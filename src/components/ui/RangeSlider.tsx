@@ -7,7 +7,7 @@ export function RangeSlider({ className, ...props }: RangeSliderProps) {
   return (
     <input 
       type="range" 
-      className={cn("w-full h-1 bg-white/10 rounded-full appearance-none cursor-pointer", className)} 
+      className={cn("k-slider", className)} 
       {...props} 
     />
   );

@@ -8,7 +8,7 @@ export interface NativeSelectProps extends SelectHTMLAttributes<HTMLSelectElemen
 export function NativeSelect({ className, children, ...props }: NativeSelectProps) {
   return (
     <select 
-      className={cn("w-full bg-[rgba(0,0,0,0.2)] border border-[var(--color-border-dark)] text-white rounded-[var(--radius-sm)] px-3 py-2 outline-none font-sans transition-colors duration-300", className)}
+      className={cn("k-input-dark", className)}
       {...props}
     >
       {children}
