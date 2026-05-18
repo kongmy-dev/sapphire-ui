@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>KONGMY Design System — Visual Catalog</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  /* Page chrome — extends the project tokens, doesn't override them */
+  body {
+    background: var(--bg-page);
+    color: var(--fg-primary);
+    margin: 0;
+  }
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-16) var(--space-8) var(--space-24);
+  }
+
+  /* Masthead */
+  .masthead {
+    border-top: 2px solid var(--color-primary);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-6) 0 var(--space-8);
+    margin-bottom: var(--space-16);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: var(--space-8);
+  }
+  .masthead .eyebrow {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg-secondary);
+    margin-bottom: var(--space-3);
+    font-weight: 600;
+  }
+  .masthead h1 {
+    font-family: var(--font-serif);
+    font-size: var(--text-display-xl);
+    font-weight: 600;
+    line-height: 1.05;
+    margin: 0;
+    color: var(--color-primary);
+    letter-spacing: -0.01em;
+  }
+  .masthead h1 .dot { color: var(--color-accent); }
+  .masthead .meta {
+    text-align: right;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--fg-secondary);
+    line-height: 1.8;
+  }
+  .masthead .meta strong { color: var(--color-primary); font-weight: 500; }
+
+  .lede {
+    font-family: var(--font-serif);
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    line-height: var(--leading-snug);
+    color: var(--color-primary);
+    max-width: 62ch;
+    margin: 0 0 var(--space-24);
+    font-weight: 400;
+  }
+
+  /* Section header */
+  .section { margin-bottom: var(--space-24); }
+  .section-head {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    align-items: baseline;
+    gap: var(--space-6);
+    border-bottom: 1px solid var(--color-primary);
+    padding-bottom: var(--space-4);
+    margin-bottom: var(--space-10);
+  }
+  .section-head .num {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-accent);
+    letter-spacing: 0.04em;
+  }
+  .section-head h2 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 500;
+    margin: 0;
+    color: var(--color-primary);
+    letter-spacing: -0.01em;
+  }
+  .section-head .label {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-secondary);
+    font-weight: 600;
+  }
+
+  /* ---------- COLORS ---------- */
+  .palette {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+  }
+  .swatch {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .swatch .chip { height: 160px; }
+  .swatch .meta { padding: var(--space-4) var(--space-5) var(--space-5); }
+  .swatch .name {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 0 0 var(--space-1);
+    color: var(--color-primary);
+  }
+  .swatch .token {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--fg-secondary);
+    margin-bottom: var(--space-3);
+  }
+  .swatch .hex {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-primary);
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-2);
+    display: flex;
+    justify-content: space-between;
+  }
+  .swatch .hex small {
+    color: var(--fg-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 10px;
+  }
+
+  .text-row {
+    grid-column: span 4;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .text-row .cell {
+    padding: var(--space-6);
+    border-right: 1px solid var(--color-border);
+  }
+  .text-row .cell:last-child { border-right: none; }
+  .text-row .cell .lvl {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--fg-secondary);
+    margin-bottom: var(--space-3);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .text-row .cell .demo {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    margin-bottom: var(--space-2);
+  }
+  .text-row .cell .hx {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-primary);
+  }
+
+  /* ---------- TYPE ---------- */
+  .type-grid {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .type-row { display: contents; }
+  .type-row .meta {
+    padding: var(--space-6);
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--fg-secondary);
+  }
+  .type-row .meta .tok {
+    color: var(--color-primary);
+    font-weight: 500;
+    display: block;
+    margin-bottom: var(--space-2);
+    font-size: 12px;
+  }
+  .type-row .meta .props { line-height: 1.7; }
+  .type-row .sample {
+    padding: var(--space-6);
+    border-top: 1px solid var(--color-border);
+    color: var(--color-primary);
+    align-self: center;
+  }
+  .type-row:first-child .meta,
+  .type-row:first-child .sample { border-top: none; }
+
+  .t-display-xl { font-family: var(--font-serif); font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 600; line-height: 1.05; letter-spacing: -0.01em; }
+  .t-display    { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3.25rem); font-weight: 600; line-height: 1.1; letter-spacing: -0.01em; }
+  .t-heading    { font-family: var(--font-serif); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 500; line-height: 1.2; }
+  .t-subheading { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 500; line-height: 1.375; }
+  .t-body-lg    { font-family: var(--font-sans); font-size: 1.125rem; font-weight: 400; line-height: 1.6; }
+  .t-body       { font-family: var(--font-sans); font-size: 1rem; font-weight: 400; line-height: 1.6; }
+  .t-body-sm    { font-family: var(--font-sans); font-size: 0.875rem; font-weight: 400; line-height: 1.6; }
+  .t-eyebrow    { font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600; line-height: 1.375; letter-spacing: 0.04em; text-transform: uppercase; }
+  .t-mono       { font-family: var(--font-mono); font-size: 0.875rem; font-weight: 400; line-height: 1.5; }
+
+  /* ---------- BUTTONS ---------- */
+  .btn-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+  }
+  .btn-cell {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-8);
+  }
+  .btn-cell.on-dark {
+    background: var(--color-primary);
+    border-color: var(--color-border-dark);
+    color: var(--color-text-on-dark);
+  }
+  .btn-cell .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .btn-cell.on-dark .head { border-bottom-color: var(--color-border-dark); }
+  .btn-cell .head h3 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 1.25rem;
+    margin: 0;
+    color: var(--color-primary);
+  }
+  .btn-cell.on-dark .head h3 { color: var(--color-text-on-dark); }
+  .btn-cell .head .tag-meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--fg-secondary);
+  }
+  .btn-cell.on-dark .head .tag-meta { color: var(--color-text-on-dark-muted); }
+  .btn-cell .row {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: var(--space-4);
+  }
+  .btn-cell .row:last-of-type { margin-bottom: 0; }
+  .btn-cell .desc {
+    margin: var(--space-4) 0 0;
+    font-size: 0.875rem;
+    color: var(--fg-secondary);
+    border-top: 1px dashed var(--color-border);
+    padding-top: var(--space-3);
+    line-height: 1.6;
+  }
+  .btn-cell.on-dark .desc {
+    color: var(--color-text-on-dark-muted);
+    border-top-color: var(--color-border-dark);
+  }
+  .btn .material-symbols-outlined { font-size: 18px; }
+
+  /* On-dark button overrides for this preview */
+  .btn-on-dark-primary {
+    background: var(--color-accent);
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+  .btn-on-dark-primary:hover { background: var(--color-accent-dark); color: var(--color-primary); }
+  .btn-on-dark-outline {
+    background: transparent;
+    color: var(--color-text-on-dark);
+    border: 1.5px solid rgba(255,255,255,0.3);
+  }
+  .btn-on-dark-outline:hover { background: rgba(255,255,255,0.08); color: var(--color-text-on-dark); }
+
+  /* ---------- CARDS ---------- */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+  .preview-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    transition: box-shadow var(--transition-base), transform var(--transition-base);
+  }
+  .preview-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-2px); }
+  .preview-card .icon-mark {
+    width: 48px; height: 48px;
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+  }
+  .preview-card .icon-mark .material-symbols-outlined { font-size: 28px; }
+  .preview-card h3 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    margin: 0;
+    color: var(--color-primary);
+  }
+  .preview-card p {
+    margin: 0;
+    color: var(--fg-secondary);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+  .preview-card .foot {
+    margin-top: auto;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--color-accent);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .preview-card.dark {
+    background: var(--color-primary);
+    border-color: var(--color-border-dark);
+    color: var(--color-text-on-dark);
+    position: relative;
+    overflow: hidden;
+  }
+  .preview-card.dark h3 { color: var(--color-text-on-dark); }
+  .preview-card.dark p { color: var(--color-text-on-dark-muted); }
+  .preview-card.dark .icon-mark { background: rgba(255,255,255,0.06); color: var(--color-accent); }
+  .preview-card.dark .foot { border-top-color: var(--color-border-dark); color: var(--color-accent); }
+  .preview-card.dark::after {
+    content: "";
+    position: absolute;
+    right: -40px; top: -40px;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    opacity: 0.05;
+  }
+
+  .preview-card.feature {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  .preview-card.feature .body {
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .preview-card.feature .img {
+    background: var(--color-primary);
+    position: relative;
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+  }
+  .preview-card.feature .img .material-symbols-outlined { font-size: 96px; opacity: 0.6; }
+  .preview-card.feature .img::after {
+    content: "FIG. 01 — Featured Service";
+    position: absolute;
+    bottom: var(--space-4); left: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--color-text-on-dark-muted);
+    text-transform: uppercase;
+  }
+
+  /* Tag row */
+  .tag-row {
+    margin-top: var(--space-8);
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: var(--space-16);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--fg-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .footer strong { color: var(--color-primary); font-weight: 500; }
+
+  /* Responsiveness */
+  @media (max-width: 960px) {
+    .palette { grid-template-columns: repeat(2, 1fr); }
+    .text-row { grid-template-columns: repeat(2, 1fr); }
+    .text-row .cell:nth-child(2n) { border-right: none; }
+    .text-row .cell { border-bottom: 1px solid var(--color-border); }
+    .btn-grid { grid-template-columns: 1fr; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .preview-card.feature { grid-column: span 1; grid-template-columns: 1fr; }
+    .type-grid { grid-template-columns: 1fr; }
+    .type-row .meta { padding-bottom: var(--space-2); }
+  }
+  @media (max-width: 640px) {
+    .page { padding: var(--space-8) var(--space-5) var(--space-16); }
+    .masthead { grid-template-columns: 1fr; }
+    .masthead .meta { text-align: left; }
+    .section-head { grid-template-columns: 1fr; gap: var(--space-1); }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <header class="masthead">
+    <div>
+      <div class="eyebrow">Design System · Visual Catalog</div>
+      <h1>KONGMY<span class="dot">.</span>dev</h1>
+    </div>
+    <div class="meta">
+      <div><strong>Edition</strong> Alpha</div>
+      <div><strong>Updated</strong> 27 · IV · 2026</div>
+      <div><strong>Source</strong> colors_and_type.css</div>
+    </div>
+  </header>
+
+  <p class="lede">
+    The visual specification for <strong>kongmy.dev</strong> — an independent, founder-led IT consultancy. Anti-bloat, editorial, navy and gold. The system mirrors the founder's voice: direct, considered, and confident without boasting.
+  </p>
+
+  <!-- ============ COLORS ============ -->
+  <section class="section">
+    <div class="section-head">
+      <div class="num">§ 01</div>
+      <h2>Colors</h2>
+      <div class="label">Brand · 4 + Text scale · 4</div>
+    </div>
+
+    <div class="palette">
+      <div class="swatch">
+        <div class="chip" style="background: var(--color-primary);"></div>
+        <div class="meta">
+          <h3 class="name">Dark Navy</h3>
+          <div class="token">--color-primary</div>
+          <div class="hex"><span>#0a192f</span><small>brand · primary</small></div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background: var(--color-accent);"></div>
+        <div class="meta">
+          <h3 class="name">Gold</h3>
+          <div class="token">--color-accent</div>
+          <div class="hex"><span>#c5a065</span><small>brand · accent</small></div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background: var(--color-surface); border-bottom: 1px solid var(--color-border);"></div>
+        <div class="meta">
+          <h3 class="name">Off-white</h3>
+          <div class="token">--color-surface</div>
+          <div class="hex"><span>#f4f6f8</span><small>page · background</small></div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background: var(--color-white); border-bottom: 1px solid var(--color-border);"></div>
+        <div class="meta">
+          <h3 class="name">White</h3>
+          <div class="token">--color-white</div>
+          <div class="hex"><span>#ffffff</span><small>card · fill</small></div>
+        </div>
+      </div>
+
+      <!-- Text + border row -->
+      <div class="text-row">
+        <div class="cell">
+          <div class="lvl">--color-text-main</div>
+          <div class="demo" style="color: var(--color-text-main);">Primary body text</div>
+          <div class="hx">#1e293b</div>
+        </div>
+        <div class="cell">
+          <div class="lvl">--color-text-muted</div>
+          <div class="demo" style="color: var(--color-text-muted);">Captions & metadata</div>
+          <div class="hx">#64748b</div>
+        </div>
+        <div class="cell" style="background: var(--color-primary);">
+          <div class="lvl" style="color: var(--color-text-on-dark-muted);">--color-text-on-dark</div>
+          <div class="demo" style="color: var(--color-text-on-dark);">Body on navy</div>
+          <div class="hx" style="color: var(--color-text-on-dark);">#f1f5f9</div>
+        </div>
+        <div class="cell">
+          <div class="lvl">--color-border</div>
+          <div class="demo" style="color: var(--color-text-main); border: 1px solid var(--color-border); padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); display: inline-block;">1px hairline</div>
+          <div class="hx" style="margin-top: var(--space-2);">#e2e8f0</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TYPE ============ -->
+  <section class="section">
+    <div class="section-head">
+      <div class="num">§ 02</div>
+      <h2>Typography</h2>
+      <div class="label">Newsreader · Source Sans 3 · JetBrains Mono</div>
+    </div>
+
+    <div class="type-grid">
+      <div class="type-row">
+        <div class="meta">
+          <span class="tok">--text-display-xl</span>
+          <span class="props">Newsreader<br/>clamp(2.5 · 6vw · 4.5rem)<br/>weight 600 · -0.01em</span>
+        </div>
+        <div class="sample"><span class="t-display-xl">I build the missing piece.</span></div>
+      </div>
+
+      <div class="type-row">
+        <div class="meta">
+          <span class="tok">--text-display</span>
+          <span class="props">Newsreader<br/>clamp(2 · 4vw · 3.25rem)<br/>weight 600</span>
+        </div>
+        <div class="sample"><span class="t-display">Section heading, h2 register.</span></div>
+      </div>
+
+      <div class="type-row">
+        <div class="meta">
+          <span class="tok">--text-heading</span>
+          <span class="props">Newsreader<br/>clamp(1.5 · 3vw · 2rem)<br/>weight 500</span>
+        </div>
+        <div class="sample"><span class="t-heading">Card and feature titles</span></div>
+      </div>
+
+      <div class="type-row">
+        <div class="meta">
+          <span class="tok">--text-subheading</span>
+          <span class="props">Newsreader<br/>1.25rem · weight 500</span>
+        </div>
+        <div class="sample"><span class="t-subheading">Inline subhead, h4</span></div>
+      </div>
+
+      <div class="type-row">
+        <div class="meta">
+          <span class="tok">--text-lg</span>
+          <span class="props">Source Sans 3<br/>1.125rem · weight 400</span>
+        </div>
+        <div class="sample"><span class="t-body-lg">Lede copy and emphasized intros — set on light surfaces, never mid-paragraph.</span></div>
+      </div>
+
+      <div class="type-row">
+        <div class="meta">
+          <span class="tok">--text-base</span>
+          <span class="props">Source Sans 3<br/>1rem · weight 400 · 1.6</span>
+        </div>
+        <div class="sample"><span class="t-body">A professionally hosted website should be fast, always-on, and not require a dedicated IT person to keep it running. Reading width capped near 65 characters.</span></div>
+      </div>
+
+      <div class="type-row">
+        <div class="meta">
+          <span class="tok">--text-sm</span>
+          <span class="props">Source Sans 3<br/>0.875rem · weight 400</span>
+        </div>
+        <div class="sample"><span class="t-body-sm">Smaller copy carries footnotes, captions, and supporting metadata.</span></div>
+      </div>
+
+      <div class="type-row">
+        <div class="meta">
+          <span class="tok">--text-xs · uppercase</span>
+          <span class="props">Source Sans 3<br/>0.75rem · weight 600 · 0.04em</span>
+        </div>
+        <div class="sample"><span class="t-eyebrow" style="color: var(--color-text-muted);">Product Owner · MBA · Full Stack Engineer</span></div>
+      </div>
+
+      <div class="type-row">
+        <div class="meta">
+          <span class="tok">--font-mono</span>
+          <span class="props">JetBrains Mono<br/>0.875rem · weight 400</span>
+        </div>
+        <div class="sample"><span class="t-mono">--color-accent: #c5a065;</span></div>
+      </div>
+
+      <div class="type-row">
+        <div class="meta">
+          <span class="tok">Material Symbols</span>
+          <span class="props">Outlined · weight 300<br/>opsz 24</span>
+        </div>
+        <div class="sample" style="display: flex; gap: var(--space-6); align-items: center;">
+          <span class="material-symbols-outlined" style="font-size: 32px;">cloud</span>
+          <span class="material-symbols-outlined" style="font-size: 32px;">smart_toy</span>
+          <span class="material-symbols-outlined" style="font-size: 32px;">code_blocks</span>
+          <span class="material-symbols-outlined" style="font-size: 32px;">psychology</span>
+          <span class="material-symbols-outlined" style="font-size: 32px;">chat</span>
+          <span class="material-symbols-outlined" style="font-size: 32px;">mail</span>
+          <span class="material-symbols-outlined" style="font-size: 32px;">arrow_outward</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BUTTONS ============ -->
+  <section class="section">
+    <div class="section-head">
+      <div class="num">§ 03</div>
+      <h2>Buttons</h2>
+      <div class="label">3 variants · light + dark contexts</div>
+    </div>
+
+    <div class="btn-grid">
+      <div class="btn-cell">
+        <div class="head">
+          <h3>Primary · Navy</h3>
+          <span class="tag-meta">.btn .btn-primary</span>
+        </div>
+        <div class="row">
+          <a href="#" class="btn btn-primary">Get Started</a>
+          <a href="#" class="btn btn-primary"><span class="material-symbols-outlined">chat</span>WhatsApp Me</a>
+          <a href="#" class="btn btn-primary" style="background: var(--color-primary-hover, #1a3358);">Hover state</a>
+        </div>
+        <p class="desc">Default destination for confirmed actions. Navy fill, white text, 6px radius.</p>
+      </div>
+
+      <div class="btn-cell">
+        <div class="head">
+          <h3>Outline · Navy border</h3>
+          <span class="tag-meta">.btn .btn-outline</span>
+        </div>
+        <div class="row">
+          <a href="#" class="btn btn-outline">Learn More</a>
+          <a href="#" class="btn btn-outline">View Services<span class="material-symbols-outlined">arrow_outward</span></a>
+          <a href="#" class="btn btn-outline" style="background: var(--color-primary); color: var(--color-text-on-dark);">Hover state</a>
+        </div>
+        <p class="desc">Secondary action. 1.5px navy border, transparent fill. Inverts on hover.</p>
+      </div>
+
+      <div class="btn-cell">
+        <div class="head">
+          <h3>Ghost · Gold border</h3>
+          <span class="tag-meta">.btn .btn-ghost</span>
+        </div>
+        <div class="row">
+          <a href="#" class="btn btn-ghost">Read more</a>
+          <a href="#" class="btn btn-ghost">Track Record</a>
+          <a href="#" class="btn btn-ghost" style="background: var(--color-hover-overlay);">Hover state</a>
+        </div>
+        <p class="desc">Tertiary, low-stakes navigation. Gold border, gold text on light surfaces.</p>
+      </div>
+
+      <div class="btn-cell on-dark">
+        <div class="head">
+          <h3>On Dark · Featured</h3>
+          <span class="tag-meta">on --color-primary</span>
+        </div>
+        <div class="row">
+          <a href="#" class="btn btn-on-dark-primary">Contact Me</a>
+          <a href="#" class="btn btn-on-dark-primary"><span class="material-symbols-outlined">chat</span>WhatsApp</a>
+          <a href="#" class="btn btn-on-dark-outline">View Work</a>
+        </div>
+        <p class="desc">On navy backgrounds, the gold-fill button leads. Outlines use white at 30% opacity.</p>
+      </div>
+    </div>
+
+    <div class="tag-row">
+      <span class="tag">Edge Platform</span>
+      <span class="tag tag-accent">AI &amp; WhatsApp</span>
+      <span class="tag">Custom Software</span>
+      <span class="tag tag-accent">Hosting</span>
+      <span class="tag">SME · Kuala Lumpur</span>
+    </div>
+  </section>
+
+  <!-- ============ CARDS ============ -->
+  <section class="section">
+    <div class="section-head">
+      <div class="num">§ 04</div>
+      <h2>Cards</h2>
+      <div class="label">Light · Dark · Featured</div>
+    </div>
+
+    <div class="cards-grid">
+
+      <article class="preview-card feature">
+        <div class="body">
+          <span class="t-eyebrow" style="color: var(--color-accent);">Featured Service</span>
+          <h3 style="font-size: clamp(1.75rem, 3vw, 2.25rem);">AI &amp; WhatsApp Automation</h3>
+          <p style="color: var(--color-text-main);">Conversational interfaces wired to your business systems. I build the glue between WhatsApp, your CRM, and the inbox you actually check.</p>
+          <div style="display: flex; gap: var(--space-2); margin-top: var(--space-2);">
+            <a href="#" class="btn btn-primary">See case study</a>
+            <a href="#" class="btn btn-ghost">Read more</a>
+          </div>
+        </div>
+        <div class="img" aria-hidden="true">
+          <span class="material-symbols-outlined">smart_toy</span>
+        </div>
+      </article>
+
+      <article class="preview-card">
+        <div class="icon-mark"><span class="material-symbols-outlined">cloud</span></div>
+        <h3>Website &amp; App Hosting</h3>
+        <p>Scalable, always-on hosting without a dedicated IT person. I handle deploys, monitoring, and the calls at 3am.</p>
+        <div class="foot">
+          <span>Always-on</span>
+          <span class="material-symbols-outlined">arrow_outward</span>
+        </div>
+      </article>
+
+      <article class="preview-card">
+        <div class="icon-mark"><span class="material-symbols-outlined">code_blocks</span></div>
+        <h3>Custom Software</h3>
+        <p>Off-the-shelf tools rarely fit the way your business actually works. I build the missing piece.</p>
+        <div class="foot">
+          <span>Bespoke</span>
+          <span class="material-symbols-outlined">arrow_outward</span>
+        </div>
+      </article>
+
+      <article class="preview-card dark">
+        <div class="icon-mark"><span class="material-symbols-outlined">psychology</span></div>
+        <h3>System Integrations</h3>
+        <p>Internal tools, portals, and data-silo busters. The systems your team relies on, finally talking to each other.</p>
+        <div class="foot">
+          <span>Data unified</span>
+          <span class="material-symbols-outlined">arrow_outward</span>
+        </div>
+      </article>
+
+      <article class="preview-card">
+        <span class="t-eyebrow" style="color: var(--color-text-muted);">Track Record · 01</span>
+        <h3>Edge Platform</h3>
+        <p>Privilege of building and maintaining a platform that scales globally — and the hands-on experience to take a system from zero to one.</p>
+        <div class="foot">
+          <span>Case study</span>
+          <span class="material-symbols-outlined">arrow_outward</span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div><strong>KONGMY Digital Solutions</strong> · kongmy.dev</div>
+    <div>End of Visual Catalog · Vol. I</div>
+  </footer>
+
+</main>
+</body>
+</html>
