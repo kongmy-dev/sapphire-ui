@@ -1,0 +1,12 @@
+version = "0.4"
+last_updated = "2026-03-09"
+
+[org]
+disclosures = [
+  { doc_type = "web-page", url = "https://kongmy.dev/privacy", title = "Sustainability and Privacy Commitment" }
+]
+
+[upstream]
+services = [
+  { domain = "cloudflare.com", service_type = ["cdn", "shared-hosting"] }
+]
