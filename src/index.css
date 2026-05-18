@@ -258,9 +258,14 @@
   }
   .card-dark {
     background:    var(--color-primary);
-    border-color:  var(--color-border-dark);
+    border:        1px solid var(--color-border-dark);
+    border-radius: var(--radius-md);
+    padding:       var(--space-8);
     color:         var(--color-text-on-dark);
+    transition:    border-color var(--transition-base);
   }
+  .card-dark .t-heading, .card-dark .t-subheading { color: var(--color-text-on-dark); }
+  .card-dark .t-body-sm { color: var(--color-text-on-dark-muted); }
 
   /* Typography */
   .t-display { font-family: var(--font-serif); font-size: var(--text-display); font-weight: 600; line-height: 1.1; letter-spacing: -0.01em; color: var(--color-primary); }
