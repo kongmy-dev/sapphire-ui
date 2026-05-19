@@ -3,6 +3,7 @@ import { getConsentStatus } from '../lib/consent';
 declare global {
   interface Window {
     dataLayer?: any[];
+    zaraz?: any;
   }
 }
 
@@ -40,6 +41,17 @@ export class AnalyticsElement extends SSRHTMLElement {
     // 2. Initialize PostHog
     if (posthogToken) {
       this.initPostHog(posthogToken, posthogHost, posthogUiHost, consent.analytics);
+    }
+
+    // 3. Sync initial consent state with Cloudflare Zaraz
+    if (window.zaraz?.consent?.set) {
+      try {
+        window.zaraz.consent.set({
+          analytics: consent.analytics,
+        });
+      } catch (e) {
+        // Silently capture if Zaraz is still initializing asynchronously
+      }
     }
   }
 

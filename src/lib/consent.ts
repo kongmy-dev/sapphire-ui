@@ -13,6 +13,7 @@ declare global {
   interface Window {
     posthog?: any;
     gtag?: any;
+    zaraz?: any;
   }
 }
 
@@ -89,5 +90,16 @@ export function updateTrackers(preferences: ConsentPreferences) {
       ad_personalization: 'denied',
       analytics_storage: preferences.analytics ? 'granted' : 'denied',
     });
+  }
+
+  // Update Cloudflare Zaraz
+  if (window.zaraz?.consent?.set) {
+    try {
+      window.zaraz.consent.set({
+        analytics: preferences.analytics,
+      });
+    } catch (e) {
+      console.warn('[Sapphire Analytics] Failed to sync consent with Cloudflare Zaraz:', e);
+    }
   }
 }
