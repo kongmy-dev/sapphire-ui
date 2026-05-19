@@ -30,10 +30,20 @@ export * from './components/ui/Skeleton';
 export * from './components/ui/Spinner';
 export * from './components/ui/Progress';
 export * from './components/ui/Avatar';
+export * from './components/ui/AvatarGroup';
 export * from './components/ui/Table';
 export * from './components/ui/Tabs';
 export * from './components/ui/Alert';
 export * from './components/ui/Empty';
+export * from './components/ui/Stat';
+
+// ─── Phase 3 Extended: Visual + Interactive Primitives ──────────────
+export * from './components/ui/Breadcrumb';
+export * from './components/ui/Pagination';
+export * from './components/ui/Kbd';
+export * from './components/ui/Chip';
+export * from './components/ui/CodeBlock';
+export * from './components/ui/Toggle';
 
 // ─── Composites ─────────────────────────────────────────────────────
 export * from './components/CookieBanner';
