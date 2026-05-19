@@ -1,0 +1,26 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "sapphire-ui-docs"
+compatibility_date = "2025-05-14"
+
+[assets]
+directory = "dist-docs"
+not_found_handling = "single-page-application"
+
+[observability]
+enabled = true
+head_sampling_rate = 1
+
+[observability.logs]
+enabled = true
+head_sampling_rate = 1
+persist = true
+invocation_logs = true
+
+[observability.traces]
+enabled = true
+persist = true
+head_sampling_rate = 1
+
+[[routes]]
+pattern = "design.kongmy.dev"
+custom_domain = true
