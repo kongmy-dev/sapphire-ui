@@ -22,14 +22,20 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'src/index.ts'),
+      // Multi-entry: full React bundle + framework-agnostic Web Components entry.
+      // Consumers can `import from '@kongmy-dev/sapphire-ui'` (React-aware)
+      // or `import '@kongmy-dev/sapphire-ui/elements'` (vanilla, no React).
+      entry: {
+        index: path.resolve(__dirname, 'src/index.ts'),
+        elements: path.resolve(__dirname, 'src/elements.ts'),
+      },
       name: 'SapphireUI',
       formats: ['es', 'cjs'],
-      fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`,
+      fileName: (format, entryName) =>
+        `${entryName}.${format === 'es' ? 'js' : 'cjs'}`,
     },
     rollupOptions: {
-      // make sure to externalize deps that shouldn't be bundled
-      // into your library
+      // Externalize deps that shouldn't be bundled into the library.
       external: [
         'react',
         'react-dom',
@@ -38,6 +44,9 @@ export default defineConfig({
         /^@radix-ui\//,
       ],
       output: {
+        // Preserve module structure so tree-shaking and side-effect hints
+        // (customElements.define) survive in consumer bundles.
+        preserveModules: false,
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
