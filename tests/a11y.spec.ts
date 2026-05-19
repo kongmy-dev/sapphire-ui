@@ -22,6 +22,7 @@ const ROUTES = [
   { path: '/data', name: 'data' },
   { path: '/interactive', name: 'interactive' },
   { path: '/extended', name: 'extended' },
+  { path: '/hooks', name: 'hooks' },
 ];
 
 const strict = process.env.STRICT_A11Y === '1';

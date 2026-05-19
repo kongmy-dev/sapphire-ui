@@ -518,3 +518,179 @@
 .site-footer-link { font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-text-on-dark-muted); text-decoration: none; transition: color 0.18s ease; }
 .site-footer-link:hover { color: white; }
 .site-footer-bottom { padding-top: 1.5rem; border-top: 1px solid var(--color-border-dark); display: flex; justify-content: space-between; align-items: center; gap: 1rem; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-on-dark-muted); }
+
+/* ─── Framework-agnostic CSS utilities (Phase 4) ──────────
+ * These are class APIs usable from plain HTML, Astro, Vue, Svelte —
+ * any consumer that imports `@kongmy-dev/sapphire-ui/style.css`.
+ * They intentionally use only the design tokens already defined above,
+ * so theming flows through without per-utility overrides.
+ */
+
+/* Accessibility: visually hide content but keep it for assistive tech.
+ * Pair with `.not-sr` (or no class) to reveal on focus for skip links. */
+.visually-hidden,
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+.visually-hidden-focusable:not(:focus):not(:focus-within) {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Vertical rhythm via owl selector — every direct child gets `--stack-gap`
+ * of top margin except the first. Override with `style="--stack-gap: 2rem"`. */
+.stack {
+  --stack-gap: 1rem;
+  display: block;
+}
+.stack > * { margin-block: 0; }
+.stack > * + * { margin-block-start: var(--stack-gap); }
+.stack-sm  { --stack-gap: 0.5rem; }
+.stack-lg  { --stack-gap: 1.5rem; }
+.stack-xl  { --stack-gap: 2.5rem; }
+
+/* Horizontal cluster — flex row that wraps and centers vertically.
+ * Tweak gap or alignment with --cluster-gap / --cluster-justify. */
+.cluster {
+  --cluster-gap: 0.75rem;
+  --cluster-justify: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cluster-gap);
+  justify-content: var(--cluster-justify);
+}
+
+/* Container query opt-in. Add `.cq` on an ancestor, then size descendants
+ * by container width with the helper classes below.
+ *
+ *   <div class="cq">
+ *     <article class="cq-sm:flex">…</article>
+ *   </div>
+ */
+.cq        { container-type: inline-size; container-name: sapphire; }
+.cq-inline { container-type: inline-size; }
+
+@container sapphire (min-width: 30rem) {
+  .cq-sm\:flex       { display: flex; }
+  .cq-sm\:grid       { display: grid; }
+  .cq-sm\:hidden     { display: none; }
+  .cq-sm\:row        { flex-direction: row; }
+  .cq-sm\:col        { flex-direction: column; }
+}
+@container sapphire (min-width: 48rem) {
+  .cq-md\:flex       { display: flex; }
+  .cq-md\:grid       { display: grid; }
+  .cq-md\:hidden     { display: none; }
+  .cq-md\:row        { flex-direction: row; }
+  .cq-md\:col        { flex-direction: column; }
+  .cq-md\:cols-2     { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cq-md\:cols-3     { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@container sapphire (min-width: 64rem) {
+  .cq-lg\:cols-2     { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cq-lg\:cols-3     { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cq-lg\:cols-4     { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* Typography flow for long-form content. Drop `.prose` on any wrapper
+ * around CMS/MDX/markdown output and headings, paragraphs, lists, code,
+ * blockquote, and links pick up Sapphire tokens automatically. */
+.prose {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-text-main);
+  max-width: 70ch;
+}
+.prose > * + * { margin-block-start: 1.25em; }
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--color-text-main);
+  margin-block-start: 2em;
+  margin-block-end: 0.5em;
+}
+.prose h1 { font-size: 2.25rem; letter-spacing: -0.02em; }
+.prose h2 { font-size: 1.75rem; letter-spacing: -0.015em; }
+.prose h3 { font-size: 1.375rem; }
+.prose h4 { font-size: 1.125rem; }
+.prose p  { margin: 0; }
+.prose a {
+  color: var(--color-accent-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.prose a:hover { text-decoration-thickness: 2px; }
+.prose strong { color: var(--color-text-main); font-weight: 600; }
+.prose ul,
+.prose ol {
+  padding-inline-start: 1.5em;
+  margin: 0;
+}
+.prose li { margin-block: 0.25em; }
+.prose li::marker { color: var(--color-text-muted); }
+.prose blockquote {
+  border-inline-start: 3px solid var(--color-accent);
+  padding-inline-start: 1.25em;
+  font-style: italic;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm, 4px);
+  padding: 0.1em 0.35em;
+  color: var(--color-text-main);
+}
+.prose pre {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md, 8px);
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+}
+.prose pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font-size: inherit;
+}
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  margin-block: 2.5em;
+}
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md, 8px);
+}
+.prose-sm { font-size: 0.9375rem; line-height: 1.65; }
+.prose-lg { font-size: 1.125rem; line-height: 1.75; }
