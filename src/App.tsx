@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom';
 import './App.css';
 
 // Pages
@@ -11,33 +11,42 @@ import CardsPage from './pages/CardsPage';
 import FormsPage from './pages/FormsPage';
 import FeedbackPage from './pages/FeedbackPage';
 import DataPage from './pages/DataPage';
+import InteractivePage from './pages/InteractivePage';
 
 import { CookieBanner } from './components/CookieBanner';
 import { Analytics } from './components/Analytics';
 import { MobileNav } from './components/ui/MobileNav';
 
 const navItems = [
-  { to: '/', label: 'Overview', icon: 'home' },
-  { to: '/colors', label: 'Colors', icon: 'palette' },
-  { to: '/typography', label: 'Typography', icon: 'text_fields' },
-  { to: '/buttons', label: 'Buttons', icon: 'smart_button' },
-  { to: '/cards', label: 'Cards', icon: 'cards' },
-  { to: '/forms', label: 'Forms', icon: 'input' },
-  { to: '/feedback', label: 'Feedback', icon: 'notifications' },
-  { to: '/data', label: 'Data Display', icon: 'table_chart' },
+  { href: '/', label: 'Overview', icon: 'home' },
+  { href: '/colors', label: 'Colors', icon: 'palette' },
+  { href: '/typography', label: 'Typography', icon: 'text_fields' },
+  { href: '/buttons', label: 'Buttons', icon: 'smart_button' },
+  { href: '/cards', label: 'Cards', icon: 'cards' },
+  { href: '/forms', label: 'Forms', icon: 'input' },
+  { href: '/feedback', label: 'Feedback', icon: 'notifications' },
+  { href: '/data', label: 'Data Display', icon: 'table_chart' },
+  { href: '/interactive', label: 'Interactive', icon: 'touch_app' },
 ];
 
-export default function App() {
+function AppShell() {
   const [showCookies, setShowCookies] = useState(false);
+  const navigate = useNavigate();
 
   return (
-    <BrowserRouter>
+    <>
       {/* Mobile Drawer Navigation */}
       <MobileNav
         brandName="Sapphire"
         brandSuffix="UI"
         version="v0.1.0"
         navItems={navItems}
+        onNavigate={(href, event) => {
+          // Intercept clicks so React Router handles routing without
+          // a full page reload.
+          event.preventDefault();
+          navigate(href);
+        }}
         extraActions={
           <button
             onClick={() => setShowCookies(true)}
@@ -63,9 +72,9 @@ export default function App() {
           <nav className="docs-nav">
             {navItems.map((item) => (
               <NavLink
-                key={item.to}
-                to={item.to}
-                end={item.to === '/'}
+                key={item.href}
+                to={item.href}
+                end={item.href === '/'}
                 className={({ isActive }) =>
                   `docs-nav-link ${isActive ? 'docs-nav-link--active' : ''}`
                 }
@@ -105,6 +114,7 @@ export default function App() {
             <Route path="/forms" element={<FormsPage />} />
             <Route path="/feedback" element={<FeedbackPage />} />
             <Route path="/data" element={<DataPage />} />
+            <Route path="/interactive" element={<InteractivePage />} />
           </Routes>
         </main>
       </div>
@@ -114,6 +124,14 @@ export default function App() {
         gaId={import.meta.env.VITE_PUBLIC_GA_ID}
         posthogToken={import.meta.env.VITE_PUBLIC_POSTHOG_KEY}
       />
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppShell />
     </BrowserRouter>
   );
 }
