@@ -1,14 +1,20 @@
+import { useState } from 'react';
 import { Badge } from '../components/ui/Badge';
 import { Avatar } from '../components/ui/Avatar';
+import { AvatarGroup } from '../components/ui/AvatarGroup';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../components/ui/Tabs';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '../components/ui/Table';
 import { Separator } from '../components/ui/Separator';
+import { Stat } from '../components/ui/Stat';
+import { Chip } from '../components/ui/Chip';
+import { Pagination } from '../components/ui/Pagination';
 
 // 'dark' is excluded — it ships near-white text intended for dark backgrounds
 // and is showcased separately in the dark preview row below.
 const badgeVariants = ['default', 'accent', 'success', 'error', 'warning', 'info'] as const;
 
 export default function DataPage() {
+  const [page, setPage] = useState(3);
   return (
     <div>
       <header className="docs-page-header">
@@ -42,6 +48,67 @@ export default function DataPage() {
             <Avatar size="md" fallback="KM" />
             <Avatar size="lg" fallback="KM" />
             <Avatar size="lg" src="https://avatars.githubusercontent.com/u/1?v=4" alt="GitHub User" />
+          </div>
+        </div>
+      </section>
+
+      <section className="docs-section">
+        <h2 className="docs-section-title">Avatar Group</h2>
+        <div className="docs-preview">
+          <div className="docs-stack" style={{ gap: 16 }}>
+            <AvatarGroup>
+              <Avatar fallback="AB" />
+              <Avatar fallback="CD" />
+              <Avatar fallback="EF" />
+            </AvatarGroup>
+            <AvatarGroup max={3}>
+              <Avatar fallback="AB" />
+              <Avatar fallback="CD" />
+              <Avatar fallback="EF" />
+              <Avatar fallback="GH" />
+              <Avatar fallback="IJ" />
+              <Avatar fallback="KL" />
+            </AvatarGroup>
+          </div>
+        </div>
+      </section>
+
+      <section className="docs-section">
+        <h2 className="docs-section-title">Stat</h2>
+        <div className="docs-preview">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 24 }}>
+            <Stat label="Active users" value="12,438" change="+12%" changeDirection="up" />
+            <Stat label="Monthly cost" value="$428.50" change="-3%" changeDirection="down" />
+            <Stat label="Uptime" value="99.97%" description="last 30 days" />
+            <Stat label="API calls" value="2.1M" change="0%" changeDirection="neutral" size="sm" />
+          </div>
+        </div>
+      </section>
+
+      <section className="docs-section">
+        <h2 className="docs-section-title">Chip</h2>
+        <div className="docs-preview">
+          <div className="docs-flex" style={{ flexWrap: 'wrap' }}>
+            <Chip>Default</Chip>
+            <Chip variant="accent">Accent</Chip>
+            <Chip variant="outline">Outline</Chip>
+            <Chip onDismiss={() => {}}>Removable</Chip>
+            <Chip variant="accent" onDismiss={() => {}} leading={<span style={{ width: 8, height: 8, borderRadius: '50%', background: 'currentColor', display: 'inline-block' }} />}>
+              With leading
+            </Chip>
+            <Chip size="sm">Small</Chip>
+            <Chip size="lg">Large</Chip>
+          </div>
+        </div>
+      </section>
+
+      <section className="docs-section">
+        <h2 className="docs-section-title">Pagination</h2>
+        <div className="docs-preview">
+          <div className="docs-stack" style={{ gap: 16 }}>
+            <Pagination currentPage={page} totalPages={12} onPageChange={setPage} />
+            <Pagination currentPage={page} totalPages={12} onPageChange={setPage} hideControls />
+            <Pagination currentPage={page} totalPages={5} onPageChange={setPage} siblings={2} />
           </div>
         </div>
       </section>

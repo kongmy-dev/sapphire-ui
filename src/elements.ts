@@ -10,11 +10,14 @@
 import './components/ToastElement';
 import './components/CookieBannerElement';
 import './components/AnalyticsElement';
+import './components/BannerElement';
 
 export { ToastElement } from './components/ToastElement';
 export type { ToastType } from './components/ToastElement';
 export { CookieBannerElement } from './components/CookieBannerElement';
 export { AnalyticsElement } from './components/AnalyticsElement';
+export { BannerElement } from './components/BannerElement';
+export type { BannerVariant } from './components/BannerElement';
 
 export {
   getConsentStatus,

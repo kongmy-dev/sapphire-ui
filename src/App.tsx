@@ -12,6 +12,7 @@ import FormsPage from './pages/FormsPage';
 import FeedbackPage from './pages/FeedbackPage';
 import DataPage from './pages/DataPage';
 import InteractivePage from './pages/InteractivePage';
+import ExtendedPage from './pages/ExtendedPage';
 
 import { CookieBanner } from './components/CookieBanner';
 import { Analytics } from './components/Analytics';
@@ -27,6 +28,7 @@ const navItems = [
   { href: '/feedback', label: 'Feedback', icon: 'notifications' },
   { href: '/data', label: 'Data Display', icon: 'table_chart' },
   { href: '/interactive', label: 'Interactive', icon: 'touch_app' },
+  { href: '/extended', label: 'Extended', icon: 'extension' },
 ];
 
 function AppShell() {
@@ -115,6 +117,7 @@ function AppShell() {
             <Route path="/feedback" element={<FeedbackPage />} />
             <Route path="/data" element={<DataPage />} />
             <Route path="/interactive" element={<InteractivePage />} />
+            <Route path="/extended" element={<ExtendedPage />} />
           </Routes>
         </main>
       </div>

@@ -21,6 +21,7 @@ const ROUTES = [
   { path: '/feedback', name: 'feedback' },
   { path: '/data', name: 'data' },
   { path: '/interactive', name: 'interactive' },
+  { path: '/extended', name: 'extended' },
 ];
 
 const strict = process.env.STRICT_A11Y === '1';

@@ -44,6 +44,10 @@ export * from './components/ui/Kbd';
 export * from './components/ui/Chip';
 export * from './components/ui/CodeBlock';
 export * from './components/ui/Toggle';
+export * from './components/ui/ScrollArea';
+export * from './components/ui/HoverCard';
+export * from './components/Banner';
+export * from './components/BannerElement';
 
 // ─── Composites ─────────────────────────────────────────────────────
 export * from './components/CookieBanner';
