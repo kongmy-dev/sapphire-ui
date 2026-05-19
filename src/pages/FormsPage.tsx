@@ -6,10 +6,17 @@ import { Checkbox } from '../components/ui/Checkbox';
 import { ToggleSwitch } from '../components/ui/ToggleSwitch';
 import { RangeSlider } from '../components/ui/RangeSlider';
 import { NativeSelect } from '../components/ui/NativeSelect';
+import { FormField } from '../components/ui/FormField';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectGroup, SelectLabel, SelectSeparator } from '../components/ui/Select';
+import { RadioGroup, RadioGroupItem } from '../components/ui/RadioGroup';
 
 export default function FormsPage() {
   const [switchOn, setSwitchOn] = useState(false);
   const [sliderVal, setSliderVal] = useState<number[]>([50]);
+  const [selectVal, setSelectVal] = useState<string>('');
+  const [plan, setPlan] = useState('pro');
+  const [email, setEmail] = useState('');
+  const emailError = email && !email.includes('@') ? 'Looks like that\'s not a valid email.' : undefined;
 
   return (
     <div>
@@ -103,6 +110,77 @@ export default function FormsPage() {
               <option value="gcp">Google Cloud Platform</option>
               <option value="cf">Cloudflare</option>
             </NativeSelect>
+          </div>
+        </div>
+      </section>
+
+      <section className="docs-section">
+        <h2 className="docs-section-title">Select (Radix)</h2>
+        <div className="docs-preview">
+          <div style={{ maxWidth: 300 }}>
+            <Label htmlFor="region-select">Region</Label>
+            <Select value={selectVal} onValueChange={setSelectVal}>
+              <SelectTrigger id="region-select" aria-label="Region">
+                <SelectValue placeholder="Pick a region…" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Americas</SelectLabel>
+                  <SelectItem value="us-east-1">us-east-1 (Virginia)</SelectItem>
+                  <SelectItem value="us-west-2">us-west-2 (Oregon)</SelectItem>
+                </SelectGroup>
+                <SelectSeparator />
+                <SelectGroup>
+                  <SelectLabel>Europe</SelectLabel>
+                  <SelectItem value="eu-west-1">eu-west-1 (Ireland)</SelectItem>
+                  <SelectItem value="eu-central-1">eu-central-1 (Frankfurt)</SelectItem>
+                </SelectGroup>
+                <SelectSeparator />
+                <SelectGroup>
+                  <SelectLabel>Asia Pacific</SelectLabel>
+                  <SelectItem value="ap-southeast-1">ap-southeast-1 (Singapore)</SelectItem>
+                  <SelectItem value="ap-southeast-2">ap-southeast-2 (Sydney)</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+      </section>
+
+      <section className="docs-section">
+        <h2 className="docs-section-title">Radio Group</h2>
+        <div className="docs-preview">
+          <RadioGroup value={plan} onValueChange={setPlan} aria-label="Plan">
+            <RadioGroupItem value="free" label="Free" description="$0/mo — single project, community support." />
+            <RadioGroupItem value="pro" label="Pro" description="$12/mo — unlimited projects, email support." />
+            <RadioGroupItem value="team" label="Team" description="$48/mo — multi-seat, priority support." />
+          </RadioGroup>
+        </div>
+      </section>
+
+      <section className="docs-section">
+        <h2 className="docs-section-title">Form Field (composition)</h2>
+        <div className="docs-preview">
+          <div className="docs-stack" style={{ maxWidth: 400 }}>
+            <FormField label="Email" hint="We'll send a verification link." required>
+              <Input
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </FormField>
+            <FormField label="Email with validation" error={emailError}>
+              <Input
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </FormField>
+            <FormField label="Plain field with hint" hint="Maximum 280 characters.">
+              <Textarea placeholder="What's on your mind?" />
+            </FormField>
           </div>
         </div>
       </section>

@@ -49,6 +49,16 @@ export * from './components/ui/HoverCard';
 export * from './components/Banner';
 export * from './components/BannerElement';
 
+// ─── Phase 1 Core Completion: Selection + Disclosure + Composition ──
+export * from './components/ui/Popover';
+export * from './components/ui/Tooltip';
+export * from './components/ui/Sheet';
+export * from './components/ui/Select';
+export * from './components/ui/DropdownMenu';
+export * from './components/ui/RadioGroup';
+export * from './components/ui/Accordion';
+export * from './components/ui/FormField';
+
 // ─── Composites ─────────────────────────────────────────────────────
 export * from './components/CookieBanner';
 export * from './components/CookieBannerElement';
