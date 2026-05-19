@@ -5,7 +5,7 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://phg-t.kongmy.dev https://www.googletagmanager.com https://static.cloudflareinsights.com; connect-src 'self' https://phg-t.kongmy.dev https://eu.posthog.com https://www.google-analytics.com https://cloudflareinsights.com; img-src 'self' data: https://phg-t.kongmy.dev https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; frame-src 'none';
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://phg-t.kongmy.dev https://www.googletagmanager.com https://static.cloudflareinsights.com; connect-src 'self' https://phg-t.kongmy.dev https://eu.posthog.com https://www.google-analytics.com https://stats.g.doubleclick.net https://cloudflareinsights.com; img-src 'self' data: https://phg-t.kongmy.dev https://www.google-analytics.com https://stats.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; frame-src 'none';
   # Default Page Cache: 1 minute local cache + 10 mins background revalidation
   Cache-Control: public, max-age=60, stale-while-revalidate=600
 
