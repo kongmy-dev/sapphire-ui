@@ -22,3 +22,13 @@ export {
   updateTrackers,
 } from './lib/consent';
 export type { ConsentPreferences, ConsentState } from './lib/consent';
+
+export {
+  getTheme,
+  getThemePreference,
+  setTheme,
+  resolveSystemTheme,
+  subscribeTheme,
+  initTheme,
+} from './lib/theme';
+export type { Theme, ThemePreference } from './lib/theme';

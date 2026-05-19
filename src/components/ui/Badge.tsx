@@ -7,20 +7,22 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
+        // Foreground colors are darkened from the underlying brand/state
+        // hue so 12px badge text passes WCAG AA contrast on the tinted bg.
         default:
           'bg-[var(--color-surface)] text-[var(--color-text-muted)] border border-[var(--color-border)]',
         accent:
-          'bg-[rgba(197,160,101,0.12)] text-[var(--color-accent-dark)] border border-[rgba(197,160,101,0.3)]',
+          'bg-[rgba(197,160,101,0.12)] text-[var(--color-accent-text)] border border-[rgba(197,160,101,0.3)]',
         dark:
           'bg-[rgba(255,255,255,0.1)] text-[var(--color-text-on-dark)] border border-[var(--color-border-dark)]',
         success:
-          'bg-[rgba(34,197,94,0.1)] text-[#16a34a] border border-[rgba(34,197,94,0.2)]',
+          'bg-[rgba(34,197,94,0.1)] text-[#15803d] border border-[rgba(34,197,94,0.2)]',
         error:
-          'bg-[rgba(239,68,68,0.1)] text-[#ef4444] border border-[rgba(239,68,68,0.2)]',
+          'bg-[rgba(239,68,68,0.1)] text-[#b91c1c] border border-[rgba(239,68,68,0.2)]',
         warning:
-          'bg-[rgba(245,158,11,0.1)] text-[#d97706] border border-[rgba(245,158,11,0.2)]',
+          'bg-[rgba(245,158,11,0.1)] text-[#b45309] border border-[rgba(245,158,11,0.2)]',
         info:
-          'bg-[rgba(59,130,246,0.1)] text-[#3b82f6] border border-[rgba(59,130,246,0.2)]',
+          'bg-[rgba(59,130,246,0.1)] text-[#1d4ed8] border border-[rgba(59,130,246,0.2)]',
       },
     },
     defaultVariants: {

@@ -5,7 +5,7 @@ import { cn } from '../../lib/utils';
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   /** Visual variant */
-  variant?: 'default' | 'dark' | 'feature';
+  variant?: 'default' | 'dark' | 'feature' | 'dashed';
   /** Enable hover lift effect */
   hoverable?: boolean;
   /** Show left accent border */
@@ -22,8 +22,10 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
           variant === 'default' && 'bg-white border border-[var(--color-border)]',
           variant === 'dark' && 'bg-[var(--color-primary)] border border-[var(--color-border-dark)] text-[var(--color-text-on-dark)]',
           variant === 'feature' && 'bg-white border border-[var(--color-border)] grid md:grid-cols-[1fr_auto] gap-8',
+          variant === 'dashed' && 'bg-transparent border-[1.5px] border-dashed border-[var(--color-border)] text-[var(--color-text-muted)]',
           hoverable && variant === 'default' && 'hover:shadow-[var(--shadow-card-hover)] hover:-translate-y-0.5 cursor-pointer',
           hoverable && variant === 'dark' && 'hover:border-[var(--color-accent)] cursor-pointer',
+          hoverable && variant === 'dashed' && 'hover:border-[var(--color-accent)] hover:text-[var(--color-text-main)] cursor-pointer',
           bordered && 'border-l-[6px] border-l-[var(--color-accent)]',
           className,
         )}

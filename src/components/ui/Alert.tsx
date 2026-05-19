@@ -28,12 +28,16 @@ const iconMap: Record<string, string> = {
   accent: 'lightbulb',
 };
 
-const iconColorMap: Record<string, string> = {
-  info: '#3b82f6',
-  success: '#16a34a',
-  warning: '#d97706',
-  error: '#ef4444',
-  accent: 'var(--color-accent-dark)',
+// Icon and title share the same darker variant so 20px icons (which axe
+// flags as text-adjacent even when aria-hidden) pass WCAG AA contrast on
+// the tinted background. The hue identifies the variant; the darker shade
+// is the accessibility fix.
+const variantColorMap: Record<string, string> = {
+  info: '#1d4ed8',
+  success: '#15803d',
+  warning: '#b45309',
+  error: '#b91c1c',
+  accent: 'var(--color-accent-text)',
 };
 
 export interface AlertProps
@@ -47,22 +51,23 @@ export interface AlertProps
 }
 
 function Alert({ className, variant = 'info', title, icon, children, ...props }: AlertProps) {
-  const iconName = icon || iconMap[variant || 'info'];
-  const iconColor = iconColorMap[variant || 'info'];
+  const key = variant || 'info';
+  const iconName = icon || iconMap[key];
+  const color = variantColorMap[key];
 
   return (
     <div className={cn(alertVariants({ variant }), className)} role="alert" {...props}>
       <div className="flex items-start gap-3">
         <span
           className="material-symbols-outlined shrink-0 mt-0.5"
-          style={{ color: iconColor, fontSize: 20 }}
+          style={{ color, fontSize: 20 }}
           aria-hidden="true"
         >
           {iconName}
         </span>
         <div className="flex-1 min-w-0">
           {title && (
-            <div className="font-semibold text-sm mb-1" style={{ color: iconColor }}>
+            <div className="font-semibold text-sm mb-1" style={{ color }}>
               {title}
             </div>
           )}

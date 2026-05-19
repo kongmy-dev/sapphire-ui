@@ -14,9 +14,25 @@ const Table = forwardRef<HTMLTableElement, HTMLAttributes<HTMLTableElement>>(
 );
 Table.displayName = 'Table';
 
-const TableHeader = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(
-  ({ className, ...props }, ref) => (
-    <thead ref={ref} className={cn('', className)} {...props} />
+export interface TableHeaderProps extends HTMLAttributes<HTMLTableSectionElement> {
+  /**
+   * Stick the header to the top of the nearest scrolling ancestor. Requires
+   * the Table to be inside a fixed-height scroll container (`overflow: auto`
+   * + `max-height`) for the sticky behavior to actually take effect.
+   */
+  sticky?: boolean;
+}
+
+const TableHeader = forwardRef<HTMLTableSectionElement, TableHeaderProps>(
+  ({ className, sticky, ...props }, ref) => (
+    <thead
+      ref={ref}
+      className={cn(
+        sticky && 'sticky top-0 z-10 bg-[var(--color-card-bg)] shadow-[0_1px_0_0_var(--color-border)]',
+        className,
+      )}
+      {...props}
+    />
   ),
 );
 TableHeader.displayName = 'TableHeader';

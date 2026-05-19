@@ -31,7 +31,7 @@ export default function TypographyPage() {
               <div style={{ fontFamily: `var(${f.variable})`, fontSize: '1.5rem', color: 'var(--color-primary)', marginBottom: 4 }}>
                 {f.name}
               </div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--color-accent-dark)', marginBottom: 8 }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--color-accent-text)', marginBottom: 8 }}>
                 {f.variable}
               </div>
               <div style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--color-text-muted)' }}>
@@ -51,7 +51,7 @@ export default function TypographyPage() {
           {typeScale.map((t) => (
             <div key={t.tag} className="docs-preview" style={{ padding: '20px 24px' }}>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 8 }}>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--color-accent-dark)', minWidth: 60 }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--color-accent-text)', minWidth: 60 }}>
                   {t.label}
                 </span>
                 <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--color-text-subtle)' }}>

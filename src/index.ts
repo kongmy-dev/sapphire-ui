@@ -3,9 +3,13 @@ import './index.css';
 // ─── Utilities ──────────────────────────────────────────────────────
 export * from './lib/utils';
 export * from './lib/consent';
+export * from './lib/theme';
 
 // ─── Hooks ──────────────────────────────────────────────────────────
 export * from './hooks/useMediaQuery';
+
+// ─── Theming ────────────────────────────────────────────────────────
+export * from './components/ThemeProvider';
 
 // ─── Tier 1: Core Primitives ────────────────────────────────────────
 export * from './components/ui/Button';

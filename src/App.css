@@ -154,6 +154,16 @@
 .docs-preview--dark {
   background: var(--color-primary);
   border-color: var(--color-border-dark);
+  /* Apply dark-theme token overrides so library components nested inside
+     (Badge accent, Alert, etc.) automatically pick up dark-context colors
+     (e.g. --color-accent-text becomes the bright gold). Mirrors the
+     overrides in index.css under [data-theme="dark"]. */
+  --color-surface:       #0a192f;
+  --color-card-bg:       #112240;
+  --color-text-main:     #f1f5f9;
+  --color-text-muted:    rgba(241, 245, 249, 0.72);
+  --color-border:        rgba(255, 255, 255, 0.12);
+  --color-accent-text:   #c5a065;
 }
 
 .docs-code {
@@ -199,7 +209,7 @@
   background: var(--color-surface);
   padding: 1px 5px;
   border-radius: 3px;
-  color: var(--color-accent-dark);
+  color: var(--color-accent-text);
 }
 
 /* ─── Utility ─────────────────────────────────────────────── */

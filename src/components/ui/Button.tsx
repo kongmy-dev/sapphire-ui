@@ -13,7 +13,7 @@ const buttonVariants = cva(
         outline:
           'bg-transparent text-[var(--color-primary)] rounded-[var(--radius-btn)] border-[1.5px] border-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-[var(--color-text-on-dark)]',
         ghost:
-          'bg-transparent text-[var(--color-accent)] rounded-[var(--radius-btn)] border-[1.5px] border-[var(--color-accent)] hover:bg-[var(--color-hover-overlay)]',
+          'bg-transparent text-[var(--color-accent-text)] rounded-[var(--radius-btn)] border-[1.5px] border-[var(--color-accent)] hover:bg-[var(--color-hover-overlay)]',
         accent:
           'bg-[var(--color-accent)] text-[var(--color-primary)] rounded-[var(--radius-btn)] border-none hover:bg-[var(--color-accent-dark)]',
         'on-dark-primary':
@@ -21,9 +21,13 @@ const buttonVariants = cva(
         'on-dark-outline':
           'bg-transparent text-[var(--color-text-on-dark)] rounded-[var(--radius-btn)] border-[1.5px] border-[rgba(255,255,255,0.3)] hover:border-white hover:text-white',
         link:
-          'bg-transparent text-[var(--color-accent)] hover:text-[var(--color-accent-dark)] p-0 underline-offset-4 hover:underline border-none',
+          'bg-transparent text-[var(--color-accent-text)] hover:text-[var(--color-primary)] p-0 underline-offset-4 hover:underline border-none',
         premium:
           'bg-gradient-to-br from-[var(--color-accent)] to-[#b8904f] text-white rounded-[var(--radius-btn)] border-none shadow-[0_4px_14px_rgba(197,160,101,0.3)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(197,160,101,0.4)]',
+        destructive:
+          'bg-[#b91c1c] text-white rounded-[var(--radius-btn)] border-none hover:bg-[#991b1b] focus-visible:ring-[#dc2626]',
+        'destructive-outline':
+          'bg-transparent text-[#b91c1c] rounded-[var(--radius-btn)] border-[1.5px] border-[#b91c1c] hover:bg-[#b91c1c] hover:text-white focus-visible:ring-[#dc2626]',
       },
       size: {
         sm: 'text-sm px-4 py-2',

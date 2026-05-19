@@ -19,16 +19,29 @@
 }
 
 /* ─── Base Color Palette ─────────────────────────────────────────────── */
+/*
+ * Tokens are scoped to `:root` (the light theme default) and overridden
+ * by `:root[data-theme="dark"]` further down. Use the helpers in
+ * `lib/theme.ts` to toggle, or set `data-theme` directly on <html>.
+ *
+ * Contrast rules (WCAG 2.1 AA):
+ *  - --color-accent (#c5a065) is a decorative/UI fill — never use as text
+ *    on light surfaces. Use --color-accent-text instead (passes 4.6:1
+ *    on #f4f6f8).
+ *  - --color-text-muted is darkened from #64748b → #475569 (4.39:1 → 7.0:1
+ *    on #f4f6f8) so secondary text passes AA without case-by-case overrides.
+ */
 :root {
   /* Brand colors */
   --color-primary:       #0a192f;   /* Dark navy */
-  --color-accent:        #c5a065;   /* Gold */
-  --color-accent-dark:   #b8904f;   /* Gold hover */
+  --color-accent:        #c5a065;   /* Gold — backgrounds, decorative fills */
+  --color-accent-dark:   #b8904f;   /* Gold hover (decorative use only) */
+  --color-accent-text:   #8a5a1f;   /* Gold — AA-safe for text on light surface (4.6:1) */
   --color-surface:       #f4f6f8;   /* Off-white background */
 
   /* Text */
   --color-text-main:     #1e293b;
-  --color-text-muted:    #64748b;
+  --color-text-muted:    #475569;   /* AA-safe (7.0:1) on --color-surface */
   --color-text-on-dark:  #f1f5f9;
   --color-text-on-dark-muted: rgba(241, 245, 249, 0.65);
 
@@ -44,6 +57,21 @@
   --color-white:         #ffffff;
   --color-card-bg:       #ffffff;
   --color-card-dark-bg:  #0a192f;
+}
+
+/* ─── Dark Theme ──────────────────────────────────────────────────────── */
+/*
+ * Activated by setting `data-theme="dark"` on the <html> element (or any
+ * scope ancestor). On dark backgrounds the original gold #c5a065 passes
+ * AA naturally, so --color-accent-text reverts to the brand gold.
+ */
+[data-theme="dark"] {
+  --color-surface:       #0a192f;
+  --color-card-bg:       #112240;
+  --color-text-main:     #f1f5f9;
+  --color-text-muted:    rgba(241, 245, 249, 0.72);
+  --color-border:        rgba(255, 255, 255, 0.12);
+  --color-accent-text:   #c5a065;
 }
 
 /* ─── Typography Families ────────────────────────────────────────────── */
@@ -410,10 +438,16 @@
 
 /* ─── Toast ──────────────────────────────────────────────── */
 .sapphire-toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 2000; display: flex; flex-direction: column-reverse; gap: 8px; pointer-events: none; }
-.sapphire-toast { display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: var(--radius-md, 8px); background: white; border: 1px solid var(--color-border, #e2e8f0); border-left: 4px solid var(--toast-accent, #22c55e); box-shadow: 0 8px 32px rgba(10,25,47,0.14); font-family: var(--font-sans, system-ui, sans-serif); font-size: 0.875rem; color: var(--color-text-main, #1e293b); transform: translateX(120%); opacity: 0; transition: transform 300ms ease, opacity 300ms ease; pointer-events: auto; max-width: 380px; }
+.sapphire-toast { display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: var(--radius-md, 8px); background: white; border: 1px solid var(--color-border, #e2e8f0); border-left: 4px solid var(--toast-accent, #16a34a); box-shadow: 0 8px 32px rgba(10,25,47,0.14); font-family: var(--font-sans, system-ui, sans-serif); font-size: 0.875rem; color: var(--color-text-main, #1e293b); transform: translateX(120%); opacity: 0; transition: transform 300ms ease, opacity 300ms ease; pointer-events: auto; max-width: 380px; }
 .sapphire-toast.is-visible { transform: translateX(0); opacity: 1; }
-.sapphire-toast-icon { flex-shrink: 0; }
+.sapphire-toast-icon { flex-shrink: 0; color: var(--toast-accent, #16a34a); font-size: 20px; }
 .sapphire-toast-message { flex: 1; line-height: 1.4; }
+/* Per-type accent colors. Driven by data-type attribute on the toast root
+   so ToastElement.ts doesn't need to write inline styles for each toast. */
+.sapphire-toast[data-type="success"] { --toast-accent: #16a34a; }
+.sapphire-toast[data-type="info"]    { --toast-accent: #3b82f6; }
+.sapphire-toast[data-type="warning"] { --toast-accent: #d97706; }
+.sapphire-toast[data-type="error"]   { --toast-accent: #ef4444; }
 
 @media (max-width: 480px) {
   .sapphire-toast-container { left: 16px; right: 16px; bottom: 16px; }

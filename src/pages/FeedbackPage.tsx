@@ -49,7 +49,7 @@ export default function FeedbackPage() {
             <Spinner size="sm" />
             <Spinner />
             <Spinner size="lg" />
-            <Spinner style={{ color: 'var(--color-accent)' }} />
+            <Spinner style={{ color: 'var(--color-accent-text)' }} />
           </div>
         </div>
       </section>
@@ -58,9 +58,9 @@ export default function FeedbackPage() {
         <h2 className="docs-section-title">Progress</h2>
         <div className="docs-preview">
           <div className="docs-stack" style={{ maxWidth: 400 }}>
-            <Progress value={progress} showLabel />
-            <Progress value={75} size="sm" />
-            <Progress value={100} size="lg" showLabel />
+            <Progress aria-label="Loading progress" value={progress} showLabel />
+            <Progress aria-label="Upload progress" value={75} size="sm" />
+            <Progress aria-label="Completion" value={100} size="lg" showLabel />
           </div>
         </div>
       </section>

@@ -35,7 +35,7 @@ const TabsTrigger = forwardRef<
       'text-[var(--color-text-muted)] hover:text-[var(--color-primary)]',
       // Underline variant (default via parent data-variant)
       'px-4 py-3 -mb-px border-b-2 border-transparent',
-      'data-[state=active]:text-[var(--color-accent)] data-[state=active]:border-[var(--color-accent)]',
+      'data-[state=active]:text-[var(--color-accent-text)] data-[state=active]:border-[var(--color-accent)]',
       'focus-visible:ring-2 focus-visible:ring-[var(--color-focus-ring)] focus-visible:ring-offset-0',
       className,
     )}

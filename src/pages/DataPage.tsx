@@ -4,7 +4,9 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '../components/ui/Tabs'
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '../components/ui/Table';
 import { Separator } from '../components/ui/Separator';
 
-const badgeVariants = ['default', 'accent', 'dark', 'success', 'error', 'warning', 'info'] as const;
+// 'dark' is excluded — it ships near-white text intended for dark backgrounds
+// and is showcased separately in the dark preview row below.
+const badgeVariants = ['default', 'accent', 'success', 'error', 'warning', 'info'] as const;
 
 export default function DataPage() {
   return (
