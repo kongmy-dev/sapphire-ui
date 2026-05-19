@@ -64,6 +64,9 @@ export * from './components/ui/RadioGroup';
 export * from './components/ui/Accordion';
 export * from './components/ui/FormField';
 
+// ─── Docs / DX primitives ───────────────────────────────────────────
+export * from './components/CommandPalette';
+
 // ─── Composites ─────────────────────────────────────────────────────
 export * from './components/CookieBanner';
 export * from './components/CookieBannerElement';

@@ -111,7 +111,7 @@ export default function HooksPage() {
         </p>
         <div className="docs-preview">
           <div className="docs-stack" style={{ maxWidth: 480 }}>
-            <CodeBlock language="bash" code="npm install @kongmy-dev/sapphire-ui" />
+            <CodeBlock language="bash" code="npm install @kongmy-dev/sapphire-ui" copyable variant="light" />
             <Button
               variant={isCopied ? 'accent' : 'outline'}
               onClick={() => copy('npm install @kongmy-dev/sapphire-ui')}
@@ -193,6 +193,7 @@ export default function HooksPage() {
         </p>
         <CodeBlock
           language="tsx"
+          copyable
           code={`import { useIsomorphicLayoutEffect } from '@kongmy-dev/sapphire-ui';
 
 useIsomorphicLayoutEffect(() => {

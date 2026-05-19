@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom';
 import './App.css';
 
@@ -18,6 +18,9 @@ import HooksPage from './pages/HooksPage';
 import { CookieBanner } from './components/CookieBanner';
 import { Analytics } from './components/Analytics';
 import { MobileNav } from './components/ui/MobileNav';
+import { ThemeProvider, useTheme } from './components/ThemeProvider';
+import { CommandPalette, type CommandItem } from './components/CommandPalette';
+import { Kbd } from './components/ui/Kbd';
 
 const navItems = [
   { href: '/', label: 'Overview', icon: 'home' },
@@ -33,9 +36,48 @@ const navItems = [
   { href: '/hooks', label: 'Hooks & Utils', icon: 'function' },
 ];
 
+function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+  const next = theme === 'dark' ? 'light' : 'dark';
+  return (
+    <button
+      type="button"
+      onClick={() => setTheme(next)}
+      aria-label={`Switch to ${next} theme`}
+      className="docs-nav-link w-full border-none bg-transparent cursor-pointer text-left"
+      style={{ outline: 'none' }}
+    >
+      <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
+        {theme === 'dark' ? 'light_mode' : 'dark_mode'}
+      </span>
+      Theme: {theme}
+    </button>
+  );
+}
+
 function AppShell() {
   const [showCookies, setShowCookies] = useState(false);
+  const [paletteOpen, setPaletteOpen] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    function onKey(event: KeyboardEvent) {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault();
+        setPaletteOpen((open) => !open);
+      }
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  const commands: CommandItem[] = navItems.map((item) => ({
+    id: item.href,
+    label: item.label,
+    hint: item.href,
+    icon: item.icon,
+    onSelect: () => navigate(item.href),
+  }));
 
   return (
     <>
@@ -90,6 +132,24 @@ function AppShell() {
               </NavLink>
             ))}
             
+            {/* Search */}
+            <button
+              type="button"
+              onClick={() => setPaletteOpen(true)}
+              aria-label="Open command palette"
+              className="docs-nav-link w-full border-none bg-transparent cursor-pointer text-left"
+              style={{ outline: 'none', display: 'flex', alignItems: 'center', gap: '0.75rem' }}
+            >
+              <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
+                search
+              </span>
+              <span style={{ flex: 1 }}>Search</span>
+              <Kbd size="sm">⌘K</Kbd>
+            </button>
+
+            {/* Theme toggle */}
+            <ThemeToggle />
+
             {/* Cookie Settings Button */}
             <button
               onClick={() => setShowCookies(true)}
@@ -130,14 +190,22 @@ function AppShell() {
         gaId={import.meta.env.VITE_PUBLIC_GA_ID}
         posthogToken={import.meta.env.VITE_PUBLIC_POSTHOG_KEY}
       />
+      <CommandPalette
+        items={commands}
+        open={paletteOpen}
+        onOpenChange={setPaletteOpen}
+        placeholder="Jump to a section…"
+      />
     </>
   );
 }
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AppShell />
-    </BrowserRouter>
+    <ThemeProvider defaultPreference="light">
+      <BrowserRouter>
+        <AppShell />
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }

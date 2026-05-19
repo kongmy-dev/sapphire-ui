@@ -1,7 +1,9 @@
-import { Button } from '../components/ui/Button';
+import { Button, type ButtonProps } from '../components/ui/Button';
 
-const variants = ['primary', 'outline', 'ghost', 'accent', 'on-dark-primary', 'on-dark-outline', 'link', 'premium'] as const;
+type Variant = NonNullable<ButtonProps['variant']>;
+const variants: readonly Variant[] = ['primary', 'outline', 'ghost', 'accent', 'on-dark-primary', 'on-dark-outline', 'link', 'premium'] as const;
 const sizes = ['sm', 'default', 'lg'] as const;
+const showcaseVariants: readonly Variant[] = ['primary', 'outline', 'ghost', 'accent', 'link'];
 
 export default function ButtonsPage() {
   return (
@@ -15,8 +17,8 @@ export default function ButtonsPage() {
         <h2 className="docs-section-title">Variants</h2>
         <div className="docs-preview">
           <div className="docs-flex">
-            {['primary', 'outline', 'ghost', 'accent', 'link'].map((v) => (
-              <Button key={v} variant={v as any}>{v}</Button>
+            {showcaseVariants.map((v) => (
+              <Button key={v} variant={v}>{v}</Button>
             ))}
           </div>
         </div>

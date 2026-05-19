@@ -1,6 +1,6 @@
 import React, { useRef, useImperativeHandle, useEffect, forwardRef, type ReactNode } from 'react';
 import './BannerElement';
-import type { BannerVariant } from './BannerElement';
+import { BannerElement, type BannerVariant } from './BannerElement';
 
 export interface BannerRef {
   /** Dismiss the banner imperatively. */
@@ -39,8 +39,8 @@ const Banner = forwardRef<BannerRef, BannerProps>(
     const elRef = useRef<HTMLElement>(null);
 
     useImperativeHandle(ref, () => ({
-      dismiss: () => (elRef.current as any)?.dismiss?.(),
-      show: () => (elRef.current as any)?.show?.(),
+      dismiss: () => (elRef.current as BannerElement | null)?.dismiss?.(),
+      show: () => (elRef.current as BannerElement | null)?.show?.(),
     }), []);
 
     useEffect(() => {
