@@ -13,6 +13,7 @@ import FeedbackPage from './pages/FeedbackPage';
 import DataPage from './pages/DataPage';
 
 import { CookieBanner } from './components/CookieBanner';
+import { Analytics } from './components/Analytics';
 import { MobileNav } from './components/ui/MobileNav';
 
 const navItems = [
@@ -109,6 +110,10 @@ export default function App() {
       </div>
 
       <CookieBanner forceShow={showCookies} onClose={() => setShowCookies(false)} />
+      <Analytics
+        gaId={import.meta.env.VITE_PUBLIC_GA_ID}
+        posthogToken={import.meta.env.VITE_PUBLIC_POSTHOG_KEY}
+      />
     </BrowserRouter>
   );
 }

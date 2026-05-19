@@ -34,4 +34,6 @@ export * from './components/ui/Empty';
 // ─── Composites ─────────────────────────────────────────────────────
 export * from './components/CookieBanner';
 export * from './components/CookieBannerElement';
+export * from './components/Analytics';
+export * from './components/AnalyticsElement';
 export * from './components/ui/MobileNav';
