@@ -228,20 +228,9 @@
     flex-direction: column;
   }
   .docs-sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-    padding: var(--space-4) 0;
-  }
-  .docs-nav {
-    flex-direction: row;
-    overflow-x: auto;
-    padding: 0 var(--space-3);
-  }
-  .docs-nav-link {
-    white-space: nowrap;
+    display: none;
   }
   .docs-main {
-    padding: var(--space-5) var(--space-4);
+    padding: calc(64px + var(--space-5)) var(--space-4) var(--space-5) var(--space-4);
   }
 }

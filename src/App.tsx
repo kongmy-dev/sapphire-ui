@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
 import './App.css';
 
@@ -11,6 +12,9 @@ import FormsPage from './pages/FormsPage';
 import FeedbackPage from './pages/FeedbackPage';
 import DataPage from './pages/DataPage';
 
+import { CookieBanner } from './components/CookieBanner';
+import { MobileNav } from './components/ui/MobileNav';
+
 const navItems = [
   { to: '/', label: 'Overview', icon: 'home' },
   { to: '/colors', label: 'Colors', icon: 'palette' },
@@ -23,8 +27,30 @@ const navItems = [
 ];
 
 export default function App() {
+  const [showCookies, setShowCookies] = useState(false);
+
   return (
     <BrowserRouter>
+      {/* Mobile Drawer Navigation */}
+      <MobileNav
+        brandName="Sapphire"
+        brandSuffix="UI"
+        version="v0.1.0"
+        navItems={navItems}
+        extraActions={
+          <button
+            onClick={() => setShowCookies(true)}
+            className="flex items-center gap-3 px-4 py-2.5 rounded-md font-sans text-sm font-medium transition-colors text-white/70 hover:text-white hover:bg-white/5 w-full border-none bg-transparent cursor-pointer text-left"
+            style={{ outline: 'none' }}
+          >
+            <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
+              cookie
+            </span>
+            Cookie Settings
+          </button>
+        }
+      />
+
       <div className="docs-layout">
         {/* Sidebar */}
         <aside className="docs-sidebar">
@@ -49,6 +75,18 @@ export default function App() {
                 {item.label}
               </NavLink>
             ))}
+            
+            {/* Cookie Settings Button */}
+            <button
+              onClick={() => setShowCookies(true)}
+              className="docs-nav-link w-full border-none bg-transparent cursor-pointer text-left"
+              style={{ outline: 'none' }}
+            >
+              <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
+                cookie
+              </span>
+              Cookie Settings
+            </button>
           </nav>
           <div className="docs-sidebar-footer">
             <span className="docs-footer-text">KONGMY Digital Solutions</span>
@@ -69,6 +107,8 @@ export default function App() {
           </Routes>
         </main>
       </div>
+
+      <CookieBanner forceShow={showCookies} onClose={() => setShowCookies(false)} />
     </BrowserRouter>
   );
 }
