@@ -1,38 +1,58 @@
-import { forwardRef, type InputHTMLAttributes, useId } from 'react';
+import { forwardRef, useId } from 'react';
+import * as RadixCheckbox from '@radix-ui/react-checkbox';
 import { cn } from '../../lib/utils';
 
-export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
-  /** Label text displayed next to the checkbox */
+type CheckedState = boolean | 'indeterminate';
+
+export interface CheckboxProps {
+  /** Controlled checked state. Use 'indeterminate' for the mixed visual. */
+  checked?: CheckedState;
+  /** Uncontrolled initial checked state. */
+  defaultChecked?: CheckedState;
+  /** Fired when checked state changes. */
+  onCheckedChange?: (checked: CheckedState) => void;
+  /** Disable interaction. */
+  disabled?: boolean;
+  /** Mark as required for form submission. */
+  required?: boolean;
+  /** Form field name. */
+  name?: string;
+  /** Form field value (submitted when checked). */
+  value?: string;
+  /** Explicit id; auto-generated if omitted. */
+  id?: string;
+  /** Class applied to the checkbox root (the visible square). */
+  className?: string;
+  /** Label rendered next to the checkbox. */
   label?: string;
-  /** Helper text displayed below the label */
+  /** Helper text rendered below the label. */
   description?: string;
-  /** Indeterminate visual state */
-  indeterminate?: boolean;
 }
 
-const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ className, label, description, indeterminate, id: idProp, ...props }, ref) => {
+/**
+ * Accessible checkbox built on @radix-ui/react-checkbox.
+ *
+ * Breaking change from 0.1.x: uses Radix-style `checked` + `onCheckedChange`
+ * instead of native `onChange(event)`. Indeterminate is now a value of
+ * `checked` ('indeterminate'), not a separate prop.
+ */
+const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
+  ({ className, label, description, id: idProp, ...props }, ref) => {
     const autoId = useId();
     const id = idProp || autoId;
     const descriptionId = description ? `${id}-desc` : undefined;
 
     return (
       <div className="flex items-start gap-2.5">
-        <input
-          type="checkbox"
+        <RadixCheckbox.Root
+          ref={ref}
           id={id}
-          ref={(el) => {
-            if (el) el.indeterminate = !!indeterminate;
-            if (typeof ref === 'function') ref(el);
-            else if (ref) ref.current = el;
-          }}
-          className={cn(
-            'k-checkbox',
-            className,
-          )}
           aria-describedby={descriptionId}
+          className={cn('k-checkbox', className)}
           {...props}
-        />
+        >
+          <RadixCheckbox.Indicator className="k-checkbox-indicator" />
+        </RadixCheckbox.Root>
         {(label || description) && (
           <div className="flex flex-col">
             {label && (

@@ -9,7 +9,7 @@ import { NativeSelect } from '../components/ui/NativeSelect';
 
 export default function FormsPage() {
   const [switchOn, setSwitchOn] = useState(false);
-  const [sliderVal, setSliderVal] = useState(50);
+  const [sliderVal, setSliderVal] = useState<number[]>([50]);
 
   return (
     <div>
@@ -56,7 +56,7 @@ export default function FormsPage() {
           <div className="docs-stack">
             <Checkbox label="Accept terms and conditions" description="You agree to our privacy policy." />
             <Checkbox label="Send me updates" defaultChecked />
-            <Checkbox label="Indeterminate" indeterminate />
+            <Checkbox label="Indeterminate" checked="indeterminate" />
           </div>
         </div>
       </section>
@@ -68,8 +68,7 @@ export default function FormsPage() {
             <ToggleSwitch
               label="Enable analytics"
               checked={switchOn}
-              onChange={(e) => setSwitchOn(e.target.checked)}
-              activeColor="var(--color-accent)"
+              onCheckedChange={setSwitchOn}
             />
             <ToggleSwitch label="Disabled" disabled />
           </div>
@@ -80,11 +79,12 @@ export default function FormsPage() {
         <h2 className="docs-section-title">Range Slider</h2>
         <div className="docs-preview">
           <div style={{ maxWidth: 400 }}>
-            <Label>Volume: {sliderVal}</Label>
+            <Label>Volume: {sliderVal[0]}</Label>
             <RangeSlider
+              aria-label="Volume"
               min={0} max={100}
               value={sliderVal}
-              onChange={(e) => setSliderVal(Number(e.target.value))}
+              onValueChange={setSliderVal}
               showValue
               variant="light"
             />
@@ -96,8 +96,8 @@ export default function FormsPage() {
         <h2 className="docs-section-title">Native Select</h2>
         <div className="docs-preview">
           <div style={{ maxWidth: 300 }}>
-            <Label>Cloud Provider</Label>
-            <NativeSelect variant="default">
+            <Label htmlFor="cloud-provider-select">Cloud Provider</Label>
+            <NativeSelect id="cloud-provider-select" variant="default">
               <option value="">Select provider...</option>
               <option value="aws">Amazon Web Services</option>
               <option value="gcp">Google Cloud Platform</option>

@@ -1,39 +1,52 @@
-import { forwardRef, type InputHTMLAttributes, useId } from 'react';
+import { forwardRef, useId } from 'react';
+import * as RadixSwitch from '@radix-ui/react-switch';
 import { cn } from '../../lib/utils';
 
-export interface ToggleSwitchProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
-  /** Active/checked color (CSS value) */
-  activeColor?: string;
-  /** Label text displayed next to the switch */
+export interface SwitchProps {
+  /** Controlled checked state. */
+  checked?: boolean;
+  /** Uncontrolled initial checked state. */
+  defaultChecked?: boolean;
+  /** Fired when checked state changes. */
+  onCheckedChange?: (checked: boolean) => void;
+  /** Disable interaction. */
+  disabled?: boolean;
+  /** Mark as required for form submission. */
+  required?: boolean;
+  /** Form field name. */
+  name?: string;
+  /** Form field value (submitted when checked). */
+  value?: string;
+  /** Explicit id; auto-generated if omitted. */
+  id?: string;
+  /** Class applied to the switch root (the visible track). */
+  className?: string;
+  /** Label rendered next to the switch. */
   label?: string;
 }
 
-const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
-  ({ className, activeColor, label, id: idProp, checked, disabled, ...props }, ref) => {
+/**
+ * Accessible switch built on @radix-ui/react-switch.
+ *
+ * Breaking change from 0.1.x: uses Radix-style `checked` + `onCheckedChange`
+ * instead of native `onChange(event)`. The `activeColor` prop is gone —
+ * override `--switch-active` CSS variable instead.
+ */
+const Switch = forwardRef<HTMLButtonElement, SwitchProps>(
+  ({ className, label, id: idProp, ...props }, ref) => {
     const autoId = useId();
     const id = idProp || autoId;
 
     return (
-      <div className={cn('flex items-center gap-3', disabled && 'opacity-50')}>
-        <label
-          className={cn('k-toggle-switch', className)}
-          htmlFor={id}
+      <div className={cn('flex items-center gap-3', props.disabled && 'opacity-50')}>
+        <RadixSwitch.Root
+          ref={ref}
+          id={id}
+          className={cn('k-switch', className)}
+          {...props}
         >
-          <input
-            type="checkbox"
-            id={id}
-            ref={ref}
-            checked={checked}
-            disabled={disabled}
-            role="switch"
-            aria-checked={!!checked}
-            {...props}
-          />
-          <span
-            className="k-toggle-slider"
-            style={checked ? { backgroundColor: activeColor, borderColor: activeColor } : {}}
-          />
-        </label>
+          <RadixSwitch.Thumb className="k-switch-thumb" />
+        </RadixSwitch.Root>
         {label && (
           <label
             htmlFor={id}
@@ -46,9 +59,10 @@ const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
     );
   },
 );
-ToggleSwitch.displayName = 'ToggleSwitch';
+Switch.displayName = 'Switch';
 
-/** Alias for shadcn naming convention */
-const Switch = ToggleSwitch;
+/** Backwards-friendly alias from the previous shipping name. */
+const ToggleSwitch = Switch;
 
-export { ToggleSwitch, Switch };
+export { Switch, ToggleSwitch };
+export type { SwitchProps as ToggleSwitchProps };
