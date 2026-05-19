@@ -33,9 +33,14 @@ export class AnalyticsElement extends SSRHTMLElement {
     // Parse current consent status
     const consent = this.parseConsent();
 
-    // 1. Initialize Google Analytics
+    // 1. Initialize Google Analytics (Bypassed if Cloudflare Zaraz is active to prevent double-tracking)
+    const isZarazActive = typeof window !== 'undefined' && !!window.zaraz;
     if (gaId) {
-      this.initGA(gaId, consent.analytics, domains);
+      if (!isZarazActive) {
+        this.initGA(gaId, consent.analytics, domains);
+      } else {
+        console.log('[Sapphire Analytics] Cloudflare Zaraz detected. Bypassing client-side Google Analytics to prevent double-tracking.');
+      }
     }
 
     // 2. Initialize PostHog
