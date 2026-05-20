@@ -12,10 +12,7 @@ export default defineConfig({
     dts({
       insertTypesEntry: true,
       include: ['src/**/*.ts', 'src/**/*.tsx'],
-      // Match the rollup output: emit declarations relative to src/ so
-      // `dist/components/ui/Button.d.ts` lines up with `Button.js`.
       entryRoot: 'src',
-      // Docs-site sources don't belong in the library types.
       exclude: ['src/App.tsx', 'src/main.tsx', 'src/pages/**', 'src/App.css'],
       tsconfigPath: './tsconfig.app.json',
     }),

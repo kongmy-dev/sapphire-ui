@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom';
 import './App.css';
 
-// Pages
-import OverviewPage from './pages/OverviewPage';
-import ColorsPage from './pages/ColorsPage';
-import TypographyPage from './pages/TypographyPage';
-import ButtonsPage from './pages/ButtonsPage';
-import CardsPage from './pages/CardsPage';
-import FormsPage from './pages/FormsPage';
-import FeedbackPage from './pages/FeedbackPage';
-import DataPage from './pages/DataPage';
-import InteractivePage from './pages/InteractivePage';
-import ExtendedPage from './pages/ExtendedPage';
-import HooksPage from './pages/HooksPage';
+// Pages — lazy-loaded so each page ships in its own chunk
+const OverviewPage = lazy(() => import('./pages/OverviewPage'));
+const ColorsPage = lazy(() => import('./pages/ColorsPage'));
+const TypographyPage = lazy(() => import('./pages/TypographyPage'));
+const ButtonsPage = lazy(() => import('./pages/ButtonsPage'));
+const CardsPage = lazy(() => import('./pages/CardsPage'));
+const FormsPage = lazy(() => import('./pages/FormsPage'));
+const FeedbackPage = lazy(() => import('./pages/FeedbackPage'));
+const DataPage = lazy(() => import('./pages/DataPage'));
+const InteractivePage = lazy(() => import('./pages/InteractivePage'));
+const ExtendedPage = lazy(() => import('./pages/ExtendedPage'));
+const HooksPage = lazy(() => import('./pages/HooksPage'));
 
 import { CookieBanner } from './components/CookieBanner';
 import { Analytics } from './components/Analytics';
@@ -177,19 +177,25 @@ function AppShell() {
         </aside>
         }
       >
-        <Routes>
-          <Route path="/" element={<OverviewPage />} />
-          <Route path="/colors" element={<ColorsPage />} />
-          <Route path="/typography" element={<TypographyPage />} />
-          <Route path="/buttons" element={<ButtonsPage />} />
-          <Route path="/cards" element={<CardsPage />} />
-          <Route path="/forms" element={<FormsPage />} />
-          <Route path="/feedback" element={<FeedbackPage />} />
-          <Route path="/data" element={<DataPage />} />
-          <Route path="/interactive" element={<InteractivePage />} />
-          <Route path="/extended" element={<ExtendedPage />} />
-          <Route path="/hooks" element={<HooksPage />} />
-        </Routes>
+        <Suspense fallback={
+          <div style={{ padding: '2rem', fontFamily: 'var(--font-sans)', color: 'var(--color-text-muted)', fontSize: 14 }}>
+            Loading…
+          </div>
+        }>
+          <Routes>
+            <Route path="/" element={<OverviewPage />} />
+            <Route path="/colors" element={<ColorsPage />} />
+            <Route path="/typography" element={<TypographyPage />} />
+            <Route path="/buttons" element={<ButtonsPage />} />
+            <Route path="/cards" element={<CardsPage />} />
+            <Route path="/forms" element={<FormsPage />} />
+            <Route path="/feedback" element={<FeedbackPage />} />
+            <Route path="/data" element={<DataPage />} />
+            <Route path="/interactive" element={<InteractivePage />} />
+            <Route path="/extended" element={<ExtendedPage />} />
+            <Route path="/hooks" element={<HooksPage />} />
+          </Routes>
+        </Suspense>
       </Layout>
 
       <CookieBanner forceShow={showCookies} onClose={() => setShowCookies(false)} />

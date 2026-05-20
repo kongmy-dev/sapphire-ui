@@ -15,6 +15,7 @@ export * from './hooks/useIsomorphicLayoutEffect';
 
 // ─── Theming ────────────────────────────────────────────────────────
 export * from './components/ThemeProvider';
+export * from './components/ui/ThemeToggle';
 
 // ─── Tier 1: Core Primitives ────────────────────────────────────────
 export * from './components/ui/Button';

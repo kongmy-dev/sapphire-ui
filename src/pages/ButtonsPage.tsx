@@ -1,4 +1,5 @@
 import { Button, type ButtonProps } from '../components/ui/Button';
+import { IconMark } from '../components/ui/IconMark';
 
 type Variant = NonNullable<ButtonProps['variant']>;
 const variants: readonly Variant[] = ['primary', 'outline', 'ghost', 'accent', 'on-dark-primary', 'on-dark-outline', 'link', 'premium'] as const;
@@ -72,6 +73,38 @@ export default function ButtonsPage() {
               Visit kongmy.dev →
             </a>
           </Button>
+        </div>
+      </section>
+
+      <section className="docs-section">
+        <h2 className="docs-section-title">Icon Mark</h2>
+        <div className="docs-preview">
+          <div className="docs-flex" style={{ gap: 16, alignItems: 'flex-end', flexWrap: 'wrap' }}>
+            <div className="docs-stack" style={{ gap: 4, alignItems: 'center' }}>
+              <IconMark icon="cloud" size="sm" />
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--color-text-muted)' }}>sm</span>
+            </div>
+            <div className="docs-stack" style={{ gap: 4, alignItems: 'center' }}>
+              <IconMark icon="cloud" />
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--color-text-muted)' }}>default</span>
+            </div>
+            <div className="docs-stack" style={{ gap: 4, alignItems: 'center' }}>
+              <IconMark icon="cloud" size="lg" />
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--color-text-muted)' }}>lg</span>
+            </div>
+            <div className="docs-stack" style={{ gap: 4, alignItems: 'center' }}>
+              <IconMark icon="auto_awesome" filled />
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--color-text-muted)' }}>filled</span>
+            </div>
+          </div>
+        </div>
+        <div className="docs-preview docs-preview--dark" style={{ marginTop: 12 }}>
+          <div className="docs-flex" style={{ gap: 16, alignItems: 'center' }}>
+            <IconMark icon="rocket_launch" variant="dark" size="sm" />
+            <IconMark icon="security" variant="dark" />
+            <IconMark icon="auto_awesome" variant="dark" size="lg" />
+            <IconMark icon="hub" variant="dark" filled />
+          </div>
         </div>
       </section>
 

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Skeleton } from '../components/ui/Skeleton';
 import { Spinner } from '../components/ui/Spinner';
 import { Progress } from '../components/ui/Progress';
+import { SegmentedBar } from '../components/ui/SegmentedBar';
 import { Alert } from '../components/ui/Alert';
 import { Empty } from '../components/ui/Empty';
 import { Button } from '../components/ui/Button';
@@ -61,6 +62,55 @@ export default function FeedbackPage() {
             <Progress aria-label="Loading progress" value={progress} showLabel />
             <Progress aria-label="Upload progress" value={75} size="sm" />
             <Progress aria-label="Completion" value={100} size="lg" showLabel />
+          </div>
+        </div>
+      </section>
+
+      <section className="docs-section">
+        <h2 className="docs-section-title">Segmented Bar</h2>
+        <div className="docs-preview">
+          <div className="docs-stack" style={{ maxWidth: 480, gap: 20 }}>
+            <div>
+              <div style={{ fontFamily: 'var(--font-sans)', fontSize: 12, color: 'var(--color-text-muted)', marginBottom: 6 }}>
+                Budget allocation (compute / storage / network / other)
+              </div>
+              <SegmentedBar
+                aria-label="Budget allocation"
+                segments={[
+                  { value: 45, color: 'var(--color-accent)' },
+                  { value: 30, color: 'var(--color-success)' },
+                  { value: 15, color: 'var(--color-warning)' },
+                  { value: 10, color: 'var(--color-error)' },
+                ]}
+              />
+            </div>
+            <div>
+              <div style={{ fontFamily: 'var(--font-sans)', fontSize: 12, color: 'var(--color-text-muted)', marginBottom: 6 }}>
+                Small — with target marker at 50 %
+              </div>
+              <SegmentedBar
+                size="sm"
+                aria-label="Usage with target"
+                segments={[
+                  { value: 62, color: 'var(--color-accent)' },
+                  { value: 38, color: 'rgba(255,255,255,0.06)' },
+                ]}
+                markers={[{ position: 50, color: 'var(--color-text-muted)' }]}
+              />
+            </div>
+            <div>
+              <div style={{ fontFamily: 'var(--font-sans)', fontSize: 12, color: 'var(--color-text-muted)', marginBottom: 6 }}>
+                Large — single fill
+              </div>
+              <SegmentedBar
+                size="lg"
+                aria-label="Storage used"
+                segments={[
+                  { value: 75, color: 'var(--color-success)' },
+                  { value: 25, color: 'var(--color-border)' },
+                ]}
+              />
+            </div>
           </div>
         </div>
       </section>

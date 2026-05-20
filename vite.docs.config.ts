@@ -17,5 +17,16 @@ export default defineConfig({
   build: {
     outDir: 'dist-docs',
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id: string) {
+          if (!id.includes('node_modules')) return;
+          if (id.includes('react-dom') || id.includes('scheduler')) return 'react';
+          if (id.includes('react-router')) return 'router';
+          if (id.includes('@radix-ui')) return 'radix';
+          return 'vendor';
+        },
+      },
+    },
   },
 });

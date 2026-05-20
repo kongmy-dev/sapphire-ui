@@ -17,7 +17,7 @@ interface ThemeContextValue {
   setTheme: (preference: ThemePreference) => void;
 }
 
-const ThemeContext = createContext<ThemeContextValue | null>(null);
+export const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export interface ThemeProviderProps {
   /** Initial preference when nothing is stored. Defaults to 'system'. */
