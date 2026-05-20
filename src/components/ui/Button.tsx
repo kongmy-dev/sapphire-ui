@@ -11,7 +11,7 @@ const buttonVariants = cva(
         primary:
           'bg-[var(--color-primary)] text-white rounded-[var(--radius-btn)] hover:bg-[#1a3358] border-none',
         outline:
-          'bg-transparent text-[var(--color-primary)] rounded-[var(--radius-btn)] border-[1.5px] border-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-[var(--color-text-on-dark)]',
+          'bg-transparent text-[var(--color-text-strong)] rounded-[var(--radius-btn)] border-[1.5px] border-[var(--color-text-strong)] hover:bg-[var(--color-text-strong)] hover:text-[var(--color-card-bg)]',
         ghost:
           'bg-transparent text-[var(--color-accent-text)] rounded-[var(--radius-btn)] border-[1.5px] border-[var(--color-accent)] hover:bg-[var(--color-hover-overlay)]',
         accent:
@@ -21,7 +21,7 @@ const buttonVariants = cva(
         'on-dark-outline':
           'bg-transparent text-[var(--color-text-on-dark)] rounded-[var(--radius-btn)] border-[1.5px] border-[rgba(255,255,255,0.3)] hover:border-white hover:text-white',
         link:
-          'bg-transparent text-[var(--color-accent-text)] hover:text-[var(--color-primary)] p-0 underline-offset-4 hover:underline border-none',
+          'bg-transparent text-[var(--color-accent-text)] hover:text-[var(--color-text-strong)] p-0 underline-offset-4 hover:underline border-none',
         premium:
           'bg-gradient-to-br from-[var(--color-accent)] to-[#b8904f] text-white rounded-[var(--radius-btn)] border-none shadow-[0_4px_14px_rgba(197,160,101,0.3)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(197,160,101,0.4)]',
         destructive:

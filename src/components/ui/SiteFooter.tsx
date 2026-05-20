@@ -22,7 +22,9 @@ const SiteFooter = forwardRef<HTMLElement, SiteFooterProps>(
         'w-full border-t',
         variant === 'dark'
           ? 'bg-[var(--color-primary)] text-[var(--color-text-on-dark)] border-[var(--color-border-dark)]'
-          : 'bg-white text-[var(--color-text-main)] border-[var(--color-border)]',
+          // Light variant: hardcoded light palette so it stays light even
+          // when the surrounding page is in dark theme.
+          : 'bg-white text-[#1e293b] border-[#e2e8f0]',
         className,
       )}
       {...props}
@@ -42,7 +44,7 @@ const SiteFooter = forwardRef<HTMLElement, SiteFooterProps>(
             'pt-6 border-t flex flex-col md:flex-row justify-between items-center gap-4 font-mono text-[11px] uppercase tracking-[0.06em]',
             variant === 'dark'
               ? 'border-[var(--color-border-dark)] text-[var(--color-text-on-dark-muted)]'
-              : 'border-[var(--color-border)] text-[var(--color-text-muted)]',
+              : 'border-[#e2e8f0] text-[#475569]',
           )}>
             {bottom}
           </div>
@@ -86,7 +88,7 @@ const SiteFooterLink = forwardRef<HTMLAnchorElement, SiteFooterLinkProps>(
         'font-sans text-sm no-underline transition-colors',
         variant === 'dark'
           ? 'text-[var(--color-text-on-dark-muted)] hover:text-white'
-          : 'text-[var(--color-text-muted)] hover:text-[var(--color-primary)]',
+          : 'text-[#475569] hover:text-[#0a192f]',
         className,
       )}
       {...props}
