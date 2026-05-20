@@ -32,7 +32,7 @@ const TabsTrigger = forwardRef<
     ref={ref}
     className={cn(
       'inline-flex items-center gap-2 font-sans text-sm font-medium transition-all cursor-pointer outline-none',
-      'text-[var(--color-text-muted)] hover:text-[var(--color-primary)]',
+      'text-[var(--color-text-muted)] hover:text-[var(--color-text-strong)]',
       // Underline variant (default via parent data-variant)
       'px-4 py-3 -mb-px border-b-2 border-transparent',
       'data-[state=active]:text-[var(--color-accent-text)] data-[state=active]:border-[var(--color-accent)]',

@@ -40,7 +40,7 @@ const Avatar = forwardRef<
       className="aspect-square h-full w-full object-cover"
     />
     <AvatarPrimitive.Fallback
-      className="flex h-full w-full items-center justify-center bg-[var(--color-surface)] font-sans font-semibold text-[var(--color-primary)] uppercase"
+      className="flex h-full w-full items-center justify-center bg-[var(--color-surface)] font-sans font-semibold text-[var(--color-text-strong)] uppercase"
       delayMs={300}
     >
       {fallback}

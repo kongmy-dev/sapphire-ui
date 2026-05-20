@@ -80,7 +80,7 @@ export default function OverviewPage() {
             <div key={layer.name} className="docs-preview" style={{ padding: 24 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
                 <Icon name={layer.icon} size={24} style={{ color: 'var(--color-accent)' }} />
-                <strong style={{ fontFamily: 'var(--font-sans)', color: 'var(--color-primary)' }}>
+                <strong style={{ fontFamily: 'var(--font-sans)', color: 'var(--color-text-strong)' }}>
                   {layer.name}
                 </strong>
               </div>
@@ -103,7 +103,7 @@ export default function OverviewPage() {
               <CardBody>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
                   <Icon name={cat.icon} size={22} style={{ color: 'var(--color-accent)' }} />
-                  <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 15, color: 'var(--color-primary)' }}>
+                  <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 15, color: 'var(--color-text-strong)' }}>
                     {cat.title}
                   </span>
                 </div>

@@ -31,7 +31,7 @@ function Empty({ className, icon, title, description, action, ...props }: EmptyP
         </span>
       )}
       {title && (
-        <h3 className="font-serif text-lg font-medium text-[var(--color-primary)] mb-2">
+        <h3 className="font-serif text-lg font-medium text-[var(--color-text-strong)] mb-2">
           {title}
         </h3>
       )}

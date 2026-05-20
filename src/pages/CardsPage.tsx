@@ -16,7 +16,7 @@ export default function CardsPage() {
           <Card hoverable style={{ maxWidth: 400 }}>
             <CardHeader>
               <Badge variant="accent">New</Badge>
-              <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 600, color: 'var(--color-primary)' }}>
+              <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 600, color: 'var(--color-text-strong)' }}>
                 Cloud Infrastructure
               </h3>
             </CardHeader>
@@ -59,7 +59,7 @@ export default function CardsPage() {
         <div className="docs-preview">
           <Card bordered style={{ maxWidth: 400 }}>
             <CardBody>
-              <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.1rem', fontWeight: 600, color: 'var(--color-primary)', marginBottom: 6 }}>
+              <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.1rem', fontWeight: 600, color: 'var(--color-text-strong)', marginBottom: 6 }}>
                 Important Note
               </h3>
               <p style={{ fontFamily: 'var(--font-sans)', fontSize: 14, color: 'var(--color-text-muted)', lineHeight: 1.6 }}>

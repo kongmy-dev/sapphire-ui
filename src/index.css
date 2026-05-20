@@ -33,7 +33,7 @@
  */
 :root {
   /* Brand colors */
-  --color-primary:       #0a192f;   /* Dark navy */
+  --color-primary:       #0a192f;   /* Dark navy — brand fill (buttons, sidebar). Does NOT flip in dark mode. */
   --color-accent:        #c5a065;   /* Gold — backgrounds, decorative fills */
   --color-accent-dark:   #b8904f;   /* Gold hover (decorative use only) */
   --color-accent-text:   #8a5a1f;   /* Gold — AA-safe for text on light surface (4.6:1) */
@@ -41,6 +41,7 @@
 
   /* Text */
   --color-text-main:     #1e293b;
+  --color-text-strong:   #0a192f;   /* Heading/strong text — flips to light in dark mode. Use instead of --color-primary for text. */
   --color-text-muted:    #475569;   /* AA-safe (7.0:1) on --color-surface */
   --color-text-on-dark:  #f1f5f9;
   --color-text-on-dark-muted: rgba(241, 245, 249, 0.65);
@@ -69,9 +70,20 @@
   --color-surface:       #0a192f;
   --color-card-bg:       #112240;
   --color-text-main:     #f1f5f9;
+  --color-text-strong:   #f1f5f9;   /* flips for headings/strong text */
   --color-text-muted:    rgba(241, 245, 249, 0.72);
   --color-border:        rgba(255, 255, 255, 0.12);
   --color-accent-text:   #c5a065;
+}
+
+/* ─── Scrollbar Gutter ───────────────────────────────────────────────── */
+/*
+ * Reserve space for the vertical scrollbar so that body-scroll-lock
+ * (e.g. Radix Dialog opening) doesn't shift the viewport and jitter
+ * centered overlays.
+ */
+html {
+  scrollbar-gutter: stable;
 }
 
 /* ─── Typography Families ────────────────────────────────────────────── */

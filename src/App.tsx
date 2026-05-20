@@ -21,6 +21,7 @@ import { MobileNav } from './components/ui/MobileNav';
 import { ThemeProvider, useTheme } from './components/ThemeProvider';
 import { CommandPalette, type CommandItem } from './components/CommandPalette';
 import { Kbd } from './components/ui/Kbd';
+import { Layout } from './components/ui/Layout';
 
 const navItems = [
   { href: '/', label: 'Overview', icon: 'home' },
@@ -107,8 +108,10 @@ function AppShell() {
         }
       />
 
-      <div className="docs-layout">
-        {/* Sidebar */}
+      <Layout
+        className="docs-layout"
+        mainClassName="docs-main"
+        sidebar={
         <aside className="docs-sidebar">
           <div className="docs-sidebar-brand">
             <span className="docs-brand-name">Sapphire</span>
@@ -116,6 +119,25 @@ function AppShell() {
           </div>
           <div className="docs-brand-version">v0.1.0</div>
           <nav className="docs-nav">
+            {/* Search — pinned to top so the keyboard-driven jump path
+                is the first thing in the visual hierarchy. */}
+            <button
+              type="button"
+              onClick={() => setPaletteOpen(true)}
+              aria-label="Open command palette"
+              className="docs-nav-link w-full border-none bg-transparent cursor-pointer text-left"
+              style={{ outline: 'none', display: 'flex', alignItems: 'center', gap: '0.75rem' }}
+            >
+              <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
+                search
+              </span>
+              <span style={{ flex: 1 }}>Search</span>
+              <Kbd size="sm">⌘K</Kbd>
+            </button>
+
+            <hr className="docs-nav-divider" />
+
+            {/* Page links — the catalog */}
             {navItems.map((item) => (
               <NavLink
                 key={item.href}
@@ -131,59 +153,44 @@ function AppShell() {
                 {item.label}
               </NavLink>
             ))}
-            
-            {/* Search */}
-            <button
-              type="button"
-              onClick={() => setPaletteOpen(true)}
-              aria-label="Open command palette"
-              className="docs-nav-link w-full border-none bg-transparent cursor-pointer text-left"
-              style={{ outline: 'none', display: 'flex', alignItems: 'center', gap: '0.75rem' }}
-            >
-              <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
-                search
-              </span>
-              <span style={{ flex: 1 }}>Search</span>
-              <Kbd size="sm">⌘K</Kbd>
-            </button>
 
-            {/* Theme toggle */}
-            <ThemeToggle />
-
-            {/* Cookie Settings Button */}
-            <button
-              onClick={() => setShowCookies(true)}
-              className="docs-nav-link w-full border-none bg-transparent cursor-pointer text-left"
-              style={{ outline: 'none' }}
-            >
-              <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
-                cookie
-              </span>
-              Cookie Settings
-            </button>
+            {/* Bottom group — utility actions, pinned to the bottom so
+                they read as preferences rather than additional pages. */}
+            <div className="docs-nav-bottom">
+              <hr className="docs-nav-divider" />
+              <ThemeToggle />
+              <button
+                onClick={() => setShowCookies(true)}
+                className="docs-nav-link w-full border-none bg-transparent cursor-pointer text-left"
+                style={{ outline: 'none' }}
+              >
+                <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
+                  cookie
+                </span>
+                Cookie Settings
+              </button>
+            </div>
           </nav>
           <div className="docs-sidebar-footer">
             <span className="docs-footer-text">KONGMY Digital Solutions</span>
           </div>
         </aside>
-
-        {/* Main */}
-        <main className="docs-main">
-          <Routes>
-            <Route path="/" element={<OverviewPage />} />
-            <Route path="/colors" element={<ColorsPage />} />
-            <Route path="/typography" element={<TypographyPage />} />
-            <Route path="/buttons" element={<ButtonsPage />} />
-            <Route path="/cards" element={<CardsPage />} />
-            <Route path="/forms" element={<FormsPage />} />
-            <Route path="/feedback" element={<FeedbackPage />} />
-            <Route path="/data" element={<DataPage />} />
-            <Route path="/interactive" element={<InteractivePage />} />
-            <Route path="/extended" element={<ExtendedPage />} />
-            <Route path="/hooks" element={<HooksPage />} />
-          </Routes>
-        </main>
-      </div>
+        }
+      >
+        <Routes>
+          <Route path="/" element={<OverviewPage />} />
+          <Route path="/colors" element={<ColorsPage />} />
+          <Route path="/typography" element={<TypographyPage />} />
+          <Route path="/buttons" element={<ButtonsPage />} />
+          <Route path="/cards" element={<CardsPage />} />
+          <Route path="/forms" element={<FormsPage />} />
+          <Route path="/feedback" element={<FeedbackPage />} />
+          <Route path="/data" element={<DataPage />} />
+          <Route path="/interactive" element={<InteractivePage />} />
+          <Route path="/extended" element={<ExtendedPage />} />
+          <Route path="/hooks" element={<HooksPage />} />
+        </Routes>
+      </Layout>
 
       <CookieBanner forceShow={showCookies} onClose={() => setShowCookies(false)} />
       <Analytics

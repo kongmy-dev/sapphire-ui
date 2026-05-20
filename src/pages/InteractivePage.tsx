@@ -8,6 +8,7 @@ import { Toast, type ToastRef } from '../components/Toast';
 import { PageSection } from '../components/ui/PageSection';
 import { SiteHeader, SiteHeaderLink } from '../components/ui/SiteHeader';
 import { SiteFooter, SiteFooterGroup, SiteFooterLink } from '../components/ui/SiteFooter';
+import { Layout } from '../components/ui/Layout';
 import { Input } from '../components/ui/Input';
 import { Label } from '../components/ui/Label';
 
@@ -136,8 +137,8 @@ export default function InteractivePage() {
           >
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {['Cloud Ops', 'AI / ML', 'Web Apps'].map((t) => (
-                <div key={t} className="bg-white p-6 rounded-[var(--radius-md)] border border-[var(--color-border)]">
-                  <span className="font-sans font-semibold text-[var(--color-primary)]">{t}</span>
+                <div key={t} className="bg-[var(--color-card-bg)] p-6 rounded-[var(--radius-md)] border border-[var(--color-border)]">
+                  <span className="font-sans font-semibold text-[var(--color-text-strong)]">{t}</span>
                 </div>
               ))}
             </div>
@@ -252,6 +253,78 @@ export default function InteractivePage() {
             }
           />
         </div>
+      </section>
+
+      {/* ─── Layout ─────────────────────────────────────────────────── */}
+      <section className="docs-section">
+        <h2 className="docs-section-title">Layout</h2>
+        <p className="font-sans text-sm text-[var(--color-text-muted)] mb-4 leading-relaxed">
+          Canonical page shell — composes <code className="docs-props-table code">SiteHeader</code>,
+          <code className="docs-props-table code">SiteFooter</code>, and an optional sidebar slot into a
+          full-height column. Used by every kongmy.dev app so consumers get the
+          same header/main/footer rhythm in one import.
+        </p>
+        <div className="docs-preview" style={{ padding: 0, overflow: 'hidden', borderRadius: 'var(--radius-md)' }}>
+          <Layout
+            style={{ minHeight: 360 }}
+            header={
+              <SiteHeader
+                sticky={false}
+                brand={
+                  <>
+                    <span className="font-serif font-bold text-lg">KONGMY</span>
+                    <span className="font-sans font-light text-lg text-[var(--color-accent)]">dev</span>
+                  </>
+                }
+                nav={
+                  <>
+                    <SiteHeaderLink href="#" active>Home</SiteHeaderLink>
+                    <SiteHeaderLink href="#">Docs</SiteHeaderLink>
+                  </>
+                }
+              />
+            }
+            footer={
+              <SiteFooter
+                brand={
+                  <span className="font-sans text-sm text-[var(--color-text-on-dark-muted)]">
+                    © KONGMY Digital Solutions
+                  </span>
+                }
+                bottom={<span>Built with Sapphire UI</span>}
+              />
+            }
+          >
+            <div style={{ padding: '2rem 1.5rem' }}>
+              <h3 className="font-serif text-xl font-semibold text-[var(--color-text-strong)] m-0 mb-2">
+                Main content area
+              </h3>
+              <p className="font-sans text-sm text-[var(--color-text-muted)] m-0">
+                Pages, routes, or any children render here between the header and footer slots.
+              </p>
+            </div>
+          </Layout>
+        </div>
+
+        <pre className="docs-code" style={{ display: 'block', padding: 16, marginTop: 12 }}>
+{`<Layout
+  header={<SiteHeader brand={...} nav={...} />}
+  footer={<SiteFooter brand={...} links={...} />}
+  // sidebar={<aside>…</aside>} // optional left rail
+>
+  <Routes>{...}</Routes>
+</Layout>`}
+        </pre>
+
+        <table className="docs-props-table">
+          <thead><tr><th>Prop</th><th>Type</th><th>Default</th></tr></thead>
+          <tbody>
+            <tr><td><code>header</code></td><td><code>ReactNode</code></td><td>—</td></tr>
+            <tr><td><code>sidebar</code></td><td><code>ReactNode</code></td><td>—</td></tr>
+            <tr><td><code>footer</code></td><td><code>ReactNode</code></td><td>—</td></tr>
+            <tr><td><code>mainClassName</code></td><td><code>string</code></td><td>—</td></tr>
+          </tbody>
+        </table>
       </section>
 
       {/* ─── SEOHead ────────────────────────────────────────────────── */}

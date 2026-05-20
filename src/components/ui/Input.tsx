@@ -8,7 +8,7 @@ const inputVariants = cva(
     variants: {
       variant: {
         default:
-          'bg-white text-[var(--color-text-main)] border border-[var(--color-border)] rounded-[var(--radius-btn)] px-4 py-3 focus:border-[var(--color-accent)] focus:shadow-[0_0_0_3px_rgba(197,160,101,0.12)]',
+          'bg-[var(--color-card-bg)] text-[var(--color-text-main)] border border-[var(--color-border)] rounded-[var(--radius-btn)] px-4 py-3 focus:border-[var(--color-accent)] focus:shadow-[0_0_0_3px_rgba(197,160,101,0.12)]',
         dark:
           'bg-[rgba(0,0,0,0.2)] text-[var(--color-text-on-dark)] border border-[var(--color-border-dark)] rounded-[var(--radius-sm)] px-3 py-2.5 focus:border-[var(--color-accent)]',
         mono:

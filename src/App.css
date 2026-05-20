@@ -82,10 +82,30 @@
   background: rgba(197, 160, 101, 0.1);
 }
 
+/* Visual hairline between sections of the sidebar nav (e.g. between
+   search/top group and the page links, and between the page links and
+   the bottom theme/cookie group). Uses on-dark border because the
+   sidebar always sits on --color-primary. */
+.docs-nav-divider {
+  height: 1px;
+  background: var(--color-border-dark);
+  margin: var(--space-2) var(--space-4);
+  border: 0;
+}
+
+/* Pin theme/cookie controls to the bottom of the sidebar so they read
+   as utility actions rather than additional pages. */
+.docs-nav-bottom {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: var(--space-2);
+}
+
 .docs-sidebar-footer {
   padding: var(--space-4) var(--space-5);
   border-top: 1px solid var(--color-border-dark);
-  margin-top: auto;
 }
 
 .docs-footer-text {
@@ -115,7 +135,7 @@
   font-family: var(--font-serif);
   font-size: 2rem;
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--color-text-strong);
   margin: 0 0 var(--space-2);
 }
 
@@ -144,7 +164,7 @@
 }
 
 .docs-preview {
-  background: white;
+  background: var(--color-card-bg);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: var(--space-8);
@@ -194,7 +214,7 @@
   letter-spacing: 0.05em;
   color: var(--color-text-muted);
   padding: var(--space-2) var(--space-4);
-  border-bottom: 2px solid var(--color-primary);
+  border-bottom: 2px solid var(--color-text-strong);
 }
 
 .docs-props-table td {

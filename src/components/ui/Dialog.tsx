@@ -46,7 +46,7 @@ const DialogContent = forwardRef<
       className={cn(
         'fixed left-1/2 top-1/2 z-[1001] -translate-x-1/2 -translate-y-1/2',
         'w-[90%] max-h-[85vh] flex flex-col',
-        'bg-white rounded-[var(--radius-md)] shadow-[var(--shadow-lg)]',
+        'bg-[var(--color-card-bg)] rounded-[var(--radius-md)] shadow-[var(--shadow-lg)]',
         'data-[state=open]:animate-[dialogIn_200ms_ease] data-[state=closed]:animate-[dialogOut_150ms_ease]',
         'outline-none',
         className,
@@ -56,7 +56,7 @@ const DialogContent = forwardRef<
     >
       {children}
       {!hideClose && (
-        <DialogPrimitive.Close className="absolute right-4 top-4 p-1.5 rounded-[var(--radius-sm)] text-[var(--color-text-muted)] hover:text-[var(--color-primary)] hover:bg-[var(--color-surface)] transition-colors cursor-pointer border-none bg-transparent outline-none">
+        <DialogPrimitive.Close className="absolute right-4 top-4 p-1.5 rounded-[var(--radius-sm)] text-[var(--color-text-muted)] hover:text-[var(--color-text-strong)] hover:bg-[var(--color-surface)] transition-colors cursor-pointer border-none bg-transparent outline-none">
           <Icon name="close" size={18} />
         </DialogPrimitive.Close>
       )}
@@ -89,7 +89,7 @@ const DialogTitle = forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    className={cn('font-serif text-lg font-semibold text-[var(--color-primary)] m-0', className)}
+    className={cn('font-serif text-lg font-semibold text-[var(--color-text-strong)] m-0', className)}
     {...props}
   />
 ));
@@ -184,7 +184,7 @@ function ConfirmDialog({
         <DialogFooter>
           <button
             onClick={handleCancel}
-            className="px-5 py-2.5 text-sm font-medium rounded-[var(--radius-btn)] cursor-pointer font-sans text-[var(--color-primary)] bg-[var(--color-surface)] border border-[var(--color-border)] hover:bg-[var(--color-border)] transition-colors outline-none"
+            className="px-5 py-2.5 text-sm font-medium rounded-[var(--radius-btn)] cursor-pointer font-sans text-[var(--color-text-strong)] bg-[var(--color-surface)] border border-[var(--color-border)] hover:bg-[var(--color-border)] transition-colors outline-none"
           >
             {cancelLabel}
           </button>

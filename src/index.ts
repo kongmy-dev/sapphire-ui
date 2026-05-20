@@ -73,6 +73,7 @@ export * from './components/Toast';
 export * from './components/ToastElement';
 
 // ─── Tier 4: Composites & Layouts ───────────────────────────────────
+export * from './components/ui/Layout';
 export * from './components/ui/PageSection';
 export * from './components/ui/SiteHeader';
 export * from './components/ui/SiteFooter';

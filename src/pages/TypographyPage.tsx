@@ -28,7 +28,7 @@ export default function TypographyPage() {
         <div className="docs-stack">
           {fonts.map((f) => (
             <div key={f.name} className="docs-preview" style={{ padding: 24 }}>
-              <div style={{ fontFamily: `var(${f.variable})`, fontSize: '1.5rem', color: 'var(--color-primary)', marginBottom: 4 }}>
+              <div style={{ fontFamily: `var(${f.variable})`, fontSize: '1.5rem', color: 'var(--color-text-strong)', marginBottom: 4 }}>
                 {f.name}
               </div>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--color-accent-text)', marginBottom: 8 }}>
@@ -62,7 +62,7 @@ export default function TypographyPage() {
                 fontFamily: `var(--font-${t.family})`,
                 fontSize: t.size,
                 fontWeight: t.weight,
-                color: 'var(--color-primary)',
+                color: 'var(--color-text-strong)',
                 lineHeight: 1.3,
                 letterSpacing: t.tag === 'caption' ? '0.1em' : undefined,
                 textTransform: t.tag === 'caption' ? 'uppercase' : undefined,

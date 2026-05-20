@@ -19,9 +19,9 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
         ref={ref}
         className={cn(
           'rounded-[var(--radius-md)] p-8 transition-all duration-200',
-          variant === 'default' && 'bg-white border border-[var(--color-border)]',
+          variant === 'default' && 'bg-[var(--color-card-bg)] border border-[var(--color-border)]',
           variant === 'dark' && 'bg-[var(--color-primary)] border border-[var(--color-border-dark)] text-[var(--color-text-on-dark)]',
-          variant === 'feature' && 'bg-white border border-[var(--color-border)] grid md:grid-cols-[1fr_auto] gap-8',
+          variant === 'feature' && 'bg-[var(--color-card-bg)] border border-[var(--color-border)] grid md:grid-cols-[1fr_auto] gap-8',
           variant === 'dashed' && 'bg-transparent border-[1.5px] border-dashed border-[var(--color-border)] text-[var(--color-text-muted)]',
           hoverable && variant === 'default' && 'hover:shadow-[var(--shadow-card-hover)] hover:-translate-y-0.5 cursor-pointer',
           hoverable && variant === 'dark' && 'hover:border-[var(--color-accent)] cursor-pointer',

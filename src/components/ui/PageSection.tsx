@@ -41,7 +41,7 @@ const PageSection = forwardRef<HTMLElement, PageSectionProps>(
             </span>
           )}
           {heading && (
-            <h2 className="font-serif font-bold text-[clamp(1.5rem,3vw,2.5rem)] text-[var(--color-primary)] leading-tight m-0">
+            <h2 className="font-serif font-bold text-[clamp(1.5rem,3vw,2.5rem)] text-[var(--color-text-strong)] leading-tight m-0">
               {heading}
             </h2>
           )}

@@ -38,7 +38,7 @@ function ColorSwatch({ name, value, label }: { name: string; value: string; labe
         {copied && (
           <span style={{
             position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)',
-            fontFamily: 'var(--font-mono)', fontSize: 11, color: isDark ? 'white' : 'var(--color-primary)',
+            fontFamily: 'var(--font-mono)', fontSize: 11, color: isDark ? 'white' : 'var(--color-text-strong)',
             background: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.8)', padding: '2px 8px', borderRadius: 4,
           }}>
             Copied!
@@ -46,7 +46,7 @@ function ColorSwatch({ name, value, label }: { name: string; value: string; labe
         )}
       </div>
       <div style={{ padding: '10px 12px' }}>
-        <div style={{ fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 600, color: 'var(--color-primary)' }}>
+        <div style={{ fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 600, color: 'var(--color-text-strong)' }}>
           {label}
         </div>
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--color-text-muted)', marginTop: 2 }}>

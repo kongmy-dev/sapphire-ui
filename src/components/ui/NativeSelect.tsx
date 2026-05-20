@@ -17,7 +17,7 @@ const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
           className={cn(
             variant === 'dark' && 'k-input-dark',
             variant === 'default' &&
-              'w-full font-sans text-base bg-white text-[var(--color-text-main)] border border-[var(--color-border)] rounded-[var(--radius-btn)] px-4 py-3 outline-none transition-all duration-200 focus:border-[var(--color-accent)] focus:shadow-[0_0_0_3px_rgba(197,160,101,0.12)] appearance-none cursor-pointer',
+              'w-full font-sans text-base bg-[var(--color-card-bg)] text-[var(--color-text-main)] border border-[var(--color-border)] rounded-[var(--radius-btn)] px-4 py-3 outline-none transition-all duration-200 focus:border-[var(--color-accent)] focus:shadow-[0_0_0_3px_rgba(197,160,101,0.12)] appearance-none cursor-pointer',
             disabled && 'opacity-50 cursor-not-allowed',
             'pr-10',
             className,

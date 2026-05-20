@@ -46,7 +46,7 @@ const RadioGroupItem = forwardRef<
         id={id}
         aria-describedby={descriptionId}
         className={cn(
-          'mt-0.5 h-[18px] w-[18px] shrink-0 rounded-full border-[1.5px] border-[var(--color-border-strong,#cbd5e1)] bg-white cursor-pointer',
+          'mt-0.5 h-[18px] w-[18px] shrink-0 rounded-full border-[1.5px] border-[var(--color-border-strong,#cbd5e1)] bg-[var(--color-card-bg)] cursor-pointer',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus-ring)] focus-visible:ring-offset-1',
           'data-[state=checked]:border-[var(--color-accent)]',
           'disabled:cursor-not-allowed disabled:opacity-50',
