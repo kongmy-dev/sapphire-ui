@@ -323,7 +323,7 @@ html {
   .k-input-dark option { background: var(--color-primary); color: var(--color-text-on-dark); }
 
   /* Checkbox (Radix UI) */
-  .k-checkbox { width: 18px; height: 18px; border: 1.5px solid var(--color-border-strong, #cbd5e1); border-radius: 4px; background: white; cursor: pointer; flex-shrink: 0; margin-top: 1px; padding: 0; display: inline-flex; align-items: center; justify-content: center; transition: background-color 0.15s, border-color 0.15s; }
+  .k-checkbox { width: 18px; height: 18px; border: 1.5px solid var(--color-border-strong, #cbd5e1); border-radius: 4px; background: var(--color-card-bg, #ffffff); cursor: pointer; flex-shrink: 0; margin-top: 1px; padding: 0; display: inline-flex; align-items: center; justify-content: center; transition: background-color 0.15s, border-color 0.15s; }
   .k-checkbox[data-state="checked"], .k-checkbox[data-state="indeterminate"] { background-color: var(--color-accent); border-color: var(--color-accent); }
   .k-checkbox:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
   .k-checkbox[data-disabled] { opacity: 0.5; cursor: not-allowed; }
@@ -386,7 +386,7 @@ html {
 /* ─── Form Utilities ──────────────────────────────────────── */
 .form-group { display: flex; flex-direction: column; gap: 4px; }
 .label { font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--color-primary); }
-.input { width: 100%; font-family: var(--font-sans); font-size: 1rem; background: #fff; color: var(--color-text-main); border: 1px solid var(--color-border); border-radius: var(--radius-btn); padding: 12px 16px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+.input { width: 100%; font-family: var(--font-sans); font-size: 1rem; background: var(--color-card-bg, #ffffff); color: var(--color-text-main); border: 1px solid var(--color-border); border-radius: var(--radius-btn); padding: 12px 16px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
 .input:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px rgba(197,160,101,0.12); }
 .input--mono { font-family: var(--font-mono); font-size: 0.875rem; background: var(--color-surface); }
 .input--dark { background: rgba(0,0,0,0.2); color: var(--color-text-on-dark); border-color: var(--color-border-dark); border-radius: var(--radius-sm); }
@@ -396,7 +396,7 @@ html {
 
 /* ─── Modal / Dialog ──────────────────────────────────────── */
 .modal-overlay { position: fixed; inset: 0; background: rgba(10,25,47,0.85); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(4px); }
-.modal { background: #fff; border-radius: var(--radius-md); width: 90%; max-width: 800px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: var(--shadow-lg); }
+.modal { background: var(--color-card-bg, #ffffff); border-radius: var(--radius-md); width: 90%; max-width: 800px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: var(--shadow-lg); }
 .modal-header { padding: 16px 24px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; }
 .modal-body { padding: 24px; overflow-y: auto; flex: 1; }
 .modal-footer { padding: 16px 24px; border-top: 1px solid var(--color-border); display: flex; justify-content: flex-end; gap: 12px; }
@@ -454,7 +454,7 @@ html {
 
 /* ─── Toast ──────────────────────────────────────────────── */
 .sapphire-toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 2000; display: flex; flex-direction: column-reverse; gap: 8px; pointer-events: none; }
-.sapphire-toast { display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: var(--radius-md, 8px); background: white; border: 1px solid var(--color-border, #e2e8f0); border-left: 4px solid var(--toast-accent, #16a34a); box-shadow: 0 8px 32px rgba(10,25,47,0.14); font-family: var(--font-sans, system-ui, sans-serif); font-size: 0.875rem; color: var(--color-text-main, #1e293b); transform: translateX(120%); opacity: 0; transition: transform 300ms ease, opacity 300ms ease; pointer-events: auto; max-width: 380px; }
+.sapphire-toast { display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: var(--radius-md, 8px); background: var(--color-card-bg, #ffffff); border: 1px solid var(--color-border, #e2e8f0); border-left: 4px solid var(--toast-accent, #16a34a); box-shadow: 0 8px 32px rgba(10,25,47,0.14); font-family: var(--font-sans, system-ui, sans-serif); font-size: 0.875rem; color: var(--color-text-main, #1e293b); transform: translateX(120%); opacity: 0; transition: transform 300ms ease, opacity 300ms ease; pointer-events: auto; max-width: 380px; }
 .sapphire-toast.is-visible { transform: translateX(0); opacity: 1; }
 .sapphire-toast-icon { flex-shrink: 0; color: var(--toast-accent, #16a34a); font-size: 20px; }
 .sapphire-toast-message { flex: 1; line-height: 1.4; }
@@ -515,7 +515,9 @@ html {
 /* ─── Site Header (CSS-only) ─────────────────────────────── */
 .site-header { width: 100%; z-index: 40; border-bottom: 1px solid var(--color-border-dark); background: var(--color-primary); color: var(--color-text-on-dark); }
 .site-header--sticky { position: sticky; top: 0; }
-.site-header--light { background: white; color: var(--color-text-main); border-color: var(--color-border); }
+/* Light variant is intentionally locked to a light palette so it stays
+   readable even when the surrounding page is in dark theme. */
+.site-header--light { background: #ffffff; color: #0a192f; border-color: #e2e8f0; }
 .site-header-inner { max-width: 80rem; margin: 0 auto; padding: 0 1.5rem; height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
 .site-header-brand { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
 .site-header-nav { display: flex; align-items: center; gap: 0.25rem; flex: 1; }
@@ -526,7 +528,7 @@ html {
 
 /* ─── Site Footer (CSS-only) ─────────────────────────────── */
 .site-footer { width: 100%; border-top: 1px solid var(--color-border-dark); background: var(--color-primary); color: var(--color-text-on-dark); }
-.site-footer--light { background: white; color: var(--color-text-main); border-color: var(--color-border); }
+.site-footer--light { background: #ffffff; color: #1e293b; border-color: #e2e8f0; }
 .site-footer-inner { max-width: 80rem; margin: 0 auto; padding: 3rem 1.5rem 2rem; }
 .site-footer-grid { display: flex; flex-wrap: wrap; gap: 2.5rem 4rem; margin-bottom: 2.5rem; }
 .site-footer-group { display: flex; flex-direction: column; gap: 0.75rem; }

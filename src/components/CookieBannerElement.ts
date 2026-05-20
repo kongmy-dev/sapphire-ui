@@ -109,10 +109,10 @@ export class CookieBannerElement extends SSRHTMLElement {
     this.innerHTML = `
       <div
         data-banner-container
-        class="fixed bottom-0 left-0 right-0 z-1000 flex flex-col sm:flex-row items-center justify-between p-4 sm:p-6 gap-4 w-full bg-white border-t border-border shadow-[0_-4px_20px_rgba(10,25,47,0.12)] transition-transform duration-300 ease-in-out translate-y-full"
+        class="fixed bottom-0 left-0 right-0 z-1000 flex flex-col sm:flex-row items-center justify-between p-4 sm:p-6 gap-4 w-full bg-(--color-card-bg) border-t border-border shadow-[0_-4px_20px_rgba(10,25,47,0.12)] transition-transform duration-300 ease-in-out translate-y-full"
       >
         <div class="flex-1 max-w-4xl text-left">
-          <h3 class="text-primary font-serif font-semibold mb-1 text-[1.1rem]">
+          <h3 class="text-(--color-text-strong) font-serif font-semibold mb-1 text-[1.1rem]">
             We value your privacy
           </h3>
           <p class="text-(--color-text-muted) font-sans text-sm m-0 leading-relaxed">
@@ -126,7 +126,7 @@ export class CookieBannerElement extends SSRHTMLElement {
         <div class="flex flex-wrap sm:flex-nowrap gap-3 w-full sm:w-auto shrink-0 justify-end">
           <button
             data-decline-btn
-            class="flex-1 sm:flex-none px-5 py-2.5 text-sm font-medium rounded-md transition-all cursor-pointer font-sans text-center text-primary bg-surface border border-border hover:bg-border hover:opacity-90 outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            class="flex-1 sm:flex-none px-5 py-2.5 text-sm font-medium rounded-md transition-all cursor-pointer font-sans text-center text-(--color-text-strong) bg-surface border border-border hover:bg-border hover:opacity-90 outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
           >
             Decline
           </button>
