@@ -53,6 +53,7 @@ export * from './components/ui/Chip';
 export * from './components/ui/CodeBlock';
 export * from './components/ui/Toggle';
 export * from './components/ui/ScrollArea';
+export * from './components/ui/Steps';
 export * from './components/ui/HoverCard';
 export * from './components/Banner';
 export * from './components/BannerElement';

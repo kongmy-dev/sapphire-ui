@@ -79,31 +79,45 @@ export default function ButtonsPage() {
       <section className="docs-section">
         <h2 className="docs-section-title">Icon Mark</h2>
         <div className="docs-preview">
-          <div className="docs-flex" style={{ gap: 16, alignItems: 'flex-end', flexWrap: 'wrap' }}>
-            <div className="docs-stack" style={{ gap: 4, alignItems: 'center' }}>
-              <IconMark icon="cloud" size="sm" />
-              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--color-text-muted)' }}>sm</span>
+          <div className="docs-stack" style={{ gap: 20 }}>
+            <div>
+              <div style={{ fontFamily: 'var(--font-sans)', fontSize: 12, color: 'var(--color-text-muted)', marginBottom: 10 }}>
+                Default — for light surfaces
+              </div>
+              <div className="docs-flex" style={{ gap: 20, alignItems: 'flex-end', flexWrap: 'wrap' }}>
+                {(['sm', 'default', 'lg'] as const).map((s) => (
+                  <div key={s} className="docs-stack" style={{ gap: 4, alignItems: 'center' }}>
+                    <IconMark icon="cloud" size={s} />
+                    <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--color-text-muted)' }}>{s}</span>
+                  </div>
+                ))}
+                <div className="docs-stack" style={{ gap: 4, alignItems: 'center' }}>
+                  <IconMark icon="auto_awesome" filled />
+                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--color-text-muted)' }}>filled</span>
+                </div>
+              </div>
             </div>
-            <div className="docs-stack" style={{ gap: 4, alignItems: 'center' }}>
-              <IconMark icon="cloud" />
-              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--color-text-muted)' }}>default</span>
+
+            <div
+              style={{
+                background: 'var(--color-primary)',
+                borderRadius: 'var(--radius-sm)',
+                padding: '1rem 1.25rem',
+                display: 'inline-flex',
+                flexDirection: 'column',
+                gap: 10,
+              }}
+            >
+              <div style={{ fontFamily: 'var(--font-sans)', fontSize: 12, color: 'rgba(241,245,249,0.55)' }}>
+                Dark variant — for dark surfaces
+              </div>
+              <div className="docs-flex" style={{ gap: 20, alignItems: 'center' }}>
+                <IconMark icon="rocket_launch" variant="dark" size="sm" />
+                <IconMark icon="security" variant="dark" />
+                <IconMark icon="auto_awesome" variant="dark" size="lg" />
+                <IconMark icon="hub" variant="dark" filled />
+              </div>
             </div>
-            <div className="docs-stack" style={{ gap: 4, alignItems: 'center' }}>
-              <IconMark icon="cloud" size="lg" />
-              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--color-text-muted)' }}>lg</span>
-            </div>
-            <div className="docs-stack" style={{ gap: 4, alignItems: 'center' }}>
-              <IconMark icon="auto_awesome" filled />
-              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--color-text-muted)' }}>filled</span>
-            </div>
-          </div>
-        </div>
-        <div className="docs-preview docs-preview--dark" style={{ marginTop: 12 }}>
-          <div className="docs-flex" style={{ gap: 16, alignItems: 'center' }}>
-            <IconMark icon="rocket_launch" variant="dark" size="sm" />
-            <IconMark icon="security" variant="dark" />
-            <IconMark icon="auto_awesome" variant="dark" size="lg" />
-            <IconMark icon="hub" variant="dark" filled />
           </div>
         </div>
       </section>

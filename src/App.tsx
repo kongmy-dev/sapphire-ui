@@ -1,6 +1,9 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom';
+import pkg from '../package.json';
 import './App.css';
+
+const DOCS_VERSION = `v${pkg.version}`;
 
 // Pages — lazy-loaded so each page ships in its own chunk
 const OverviewPage = lazy(() => import('./pages/OverviewPage'));
@@ -86,7 +89,7 @@ function AppShell() {
       <MobileNav
         brandName="Sapphire"
         brandSuffix="UI"
-        version="v0.1.0"
+        version={DOCS_VERSION}
         navItems={navItems}
         onNavigate={(href, event) => {
           // Intercept clicks so React Router handles routing without
@@ -117,7 +120,7 @@ function AppShell() {
             <span className="docs-brand-name">Sapphire</span>
             <span className="docs-brand-suffix">UI</span>
           </div>
-          <div className="docs-brand-version">v0.1.0</div>
+          <div className="docs-brand-version">{DOCS_VERSION}</div>
           <nav className="docs-nav">
             {/* Search — pinned to top so the keyboard-driven jump path
                 is the first thing in the visual hierarchy. */}

@@ -1,6 +1,6 @@
 {
   "name": "@kongmy-dev/sapphire-ui",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
@@ -179,6 +179,11 @@
       "types": "./dist/components/ui/ScrollArea.d.ts",
       "import": "./dist/components/ui/ScrollArea.js",
       "require": "./dist/components/ui/ScrollArea.cjs"
+    },
+    "./steps": {
+      "types": "./dist/components/ui/Steps.d.ts",
+      "import": "./dist/components/ui/Steps.js",
+      "require": "./dist/components/ui/Steps.cjs"
     },
     "./segmented-bar": {
       "types": "./dist/components/ui/SegmentedBar.d.ts",
