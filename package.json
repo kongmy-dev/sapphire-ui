@@ -1,6 +1,6 @@
 {
   "name": "@kongmy-dev/sapphire-ui",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
@@ -43,6 +43,7 @@
     "./form-field": { "types": "./dist/components/ui/FormField.d.ts", "import": "./dist/components/ui/FormField.js", "require": "./dist/components/ui/FormField.cjs" },
     "./hover-card": { "types": "./dist/components/ui/HoverCard.d.ts", "import": "./dist/components/ui/HoverCard.js", "require": "./dist/components/ui/HoverCard.cjs" },
     "./icon": { "types": "./dist/components/ui/Icon.d.ts", "import": "./dist/components/ui/Icon.js", "require": "./dist/components/ui/Icon.cjs" },
+    "./icon-mark": { "types": "./dist/components/ui/IconMark.d.ts", "import": "./dist/components/ui/IconMark.js", "require": "./dist/components/ui/IconMark.cjs" },
     "./input": { "types": "./dist/components/ui/Input.d.ts", "import": "./dist/components/ui/Input.js", "require": "./dist/components/ui/Input.cjs" },
     "./kbd": { "types": "./dist/components/ui/Kbd.d.ts", "import": "./dist/components/ui/Kbd.js", "require": "./dist/components/ui/Kbd.cjs" },
     "./label": { "types": "./dist/components/ui/Label.d.ts", "import": "./dist/components/ui/Label.js", "require": "./dist/components/ui/Label.cjs" },
@@ -56,6 +57,7 @@
     "./radio-group": { "types": "./dist/components/ui/RadioGroup.d.ts", "import": "./dist/components/ui/RadioGroup.js", "require": "./dist/components/ui/RadioGroup.cjs" },
     "./range-slider": { "types": "./dist/components/ui/RangeSlider.d.ts", "import": "./dist/components/ui/RangeSlider.js", "require": "./dist/components/ui/RangeSlider.cjs" },
     "./scroll-area": { "types": "./dist/components/ui/ScrollArea.d.ts", "import": "./dist/components/ui/ScrollArea.js", "require": "./dist/components/ui/ScrollArea.cjs" },
+    "./segmented-bar": { "types": "./dist/components/ui/SegmentedBar.d.ts", "import": "./dist/components/ui/SegmentedBar.js", "require": "./dist/components/ui/SegmentedBar.cjs" },
     "./seo-head": { "types": "./dist/components/ui/SEOHead.d.ts", "import": "./dist/components/ui/SEOHead.js", "require": "./dist/components/ui/SEOHead.cjs" },
     "./select": { "types": "./dist/components/ui/Select.d.ts", "import": "./dist/components/ui/Select.js", "require": "./dist/components/ui/Select.cjs" },
     "./separator": { "types": "./dist/components/ui/Separator.d.ts", "import": "./dist/components/ui/Separator.js", "require": "./dist/components/ui/Separator.cjs" },
