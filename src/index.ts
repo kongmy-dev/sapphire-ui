@@ -67,7 +67,18 @@ export * from './components/ui/FormField';
 // ─── Docs / DX primitives ───────────────────────────────────────────
 export * from './components/CommandPalette';
 
-// ─── Composites ─────────────────────────────────────────────────────
+// ─── Tier 3: Interactive Primitives ─────────────────────────────────
+export * from './components/ui/Dialog';
+export * from './components/Toast';
+export * from './components/ToastElement';
+
+// ─── Tier 4: Composites & Layouts ───────────────────────────────────
+export * from './components/ui/PageSection';
+export * from './components/ui/SiteHeader';
+export * from './components/ui/SiteFooter';
+export * from './components/ui/SEOHead';
+
+// ─── Ecosystem ──────────────────────────────────────────────────────
 export * from './components/CookieBanner';
 export * from './components/CookieBannerElement';
 export * from './components/Analytics';

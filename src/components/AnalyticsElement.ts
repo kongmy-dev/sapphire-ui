@@ -1,4 +1,4 @@
-import { getConsentStatus } from '../lib/consent';
+import { getConsentStatus, updateTrackers } from '../lib/consent';
 
 declare global {
   interface Window {
@@ -48,16 +48,8 @@ export class AnalyticsElement extends SSRHTMLElement {
       this.initPostHog(posthogToken, posthogHost, posthogUiHost, consent.analytics);
     }
 
-    // 3. Sync initial consent state with Cloudflare Zaraz
-    if (window.zaraz?.consent?.set) {
-      try {
-        window.zaraz.consent.set({
-          analytics: consent.analytics,
-        });
-      } catch (e) {
-        // Silently capture if Zaraz is still initializing asynchronously
-      }
-    }
+    // 3. Sync initial consent state with all trackers
+    updateTrackers(consent);
   }
 
   private parseConsent(): { analytics: boolean } {
@@ -143,6 +135,7 @@ export class AnalyticsElement extends SSRHTMLElement {
         opt_in_site_apps: false, // Disables surveys to save bundle size
         autocapture: true,
         capture_pageview: true,
+        opt_out_capturing_by_default: !allowed,
       });
 
       // Apply initial consent behavior cloned from landing-page

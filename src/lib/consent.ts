@@ -93,13 +93,33 @@ export function updateTrackers(preferences: ConsentPreferences) {
   }
 
   // Update Cloudflare Zaraz
-  if (window.zaraz?.consent?.set) {
-    try {
-      window.zaraz.consent.set({
-        analytics: preferences.analytics,
-      });
-    } catch (e) {
-      console.warn('[Sapphire Analytics] Failed to sync consent with Cloudflare Zaraz:', e);
+  const syncWithZaraz = () => {
+    if (window.zaraz) {
+      // 1. Set global variable that can be used in custom Zaraz triggers/rules
+      if (window.zaraz.set) {
+        try {
+          window.zaraz.set('analytics_consent', preferences.analytics ? 'granted' : 'denied');
+        } catch (e) {
+          // Ignore
+        }
+      }
+
+      // 2. Set official Zaraz Consent if Zaraz Consent Management is active
+      if (window.zaraz.consent?.set) {
+        try {
+          window.zaraz.consent.set({
+            analytics: preferences.analytics,
+          });
+        } catch (e) {
+          console.warn('[Sapphire Analytics] Failed to sync consent with Cloudflare Zaraz:', e);
+        }
+      }
     }
+  };
+
+  if (window.zaraz) {
+    syncWithZaraz();
+  } else {
+    document.addEventListener('zarazConsentAPIReady', syncWithZaraz, { once: true });
   }
 }

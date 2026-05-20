@@ -54,6 +54,12 @@ const categories = [
     desc: 'Newsreader, Source Sans 3, and JetBrains Mono — curated font stack.',
     route: '/typography',
   },
+  {
+    title: 'Interactive',
+    icon: 'touch_app',
+    desc: 'Dialogs, toasts, page sections, site headers/footers, and SEO utilities.',
+    route: '/interactive',
+  },
 ];
 
 export default function OverviewPage() {
