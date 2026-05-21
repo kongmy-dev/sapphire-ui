@@ -16,7 +16,7 @@ export interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
 /**
  * Canonical page shell for kongmy.dev apps. Orchestrates the shared
  * header → (sidebar + main) → footer layout used across landing-page,
- * paimon-techblog, web-toolbox, and the sapphire-ui docs site.
+ * blog.kongmy.dev, web-toolbox, and the sapphire-ui docs site.
  *
  *   <Layout
  *     header={<SiteHeader brand={...} nav={...} />}

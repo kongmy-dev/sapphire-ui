@@ -1,6 +1,8 @@
 # Sapphire UI — Design System Spec & Components
 
-Sapphire UI is the official, editorial-focused design system for **KONGMY Digital Solutions** (`kongmy.dev`). Grounded in deep navy authority and crisp gold accents, it is engineered to be a ruthlessly efficient, zero-bloat specimen tailored for professional IT consultancies, technical blogs (such as `paimon-techblog`), and high-performance Web tools.
+Sapphire UI is the official, editorial-focused design system for **KONGMY Digital Solutions** (`kongmy.dev`). Grounded in deep navy authority and crisp gold accents, it is engineered to be a ruthlessly efficient, zero-bloat specimen tailored for professional IT consultancies, technical blogs (such as `blog.kongmy.dev`), and high-performance Web tools.
+
+📖 **Live docs & interactive specimen:** [design.kongmy.dev](https://design.kongmy.dev)
 
 ---
 
