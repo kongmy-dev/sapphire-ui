@@ -19,8 +19,8 @@ const DialogOverlay = forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={cn(
-      'fixed inset-0 z-[1000] bg-[rgba(10,25,47,0.85)] backdrop-blur-[4px]',
-      'data-[state=open]:animate-[fadeIn_200ms_ease] data-[state=closed]:animate-[fadeOut_150ms_ease]',
+      'fixed inset-0 z-[1000] bg-[rgba(10,25,47,0.85)] backdrop-blur-xs',
+      'data-[state=closed]:animate-[fadeOut_150ms_ease] data-[state=open]:animate-[fadeIn_200ms_ease]',
       className,
     )}
     {...props}
@@ -44,10 +44,10 @@ const DialogContent = forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        'fixed left-1/2 top-1/2 z-[1001] -translate-x-1/2 -translate-y-1/2',
-        'w-[90%] max-h-[85vh] flex flex-col',
-        'bg-[var(--color-card-bg)] rounded-[var(--radius-md)] shadow-[var(--shadow-lg)]',
-        'data-[state=open]:animate-[dialogIn_200ms_ease] data-[state=closed]:animate-[dialogOut_150ms_ease]',
+        'fixed top-1/2 left-1/2 z-[1001] -translate-1/2',
+        'flex max-h-[85vh] w-[90%] flex-col',
+        'rounded-md bg-(--color-card-bg) shadow-(--shadow-lg)',
+        'data-[state=closed]:animate-[dialogOut_150ms_ease] data-[state=open]:animate-[dialogIn_200ms_ease]',
         'outline-none',
         className,
       )}
@@ -56,7 +56,7 @@ const DialogContent = forwardRef<
     >
       {children}
       {!hideClose && (
-        <DialogPrimitive.Close className="absolute right-4 top-4 p-1.5 rounded-[var(--radius-sm)] text-[var(--color-text-muted)] hover:text-[var(--color-text-strong)] hover:bg-[var(--color-surface)] transition-colors cursor-pointer border-none bg-transparent outline-none">
+        <DialogPrimitive.Close className="absolute top-4 right-4 cursor-pointer rounded-sm border-none bg-transparent p-1.5 text-(--color-text-muted) transition-colors outline-none hover:bg-surface hover:text-(--color-text-strong)">
           <Icon name="close" size={18} />
         </DialogPrimitive.Close>
       )}
@@ -72,7 +72,7 @@ const DialogHeader = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElem
     <div
       ref={ref}
       className={cn(
-        'px-6 py-4 border-b border-[var(--color-border)] flex items-center justify-between',
+        'flex items-center justify-between border-b border-border px-6 py-4',
         className,
       )}
       {...props}
@@ -89,7 +89,7 @@ const DialogTitle = forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    className={cn('font-serif text-lg font-semibold text-[var(--color-text-strong)] m-0', className)}
+    className={cn('m-0 font-serif text-lg font-semibold text-(--color-text-strong)', className)}
     {...props}
   />
 ));
@@ -103,7 +103,7 @@ const DialogDescription = forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn('font-sans text-sm text-[var(--color-text-muted)] mt-1', className)}
+    className={cn('mt-1 font-sans text-sm text-(--color-text-muted)', className)}
     {...props}
   />
 ));
@@ -115,7 +115,7 @@ const DialogBody = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElemen
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn('px-6 py-5 overflow-y-auto flex-1', className)}
+      className={cn('flex-1 overflow-y-auto px-6 py-5', className)}
       {...props}
     />
   ),
@@ -129,7 +129,7 @@ const DialogFooter = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElem
     <div
       ref={ref}
       className={cn(
-        'px-6 py-4 border-t border-[var(--color-border)] flex justify-end gap-3',
+        'flex justify-end gap-3 border-t border-border px-6 py-4',
         className,
       )}
       {...props}
@@ -177,20 +177,20 @@ function ConfirmDialog({
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         <DialogBody>
-          <p className="font-sans text-sm text-[var(--color-text-muted)] leading-relaxed m-0">
+          <p className="m-0 font-sans text-sm/relaxed text-(--color-text-muted)">
             {message}
           </p>
         </DialogBody>
         <DialogFooter>
           <button
             onClick={handleCancel}
-            className="px-5 py-2.5 text-sm font-medium rounded-[var(--radius-btn)] cursor-pointer font-sans text-[var(--color-text-strong)] bg-[var(--color-surface)] border border-[var(--color-border)] hover:bg-[var(--color-border)] transition-colors outline-none"
+            className="cursor-pointer rounded-btn border border-border bg-surface px-5 py-2.5 font-sans text-sm font-medium text-(--color-text-strong) transition-colors outline-none hover:bg-border"
           >
             {cancelLabel}
           </button>
           <button
             onClick={() => { onConfirm(); onOpenChange(false); }}
-            className="px-5 py-2.5 text-sm font-medium rounded-[var(--radius-btn)] cursor-pointer font-sans text-white border-none transition-colors outline-none"
+            className="cursor-pointer rounded-btn border-none px-5 py-2.5 font-sans text-sm font-medium text-white transition-colors outline-none"
             style={{ backgroundColor: isDanger ? 'var(--color-error)' : 'var(--color-primary)' }}
           >
             {confirmLabel}
