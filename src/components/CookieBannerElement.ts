@@ -60,11 +60,10 @@ export class CookieBannerElement extends SSRHTMLElement {
     if (!this.container) return;
     this.isVisible = true;
     
-    // Trigger transition by removing class in next tick
+    // Trigger transition by adding class in next tick
     this.mountTimer = setTimeout(() => {
       if (this.container) {
-        this.container.classList.remove('translate-y-full');
-        this.container.classList.add('translate-y-0');
+        this.container.classList.add('is-visible');
       }
     }, 50);
   }
@@ -72,8 +71,7 @@ export class CookieBannerElement extends SSRHTMLElement {
   private hide() {
     if (!this.container) return;
     this.isVisible = false;
-    this.container.classList.remove('translate-y-0');
-    this.container.classList.add('translate-y-full');
+    this.container.classList.remove('is-visible');
 
     if (this.hasAttribute('force-show')) {
       this.removeAttribute('force-show');
@@ -109,7 +107,7 @@ export class CookieBannerElement extends SSRHTMLElement {
     this.innerHTML = `
       <div
         data-banner-container
-        class="fixed bottom-0 left-0 right-0 z-[1000] flex flex-col sm:flex-row items-center justify-between p-4 sm:p-6 gap-4 w-full bg-(--color-card-bg) border-t border-border shadow-[0_-4px_20px_rgba(10,25,47,0.12)] transition-transform duration-300 ease-in-out translate-y-full"
+        class="sapphire-cookie-banner flex flex-col sm:flex-row items-center justify-between p-4 sm:p-6 gap-4 w-full bg-(--color-card-bg) border-t border-border shadow-[0_-4px_20px_rgba(10,25,47,0.12)]"
       >
         <div class="flex-1 max-w-4xl text-left">
           <h3 class="text-(--color-text-strong) font-serif font-semibold mb-1 text-[1.1rem]">
