@@ -64,10 +64,13 @@ import '@kongmy-dev/sapphire-ui/style.css';
 
 Every merge or push to `master` triggers our automated GitHub Actions workflow (`.github/workflows/publish.yml`), which features:
 
-1. **GitHub Package Registry**: Builds and publishes minified packages directly to GitHub Packages.
+1. **Dual-Registry Publishing**: Publishes to both **GitHub Packages** (scoped `@kongmy-dev`) and the **public npm registry** in a single run.
 2. **Node.js 24 Execution**: Explicitly configured via the `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24` flag to utilize modern runtime performance.
 3. **Advanced Caching**: Caches global Bun dependency trees (`~/.bun/install/cache`), checking against hashes of `bun.lock` for lightning-fast incremental pipelines.
-4. **Publish Workaround**: Employs `npm publish` in its final step to bypass known Bun/GitHub tarball attachment issues, ensuring bulletproof deployments.
+4. **Tag-Based Deduplication**: Reads `version` from `package.json`, checks for an existing git tag, and skips the entire publish pipeline if the version has already been released.
+5. **GitHub Releases**: Automatically creates a tagged GitHub Release with auto-generated release notes.
+
+> **Required Secrets**: `NPM_TOKEN` — an npm access token with publish permissions. `GITHUB_TOKEN` is provided automatically.
 
 ---
 

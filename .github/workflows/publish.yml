@@ -1,4 +1,4 @@
-name: Publish Package to GitHub Packages
+name: Publish Package to GitHub Packages & npm
 
 on:
   push:
@@ -60,7 +60,8 @@ jobs:
         if: steps.tag_check.outputs.exists == 'false'
         run: bun run build
 
-      - name: Setup .npmrc
+      # ── GitHub Packages ────────────────────────────────────────────
+      - name: Setup .npmrc for GitHub Packages
         if: steps.tag_check.outputs.exists == 'false'
         run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > .npmrc
 
@@ -68,6 +69,18 @@ jobs:
         if: steps.tag_check.outputs.exists == 'false'
         run: npm publish
 
+      # ── npm Registry ───────────────────────────────────────────────
+      - name: Setup .npmrc for npm
+        if: steps.tag_check.outputs.exists == 'false'
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+          echo "registry=https://registry.npmjs.org/" >> .npmrc
+
+      - name: Publish to npm
+        if: steps.tag_check.outputs.exists == 'false'
+        run: npm publish --registry=https://registry.npmjs.org/ --access public
+
+      # ── Release ────────────────────────────────────────────────────
       - name: Create git tag
         if: steps.tag_check.outputs.exists == 'false'
         run: |
