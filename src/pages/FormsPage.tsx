@@ -3,7 +3,7 @@ import { Input } from '../components/ui/Input';
 import { Textarea } from '../components/ui/Textarea';
 import { Label } from '../components/ui/Label';
 import { Checkbox } from '../components/ui/Checkbox';
-import { ToggleSwitch } from '../components/ui/ToggleSwitch';
+import { Switch } from '../components/ui/ToggleSwitch';
 import { RangeSlider } from '../components/ui/RangeSlider';
 import { NativeSelect } from '../components/ui/NativeSelect';
 import { FormField } from '../components/ui/FormField';
@@ -69,15 +69,33 @@ export default function FormsPage() {
       </section>
 
       <section className="docs-section">
-        <h2 className="docs-section-title">Toggle Switch</h2>
+        <h2 className="docs-section-title">Switch</h2>
+        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
+          Built on <code>@radix-ui/react-switch</code>. Use <code>checked</code> +{' '}
+          <code>onCheckedChange</code> for controlled, or <code>defaultChecked</code> for
+          uncontrolled. Override the active fill via the <code>--switch-active</code> CSS variable.
+        </p>
         <div className="docs-preview">
           <div className="docs-stack">
-            <ToggleSwitch
+            <Switch
               label="Enable analytics"
               checked={switchOn}
               onCheckedChange={setSwitchOn}
             />
-            <ToggleSwitch label="Disabled" disabled />
+            <Switch label="Marketing emails" defaultChecked />
+            <Switch label="Disabled" disabled />
+            <Switch label="Disabled · on" disabled defaultChecked />
+            <Switch
+              label="Custom accent"
+              defaultChecked
+              style={{ ['--switch-active' as string]: '#16a34a' }}
+            />
+          </div>
+        </div>
+        <div className="docs-preview docs-preview--dark">
+          <div className="docs-stack">
+            <Switch label="On dark surface" defaultChecked />
+            <Switch label="Off" />
           </div>
         </div>
       </section>
