@@ -56,7 +56,7 @@ export default function HooksPage() {
         <h2 className="docs-section-title">useDebounce</h2>
         <p style={{ color: 'var(--color-text-muted)', maxWidth: '60ch', margin: '0 0 1rem' }}>
           Returns the latest value only after a stable pause. Use for search
-          inputs, autosave, and any handler that's expensive to run on every
+          inputs, autosave, and any handler that&apos;s expensive to run on every
           keystroke.
         </p>
         <div className="docs-preview">
@@ -96,7 +96,7 @@ export default function HooksPage() {
               Reload the page or open another tab — the value stays in sync.
             </p>
             <Button variant="outline" size="sm" onClick={() => setFavColor('sapphire')}>
-              Reset to "sapphire"
+              Reset to &quot;sapphire&quot;
             </Button>
           </div>
         </div>
@@ -107,7 +107,7 @@ export default function HooksPage() {
         <h2 className="docs-section-title">useCopyToClipboard</h2>
         <p style={{ color: 'var(--color-text-muted)', maxWidth: '60ch', margin: '0 0 1rem' }}>
           Wraps the Clipboard API and flips an <code>isCopied</code> flag for
-          two seconds — perfect for "Copy code" or share buttons.
+          two seconds — perfect for &quot;Copy code&quot; or share buttons.
         </p>
         <div className="docs-preview">
           <div className="docs-stack" style={{ maxWidth: 480 }}>
@@ -127,7 +127,7 @@ export default function HooksPage() {
         <h2 className="docs-section-title">useOnClickOutside</h2>
         <p style={{ color: 'var(--color-text-muted)', maxWidth: '60ch', margin: '0 0 1rem' }}>
           Detects clicks, touches, and focus changes outside a referenced
-          element. Use it to dismiss lightweight menus and popovers that aren't
+          element. Use it to dismiss lightweight menus and popovers that aren&apos;t
           worth a full Radix primitive.
         </p>
         <div className="docs-preview">
@@ -188,8 +188,8 @@ export default function HooksPage() {
         <p style={{ color: 'var(--color-text-muted)', maxWidth: '60ch', margin: '0 0 1rem' }}>
           Aliases <code>useLayoutEffect</code> on the client and{' '}
           <code>useEffect</code> on the server so SSR frameworks (Next.js,
-          Astro, Remix) don't spam warnings about mismatched effect timing.
-          No demo — it's a one-line drop-in:
+          Astro, Remix) don&apos;t spam warnings about mismatched effect timing.
+          No demo — it&apos;s a one-line drop-in:
         </p>
         <CodeBlock
           language="tsx"
@@ -239,7 +239,7 @@ useIsomorphicLayoutEffect(() => {
             <span className="visually-hidden">Close dialog</span>
           </Button>
           <p style={{ margin: '0.5rem 0 0', fontSize: '0.8125rem', color: 'var(--color-text-muted)' }}>
-            Screen readers announce "Close dialog"; sighted users see only the icon.
+            Screen readers announce &quot;Close dialog&quot;; sighted users see only the icon.
           </p>
         </div>
 

@@ -184,7 +184,7 @@ export default function ExtendedPage() {
               Your changes were saved successfully.
             </Banner>
             <Banner variant="warning">
-              You're approaching your API quota for this month.
+              You&apos;re approaching your API quota for this month.
             </Banner>
             <Banner variant="error">
               Something went wrong — please retry.
@@ -346,7 +346,7 @@ export default function ExtendedPage() {
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="q3">
-              <AccordionTrigger>What's the bundle size?</AccordionTrigger>
+              <AccordionTrigger>What&apos;s the bundle size?</AccordionTrigger>
               <AccordionContent>
                 ~20 KB gzip for the full React bundle, with peer-dep externalization so
                 consumers only pay for what they import. The vanilla entry is ~4 KB gzip.

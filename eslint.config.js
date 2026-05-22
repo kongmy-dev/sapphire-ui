@@ -35,17 +35,12 @@ export default defineConfig([
     rules: {
       // Library code exports many subcomponents and variant helpers per file
       // by design (Tabs+TabsList+TabsTrigger, cva variants alongside the
-      // component). The Vite HMR rule is meaningful for app code only.
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
+      // component). The Vite HMR rule is meaningful for app code only. Disable entirely.
+      'react-refresh/only-export-components': 'off',
       // The new "set-state-in-effect" lint is too aggressive for cases where
       // an effect IS the synchronization boundary (media query listeners,
-      // localStorage reads, theme provider). Downgrade to warn.
-      'react-hooks/set-state-in-effect': 'warn',
-      // Disable unescaped entities check which is too noisy for a docs site
-      'react/no-unescaped-entities': 'off',
+      // localStorage reads, theme provider). Disable entirely.
+      'react-hooks/set-state-in-effect': 'off',
       // Line-wrapping reformats multi-class cn() calls across many lines —
       // too opinionated for a component library; ordering is handled by
       // enforce-consistent-class-order instead.

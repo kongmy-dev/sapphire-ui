@@ -376,7 +376,7 @@ const seo = generateSEOTags({
             <tr><td><code>description</code></td><td><code>string</code></td><td>—</td></tr>
             <tr><td><code>url</code></td><td><code>string</code></td><td>—</td></tr>
             <tr><td><code>image</code></td><td><code>string</code></td><td>—</td></tr>
-            <tr><td><code>siteName</code></td><td><code>string</code></td><td><code>"KONGMY"</code></td></tr>
+            <tr><td><code>siteName</code></td><td><code>string</code></td><td><code>&quot;KONGMY&quot;</code></td></tr>
             <tr><td><code>type</code></td><td><code>website | article</code></td><td><code>website</code></td></tr>
             <tr><td><code>twitterCard</code></td><td><code>summary | summary_large_image</code></td><td><code>summary_large_image</code></td></tr>
             <tr><td><code>publishedTime</code></td><td><code>string (ISO)</code></td><td>—</td></tr>
