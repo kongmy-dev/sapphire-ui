@@ -159,7 +159,7 @@ function AppShell() {
 
             {/* Bottom group — utility actions, pinned to the bottom so
                 they read as preferences rather than additional pages. */}
-            <div className="docs-nav-bottom">
+            <div className="docs-nav-bottom pb-4">
               <hr className="docs-nav-divider" />
               <ThemeToggle />
               <button

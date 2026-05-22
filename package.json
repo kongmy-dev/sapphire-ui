@@ -1,6 +1,6 @@
 {
   "name": "@kongmy-dev/sapphire-ui",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
@@ -395,6 +395,7 @@
     "build:docs": "vite build --config vite.docs.config.ts --outDir dist-docs",
     "preview": "vite preview",
     "test:a11y": "playwright test",
+    "test": "vitest run",
     "deploy:docs": "bun run build:docs && wrangler pages deploy dist-docs --project-name=sapphire-ui-docs"
   },
   "peerDependencies": {
@@ -450,6 +451,9 @@
     "@radix-ui/react-toggle-group": "^1.1.11",
     "@radix-ui/react-tooltip": "^1.2.8",
     "@tailwindcss/vite": "^4.3.0",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^25.9.1",
     "@types/react": "^19.2.15",
@@ -457,9 +461,11 @@
     "@vitejs/plugin-react": "^6.0.2",
     "eslint": "^10.4.0",
     "eslint-plugin-better-tailwindcss": "^4.5.0",
+    "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
+    "jsdom": "^29.1.1",
     "react-router-dom": "^7.15.1",
     "stylelint": "^17.12.0",
     "stylelint-config-standard": "^40.0.0",
@@ -468,6 +474,7 @@
     "typescript-eslint": "^8.59.4",
     "vite": "^8.0.13",
     "vite-plugin-dts": "^5.0.1",
+    "vitest": "^4.1.7",
     "wrangler": "^4.93.0"
   }
 }

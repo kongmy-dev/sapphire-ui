@@ -1,26 +1,9 @@
 import { forwardRef, useId } from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
 import * as RadixSwitch from '@radix-ui/react-switch';
 import { cn } from '../../lib/utils';
 
-export interface SwitchProps {
-  /** Controlled checked state. */
-  checked?: boolean;
-  /** Uncontrolled initial checked state. */
-  defaultChecked?: boolean;
-  /** Fired when checked state changes. */
-  onCheckedChange?: (checked: boolean) => void;
-  /** Disable interaction. */
-  disabled?: boolean;
-  /** Mark as required for form submission. */
-  required?: boolean;
-  /** Form field name. */
-  name?: string;
-  /** Form field value (submitted when checked). */
-  value?: string;
-  /** Explicit id; auto-generated if omitted. */
-  id?: string;
-  /** Class applied to the switch root (the visible track). */
-  className?: string;
+export interface SwitchProps extends Omit<ComponentPropsWithoutRef<typeof RadixSwitch.Root>, 'asChild'> {
   /** Label rendered next to the switch. */
   label?: string;
 }

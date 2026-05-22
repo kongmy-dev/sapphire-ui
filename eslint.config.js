@@ -2,6 +2,7 @@ import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
+import reactPlugin from 'eslint-plugin-react'
 import tseslint from 'typescript-eslint'
 import betterTailwind from 'eslint-plugin-better-tailwindcss'
 import { defineConfig, globalIgnores } from 'eslint/config'
@@ -13,6 +14,8 @@ export default defineConfig([
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
+      reactPlugin.configs.flat.recommended,
+      reactPlugin.configs.flat['jsx-runtime'],
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
       betterTailwind.configs.recommended,
@@ -24,6 +27,9 @@ export default defineConfig([
       'better-tailwindcss': {
         // Tailwind v4 reads config from the CSS entry file, not tailwind.config.js
         entryPoint: 'src/index.css',
+      },
+      react: {
+        version: '19.2.6',
       },
     },
     rules: {
@@ -38,6 +44,8 @@ export default defineConfig([
       // an effect IS the synchronization boundary (media query listeners,
       // localStorage reads, theme provider). Downgrade to warn.
       'react-hooks/set-state-in-effect': 'warn',
+      // Disable unescaped entities check which is too noisy for a docs site
+      'react/no-unescaped-entities': 'off',
       // Line-wrapping reformats multi-class cn() calls across many lines —
       // too opinionated for a component library; ordering is handled by
       // enforce-consistent-class-order instead.

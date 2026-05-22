@@ -1,8 +1,9 @@
 import { forwardRef } from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
 import * as RadixSlider from '@radix-ui/react-slider';
 import { cn } from '../../lib/utils';
 
-export interface SliderProps {
+export interface SliderProps extends Omit<ComponentPropsWithoutRef<typeof RadixSlider.Root>, 'asChild' | 'value' | 'defaultValue' | 'onValueChange' | 'onValueCommit' | 'aria-label'> {
   /** Controlled value array. Use a single-element array for one thumb. */
   value?: number[];
   /** Uncontrolled initial value. */
@@ -11,12 +12,6 @@ export interface SliderProps {
   onValueChange?: (value: number[]) => void;
   /** Fired once when the user commits the value (mouseup / keyup). */
   onValueCommit?: (value: number[]) => void;
-  min?: number;
-  max?: number;
-  step?: number;
-  disabled?: boolean;
-  name?: string;
-  className?: string;
   /** Show the numeric value next to the slider. */
   showValue?: boolean;
   /** Visual variant for light backgrounds. */
@@ -28,8 +23,6 @@ export interface SliderProps {
    * an array (one entry per thumb, e.g. ['Min', 'Max'] for a range).
    */
   'aria-label'?: string | string[];
-  /** Id of an element that labels the slider thumb. Alternative to aria-label. */
-  'aria-labelledby'?: string;
 }
 
 /**

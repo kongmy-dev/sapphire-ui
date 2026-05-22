@@ -1,28 +1,17 @@
 import { forwardRef, useId } from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
 import * as RadixCheckbox from '@radix-ui/react-checkbox';
 import { cn } from '../../lib/utils';
 
 type CheckedState = boolean | 'indeterminate';
 
-export interface CheckboxProps {
+export interface CheckboxProps extends Omit<ComponentPropsWithoutRef<typeof RadixCheckbox.Root>, 'asChild' | 'checked' | 'defaultChecked' | 'onCheckedChange'> {
   /** Controlled checked state. Use 'indeterminate' for the mixed visual. */
   checked?: CheckedState;
   /** Uncontrolled initial checked state. */
   defaultChecked?: CheckedState;
   /** Fired when checked state changes. */
   onCheckedChange?: (checked: CheckedState) => void;
-  /** Disable interaction. */
-  disabled?: boolean;
-  /** Mark as required for form submission. */
-  required?: boolean;
-  /** Form field name. */
-  name?: string;
-  /** Form field value (submitted when checked). */
-  value?: string;
-  /** Explicit id; auto-generated if omitted. */
-  id?: string;
-  /** Class applied to the checkbox root (the visible square). */
-  className?: string;
   /** Label rendered next to the checkbox. */
   label?: string;
   /** Helper text rendered below the label. */
