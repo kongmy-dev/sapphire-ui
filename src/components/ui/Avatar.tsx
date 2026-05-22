@@ -28,7 +28,7 @@ const Avatar = forwardRef<
   <AvatarPrimitive.Root
     ref={ref}
     className={cn(
-      'relative flex shrink-0 overflow-hidden rounded-full border border-[var(--color-border)]',
+      'relative flex shrink-0 overflow-hidden rounded-full border border-border',
       sizeClasses[size],
       className,
     )}
@@ -37,10 +37,10 @@ const Avatar = forwardRef<
     <AvatarPrimitive.Image
       src={src}
       alt={alt}
-      className="aspect-square h-full w-full object-cover"
+      className="aspect-square size-full object-cover"
     />
     <AvatarPrimitive.Fallback
-      className="flex h-full w-full items-center justify-center bg-[var(--color-surface)] font-sans font-semibold text-[var(--color-text-strong)] uppercase"
+      className="flex size-full items-center justify-center bg-surface font-sans font-semibold text-(--color-text-strong) uppercase"
       delayMs={300}
     >
       {fallback}

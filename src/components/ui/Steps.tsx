@@ -49,7 +49,7 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
         className={cn('flex w-full font-sans', className)}
         {...props}
       >
-        <ol className="flex w-full gap-0 list-none m-0 p-0">
+        <ol className="m-0 flex w-full list-none gap-0 p-0">
           {steps.map((step, index) => {
             const status = getStatus(index, current);
             const isLast = index === steps.length - 1;
@@ -58,7 +58,7 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
               <li
                 key={index}
                 className={cn(
-                  'flex-1 flex flex-col items-center text-center relative',
+                  'relative flex flex-1 flex-col items-center text-center',
                   variant === 'compact' && 'gap-1',
                   variant === 'default' && 'gap-2',
                 )}
@@ -68,10 +68,10 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
                   <div
                     className={cn(
                       'absolute top-3.5 h-[2px]',
-                      'left-[calc(50%+16px)] right-[calc(-50%+16px)]',
+                      'right-[calc(-50%+16px)] left-[calc(50%+16px)]',
                       status === 'done'
-                        ? 'bg-[var(--color-primary)]'
-                        : 'bg-[var(--color-border)]',
+                        ? 'bg-primary'
+                        : 'bg-border',
                     )}
                     aria-hidden="true"
                   />
@@ -84,13 +84,13 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
                   ) : (
                     <div
                       className={cn(
-                        'w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold font-mono transition-colors',
+                        'flex size-7 items-center justify-center rounded-full font-mono text-xs font-semibold transition-colors',
                         status === 'done' &&
-                          'bg-[var(--color-primary)] text-white',
+                          'bg-primary text-white',
                         status === 'active' &&
-                          'bg-[var(--color-accent)] text-[var(--color-primary)] ring-4 ring-[rgba(197,160,101,0.18)]',
+                          'bg-accent text-primary ring-4 ring-[rgba(197,160,101,0.18)]',
                         status === 'upcoming' &&
-                          'bg-[var(--color-surface)] text-[var(--color-text-muted)] border border-[var(--color-border)]',
+                          'border border-border bg-surface text-(--color-text-muted)',
                       )}
                     >
                       {status === 'done' ? (
@@ -111,16 +111,16 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
                 <div className="flex flex-col gap-0.5">
                   <span
                     className={cn(
-                      'text-xs font-semibold uppercase tracking-wider transition-colors',
-                      status === 'done' && 'text-[var(--color-text-strong)]',
-                      status === 'active' && 'text-[var(--color-accent-text,var(--color-accent))]',
-                      status === 'upcoming' && 'text-[var(--color-text-muted)]',
+                      'text-xs font-semibold tracking-wider uppercase transition-colors',
+                      status === 'done' && 'text-(--color-text-strong)',
+                      status === 'active' && 'text-(--color-accent-text,var(--color-accent))',
+                      status === 'upcoming' && 'text-(--color-text-muted)',
                     )}
                   >
                     {step.label}
                   </span>
                   {step.description && variant === 'default' && (
-                    <span className="text-[11px] text-[var(--color-text-muted)] leading-tight">
+                    <span className="text-[11px] leading-tight text-(--color-text-muted)">
                       {step.description}
                     </span>
                   )}

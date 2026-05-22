@@ -25,10 +25,10 @@ const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(
     <nav
       ref={ref}
       aria-label="Breadcrumb"
-      className={cn('font-sans text-sm text-[var(--color-text-muted)]', className)}
+      className={cn('font-sans text-sm text-(--color-text-muted)', className)}
       {...props}
     >
-      <ol className="flex flex-wrap items-center gap-1.5 list-none m-0 p-0">
+      <ol className="m-0 flex list-none flex-wrap items-center gap-1.5 p-0">
         {items.map((item, i) => {
           const isLast = i === items.length - 1;
           return (
@@ -37,7 +37,7 @@ const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(
                 {isLast || !item.href ? (
                   <span
                     aria-current={isLast ? 'page' : undefined}
-                    className={isLast ? 'text-[var(--color-text-main)] font-medium' : undefined}
+                    className={isLast ? 'font-medium text-(--color-text-main)' : undefined}
                   >
                     {item.label}
                   </span>
@@ -45,14 +45,14 @@ const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(
                   <a
                     href={item.href}
                     onClick={onNavigate ? (e) => onNavigate(item.href!, e) : undefined}
-                    className="text-[var(--color-text-muted)] hover:text-[var(--color-accent-text)] transition-colors no-underline"
+                    className="text-(--color-text-muted) no-underline transition-colors hover:text-(--color-accent-text)"
                   >
                     {item.label}
                   </a>
                 )}
               </li>
               {!isLast && (
-                <li aria-hidden="true" className="inline-flex items-center text-[var(--color-text-muted)] select-none">
+                <li aria-hidden="true" className="inline-flex items-center text-(--color-text-muted) select-none">
                   {separator}
                 </li>
               )}

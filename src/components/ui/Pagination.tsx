@@ -87,7 +87,7 @@ const Pagination = forwardRef<HTMLElement, PaginationProps>(
             aria-label="Go to previous page"
             className={cn(
               buttonClass,
-              'bg-transparent border-[var(--color-border)] text-[var(--color-text-main)] hover:bg-[var(--color-surface)]',
+              'border-border bg-transparent text-(--color-text-main) hover:bg-surface',
             )}
           >
             <Arrow direction="left" />
@@ -98,7 +98,7 @@ const Pagination = forwardRef<HTMLElement, PaginationProps>(
             <span
               key={`ellipsis-${i}`}
               aria-hidden="true"
-              className="inline-flex items-center justify-center w-8 h-8 text-[var(--color-text-muted)] select-none"
+              className="inline-flex size-8 items-center justify-center text-(--color-text-muted) select-none"
             >
               …
             </span>
@@ -112,8 +112,8 @@ const Pagination = forwardRef<HTMLElement, PaginationProps>(
               className={cn(
                 buttonClass,
                 item === currentPage
-                  ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)]'
-                  : 'bg-transparent border-[var(--color-border)] text-[var(--color-text-main)] hover:bg-[var(--color-surface)]',
+                  ? 'border-primary bg-primary text-white'
+                  : 'border-border bg-transparent text-(--color-text-main) hover:bg-surface',
               )}
             >
               {item}
@@ -128,7 +128,7 @@ const Pagination = forwardRef<HTMLElement, PaginationProps>(
             aria-label="Go to next page"
             className={cn(
               buttonClass,
-              'bg-transparent border-[var(--color-border)] text-[var(--color-text-main)] hover:bg-[var(--color-surface)]',
+              'border-border bg-transparent text-(--color-text-main) hover:bg-surface',
             )}
           >
             <Arrow direction="right" />

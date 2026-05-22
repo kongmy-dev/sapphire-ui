@@ -1,6 +1,6 @@
 {
   "name": "@kongmy-dev/sapphire-ui",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
@@ -388,6 +388,10 @@
     "build": "tsc -b && vite build",
     "prepare": "bun run build",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "lint:css": "stylelint \"src/**/*.css\"",
+    "lint:css:fix": "stylelint \"src/**/*.css\" --fix",
+    "format": "bun run lint:fix && bun run lint:css:fix",
     "build:docs": "vite build --config vite.docs.config.ts --outDir dist-docs",
     "preview": "vite preview",
     "test:a11y": "playwright test",
@@ -457,6 +461,8 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
     "react-router-dom": "^7.15.1",
+    "stylelint": "^17.12.0",
+    "stylelint-config-standard": "^40.0.0",
     "tailwindcss": "^4.3.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.4",

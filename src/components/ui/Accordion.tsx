@@ -20,7 +20,7 @@ const AccordionItem = forwardRef<
 >(({ className, ...props }, ref) => (
   <AccordionPrimitive.Item
     ref={ref}
-    className={cn('border-b border-[var(--color-border)]', className)}
+    className={cn('border-b border-border', className)}
     {...props}
   />
 ));
@@ -34,16 +34,16 @@ const AccordionTrigger = forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        'flex flex-1 items-center justify-between py-4 font-sans text-sm font-medium text-[var(--color-text-main)] cursor-pointer transition-all',
-        'hover:underline underline-offset-4',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus-ring)] focus-visible:ring-offset-1 focus-visible:rounded-[var(--radius-sm)]',
+        'flex flex-1 cursor-pointer items-center justify-between py-4 font-sans text-sm font-medium text-(--color-text-main) transition-all',
+        'underline-offset-4 hover:underline',
+        'focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:ring-offset-1 focus-visible:outline-none',
         '[&[data-state=open]>svg]:rotate-180',
         className,
       )}
       {...props}
     >
       {children}
-      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" className="shrink-0 transition-transform duration-200 text-[var(--color-text-muted)]">
+      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" className="shrink-0 text-(--color-text-muted) transition-transform duration-200">
         <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
       </svg>
     </AccordionPrimitive.Trigger>
@@ -57,10 +57,10 @@ const AccordionContent = forwardRef<
 >(({ className, children, ...props }, ref) => (
   <AccordionPrimitive.Content
     ref={ref}
-    className="overflow-hidden text-sm font-sans text-[var(--color-text-muted)] data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+    className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden font-sans text-sm text-(--color-text-muted)"
     {...props}
   >
-    <div className={cn('pb-4 pt-0', className)}>{children}</div>
+    <div className={cn('pt-0 pb-4', className)}>{children}</div>
   </AccordionPrimitive.Content>
 ));
 AccordionContent.displayName = 'AccordionContent';

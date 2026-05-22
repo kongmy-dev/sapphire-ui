@@ -1,0 +1,52 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "ignoreFiles": ["dist/**/*", "dist-docs/**/*", "node_modules/**/*"],
+  "rules": {
+    "import-notation": "string",
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": [
+          "tailwind",
+          "theme",
+          "layer",
+          "apply",
+          "variants",
+          "responsive",
+          "screen",
+          "config",
+          "plugin",
+          "source",
+          "utility",
+          "custom-variant",
+          "reference"
+        ]
+      }
+    ],
+    "selector-class-pattern": null,
+    "no-descending-specificity": null,
+    "no-duplicate-selectors": null,
+    "declaration-block-single-line-max-declarations": null,
+    "alpha-value-notation": "number",
+    "color-function-notation": null,
+    "hue-degree-notation": null,
+    "media-feature-range-notation": "prefix",
+    "rule-empty-line-before": null,
+    "comment-empty-line-before": null,
+    "at-rule-empty-line-before": null,
+    "declaration-empty-line-before": null,
+    "selector-pseudo-class-no-unknown": [
+      true,
+      { "ignorePseudoClasses": ["global", "is", "where"] }
+    ],
+    "shorthand-property-no-redundant-values": true,
+    "length-zero-no-unit": true,
+    "keyframes-name-pattern": null,
+    "property-no-deprecated": [
+      true,
+      {
+        "ignoreProperties": ["clip"]
+      }
+    ]
+  }
+}

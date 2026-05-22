@@ -12,14 +12,14 @@ function Skeleton({ className, variant = 'line', size = 'md', ...props }: Skelet
   return (
     <div
       className={cn(
-        'animate-[skeleton-shimmer_1.5s_ease-in-out_infinite] bg-[length:200%_100%] rounded-[var(--radius-sm)]',
-        'bg-gradient-to-r from-[var(--color-surface)] via-[var(--color-border)] to-[var(--color-surface)]',
+        'animate-[skeleton-shimmer_1.5s_ease-in-out_infinite] rounded-sm bg-size-[200%_100%]',
+        'bg-linear-to-r from-surface via-border to-surface',
         'motion-reduce:animate-none',
         variant === 'line' && size === 'sm' && 'h-3.5 w-2/5',
         variant === 'line' && size === 'md' && 'h-5 w-4/5',
         variant === 'line' && size === 'lg' && 'h-8 w-3/5',
-        variant === 'card' && 'h-48 w-full rounded-[var(--radius-md)]',
-        variant === 'circle' && 'rounded-full w-10 h-10',
+        variant === 'card' && 'h-48 w-full rounded-md',
+        variant === 'circle' && 'size-10 rounded-full',
         className,
       )}
       {...props}

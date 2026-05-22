@@ -12,10 +12,10 @@ function Spinner({ className, size = 'default', ...props }: SpinnerProps) {
       role="status"
       aria-label="Loading"
       className={cn(
-        'inline-block border-2 border-current border-t-transparent rounded-full animate-spin motion-reduce:animate-none',
-        size === 'sm' && 'w-3.5 h-3.5',
-        size === 'default' && 'w-[18px] h-[18px]',
-        size === 'lg' && 'w-6 h-6',
+        'inline-block animate-spin rounded-full border-2 border-current border-t-transparent motion-reduce:animate-none',
+        size === 'sm' && 'size-3.5',
+        size === 'default' && 'size-[18px]',
+        size === 'lg' && 'size-6',
         className,
       )}
       {...props}

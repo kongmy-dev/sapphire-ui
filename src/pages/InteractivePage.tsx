@@ -30,7 +30,7 @@ export default function InteractivePage() {
       {/* ─── Dialog ─────────────────────────────────────────────────── */}
       <section className="docs-section">
         <h2 className="docs-section-title">Dialog</h2>
-        <p className="font-sans text-sm text-[var(--color-text-muted)] mb-4 leading-relaxed">
+        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
           Accessible modal built on Radix Dialog. Includes focus trap, Escape close, and overlay click dismiss.
           Use the compound sub-components for custom layouts, or <code className="docs-props-table code">ConfirmDialog</code> for quick confirmations.
         </p>
@@ -98,7 +98,7 @@ export default function InteractivePage() {
       {/* ─── Toast ──────────────────────────────────────────────────── */}
       <section className="docs-section">
         <h2 className="docs-section-title">Toast</h2>
-        <p className="font-sans text-sm text-[var(--color-text-muted)] mb-4 leading-relaxed">
+        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
           Framework-agnostic toast notifications via Web Component. React wrapper exposes <code className="docs-props-table code">show()</code> via ref.
           Also available in vanilla JS via <code className="docs-props-table code">window.__sapphireToast()</code>.
         </p>
@@ -124,7 +124,7 @@ export default function InteractivePage() {
       {/* ─── PageSection ────────────────────────────────────────────── */}
       <section className="docs-section">
         <h2 className="docs-section-title">PageSection</h2>
-        <p className="font-sans text-sm text-[var(--color-text-muted)] mb-4 leading-relaxed">
+        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
           Consistent section wrapper with constrained width, optional label + heading + subheading. Eliminates repeated <code className="docs-props-table code">max-w-7xl mx-auto px-6</code> boilerplate.
         </p>
         <div className="docs-preview" style={{ padding: 0, overflow: 'hidden' }}>
@@ -135,10 +135,10 @@ export default function InteractivePage() {
             maxWidth="full"
             style={{ padding: '2rem 1.5rem', background: 'var(--color-surface)' }}
           >
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
               {['Cloud Ops', 'AI / ML', 'Web Apps'].map((t) => (
-                <div key={t} className="bg-[var(--color-card-bg)] p-6 rounded-[var(--radius-md)] border border-[var(--color-border)]">
-                  <span className="font-sans font-semibold text-[var(--color-text-strong)]">{t}</span>
+                <div key={t} className="rounded-md border border-border bg-(--color-card-bg) p-6">
+                  <span className="font-sans font-semibold text-(--color-text-strong)">{t}</span>
                 </div>
               ))}
             </div>
@@ -159,7 +159,7 @@ export default function InteractivePage() {
       {/* ─── SiteHeader ─────────────────────────────────────────────── */}
       <section className="docs-section">
         <h2 className="docs-section-title">SiteHeader</h2>
-        <p className="font-sans text-sm text-[var(--color-text-muted)] mb-4 leading-relaxed">
+        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
           Composable sticky header with brand, nav, and actions slots. Dark (default) and light variants.
         </p>
         <div className="docs-preview" style={{ padding: 0, overflow: 'hidden', borderRadius: 'var(--radius-md)' }}>
@@ -167,8 +167,8 @@ export default function InteractivePage() {
             sticky={false}
             brand={
               <>
-                <span className="font-serif font-bold text-lg">KONGMY</span>
-                <span className="font-sans font-light text-lg text-[var(--color-accent)]">dev</span>
+                <span className="font-serif text-lg font-bold">KONGMY</span>
+                <span className="font-sans text-lg font-light text-accent">dev</span>
               </>
             }
             nav={
@@ -190,8 +190,8 @@ export default function InteractivePage() {
             variant="light"
             brand={
               <>
-                <span className="font-serif font-bold text-lg">Cloud</span>
-                <span className="font-sans font-light text-lg text-[var(--color-accent)]">Cost</span>
+                <span className="font-serif text-lg font-bold">Cloud</span>
+                <span className="font-sans text-lg font-light text-accent">Cost</span>
               </>
             }
             nav={
@@ -211,18 +211,18 @@ export default function InteractivePage() {
       {/* ─── SiteFooter ─────────────────────────────────────────────── */}
       <section className="docs-section">
         <h2 className="docs-section-title">SiteFooter</h2>
-        <p className="font-sans text-sm text-[var(--color-text-muted)] mb-4 leading-relaxed">
+        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
           Composable footer with brand, link groups, and bottom bar slots.
         </p>
         <div className="docs-preview" style={{ padding: 0, overflow: 'hidden', borderRadius: 'var(--radius-md)' }}>
           <SiteFooter
             brand={
               <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="font-serif font-bold text-xl text-white">KONGMY</span>
-                  <span className="font-sans font-light text-xl text-[var(--color-accent)]">dev</span>
+                <div className="mb-3 flex items-center gap-2">
+                  <span className="font-serif text-xl font-bold text-white">KONGMY</span>
+                  <span className="font-sans text-xl font-light text-accent">dev</span>
                 </div>
-                <p className="font-sans text-sm text-[var(--color-text-on-dark-muted)] leading-relaxed m-0">
+                <p className="m-0 font-sans text-sm/relaxed text-(--color-text-on-dark-muted)">
                   Helping businesses cut costs, automate operations, and build software that works.
                 </p>
               </div>
@@ -258,7 +258,7 @@ export default function InteractivePage() {
       {/* ─── Layout ─────────────────────────────────────────────────── */}
       <section className="docs-section">
         <h2 className="docs-section-title">Layout</h2>
-        <p className="font-sans text-sm text-[var(--color-text-muted)] mb-4 leading-relaxed">
+        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
           Canonical page shell — composes <code className="docs-props-table code">SiteHeader</code>,
           <code className="docs-props-table code">SiteFooter</code>, and an optional sidebar slot into a
           full-height column. Used by every kongmy.dev app so consumers get the
@@ -272,8 +272,8 @@ export default function InteractivePage() {
                 sticky={false}
                 brand={
                   <>
-                    <span className="font-serif font-bold text-lg">KONGMY</span>
-                    <span className="font-sans font-light text-lg text-[var(--color-accent)]">dev</span>
+                    <span className="font-serif text-lg font-bold">KONGMY</span>
+                    <span className="font-sans text-lg font-light text-accent">dev</span>
                   </>
                 }
                 nav={
@@ -287,7 +287,7 @@ export default function InteractivePage() {
             footer={
               <SiteFooter
                 brand={
-                  <span className="font-sans text-sm text-[var(--color-text-on-dark-muted)]">
+                  <span className="font-sans text-sm text-(--color-text-on-dark-muted)">
                     © KONGMY Digital Solutions
                   </span>
                 }
@@ -296,10 +296,10 @@ export default function InteractivePage() {
             }
           >
             <div style={{ padding: '2rem 1.5rem' }}>
-              <h3 className="font-serif text-xl font-semibold text-[var(--color-text-strong)] m-0 mb-2">
+              <h3 className="m-0 mb-2 font-serif text-xl font-semibold text-(--color-text-strong)">
                 Main content area
               </h3>
-              <p className="font-sans text-sm text-[var(--color-text-muted)] m-0">
+              <p className="m-0 font-sans text-sm text-(--color-text-muted)">
                 Pages, routes, or any children render here between the header and footer slots.
               </p>
             </div>
@@ -330,13 +330,13 @@ export default function InteractivePage() {
       {/* ─── SEOHead ────────────────────────────────────────────────── */}
       <section className="docs-section">
         <h2 className="docs-section-title">SEO / Head</h2>
-        <p className="font-sans text-sm text-[var(--color-text-muted)] mb-4 leading-relaxed">
+        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
           Dual API for SEO meta tags: React <code className="docs-props-table code">&lt;SEOHead&gt;</code> component for SPAs, and <code className="docs-props-table code">generateSEOTags()</code> utility for Astro/SSR.
         </p>
         <div className="docs-preview">
           <div className="docs-stack" style={{ gap: 16 }}>
             <div>
-              <span className="font-mono text-xs font-bold uppercase tracking-[0.1em] text-[var(--color-accent)] mb-2 block">React (SPA)</span>
+              <span className="mb-2 block font-mono text-xs font-bold tracking-widest text-accent uppercase">React (SPA)</span>
               <pre className="docs-code" style={{ display: 'block', padding: 16 }}>
 {`<SEOHead
   title="Cloud Cost Dashboard"
@@ -349,7 +349,7 @@ export default function InteractivePage() {
               </pre>
             </div>
             <div>
-              <span className="font-mono text-xs font-bold uppercase tracking-[0.1em] text-[var(--color-accent)] mb-2 block">Astro / SSR</span>
+              <span className="mb-2 block font-mono text-xs font-bold tracking-widest text-accent uppercase">Astro / SSR</span>
               <pre className="docs-code" style={{ display: 'block', padding: 16 }}>
 {`---
 import { generateSEOTags } from '@kongmy-dev/sapphire-ui';

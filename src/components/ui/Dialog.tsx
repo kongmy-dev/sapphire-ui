@@ -19,7 +19,7 @@ const DialogOverlay = forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={cn(
-      'fixed inset-0 z-[1000] bg-[rgba(10,25,47,0.85)] backdrop-blur-xs',
+      'fixed inset-0 z-1000 bg-[rgba(10,25,47,0.85)] backdrop-blur-xs',
       'data-[state=closed]:animate-[fadeOut_150ms_ease] data-[state=open]:animate-[fadeIn_200ms_ease]',
       className,
     )}
@@ -44,7 +44,7 @@ const DialogContent = forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        'fixed top-1/2 left-1/2 z-[1001] -translate-1/2',
+        'fixed top-1/2 left-1/2 z-1001 -translate-1/2',
         'flex max-h-[85vh] w-[90%] flex-col',
         'rounded-md bg-(--color-card-bg) shadow-(--shadow-lg)',
         'data-[state=closed]:animate-[dialogOut_150ms_ease] data-[state=open]:animate-[dialogIn_200ms_ease]',

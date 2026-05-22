@@ -16,14 +16,14 @@ function Empty({ className, icon, title, description, action, ...props }: EmptyP
   return (
     <div
       className={cn(
-        'flex flex-col items-center justify-center text-center py-16 px-6',
+        'flex flex-col items-center justify-center px-6 py-16 text-center',
         className,
       )}
       {...props}
     >
       {icon && (
         <span
-          className="material-symbols-outlined text-[var(--color-text-muted)] mb-4"
+          className="material-symbols-outlined mb-4 text-(--color-text-muted)"
           style={{ fontSize: 56 }}
           aria-hidden="true"
         >
@@ -31,12 +31,12 @@ function Empty({ className, icon, title, description, action, ...props }: EmptyP
         </span>
       )}
       {title && (
-        <h3 className="font-serif text-lg font-medium text-[var(--color-text-strong)] mb-2">
+        <h3 className="mb-2 font-serif text-lg font-medium text-(--color-text-strong)">
           {title}
         </h3>
       )}
       {description && (
-        <p className="font-sans text-sm text-[var(--color-text-muted)] max-w-sm mb-6">
+        <p className="mb-6 max-w-sm font-sans text-sm text-(--color-text-muted)">
           {description}
         </p>
       )}

@@ -60,7 +60,7 @@ const Slider = forwardRef<HTMLSpanElement, SliderProps>(
     };
 
     return (
-      <div className="flex items-center gap-3 w-full">
+      <div className="flex w-full items-center gap-3">
         <RadixSlider.Root
           ref={ref}
           value={value}
@@ -85,7 +85,7 @@ const Slider = forwardRef<HTMLSpanElement, SliderProps>(
           ))}
         </RadixSlider.Root>
         {showValue && (
-          <span className="font-mono text-sm text-[var(--color-text-muted)] min-w-[3ch] text-right tabular-nums">
+          <span className="min-w-[3ch] text-right font-mono text-sm text-(--color-text-muted) tabular-nums">
             {display.join('–')}
           </span>
         )}

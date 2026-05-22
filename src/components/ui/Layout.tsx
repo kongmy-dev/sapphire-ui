@@ -34,15 +34,15 @@ const Layout = forwardRef<HTMLDivElement, LayoutProps>(
       <div
         ref={ref}
         className={cn(
-          'min-h-screen flex flex-col bg-[var(--color-surface)]',
+          'flex min-h-screen flex-col bg-surface',
           className,
         )}
         {...props}
       >
         {header}
-        <div className={cn('flex flex-1 min-h-0', sidebar ? '' : 'flex-col')}>
+        <div className={cn('flex min-h-0 flex-1', sidebar ? '' : 'flex-col')}>
           {sidebar}
-          <main className={cn('flex-1 min-w-0', mainClassName)}>
+          <main className={cn('min-w-0 flex-1', mainClassName)}>
             {children}
           </main>
         </div>

@@ -21,22 +21,22 @@ const SiteHeader = forwardRef<HTMLElement, SiteHeaderProps>(
     <header
       ref={ref}
       className={cn(
-        'w-full z-40 border-b',
+        'z-40 w-full border-b',
         sticky && 'sticky top-0',
         variant === 'dark'
-          ? 'bg-[var(--color-primary)] text-white border-[var(--color-border-dark)]'
+          ? 'border-border-dark bg-primary text-white'
           // Light variant: hardcoded light palette so it stays light even
           // when previewed inside a dark-themed page (e.g. /interactive
           // demos a light header on a dark docs background).
-          : 'bg-white text-[#0a192f] border-[#e2e8f0]',
+          : 'border-border bg-white text-primary',
         className,
       )}
       {...props}
     >
-      <div className="max-w-[80rem] mx-auto px-6 h-16 flex items-center justify-between gap-6">
-        {brand && <div className="flex items-center gap-3 shrink-0">{brand}</div>}
-        {nav && <nav className="hidden md:flex items-center gap-1 flex-1">{nav}</nav>}
-        {actions && <div className="flex items-center gap-3 shrink-0">{actions}</div>}
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-6">
+        {brand && <div className="flex shrink-0 items-center gap-3">{brand}</div>}
+        {nav && <nav className="hidden flex-1 items-center gap-1 md:flex">{nav}</nav>}
+        {actions && <div className="flex shrink-0 items-center gap-3">{actions}</div>}
         {children}
       </div>
     </header>
@@ -57,16 +57,16 @@ const SiteHeaderLink = forwardRef<HTMLAnchorElement, SiteHeaderLinkProps>(
     <a
       ref={ref}
       className={cn(
-        'font-sans text-sm font-medium px-3 py-2 rounded-[var(--radius-btn)] transition-colors no-underline',
+        'rounded-btn px-3 py-2 font-sans text-sm font-medium no-underline transition-colors',
         variant === 'dark'
           ? active
-            ? 'text-[var(--color-accent)] bg-[rgba(197,160,101,0.1)]'
-            : 'text-[var(--color-text-on-dark-muted)] hover:text-white hover:bg-[rgba(255,255,255,0.06)]'
+            ? 'bg-[rgba(197,160,101,0.1)] text-accent'
+            : 'text-(--color-text-on-dark-muted) hover:bg-[rgba(255,255,255,0.06)] hover:text-white'
           // Light variant: hardcoded so the link stays readable on the
           // light header background regardless of the surrounding theme.
           : active
-            ? 'text-[#0a192f] bg-[#f4f6f8]'
-            : 'text-[#475569] hover:text-[#0a192f] hover:bg-[#f4f6f8]',
+            ? 'bg-surface text-primary'
+            : 'text-[#475569] hover:bg-surface hover:text-primary',
         className,
       )}
       {...props}

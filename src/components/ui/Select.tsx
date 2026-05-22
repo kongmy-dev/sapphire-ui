@@ -27,9 +27,9 @@ const SelectTrigger = forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      'flex h-10 w-full items-center justify-between rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-card-bg)] px-3 py-2 text-sm font-sans text-[var(--color-text-main)] cursor-pointer',
-      'placeholder:text-[var(--color-text-muted)]',
-      'focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus-ring)] focus-visible:ring-offset-1',
+      'flex h-10 w-full cursor-pointer items-center justify-between rounded-sm border border-border bg-(--color-card-bg) px-3 py-2 font-sans text-sm text-(--color-text-main)',
+      'placeholder:text-(--color-text-muted)',
+      'focus:outline-none focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:ring-offset-1',
       'disabled:cursor-not-allowed disabled:opacity-50',
       '[&>span]:line-clamp-1',
       className,
@@ -38,7 +38,7 @@ const SelectTrigger = forwardRef<
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" className="opacity-60 shrink-0 ml-2">
+      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" className="ml-2 shrink-0 opacity-60">
         <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
       </svg>
     </SelectPrimitive.Icon>
@@ -55,7 +55,7 @@ const SelectContent = forwardRef<
       ref={ref}
       position={position}
       className={cn(
-        'relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-card-bg)] text-[var(--color-text-main)] shadow-md',
+        'relative z-50 max-h-96 min-w-32 overflow-hidden rounded-md border border-border bg-(--color-card-bg) text-(--color-text-main) shadow-md',
         'data-[state=open]:animate-in data-[state=closed]:animate-out',
         'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
         position === 'popper' &&
@@ -68,7 +68,7 @@ const SelectContent = forwardRef<
         className={cn(
           'p-1',
           position === 'popper' &&
-            'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]',
+            'h-(--radix-select-trigger-height) w-full min-w-(--radix-select-trigger-width)',
         )}
       >
         {children}
@@ -84,7 +84,7 @@ const SelectLabel = forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.Label
     ref={ref}
-    className={cn('px-2 py-1.5 text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]', className)}
+    className={cn('px-2 py-1.5 text-xs font-semibold tracking-wider text-(--color-text-muted) uppercase', className)}
     {...props}
   />
 ));
@@ -97,14 +97,14 @@ const SelectItem = forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex w-full cursor-pointer select-none items-center rounded-[var(--radius-sm)] py-1.5 pl-8 pr-2 text-sm font-sans outline-none',
-      'focus:bg-[var(--color-surface)] focus:text-[var(--color-text-main)]',
-      'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      'relative flex w-full cursor-pointer items-center rounded-sm py-1.5 pr-2 pl-8 font-sans text-sm outline-none select-none',
+      'focus:bg-surface focus:text-(--color-text-main)',
+      'data-disabled:pointer-events-none data-disabled:opacity-50',
       className,
     )}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className="absolute left-2 flex size-3.5 items-center justify-center">
       <SelectPrimitive.ItemIndicator>
         <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
           <path d="M2 6l3 3 5-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
@@ -120,7 +120,7 @@ const SelectSeparator = forwardRef<
   React.ComponentRef<typeof SelectPrimitive.Separator>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
 >(({ className, ...props }, ref) => (
-  <SelectPrimitive.Separator ref={ref} className={cn('-mx-1 my-1 h-px bg-[var(--color-border)]', className)} {...props} />
+  <SelectPrimitive.Separator ref={ref} className={cn('-mx-1 my-1 h-px bg-border', className)} {...props} />
 ));
 SelectSeparator.displayName = 'SelectSeparator';
 

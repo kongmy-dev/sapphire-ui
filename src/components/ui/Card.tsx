@@ -18,15 +18,15 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
       <div
         ref={ref}
         className={cn(
-          'rounded-[var(--radius-md)] p-8 transition-all duration-200',
-          variant === 'default' && 'bg-[var(--color-card-bg)] border border-[var(--color-border)]',
-          variant === 'dark' && 'bg-[var(--color-primary)] border border-[var(--color-border-dark)] text-[var(--color-text-on-dark)]',
-          variant === 'feature' && 'bg-[var(--color-card-bg)] border border-[var(--color-border)] grid md:grid-cols-[1fr_auto] gap-8',
-          variant === 'dashed' && 'bg-transparent border-[1.5px] border-dashed border-[var(--color-border)] text-[var(--color-text-muted)]',
-          hoverable && variant === 'default' && 'hover:shadow-[var(--shadow-card-hover)] hover:-translate-y-0.5 cursor-pointer',
-          hoverable && variant === 'dark' && 'hover:border-[var(--color-accent)] cursor-pointer',
-          hoverable && variant === 'dashed' && 'hover:border-[var(--color-accent)] hover:text-[var(--color-text-main)] cursor-pointer',
-          bordered && 'border-l-[6px] border-l-[var(--color-accent)]',
+          'rounded-md p-8 transition-all duration-200',
+          variant === 'default' && 'border border-border bg-(--color-card-bg)',
+          variant === 'dark' && 'border border-border-dark bg-primary text-(--color-text-on-dark)',
+          variant === 'feature' && 'grid gap-8 border border-border bg-(--color-card-bg) md:grid-cols-[1fr_auto]',
+          variant === 'dashed' && 'border-[1.5px] border-dashed border-border bg-transparent text-(--color-text-muted)',
+          hoverable && variant === 'default' && 'cursor-pointer hover:-translate-y-0.5 hover:shadow-(--shadow-card-hover)',
+          hoverable && variant === 'dark' && 'cursor-pointer hover:border-accent',
+          hoverable && variant === 'dashed' && 'cursor-pointer hover:border-accent hover:text-(--color-text-main)',
+          bordered && 'border-l-[6px] border-l-accent',
           className,
         )}
         {...props}
@@ -65,7 +65,7 @@ const CardFooter = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
     <div
       ref={ref}
       className={cn(
-        'flex items-center justify-between pt-4 border-t border-[var(--color-border)] mt-auto',
+        'mt-auto flex items-center justify-between border-t border-border pt-4',
         className,
       )}
       {...props}

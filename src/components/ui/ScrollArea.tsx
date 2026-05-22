@@ -23,7 +23,7 @@ const ScrollArea = forwardRef<
     {/* tabIndex=0 makes the scrollable region keyboard-focusable —
         required by axe's scrollable-region-focusable rule so users on
         keyboard-only navigation can scroll the content. */}
-    <ScrollAreaPrimitive.Viewport tabIndex={0} className="h-full w-full rounded-[inherit] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus-ring)] focus-visible:ring-offset-1">
+    <ScrollAreaPrimitive.Viewport tabIndex={0} className="size-full rounded-[inherit] focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:ring-offset-1 focus-visible:outline-none">
       {children}
     </ScrollAreaPrimitive.Viewport>
     <ScrollBar />
@@ -40,14 +40,14 @@ const ScrollBar = forwardRef<
     ref={ref}
     orientation={orientation}
     className={cn(
-      'flex touch-none select-none transition-colors',
-      orientation === 'vertical' && 'h-full w-2 border-l border-l-transparent p-[1px]',
-      orientation === 'horizontal' && 'h-2 flex-col border-t border-t-transparent p-[1px]',
+      'flex touch-none transition-colors select-none',
+      orientation === 'vertical' && 'h-full w-2 border-l border-l-transparent p-px',
+      orientation === 'horizontal' && 'h-2 flex-col border-t border-t-transparent p-px',
       className,
     )}
     {...props}
   >
-    <ScrollAreaPrimitive.ScrollAreaThumb className="relative flex-1 rounded-full bg-[var(--color-border)] hover:bg-[var(--color-text-muted)] transition-colors" />
+    <ScrollAreaPrimitive.ScrollAreaThumb className="relative flex-1 rounded-full bg-border transition-colors hover:bg-(--color-text-muted)" />
   </ScrollAreaPrimitive.ScrollAreaScrollbar>
 ));
 ScrollBar.displayName = 'ScrollBar';

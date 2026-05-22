@@ -5,21 +5,21 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../lib/utils';
 
 const toggleVariants = cva(
-  'inline-flex items-center justify-center gap-1.5 font-sans font-medium cursor-pointer transition-colors outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus-ring)] focus-visible:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed',
+  'inline-flex cursor-pointer items-center justify-center gap-1.5 font-sans font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
         default:
-          'bg-transparent text-[var(--color-text-main)] border border-[var(--color-border)] hover:bg-[var(--color-surface)] data-[state=on]:bg-[var(--color-primary)] data-[state=on]:text-white data-[state=on]:border-[var(--color-primary)]',
+          'border border-border bg-transparent text-(--color-text-main) hover:bg-surface data-[state=on]:border-primary data-[state=on]:bg-primary data-[state=on]:text-white',
         outline:
-          'bg-transparent text-[var(--color-text-muted)] border border-[var(--color-border)] hover:text-[var(--color-text-main)] data-[state=on]:bg-[var(--color-accent)] data-[state=on]:text-[var(--color-primary)] data-[state=on]:border-[var(--color-accent)]',
+          'border border-border bg-transparent text-(--color-text-muted) hover:text-(--color-text-main) data-[state=on]:border-accent data-[state=on]:bg-accent data-[state=on]:text-primary',
         ghost:
-          'bg-transparent text-[var(--color-text-muted)] border-none hover:bg-[var(--color-surface)] data-[state=on]:bg-[var(--color-surface)] data-[state=on]:text-[var(--color-text-main)]',
+          'border-none bg-transparent text-(--color-text-muted) hover:bg-surface data-[state=on]:bg-surface data-[state=on]:text-(--color-text-main)',
       },
       size: {
-        sm: 'h-8 px-2.5 text-xs rounded-[var(--radius-btn)]',
-        default: 'h-9 px-3 text-sm rounded-[var(--radius-btn)]',
-        lg: 'h-10 px-4 text-base rounded-[var(--radius-btn)]',
+        sm: 'h-8 rounded-btn px-2.5 text-xs',
+        default: 'h-9 rounded-btn px-3 text-sm',
+        lg: 'h-10 rounded-btn px-4 text-base',
       },
     },
     defaultVariants: {

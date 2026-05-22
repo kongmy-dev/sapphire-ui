@@ -27,7 +27,7 @@ const PageSection = forwardRef<HTMLElement, PageSectionProps>(
     <section
       ref={ref}
       className={cn(
-        'w-full mx-auto px-6 py-16 md:py-24',
+        'mx-auto w-full px-6 py-16 md:py-24',
         className,
       )}
       style={{ maxWidth: maxWidthMap[maxWidth] }}
@@ -36,17 +36,17 @@ const PageSection = forwardRef<HTMLElement, PageSectionProps>(
       {(label || heading || subheading) && (
         <div className="mb-10 md:mb-14">
           {label && (
-            <span className="block font-mono text-xs font-bold uppercase tracking-[0.1em] text-[var(--color-accent)] mb-3">
+            <span className="mb-3 block font-mono text-xs font-bold tracking-widest text-accent uppercase">
               {label}
             </span>
           )}
           {heading && (
-            <h2 className="font-serif font-bold text-[clamp(1.5rem,3vw,2.5rem)] text-[var(--color-text-strong)] leading-tight m-0">
+            <h2 className="m-0 font-serif text-[clamp(1.5rem,3vw,2.5rem)] leading-tight font-bold text-(--color-text-strong)">
               {heading}
             </h2>
           )}
           {subheading && (
-            <p className="font-sans text-base md:text-lg text-[var(--color-text-muted)] mt-3 leading-relaxed max-w-[640px] m-0 mt-3">
+            <p className="m-0 mt-3 max-w-[640px] font-sans text-base/relaxed text-(--color-text-muted) md:text-lg">
               {subheading}
             </p>
           )}

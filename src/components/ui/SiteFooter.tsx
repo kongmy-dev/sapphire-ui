@@ -21,30 +21,30 @@ const SiteFooter = forwardRef<HTMLElement, SiteFooterProps>(
       className={cn(
         'w-full border-t',
         variant === 'dark'
-          ? 'bg-[var(--color-primary)] text-[var(--color-text-on-dark)] border-[var(--color-border-dark)]'
+          ? 'border-border-dark bg-primary text-(--color-text-on-dark)'
           // Light variant: hardcoded light palette so it stays light even
           // when the surrounding page is in dark theme.
-          : 'bg-white text-[#1e293b] border-[#e2e8f0]',
+          : 'border-border bg-white text-[#1e293b]',
         className,
       )}
       {...props}
     >
-      <div className="max-w-[80rem] mx-auto px-6 py-12 md:py-16">
+      <div className="mx-auto max-w-7xl px-6 py-12 md:py-16">
         {/* Main row: brand + links */}
         {(brand || links) && (
-          <div className="flex flex-col md:flex-row gap-10 md:gap-16 mb-10">
-            {brand && <div className="md:max-w-xs shrink-0">{brand}</div>}
-            {links && <div className="flex flex-wrap gap-10 md:gap-16 flex-1">{links}</div>}
+          <div className="mb-10 flex flex-col gap-10 md:flex-row md:gap-16">
+            {brand && <div className="shrink-0 md:max-w-xs">{brand}</div>}
+            {links && <div className="flex flex-1 flex-wrap gap-10 md:gap-16">{links}</div>}
           </div>
         )}
         {children}
         {/* Bottom bar */}
         {bottom && (
           <div className={cn(
-            'pt-6 border-t flex flex-col md:flex-row justify-between items-center gap-4 font-mono text-[11px] uppercase tracking-[0.06em]',
+            'flex flex-col items-center justify-between gap-4 border-t pt-6 font-mono text-[11px] tracking-[0.06em] uppercase md:flex-row',
             variant === 'dark'
-              ? 'border-[var(--color-border-dark)] text-[var(--color-text-on-dark-muted)]'
-              : 'border-[#e2e8f0] text-[#475569]',
+              ? 'border-border-dark text-(--color-text-on-dark-muted)'
+              : 'border-border text-[#475569]',
           )}>
             {bottom}
           </div>
@@ -64,7 +64,7 @@ export interface SiteFooterGroupProps extends HTMLAttributes<HTMLDivElement> {
 const SiteFooterGroup = forwardRef<HTMLDivElement, SiteFooterGroupProps>(
   ({ className, title, children, ...props }, ref) => (
     <div ref={ref} className={cn('flex flex-col gap-3', className)} {...props}>
-      <span className="font-mono text-xs font-bold uppercase tracking-[0.1em] text-[var(--color-accent)]">
+      <span className="font-mono text-xs font-bold tracking-widest text-accent uppercase">
         {title}
       </span>
       <div className="flex flex-col gap-2">{children}</div>
@@ -87,8 +87,8 @@ const SiteFooterLink = forwardRef<HTMLAnchorElement, SiteFooterLinkProps>(
       className={cn(
         'font-sans text-sm no-underline transition-colors',
         variant === 'dark'
-          ? 'text-[var(--color-text-on-dark-muted)] hover:text-white'
-          : 'text-[#475569] hover:text-[#0a192f]',
+          ? 'text-(--color-text-on-dark-muted) hover:text-white'
+          : 'text-[#475569] hover:text-primary',
         className,
       )}
       {...props}

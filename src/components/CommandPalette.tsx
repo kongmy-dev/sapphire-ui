@@ -85,8 +85,8 @@ export function CommandPalette({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="top" className="p-0 max-h-[80vh] overflow-hidden">
-        <SheetHeader className="p-4 pb-2 border-b border-[var(--color-border)]">
+      <SheetContent side="top" className="max-h-[80vh] overflow-hidden p-0">
+        <SheetHeader className="border-b border-border p-4 pb-2">
           <SheetTitle className="sr-only">Command palette</SheetTitle>
           <div onKeyDown={handleKey}>
             <Input
@@ -107,7 +107,7 @@ export function CommandPalette({
           style={{ maxHeight: 'calc(80vh - 80px)' }}
         >
           {filtered.length === 0 ? (
-            <p className="px-4 py-8 text-center font-sans text-sm text-[var(--color-text-muted)] m-0">
+            <p className="m-0 px-4 py-8 text-center font-sans text-sm text-(--color-text-muted)">
               No matches for &quot;{query}&quot;.
             </p>
           ) : (
@@ -116,7 +116,7 @@ export function CommandPalette({
               id="command-palette-list"
               role="listbox"
               aria-label="Command results"
-              className="m-0 p-2 list-none"
+              className="m-0 list-none p-2"
             >
               {filtered.map((item, index) => {
                 const isActive = index === activeIndex;
@@ -131,7 +131,7 @@ export function CommandPalette({
                       item.onSelect(query);
                       onOpenChange(false);
                     }}
-                    className="flex items-center gap-3 px-3 py-2 rounded-md cursor-pointer font-sans text-sm"
+                    className="flex cursor-pointer items-center gap-3 rounded-md px-3 py-2 font-sans text-sm"
                     style={{
                       background: isActive ? 'var(--color-surface)' : 'transparent',
                       color: 'var(--color-text-main)',
@@ -162,7 +162,7 @@ export function CommandPalette({
           )}
         </div>
         <footer
-          className="px-4 py-2 border-t border-[var(--color-border)] flex items-center gap-3 font-sans text-xs"
+          className="flex items-center gap-3 border-t border-border px-4 py-2 font-sans text-xs"
           style={{ color: 'var(--color-text-muted)' }}
         >
           <span className="flex items-center gap-1">

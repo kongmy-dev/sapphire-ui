@@ -28,7 +28,7 @@ const TableHeader = forwardRef<HTMLTableSectionElement, TableHeaderProps>(
     <thead
       ref={ref}
       className={cn(
-        sticky && 'sticky top-0 z-10 bg-[var(--color-card-bg)] shadow-[0_1px_0_0_var(--color-border)]',
+        sticky && 'sticky top-0 z-10 bg-(--color-card-bg) shadow-[0_1px_0_0_var(--color-border)]',
         className,
       )}
       {...props}
@@ -49,7 +49,7 @@ const TableRow = forwardRef<HTMLTableRowElement, HTMLAttributes<HTMLTableRowElem
     <tr
       ref={ref}
       className={cn(
-        'border-b border-[var(--color-border)] transition-colors hover:bg-[var(--color-hover-overlay)]',
+        'border-b border-border transition-colors hover:bg-(--color-hover-overlay)',
         className,
       )}
       {...props}
@@ -63,7 +63,7 @@ const TableHead = forwardRef<HTMLTableCellElement, ThHTMLAttributes<HTMLTableCel
     <th
       ref={ref}
       className={cn(
-        'text-left text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)] px-4 py-3 border-b-2 border-[var(--color-primary)] font-sans',
+        'border-b-2 border-primary px-4 py-3 text-left font-sans text-xs font-semibold tracking-wider text-(--color-text-muted) uppercase',
         className,
       )}
       {...props}

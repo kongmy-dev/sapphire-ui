@@ -32,8 +32,8 @@ const IconMark = forwardRef<HTMLDivElement, IconMarkProps>(
       <div
         ref={ref}
         className={cn(
-          'icon-mark flex items-center justify-center rounded-[var(--radius-sm)]',
-          variant === 'default' ? 'bg-[var(--color-surface)] text-[var(--color-primary)]' : 'icon-mark-dark bg-[rgba(255,255,255,0.05)] text-[var(--color-accent)]',
+          'icon-mark flex items-center justify-center rounded-sm',
+          variant === 'default' ? 'bg-surface text-primary' : 'icon-mark-dark bg-[rgba(255,255,255,0.05)] text-accent',
           containerSizeClass,
           className,
         )}

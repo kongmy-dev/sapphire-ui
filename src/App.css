@@ -74,12 +74,12 @@
 
 .docs-nav-link:hover {
   color: white;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgb(255, 255, 255, 0.06);
 }
 
 .docs-nav-link--active {
   color: var(--color-accent) !important;
-  background: rgba(197, 160, 101, 0.1);
+  background: rgb(197, 160, 101, 0.1);
 }
 
 /* Visual hairline between sections of the sidebar nav (e.g. between
@@ -181,8 +181,8 @@
   --color-surface:       #0a192f;
   --color-card-bg:       #112240;
   --color-text-main:     #f1f5f9;
-  --color-text-muted:    rgba(241, 245, 249, 0.72);
-  --color-border:        rgba(255, 255, 255, 0.12);
+  --color-text-muted:    rgb(241, 245, 249, 0.72);
+  --color-border:        rgb(255, 255, 255, 0.12);
   --color-accent-text:   #c5a065;
 }
 

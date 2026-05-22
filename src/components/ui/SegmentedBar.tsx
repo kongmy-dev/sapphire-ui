@@ -38,7 +38,7 @@ const SegmentedBar = forwardRef<HTMLDivElement, SegmentedBarProps>(
       <div
         ref={ref}
         className={cn(
-          'relative w-full overflow-hidden rounded-[var(--radius-sm)] bg-[rgba(255,255,255,0.05)] flex border border-[var(--color-border)]',
+          'relative flex w-full overflow-hidden rounded-sm border border-border bg-[rgba(255,255,255,0.05)]',
           size === 'sm' && 'h-1.5',
           size === 'default' && 'h-2.5',
           size === 'lg' && 'h-4',
@@ -51,7 +51,7 @@ const SegmentedBar = forwardRef<HTMLDivElement, SegmentedBarProps>(
           <div
             key={idx}
             className={cn(
-              'absolute top-0 bottom-0 border-r-2 z-10 opacity-65 transition-all duration-300 h-full',
+              'absolute inset-y-0 z-10 h-full border-r-2 opacity-65 transition-all duration-300',
               marker.className
             )}
             style={{
@@ -66,7 +66,7 @@ const SegmentedBar = forwardRef<HTMLDivElement, SegmentedBarProps>(
         {segments.map((segment, idx) => (
           <div
             key={idx}
-            className={cn('transition-all duration-300 ease-in-out h-full', segment.className)}
+            className={cn('h-full transition-all duration-300 ease-in-out', segment.className)}
             style={{
               width: `${segment.value}%`,
               backgroundColor: segment.color,

@@ -59,19 +59,22 @@ export class CookieBannerElement extends SSRHTMLElement {
   private show() {
     if (!this.container) return;
     this.isVisible = true;
-    
-    // Trigger transition by adding class in next tick
+
+    // Force a reflow then flip transform — guarantees the transition fires
+    // even when the element was just inserted (initial styles need to commit
+    // to the layout tree before the transition target is set).
+    void this.container.offsetHeight;
     this.mountTimer = setTimeout(() => {
       if (this.container) {
-        this.container.classList.add('is-visible');
+        this.container.style.transform = 'translateY(0)';
       }
-    }, 50);
+    }, 20);
   }
 
   private hide() {
     if (!this.container) return;
     this.isVisible = false;
-    this.container.classList.remove('is-visible');
+    this.container.style.transform = 'translateY(100%)';
 
     if (this.hasAttribute('force-show')) {
       this.removeAttribute('force-show');
@@ -107,7 +110,8 @@ export class CookieBannerElement extends SSRHTMLElement {
     this.innerHTML = `
       <div
         data-banner-container
-        class="sapphire-cookie-banner flex flex-col sm:flex-row items-center justify-between p-4 sm:p-6 gap-4 w-full bg-(--color-card-bg) border-t border-border shadow-[0_-4px_20px_rgba(10,25,47,0.12)]"
+        style="position:fixed;bottom:0;left:0;right:0;z-index:1000;transform:translateY(100%);transition:transform 300ms ease-in-out;"
+        class="flex flex-col sm:flex-row items-center justify-between p-4 sm:p-6 gap-4 w-full bg-(--color-card-bg) border-t border-border shadow-[0_-4px_20px_rgba(10,25,47,0.12)]"
       >
         <div class="flex-1 max-w-4xl text-left">
           <h3 class="text-(--color-text-strong) font-serif font-semibold mb-1 text-[1.1rem]">

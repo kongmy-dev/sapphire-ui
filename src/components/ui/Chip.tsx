@@ -8,16 +8,16 @@ const chipVariants = cva(
     variants: {
       variant: {
         default:
-          'bg-[var(--color-surface)] text-[var(--color-text-main)] border border-[var(--color-border)]',
+          'border border-border bg-surface text-(--color-text-main)',
         accent:
-          'bg-[rgba(197,160,101,0.12)] text-[var(--color-accent-text)] border border-[rgba(197,160,101,0.3)]',
+          'border border-[rgba(197,160,101,0.3)] bg-[rgba(197,160,101,0.12)] text-(--color-accent-text)',
         outline:
-          'bg-transparent text-[var(--color-text-main)] border border-[var(--color-border)]',
+          'border border-border bg-transparent text-(--color-text-main)',
       },
       size: {
-        sm: 'text-xs px-2 py-0.5',
-        default: 'text-sm px-2.5 py-1',
-        lg: 'text-sm px-3 py-1.5',
+        sm: 'px-2 py-0.5 text-xs',
+        default: 'px-2.5 py-1 text-sm',
+        lg: 'px-3 py-1.5 text-sm',
       },
     },
     defaultVariants: {
@@ -48,14 +48,14 @@ export interface ChipProps
 const Chip = forwardRef<HTMLSpanElement, ChipProps>(
   ({ className, variant, size, leading, children, onDismiss, ...props }, ref) => (
     <span ref={ref} className={cn(chipVariants({ variant, size }), className)} {...props}>
-      {leading && <span className="inline-flex items-center shrink-0">{leading}</span>}
+      {leading && <span className="inline-flex shrink-0 items-center">{leading}</span>}
       <span className="truncate">{children}</span>
       {onDismiss && (
         <button
           type="button"
           onClick={onDismiss}
           aria-label="Remove"
-          className="ml-0.5 inline-flex items-center justify-center w-4 h-4 rounded-full hover:bg-black/10 cursor-pointer border-none bg-transparent text-inherit p-0 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus-ring)]"
+          className="ml-0.5 inline-flex size-4 cursor-pointer items-center justify-center rounded-full border-none bg-transparent p-0 text-inherit outline-none hover:bg-black/10 focus-visible:ring-2 focus-visible:ring-(--color-focus-ring)"
         >
           <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
             <path d="M1 1l8 8M9 1l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />

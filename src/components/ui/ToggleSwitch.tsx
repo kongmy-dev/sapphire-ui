@@ -50,7 +50,7 @@ const Switch = forwardRef<HTMLButtonElement, SwitchProps>(
         {label && (
           <label
             htmlFor={id}
-            className="font-sans text-sm font-medium text-[var(--color-text-main)] cursor-pointer select-none"
+            className="cursor-pointer font-sans text-sm font-medium text-(--color-text-main) select-none"
           >
             {label}
           </label>

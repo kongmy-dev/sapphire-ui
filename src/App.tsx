@@ -48,7 +48,7 @@ function ThemeToggle() {
       type="button"
       onClick={() => setTheme(next)}
       aria-label={`Switch to ${next} theme`}
-      className="docs-nav-link w-full border-none bg-transparent cursor-pointer text-left"
+      className="docs-nav-link w-full cursor-pointer border-none bg-transparent text-left"
       style={{ outline: 'none' }}
     >
       <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
@@ -100,7 +100,7 @@ function AppShell() {
         extraActions={
           <button
             onClick={() => setShowCookies(true)}
-            className="flex items-center gap-3 px-4 py-2.5 rounded-md font-sans text-sm font-medium transition-colors text-white/70 hover:text-white hover:bg-white/5 w-full border-none bg-transparent cursor-pointer text-left"
+            className="flex w-full cursor-pointer items-center gap-3 rounded-md border-none bg-transparent px-4 py-2.5 text-left font-sans text-sm font-medium text-white/70 transition-colors hover:bg-white/5 hover:text-white"
             style={{ outline: 'none' }}
           >
             <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
@@ -128,7 +128,7 @@ function AppShell() {
               type="button"
               onClick={() => setPaletteOpen(true)}
               aria-label="Open command palette"
-              className="docs-nav-link w-full border-none bg-transparent cursor-pointer text-left"
+              className="docs-nav-link w-full cursor-pointer border-none bg-transparent text-left"
               style={{ outline: 'none', display: 'flex', alignItems: 'center', gap: '0.75rem' }}
             >
               <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
@@ -164,7 +164,7 @@ function AppShell() {
               <ThemeToggle />
               <button
                 onClick={() => setShowCookies(true)}
-                className="docs-nav-link w-full border-none bg-transparent cursor-pointer text-left"
+                className="docs-nav-link w-full cursor-pointer border-none bg-transparent text-left"
                 style={{ outline: 'none' }}
               >
                 <span className="material-symbols-outlined" style={{ fontSize: 18 }}>

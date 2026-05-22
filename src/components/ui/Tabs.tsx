@@ -14,8 +14,8 @@ const TabsList = forwardRef<
     ref={ref}
     className={cn(
       'flex',
-      variant === 'underline' && 'border-b border-[var(--color-border)] gap-0',
-      variant === 'pills' && 'gap-2 flex-wrap',
+      variant === 'underline' && 'gap-0 border-b border-border',
+      variant === 'pills' && 'flex-wrap gap-2',
       className,
     )}
     data-variant={variant}
@@ -31,12 +31,12 @@ const TabsTrigger = forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      'inline-flex items-center gap-2 font-sans text-sm font-medium transition-all cursor-pointer outline-none',
-      'text-[var(--color-text-muted)] hover:text-[var(--color-text-strong)]',
+      'inline-flex cursor-pointer items-center gap-2 font-sans text-sm font-medium transition-all outline-none',
+      'text-(--color-text-muted) hover:text-(--color-text-strong)',
       // Underline variant (default via parent data-variant)
-      'px-4 py-3 -mb-px border-b-2 border-transparent',
-      'data-[state=active]:text-[var(--color-accent-text)] data-[state=active]:border-[var(--color-accent)]',
-      'focus-visible:ring-2 focus-visible:ring-[var(--color-focus-ring)] focus-visible:ring-offset-0',
+      '-mb-px border-b-2 border-transparent px-4 py-3',
+      'data-[state=active]:border-accent data-[state=active]:text-(--color-accent-text)',
+      'focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:ring-offset-0',
       className,
     )}
     {...props}

@@ -46,16 +46,16 @@ const RadioGroupItem = forwardRef<
         id={id}
         aria-describedby={descriptionId}
         className={cn(
-          'mt-0.5 h-[18px] w-[18px] shrink-0 rounded-full border-[1.5px] border-[var(--color-border-strong,#cbd5e1)] bg-[var(--color-card-bg)] cursor-pointer',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus-ring)] focus-visible:ring-offset-1',
-          'data-[state=checked]:border-[var(--color-accent)]',
+          'mt-0.5 size-[18px] shrink-0 cursor-pointer rounded-full border-[1.5px] border-(--color-border-strong,#cbd5e1) bg-(--color-card-bg)',
+          'focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:ring-offset-1 focus-visible:outline-none',
+          'data-[state=checked]:border-accent',
           'disabled:cursor-not-allowed disabled:opacity-50',
           className,
         )}
         {...props}
       >
-        <RadioGroupPrimitive.Indicator className="flex items-center justify-center h-full w-full relative">
-          <span className="block h-2 w-2 rounded-full bg-[var(--color-accent)]" />
+        <RadioGroupPrimitive.Indicator className="relative flex size-full items-center justify-center">
+          <span className="block size-2 rounded-full bg-accent" />
         </RadioGroupPrimitive.Indicator>
       </RadioGroupPrimitive.Item>
       {(label || description) && (
@@ -63,13 +63,13 @@ const RadioGroupItem = forwardRef<
           {label && (
             <label
               htmlFor={id}
-              className="font-sans text-sm font-medium text-[var(--color-text-main)] cursor-pointer select-none"
+              className="cursor-pointer font-sans text-sm font-medium text-(--color-text-main) select-none"
             >
               {label}
             </label>
           )}
           {description && (
-            <span id={descriptionId} className="font-sans text-xs text-[var(--color-text-muted)] mt-0.5">
+            <span id={descriptionId} className="mt-0.5 font-sans text-xs text-(--color-text-muted)">
               {description}
             </span>
           )}

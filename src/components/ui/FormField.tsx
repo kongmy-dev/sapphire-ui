@@ -64,11 +64,11 @@ const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
           ? cloneElement(child, childProps as Partial<typeof child.props>)
           : child}
         {error ? (
-          <p id={errorId} className="font-sans text-xs text-[#b91c1c] m-0">
+          <p id={errorId} className="m-0 font-sans text-xs text-[#b91c1c]">
             {error}
           </p>
         ) : hint ? (
-          <p id={hintId} className="font-sans text-xs text-[var(--color-text-muted)] m-0">
+          <p id={hintId} className="m-0 font-sans text-xs text-(--color-text-muted)">
             {hint}
           </p>
         ) : null}

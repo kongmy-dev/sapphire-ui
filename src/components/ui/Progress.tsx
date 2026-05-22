@@ -23,7 +23,7 @@ const Progress = forwardRef<
         value={value}
         max={max}
         className={cn(
-          'relative w-full overflow-hidden rounded-full bg-[var(--color-surface)] border border-[var(--color-border)]',
+          'relative w-full overflow-hidden rounded-full border border-border bg-surface',
           size === 'sm' && 'h-1.5',
           size === 'default' && 'h-2.5',
           size === 'lg' && 'h-4',
@@ -32,12 +32,12 @@ const Progress = forwardRef<
         {...props}
       >
         <ProgressPrimitive.Indicator
-          className="h-full bg-[var(--color-accent)] transition-transform duration-500 ease-out rounded-full"
+          className="h-full rounded-full bg-accent transition-transform duration-500 ease-out"
           style={{ transform: `translateX(-${100 - percentage}%)` }}
         />
       </ProgressPrimitive.Root>
       {showLabel && (
-        <span className="font-mono text-xs text-[var(--color-text-muted)] min-w-[3ch] tabular-nums">
+        <span className="min-w-[3ch] font-mono text-xs text-(--color-text-muted) tabular-nums">
           {percentage}%
         </span>
       )}

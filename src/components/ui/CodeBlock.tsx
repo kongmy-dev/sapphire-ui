@@ -39,15 +39,15 @@ const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
     }, [code]);
 
     return (
-      <div className="relative group">
+      <div className="group relative">
         <pre
           ref={ref}
           data-lang={language}
           className={cn(
-            'font-mono text-[13px] leading-relaxed overflow-x-auto m-0',
-            'rounded-[var(--radius-sm)] p-4',
-            variant === 'dark' && 'bg-[var(--color-primary)] text-[var(--color-text-on-dark)]',
-            variant === 'light' && 'bg-[var(--color-surface)] text-[var(--color-text-main)] border border-[var(--color-border)]',
+            'm-0 overflow-x-auto font-mono text-[13px] leading-relaxed',
+            'rounded-sm p-4',
+            variant === 'dark' && 'bg-primary text-(--color-text-on-dark)',
+            variant === 'light' && 'border border-border bg-surface text-(--color-text-main)',
             className,
           )}
           {...props}
@@ -60,11 +60,11 @@ const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
             onClick={handleCopy}
             aria-label={copied ? 'Copied' : 'Copy code to clipboard'}
             className={cn(
-              'absolute top-2 right-2 inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-mono cursor-pointer transition-opacity',
+              'absolute top-2 right-2 inline-flex cursor-pointer items-center gap-1 rounded-sm px-2 py-1 font-mono text-xs transition-opacity',
               'opacity-0 group-hover:opacity-100 focus-visible:opacity-100',
-              variant === 'dark' && 'bg-white/10 text-[var(--color-text-on-dark)] hover:bg-white/20 border-none',
-              variant === 'light' && 'bg-white text-[var(--color-text-muted)] border border-[var(--color-border)] hover:bg-[var(--color-surface)]',
-              'focus-visible:ring-2 focus-visible:ring-[var(--color-focus-ring)] focus-visible:outline-none',
+              variant === 'dark' && 'border-none bg-white/10 text-(--color-text-on-dark) hover:bg-white/20',
+              variant === 'light' && 'border border-border bg-white text-(--color-text-muted) hover:bg-surface',
+              'focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:outline-none',
             )}
           >
             {copied ? 'Copied!' : 'Copy'}
