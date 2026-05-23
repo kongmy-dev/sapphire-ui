@@ -179,3 +179,10 @@ import { Button, Card, Badge } from '@kongmy-dev/sapphire-ui';
 
 The stylesheet exports all design tokens as CSS custom properties (`--color-primary`, `--font-serif`, `--space-6`, etc.), so even non-React projects can consume the system by importing the CSS and applying the variables.
 
+---
+
+## ⚖️ License
+
+Sapphire UI is open-source software licensed under the **[BSD 3-Clause License](LICENSE)**. Copyright © 2026 KONGMY Digital Solutions.
+
+
