@@ -123,7 +123,7 @@ export class AnalyticsElement extends SSRHTMLElement {
         };
         r = "capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys getNextSurveyStep onSessionId".split(" ");
         for (var c = 0; c < r.length; c++) g(p, r[c]);
-        e._i.push([i, s, a])
+        e._i.push([i, s, a]);
       }, e.__SV = 1)
     })(document, (window as any).posthog || []);
 
