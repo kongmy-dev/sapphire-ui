@@ -31,7 +31,7 @@ export const ProposalLayout = forwardRef<HTMLDivElement, ProposalLayoutProps>(
 );
 ProposalLayout.displayName = 'ProposalLayout';
 
-export interface ProposalHeroProps extends HTMLAttributes<HTMLDivElement> {
+export interface ProposalHeroProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   eyebrow?: ReactNode;
   title: ReactNode;
   lede?: ReactNode;
@@ -62,7 +62,7 @@ export const ProposalHero = forwardRef<HTMLDivElement, ProposalHeroProps>(
 );
 ProposalHero.displayName = 'ProposalHero';
 
-export interface ProposalSectionProps extends HTMLAttributes<HTMLElement> {
+export interface ProposalSectionProps extends Omit<HTMLAttributes<HTMLElement>, 'title'> {
   sectionNo?: string;
   title: ReactNode;
   lede?: ReactNode;

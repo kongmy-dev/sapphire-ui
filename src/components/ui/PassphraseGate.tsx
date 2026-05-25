@@ -1,7 +1,7 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
 import { cn } from '../../lib/utils';
 
-export interface PassphraseGateProps extends HTMLAttributes<HTMLDivElement> {
+export interface PassphraseGateProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   isHidden?: boolean;
   brandMark?: ReactNode;
   brandName?: ReactNode;
