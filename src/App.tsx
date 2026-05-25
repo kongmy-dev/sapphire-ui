@@ -17,6 +17,7 @@ const DataPage = lazy(() => import('./pages/DataPage'));
 const InteractivePage = lazy(() => import('./pages/InteractivePage'));
 const ExtendedPage = lazy(() => import('./pages/ExtendedPage'));
 const HooksPage = lazy(() => import('./pages/HooksPage'));
+const AdminPage = lazy(() => import('./pages/AdminPage'));
 
 import { CookieBanner } from './components/CookieBanner';
 import { Analytics } from './components/Analytics';
@@ -38,6 +39,7 @@ const navItems = [
   { href: '/interactive', label: 'Interactive', icon: 'touch_app' },
   { href: '/extended', label: 'Extended', icon: 'extension' },
   { href: '/hooks', label: 'Hooks & Utils', icon: 'function' },
+  { href: '/admin', label: 'Admin Layout', icon: 'admin_panel_settings' },
 ];
 
 function ThemeToggle() {
@@ -197,6 +199,7 @@ function AppShell() {
             <Route path="/interactive" element={<InteractivePage />} />
             <Route path="/extended" element={<ExtendedPage />} />
             <Route path="/hooks" element={<HooksPage />} />
+            <Route path="/admin" element={<AdminPage />} />
           </Routes>
         </Suspense>
       </Layout>

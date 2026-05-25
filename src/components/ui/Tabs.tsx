@@ -14,7 +14,8 @@ const TabsList = forwardRef<
     ref={ref}
     className={cn(
       'flex',
-      variant === 'underline' && 'gap-0 border-b border-border',
+      'data-[orientation=vertical]:flex-col',
+      variant === 'underline' && 'data-[orientation=horizontal]:border-b data-[orientation=vertical]:border-l border-border',
       variant === 'pills' && 'flex-wrap gap-2',
       className,
     )}
@@ -33,8 +34,16 @@ const TabsTrigger = forwardRef<
     className={cn(
       'inline-flex cursor-pointer items-center gap-2 font-sans text-sm font-medium transition-all outline-none',
       'text-(--color-text-muted) hover:text-(--color-text-strong)',
-      // Underline variant (default via parent data-variant)
-      '-mb-px border-b-2 border-transparent px-4 py-3',
+      // Padding
+      'px-4 py-3',
+      // Underline variant styles (horizontal)
+      '[parent[data-variant=underline]_&]:data-[orientation=horizontal]:-mb-px [parent[data-variant=underline]_&]:data-[orientation=horizontal]:border-b-2 [parent[data-variant=underline]_&]:data-[orientation=horizontal]:border-transparent',
+      // Underline variant styles (vertical)
+      '[parent[data-variant=underline]_&]:data-[orientation=vertical]:-ml-px [parent[data-variant=underline]_&]:data-[orientation=vertical]:border-l-2 [parent[data-variant=underline]_&]:data-[orientation=vertical]:border-transparent [parent[data-variant=underline]_&]:data-[orientation=vertical]:justify-start',
+      // Fallbacks if parent selector is too complex, we can just use universal border:
+      'data-[orientation=horizontal]:-mb-px data-[orientation=horizontal]:border-b-2 data-[orientation=horizontal]:border-transparent',
+      'data-[orientation=vertical]:-ml-px data-[orientation=vertical]:border-l-2 data-[orientation=vertical]:border-transparent data-[orientation=vertical]:justify-start',
+      
       'data-[state=active]:border-accent data-[state=active]:text-(--color-accent-text)',
       'focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:ring-offset-0',
       className,
@@ -50,7 +59,12 @@ const TabsContent = forwardRef<
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.Content
     ref={ref}
-    className={cn('mt-4 outline-none', className)}
+    className={cn(
+      'outline-none',
+      'data-[orientation=horizontal]:mt-4',
+      'data-[orientation=vertical]:ml-6',
+      className
+    )}
     {...props}
   />
 ));

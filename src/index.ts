@@ -42,6 +42,14 @@ export * from './components/ui/AvatarGroup';
 export * from './components/ui/Table';
 export * from './components/ui/Tabs';
 export * from './components/ui/Alert';
+export * from './components/ui/Callout';
+export * from './components/ui/Container';
+export * from './components/ui/MarginNote';
+export * from './components/ui/StatGroup';
+export * from './components/ui/SplitLayout';
+export * from './components/ui/TableOfContents';
+export * from './components/ui/Timeline';
+export * from './components/ui/WizardLayout';
 export * from './components/ui/Empty';
 export * from './components/ui/Stat';
 
@@ -78,10 +86,13 @@ export * from './components/ToastElement';
 
 // ─── Tier 4: Composites & Layouts ───────────────────────────────────
 export * from './components/ui/Layout';
+export * from './components/ui/AdminLayout';
 export * from './components/ui/PageSection';
 export * from './components/ui/SiteHeader';
 export * from './components/ui/SiteFooter';
 export * from './components/ui/SEOHead';
+export * from './components/ui/ProposalLayout';
+export * from './components/ui/PassphraseGate';
 
 // ─── Ecosystem ──────────────────────────────────────────────────────
 export * from './components/CookieBanner';

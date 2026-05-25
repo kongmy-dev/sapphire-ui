@@ -136,6 +136,11 @@
       "import": "./dist/components/ui/Layout.js",
       "require": "./dist/components/ui/Layout.cjs"
     },
+    "./admin-layout": {
+      "types": "./dist/components/ui/AdminLayout.d.ts",
+      "import": "./dist/components/ui/AdminLayout.js",
+      "require": "./dist/components/ui/AdminLayout.cjs"
+    },
     "./mobile-nav": {
       "types": "./dist/components/ui/MobileNav.d.ts",
       "import": "./dist/components/ui/MobileNav.js",
@@ -400,8 +405,6 @@
     "deploy:docs": "bun run build:docs && wrangler pages deploy dist-docs --project-name=sapphire-ui-docs"
   },
   "peerDependencies": {
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6",
     "@radix-ui/react-accordion": "^1.0.0",
     "@radix-ui/react-avatar": "^1.0.0",
     "@radix-ui/react-checkbox": "^1.0.0",
@@ -420,12 +423,15 @@
     "@radix-ui/react-tabs": "^1.0.0",
     "@radix-ui/react-toggle": "^1.0.0",
     "@radix-ui/react-toggle-group": "^1.0.0",
-    "@radix-ui/react-tooltip": "^1.0.0"
+    "@radix-ui/react-tooltip": "^1.0.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "js-cookie": "^3.0.7",
+    "react-resizable-panels": "^4.11.2",
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
