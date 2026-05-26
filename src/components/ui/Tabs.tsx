@@ -2,7 +2,7 @@ import * as TabsPrimitive from '@radix-ui/react-tabs';
 import { createContext, forwardRef, useContext } from 'react';
 import { cn } from '../../lib/utils';
 
-type TabsVariant = 'underline' | 'pills';
+type TabsVariant = 'underline' | 'pills' | 'dashboard';
 
 const TabsVariantContext = createContext<TabsVariant>('underline');
 
@@ -21,6 +21,7 @@ const TabsList = forwardRef<
         'flex',
         variant === 'underline' && 'gap-0 border-b border-border data-[orientation=vertical]:flex-col data-[orientation=vertical]:border-r data-[orientation=vertical]:border-b-0',
         variant === 'pills' && 'flex-wrap gap-1 data-[orientation=vertical]:flex-col',
+        variant === 'dashboard' && 'gap-0.5',
         className,
       )}
       data-variant={variant}
@@ -56,6 +57,12 @@ const TabsTrigger = forwardRef<
           'rounded-md px-3 py-2',
           'hover:bg-surface',
           'data-[state=active]:bg-accent/10 data-[state=active]:text-(--color-accent-text)',
+        ],
+
+        // Dashboard variant
+        variant === 'dashboard' && [
+          'rounded-md px-3.5 py-[7px] text-[13px] font-semibold text-(--color-text-muted)',
+          'data-[state=active]:bg-primary data-[state=active]:text-white',
         ],
 
         'focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:ring-offset-0',

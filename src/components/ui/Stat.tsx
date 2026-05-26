@@ -31,33 +31,33 @@ const Stat = forwardRef<HTMLDivElement, StatProps>(
   ({ className, label, value, description, change, changeDirection = 'neutral', size = 'default', ...props }, ref) => (
     <div
       ref={ref}
-      className={cn('flex flex-col gap-1 font-sans', className)}
+      className={cn('flex flex-col gap-1 rounded-md border border-border bg-card px-5 py-[18px] font-sans', className)}
       {...props}
     >
       <dl className="m-0 flex flex-col gap-1">
         <dt
           className={cn(
-            'font-medium tracking-wider text-(--color-text-muted) uppercase',
+            'flex items-center gap-1.5 font-semibold tracking-[0.06em] text-(--color-text-muted) uppercase mb-1',
             size === 'sm' && 'text-[10px]',
-            size === 'default' && 'text-xs',
+            size === 'default' && 'text-[12px]',
             size === 'lg' && 'text-sm',
           )}
         >
           {label}
         </dt>
-        <dd className="m-0 flex items-baseline gap-2">
+        <dd className="m-0 flex flex-col items-start gap-1">
           <span
             className={cn(
-              'font-serif font-semibold text-(--color-text-main) tabular-nums',
+              'font-serif font-medium tracking-[-0.01em] text-(--color-text-main) tabular-nums leading-none',
               size === 'sm' && 'text-2xl',
-              size === 'default' && 'text-3xl',
+              size === 'default' && 'text-[28px]',
               size === 'lg' && 'text-4xl',
             )}
           >
             {value}
           </span>
           {change != null && (
-            <span className={cn('text-sm font-medium tabular-nums', changeColor[changeDirection])}>
+            <span className={cn('text-[12px] font-normal tabular-nums mt-1', changeDirection === 'up' ? 'text-[#1f7a4d]' : changeDirection === 'down' ? 'text-[#b03a3a]' : 'text-(--color-text-muted)')}>
               {change}
             </span>
           )}

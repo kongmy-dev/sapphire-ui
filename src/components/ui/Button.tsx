@@ -30,8 +30,8 @@ const buttonVariants = cva(
           'rounded-btn border-[1.5px] border-(--color-error) bg-transparent text-(--color-error) hover:bg-(--color-error) hover:text-(--color-text-on-dark) focus-visible:ring-(--color-error-ring)',
       },
       size: {
-        sm: 'px-4 py-2 text-sm',
-        default: 'px-6 py-3 text-base',
+        sm: 'px-3 py-1.5 text-[13px]',
+        default: 'px-4 py-[9px] text-[14px]',
         lg: 'px-8 py-4 text-lg',
         icon: 'p-2.5',
       },

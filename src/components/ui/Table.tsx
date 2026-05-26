@@ -6,7 +6,7 @@ const Table = forwardRef<HTMLTableElement, HTMLAttributes<HTMLTableElement>>(
     <div className="w-full overflow-auto">
       <table
         ref={ref}
-        className={cn('w-full border-collapse font-sans', className)}
+        className={cn('w-full border-collapse font-sans text-[14px]', className)}
         {...props}
       />
     </div>
@@ -49,7 +49,7 @@ const TableRow = forwardRef<HTMLTableRowElement, HTMLAttributes<HTMLTableRowElem
     <tr
       ref={ref}
       className={cn(
-        'border-b border-border transition-colors hover:bg-(--color-hover-overlay)',
+        'border-b border-border transition-colors hover:bg-accent/5',
         className,
       )}
       {...props}
@@ -63,7 +63,7 @@ const TableHead = forwardRef<HTMLTableCellElement, ThHTMLAttributes<HTMLTableCel
     <th
       ref={ref}
       className={cn(
-        'border-b-2 border-primary px-4 py-3 text-left font-sans text-xs font-semibold tracking-wider text-(--color-text-muted) uppercase',
+        'border-b border-border bg-page px-4 py-3 text-left font-sans text-[11px] font-semibold tracking-[0.08em] text-(--color-text-muted) uppercase whitespace-nowrap',
         className,
       )}
       {...props}
@@ -76,7 +76,7 @@ const TableCell = forwardRef<HTMLTableCellElement, TdHTMLAttributes<HTMLTableCel
   ({ className, ...props }, ref) => (
     <td
       ref={ref}
-      className={cn('px-4 py-3 text-sm', className)}
+      className={cn('px-4 py-4', className)}
       {...props}
     />
   ),

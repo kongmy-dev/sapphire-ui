@@ -21,17 +21,17 @@ const AdminLayout = forwardRef<HTMLDivElement, AdminLayoutProps>(
       <div
         ref={ref}
         className={cn(
-          'text-main flex min-h-screen w-full bg-surface font-sans transition-colors duration-200',
+          'text-main grid min-h-screen w-full grid-cols-[248px_1fr] bg-surface font-sans transition-colors duration-200',
           className
         )}
         {...props}
       >
         {sidebar}
-        <div className="flex min-w-0 flex-1 flex-col">
+        <div className="flex min-w-0 flex-col">
           {header}
           <main
             className={cn(
-              'mx-auto w-full max-w-7xl flex-1 overflow-y-auto px-6 py-8 md:px-8',
+              'mx-auto w-full max-w-[1280px] flex-1 overflow-y-auto px-8 py-8 pb-20',
               contentClassName
             )}
           >
@@ -77,13 +77,13 @@ const AdminSidebar = forwardRef<HTMLDivElement, AdminSidebarProps>(
         ref={ref}
         className={cn(
           'relative z-30 flex h-screen shrink-0 flex-col border-r border-border-dark bg-primary text-(--color-text-on-dark) transition-all duration-300 ease-in-out',
-          activeCollapsed ? 'w-16' : 'w-64',
+          activeCollapsed ? 'w-16' : 'w-full',
           className
         )}
         {...props}
       >
         {/* Brand/Logo Area */}
-        <div className="flex h-16 items-center justify-between border-b border-border-dark px-4">
+        <div className="flex items-center gap-2.5 border-b border-border-dark px-[22px] pt-[22px] pb-[18px]">
           <div className={cn('overflow-hidden transition-all duration-300', activeCollapsed ? 'w-0 opacity-0' : 'w-full opacity-100')}>
             {brand}
           </div>
@@ -101,7 +101,7 @@ const AdminSidebar = forwardRef<HTMLDivElement, AdminSidebarProps>(
         </div>
 
         {/* Scrollable Nav Area */}
-        <div className="flex-1 scrollbar-thin scrollbar-thumb-white/10 space-y-6 overflow-y-auto px-2 py-4">
+        <div className="flex-1 scrollbar-thin scrollbar-thumb-white/10 overflow-y-auto px-3 py-3.5">
           {children}
         </div>
 
@@ -130,13 +130,13 @@ export interface AdminSidebarSectionProps extends HTMLAttributes<HTMLDivElement>
 const AdminSidebarSection = forwardRef<HTMLDivElement, AdminSidebarSectionProps>(
   ({ className, title, collapsed = false, children, ...props }, ref) => {
     return (
-      <div ref={ref} className={cn('space-y-1', className)} {...props}>
+      <div ref={ref} className={cn('', className)} {...props}>
         {title && !collapsed && (
-          <h5 className="px-3 text-[10px] font-semibold tracking-wider text-(--color-text-on-dark)/40 uppercase">
+          <h5 className="mx-3 mt-[18px] mb-2 font-sans text-[10px] font-semibold tracking-[0.12em] text-(--color-text-on-dark-muted) uppercase first:mt-1">
             {title}
           </h5>
         )}
-        <nav className="space-y-0.5">{children}</nav>
+        <nav className="flex flex-col gap-0.5">{children}</nav>
       </div>
     );
   }
@@ -167,10 +167,10 @@ const AdminSidebarLink = forwardRef<HTMLAnchorElement, AdminSidebarLinkProps>(
       <Comp
         ref={ref}
         className={cn(
-          'group flex items-center gap-3 rounded-btn px-3 py-2.5 font-sans text-sm font-medium no-underline transition-all duration-150',
+          'group flex items-center gap-2.5 rounded-md px-3 py-2 font-sans text-[14px] font-medium no-underline transition-all duration-150',
           active
-            ? 'border-l-2 border-accent bg-accent/10 text-accent'
-            : 'text-(--color-text-on-dark)/70 hover:bg-white/5 hover:text-(--color-text-on-dark)',
+            ? 'bg-accent/12 text-accent'
+            : 'text-(--color-text-on-dark) hover:bg-white/5 hover:text-(--color-text-on-dark)',
           collapsed ? 'justify-center px-0' : '',
           className
         )}
@@ -179,8 +179,8 @@ const AdminSidebarLink = forwardRef<HTMLAnchorElement, AdminSidebarLinkProps>(
         {icon && (
           <span
             className={cn(
-              'material-symbols-outlined text-[20px] transition-colors',
-              active ? 'text-accent' : 'text-(--color-text-on-dark)/50 group-hover:text-(--color-text-on-dark)'
+              'material-symbols-outlined text-[18px] transition-colors',
+              active ? 'text-accent opacity-100' : 'opacity-70 group-hover:opacity-100 group-hover:text-white'
             )}
           >
             {icon}
@@ -188,7 +188,7 @@ const AdminSidebarLink = forwardRef<HTMLAnchorElement, AdminSidebarLinkProps>(
         )}
         {!collapsed && <span className="flex-1 truncate">{children}</span>}
         {!collapsed && badge && (
-          <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-accent/20 px-1.5 font-mono text-[10px] font-bold text-accent">
+          <span className="ml-auto font-mono text-[11px] text-(--color-text-on-dark-muted)">
             {badge}
           </span>
         )}
@@ -215,12 +215,12 @@ const AdminHeader = forwardRef<HTMLElement, AdminHeaderProps>(
       <header
         ref={ref}
         className={cn(
-          'z-20 flex h-16 w-full items-center justify-between border-b border-border bg-(--color-card-bg) px-6 shadow-sm transition-colors duration-200',
+          'z-10 flex w-full items-center gap-4 border-b border-border bg-card px-8 py-3.5 transition-colors duration-200 sticky top-0',
           className
         )}
         {...props}
       >
-        <div className="flex items-center gap-4">
+        <div className="flex max-w-[420px] flex-1 items-center gap-4">
           {leftSlot}
           {breadcrumbs && <div className="hidden sm:block">{breadcrumbs}</div>}
         </div>
