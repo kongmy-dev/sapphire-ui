@@ -17,6 +17,11 @@ export const ProposalLayout = forwardRef<HTMLDivElement, ProposalLayoutProps>(
         <div className="doc-bar">
           {brandMark && <div className="sf-mark">{brandMark}</div>}
           {brandName && <div className="wm">{brandName}</div>}
+          {breadcrumbs && (
+            <span className="material-symbols-outlined doc-bar-sep" aria-hidden="true">
+              chevron_right
+            </span>
+          )}
           {breadcrumbs && <div className="crumb">{breadcrumbs}</div>}
           {metadata && <div className="doc-meta">{metadata}</div>}
         </div>
