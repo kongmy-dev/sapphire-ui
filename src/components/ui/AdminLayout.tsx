@@ -21,17 +21,17 @@ const AdminLayout = forwardRef<HTMLDivElement, AdminLayoutProps>(
       <div
         ref={ref}
         className={cn(
-          'text-main grid min-h-screen w-full grid-cols-[248px_1fr] bg-surface font-sans transition-colors duration-200 max-[760px]:grid-cols-1',
+          'sf-admin-shell text-main grid min-h-screen w-full grid-cols-[248px_1fr] bg-surface font-sans transition-colors duration-200 max-[760px]:grid-cols-1',
           className
         )}
         {...props}
       >
         {sidebar}
-        <div className="flex min-w-0 flex-col">
+        <div className="sf-admin-main flex min-w-0 flex-col">
           {header}
           <main
             className={cn(
-              'mx-auto w-full max-w-[1280px] flex-1 overflow-y-auto px-8 py-8 pb-20 max-[760px]:px-4 max-[760px]:py-6',
+              'sf-admin-content mx-auto w-full max-w-[1280px] flex-1 overflow-y-auto px-8 py-8 pb-20 max-[760px]:px-4 max-[760px]:py-6',
               contentClassName
             )}
           >
@@ -76,7 +76,7 @@ const AdminSidebar = forwardRef<HTMLDivElement, AdminSidebarProps>(
       <aside
         ref={ref}
         className={cn(
-          'relative z-30 flex h-screen shrink-0 flex-col border-r border-border-dark bg-primary text-(--color-text-on-dark) transition-all duration-300 ease-in-out max-[760px]:h-auto max-[760px]:border-r-0 max-[760px]:border-b',
+          'sf-admin-sidebar relative z-30 flex h-screen shrink-0 flex-col border-r border-border-dark bg-primary text-(--color-text-on-dark) transition-all duration-300 ease-in-out max-[760px]:h-auto max-[760px]:border-r-0 max-[760px]:border-b',
           activeCollapsed ? 'w-16' : 'w-full',
           className
         )}
@@ -215,7 +215,7 @@ const AdminHeader = forwardRef<HTMLElement, AdminHeaderProps>(
       <header
         ref={ref}
         className={cn(
-          'z-10 flex w-full items-center gap-4 border-b border-border bg-card px-8 py-3.5 transition-colors duration-200 sticky top-0 max-[760px]:flex-wrap max-[760px]:gap-3 max-[760px]:px-4',
+          'sf-admin-header z-10 flex w-full items-center gap-4 border-b border-border bg-card px-8 py-3.5 transition-colors duration-200 sticky top-0 max-[760px]:flex-wrap max-[760px]:gap-3 max-[760px]:px-4',
           className
         )}
         {...props}
