@@ -58,6 +58,65 @@ To consume the styles globally in your application:
 import '@kongmy-dev/sapphire-ui/style.css';
 ```
 
+### Custom Elements (Astro / vanilla HTML / any framework)
+
+Sapphire UI ships a framework-agnostic Web Components bundle. Import once
+to register every `<sapphire-*>` element — no React runtime required.
+
+```typescript
+import '@kongmy-dev/sapphire-ui/style.css';
+import '@kongmy-dev/sapphire-ui/elements';
+```
+
+Then drop the elements into any HTML environment:
+
+```html
+<sapphire-site-header variant="dark" sticky>
+  <div data-slot="brand">
+    <a href="/">BRAND</a>
+  </div>
+  <nav data-slot="nav">
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
+  </nav>
+  <div data-slot="actions">
+    <a class="sapphire-btn sapphire-btn--primary" href="/download">Download</a>
+  </div>
+</sapphire-site-header>
+
+<sapphire-site-footer variant="dark">
+  <div data-slot="brand">
+    <h4>BRAND</h4>
+    <p>Tagline.</p>
+  </div>
+  <div data-slot="links">
+    <div>
+      <span>Product</span>
+      <a href="/features">Features</a>
+    </div>
+  </div>
+  <div data-slot="bottom">
+    <span>© 2026 KONGMY Digital Solutions</span>
+    <span>Built with Astro · Hosted on Cloudflare</span>
+  </div>
+</sapphire-site-footer>
+
+<sapphire-analytics
+  posthog-token="phc_..."
+  ga-id="G-..."
+  domains="example.com,blog.example.com"
+></sapphire-analytics>
+<sapphire-toast></sapphire-toast>
+<cookie-banner></cookie-banner>
+```
+
+Tree-shake by importing only the elements you need:
+
+```typescript
+import '@kongmy-dev/sapphire-ui/site-header-element';
+import '@kongmy-dev/sapphire-ui/site-footer-element';
+```
+
 ---
 
 ## 🔗 CI/CD & Automated Publishing

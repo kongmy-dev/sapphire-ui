@@ -215,3 +215,96 @@ export { MyComponent, myComponentVariants } from './components/ui/MyComponent';
 - **No default exports** — all components use named exports.
 - **No `React.memo` by default** — add it only after profiling confirms a real render bottleneck.
 - **No uncontrolled state for design variants** — variant logic belongs in CVA, not in component state.
+
+---
+
+## Shipping a Custom Element alongside a React component
+
+Some components have a sibling Web Component so Astro-static, vanilla HTML, and non-React framework consumers can use them without an `@astrojs/react` integration. Examples in the codebase: `Banner.tsx` + `BannerElement.ts`, `Toast.tsx` + `ToastElement.ts`, `SiteHeader.tsx` + `SiteHeaderElement.ts`, `SiteFooter.tsx` + `SiteFooterElement.ts`.
+
+### When to ship a Custom Element version
+
+| Yes | No |
+| --- | --- |
+| Site chrome — Header, Footer, Banner, Toast, CookieBanner | Anything that depends on Radix portals (Dialog, Popover, Tooltip) |
+| Pure presentational layouts with named slots | Components driven by complex React state |
+| Components consumers want to use from Astro `.astro` pages without React | Components that already have a non-React equivalent CSS class in `index.css` |
+
+Three-strikes rule applies — promote a component to a custom-element peer only when at least three downstream consumers reimplement it locally.
+
+### The pattern
+
+1. **File location and naming**:
+   - React component: `src/components/ui/SiteHeader.tsx` (or `src/components/SiteHeader.tsx` for behavior components)
+   - Custom Element: `src/components/SiteHeaderElement.ts` (always at `src/components/`, never `src/components/ui/`)
+   - The element class is named `SiteHeaderElement`, the custom tag is `sapphire-site-header`.
+
+2. **SSR-safe base class**:
+   ```ts
+   const SSRHTMLElement = typeof window !== 'undefined' ? HTMLElement : class {} as typeof HTMLElement;
+
+   export class SiteHeaderElement extends SSRHTMLElement {
+     // …
+   }
+   ```
+   This keeps the file importable from Node-side build steps without throwing `HTMLElement is not defined`.
+
+3. **Light DOM, not Shadow DOM**:
+   - The consumer already imports `@kongmy-dev/sapphire-ui/style.css`, so the compiled Tailwind utilities are available globally.
+   - Shadow DOM would isolate the element from those utilities — defeating the design system.
+   - Light DOM means slotted content uses the same cascade as everything else on the page.
+
+4. **Named slots via `data-slot` attributes**:
+   - `<slot>` only works inside Shadow DOM, so we use a data-attribute convention.
+   - On `connectedCallback`, collect children whose `dataset.slot === 'brand' | 'nav' | 'actions'`, then rearrange them into a wrapper container.
+   - Guard with a `rendered` flag so re-connect (HMR, list re-render) doesn't double-process.
+
+5. **Reuse the React component's Tailwind classes verbatim**:
+   - The compiled `sapphire-ui.css` already includes every class the React component uses.
+   - Hardcoding the same class arrays in the element's TS guarantees pixel-identical output.
+
+6. **Reactive attributes via `observedAttributes` + `attributeChangedCallback`**:
+   - Variant switching at runtime should reflow class names.
+   - Guard inside the callback with `if (!this.rendered) return` so first connect controls initial render.
+
+7. **Define the custom element at module bottom**:
+   ```ts
+   if (typeof window !== 'undefined' && !customElements.get('sapphire-site-header')) {
+     customElements.define('sapphire-site-header', SiteHeaderElement);
+   }
+   ```
+   The `customElements.get` guard prevents double-define errors when the module is imported by both the `/elements` bundle and a direct import.
+
+### Wiring it up
+
+After creating `src/components/SiteHeaderElement.ts`:
+
+1. **Register in `src/elements.ts`**:
+   ```ts
+   import './components/SiteHeaderElement';
+   export { SiteHeaderElement } from './components/SiteHeaderElement';
+   ```
+
+2. **Export from `src/index.ts`** (for React consumers who want the class):
+   ```ts
+   export * from './components/SiteHeaderElement';
+   ```
+
+3. **Add the export path to `package.json → exports`**:
+   ```json
+   "./site-header-element": {
+     "types": "./dist/components/SiteHeaderElement.d.ts",
+     "import": "./dist/components/SiteHeaderElement.js",
+     "require": "./dist/components/SiteHeaderElement.cjs"
+   }
+   ```
+
+4. **Add to `package.json → sideEffects`** so bundlers don't tree-shake the `customElements.define` call:
+   ```json
+   "./dist/components/SiteHeaderElement.js",
+   "./dist/components/SiteHeaderElement.cjs"
+   ```
+
+5. **Document in `src/pages/InteractivePage.tsx`** — add a Custom Elements section right after the React component preview, showing the equivalent HTML in a `<pre>` code block.
+
+6. **Bump the package version** in `package.json` — minor bump (e.g. `1.5.0 → 1.6.0`) since adding exports is additive.

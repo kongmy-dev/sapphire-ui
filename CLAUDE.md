@@ -25,7 +25,9 @@ Sapphire UI is the official design system for **KONGMY Digital Solutions** (`kon
 ```bash
 bun run dev          # specimen viewer at localhost:5173
 bun run build        # tsc + vite build → dist/
-bun run lint         # ESLint
+bun run lint         # ESLint check
+bun run lint:fix     # ESLint auto-fix (Tailwind class order, escaped entities, etc.)
+bun run format       # Full auto-format (ESLint + Stylelint fixes)
 bun run test:a11y    # Playwright a11y tests
 bun run build:docs   # docs site → dist-docs/
 bun run deploy:docs  # deploy docs to Cloudflare Pages

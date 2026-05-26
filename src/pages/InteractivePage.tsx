@@ -5,10 +5,12 @@ import {
 } from '../components/ui/Dialog';
 import { Button } from '../components/ui/Button';
 import { Toast, type ToastRef } from '../components/Toast';
-import { PageSection } from '../components/ui/PageSection';
-import { SiteHeader, SiteHeaderLink } from '../components/ui/SiteHeader';
-import { SiteFooter, SiteFooterGroup, SiteFooterLink } from '../components/ui/SiteFooter';
-import { Layout } from '../components/ui/Layout';
+import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetFooter, SheetClose } from '../components/ui/Sheet';
+import { Popover, PopoverTrigger, PopoverContent } from '../components/ui/Popover';
+import { Tooltip, TooltipProvider, TooltipRoot, TooltipTrigger, TooltipContent } from '../components/ui/Tooltip';
+import { HoverCard, HoverCardTrigger, HoverCardContent } from '../components/ui/HoverCard';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem, DropdownMenuShortcut } from '../components/ui/DropdownMenu';
+import { Avatar } from '../components/ui/Avatar';
 import { Input } from '../components/ui/Input';
 import { Label } from '../components/ui/Label';
 
@@ -17,13 +19,16 @@ export default function InteractivePage() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [dangerOpen, setDangerOpen] = useState(false);
   const toastRef = useRef<ToastRef>(null);
+  
+  const [showCompleted, setShowCompleted] = useState(true);
+  const [showDrafts, setShowDrafts] = useState(false);
 
   return (
     <div>
       <header className="docs-page-header">
-        <h1>Interactive</h1>
+        <h1>Interactive Overlays</h1>
         <p>
-          Modal dialogs, toast notifications, page sections, and site shell components.
+          Modal dialogs, toast notifications, sheets, tooltips, and popovers.
         </p>
       </header>
 
@@ -121,269 +126,167 @@ export default function InteractivePage() {
         <Toast ref={toastRef} />
       </section>
 
-      {/* ─── PageSection ────────────────────────────────────────────── */}
+      {/* ─── Sheet (Side Drawer) ────────────────────────────────────── */}
       <section className="docs-section">
-        <h2 className="docs-section-title">PageSection</h2>
-        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
-          Consistent section wrapper with constrained width, optional label + heading + subheading. Eliminates repeated <code className="docs-props-table code">max-w-7xl mx-auto px-6</code> boilerplate.
-        </p>
-        <div className="docs-preview" style={{ padding: 0, overflow: 'hidden' }}>
-          <PageSection
-            label="01 — Services"
-            heading="What we build"
-            subheading="Cloud infrastructure, AI/ML pipelines, and custom software for growing businesses."
-            maxWidth="full"
-            style={{ padding: '2rem 1.5rem', background: 'var(--color-surface)' }}
-          >
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-              {['Cloud Ops', 'AI / ML', 'Web Apps'].map((t) => (
-                <div key={t} className="rounded-md border border-border bg-(--color-card-bg) p-6">
-                  <span className="font-sans font-semibold text-(--color-text-strong)">{t}</span>
-                </div>
-              ))}
-            </div>
-          </PageSection>
-        </div>
-
-        <table className="docs-props-table">
-          <thead><tr><th>Prop</th><th>Type</th><th>Default</th></tr></thead>
-          <tbody>
-            <tr><td><code>heading</code></td><td><code>string</code></td><td>—</td></tr>
-            <tr><td><code>subheading</code></td><td><code>string</code></td><td>—</td></tr>
-            <tr><td><code>label</code></td><td><code>string</code></td><td>—</td></tr>
-            <tr><td><code>maxWidth</code></td><td><code>sm | md | lg | xl | 7xl | full</code></td><td><code>7xl</code></td></tr>
-          </tbody>
-        </table>
-      </section>
-
-      {/* ─── SiteHeader ─────────────────────────────────────────────── */}
-      <section className="docs-section">
-        <h2 className="docs-section-title">SiteHeader</h2>
-        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
-          Composable sticky header with brand, nav, and actions slots. Dark (default) and light variants.
-        </p>
-        <div className="docs-preview" style={{ padding: 0, overflow: 'hidden', borderRadius: 'var(--radius-md)' }}>
-          <SiteHeader
-            sticky={false}
-            brand={
-              <>
-                <span className="font-serif text-lg font-bold">KONGMY</span>
-                <span className="font-sans text-lg font-light text-accent">dev</span>
-              </>
-            }
-            nav={
-              <>
-                <SiteHeaderLink href="#" active>Home</SiteHeaderLink>
-                <SiteHeaderLink href="#">Services</SiteHeaderLink>
-                <SiteHeaderLink href="#">Blog</SiteHeaderLink>
-                <SiteHeaderLink href="#">Contact</SiteHeaderLink>
-              </>
-            }
-            actions={
-              <Button variant="on-dark-primary" size="sm">Get Started</Button>
-            }
-          />
-        </div>
-        <div className="docs-preview" style={{ padding: 0, overflow: 'hidden', borderRadius: 'var(--radius-md)', marginTop: 12 }}>
-          <SiteHeader
-            sticky={false}
-            variant="light"
-            brand={
-              <>
-                <span className="font-serif text-lg font-bold">Cloud</span>
-                <span className="font-sans text-lg font-light text-accent">Cost</span>
-              </>
-            }
-            nav={
-              <>
-                <SiteHeaderLink href="#" variant="light" active>Dashboard</SiteHeaderLink>
-                <SiteHeaderLink href="#" variant="light">Projects</SiteHeaderLink>
-                <SiteHeaderLink href="#" variant="light">Settings</SiteHeaderLink>
-              </>
-            }
-            actions={
-              <Button variant="primary" size="sm">Sync</Button>
-            }
-          />
-        </div>
-      </section>
-
-      {/* ─── SiteFooter ─────────────────────────────────────────────── */}
-      <section className="docs-section">
-        <h2 className="docs-section-title">SiteFooter</h2>
-        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
-          Composable footer with brand, link groups, and bottom bar slots.
-        </p>
-        <div className="docs-preview" style={{ padding: 0, overflow: 'hidden', borderRadius: 'var(--radius-md)' }}>
-          <SiteFooter
-            brand={
-              <div>
-                <div className="mb-3 flex items-center gap-2">
-                  <span className="font-serif text-xl font-bold text-white">KONGMY</span>
-                  <span className="font-sans text-xl font-light text-accent">dev</span>
-                </div>
-                <p className="m-0 font-sans text-sm/relaxed text-(--color-text-on-dark-muted)">
-                  Helping businesses cut costs, automate operations, and build software that works.
-                </p>
-              </div>
-            }
-            links={
-              <>
-                <SiteFooterGroup title="Products">
-                  <SiteFooterLink href="#">CloudCost</SiteFooterLink>
-                  <SiteFooterLink href="#">Web Toolbox</SiteFooterLink>
-                  <SiteFooterLink href="#">Sapphire UI</SiteFooterLink>
-                </SiteFooterGroup>
-                <SiteFooterGroup title="Resources">
-                  <SiteFooterLink href="#">Blog</SiteFooterLink>
-                  <SiteFooterLink href="#">Documentation</SiteFooterLink>
-                  <SiteFooterLink href="#">GitHub</SiteFooterLink>
-                </SiteFooterGroup>
-                <SiteFooterGroup title="Legal">
-                  <SiteFooterLink href="#">Privacy Policy</SiteFooterLink>
-                  <SiteFooterLink href="#">Terms of Service</SiteFooterLink>
-                </SiteFooterGroup>
-              </>
-            }
-            bottom={
-              <>
-                <span>© 2024 KONGMY Digital Solutions</span>
-                <span>Built with Sapphire UI</span>
-              </>
-            }
-          />
-        </div>
-      </section>
-
-      {/* ─── Layout ─────────────────────────────────────────────────── */}
-      <section className="docs-section">
-        <h2 className="docs-section-title">Layout</h2>
-        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
-          Canonical page shell — composes <code className="docs-props-table code">SiteHeader</code>,
-          <code className="docs-props-table code">SiteFooter</code>, and an optional sidebar slot into a
-          full-height column. Used by every kongmy.dev app so consumers get the
-          same header/main/footer rhythm in one import.
-        </p>
-        <div className="docs-preview" style={{ padding: 0, overflow: 'hidden', borderRadius: 'var(--radius-md)' }}>
-          <Layout
-            style={{ minHeight: 360 }}
-            header={
-              <SiteHeader
-                sticky={false}
-                brand={
-                  <>
-                    <span className="font-serif text-lg font-bold">KONGMY</span>
-                    <span className="font-sans text-lg font-light text-accent">dev</span>
-                  </>
-                }
-                nav={
-                  <>
-                    <SiteHeaderLink href="#" active>Home</SiteHeaderLink>
-                    <SiteHeaderLink href="#">Docs</SiteHeaderLink>
-                  </>
-                }
-              />
-            }
-            footer={
-              <SiteFooter
-                brand={
-                  <span className="font-sans text-sm text-(--color-text-on-dark-muted)">
-                    © KONGMY Digital Solutions
-                  </span>
-                }
-                bottom={<span>Built with Sapphire UI</span>}
-              />
-            }
-          >
-            <div style={{ padding: '2rem 1.5rem' }}>
-              <h3 className="m-0 mb-2 font-serif text-xl font-semibold text-(--color-text-strong)">
-                Main content area
-              </h3>
-              <p className="m-0 font-sans text-sm text-(--color-text-muted)">
-                Pages, routes, or any children render here between the header and footer slots.
-              </p>
-            </div>
-          </Layout>
-        </div>
-
-        <pre className="docs-code" style={{ display: 'block', padding: 16, marginTop: 12 }}>
-{`<Layout
-  header={<SiteHeader brand={...} nav={...} />}
-  footer={<SiteFooter brand={...} links={...} />}
-  // sidebar={<aside>…</aside>} // optional left rail
->
-  <Routes>{...}</Routes>
-</Layout>`}
-        </pre>
-
-        <table className="docs-props-table">
-          <thead><tr><th>Prop</th><th>Type</th><th>Default</th></tr></thead>
-          <tbody>
-            <tr><td><code>header</code></td><td><code>ReactNode</code></td><td>—</td></tr>
-            <tr><td><code>sidebar</code></td><td><code>ReactNode</code></td><td>—</td></tr>
-            <tr><td><code>footer</code></td><td><code>ReactNode</code></td><td>—</td></tr>
-            <tr><td><code>mainClassName</code></td><td><code>string</code></td><td>—</td></tr>
-          </tbody>
-        </table>
-      </section>
-
-      {/* ─── SEOHead ────────────────────────────────────────────────── */}
-      <section className="docs-section">
-        <h2 className="docs-section-title">SEO / Head</h2>
-        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
-          Dual API for SEO meta tags: React <code className="docs-props-table code">&lt;SEOHead&gt;</code> component for SPAs, and <code className="docs-props-table code">generateSEOTags()</code> utility for Astro/SSR.
-        </p>
+        <h2 className="docs-section-title">Sheet (Side Drawer)</h2>
         <div className="docs-preview">
-          <div className="docs-stack" style={{ gap: 16 }}>
-            <div>
-              <span className="mb-2 block font-mono text-xs font-bold tracking-widest text-accent uppercase">React (SPA)</span>
-              <pre className="docs-code" style={{ display: 'block', padding: 16 }}>
-{`<SEOHead
-  title="Cloud Cost Dashboard"
-  description="Monitor multi-cloud spending."
-  url="https://cloudcost.kongmy.dev"
-  image="https://kongmy.dev/og-cloudcost.png"
-  siteName="KONGMY"
-  type="website"
-/>`}
-              </pre>
-            </div>
-            <div>
-              <span className="mb-2 block font-mono text-xs font-bold tracking-widest text-accent uppercase">Astro / SSR</span>
-              <pre className="docs-code" style={{ display: 'block', padding: 16 }}>
-{`---
-import { generateSEOTags } from '@kongmy-dev/sapphire-ui';
-const seo = generateSEOTags({
-  title: 'My Blog Post',
-  description: 'A deep dive into...',
-  type: 'article',
-  publishedTime: '2024-01-15',
-  author: 'Kong MY',
-});
----
-<head>
-  <Fragment set:html={seo} />
-</head>`}
-              </pre>
-            </div>
+          <div className="docs-flex" style={{ gap: 8, flexWrap: 'wrap' }}>
+            {(['top', 'right', 'bottom', 'left'] as const).map((side) => (
+              <Sheet key={side}>
+                <SheetTrigger asChild>
+                  <Button variant="outline" size="sm">{side}</Button>
+                </SheetTrigger>
+                <SheetContent side={side}>
+                  <SheetHeader>
+                    <SheetTitle style={{ fontFamily: 'var(--font-serif)', fontSize: 20, fontWeight: 600, margin: 0 }}>
+                      Sheet from {side}
+                    </SheetTitle>
+                    <SheetDescription style={{ fontFamily: 'var(--font-sans)', fontSize: 14, color: 'var(--color-text-muted)', margin: 0 }}>
+                      Anything can go inside a Sheet — forms, content, configuration panels.
+                    </SheetDescription>
+                  </SheetHeader>
+                  <div style={{ marginTop: 16, fontFamily: 'var(--font-sans)', fontSize: 14 }}>
+                    Slot content here.
+                  </div>
+                  <SheetFooter>
+                    <SheetClose asChild>
+                      <Button variant="outline" size="sm">Cancel</Button>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <Button size="sm">Save</Button>
+                    </SheetClose>
+                  </SheetFooter>
+                </SheetContent>
+              </Sheet>
+            ))}
           </div>
         </div>
-
-        <table className="docs-props-table">
-          <thead><tr><th>Prop</th><th>Type</th><th>Default</th></tr></thead>
-          <tbody>
-            <tr><td><code>title</code></td><td><code>string</code></td><td>—</td></tr>
-            <tr><td><code>description</code></td><td><code>string</code></td><td>—</td></tr>
-            <tr><td><code>url</code></td><td><code>string</code></td><td>—</td></tr>
-            <tr><td><code>image</code></td><td><code>string</code></td><td>—</td></tr>
-            <tr><td><code>siteName</code></td><td><code>string</code></td><td><code>&quot;KONGMY&quot;</code></td></tr>
-            <tr><td><code>type</code></td><td><code>website | article</code></td><td><code>website</code></td></tr>
-            <tr><td><code>twitterCard</code></td><td><code>summary | summary_large_image</code></td><td><code>summary_large_image</code></td></tr>
-            <tr><td><code>publishedTime</code></td><td><code>string (ISO)</code></td><td>—</td></tr>
-            <tr><td><code>jsonLd</code></td><td><code>Record</code></td><td>—</td></tr>
-          </tbody>
-        </table>
       </section>
+
+      {/* ─── Popover ────────────────────────────────────────────────── */}
+      <section className="docs-section">
+        <h2 className="docs-section-title">Popover</h2>
+        <div className="docs-preview">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline">Edit profile</Button>
+            </PopoverTrigger>
+            <PopoverContent>
+              <div className="docs-stack" style={{ gap: 12 }}>
+                <div style={{ fontWeight: 600 }}>Profile</div>
+                <div className="docs-stack" style={{ gap: 6 }}>
+                  <Label htmlFor="popover-name">Name</Label>
+                  <Input id="popover-name" defaultValue="Kong My" />
+                </div>
+                <div className="docs-stack" style={{ gap: 6 }}>
+                  <Label htmlFor="popover-handle">Handle</Label>
+                  <Input id="popover-handle" defaultValue="@kongmy" />
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
+        </div>
+      </section>
+
+      {/* ─── Tooltip ────────────────────────────────────────────────── */}
+      <section className="docs-section">
+        <h2 className="docs-section-title">Tooltip</h2>
+        <div className="docs-preview">
+          <TooltipProvider delayDuration={200}>
+            <div className="docs-flex" style={{ gap: 12, alignItems: 'center' }}>
+              <Tooltip content="Quick info shown on hover" noProvider>
+                <Button variant="outline" size="sm">Hover me</Button>
+              </Tooltip>
+              <TooltipRoot>
+                <TooltipTrigger asChild>
+                  <Button variant="ghost" size="icon" aria-label="Settings">⚙</Button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">Settings</TooltipContent>
+              </TooltipRoot>
+              <TooltipRoot>
+                <TooltipTrigger asChild>
+                  <Button variant="ghost" size="icon" aria-label="Help">?</Button>
+                </TooltipTrigger>
+                <TooltipContent side="right">Documentation</TooltipContent>
+              </TooltipRoot>
+            </div>
+          </TooltipProvider>
+        </div>
+      </section>
+
+      {/* ─── Hover Card ─────────────────────────────────────────────── */}
+      <section className="docs-section">
+        <h2 className="docs-section-title">Hover Card</h2>
+        <div className="docs-preview">
+          <div className="docs-flex" style={{ gap: 16, alignItems: 'center' }}>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: 14 }}>Hover over:</span>
+            <HoverCard>
+              <HoverCardTrigger asChild>
+                <a href="#" onClick={(e) => e.preventDefault()} style={{ color: 'var(--color-accent-text)', textDecoration: 'underline', textUnderlineOffset: 3 }}>
+                  @kongmy
+                </a>
+              </HoverCardTrigger>
+              <HoverCardContent>
+                <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                  <Avatar fallback="KM" size="md" />
+                  <div>
+                    <div style={{ fontWeight: 600 }}>KONGMY Digital</div>
+                    <div style={{ color: 'var(--color-text-muted)', fontSize: 12, marginTop: 2 }}>
+                      Editorial-grade design system for IT consultancies.
+                    </div>
+                  </div>
+                </div>
+              </HoverCardContent>
+            </HoverCard>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Dropdown Menu ──────────────────────────────────────────── */}
+      <section className="docs-section">
+        <h2 className="docs-section-title">Dropdown Menu</h2>
+        <div className="docs-preview">
+          <div className="docs-flex" style={{ gap: 12 }}>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm">Actions</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>Item</DropdownMenuLabel>
+                 <DropdownMenuItem onSelect={() => toastRef.current?.show('Edit action triggered', 'info')}>
+                  Edit
+                  <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
+                </DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => toastRef.current?.show('Duplicate action triggered', 'info')}>
+                  Duplicate
+                  <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onSelect={() => toastRef.current?.show('Delete action triggered', 'warning')} style={{ color: '#b91c1c' }}>
+                  Delete
+                  <DropdownMenuShortcut>⌫</DropdownMenuShortcut>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm">View options</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>Filters</DropdownMenuLabel>
+                <DropdownMenuCheckboxItem checked={showCompleted} onCheckedChange={setShowCompleted}>
+                  Show completed
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem checked={showDrafts} onCheckedChange={setShowDrafts}>
+                  Show drafts
+                </DropdownMenuCheckboxItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }

@@ -25,6 +25,12 @@ const categories = [
     route: '/buttons',
   },
   {
+    title: 'Cards',
+    icon: 'cards',
+    desc: 'Versatile content containers with hover states and dark modes.',
+    route: '/cards',
+  },
+  {
     title: 'Forms & Controls',
     icon: 'input',
     desc: 'Text inputs, textareas, checkboxes, toggles, sliders, and native selects.',
@@ -59,6 +65,30 @@ const categories = [
     icon: 'touch_app',
     desc: 'Dialogs, toasts, page sections, site headers/footers, and SEO utilities.',
     route: '/interactive',
+  },
+  {
+    title: 'Layouts',
+    icon: 'view_quilt',
+    desc: 'Application shell, sidebar navigation, and full-bleed layouts.',
+    route: '/layouts',
+  },
+  {
+    title: 'Web Components',
+    icon: 'code',
+    desc: 'Framework-agnostic custom elements like sapphire-toast and sapphire-banner.',
+    route: '/elements',
+  },
+  {
+    title: 'Hooks & Utils',
+    icon: 'function',
+    desc: 'React hooks for layout, media queries, and utility functions.',
+    route: '/hooks',
+  },
+  {
+    title: 'Extended',
+    icon: 'extension',
+    desc: 'Complex UI components like wizards and composite interfaces.',
+    route: '/extended',
   },
 ];
 

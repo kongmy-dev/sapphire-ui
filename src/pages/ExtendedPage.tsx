@@ -4,17 +4,16 @@ import { Kbd } from '../components/ui/Kbd';
 import { CodeBlock } from '../components/ui/CodeBlock';
 import { Toggle, ToggleGroup, ToggleGroupItem } from '../components/ui/Toggle';
 import { ScrollArea } from '../components/ui/ScrollArea';
-import { HoverCard, HoverCardTrigger, HoverCardContent } from '../components/ui/HoverCard';
 import { Banner, type BannerRef } from '../components/Banner';
 import { Avatar } from '../components/ui/Avatar';
 import { Button } from '../components/ui/Button';
-import { Popover, PopoverTrigger, PopoverContent } from '../components/ui/Popover';
-import { Tooltip, TooltipProvider, TooltipRoot, TooltipTrigger, TooltipContent } from '../components/ui/Tooltip';
-import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetFooter, SheetClose } from '../components/ui/Sheet';
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem, DropdownMenuShortcut } from '../components/ui/DropdownMenu';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '../components/ui/Accordion';
-import { Input } from '../components/ui/Input';
-import { Label } from '../components/ui/Label';
+import { Callout } from '../components/ui/Callout';
+import { MarginNote } from '../components/ui/MarginNote';
+import { Timeline, TimelineItem, TimelineIndicator, TimelineContent } from '../components/ui/Timeline';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '../components/ui/Tabs';
+import { TableOfContents } from '../components/ui/TableOfContents';
+import { Card } from '../components/ui/Card';
 
 const sampleCode = `import { Button, Card } from '@kongmy-dev/sapphire-ui';
 import '@kongmy-dev/sapphire-ui/style.css';
@@ -33,14 +32,12 @@ export default function ExtendedPage() {
   const [align, setAlign] = useState('left');
   const [formatting, setFormatting] = useState<string[]>(['bold']);
   const bannerRef = useRef<BannerRef>(null);
-  const [showCompleted, setShowCompleted] = useState(true);
-  const [showDrafts, setShowDrafts] = useState(false);
 
   return (
     <div>
       <header className="docs-page-header">
         <h1>Extended</h1>
-        <p>Phase 3 primitives — breadcrumb trails, keyboard hints, code blocks, toggles, scroll areas, hover previews, and dismissible banners.</p>
+        <p>Phase 3 primitives — breadcrumb trails, keyboard hints, code blocks, toggles, scroll areas, and complex editorial layouts.</p>
       </header>
 
       <section className="docs-section">
@@ -147,33 +144,6 @@ export default function ExtendedPage() {
       </section>
 
       <section className="docs-section">
-        <h2 className="docs-section-title">Hover Card</h2>
-        <div className="docs-preview">
-          <div className="docs-flex" style={{ gap: 16, alignItems: 'center' }}>
-            <span style={{ fontFamily: 'var(--font-sans)', fontSize: 14 }}>Hover over:</span>
-            <HoverCard>
-              <HoverCardTrigger asChild>
-                <a href="#" onClick={(e) => e.preventDefault()} style={{ color: 'var(--color-accent-text)', textDecoration: 'underline', textUnderlineOffset: 3 }}>
-                  @kongmy
-                </a>
-              </HoverCardTrigger>
-              <HoverCardContent>
-                <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-                  <Avatar fallback="KM" size="md" />
-                  <div>
-                    <div style={{ fontWeight: 600 }}>KONGMY Digital</div>
-                    <div style={{ color: 'var(--color-text-muted)', fontSize: 12, marginTop: 2 }}>
-                      Editorial-grade design system for IT consultancies.
-                    </div>
-                  </div>
-                </div>
-              </HoverCardContent>
-            </HoverCard>
-          </div>
-        </div>
-      </section>
-
-      <section className="docs-section">
         <h2 className="docs-section-title">Banner</h2>
         <div className="docs-preview">
           <div className="docs-stack" style={{ gap: 12 }}>
@@ -197,135 +167,6 @@ export default function ExtendedPage() {
       </section>
 
       <section className="docs-section">
-        <h2 className="docs-section-title">Popover</h2>
-        <div className="docs-preview">
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant="outline">Edit profile</Button>
-            </PopoverTrigger>
-            <PopoverContent>
-              <div className="docs-stack" style={{ gap: 12 }}>
-                <div style={{ fontWeight: 600 }}>Profile</div>
-                <div className="docs-stack" style={{ gap: 6 }}>
-                  <Label htmlFor="popover-name">Name</Label>
-                  <Input id="popover-name" defaultValue="Kong My" />
-                </div>
-                <div className="docs-stack" style={{ gap: 6 }}>
-                  <Label htmlFor="popover-handle">Handle</Label>
-                  <Input id="popover-handle" defaultValue="@kongmy" />
-                </div>
-              </div>
-            </PopoverContent>
-          </Popover>
-        </div>
-      </section>
-
-      <section className="docs-section">
-        <h2 className="docs-section-title">Tooltip</h2>
-        <div className="docs-preview">
-          <TooltipProvider delayDuration={200}>
-            <div className="docs-flex" style={{ gap: 12, alignItems: 'center' }}>
-              <Tooltip content="Quick info shown on hover" noProvider>
-                <Button variant="outline" size="sm">Hover me</Button>
-              </Tooltip>
-              <TooltipRoot>
-                <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" aria-label="Settings">⚙</Button>
-                </TooltipTrigger>
-                <TooltipContent side="bottom">Settings</TooltipContent>
-              </TooltipRoot>
-              <TooltipRoot>
-                <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" aria-label="Help">?</Button>
-                </TooltipTrigger>
-                <TooltipContent side="right">Documentation</TooltipContent>
-              </TooltipRoot>
-            </div>
-          </TooltipProvider>
-        </div>
-      </section>
-
-      <section className="docs-section">
-        <h2 className="docs-section-title">Sheet (Side Drawer)</h2>
-        <div className="docs-preview">
-          <div className="docs-flex" style={{ gap: 8, flexWrap: 'wrap' }}>
-            {(['top', 'right', 'bottom', 'left'] as const).map((side) => (
-              <Sheet key={side}>
-                <SheetTrigger asChild>
-                  <Button variant="outline" size="sm">{side}</Button>
-                </SheetTrigger>
-                <SheetContent side={side}>
-                  <SheetHeader>
-                    <SheetTitle style={{ fontFamily: 'var(--font-serif)', fontSize: 20, fontWeight: 600, margin: 0 }}>
-                      Sheet from {side}
-                    </SheetTitle>
-                    <SheetDescription style={{ fontFamily: 'var(--font-sans)', fontSize: 14, color: 'var(--color-text-muted)', margin: 0 }}>
-                      Anything can go inside a Sheet — forms, content, configuration panels.
-                    </SheetDescription>
-                  </SheetHeader>
-                  <div style={{ marginTop: 16, fontFamily: 'var(--font-sans)', fontSize: 14 }}>
-                    Slot content here.
-                  </div>
-                  <SheetFooter>
-                    <SheetClose asChild>
-                      <Button variant="outline" size="sm">Cancel</Button>
-                    </SheetClose>
-                    <SheetClose asChild>
-                      <Button size="sm">Save</Button>
-                    </SheetClose>
-                  </SheetFooter>
-                </SheetContent>
-              </Sheet>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="docs-section">
-        <h2 className="docs-section-title">Dropdown Menu</h2>
-        <div className="docs-preview">
-          <div className="docs-flex" style={{ gap: 12 }}>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm">Actions</Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Item</DropdownMenuLabel>
-                <DropdownMenuItem onSelect={() => alert('Edit')}>
-                  Edit
-                  <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
-                </DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => alert('Duplicate')}>
-                  Duplicate
-                  <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onSelect={() => alert('Delete')} style={{ color: '#b91c1c' }}>
-                  Delete
-                  <DropdownMenuShortcut>⌫</DropdownMenuShortcut>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm">View options</Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Filters</DropdownMenuLabel>
-                <DropdownMenuCheckboxItem checked={showCompleted} onCheckedChange={setShowCompleted}>
-                  Show completed
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem checked={showDrafts} onCheckedChange={setShowDrafts}>
-                  Show drafts
-                </DropdownMenuCheckboxItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
-      </section>
-
-      <section className="docs-section">
         <h2 className="docs-section-title">Accordion</h2>
         <div className="docs-preview">
           <Accordion type="single" collapsible style={{ maxWidth: 600 }}>
@@ -342,7 +183,9 @@ export default function ExtendedPage() {
               <AccordionContent>
                 Yes — the dual-export architecture ships a vanilla <code>./elements</code>
                 entry that registers the custom elements (Toast, CookieBanner, Banner,
-                Analytics) without pulling React.
+                Analytics, SiteHeader, SiteFooter) without pulling React. Astro-static
+                consumers can drop them in via plain HTML — see the Interactive page for
+                usage.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="q3">
@@ -355,6 +198,91 @@ export default function ExtendedPage() {
           </Accordion>
         </div>
       </section>
+
+      {/* ─── Editorial Primitives ─────────────────────────────────── */}
+      <section className="docs-section">
+        <h2 className="docs-section-title">Editorial & Complex Primitives</h2>
+        <div className="flex flex-col gap-8">
+          
+          <Card style={{ padding: 24 }}>
+            <h3 className="mb-4 font-serif text-lg font-semibold text-primary dark:text-white">Editorial Callout</h3>
+            <Callout title="Key Takeaway" icon="bolt" variant="subtle">
+              <ul>
+                <li>UI primitives should be highly cohesive and loosely coupled.</li>
+                <li>Design systems enforce consistency across micro-frontends.</li>
+              </ul>
+            </Callout>
+          </Card>
+
+          <Card style={{ padding: 24 }}>
+            <h3 className="mb-4 font-serif text-lg font-semibold text-primary dark:text-white">Margin Note (Sidenote)</h3>
+            <p className="text-sm/relaxed text-(--color-text-main)" style={{ maxWidth: 600 }}>
+              When writing highly technical blog posts, we often need to reference external sources or explain a tangential concept without interrupting the main prose. Here is an example of a <MarginNote id="mn-1" note="This note appears in the margin on desktop and reflows inline on mobile devices.">Tufte-style margin note</MarginNote> in action.
+            </p>
+          </Card>
+
+          <Card style={{ padding: 24 }}>
+            <h3 className="mb-4 font-serif text-lg font-semibold text-primary dark:text-white">Vertical Tabs</h3>
+            <Tabs orientation="vertical" defaultValue="tab1" className="flex min-h-[150px]">
+              <TabsList variant="underline" className="w-48 shrink-0">
+                <TabsTrigger value="tab1">Overview</TabsTrigger>
+                <TabsTrigger value="tab2">Integrations</TabsTrigger>
+                <TabsTrigger value="tab3">Settings</TabsTrigger>
+              </TabsList>
+              <TabsContent value="tab1" className="mt-0 flex-1">
+                <p className="text-sm text-(--color-text-muted)">A vertical layout for tabs, commonly used for settings and large navigation rails.</p>
+              </TabsContent>
+              <TabsContent value="tab2" className="mt-0 flex-1">
+                <p className="text-sm text-(--color-text-muted)">Webhook and API integrations configuration.</p>
+              </TabsContent>
+              <TabsContent value="tab3" className="mt-0 flex-1">
+                <p className="text-sm text-(--color-text-muted)">User preferences and security settings.</p>
+              </TabsContent>
+            </Tabs>
+          </Card>
+
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+            <Card style={{ padding: 24 }}>
+              <h3 className="mb-4 font-serif text-lg font-semibold text-primary dark:text-white">Revision Timeline</h3>
+              <Timeline orientation="vertical">
+                <TimelineItem>
+                  <TimelineIndicator>
+                    <Avatar size="xs" fallback="KM" />
+                  </TimelineIndicator>
+                  <TimelineContent>
+                    <div className="text-sm font-semibold">v1.2.0 - Core Update</div>
+                    <div className="text-xs text-(--color-text-muted)">Added timeline primitive.</div>
+                  </TimelineContent>
+                </TimelineItem>
+                <TimelineItem>
+                  <TimelineIndicator isLast>
+                    <Avatar size="xs" fallback="KM" />
+                  </TimelineIndicator>
+                  <TimelineContent>
+                    <div className="text-sm font-semibold">v1.1.0 - Layouts</div>
+                    <div className="text-xs text-(--color-text-muted)">Added admin sidebar layout.</div>
+                  </TimelineContent>
+                </TimelineItem>
+              </Timeline>
+            </Card>
+
+            <Card style={{ padding: 24 }}>
+              <h3 className="mb-4 font-serif text-lg font-semibold text-primary dark:text-white">Table of Contents</h3>
+              <TableOfContents
+                activeId="sec2"
+                items={[
+                  { id: 'sec1', level: 2, title: 'Introduction to Web Architecture' },
+                  { id: 'sec2', level: 2, title: 'Component Reusability' },
+                  { id: 'sec2-1', level: 3, title: 'Extracting Primitives' },
+                  { id: 'sec2-2', level: 3, title: 'Styling with CSS Variables' },
+                  { id: 'sec3', level: 2, title: 'Conclusion' }
+                ]}
+              />
+            </Card>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }

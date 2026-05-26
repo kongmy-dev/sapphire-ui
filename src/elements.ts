@@ -11,6 +11,8 @@ import './components/ToastElement';
 import './components/CookieBannerElement';
 import './components/AnalyticsElement';
 import './components/BannerElement';
+import './components/SiteHeaderElement';
+import './components/SiteFooterElement';
 
 export { ToastElement } from './components/ToastElement';
 export type { ToastType } from './components/ToastElement';
@@ -18,6 +20,8 @@ export { CookieBannerElement } from './components/CookieBannerElement';
 export { AnalyticsElement } from './components/AnalyticsElement';
 export { BannerElement } from './components/BannerElement';
 export type { BannerVariant } from './components/BannerElement';
+export { SiteHeaderElement } from './components/SiteHeaderElement';
+export { SiteFooterElement } from './components/SiteFooterElement';
 
 export {
   getConsentStatus,

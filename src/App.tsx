@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import pkg from '../package.json';
 import './App.css';
 
@@ -16,6 +16,8 @@ const FeedbackPage = lazy(() => import('./pages/FeedbackPage'));
 const DataPage = lazy(() => import('./pages/DataPage'));
 const InteractivePage = lazy(() => import('./pages/InteractivePage'));
 const ExtendedPage = lazy(() => import('./pages/ExtendedPage'));
+const LayoutsPage = lazy(() => import('./pages/LayoutsPage'));
+const ElementsPage = lazy(() => import('./pages/ElementsPage'));
 const HooksPage = lazy(() => import('./pages/HooksPage'));
 
 import { CookieBanner } from './components/CookieBanner';
@@ -37,6 +39,8 @@ const navItems = [
   { href: '/data', label: 'Data Display', icon: 'table_chart' },
   { href: '/interactive', label: 'Interactive', icon: 'touch_app' },
   { href: '/extended', label: 'Extended', icon: 'extension' },
+  { href: '/layouts', label: 'Layouts', icon: 'view_quilt' },
+  { href: '/elements', label: 'Web Components', icon: 'code' },
   { href: '/hooks', label: 'Hooks & Utils', icon: 'function' },
 ];
 
@@ -63,6 +67,8 @@ function AppShell() {
   const [showCookies, setShowCookies] = useState(false);
   const [paletteOpen, setPaletteOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const isFullWidthPage = location.pathname === '/layouts';
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
@@ -113,7 +119,7 @@ function AppShell() {
 
       <Layout
         className="docs-layout"
-        mainClassName="docs-main"
+        mainClassName={isFullWidthPage ? "docs-main docs-main--full" : "docs-main"}
         sidebar={
         <aside className="docs-sidebar">
           <div className="docs-sidebar-brand">
@@ -196,6 +202,8 @@ function AppShell() {
             <Route path="/data" element={<DataPage />} />
             <Route path="/interactive" element={<InteractivePage />} />
             <Route path="/extended" element={<ExtendedPage />} />
+            <Route path="/layouts" element={<LayoutsPage />} />
+            <Route path="/elements" element={<ElementsPage />} />
             <Route path="/hooks" element={<HooksPage />} />
           </Routes>
         </Suspense>
