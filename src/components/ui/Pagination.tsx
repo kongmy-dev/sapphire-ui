@@ -112,7 +112,7 @@ const Pagination = forwardRef<HTMLElement, PaginationProps>(
               className={cn(
                 buttonClass,
                 item === currentPage
-                  ? 'border-primary bg-primary text-white'
+                  ? 'border-primary bg-primary text-(--color-text-on-dark)'
                   : 'border-border bg-transparent text-(--color-text-main) hover:bg-surface',
               )}
             >

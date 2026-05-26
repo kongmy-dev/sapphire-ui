@@ -102,7 +102,7 @@ export default function LayoutsPage() {
                 brand={
                   <div className="flex items-center gap-2 pl-1">
                     <span className="flex size-6 items-center justify-center rounded-sm bg-accent font-serif text-sm font-semibold text-primary">K</span>
-                    <span className="font-serif text-base font-semibold tracking-wide text-white">
+                    <span className="font-serif text-base font-semibold tracking-wide text-(--color-text-on-dark)">
                       KONGMY
                     </span>
                     <span className="font-sans text-[10px] tracking-wider text-accent uppercase">
@@ -115,8 +115,8 @@ export default function LayoutsPage() {
                     <Avatar size="sm" fallback="KM" />
                     {!collapsed && (
                       <div className="flex-1 truncate">
-                        <div className="text-xs font-semibold text-white">Kong My</div>
-                        <div className="text-[10px] text-white/50">Consultant</div>
+                        <div className="text-xs font-semibold text-(--color-text-on-dark)">Kong My</div>
+                        <div className="text-[10px] text-(--color-text-on-dark)/50">Consultant</div>
                       </div>
                     )}
                   </div>
@@ -720,7 +720,7 @@ export default function LayoutsPage() {
             brand={
               <div>
                 <div className="mb-3 flex items-center gap-2">
-                  <span className="font-serif text-xl font-bold text-white">KONGMY</span>
+                  <span className="font-serif text-xl font-bold text-(--color-text-on-dark)">KONGMY</span>
                   <span className="font-sans text-xl font-light text-accent">dev</span>
                 </div>
                 <p className="m-0 font-sans text-sm/relaxed text-(--color-text-on-dark-muted)">

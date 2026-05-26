@@ -87,7 +87,7 @@ const SiteFooterLink = forwardRef<HTMLAnchorElement, SiteFooterLinkProps>(
       className={cn(
         'font-sans text-sm no-underline transition-colors',
         variant === 'dark'
-          ? 'text-(--color-text-on-dark-muted) hover:text-white'
+          ? 'text-(--color-text-on-dark-muted) hover:text-(--color-text-on-dark)'
           : 'text-(--color-text-muted) hover:text-(--color-text-strong)',
         className,
       )}

@@ -190,7 +190,7 @@ function ConfirmDialog({
           </button>
           <button
             onClick={() => { onConfirm(); onOpenChange(false); }}
-            className="cursor-pointer rounded-btn border-none px-5 py-2.5 font-sans text-sm font-medium text-white transition-colors outline-none"
+            className="cursor-pointer rounded-btn border-none px-5 py-2.5 font-sans text-sm font-medium text-(--color-text-on-dark) transition-colors outline-none"
             style={{ backgroundColor: isDanger ? 'var(--color-error)' : 'var(--color-primary)' }}
           >
             {confirmLabel}

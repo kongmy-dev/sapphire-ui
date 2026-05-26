@@ -9,25 +9,25 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          'rounded-btn border-none bg-primary text-white hover:bg-(--color-primary-hover)',
+          'rounded-btn border-none bg-primary text-(--color-text-on-dark) hover:bg-(--color-primary-hover)',
         outline:
           'rounded-btn border-[1.5px] border-(--color-text-strong) bg-transparent text-(--color-text-strong) hover:bg-(--color-text-strong) hover:text-(--color-card-bg)',
         ghost:
-          'rounded-btn bg-transparent text-(--color-text-main) hover:bg-[var(--color-hover-overlay)]',
+          'rounded-btn border-[1.5px] border-accent bg-transparent text-(--color-accent-text) hover:bg-[var(--color-hover-overlay)]',
         accent:
           'rounded-btn border-none bg-accent text-primary hover:bg-accent-dark',
         'on-dark-primary':
           'rounded-btn border-none bg-accent font-bold text-primary hover:bg-accent-dark',
         'on-dark-outline':
-          'rounded-btn border-[1.5px] border-white/30 bg-transparent text-(--color-text-on-dark) hover:border-white hover:text-white',
+          'rounded-btn border-[1.5px] border-white/30 bg-transparent text-(--color-text-on-dark) hover:border-white hover:text-(--color-text-on-dark)',
         link:
           'border-none bg-transparent p-0 text-(--color-accent-text) underline-offset-4 hover:text-(--color-text-strong) hover:underline',
         premium:
-          'rounded-btn border-none bg-linear-to-br from-accent to-accent-dark text-white shadow-[0_4px_14px] shadow-accent/30 hover:-translate-y-0.5 hover:shadow-[0_6px_20px] hover:shadow-accent/40',
+          'rounded-btn border-none bg-linear-to-br from-accent to-accent-dark text-(--color-text-on-dark) shadow-[0_4px_14px] shadow-accent/30 hover:-translate-y-0.5 hover:shadow-[0_6px_20px] hover:shadow-accent/40',
         destructive:
-          'rounded-btn border-none bg-(--color-error) text-white hover:bg-(--color-error-hover) focus-visible:ring-(--color-error-ring)',
+          'rounded-btn border-none bg-(--color-error) text-(--color-text-on-dark) hover:bg-(--color-error-hover) focus-visible:ring-(--color-error-ring)',
         'destructive-outline':
-          'rounded-btn border-[1.5px] border-(--color-error) bg-transparent text-(--color-error) hover:bg-(--color-error) hover:text-white focus-visible:ring-(--color-error-ring)',
+          'rounded-btn border-[1.5px] border-(--color-error) bg-transparent text-(--color-error) hover:bg-(--color-error) hover:text-(--color-text-on-dark) focus-visible:ring-(--color-error-ring)',
       },
       size: {
         sm: 'px-4 py-2 text-sm',

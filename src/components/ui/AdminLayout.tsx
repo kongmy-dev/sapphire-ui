@@ -76,7 +76,7 @@ const AdminSidebar = forwardRef<HTMLDivElement, AdminSidebarProps>(
       <aside
         ref={ref}
         className={cn(
-          'relative z-30 flex h-screen shrink-0 flex-col border-r border-border-dark bg-primary text-white transition-all duration-300 ease-in-out',
+          'relative z-30 flex h-screen shrink-0 flex-col border-r border-border-dark bg-primary text-(--color-text-on-dark) transition-all duration-300 ease-in-out',
           activeCollapsed ? 'w-16' : 'w-64',
           className
         )}
@@ -91,7 +91,7 @@ const AdminSidebar = forwardRef<HTMLDivElement, AdminSidebarProps>(
             type="button"
             onClick={handleToggle}
             aria-label={activeCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-            className="flex size-8 cursor-pointer items-center justify-center rounded-btn border-none bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
+            className="flex size-8 cursor-pointer items-center justify-center rounded-btn border-none bg-white/5 text-(--color-text-on-dark)/70 hover:bg-white/10 hover:text-(--color-text-on-dark)"
             style={{ outline: 'none' }}
           >
             <span className="material-symbols-outlined text-[18px]">
@@ -132,7 +132,7 @@ const AdminSidebarSection = forwardRef<HTMLDivElement, AdminSidebarSectionProps>
     return (
       <div ref={ref} className={cn('space-y-1', className)} {...props}>
         {title && !collapsed && (
-          <h5 className="px-3 text-[10px] font-semibold tracking-wider text-white/40 uppercase">
+          <h5 className="px-3 text-[10px] font-semibold tracking-wider text-(--color-text-on-dark)/40 uppercase">
             {title}
           </h5>
         )}
@@ -170,7 +170,7 @@ const AdminSidebarLink = forwardRef<HTMLAnchorElement, AdminSidebarLinkProps>(
           'group flex items-center gap-3 rounded-btn px-3 py-2.5 font-sans text-sm font-medium no-underline transition-all duration-150',
           active
             ? 'border-l-2 border-accent bg-accent/10 text-accent'
-            : 'text-white/70 hover:bg-white/5 hover:text-white',
+            : 'text-(--color-text-on-dark)/70 hover:bg-white/5 hover:text-(--color-text-on-dark)',
           collapsed ? 'justify-center px-0' : '',
           className
         )}
@@ -180,7 +180,7 @@ const AdminSidebarLink = forwardRef<HTMLAnchorElement, AdminSidebarLinkProps>(
           <span
             className={cn(
               'material-symbols-outlined text-[20px] transition-colors',
-              active ? 'text-accent' : 'text-white/50 group-hover:text-white'
+              active ? 'text-accent' : 'text-(--color-text-on-dark)/50 group-hover:text-(--color-text-on-dark)'
             )}
           >
             {icon}

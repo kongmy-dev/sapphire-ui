@@ -24,7 +24,7 @@ const SiteHeader = forwardRef<HTMLElement, SiteHeaderProps>(
         'z-40 w-full border-b',
         sticky && 'sticky top-0',
         variant === 'dark'
-          ? 'border-border-dark bg-primary text-white'
+          ? 'border-border-dark bg-primary text-(--color-text-on-dark)'
           // Light variant: hardcoded light palette so it stays light even
           // when previewed inside a dark-themed page (e.g. /interactive
           // demos a light header on a dark docs background).
@@ -61,7 +61,7 @@ const SiteHeaderLink = forwardRef<HTMLAnchorElement, SiteHeaderLinkProps>(
         variant === 'dark'
           ? active
             ? 'bg-accent/10 text-accent'
-            : 'text-(--color-text-on-dark-muted) hover:bg-white/6 hover:text-white'
+            : 'text-(--color-text-on-dark-muted) hover:bg-white/6 hover:text-(--color-text-on-dark)'
           // Light variant: hardcoded so the link stays readable on the
           // light header background regardless of the surrounding theme.
           : active

@@ -134,7 +134,7 @@ export class CookieBannerElement extends SSRHTMLElement {
           </button>
           <button
             data-accept-btn
-            class="flex-1 sm:flex-none px-5 py-2.5 text-sm font-medium rounded-md transition-all cursor-pointer font-sans text-center text-white bg-primary border-b-2 border-accent hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(10,25,47,0.1)] outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            class="flex-1 sm:flex-none px-5 py-2.5 text-sm font-medium rounded-md transition-all cursor-pointer font-sans text-center text-(--color-text-on-dark) bg-primary border-b-2 border-accent hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(10,25,47,0.1)] outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
           >
             Accept
           </button>

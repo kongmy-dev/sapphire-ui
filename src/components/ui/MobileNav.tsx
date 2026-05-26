@@ -85,10 +85,10 @@ export function MobileNav({
   return (
     <div className="md:hidden">
       {/* Fixed Mobile Header */}
-      <header className="fixed inset-x-0 top-0 z-40 flex h-16 items-center justify-start gap-1 border-b border-white/10 bg-primary px-4 text-white shadow-md">
+      <header className="fixed inset-x-0 top-0 z-40 flex h-16 items-center justify-start gap-1 border-b border-white/10 bg-primary px-4 text-(--color-text-on-dark) shadow-md">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex cursor-pointer items-center justify-center rounded-md border-none bg-transparent p-2 text-white outline-none hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-accent"
+          className="flex cursor-pointer items-center justify-center rounded-md border-none bg-transparent p-2 text-(--color-text-on-dark) outline-none hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-accent"
           aria-label="Toggle navigation menu"
           aria-expanded={isOpen}
         >
@@ -98,12 +98,12 @@ export function MobileNav({
         </button>
 
         <div className="ml-1 flex items-center gap-1.5">
-          <span className="font-serif text-lg font-bold text-white">{brandName}</span>
+          <span className="font-serif text-lg font-bold text-(--color-text-on-dark)">{brandName}</span>
           {brandSuffix && (
             <span className="font-sans text-lg font-light text-accent">{brandSuffix}</span>
           )}
           {version && (
-            <span className="mb-0.5 ml-1.5 self-end font-mono text-[10px] text-white/50">{version}</span>
+            <span className="mb-0.5 ml-1.5 self-end font-mono text-[10px] text-(--color-text-on-dark)/50">{version}</span>
           )}
         </div>
       </header>
@@ -118,20 +118,20 @@ export function MobileNav({
 
       {/* Sliding Mobile Drawer */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-[280px] flex-col border-r border-white/10 bg-primary p-6 text-white shadow-2xl transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-[280px] flex-col border-r border-white/10 bg-primary p-6 text-(--color-text-on-dark) shadow-2xl transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div className="mb-2 flex items-center justify-between">
           <div className="flex items-center gap-1.5">
-            <span className="font-serif text-xl font-bold text-white">{brandName}</span>
+            <span className="font-serif text-xl font-bold text-(--color-text-on-dark)">{brandName}</span>
             {brandSuffix && (
               <span className="font-sans text-xl font-light text-accent">{brandSuffix}</span>
             )}
           </div>
           <button
             onClick={() => setIsOpen(false)}
-            className="flex cursor-pointer items-center justify-center rounded-md border-none bg-transparent p-1.5 text-white outline-none hover:bg-white/5"
+            className="flex cursor-pointer items-center justify-center rounded-md border-none bg-transparent p-1.5 text-(--color-text-on-dark) outline-none hover:bg-white/5"
             aria-label="Close navigation menu"
           >
             <span className="material-symbols-outlined" style={{ fontSize: 20 }}>
@@ -141,7 +141,7 @@ export function MobileNav({
         </div>
 
         {version && (
-          <div className="mb-6 px-1 font-mono text-[10px] text-white/40">
+          <div className="mb-6 px-1 font-mono text-[10px] text-(--color-text-on-dark)/40">
             {version}
           </div>
         )}
@@ -158,7 +158,7 @@ export function MobileNav({
                 className={`flex items-center gap-3 rounded-md px-4 py-2.5 font-sans text-sm font-medium no-underline transition-colors ${
                   active
                     ? 'bg-accent/10 text-accent'
-                    : 'text-white/70 hover:bg-white/5 hover:text-white'
+                    : 'text-(--color-text-on-dark)/70 hover:bg-white/5 hover:text-(--color-text-on-dark)'
                 }`}
               >
                 {item.icon && (
@@ -179,7 +179,7 @@ export function MobileNav({
         </nav>
 
         <div className="mt-auto border-t border-white/10 pt-4">
-          <a href="https://kongmy.dev/?utm_source=sapphire-ui&utm_medium=sidebar" target="_blank" rel="noopener noreferrer" className="block font-mono text-[9px] tracking-wider text-white/40 uppercase no-underline hover:text-white transition-colors">
+          <a href="https://kongmy.dev/?utm_source=sapphire-ui&utm_medium=sidebar" target="_blank" rel="noopener noreferrer" className="block font-mono text-[9px] tracking-wider text-(--color-text-on-dark)/40 uppercase no-underline hover:text-(--color-text-on-dark) transition-colors">
             kongmy.dev
           </a>
         </div>
