@@ -24,7 +24,7 @@ const SiteFooter = forwardRef<HTMLElement, SiteFooterProps>(
           ? 'border-border-dark bg-primary text-(--color-text-on-dark)'
           // Light variant: hardcoded light palette so it stays light even
           // when the surrounding page is in dark theme.
-          : 'border-border bg-white text-[#1e293b]',
+          : 'border-border bg-(--color-card-bg) text-(--color-text-main)',
         className,
       )}
       {...props}
@@ -44,7 +44,7 @@ const SiteFooter = forwardRef<HTMLElement, SiteFooterProps>(
             'flex flex-col items-center justify-between gap-4 border-t pt-6 font-mono text-[11px] tracking-[0.06em] uppercase md:flex-row',
             variant === 'dark'
               ? 'border-border-dark text-(--color-text-on-dark-muted)'
-              : 'border-border text-[#475569]',
+              : 'border-border text-(--color-text-muted)',
           )}>
             {bottom}
           </div>
@@ -88,7 +88,7 @@ const SiteFooterLink = forwardRef<HTMLAnchorElement, SiteFooterLinkProps>(
         'font-sans text-sm no-underline transition-colors',
         variant === 'dark'
           ? 'text-(--color-text-on-dark-muted) hover:text-white'
-          : 'text-[#475569] hover:text-primary',
+          : 'text-(--color-text-muted) hover:text-(--color-text-strong)',
         className,
       )}
       {...props}

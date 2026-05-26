@@ -8,6 +8,9 @@ import { Separator } from '../components/ui/Separator';
 import { Stat } from '../components/ui/Stat';
 import { Chip } from '../components/ui/Chip';
 import { Pagination } from '../components/ui/Pagination';
+import { BarChart } from '../components/ui/BarChart';
+import { Sparkline } from '../components/ui/Sparkline';
+import { Progress } from '../components/ui/Progress';
 
 // 'dark' is excluded — it ships near-white text intended for dark backgrounds
 // and is showcased separately in the dark preview row below.
@@ -184,6 +187,63 @@ export default function DataPage() {
             <p>Content above the separator</p>
             <Separator style={{ margin: '16px 0' }} />
             <p>Content below the separator</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="docs-section">
+        <h2 className="docs-section-title">BarChart</h2>
+        <div className="docs-preview">
+          <BarChart 
+            data={[45, 60, 35, 80, 55, 90]} 
+            labels={['M1', 'M2', 'M3', 'M4', 'M5', 'M6']} 
+            height="12rem" 
+            tooltipSuffix="h"
+          />
+        </div>
+      </section>
+
+      <section className="docs-section">
+        <h2 className="docs-section-title">Sparkline</h2>
+        <div className="docs-preview">
+          <Sparkline 
+            height="2rem" 
+            data={Array.from({ length: 45 }).map((_, i) => {
+              const isWarn = i === 12 || i === 13 || i === 29;
+              return {
+                status: isWarn ? 'warning' : 'success',
+                tooltip: isWarn ? 'Minor latency issues detected' : 'No downtime recorded'
+              }
+            })} 
+          />
+        </div>
+      </section>
+
+      <section className="docs-section">
+        <h2 className="docs-section-title">Progress</h2>
+        <div className="docs-preview">
+          <div className="docs-stack w-full max-w-[400px]" style={{ gap: 24, width: '100%', maxWidth: 400 }}>
+            <div>
+              <div className="flex justify-between text-xs mb-2">
+                <span className="font-medium text-(--color-text-strong)">Architecture</span>
+                <span className="font-mono font-medium text-accent">45%</span>
+              </div>
+              <Progress value={45} size="default" indicatorClassName="bg-accent" />
+            </div>
+            <div>
+              <div className="flex justify-between text-xs mb-2">
+                <span className="font-medium text-(--color-text-strong)">Advisory</span>
+                <span className="font-mono font-medium text-accent">35%</span>
+              </div>
+              <Progress value={35} size="default" indicatorClassName="bg-(--color-text-strong)" />
+            </div>
+            <div>
+              <div className="flex justify-between text-xs mb-2">
+                <span className="font-medium text-(--color-text-strong)">Delivery</span>
+                <span className="font-mono font-medium text-accent">20%</span>
+              </div>
+              <Progress value={20} size="default" indicatorClassName="bg-(--color-text-muted)" />
+            </div>
           </div>
         </div>
       </section>

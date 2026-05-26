@@ -17,9 +17,9 @@ export interface StatProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const changeColor: Record<NonNullable<StatProps['changeDirection']>, string> = {
-  up: 'text-[#15803d]',
-  down: 'text-[#b91c1c]',
-  neutral: 'text-[var(--color-text-muted)]',
+  up: 'text-(--color-success)',
+  down: 'text-(--color-error)',
+  neutral: 'text-(--color-text-muted)',
 };
 
 /**

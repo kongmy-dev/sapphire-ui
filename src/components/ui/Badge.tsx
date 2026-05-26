@@ -12,17 +12,17 @@ const badgeVariants = cva(
         default:
           'border border-border bg-surface text-(--color-text-muted)',
         accent:
-          'border border-[rgba(197,160,101,0.3)] bg-[rgba(197,160,101,0.12)] text-(--color-accent-text)',
+          'border border-accent/30 bg-accent/12 text-(--color-accent-text)',
         dark:
-          'border border-border-dark bg-[rgba(255,255,255,0.1)] text-(--color-text-on-dark)',
+          'border border-border-dark bg-white/10 text-(--color-text-on-dark)',
         success:
-          'border border-[rgba(34,197,94,0.2)] bg-[rgba(34,197,94,0.1)] text-[#15803d]',
+          'border border-(--color-success-border) bg-(--color-success-bg) text-(--color-success)',
         error:
-          'border border-[rgba(239,68,68,0.2)] bg-[rgba(239,68,68,0.1)] text-[#b91c1c]',
+          'border border-(--color-error-border) bg-(--color-error-bg) text-(--color-error)',
         warning:
-          'border border-[rgba(245,158,11,0.2)] bg-[rgba(245,158,11,0.1)] text-[#b45309]',
+          'border border-(--color-warning-border) bg-(--color-warning-bg) text-(--color-warning)',
         info:
-          'border border-[rgba(59,130,246,0.2)] bg-[rgba(59,130,246,0.1)] text-[#1d4ed8]',
+          'border border-(--color-info-border) bg-(--color-info-bg) text-(--color-info)',
       },
     },
     defaultVariants: {

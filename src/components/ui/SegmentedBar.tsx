@@ -38,7 +38,7 @@ const SegmentedBar = forwardRef<HTMLDivElement, SegmentedBarProps>(
       <div
         ref={ref}
         className={cn(
-          'relative flex w-full overflow-hidden rounded-sm border border-border bg-[rgba(255,255,255,0.05)]',
+          'relative flex w-full overflow-hidden rounded-sm border border-border bg-white/5',
           size === 'sm' && 'h-1.5',
           size === 'default' && 'h-2.5',
           size === 'lg' && 'h-4',

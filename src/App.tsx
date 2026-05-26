@@ -97,6 +97,7 @@ function AppShell() {
         brandSuffix="UI"
         version={DOCS_VERSION}
         navItems={navItems}
+        pathname={location.pathname}
         onNavigate={(href, event) => {
           // Intercept clicks so React Router handles routing without
           // a full page reload.
@@ -181,7 +182,7 @@ function AppShell() {
             </div>
           </nav>
           <div className="docs-sidebar-footer">
-            <span className="docs-footer-text">KONGMY Digital Solutions</span>
+            <a href="https://kongmy.dev/?utm_source=sapphire-ui&utm_medium=sidebar" target="_blank" rel="noopener noreferrer" className="docs-footer-text hover:text-white transition-colors no-underline">kongmy.dev</a>
           </div>
         </aside>
         }

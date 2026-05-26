@@ -10,7 +10,7 @@ const chipVariants = cva(
         default:
           'border border-border bg-surface text-(--color-text-main)',
         accent:
-          'border border-[rgba(197,160,101,0.3)] bg-[rgba(197,160,101,0.12)] text-(--color-accent-text)',
+          'border border-accent/30 bg-accent/12 text-(--color-accent-text)',
         outline:
           'border border-border bg-transparent text-(--color-text-main)',
       },

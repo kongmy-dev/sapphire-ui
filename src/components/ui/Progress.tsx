@@ -8,16 +8,18 @@ export interface ProgressProps
   showLabel?: boolean;
   /** Size variant */
   size?: 'sm' | 'default' | 'lg';
+  /** Custom class name for the indicator element */
+  indicatorClassName?: string;
 }
 
 const Progress = forwardRef<
   React.ComponentRef<typeof ProgressPrimitive.Root>,
   ProgressProps
->(({ className, value = 0, max = 100, showLabel, size = 'default', ...props }, ref) => {
+>(({ className, value = 0, max = 100, showLabel, size = 'default', indicatorClassName, ...props }, ref) => {
   const percentage = Math.round(((value ?? 0) / max) * 100);
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-3 w-full">
       <ProgressPrimitive.Root
         ref={ref}
         value={value}
@@ -32,7 +34,7 @@ const Progress = forwardRef<
         {...props}
       >
         <ProgressPrimitive.Indicator
-          className="h-full rounded-full bg-accent transition-transform duration-500 ease-out"
+          className={cn("h-full rounded-full transition-transform duration-500 ease-out", indicatorClassName || "bg-accent")}
           style={{ transform: `translateX(-${100 - percentage}%)` }}
         />
       </ProgressPrimitive.Root>

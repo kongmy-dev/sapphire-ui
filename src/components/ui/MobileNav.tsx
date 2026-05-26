@@ -15,6 +15,11 @@ export interface MobileNavProps {
   navItems: MobileNavItem[];
   extraActions?: ReactNode;
   /**
+   * Optional pathname. If provided, overrides internal window.location tracking.
+   * Useful when wrapping with React Router's useLocation().
+   */
+  pathname?: string;
+  /**
    * Optional click interceptor for items. Useful for client-side routers —
    * call `event.preventDefault()` and route programmatically. The drawer
    * closes regardless. Without this, items navigate via standard <a href>.
@@ -34,21 +39,25 @@ export function MobileNav({
   navItems,
   extraActions,
   onNavigate,
+  pathname: externalPathname,
 }: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [pathname, setPathname] = useState<string>(() =>
+  const [internalPathname, setInternalPathname] = useState<string>(() =>
     typeof window === 'undefined' ? '' : window.location.pathname,
   );
+
+  const currentPathname = externalPathname !== undefined ? externalPathname : internalPathname;
 
   // Track pathname for active-link styling. popstate covers browser
   // back/forward; SPA push-state navigations should be signaled by the
   // consumer via the `active` prop on each item or by dispatching a
   // popstate-like event after route changes.
   useEffect(() => {
-    const update = () => setPathname(window.location.pathname);
+    if (externalPathname !== undefined) return;
+    const update = () => setInternalPathname(window.location.pathname);
     window.addEventListener('popstate', update);
     return () => window.removeEventListener('popstate', update);
-  }, []);
+  }, [externalPathname]);
 
   // Lock body scroll when drawer is open.
   useEffect(() => {
@@ -69,8 +78,8 @@ export function MobileNav({
 
   const isActive = (item: MobileNavItem): boolean => {
     if (typeof item.active === 'boolean') return item.active;
-    if (item.href === '/') return pathname === '/';
-    return pathname === item.href;
+    if (item.href === '/') return currentPathname === '/';
+    return currentPathname === item.href;
   };
 
   return (
@@ -148,7 +157,7 @@ export function MobileNav({
                 aria-current={active ? 'page' : undefined}
                 className={`flex items-center gap-3 rounded-md px-4 py-2.5 font-sans text-sm font-medium no-underline transition-colors ${
                   active
-                    ? 'bg-[rgba(197,160,101,0.1)] text-accent'
+                    ? 'bg-accent/10 text-accent'
                     : 'text-white/70 hover:bg-white/5 hover:text-white'
                 }`}
               >
@@ -170,9 +179,9 @@ export function MobileNav({
         </nav>
 
         <div className="mt-auto border-t border-white/10 pt-4">
-          <span className="block font-mono text-[9px] tracking-wider text-white/40 uppercase">
-            KONGMY Digital Solutions
-          </span>
+          <a href="https://kongmy.dev/?utm_source=sapphire-ui&utm_medium=sidebar" target="_blank" rel="noopener noreferrer" className="block font-mono text-[9px] tracking-wider text-white/40 uppercase no-underline hover:text-white transition-colors">
+            kongmy.dev
+          </a>
         </div>
       </aside>
     </div>

@@ -85,7 +85,7 @@ export default function ExtendedPage() {
         <h2 className="docs-section-title">Code Block</h2>
         <div className="docs-preview">
           <div className="docs-stack" style={{ gap: 16 }}>
-            <CodeBlock code={sampleCode} language="tsx" copyable />
+            <CodeBlock variant="light" code={sampleCode} language="tsx" copyable />
             <CodeBlock code="$ bun add @kongmy-dev/sapphire-ui" language="shell" variant="light" copyable />
           </div>
         </div>
@@ -205,7 +205,7 @@ export default function ExtendedPage() {
         <div className="flex flex-col gap-8">
           
           <Card style={{ padding: 24 }}>
-            <h3 className="mb-4 font-serif text-lg font-semibold text-primary dark:text-white">Editorial Callout</h3>
+            <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">Editorial Callout</h3>
             <Callout title="Key Takeaway" icon="bolt" variant="subtle">
               <ul>
                 <li>UI primitives should be highly cohesive and loosely coupled.</li>
@@ -215,35 +215,17 @@ export default function ExtendedPage() {
           </Card>
 
           <Card style={{ padding: 24 }}>
-            <h3 className="mb-4 font-serif text-lg font-semibold text-primary dark:text-white">Margin Note (Sidenote)</h3>
+            <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">Margin Note (Sidenote)</h3>
             <p className="text-sm/relaxed text-(--color-text-main)" style={{ maxWidth: 600 }}>
               When writing highly technical blog posts, we often need to reference external sources or explain a tangential concept without interrupting the main prose. Here is an example of a <MarginNote id="mn-1" note="This note appears in the margin on desktop and reflows inline on mobile devices.">Tufte-style margin note</MarginNote> in action.
             </p>
           </Card>
 
-          <Card style={{ padding: 24 }}>
-            <h3 className="mb-4 font-serif text-lg font-semibold text-primary dark:text-white">Vertical Tabs</h3>
-            <Tabs orientation="vertical" defaultValue="tab1" className="flex min-h-[150px]">
-              <TabsList variant="underline" className="w-48 shrink-0">
-                <TabsTrigger value="tab1">Overview</TabsTrigger>
-                <TabsTrigger value="tab2">Integrations</TabsTrigger>
-                <TabsTrigger value="tab3">Settings</TabsTrigger>
-              </TabsList>
-              <TabsContent value="tab1" className="mt-0 flex-1">
-                <p className="text-sm text-(--color-text-muted)">A vertical layout for tabs, commonly used for settings and large navigation rails.</p>
-              </TabsContent>
-              <TabsContent value="tab2" className="mt-0 flex-1">
-                <p className="text-sm text-(--color-text-muted)">Webhook and API integrations configuration.</p>
-              </TabsContent>
-              <TabsContent value="tab3" className="mt-0 flex-1">
-                <p className="text-sm text-(--color-text-muted)">User preferences and security settings.</p>
-              </TabsContent>
-            </Tabs>
-          </Card>
+
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             <Card style={{ padding: 24 }}>
-              <h3 className="mb-4 font-serif text-lg font-semibold text-primary dark:text-white">Revision Timeline</h3>
+              <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">Revision Timeline</h3>
               <Timeline orientation="vertical">
                 <TimelineItem>
                   <TimelineIndicator>
@@ -267,7 +249,7 @@ export default function ExtendedPage() {
             </Card>
 
             <Card style={{ padding: 24 }}>
-              <h3 className="mb-4 font-serif text-lg font-semibold text-primary dark:text-white">Table of Contents</h3>
+              <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">Table of Contents</h3>
               <TableOfContents
                 activeId="sec2"
                 items={[

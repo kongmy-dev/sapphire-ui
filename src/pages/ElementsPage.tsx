@@ -1,4 +1,4 @@
-
+import { CodeBlock } from '../components/ui/CodeBlock';
 
 export default function ElementsPage() {
   return (
@@ -21,8 +21,13 @@ export default function ElementsPage() {
         </p>
 
         <h3 className="mt-6 mb-2 font-serif text-lg font-semibold">Setup</h3>
-        <pre className="docs-code-block"><code>{`import '@kongmy-dev/sapphire-ui/style.css';
-import '@kongmy-dev/sapphire-ui/elements';`}</code></pre>
+        <CodeBlock
+          variant="light"
+          language="tsx"
+          copyable
+          code={`import '@kongmy-dev/sapphire-ui/style.css';
+import '@kongmy-dev/sapphire-ui/elements';`}
+        />
 
         <h3 className="mt-6 mb-2 font-serif text-lg font-semibold">Usage</h3>
         <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
@@ -39,8 +44,11 @@ import '@kongmy-dev/sapphire-ui/elements';`}</code></pre>
           <div className="docs-stack" style={{ gap: 16 }}>
             <div>
               <span className="mb-2 block font-mono text-xs font-bold tracking-widest text-accent uppercase">Header</span>
-              <pre className="docs-code" style={{ display: 'block', padding: 16 }}>
-{`<sapphire-site-header variant="dark" sticky>
+              <CodeBlock
+                variant="light"
+                language="html"
+                copyable
+                code={`<sapphire-site-header variant="dark" sticky>
   <div data-slot="brand">
     <a href="/">KONGMY <span class="text-accent">dev</span></a>
   </div>
@@ -53,12 +61,15 @@ import '@kongmy-dev/sapphire-ui/elements';`}</code></pre>
     <a class="btn btn-primary" href="/contact">Get started</a>
   </div>
 </sapphire-site-header>`}
-              </pre>
+              />
             </div>
             <div>
               <span className="mb-2 block font-mono text-xs font-bold tracking-widest text-accent uppercase">Footer</span>
-              <pre className="docs-code" style={{ display: 'block', padding: 16 }}>
-{`<sapphire-site-footer variant="dark">
+              <CodeBlock
+                variant="light"
+                language="html"
+                copyable
+                code={`<sapphire-site-footer variant="dark">
   <div data-slot="brand">
     <h4>KONGMY <span class="text-accent">dev</span></h4>
     <p>Helping businesses cut costs and build software that works.</p>
@@ -80,7 +91,7 @@ import '@kongmy-dev/sapphire-ui/elements';`}</code></pre>
     <span>Built with Sapphire UI</span>
   </div>
 </sapphire-site-footer>`}
-              </pre>
+              />
             </div>
           </div>
         </div>
@@ -123,8 +134,11 @@ import '@kongmy-dev/sapphire-ui/elements';`}</code></pre>
           <div className="docs-stack" style={{ gap: 16 }}>
             <div>
               <span className="mb-2 block font-mono text-xs font-bold tracking-widest text-accent uppercase">React (SPA)</span>
-              <pre className="docs-code" style={{ display: 'block', padding: 16 }}>
-{`<SEOHead
+              <CodeBlock
+                variant="light"
+                language="tsx"
+                copyable
+                code={`<SEOHead
   title="Cloud Cost Dashboard"
   description="Monitor multi-cloud spending."
   url="https://cloudcost.kongmy.dev"
@@ -132,12 +146,15 @@ import '@kongmy-dev/sapphire-ui/elements';`}</code></pre>
   siteName="KONGMY"
   type="website"
 />`}
-              </pre>
+              />
             </div>
             <div>
               <span className="mb-2 block font-mono text-xs font-bold tracking-widest text-accent uppercase">Astro / SSR</span>
-              <pre className="docs-code" style={{ display: 'block', padding: 16 }}>
-{`---
+              <CodeBlock
+                variant="light"
+                language="astro"
+                copyable
+                code={`---
 import { generateSEOTags } from '@kongmy-dev/sapphire-ui';
 const seo = generateSEOTags({
   title: 'My Blog Post',
@@ -150,7 +167,7 @@ const seo = generateSEOTags({
 <head>
   <Fragment set:html={seo} />
 </head>`}
-              </pre>
+              />
             </div>
           </div>
         </div>

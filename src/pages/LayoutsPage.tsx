@@ -25,7 +25,12 @@ import { Container } from '../components/ui/Container';
 import { SplitLayout, SplitPanel, SplitHandle } from '../components/ui/SplitLayout';
 import { WizardLayout } from '../components/ui/WizardLayout';
 import { StatGroup } from '../components/ui/StatGroup';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '../components/ui/Tabs';
 import { Toast, type ToastRef } from '../components/Toast';
+import { BarChart } from '../components/ui/BarChart';
+import { Sparkline } from '../components/ui/Sparkline';
+import { Progress } from '../components/ui/Progress';
+import { cn } from '../lib/utils';
 
 // Mock consulting projects for the interactive table
 interface Engagement {
@@ -48,7 +53,7 @@ const initialEngagements: Engagement[] = [
 
 export default function LayoutsPage() {
   const [collapsed, setCollapsed] = useState(false);
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'services' | 'billing'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'services' | 'billing' | 'metrics' | 'status'>('dashboard');
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'on_hold' | 'completed'>('all');
   const [engagements, setEngagements] = useState<Engagement[]>(initialEngagements);
@@ -86,10 +91,12 @@ export default function LayoutsPage() {
         </p>
         
         {/* Full whitespace container breaking out of docs padding */}
-        <div style={{ margin: '0 -2rem 3rem -2rem', height: '85vh', minHeight: 700, borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)' }}>
+        <div className="-mx-4 mb-12 overflow-hidden border-y border-border md:-mx-8" style={{ height: '85vh', minHeight: 700 }}>
           <AdminLayout
+            className="h-full min-h-0"
             sidebar={
               <AdminSidebar
+                className="h-full"
                 collapsed={collapsed}
                 onToggleCollapse={setCollapsed}
                 brand={
@@ -147,10 +154,22 @@ export default function LayoutsPage() {
                 </AdminSidebarSection>
 
                 <AdminSidebarSection title="Insights" collapsed={collapsed}>
-                  <AdminSidebarLink icon="bar_chart" collapsed={collapsed} style={{ cursor: 'pointer' }}>
+                  <AdminSidebarLink 
+                    icon="bar_chart" 
+                    active={activeTab === 'metrics'} 
+                    onClick={() => setActiveTab('metrics')} 
+                    collapsed={collapsed} 
+                    style={{ cursor: 'pointer' }}
+                  >
                     Metrics & Analytics
                   </AdminSidebarLink>
-                  <AdminSidebarLink icon="dns" collapsed={collapsed} style={{ cursor: 'pointer' }}>
+                  <AdminSidebarLink 
+                    icon="dns" 
+                    active={activeTab === 'status'} 
+                    onClick={() => setActiveTab('status')} 
+                    collapsed={collapsed} 
+                    style={{ cursor: 'pointer' }}
+                  >
                     Status Monitor
                   </AdminSidebarLink>
                 </AdminSidebarSection>
@@ -163,7 +182,7 @@ export default function LayoutsPage() {
                     items={[
                       { label: 'Admin', href: '#' },
                       { label: 'Consulting' },
-                      { label: activeTab === 'dashboard' ? 'Overview' : activeTab === 'services' ? 'Services' : 'Billing' }
+                      { label: activeTab === 'dashboard' ? 'Overview' : activeTab === 'services' ? 'Services' : activeTab === 'billing' ? 'Billing' : activeTab === 'metrics' ? 'Metrics' : 'Status' }
                     ]}
                   />
                 }
@@ -251,7 +270,7 @@ export default function LayoutsPage() {
                 <Card style={{ padding: 24 }}>
                   <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <div>
-                      <h3 className="m-0 font-serif text-lg font-medium text-primary dark:text-white">
+                      <h3 className="m-0 font-serif text-lg font-medium text-(--color-text-strong)">
                         Current Consulting Engagements
                       </h3>
                       <p className="text-text-muted m-0 mt-1 text-sm">
@@ -285,7 +304,7 @@ export default function LayoutsPage() {
                           onClick={() => setStatusFilter(f)}
                           className={`cursor-pointer rounded-btn px-3 py-1 text-xs font-semibold tracking-wider uppercase transition-colors ${
                             statusFilter === f
-                              ? 'bg-primary text-white dark:bg-accent dark:text-primary'
+                              ? 'bg-(--color-text-strong) text-(--color-surface)'
                               : 'text-text-muted bg-surface hover:bg-border'
                           }`}
                           style={{ border: 'none', outline: 'none' }}
@@ -315,7 +334,7 @@ export default function LayoutsPage() {
                             <TableRow key={eng.id}>
                               <TableCell>
                                 <div>
-                                  <div className="font-semibold text-primary dark:text-white">{eng.client}</div>
+                                  <div className="font-semibold text-(--color-text-strong)">{eng.client}</div>
                                   <div className="text-text-muted mt-0.5 text-xs">{eng.project}</div>
                                 </div>
                               </TableCell>
@@ -393,7 +412,7 @@ export default function LayoutsPage() {
             
             {activeTab === 'services' && (
               <Card style={{ padding: 24 }}>
-                <h3 className="mb-2 font-serif text-lg font-medium text-primary dark:text-white">
+                <h3 className="mb-2 font-serif text-lg font-medium text-(--color-text-strong)">
                   My Core Consultancy Services
                 </h3>
                 <p className="text-text-muted mb-6 text-sm">
@@ -421,7 +440,7 @@ export default function LayoutsPage() {
 
             {activeTab === 'billing' && (
               <Card style={{ padding: 24 }}>
-                <h3 className="mb-2 font-serif text-lg font-medium text-primary dark:text-white">
+                <h3 className="mb-2 font-serif text-lg font-medium text-(--color-text-strong)">
                   Contracts & Fiscal Invoicing
                 </h3>
                 <p className="text-text-muted mb-4 text-sm">
@@ -442,26 +461,121 @@ export default function LayoutsPage() {
                       <TableRow>
                         <TableCell className="font-mono text-xs">INV-2026-042</TableCell>
                         <TableCell>May 15, 2026</TableCell>
-                        <TableCell className="font-semibold text-primary dark:text-white">Kuala Lumpur Tech Corp</TableCell>
+                        <TableCell className="font-semibold text-(--color-text-strong)">Kuala Lumpur Tech Corp</TableCell>
                         <TableCell style={{ textAlign: 'right', fontWeight: 600 }} className="font-mono">RM 32,000</TableCell>
                         <TableCell style={{ textAlign: 'center' }}><Badge variant="success">Paid</Badge></TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell className="font-mono text-xs">INV-2026-041</TableCell>
                         <TableCell>May 01, 2026</TableCell>
-                        <TableCell className="font-semibold text-primary dark:text-white">Sime Darby Retail</TableCell>
+                        <TableCell className="font-semibold text-(--color-text-strong)">Sime Darby Retail</TableCell>
                         <TableCell style={{ textAlign: 'right', fontWeight: 600 }} className="font-mono">RM 16,500</TableCell>
                         <TableCell style={{ textAlign: 'center' }}><Badge variant="success">Paid</Badge></TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell className="font-mono text-xs">INV-2026-040</TableCell>
                         <TableCell>April 15, 2026</TableCell>
-                        <TableCell className="font-semibold text-primary dark:text-white">Maybank Innovation</TableCell>
+                        <TableCell className="font-semibold text-(--color-text-strong)">Maybank Innovation</TableCell>
                         <TableCell style={{ textAlign: 'right', fontWeight: 600 }} className="font-mono">RM 35,000</TableCell>
                         <TableCell style={{ textAlign: 'center' }}><Badge variant="success">Paid</Badge></TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
+                </div>
+              </Card>
+            )}
+
+            {activeTab === 'metrics' && (
+              <Card style={{ padding: 24 }}>
+                <h3 className="mb-2 font-serif text-lg font-medium text-(--color-text-strong)">
+                  Metrics & Analytics
+                </h3>
+                <p className="text-text-muted mb-6 text-sm">
+                  Monthly billable hours analysis and revenue breakdown.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div style={{ border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)', padding: '24px' }}>
+                    <h4 className="font-sans text-sm font-semibold mb-4 text-(--color-text-strong)">Billable Hours (Last 6 Months)</h4>
+                    <BarChart 
+                      data={[45, 60, 35, 80, 55, 90]} 
+                      labels={['M1', 'M2', 'M3', 'M4', 'M5', 'M6']} 
+                      height="12rem" 
+                      tooltipSuffix="h"
+                    />
+                  </div>
+                  <div style={{ border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)', padding: '24px' }}>
+                    <h4 className="font-sans text-sm font-semibold mb-6 text-(--color-text-strong)">Revenue by Service Type</h4>
+                    <div className="space-y-5">
+                      <div>
+                        <div className="flex justify-between text-xs mb-2">
+                          <span className="font-medium text-(--color-text-strong)">Architecture</span>
+                          <span className="font-mono font-medium text-accent">45%</span>
+                        </div>
+                        <Progress value={45} size="default" indicatorClassName="bg-accent" className="h-2.5" />
+                      </div>
+                      <div>
+                        <div className="flex justify-between text-xs mb-2">
+                          <span className="font-medium text-(--color-text-strong)">Advisory</span>
+                          <span className="font-mono font-medium text-accent">35%</span>
+                        </div>
+                        <Progress value={35} size="default" indicatorClassName="bg-(--color-text-strong)" className="h-2.5" />
+                      </div>
+                      <div>
+                        <div className="flex justify-between text-xs mb-2">
+                          <span className="font-medium text-(--color-text-strong)">Delivery</span>
+                          <span className="font-mono font-medium text-accent">20%</span>
+                        </div>
+                        <Progress value={20} size="default" indicatorClassName="bg-(--color-text-muted)" className="h-2.5" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            )}
+
+            {activeTab === 'status' && (
+              <Card style={{ padding: 24 }}>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+                  <div>
+                    <h3 className="mb-1 font-serif text-lg font-medium text-(--color-text-strong)">
+                      System Status Monitor
+                    </h3>
+                    <p className="text-text-muted m-0 text-sm">
+                      Real-time uptime and incident tracking across all regions.
+                    </p>
+                  </div>
+                  <Badge variant="success" className="px-3 py-1.5 shrink-0 self-start sm:self-auto border border-[var(--color-success)]/20">
+                    <span className="w-2 h-2 rounded-full bg-current mr-2 animate-pulse" />
+                    All Systems Operational
+                  </Badge>
+                </div>
+                
+                <div className="space-y-6">
+                  {[
+                    { name: 'API Gateway', uptime: '99.99%', region: 'ap-southeast-1' },
+                    { name: 'Authentication Services', uptime: '100%', region: 'global' },
+                    { name: 'Database Clusters', uptime: '99.95%', region: 'ap-southeast-1' },
+                  ].map((sys, idx) => (
+                    <div key={idx} style={{ borderBottom: idx < 2 ? '1px solid var(--color-border)' : 'none', paddingBottom: idx < 2 ? '24px' : '0' }}>
+                      <div className="flex justify-between items-center mb-3">
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium text-sm text-(--color-text-strong)">{sys.name}</span>
+                          <span className="text-[10px] text-text-muted font-mono bg-surface px-1.5 py-0.5 rounded">{sys.region}</span>
+                        </div>
+                        <span className="text-xs font-mono font-medium" style={{ color: 'var(--color-success)' }}>{sys.uptime} uptime</span>
+                      </div>
+                      <Sparkline 
+                        height="2rem" 
+                        data={Array.from({ length: 45 }).map(() => {
+                          const isWarn = Math.random() > 0.96;
+                          return {
+                            status: isWarn ? 'warning' : 'success',
+                            tooltip: isWarn ? 'Minor latency issues detected' : 'No downtime recorded'
+                          }
+                        })} 
+                      />
+                    </div>
+                  ))}
                 </div>
               </Card>
             )}
@@ -705,6 +819,32 @@ export default function LayoutsPage() {
               <p className="text-text-muted text-sm font-semibold">Content constrained to `md` (768px) inside the Container.</p>
             </Container>
           </div>
+        </div>
+      </section>
+
+      {/* ─── Vertical Tabs Layout ────────────────────────────────────────────── */}
+      <section className="docs-section">
+        <h2 className="docs-section-title">Vertical Tabs Layout</h2>
+        <div className="docs-preview">
+          <Card style={{ padding: 24, width: '100%' }}>
+            <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">Vertical Tabs</h3>
+            <Tabs orientation="vertical" defaultValue="tab1" className="flex min-h-[150px]">
+              <TabsList variant="underline" className="w-24 sm:w-32 md:w-48 shrink-0">
+                <TabsTrigger value="tab1">Overview</TabsTrigger>
+                <TabsTrigger value="tab2">Integrations</TabsTrigger>
+                <TabsTrigger value="tab3">Settings</TabsTrigger>
+              </TabsList>
+              <TabsContent value="tab1" className="mt-0 flex-1 px-4 md:px-6">
+                <p className="text-sm text-(--color-text-muted)">A vertical layout for tabs, commonly used for settings and large navigation rails.</p>
+              </TabsContent>
+              <TabsContent value="tab2" className="mt-0 flex-1 px-4 md:px-6">
+                <p className="text-sm text-(--color-text-muted)">Webhook and API integrations configuration.</p>
+              </TabsContent>
+              <TabsContent value="tab3" className="mt-0 flex-1 px-4 md:px-6">
+                <p className="text-sm text-(--color-text-muted)">User preferences and security settings.</p>
+              </TabsContent>
+            </Tabs>
+          </Card>
         </div>
       </section>
 

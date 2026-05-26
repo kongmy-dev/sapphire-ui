@@ -215,7 +215,7 @@ const AdminHeader = forwardRef<HTMLElement, AdminHeaderProps>(
       <header
         ref={ref}
         className={cn(
-          'z-20 flex h-16 w-full items-center justify-between border-b border-border bg-white px-6 shadow-sm transition-colors duration-200 dark:bg-card-bg',
+          'z-20 flex h-16 w-full items-center justify-between border-b border-border bg-(--color-card-bg) px-6 shadow-sm transition-colors duration-200',
           className
         )}
         {...props}

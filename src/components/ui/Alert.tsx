@@ -7,11 +7,11 @@ const alertVariants = cva(
   {
     variants: {
       variant: {
-        info: 'border-[rgba(59,130,246,0.3)] bg-[rgba(59,130,246,0.06)] text-(--color-text-main)',
-        success: 'border-[rgba(34,197,94,0.3)] bg-[rgba(34,197,94,0.06)] text-(--color-text-main)',
-        warning: 'border-[rgba(245,158,11,0.3)] bg-[rgba(245,158,11,0.06)] text-(--color-text-main)',
-        error: 'border-[rgba(239,68,68,0.3)] bg-[rgba(239,68,68,0.06)] text-(--color-text-main)',
-        accent: 'border-[rgba(197,160,101,0.38)] bg-[rgba(197,160,101,0.07)] text-(--color-text-main)',
+        info: 'border-(--color-info-border) bg-(--color-info-bg) text-(--color-text-main)',
+        success: 'border-(--color-success-border) bg-(--color-success-bg) text-(--color-text-main)',
+        warning: 'border-(--color-warning-border) bg-(--color-warning-bg) text-(--color-text-main)',
+        error: 'border-(--color-error-border) bg-(--color-error-bg) text-(--color-text-main)',
+        accent: 'border-accent/38 bg-accent/7 text-(--color-text-main)',
       },
     },
     defaultVariants: {
@@ -33,10 +33,10 @@ const iconMap: Record<string, string> = {
 // the tinted background. The hue identifies the variant; the darker shade
 // is the accessibility fix.
 const variantColorMap: Record<string, string> = {
-  info: '#1d4ed8',
-  success: '#15803d',
-  warning: '#b45309',
-  error: '#b91c1c',
+  info: 'var(--color-info)',
+  success: 'var(--color-success)',
+  warning: 'var(--color-warning)',
+  error: 'var(--color-error)',
   accent: 'var(--color-accent-text)',
 };
 

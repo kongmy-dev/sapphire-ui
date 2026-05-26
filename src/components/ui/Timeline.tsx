@@ -58,8 +58,8 @@ const TimelineIndicator = forwardRef<HTMLDivElement, TimelineIndicatorProps>(
       <div
         ref={ref}
         className={cn(
-          'relative flex shrink-0 items-center justify-center',
-          orientation === 'vertical' ? 'w-6 flex-col' : 'h-6 flex-row',
+          'relative flex shrink-0 items-center',
+          orientation === 'vertical' ? 'w-6 flex-col justify-start' : 'h-6 flex-row justify-center',
           className
         )}
         {...props}

@@ -29,7 +29,7 @@ const HOST_CLASSES_BASE = ['z-40', 'w-full', 'border-b'];
 const HOST_CLASSES_STICKY = ['sticky', 'top-0'];
 // Match SiteHeader.tsx exactly so the compiled Tailwind output is reused.
 const HOST_CLASSES_DARK = ['border-border-dark', 'bg-primary', 'text-white'];
-const HOST_CLASSES_LIGHT = ['border-border', 'bg-white', 'text-primary'];
+const HOST_CLASSES_LIGHT = ['border-border', 'bg-(--color-card-bg)', 'text-(--color-text-strong)'];
 
 const INNER_CLASSES = [
   'mx-auto',

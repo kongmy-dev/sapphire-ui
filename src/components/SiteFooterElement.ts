@@ -30,7 +30,7 @@ type FooterVariant = 'light' | 'dark';
 
 const HOST_CLASSES_BASE = ['w-full', 'border-t'];
 const HOST_CLASSES_DARK = ['border-border-dark', 'bg-primary', 'text-(--color-text-on-dark)'];
-const HOST_CLASSES_LIGHT = ['border-border', 'bg-white', 'text-[#1e293b]'];
+const HOST_CLASSES_LIGHT = ['border-border', 'bg-(--color-card-bg)', 'text-(--color-text-main)'];
 
 const INNER_CLASSES = ['mx-auto', 'max-w-7xl', 'px-6', 'py-12', 'md:py-16'];
 
@@ -54,7 +54,7 @@ const BOTTOM_CLASSES_BASE = [
   'md:flex-row',
 ];
 const BOTTOM_CLASSES_DARK = ['border-border-dark', 'text-(--color-text-on-dark-muted)'];
-const BOTTOM_CLASSES_LIGHT = ['border-border', 'text-[#475569]'];
+const BOTTOM_CLASSES_LIGHT = ['border-border', 'text-(--color-text-muted)'];
 
 export class SiteFooterElement extends SSRHTMLElement {
   static observedAttributes = ['variant'];

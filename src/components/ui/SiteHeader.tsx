@@ -28,7 +28,7 @@ const SiteHeader = forwardRef<HTMLElement, SiteHeaderProps>(
           // Light variant: hardcoded light palette so it stays light even
           // when previewed inside a dark-themed page (e.g. /interactive
           // demos a light header on a dark docs background).
-          : 'border-border bg-white text-primary',
+          : 'border-border bg-(--color-card-bg) text-(--color-text-strong)',
         className,
       )}
       {...props}
@@ -60,13 +60,13 @@ const SiteHeaderLink = forwardRef<HTMLAnchorElement, SiteHeaderLinkProps>(
         'rounded-btn px-3 py-2 font-sans text-sm font-medium no-underline transition-colors',
         variant === 'dark'
           ? active
-            ? 'bg-[rgba(197,160,101,0.1)] text-accent'
-            : 'text-(--color-text-on-dark-muted) hover:bg-[rgba(255,255,255,0.06)] hover:text-white'
+            ? 'bg-accent/10 text-accent'
+            : 'text-(--color-text-on-dark-muted) hover:bg-white/6 hover:text-white'
           // Light variant: hardcoded so the link stays readable on the
           // light header background regardless of the surrounding theme.
           : active
-            ? 'bg-surface text-primary'
-            : 'text-[#475569] hover:bg-surface hover:text-primary',
+            ? 'bg-(--color-surface) text-(--color-text-strong)'
+            : 'text-(--color-text-muted) hover:bg-(--color-surface) hover:text-(--color-text-strong)',
         className,
       )}
       {...props}
