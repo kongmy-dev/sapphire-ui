@@ -202,6 +202,28 @@ export default function FormsPage() {
           </div>
         </div>
       </section>
+      <section className="docs-section">
+        <h2 className="docs-section-title">Props</h2>
+        <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">Input</h3>
+        <table className="docs-props-table mb-8">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>variant</code></td><td><code>&apos;default&apos; | &apos;dark&apos; | &apos;mono&apos;</code></td><td><code>&apos;default&apos;</code></td></tr>
+          </tbody>
+        </table>
+        
+        <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">NativeSelect</h3>
+        <table className="docs-props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>variant</code></td><td><code>&apos;default&apos; | &apos;dark&apos; | &apos;ghost&apos;</code></td><td><code>&apos;default&apos;</code></td></tr>
+          </tbody>
+        </table>
+      </section>
     </div>
   );
 }

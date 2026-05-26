@@ -24,7 +24,7 @@ const TableOfContents = forwardRef<HTMLDivElement, TableOfContentsProps>(
         className={cn('font-sans', className)}
         {...props}
       >
-        <p className="mb-4 text-sm font-semibold tracking-wider text-text-strong uppercase">
+        <p className="text-text-strong mb-4 text-sm font-semibold tracking-wider uppercase">
           {title}
         </p>
         <ul className="m-0 flex list-none flex-col gap-2.5 p-0">
@@ -36,9 +36,9 @@ const TableOfContents = forwardRef<HTMLDivElement, TableOfContentsProps>(
               <a
                 href={`#${item.id}`}
                 className={cn(
-                  'line-clamp-2 block hover:text-text-strong',
+                  'hover:text-text-strong line-clamp-2 block',
                   activeId === item.id
-                    ? 'font-medium text-accent'
+                    ? 'font-medium text-(--color-text-strong)'
                     : 'text-(--color-text-muted)'
                 )}
               >

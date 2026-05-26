@@ -29,7 +29,7 @@ const Callout = forwardRef<HTMLDivElement, CalloutProps>(
     return (
       <div ref={ref} className={cn(calloutVariants({ variant }), className)} {...props}>
         {icon && (
-          <div className="mt-0.5 flex shrink-0 items-start text-accent">
+          <div className="mt-0.5 flex shrink-0 items-start text-(--color-text-strong)">
             {typeof icon === 'string' ? (
               <span className="material-symbols-outlined text-[24px]" aria-hidden="true">
                 {icon}
@@ -41,7 +41,7 @@ const Callout = forwardRef<HTMLDivElement, CalloutProps>(
         )}
         <div className="flex flex-1 flex-col gap-2">
           {title && (
-            <div className="font-serif text-lg font-semibold tracking-tight text-text-strong">
+            <div className="text-text-strong font-serif text-lg font-semibold tracking-tight">
               {title}
             </div>
           )}

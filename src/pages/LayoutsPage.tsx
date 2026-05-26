@@ -304,7 +304,7 @@ export default function LayoutsPage() {
                           onClick={() => setStatusFilter(f)}
                           className={`cursor-pointer rounded-btn px-3 py-1 text-xs font-semibold tracking-wider uppercase transition-colors ${
                             statusFilter === f
-                              ? 'bg-(--color-text-strong) text-(--color-surface)'
+                              ? 'bg-(--color-text-strong) text-surface'
                               : 'text-text-muted bg-surface hover:bg-border'
                           }`}
                           style={{ border: 'none', outline: 'none' }}
@@ -493,9 +493,9 @@ export default function LayoutsPage() {
                 <p className="text-text-muted mb-6 text-sm">
                   Monthly billable hours analysis and revenue breakdown.
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                   <div style={{ border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)', padding: '24px' }}>
-                    <h4 className="font-sans text-sm font-semibold mb-4 text-(--color-text-strong)">Billable Hours (Last 6 Months)</h4>
+                    <h4 className="mb-4 font-sans text-sm font-semibold text-(--color-text-strong)">Billable Hours (Last 6 Months)</h4>
                     <BarChart 
                       data={[45, 60, 35, 80, 55, 90]} 
                       labels={['M1', 'M2', 'M3', 'M4', 'M5', 'M6']} 
@@ -504,24 +504,24 @@ export default function LayoutsPage() {
                     />
                   </div>
                   <div style={{ border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)', padding: '24px' }}>
-                    <h4 className="font-sans text-sm font-semibold mb-6 text-(--color-text-strong)">Revenue by Service Type</h4>
+                    <h4 className="mb-6 font-sans text-sm font-semibold text-(--color-text-strong)">Revenue by Service Type</h4>
                     <div className="space-y-5">
                       <div>
-                        <div className="flex justify-between text-xs mb-2">
+                        <div className="mb-2 flex justify-between text-xs">
                           <span className="font-medium text-(--color-text-strong)">Architecture</span>
                           <span className="font-mono font-medium text-accent">45%</span>
                         </div>
                         <Progress value={45} size="default" indicatorClassName="bg-accent" className="h-2.5" />
                       </div>
                       <div>
-                        <div className="flex justify-between text-xs mb-2">
+                        <div className="mb-2 flex justify-between text-xs">
                           <span className="font-medium text-(--color-text-strong)">Advisory</span>
                           <span className="font-mono font-medium text-accent">35%</span>
                         </div>
                         <Progress value={35} size="default" indicatorClassName="bg-(--color-text-strong)" className="h-2.5" />
                       </div>
                       <div>
-                        <div className="flex justify-between text-xs mb-2">
+                        <div className="mb-2 flex justify-between text-xs">
                           <span className="font-medium text-(--color-text-strong)">Delivery</span>
                           <span className="font-mono font-medium text-accent">20%</span>
                         </div>
@@ -535,7 +535,7 @@ export default function LayoutsPage() {
 
             {activeTab === 'status' && (
               <Card style={{ padding: 24 }}>
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+                <div className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
                   <div>
                     <h3 className="mb-1 font-serif text-lg font-medium text-(--color-text-strong)">
                       System Status Monitor
@@ -544,8 +544,8 @@ export default function LayoutsPage() {
                       Real-time uptime and incident tracking across all regions.
                     </p>
                   </div>
-                  <Badge variant="success" className="px-3 py-1.5 shrink-0 self-start sm:self-auto border border-[var(--color-success)]/20">
-                    <span className="w-2 h-2 rounded-full bg-current mr-2 animate-pulse" />
+                  <Badge variant="success" className="shrink-0 self-start border border-(--color-success)/20 px-3 py-1.5 sm:self-auto">
+                    <span className="mr-2 size-2 animate-pulse rounded-full bg-current" />
                     All Systems Operational
                   </Badge>
                 </div>
@@ -557,12 +557,12 @@ export default function LayoutsPage() {
                     { name: 'Database Clusters', uptime: '99.95%', region: 'ap-southeast-1' },
                   ].map((sys, idx) => (
                     <div key={idx} style={{ borderBottom: idx < 2 ? '1px solid var(--color-border)' : 'none', paddingBottom: idx < 2 ? '24px' : '0' }}>
-                      <div className="flex justify-between items-center mb-3">
+                      <div className="mb-3 flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <span className="font-medium text-sm text-(--color-text-strong)">{sys.name}</span>
-                          <span className="text-[10px] text-text-muted font-mono bg-surface px-1.5 py-0.5 rounded">{sys.region}</span>
+                          <span className="text-sm font-medium text-(--color-text-strong)">{sys.name}</span>
+                          <span className="text-text-muted rounded-sm bg-surface px-1.5 py-0.5 font-mono text-[10px]">{sys.region}</span>
                         </div>
-                        <span className="text-xs font-mono font-medium" style={{ color: 'var(--color-success)' }}>{sys.uptime} uptime</span>
+                        <span className="font-mono text-xs font-medium" style={{ color: 'var(--color-success)' }}>{sys.uptime} uptime</span>
                       </div>
                       <Sparkline 
                         height="2rem" 
@@ -599,8 +599,8 @@ export default function LayoutsPage() {
           >
             <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
               {['Cloud Ops', 'AI / ML', 'Web Apps'].map((t) => (
-                <div key={t} className="rounded-md border border-border bg-card-bg p-6">
-                  <span className="font-sans font-semibold text-text-strong">{t}</span>
+                <div key={t} className="bg-card-bg rounded-md border border-border p-6">
+                  <span className="text-text-strong font-sans font-semibold">{t}</span>
                 </div>
               ))}
             </div>
@@ -646,7 +646,7 @@ export default function LayoutsPage() {
             }
           >
             <div style={{ padding: '2rem 1.5rem' }}>
-              <h3 className="m-0 mb-2 font-serif text-xl font-semibold text-text-strong">
+              <h3 className="text-text-strong m-0 mb-2 font-serif text-xl font-semibold">
                 Main content area
               </h3>
               <p className="m-0 font-sans text-sm text-(--color-text-muted)">
@@ -829,7 +829,7 @@ export default function LayoutsPage() {
           <Card style={{ padding: 24, width: '100%' }}>
             <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">Vertical Tabs</h3>
             <Tabs orientation="vertical" defaultValue="tab1" className="flex min-h-[150px]">
-              <TabsList variant="underline" className="w-24 sm:w-32 md:w-48 shrink-0">
+              <TabsList variant="underline" className="w-24 shrink-0 sm:w-32 md:w-48">
                 <TabsTrigger value="tab1">Overview</TabsTrigger>
                 <TabsTrigger value="tab2">Integrations</TabsTrigger>
                 <TabsTrigger value="tab3">Settings</TabsTrigger>
@@ -849,6 +849,40 @@ export default function LayoutsPage() {
       </section>
 
       <Toast ref={toastRef} />
+      <section className="docs-section">
+        <h2 className="docs-section-title">Props</h2>
+        <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">SiteHeader</h3>
+        <table className="docs-props-table mb-8">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>variant</code></td><td><code>&apos;light&apos; | &apos;dark&apos; | &apos;transparent&apos;</code></td><td><code>&apos;light&apos;</code></td></tr>
+            <tr><td><code>sticky</code></td><td><code>boolean</code></td><td><code>false</code></td></tr>
+          </tbody>
+        </table>
+        
+        <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">SiteFooter</h3>
+        <table className="docs-props-table mb-8">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>variant</code></td><td><code>&apos;light&apos; | &apos;dark&apos;</code></td><td><code>&apos;light&apos;</code></td></tr>
+          </tbody>
+        </table>
+        
+        <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">AdminLayout</h3>
+        <table className="docs-props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>sidebar</code></td><td><code>ReactNode</code></td><td>—</td></tr>
+            <tr><td><code>header</code></td><td><code>ReactNode</code></td><td>—</td></tr>
+          </tbody>
+        </table>
+      </section>
     </div>
   );
 }

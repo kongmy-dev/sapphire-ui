@@ -8,7 +8,7 @@ import betterTailwind from 'eslint-plugin-better-tailwindcss'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist', 'dist-docs']),
+  globalIgnores(['dist', 'dist-docs', 'coverage']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [

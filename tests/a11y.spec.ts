@@ -51,7 +51,11 @@ for (const { path, name } of ROUTES) {
     if (results.violations.length > 0) {
       console.warn(
         `[a11y] ${path}: ${results.violations.length} violation(s)`,
-        summary,
+        results.violations.map((v) => ({
+          id: v.id,
+          impact: v.impact,
+          nodes: v.nodes.map(n => n.html),
+        }))
       );
     }
 

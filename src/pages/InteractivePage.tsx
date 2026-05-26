@@ -287,6 +287,24 @@ export default function InteractivePage() {
         </div>
       </section>
 
+      <section className="docs-section">
+        <h2 className="docs-section-title">Props</h2>
+        <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">ConfirmDialog</h3>
+        <table className="docs-props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>open</code></td><td><code>boolean</code></td><td>—</td></tr>
+            <tr><td><code>onOpenChange</code></td><td><code>(open: boolean) =&gt; void</code></td><td>—</td></tr>
+            <tr><td><code>title</code></td><td><code>string</code></td><td>—</td></tr>
+            <tr><td><code>message</code></td><td><code>string</code></td><td>—</td></tr>
+            <tr><td><code>confirmLabel</code></td><td><code>string</code></td><td><code>&apos;Confirm&apos;</code></td></tr>
+            <tr><td><code>cancelLabel</code></td><td><code>string</code></td><td><code>&apos;Cancel&apos;</code></td></tr>
+            <tr><td><code>isDanger</code></td><td><code>boolean</code></td><td><code>false</code></td></tr>
+          </tbody>
+        </table>
+      </section>
     </div>
   );
 }

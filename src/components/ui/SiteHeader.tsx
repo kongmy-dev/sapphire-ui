@@ -65,8 +65,8 @@ const SiteHeaderLink = forwardRef<HTMLAnchorElement, SiteHeaderLinkProps>(
           // Light variant: hardcoded so the link stays readable on the
           // light header background regardless of the surrounding theme.
           : active
-            ? 'bg-(--color-surface) text-(--color-text-strong)'
-            : 'text-(--color-text-muted) hover:bg-(--color-surface) hover:text-(--color-text-strong)',
+            ? 'bg-surface text-(--color-text-strong)'
+            : 'text-(--color-text-muted) hover:bg-surface hover:text-(--color-text-strong)',
         className,
       )}
       {...props}

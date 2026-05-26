@@ -19,7 +19,7 @@ const Progress = forwardRef<
   const percentage = Math.round(((value ?? 0) / max) * 100);
 
   return (
-    <div className="flex items-center gap-3 w-full">
+    <div className="flex w-full items-center gap-3">
       <ProgressPrimitive.Root
         ref={ref}
         value={value}

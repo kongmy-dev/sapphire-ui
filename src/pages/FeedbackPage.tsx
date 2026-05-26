@@ -149,6 +149,20 @@ export default function FeedbackPage() {
           />
         </div>
       </section>
+      <section className="docs-section">
+        <h2 className="docs-section-title">Props</h2>
+        <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">Alert</h3>
+        <table className="docs-props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>variant</code></td><td><code>&apos;info&apos; | &apos;success&apos; | &apos;warning&apos; | &apos;error&apos; | &apos;accent&apos;</code></td><td><code>&apos;info&apos;</code></td></tr>
+            <tr><td><code>title</code></td><td><code>string</code></td><td>—</td></tr>
+            <tr><td><code>icon</code></td><td><code>string</code></td><td>—</td></tr>
+          </tbody>
+        </table>
+      </section>
     </div>
   );
 }

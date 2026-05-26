@@ -23,6 +23,24 @@ test.describe('Extended page interactions', () => {
     await page.waitForSelector('main.docs-main', { timeout: 10_000 });
   });
 
+  test('a11y: Accordion (expanded)', async ({ page }) => {
+    const trigger = page.getByRole('button', { name: /What is Sapphire UI/i });
+    await trigger.click();
+    await page.waitForTimeout(300);
+    const results = await runAxe(page);
+    if (results.violations.length > 0) {
+      console.warn('[a11y] accordion-open', results.violations.map((v) => v.id));
+    }
+    if (strict) expect(results.violations).toEqual([]);
+  });
+});
+
+test.describe('Interactive page interactions', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/interactive');
+    await page.waitForSelector('main.docs-main', { timeout: 10_000 });
+  });
+
   test('a11y: Popover (open)', async ({ page }) => {
     await page.getByRole('button', { name: 'Edit profile' }).click();
     await page.waitForSelector('[role="dialog"]', { timeout: 2_000 });
@@ -39,17 +57,6 @@ test.describe('Extended page interactions', () => {
     const results = await runAxe(page);
     if (results.violations.length > 0) {
       console.warn('[a11y] sheet-open', results.violations.map((v) => v.id));
-    }
-    if (strict) expect(results.violations).toEqual([]);
-  });
-
-  test('a11y: Accordion (expanded)', async ({ page }) => {
-    const trigger = page.getByRole('button', { name: /What is Sapphire UI/i });
-    await trigger.click();
-    await page.waitForTimeout(300);
-    const results = await runAxe(page);
-    if (results.violations.length > 0) {
-      console.warn('[a11y] accordion-open', results.violations.map((v) => v.id));
     }
     if (strict) expect(results.violations).toEqual([]);
   });

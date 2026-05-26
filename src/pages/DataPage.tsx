@@ -224,28 +224,66 @@ export default function DataPage() {
         <div className="docs-preview">
           <div className="docs-stack w-full max-w-[400px]" style={{ gap: 24, width: '100%', maxWidth: 400 }}>
             <div>
-              <div className="flex justify-between text-xs mb-2">
+              <div className="mb-2 flex justify-between text-xs">
                 <span className="font-medium text-(--color-text-strong)">Architecture</span>
-                <span className="font-mono font-medium text-accent">45%</span>
+                <span className="font-mono font-medium text-(--color-text-strong)">45%</span>
               </div>
-              <Progress value={45} size="default" indicatorClassName="bg-accent" />
+              <Progress value={45} size="default" indicatorClassName="bg-accent" aria-label="Architecture progress" />
             </div>
             <div>
-              <div className="flex justify-between text-xs mb-2">
+              <div className="mb-2 flex justify-between text-xs">
                 <span className="font-medium text-(--color-text-strong)">Advisory</span>
-                <span className="font-mono font-medium text-accent">35%</span>
+                <span className="font-mono font-medium text-(--color-text-strong)">35%</span>
               </div>
-              <Progress value={35} size="default" indicatorClassName="bg-(--color-text-strong)" />
+              <Progress value={35} size="default" indicatorClassName="bg-(--color-text-strong)" aria-label="Advisory progress" />
             </div>
             <div>
-              <div className="flex justify-between text-xs mb-2">
+              <div className="mb-2 flex justify-between text-xs">
                 <span className="font-medium text-(--color-text-strong)">Delivery</span>
-                <span className="font-mono font-medium text-accent">20%</span>
+                <span className="font-mono font-medium text-(--color-text-strong)">20%</span>
               </div>
-              <Progress value={20} size="default" indicatorClassName="bg-(--color-text-muted)" />
+              <Progress value={20} size="default" indicatorClassName="bg-(--color-text-muted)" aria-label="Delivery progress" />
             </div>
           </div>
         </div>
+      </section>
+      <section className="docs-section">
+        <h2 className="docs-section-title">Props</h2>
+        <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">Badge</h3>
+        <table className="docs-props-table mb-8">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>variant</code></td><td><code>&apos;default&apos; | &apos;accent&apos; | &apos;dark&apos; | &apos;success&apos; | &apos;error&apos; | &apos;warning&apos; | &apos;info&apos;</code></td><td><code>&apos;default&apos;</code></td></tr>
+          </tbody>
+        </table>
+        
+        <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">Chip</h3>
+        <table className="docs-props-table mb-8">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>variant</code></td><td><code>&apos;default&apos; | &apos;accent&apos; | &apos;outline&apos;</code></td><td><code>&apos;default&apos;</code></td></tr>
+            <tr><td><code>size</code></td><td><code>&apos;sm&apos; | &apos;default&apos; | &apos;lg&apos;</code></td><td><code>&apos;default&apos;</code></td></tr>
+            <tr><td><code>onDismiss</code></td><td><code>() =&gt; void</code></td><td>—</td></tr>
+            <tr><td><code>leading</code></td><td><code>ReactNode</code></td><td>—</td></tr>
+          </tbody>
+        </table>
+        
+        <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">Progress</h3>
+        <table className="docs-props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>value</code></td><td><code>number</code></td><td><code>0</code></td></tr>
+            <tr><td><code>size</code></td><td><code>&apos;sm&apos; | &apos;default&apos; | &apos;lg&apos;</code></td><td><code>&apos;default&apos;</code></td></tr>
+            <tr><td><code>showLabel</code></td><td><code>boolean</code></td><td><code>false</code></td></tr>
+            <tr><td><code>indicatorClassName</code></td><td><code>string</code></td><td>—</td></tr>
+          </tbody>
+        </table>
       </section>
     </div>
   );

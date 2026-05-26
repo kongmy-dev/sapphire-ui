@@ -179,7 +179,7 @@ export function MobileNav({
         </nav>
 
         <div className="mt-auto border-t border-white/10 pt-4">
-          <a href="https://kongmy.dev/?utm_source=sapphire-ui&utm_medium=sidebar" target="_blank" rel="noopener noreferrer" className="block font-mono text-[9px] tracking-wider text-(--color-text-on-dark)/40 uppercase no-underline hover:text-(--color-text-on-dark) transition-colors">
+          <a href="https://kongmy.dev/?utm_source=sapphire-ui&utm_medium=sidebar" target="_blank" rel="noopener noreferrer" className="block font-mono text-[9px] tracking-wider text-(--color-text-on-dark)/40 uppercase no-underline transition-colors hover:text-(--color-text-on-dark)">
             kongmy.dev
           </a>
         </div>

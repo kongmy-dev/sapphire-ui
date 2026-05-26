@@ -23,11 +23,11 @@ export function Sparkline({ data, height = '2rem', className }: SparklineProps) 
   };
 
   return (
-    <div className={cn("flex gap-1.5 w-full", className)} style={{ height }}>
+    <div className={cn("flex w-full gap-1.5", className)} style={{ height }}>
       {data.map((point, i) => (
         <div 
           key={i} 
-          className="flex-1 rounded-[2px] transition-colors cursor-help opacity-60 hover:opacity-100"
+          className="flex-1 cursor-help rounded-[2px] opacity-60 transition-colors hover:opacity-100"
           style={{ backgroundColor: getStatusColor(point.status) }}
           title={point.tooltip}
         />

@@ -265,6 +265,44 @@ export default function ExtendedPage() {
         </div>
       </section>
 
+      <section className="docs-section">
+        <h2 className="docs-section-title">Props</h2>
+        <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">Accordion</h3>
+        <table className="docs-props-table mb-8">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>type</code></td><td><code>&apos;single&apos; | &apos;multiple&apos;</code></td><td><code>&apos;single&apos;</code></td></tr>
+            <tr><td><code>collapsible</code></td><td><code>boolean</code></td><td><code>false</code></td></tr>
+            <tr><td><code>variant</code></td><td><code>&apos;default&apos; | &apos;card&apos; | &apos;ghost&apos;</code></td><td><code>&apos;default&apos;</code></td></tr>
+          </tbody>
+        </table>
+        
+        <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">CodeBlock</h3>
+        <table className="docs-props-table mb-8">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>code</code></td><td><code>string</code></td><td>—</td></tr>
+            <tr><td><code>language</code></td><td><code>string</code></td><td><code>&apos;text&apos;</code></td></tr>
+            <tr><td><code>filename</code></td><td><code>string</code></td><td>—</td></tr>
+            <tr><td><code>highlightLines</code></td><td><code>number[]</code></td><td><code>[]</code></td></tr>
+          </tbody>
+        </table>
+        
+        <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">Steps</h3>
+        <table className="docs-props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>currentStep</code></td><td><code>number</code></td><td><code>1</code></td></tr>
+            <tr><td><code>orientation</code></td><td><code>&apos;horizontal&apos; | &apos;vertical&apos;</code></td><td><code>&apos;horizontal&apos;</code></td></tr>
+          </tbody>
+        </table>
+      </section>
     </div>
   );
 }

@@ -204,7 +204,7 @@ function AppShell() {
             </div>
           </nav>
           <div className="docs-sidebar-footer">
-            <a href="https://kongmy.dev/?utm_source=sapphire-ui&utm_medium=sidebar" target="_blank" rel="noopener noreferrer" className="docs-footer-text hover:text-(--color-text-on-dark) transition-colors no-underline">kongmy.dev</a>
+            <a href="https://kongmy.dev/?utm_source=sapphire-ui&utm_medium=sidebar" target="_blank" rel="noopener noreferrer" className="docs-footer-text no-underline transition-colors hover:text-(--color-text-on-dark)">kongmy.dev</a>
           </div>
         </aside>
         }

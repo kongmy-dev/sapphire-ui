@@ -13,7 +13,7 @@ const buttonVariants = cva(
         outline:
           'rounded-btn border-[1.5px] border-(--color-text-strong) bg-transparent text-(--color-text-strong) hover:bg-(--color-text-strong) hover:text-(--color-card-bg)',
         ghost:
-          'rounded-btn border-[1.5px] border-accent bg-transparent text-(--color-accent-text) hover:bg-[var(--color-hover-overlay)]',
+          'rounded-btn border-[1.5px] border-accent bg-transparent text-(--color-accent-text) hover:bg-(--color-hover-overlay)',
         accent:
           'rounded-btn border-none bg-accent text-primary hover:bg-accent-dark',
         'on-dark-primary':

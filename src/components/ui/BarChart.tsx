@@ -16,19 +16,19 @@ export function BarChart({
   tooltipSuffix = ''
 }: BarChartProps) {
   return (
-    <div className={cn("flex items-end gap-3 pt-4 border-b border-border", className)} style={{ height }}>
+    <div className={cn("flex items-end gap-3 border-b border-border pt-4", className)} style={{ height }}>
       {data.map((val, i) => (
-        <div key={i} className="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
+        <div key={i} className="group flex h-full flex-1 flex-col items-center justify-end gap-2">
           <div 
-            className="w-full bg-accent/30 rounded-t-sm relative group-hover:bg-accent/50 transition-colors" 
+            className="relative w-full rounded-t-sm bg-accent/30 transition-colors group-hover:bg-accent/50" 
             style={{ height: `${val}%` }}
           >
-            <div className="absolute -top-7 left-1/2 -translate-x-1/2 text-[10px] font-mono opacity-0 group-hover:opacity-100 transition-opacity bg-(--color-text-strong) text-(--color-surface) px-1.5 py-0.5 rounded shadow-sm z-10 whitespace-nowrap">
+            <div className="absolute -top-7 left-1/2 z-10 -translate-x-1/2 rounded-sm bg-(--color-text-strong) px-1.5 py-0.5 font-mono text-[10px] whitespace-nowrap text-surface opacity-0 shadow-sm transition-opacity group-hover:opacity-100">
               {val}{tooltipSuffix}
             </div>
           </div>
           {labels && labels[i] && (
-            <span className="text-[10px] font-mono text-text-muted mt-1">{labels[i]}</span>
+            <span className="text-text-muted mt-1 font-mono text-[10px]">{labels[i]}</span>
           )}
         </div>
       ))}
