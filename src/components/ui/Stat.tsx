@@ -16,11 +16,7 @@ export interface StatProps extends HTMLAttributes<HTMLDivElement> {
   size?: 'sm' | 'default' | 'lg';
 }
 
-const changeColor: Record<NonNullable<StatProps['changeDirection']>, string> = {
-  up: 'text-(--color-success)',
-  down: 'text-(--color-error)',
-  neutral: 'text-(--color-text-muted)',
-};
+
 
 /**
  * Single metric display. Compose multiple Stats in a grid for a dashboard
