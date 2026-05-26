@@ -8,7 +8,7 @@ import { SEOHead, generateSEOTags } from '../SEOHead';
 import { ThemeToggle } from '../ThemeToggle';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuGroup, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem } from '../DropdownMenu';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '../Sheet';
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext, PaginationEllipsis } from '../Pagination';
+import { Pagination } from '../Pagination';
 import { Steps } from '../Steps';
 import { Sparkline } from '../Sparkline';
 import { Icon } from '../Icon';
@@ -16,7 +16,7 @@ import userEvent from '@testing-library/user-event';
 
 describe('Coverage Smoke Tests', () => {
   it('renders IconMark', () => {
-    render(<IconMark size="md" color="var(--color-primary)" />);
+    render(<IconMark icon="bolt" size="default" />);
   });
 
   it('renders MobileNav', () => {
@@ -52,10 +52,9 @@ describe('Coverage Smoke Tests', () => {
       <SEOHead 
         title="Test" 
         description="Desc" 
-        canonical="https://example.com"
-        ogImage="img.png"
+        url="https://example.com"
+        image="img.png"
         twitterCard="summary_large_image"
-        noindex={true}
         author="Kongmy"
         publishedTime="2023-01-01"
         twitterSite="@kongmy"
@@ -119,22 +118,11 @@ describe('Coverage Smoke Tests', () => {
 
   it('renders Pagination', () => {
     render(
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious href="#" />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#" isActive>1</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext href="#" />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      <Pagination
+        currentPage={2}
+        totalPages={5}
+        onPageChange={() => {}}
+      />
     );
   });
 
@@ -148,7 +136,11 @@ describe('Coverage Smoke Tests', () => {
   });
 
   it('renders Sparkline', () => {
-    render(<Sparkline data={[1, 2, 3]} />);
+    render(<Sparkline data={[
+      { status: 'success' },
+      { status: 'warning' },
+      { status: 'error' },
+    ]} />);
   });
 
   it('renders Icon', () => {
