@@ -54,7 +54,8 @@ jobs:
 
       - name: Install dependencies
         if: steps.tag_check.outputs.exists == 'false'
-        run: bun install
+        # Ignore scripts to prevent the 'prepare' script from triggering a redundant build
+        run: bun install --ignore-scripts
 
       - name: Build project
         if: steps.tag_check.outputs.exists == 'false'
@@ -67,7 +68,8 @@ jobs:
 
       - name: Publish to GitHub Packages
         if: steps.tag_check.outputs.exists == 'false'
-        run: npm publish
+        # Ignore scripts to prevent the 'prepare' script from triggering a redundant build before publish
+        run: npm publish --ignore-scripts
 
       # ── npm Registry ───────────────────────────────────────────────
       - name: Setup .npmrc for npm
@@ -78,7 +80,8 @@ jobs:
 
       - name: Publish to npm
         if: steps.tag_check.outputs.exists == 'false'
-        run: npm publish --registry=https://registry.npmjs.org/ --access public
+        # Ignore scripts to prevent the 'prepare' script from triggering a redundant build before publish
+        run: npm publish --registry=https://registry.npmjs.org/ --access public --ignore-scripts
 
       # ── Release ────────────────────────────────────────────────────
       - name: Create git tag

@@ -45,7 +45,7 @@ export function ThemeToggle({
     }
   };
 
-  const nextModeLabel = activeTheme === 'dark' ? 'light' : 'dark';
+  const nextModeLabel = !mounted ? 'dark' : activeTheme === 'dark' ? 'light' : 'dark';
   const iconName = !mounted ? 'dark_mode' : activeTheme === 'dark' ? 'light_mode' : 'dark_mode';
 
   return (
