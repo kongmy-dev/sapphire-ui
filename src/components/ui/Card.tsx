@@ -1,11 +1,37 @@
 import { forwardRef, type HTMLAttributes } from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../lib/utils';
+
+/* ─── Card Variants ────────────────────────────────────────────────── */
+
+const cardVariants = cva(
+  'rounded-md transition-all duration-200',
+  {
+    variants: {
+      variant: {
+        default: 'border border-border bg-(--color-card-bg)',
+        dark: 'border border-border-dark bg-primary text-(--color-text-on-dark)',
+        feature: 'grid gap-8 border border-border bg-(--color-card-bg) md:grid-cols-[1fr_auto]',
+        dashed: 'border-[1.5px] border-dashed border-border bg-transparent text-(--color-text-muted)',
+      },
+      padding: {
+        default: 'p-8',
+        compact: 'p-5',
+        none: 'p-0',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+      padding: 'default',
+    },
+  },
+);
 
 /* ─── Card Root ─────────────────────────────────────────────────────── */
 
-export interface CardProps extends HTMLAttributes<HTMLDivElement> {
-  /** Visual variant */
-  variant?: 'default' | 'dark' | 'feature' | 'dashed';
+export interface CardProps
+  extends HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof cardVariants> {
   /** Enable hover lift effect */
   hoverable?: boolean;
   /** Show left accent border */
@@ -13,16 +39,12 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const Card = forwardRef<HTMLDivElement, CardProps>(
-  ({ className, variant = 'default', hoverable = false, bordered = false, ...props }, ref) => {
+  ({ className, variant = 'default', padding, hoverable = false, bordered = false, ...props }, ref) => {
     return (
       <div
         ref={ref}
         className={cn(
-          'rounded-md p-8 transition-all duration-200',
-          variant === 'default' && 'border border-border bg-(--color-card-bg)',
-          variant === 'dark' && 'border border-border-dark bg-primary text-(--color-text-on-dark)',
-          variant === 'feature' && 'grid gap-8 border border-border bg-(--color-card-bg) md:grid-cols-[1fr_auto]',
-          variant === 'dashed' && 'border-[1.5px] border-dashed border-border bg-transparent text-(--color-text-muted)',
+          cardVariants({ variant, padding }),
           hoverable && variant === 'default' && 'cursor-pointer hover:-translate-y-0.5 hover:shadow-(--shadow-card-hover)',
           hoverable && variant === 'dark' && 'cursor-pointer hover:border-accent',
           hoverable && variant === 'dashed' && 'cursor-pointer hover:border-accent hover:text-(--color-text-main)',
@@ -74,4 +96,4 @@ const CardFooter = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
 );
 CardFooter.displayName = 'CardFooter';
 
-export { Card, CardHeader, CardBody, CardFooter };
+export { Card, CardHeader, CardBody, CardFooter, cardVariants };

@@ -262,7 +262,7 @@ export default function InteractivePage() {
                   <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onSelect={() => toastRef.current?.show('Delete action triggered', 'warning')} style={{ color: '#b91c1c' }}>
+                <DropdownMenuItem onSelect={() => toastRef.current?.show('Delete action triggered', 'warning')} style={{ color: 'var(--color-error)' }}>
                   Delete
                   <DropdownMenuShortcut>⌫</DropdownMenuShortcut>
                 </DropdownMenuItem>

@@ -1,0 +1,4 @@
+{
+  "*.{ts,tsx}": ["bunx eslint --fix"],
+  "*.css": ["bunx stylelint --fix"]
+}

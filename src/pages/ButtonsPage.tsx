@@ -2,9 +2,9 @@ import { Button, type ButtonProps } from '../components/ui/Button';
 import { IconMark } from '../components/ui/IconMark';
 
 type Variant = NonNullable<ButtonProps['variant']>;
-const variants: readonly Variant[] = ['primary', 'outline', 'ghost', 'accent', 'on-dark-primary', 'on-dark-outline', 'link', 'premium'] as const;
+const variants: readonly Variant[] = ['primary', 'outline', 'ghost', 'accent', 'on-dark-primary', 'on-dark-outline', 'link', 'premium', 'destructive', 'destructive-outline'] as const;
 const sizes = ['sm', 'default', 'lg'] as const;
-const showcaseVariants: readonly Variant[] = ['primary', 'outline', 'ghost', 'accent', 'link'];
+const showcaseVariants: readonly Variant[] = ['primary', 'outline', 'ghost', 'accent', 'link', 'destructive', 'destructive-outline'];
 
 export default function ButtonsPage() {
   return (

@@ -8,16 +8,34 @@ colors:
   primary-hover: "#1a3358"
   accent: "#c5a065"
   accent-dark: "#b8904f"
+  accent-text: "#8a5a1f"       # AA-safe gold for text on light surfaces (4.6:1)
   surface: "#f4f6f8"
   white: "#ffffff"
   text-main: "#1e293b"
-  text-muted: "#64748b"
+  text-strong: "#0a192f"       # Headings — flips to #f1f5f9 in dark mode
+  text-muted: "#475569"        # Darkened from #64748b for AA compliance (7.0:1)
   text-on-dark: "#f1f5f9"
   text-on-dark-muted: "rgba(241, 245, 249, 0.65)"
   border: "#e2e8f0"
   border-dark: "rgba(255, 255, 255, 0.12)"
   hover-overlay: "rgba(197, 160, 101, 0.08)"
   focus-ring: "#c5a065"
+
+  # Status / semantic colors
+  success: "#15803d"
+  success-bg: "rgba(34, 197, 94, 0.1)"
+  success-border: "rgba(34, 197, 94, 0.2)"
+  error: "#b91c1c"
+  error-hover: "#991b1b"
+  error-ring: "#dc2626"
+  error-bg: "rgba(239, 68, 68, 0.1)"
+  error-border: "rgba(239, 68, 68, 0.2)"
+  warning: "#b45309"
+  warning-bg: "rgba(245, 158, 11, 0.1)"
+  warning-border: "rgba(245, 158, 11, 0.2)"
+  info: "#1d4ed8"
+  info-bg: "rgba(59, 130, 246, 0.1)"
+  info-border: "rgba(59, 130, 246, 0.2)"
 
 typography:
   display-xl:
@@ -156,11 +174,22 @@ A two-color brand palette grounded in a clean off-white surface.
 - **Primary (#0a192f — Dark Navy):** Headers, featured cards, deep backgrounds. The voice of authority.
 - **Accent (#c5a065 — Gold):** CTAs, highlights, links, dividers. Warmth against the navy.
 - **Accent Dark (#b8904f):** Gold hover state.
+- **Accent Text (#8a5a1f):** AA-safe gold for text on light surfaces (4.6:1 contrast). Always use this instead of `--color-accent` for readable text.
 - **Surface (#f4f6f8 — Off-white):** Page background, light card fills. Keeps the system airy.
 - **Text Main (#1e293b):** Primary body copy.
-- **Text Muted (#64748b):** Captions, meta, secondary labels.
+- **Text Strong (#0a192f):** Headings and emphasis. Flips to `#f1f5f9` in dark mode.
+- **Text Muted (#475569):** Captions, meta, secondary labels. Darkened from the original `#64748b` for WCAG AA compliance (7.0:1 on surface).
 - **Text On Dark (#f1f5f9):** Body copy on navy surfaces.
 - **Border (#e2e8f0):** Hairline 1px borders on light cards.
+
+### Status Colors
+
+- **Success (#15803d):** Confirmations, passed states. Background tint at 10% opacity.
+- **Error (#b91c1c):** Validation errors, destructive actions.
+- **Warning (#b45309):** Caution notices, pending states.
+- **Info (#1d4ed8):** Informational callouts, tips.
+
+Each status color has `-bg` and `-border` variants at low opacity for subtle tinted backgrounds.
 
 Navy + gold = professional authority without corporate coldness. **No gradients in primary UI** — solids only.
 
@@ -212,4 +241,41 @@ Type scale uses fluid `clamp()` for display sizes so headlines remain confident 
 - **Do** reserve gold for CTAs, links, and accents — never for body copy.
 - **Don't** combine illustrative or hand-drawn elements with the system.
 - **Do** respect `prefers-reduced-motion` — animations are minimal by default.
-- **Don't** use heavy drop shadows; let background contrast carry hierarchy.
+- **Don’t** use heavy drop shadows; let background contrast carry hierarchy.
+
+## CSS Utility Classes
+
+The compiled stylesheet ships framework-agnostic utility classes for non-React consumers. These are usable from HTML, Astro, Vue, or any template that imports `style.css`.
+
+### Typography
+`.t-display`, `.t-heading`, `.t-subheading`, `.t-body-lg`, `.t-body`, `.t-body-sm`, `.t-eyebrow`, `.t-mono`
+
+### Content Flow
+- **`.prose`** — long-form content wrapper (headings, paragraphs, lists, code, blockquotes, links pick up Sapphire tokens). Variants: `.prose-sm`, `.prose-lg`.
+- **`.stack`** — vertical rhythm via owl selector (`* + *` gets `--stack-gap` margin). Variants: `.stack-sm`, `.stack-lg`, `.stack-xl`.
+- **`.cluster`** — horizontal flex row that wraps. Customise with `--cluster-gap` / `--cluster-justify`.
+
+### Container Queries
+Add `.cq` on an ancestor, then use `.cq-sm\:flex`, `.cq-md\:cols-2`, `.cq-lg\:cols-3`, etc. on descendants.
+
+### Forms
+`.form-group`, `.label`, `.input`, `.input--mono`, `.input--dark`, `.help-text`, `.help-text--error`
+
+### Layout
+`.layout-root`, `.sidebar`, `.main-content`, `.page`, `.masthead`
+
+### Feedback
+`.alert` (with `.alert--info`, `.alert--success`, `.alert--warning`, `.alert--error`, `.alert--accent`), `.empty-state`
+
+### Loading States
+`.skeleton` (with `.skeleton-line--sm/md/lg`, `.skeleton-card`), `.spinner` (`.spinner--sm`, `.spinner--lg`)
+
+### Data Display
+`.sapphire-table`
+
+### Accessibility
+`.visually-hidden` / `.sr-only`, `.visually-hidden-focusable`
+
+### Site Shell (Web Component CSS)
+`.site-header`, `.site-header--light`, `.site-header--sticky`, `.site-footer`, `.site-footer--light`
+`.sapphire-toast`, `.sapphire-banner`

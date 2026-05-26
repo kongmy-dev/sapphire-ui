@@ -380,6 +380,66 @@
       "types": "./dist/lib/utils.d.ts",
       "import": "./dist/lib/utils.js",
       "require": "./dist/lib/utils.cjs"
+    },
+    "./callout": {
+      "types": "./dist/components/ui/Callout.d.ts",
+      "import": "./dist/components/ui/Callout.js",
+      "require": "./dist/components/ui/Callout.cjs"
+    },
+    "./container": {
+      "types": "./dist/components/ui/Container.d.ts",
+      "import": "./dist/components/ui/Container.js",
+      "require": "./dist/components/ui/Container.cjs"
+    },
+    "./margin-note": {
+      "types": "./dist/components/ui/MarginNote.d.ts",
+      "import": "./dist/components/ui/MarginNote.js",
+      "require": "./dist/components/ui/MarginNote.cjs"
+    },
+    "./stat-group": {
+      "types": "./dist/components/ui/StatGroup.d.ts",
+      "import": "./dist/components/ui/StatGroup.js",
+      "require": "./dist/components/ui/StatGroup.cjs"
+    },
+    "./split-layout": {
+      "types": "./dist/components/ui/SplitLayout.d.ts",
+      "import": "./dist/components/ui/SplitLayout.js",
+      "require": "./dist/components/ui/SplitLayout.cjs"
+    },
+    "./table-of-contents": {
+      "types": "./dist/components/ui/TableOfContents.d.ts",
+      "import": "./dist/components/ui/TableOfContents.js",
+      "require": "./dist/components/ui/TableOfContents.cjs"
+    },
+    "./timeline": {
+      "types": "./dist/components/ui/Timeline.d.ts",
+      "import": "./dist/components/ui/Timeline.js",
+      "require": "./dist/components/ui/Timeline.cjs"
+    },
+    "./wizard-layout": {
+      "types": "./dist/components/ui/WizardLayout.d.ts",
+      "import": "./dist/components/ui/WizardLayout.js",
+      "require": "./dist/components/ui/WizardLayout.cjs"
+    },
+    "./proposal-layout": {
+      "types": "./dist/components/ui/ProposalLayout.d.ts",
+      "import": "./dist/components/ui/ProposalLayout.js",
+      "require": "./dist/components/ui/ProposalLayout.cjs"
+    },
+    "./passphrase-gate": {
+      "types": "./dist/components/ui/PassphraseGate.d.ts",
+      "import": "./dist/components/ui/PassphraseGate.js",
+      "require": "./dist/components/ui/PassphraseGate.cjs"
+    },
+    "./bar-chart": {
+      "types": "./dist/components/ui/BarChart.d.ts",
+      "import": "./dist/components/ui/BarChart.js",
+      "require": "./dist/components/ui/BarChart.cjs"
+    },
+    "./sparkline": {
+      "types": "./dist/components/ui/Sparkline.d.ts",
+      "import": "./dist/components/ui/Sparkline.js",
+      "require": "./dist/components/ui/Sparkline.cjs"
     }
   },
   "sideEffects": [
@@ -439,13 +499,13 @@
     "@radix-ui/react-toggle-group": "^1.0.0",
     "@radix-ui/react-tooltip": "^1.0.0",
     "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "react-dom": "^19.2.6",
+    "react-resizable-panels": "^4.11.2"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "js-cookie": "^3.0.7",
-    "react-resizable-panels": "^4.11.2",
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {

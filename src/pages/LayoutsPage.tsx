@@ -30,7 +30,7 @@ import { Toast, type ToastRef } from '../components/Toast';
 import { BarChart } from '../components/ui/BarChart';
 import { Sparkline } from '../components/ui/Sparkline';
 import { Progress } from '../components/ui/Progress';
-import { cn } from '../lib/utils';
+
 
 // Mock consulting projects for the interactive table
 interface Engagement {
@@ -205,7 +205,7 @@ export default function LayoutsPage() {
                           Support Tickets
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem onSelect={() => toastRef.current?.show('Log Out action triggered (mocked)', 'warning')} style={{ color: '#ef4444' }}>
+                        <DropdownMenuItem onSelect={() => toastRef.current?.show('Log Out action triggered (mocked)', 'warning')} style={{ color: 'var(--color-error)' }}>
                           Log Out
                         </DropdownMenuItem>
                       </DropdownMenuContent>

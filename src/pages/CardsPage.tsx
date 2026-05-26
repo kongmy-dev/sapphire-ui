@@ -7,7 +7,7 @@ export default function CardsPage() {
     <div>
       <header className="docs-page-header">
         <h1>Cards</h1>
-        <p>Compound card component with header, body, and footer sub-components. Supports default, dark, and feature variants.</p>
+        <p>Compound card component with header, body, and footer sub-components. Supports default, dark, feature, and dashed variants.</p>
       </header>
 
       <section className="docs-section">
@@ -71,11 +71,27 @@ export default function CardsPage() {
       </section>
 
       <section className="docs-section">
+        <h2 className="docs-section-title">Dashed Card</h2>
+        <div className="docs-preview">
+          <Card variant="dashed" hoverable style={{ maxWidth: 400 }}>
+            <CardBody>
+              <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.1rem', fontWeight: 600, color: 'var(--color-text-muted)', marginBottom: 6 }}>
+                Drop Zone
+              </h3>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: 14, color: 'var(--color-text-muted)', lineHeight: 1.6 }}>
+                Dashed cards are useful for empty states, drop zones, and placeholder content.
+              </p>
+            </CardBody>
+          </Card>
+        </div>
+      </section>
+
+      <section className="docs-section">
         <h2 className="docs-section-title">Props</h2>
         <table className="docs-props-table">
           <thead><tr><th>Prop</th><th>Type</th><th>Default</th></tr></thead>
           <tbody>
-            <tr><td><code>variant</code></td><td><code>default | dark | feature</code></td><td><code>default</code></td></tr>
+            <tr><td><code>variant</code></td><td><code>default | dark | feature | dashed</code></td><td><code>default</code></td></tr>
             <tr><td><code>hoverable</code></td><td><code>boolean</code></td><td><code>false</code></td></tr>
             <tr><td><code>bordered</code></td><td><code>boolean</code></td><td><code>false</code></td></tr>
           </tbody>

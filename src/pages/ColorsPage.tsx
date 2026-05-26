@@ -7,17 +7,17 @@ const tokenColors = [
   { name: '--color-accent-dark', value: '#b8904f', label: 'Accent Dark' },
   { name: '--color-surface', value: '#f4f6f8', label: 'Surface' },
   { name: '--color-text-main', value: '#1e293b', label: 'Text Main' },
-  { name: '--color-text-muted', value: '#64748b', label: 'Text Muted' },
+  { name: '--color-text-muted', value: '#475569', label: 'Text Muted' },
   { name: '--color-text-on-dark', value: '#f1f5f9', label: 'Text on Dark' },
   { name: '--color-border', value: '#e2e8f0', label: 'Border' },
   { name: '--color-border-dark', value: 'rgba(255,255,255,0.12)', label: 'Border Dark' },
 ];
 
 const statusColors = [
-  { name: '--color-success', value: '#22c55e', label: 'Success' },
-  { name: '--color-error', value: '#ef4444', label: 'Error' },
-  { name: '--color-warning', value: '#f59e0b', label: 'Warning' },
-  { name: '--color-info', value: '#3b82f6', label: 'Info' },
+  { name: '--color-success', value: '#15803d', label: 'Success' },
+  { name: '--color-error', value: '#b91c1c', label: 'Error' },
+  { name: '--color-warning', value: '#b45309', label: 'Warning' },
+  { name: '--color-info', value: '#1d4ed8', label: 'Info' },
 ];
 
 function ColorSwatch({ name, value, label }: { name: string; value: string; label: string }) {

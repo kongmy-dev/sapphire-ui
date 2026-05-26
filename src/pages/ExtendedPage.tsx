@@ -11,7 +11,7 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '..
 import { Callout } from '../components/ui/Callout';
 import { MarginNote } from '../components/ui/MarginNote';
 import { Timeline, TimelineItem, TimelineIndicator, TimelineContent } from '../components/ui/Timeline';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '../components/ui/Tabs';
+
 import { TableOfContents } from '../components/ui/TableOfContents';
 import { Card } from '../components/ui/Card';
 

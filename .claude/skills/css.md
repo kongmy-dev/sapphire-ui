@@ -6,12 +6,12 @@ How to write CSS that fits the Sapphire design system. Read this before touching
 
 ## Token System
 
-All tokens are CSS custom properties defined in **two places**:
+All tokens are CSS custom properties. The **single source of truth** is:
 
 | File | Purpose |
 |---|---|
-| `design/colors_and_type.css` | Canonical source — readable reference, used by HTML/Astro consumers |
-| `src/index.css` (`@theme {}`) | Tailwind v4 integration — tokens here become Tailwind utilities too |
+| `src/index.css` (`@theme {}` + `:root`) | Production tokens — Tailwind v4 integration + component styles |
+| `design/colors_and_type.css` | Legacy reference — readable catalog for HTML/Astro consumers (not part of the build) |
 
 **Never hard-code hex values.** Always reference tokens:
 
@@ -168,11 +168,15 @@ In React components, prefer Tailwind utilities over these classes.
 Dark mode is toggled via `data-theme="dark"` on `<html>`. The theme helpers are in `src/lib/theme.ts`.
 
 Key dark-mode swaps defined in `src/index.css`:
-- `--color-surface` → `#0d1b2e`
-- `--color-text-main` → `#e2e8f0`
-- `--color-border` → `rgba(255,255,255,0.1)`
+- `--color-surface` → `#0a192f`
+- `--color-text-main` → `#f1f5f9`
+- `--color-text-strong` → `#f1f5f9`
+- `--color-text-muted` → `rgba(241,245,249,0.72)`
+- `--color-border` → `rgba(255,255,255,0.12)`
 - `--color-card-bg` → `#112240`
-- `--color-white` → `#112240`
+- `--color-accent-text` → `#c5a065` (gold passes AA on dark backgrounds naturally)
+
+Note: `--color-white` is **not** redefined in dark mode — it stays `#ffffff`.
 
 When adding new tokens, always define a dark-mode override in the `[data-theme="dark"]` block.
 

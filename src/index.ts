@@ -52,6 +52,8 @@ export * from './components/ui/Timeline';
 export * from './components/ui/WizardLayout';
 export * from './components/ui/Empty';
 export * from './components/ui/Stat';
+export * from './components/ui/BarChart';
+export * from './components/ui/Sparkline';
 
 // ─── Phase 3 Extended: Visual + Interactive Primitives ──────────────
 export * from './components/ui/Breadcrumb';

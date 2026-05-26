@@ -1,3 +1,7 @@
+/* Provide font-face declarations so consumers importing only style.css
+   get the correct typefaces without needing their own Google Fonts setup. */
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
 @import "tailwindcss";
 
 @theme {
@@ -75,7 +79,7 @@
   /* Surface variants */
   --color-white:         #fff;
   --color-card-bg:       #fff;
-  --color-card-dark-bg:  #0a192f;
+  --color-card-dark-bg:  var(--color-primary);
 }
 
 /* ─── Dark Theme ──────────────────────────────────────────────────────── */
@@ -261,7 +265,7 @@ html {
     background: var(--color-primary);
     color:      #fff;
   }
-  .btn-primary:hover { background: #1a3358; color: #fff; }
+  .btn-primary:hover { background: var(--color-primary-hover); color: #fff; }
 
   .btn-outline {
     background:  transparent;
@@ -392,14 +396,8 @@ html {
   100% { background-position: -200% 0; }
 }
 
-/* ─── Status Color Tokens ─────────────────────────────────── */
-:root {
-  --color-success: #22c55e;
-  --color-error: #ef4444;
-  --color-warning: #f59e0b;
-  --color-info: #3b82f6;
-  --color-focus-ring: rgb(197, 160, 101, 0.4);
-}
+/* Status color tokens are defined in the main :root block above (lines 49-65).
+   Do not re-declare them here — the earlier values are AA-safe for text. */
 
 /* ─── Form Utilities ──────────────────────────────────────── */
 .form-group { display: flex; flex-direction: column; gap: 4px; }
@@ -539,7 +537,7 @@ html {
 .site-header--sticky { position: sticky; top: 0; }
 /* Light variant is intentionally locked to a light palette so it stays
    readable even when the surrounding page is in dark theme. */
-.site-header--light { background: #fff; color: #0a192f; border-color: #e2e8f0; }
+.site-header--light { background: var(--color-white); color: var(--color-text-strong); border-color: var(--color-border); }
 .site-header-inner { max-width: 80rem; margin: 0 auto; padding: 0 1.5rem; height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
 .site-header-brand { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
 .site-header-nav { display: flex; align-items: center; gap: 0.25rem; flex: 1; }
@@ -550,7 +548,7 @@ html {
 
 /* ─── Site Footer (CSS-only) ─────────────────────────────── */
 .site-footer { width: 100%; border-top: 1px solid var(--color-border-dark); background: var(--color-primary); color: var(--color-text-on-dark); }
-.site-footer--light { background: #fff; color: #1e293b; border-color: #e2e8f0; }
+.site-footer--light { background: var(--color-white); color: var(--color-text-main); border-color: var(--color-border); }
 .site-footer-inner { max-width: 80rem; margin: 0 auto; padding: 3rem 1.5rem 2rem; }
 .site-footer-grid { display: flex; flex-wrap: wrap; gap: 2.5rem 4rem; margin-bottom: 2.5rem; }
 .site-footer-group { display: flex; flex-direction: column; gap: 0.75rem; }
