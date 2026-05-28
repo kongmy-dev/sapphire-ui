@@ -75,3 +75,18 @@ export function initTheme(): Theme {
   if (isBrowser) document.documentElement.setAttribute(ATTRIBUTE, applied);
   return applied;
 }
+
+/**
+ * Minified inline script that applies the stored theme before any paint,
+ * preventing a flash of the wrong theme (FOUC). Intended for `<head>` use.
+ *
+ * Astro usage:
+ * ```astro
+ * ---
+ * import { THEME_INIT_SCRIPT } from '@kongmy-dev/sapphire-ui';
+ * ---
+ * <script is:inline set:html={THEME_INIT_SCRIPT} />
+ * ```
+ */
+export const THEME_INIT_SCRIPT =
+  `(function(){var k='${STORAGE_KEY}',a='${ATTRIBUTE}',s=function(){return window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';},p;try{p=localStorage.getItem(k)}catch(e){}p=p==='light'||p==='dark'||p==='system'?p:'system';document.documentElement.setAttribute(a,p==='system'?s():p);})();`;

@@ -197,6 +197,8 @@ html {
 @layer base {
   *, *::before, *::after { box-sizing: border-box; }
 
+  html { scrollbar-gutter: stable; }
+
   body {
     font-family:    var(--font-sans);
     font-size:      var(--text-base);
@@ -459,12 +461,13 @@ html {
 /* ─── Dialog / Modal Animations ──────────────────────────── */
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
-/* Dialog enter/exit animates opacity + scale only. Earlier versions also
-   shifted Y by 2% on the way in, which read as a visible jump-to-center
-   "jitter" after the dialog appeared. Keep the transform anchored at
-   translate(-50%, -50%) throughout so the centered position never moves. */
-@keyframes dialogIn { from { opacity: 0; transform: translate(-50%, -50%) scale(0.96); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
-@keyframes dialogOut { from { opacity: 1; transform: translate(-50%, -50%) scale(1); } to { opacity: 0; transform: translate(-50%, -50%) scale(0.96); } }
+/* Tailwind v4 -translate-1/2 emits the CSS `translate` individual-transform
+   property, NOT `transform: translate()`. Including translate() in the
+   keyframe would double-translate the dialog (-100% instead of -50%) and
+   flash it off-screen left for the animation duration. Scale only here;
+   centering is entirely handled by the Tailwind class. */
+@keyframes dialogIn  { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+@keyframes dialogOut { from { opacity: 1; transform: scale(1);    } to { opacity: 0; transform: scale(0.96); } }
 
 /* ─── Toast ──────────────────────────────────────────────── */
 .sapphire-toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 2000; display: flex; flex-direction: column-reverse; gap: 8px; pointer-events: none; }
