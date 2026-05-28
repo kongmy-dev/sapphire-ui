@@ -139,6 +139,42 @@ export default function FeedbackPage() {
       </section>
 
       <section className="docs-section">
+        <h2 className="docs-section-title">Toast</h2>
+        <div className="docs-preview">
+          <div className="docs-flex" style={{ flexWrap: 'wrap' }}>
+            <Button
+              variant="primary"
+              icon="check_circle"
+              onClick={() => (window as any).__sapphireToast?.('Changes saved successfully.', 'success')}
+            >
+              Success
+            </Button>
+            <Button
+              variant="outline"
+              icon="info"
+              onClick={() => (window as any).__sapphireToast?.('Syncing data in the background.', 'info')}
+            >
+              Info
+            </Button>
+            <Button
+              variant="outline"
+              icon="warning"
+              onClick={() => (window as any).__sapphireToast?.('API usage is approaching the limit.', 'warning')}
+            >
+              Warning
+            </Button>
+            <Button
+              variant="destructive"
+              icon="error"
+              onClick={() => (window as any).__sapphireToast?.('Failed to connect to the server.', 'error')}
+            >
+              Error
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <section className="docs-section">
         <h2 className="docs-section-title">Empty State</h2>
         <div className="docs-preview">
           <Empty

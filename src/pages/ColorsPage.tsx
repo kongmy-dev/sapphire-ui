@@ -29,7 +29,7 @@ function ColorSwatch({ name, value, label }: { name: string; value: string; labe
       className="docs-preview"
       style={{ padding: 0, cursor: 'pointer', overflow: 'hidden', border: '1px solid var(--color-border)', textAlign: 'left' }}
       onClick={() => {
-        navigator.clipboard.writeText(name);
+        navigator.clipboard.writeText(value);
         setCopied(true);
         setTimeout(() => setCopied(false), 1500);
       }}
@@ -65,7 +65,7 @@ export default function ColorsPage() {
     <div>
       <header className="docs-page-header">
         <h1>Colors</h1>
-        <p>The Sapphire UI color palette. Click any swatch to copy its CSS variable name.</p>
+        <p>The Sapphire UI color palette. Click any swatch to copy its hex color code.</p>
       </header>
 
       <section className="docs-section">

@@ -21,6 +21,7 @@ const ElementsPage = lazy(() => import('./pages/ElementsPage'));
 const HooksPage = lazy(() => import('./pages/HooksPage'));
 
 import { CookieBanner } from './components/CookieBanner';
+import { Toast } from './components/Toast';
 import { Analytics } from './components/Analytics';
 import { MobileNav } from './components/ui/MobileNav';
 import { ThemeProvider, useTheme } from './components/ThemeProvider';
@@ -233,6 +234,7 @@ function AppShell() {
       </Layout>
 
       <CookieBanner forceShow={showCookies} onClose={() => setShowCookies(false)} />
+      <Toast />
       <Analytics
         gaId={import.meta.env.VITE_PUBLIC_GA_ID}
         posthogToken={import.meta.env.VITE_PUBLIC_POSTHOG_KEY}
