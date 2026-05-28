@@ -476,7 +476,7 @@
     "preview": "vite preview",
     "test:a11y": "playwright test",
     "test": "vitest run",
-    "deploy:docs": "bun run build:docs && wrangler pages deploy dist-docs --project-name=sapphire-ui-docs"
+    "deploy:docs": "bun run build:docs && wrangler deploy"
   },
   "peerDependencies": {
     "@radix-ui/react-accordion": "^1.0.0",
