@@ -1,7 +1,7 @@
 ---
 version: alpha
-name: KONGMY Digital Solutions
-description: Design system for KONGMY — an independent, founder-led IT consultancy. Anti-bloat, editorial, navy + gold.
+name: Sapphire UI
+description: Design system for KONGMY Digital Solutions — an independent, founder-led IT consultancy. Anti-bloat, editorial, navy + gold.
 
 colors:
   primary: "#0a192f"
@@ -227,10 +227,34 @@ Type scale uses fluid `clamp()` for display sizes so headlines remain confident 
 
 ## Components
 
+Sapphire UI provides a robust React component library alongside its CSS tokens.
+
+### Core Primitives
 - **Buttons:** Primary fills with navy and white text; Outline uses 1.5px navy border; Ghost uses gold border. On-dark variant fills with gold and uses navy text.
 - **Cards:** 8px radius, 1px border, 32px padding. Light variant on white, featured variant on navy.
-- **Tags:** Pill shape with all-caps Source Sans 3 at 12px / weight 600 / 0.04em tracking.
-- **Icons:** Material Symbols Outlined, weight 300, opsz 24.
+- **Tags, Badges, Chips:** Pill shape with all-caps Source Sans 3 at 12px / weight 600 / 0.04em tracking.
+- **Icons:** Material Symbols Outlined, weight 300, opsz 24. Includes `IconMark` for feature highlights.
+- **Avatars:** User profile pictures with text fallbacks and `AvatarGroup` clustering.
+
+### Forms & Controls
+- **Text Inputs:** Standard `Input` and `Textarea` with distinct focus rings. Features `--color-error` border for validation states.
+- **Selection:** `Select`, `NativeSelect`, `Checkbox`, `RadioGroup`, and `ToggleSwitch` (all powered by Radix UI for accessibility).
+- **Sliders:** `RangeSlider` with gold active states.
+
+### Overlays & Disclosure
+- **Modals:** Centered `Dialog` and edge-anchored `Sheet` components.
+- **Menus & Popups:** `DropdownMenu`, `Popover`, `HoverCard`, and `Tooltip`.
+- **Disclosure:** `Accordion` and `Tabs` for hiding complexity, `Steps` for wizards.
+
+### Feedback & Data
+- **Alerts & Messaging:** `Alert`, `Callout`, non-blocking `Toast`, and global `Banner`.
+- **Loading:** Shimmering `Skeleton` blocks and rotating `Spinner` elements.
+- **Data Display:** `Table`, `Stat` blocks for metrics, `Progress`, and `Sparkline`.
+
+### Navigation & Layouts
+- **Navigation:** `Breadcrumb`, `Pagination`, `Timeline`, `MobileNav`, and `TableOfContents`.
+- **App Layouts:** Ready-to-use compositions including `AdminLayout`, `ProposalLayout`, and `WizardLayout`.
+- **Site Shell:** `SiteHeader` and `SiteFooter` structures.
 
 ## Do's and Don'ts
 
