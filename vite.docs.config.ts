@@ -18,6 +18,7 @@ export default defineConfig({
     outDir: 'dist-docs',
     emptyOutDir: true,
     rollupOptions: {
+      treeshake: { moduleSideEffects: true },
       output: {
         manualChunks(id: string) {
           if (!id.includes('node_modules')) return;

@@ -443,6 +443,7 @@
     }
   },
   "sideEffects": [
+    "./src/components/*Element.ts",
     "./dist/sapphire-ui.css",
     "./dist/index.css",
     "./dist/elements.js",

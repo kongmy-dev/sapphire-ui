@@ -30,3 +30,4 @@ playwright/.cache/
 *.sw?
 .env
 coverage
+.claude/launch.json
