@@ -27,13 +27,13 @@ const Stat = forwardRef<HTMLDivElement, StatProps>(
   ({ className, label, value, description, change, changeDirection = 'neutral', size = 'default', ...props }, ref) => (
     <div
       ref={ref}
-      className={cn('flex flex-col gap-1 rounded-md border border-border bg-card px-5 py-[18px] font-sans', className)}
+      className={cn('bg-card flex flex-col gap-1 rounded-md border border-border px-5 py-[18px] font-sans', className)}
       {...props}
     >
       <dl className="m-0 flex flex-col gap-1">
         <dt
           className={cn(
-            'flex items-center gap-1.5 font-semibold tracking-[0.06em] text-(--color-text-muted) uppercase mb-1',
+            'mb-1 flex items-center gap-1.5 font-semibold tracking-[0.06em] text-(--color-text-muted) uppercase',
             size === 'sm' && 'text-[10px]',
             size === 'default' && 'text-[12px]',
             size === 'lg' && 'text-sm',
@@ -44,7 +44,7 @@ const Stat = forwardRef<HTMLDivElement, StatProps>(
         <dd className="m-0 flex flex-col items-start gap-1">
           <span
             className={cn(
-              'font-serif font-medium tracking-[-0.01em] text-(--color-text-main) tabular-nums leading-none',
+              'font-serif leading-none font-medium tracking-[-0.01em] text-(--color-text-main) tabular-nums',
               size === 'sm' && 'text-2xl',
               size === 'default' && 'text-[28px]',
               size === 'lg' && 'text-4xl',
@@ -53,7 +53,7 @@ const Stat = forwardRef<HTMLDivElement, StatProps>(
             {value}
           </span>
           {change != null && (
-            <span className={cn('text-[12px] font-normal tabular-nums mt-1', changeDirection === 'up' ? 'text-[#1f7a4d]' : changeDirection === 'down' ? 'text-[#b03a3a]' : 'text-(--color-text-muted)')}>
+            <span className={cn('mt-1 text-[12px] font-normal tabular-nums', changeDirection === 'up' ? 'text-[#1f7a4d]' : changeDirection === 'down' ? 'text-[#b03a3a]' : 'text-(--color-text-muted)')}>
               {change}
             </span>
           )}

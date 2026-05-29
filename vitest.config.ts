@@ -9,7 +9,11 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       all: true,
-      include: ['src/components/ui/**/*.tsx'],
+      include: [
+        'src/components/ui/**/*.tsx',
+        'src/lib/**/*.ts',
+        'src/hooks/**/*.ts',
+      ],
     },
   },
 });

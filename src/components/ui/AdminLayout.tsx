@@ -31,7 +31,7 @@ const AdminLayout = forwardRef<HTMLDivElement, AdminLayoutProps>(
           {header}
           <main
             className={cn(
-              'sf-admin-content mx-auto w-full max-w-[1280px] flex-1 overflow-y-auto px-8 py-8 pb-20 max-[760px]:px-4 max-[760px]:py-6',
+              'sf-admin-content mx-auto w-full max-w-[1280px] flex-1 overflow-y-auto p-8 pb-20 max-[760px]:px-4 max-[760px]:py-6',
               contentClassName
             )}
           >
@@ -180,7 +180,7 @@ const AdminSidebarLink = forwardRef<HTMLAnchorElement, AdminSidebarLinkProps>(
           <span
             className={cn(
               'material-symbols-outlined text-[18px] transition-colors',
-              active ? 'text-accent opacity-100' : 'opacity-70 group-hover:opacity-100 group-hover:text-white'
+              active ? 'text-accent opacity-100' : 'opacity-70 group-hover:text-white group-hover:opacity-100'
             )}
           >
             {icon}
@@ -215,7 +215,7 @@ const AdminHeader = forwardRef<HTMLElement, AdminHeaderProps>(
       <header
         ref={ref}
         className={cn(
-          'sf-admin-header z-10 flex w-full items-center gap-4 border-b border-border bg-card px-8 py-3.5 transition-colors duration-200 sticky top-0 max-[760px]:flex-wrap max-[760px]:gap-3 max-[760px]:px-4',
+          'sf-admin-header bg-card sticky top-0 z-10 flex w-full items-center gap-4 border-b border-border px-8 py-3.5 transition-colors duration-200 max-[760px]:flex-wrap max-[760px]:gap-3 max-[760px]:px-4',
           className
         )}
         {...props}

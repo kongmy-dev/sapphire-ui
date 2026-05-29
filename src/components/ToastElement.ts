@@ -4,6 +4,16 @@ const SSRHTMLElement = typeof window !== 'undefined' ? HTMLElement : class {} as
 
 export type ToastType = 'success' | 'info' | 'warning' | 'error';
 
+declare global {
+  interface Window {
+    /**
+     * Global toast bridge installed by <sapphire-toast> while it is mounted.
+     * Lets vanilla / non-React consumers fire a toast without a component ref.
+     */
+    __sapphireToast?: (message: string, type?: ToastType, durationMs?: number) => void;
+  }
+}
+
 const ICON_MAP: Record<ToastType, string> = {
   success: 'check_circle',
   info: 'info',
@@ -28,11 +38,11 @@ export class ToastElement extends SSRHTMLElement {
     this.appendChild(this.container);
 
     // Expose global helper
-    (window as any).__sapphireToast = this.show.bind(this);
+    window.__sapphireToast = this.show.bind(this);
   }
 
   disconnectedCallback() {
-    delete (window as any).__sapphireToast;
+    delete window.__sapphireToast;
   }
 
   /**

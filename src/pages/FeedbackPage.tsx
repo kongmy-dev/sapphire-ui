@@ -145,28 +145,28 @@ export default function FeedbackPage() {
             <Button
               variant="primary"
               icon="check_circle"
-              onClick={() => (window as any).__sapphireToast?.('Changes saved successfully.', 'success')}
+              onClick={() => window.__sapphireToast?.('Changes saved successfully.', 'success')}
             >
               Success
             </Button>
             <Button
               variant="outline"
               icon="info"
-              onClick={() => (window as any).__sapphireToast?.('Syncing data in the background.', 'info')}
+              onClick={() => window.__sapphireToast?.('Syncing data in the background.', 'info')}
             >
               Info
             </Button>
             <Button
               variant="outline"
               icon="warning"
-              onClick={() => (window as any).__sapphireToast?.('API usage is approaching the limit.', 'warning')}
+              onClick={() => window.__sapphireToast?.('API usage is approaching the limit.', 'warning')}
             >
               Warning
             </Button>
             <Button
               variant="destructive"
               icon="error"
-              onClick={() => (window as any).__sapphireToast?.('Failed to connect to the server.', 'error')}
+              onClick={() => window.__sapphireToast?.('Failed to connect to the server.', 'error')}
             >
               Error
             </Button>
