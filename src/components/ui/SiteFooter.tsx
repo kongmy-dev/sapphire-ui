@@ -41,7 +41,8 @@ const SiteFooter = forwardRef<HTMLElement, SiteFooterProps>(
         {/* Bottom bar */}
         {bottom && (
           <div className={cn(
-            'flex flex-col items-center justify-between gap-4 border-t pt-6 font-mono text-[11px] tracking-[0.06em] uppercase md:flex-row',
+            'flex flex-col items-center justify-between gap-4 font-mono text-[11px] tracking-[0.06em] uppercase md:flex-row',
+            (brand || links || children) && 'border-t pt-6',
             variant === 'dark'
               ? 'border-border-dark text-(--color-text-on-dark-muted)'
               : 'border-border text-(--color-text-muted)',

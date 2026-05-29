@@ -776,8 +776,8 @@ html {
 .doc-bar .doc-meta b { color: var(--fg-on-dark); font-weight: 500; }
 .doc-bar .sf-pill.locked {
   color: var(--color-accent);
-  background: rgba(197,160,101,0.15);
-  border-color: rgba(197,160,101,0.4);
+  background: rgb(197,160,101,0.15);
+  border-color: rgb(197,160,101,0.4);
 }
 
 .doc-hero {
@@ -907,12 +907,12 @@ html {
 .doc-card .ic {
   width: 36px; height: 36px;
   display: grid; place-items: center;
-  background: rgba(197,160,101,0.12);
+  background: rgb(197,160,101,0.12);
   color: var(--color-accent-dark);
   border-radius: 8px;
   margin-bottom: 14px;
 }
-.doc-card.dark .ic { background: rgba(197,160,101,0.18); color: var(--color-accent); }
+.doc-card.dark .ic { background: rgb(197,160,101,0.18); color: var(--color-accent); }
 
 /* Doc footer */
 .doc-foot {
@@ -980,7 +980,7 @@ html {
   font-weight: 600;
 }
 .fin-table tbody tr.subtotal td {
-  background: rgba(10,25,47,0.04);
+  background: rgb(10,25,47,0.04);
   font-weight: 600;
   border-top: 1px solid var(--color-border);
 }
@@ -1007,14 +1007,14 @@ html {
   content: '';
   position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse 70% 50% at 20% 0%, rgba(197,160,101,0.15), transparent 60%),
-    radial-gradient(ellipse 60% 50% at 100% 100%, rgba(197,160,101,0.08), transparent 60%);
+    radial-gradient(ellipse 70% 50% at 20% 0%, rgb(197,160,101,0.15), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 100% 100%, rgb(197,160,101,0.08), transparent 60%);
   pointer-events: none;
 }
 .gate-card {
   position: relative;
   width: min(440px, 100%);
-  background: rgba(255,255,255,0.04);
+  background: rgb(255,255,255,0.04);
   border: 1px solid var(--color-border-dark);
   border-radius: 12px;
   padding: 36px 32px;
@@ -1073,7 +1073,7 @@ html {
 }
 .gate input {
   flex: 1;
-  background: rgba(0,0,0,0.25);
+  background: rgb(0,0,0,0.25);
   border: 1px solid var(--color-border-dark);
   color: var(--fg-on-dark);
   padding: 11px 14px;
@@ -1083,7 +1083,7 @@ html {
   letter-spacing: 0.05em;
   outline: none;
 }
-.gate input:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px rgba(197,160,101,0.2); }
+.gate input:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px rgb(197,160,101,0.2); }
 .gate .gate-submit {
   background: var(--color-accent);
   color: var(--color-primary);
@@ -1143,7 +1143,7 @@ html {
 }
 .kvs {
   display: grid; grid-template-columns: max-content 1fr;
-  column-gap: 28px; row-gap: 6px;
+  gap: 6px 28px;
 }
 .kvs dt { color: var(--fg-secondary); font-size: 13px; }
 .kvs dd { margin: 0; font-size: 14px; }

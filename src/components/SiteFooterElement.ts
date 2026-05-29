@@ -45,8 +45,6 @@ const BOTTOM_CLASSES_BASE = [
   'items-center',
   'justify-between',
   'gap-4',
-  'border-t',
-  'pt-6',
   'font-mono',
   'text-[11px]',
   'tracking-[0.06em]',
@@ -142,6 +140,9 @@ export class SiteFooterElement extends SSRHTMLElement {
     if (this.slotCache.bottom.length > 0) {
       const bottom = document.createElement('div');
       bottom.dataset.sapphireSlot = 'bottom';
+      if (hasBrandOrLinks || this.slotCache.extra.length > 0) {
+        bottom.classList.add('border-t', 'pt-6');
+      }
       this.slotCache.bottom.forEach((n) => bottom.appendChild(n));
       inner.appendChild(bottom);
       this.bottomEl = bottom;
