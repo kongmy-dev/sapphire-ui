@@ -1,5 +1,58 @@
 import { type ReactNode } from 'react';
 
+const DEFAULT_ORGANIZATION = {
+  '@context': 'https://schema.org',
+  '@type': ['ProfessionalService', 'Organization', 'LocalBusiness'],
+  '@id': 'https://kongmy.dev/#organization',
+  name: 'KONGMY Digital Solutions',
+  description: 'Independent technology consultant helping SMEs with serverless platforms, AI workflow automation, and custom software solutions.',
+  url: 'https://kongmy.dev',
+  logo: {
+    '@type': 'ImageObject',
+    url: 'https://kongmy.dev/android-chrome-512x512.webp',
+    width: '512',
+    height: '512',
+  },
+  image: 'https://kongmy.dev/Logo_Full.webp',
+  email: 'hello@kongmy.dev',
+  telephone: '+60174323118',
+  priceRange: '$$',
+  founder: {
+    '@type': 'Person',
+    '@id': 'https://kongmy.dev/#founder',
+    name: 'Kong MY',
+    jobTitle: 'Founder & Principal Consultant',
+    url: 'https://kongmy.dev/#founder',
+    sameAs: ['https://linkedin.com/in/kongmy', 'https://github.com/kuribu99'],
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Kuala Lumpur',
+    addressRegion: 'Kuala Lumpur',
+    addressCountry: 'MY',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 3.121625,
+    longitude: 101.730683,
+  },
+  areaServed: [
+    { '@type': 'Country', name: 'Malaysia' },
+    { '@type': 'Place', name: 'Southeast Asia' },
+  ],
+  knowsAbout: [
+    'IT Consulting',
+    'Software Development',
+    'AI & Workflow Automation',
+    'Cloud Hosting & Infrastructure',
+  ],
+  sameAs: [
+    'https://linkedin.com/in/kongmy',
+    'https://github.com/kuribu99',
+    'https://github.com/orgs/kongmy-dev',
+  ],
+};
+
 /* ─── SEO Types ─────────────────────────────────────────────────────── */
 
 export interface SEOProps {
@@ -15,6 +68,20 @@ export interface SEOProps {
   siteName?: string;
   /** OG type */
   type?: 'website' | 'article';
+  /** Locale (e.g., 'en_MY') */
+  locale?: string;
+  /** Alternate language links */
+  hreflang?: Record<string, string>;
+  /** Domains to preconnect */
+  preconnect?: string[];
+  /** Assets to preload */
+  preload?: Array<{ href: string; as: string; type?: string; crossOrigin?: "" | "anonymous" | "use-credentials" }>;
+  /** Quick flag to include WebSite schema */
+  isWebSite?: boolean;
+  /** Quick flag to include Organization schema */
+  isOrganization?: boolean;
+  /** Prevent injecting the default KONGMY organization details when using isOrganization */
+  omitDefaultOrganizationDetails?: boolean;
   /** Twitter card type */
   twitterCard?: 'summary' | 'summary_large_image';
   /** Twitter handle */
@@ -64,6 +131,13 @@ export function SEOHead({
   keywords,
   robots = 'index, follow',
   jsonLd,
+  locale,
+  hreflang,
+  preconnect,
+  preload,
+  isWebSite,
+  isOrganization,
+  omitDefaultOrganizationDetails,
   children,
 }: SEOProps) {
   return (
@@ -91,7 +165,65 @@ export function SEOHead({
       {image && <meta name="twitter:image" content={image} />}
       {twitterSite && <meta name="twitter:site" content={twitterSite} />}
 
+      {/* Locale & Hreflang */}
+      {locale && <meta property="og:locale" content={locale} />}
+      {hreflang &&
+        Object.entries(hreflang).map(([lang, href]) => (
+          <link key={lang} rel="alternate" hrefLang={lang} href={href} />
+        ))}
+
+      {/* Resource Hints */}
+      {preconnect?.map((domain) => (
+        <link key={domain} rel="preconnect" href={domain} crossOrigin="anonymous" />
+      ))}
+      {preload?.map((asset) => (
+        <link
+          key={asset.href}
+          rel="preload"
+          href={asset.href}
+          as={asset.as}
+          type={asset.type}
+          crossOrigin={asset.crossOrigin}
+        />
+      ))}
+
       {/* JSON-LD */}
+      {isOrganization && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              omitDefaultOrganizationDetails
+                ? {
+                    '@context': 'https://schema.org',
+                    '@type': 'Organization',
+                    name: siteName,
+                    url: url || 'https://sapphire.kongmy.dev',
+                    logo: image,
+                  }
+                : {
+                    ...DEFAULT_ORGANIZATION,
+                    name: siteName || DEFAULT_ORGANIZATION.name,
+                    url: url || DEFAULT_ORGANIZATION.url,
+                    image: image || DEFAULT_ORGANIZATION.image,
+                  }
+            ),
+          }}
+        />
+      )}
+      {isWebSite && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: siteName,
+              url: url || 'https://sapphire.kongmy.dev',
+            }),
+          }}
+        />
+      )}
       {jsonLd && (
         <script
           type="application/ld+json"
@@ -135,6 +267,13 @@ export function generateSEOTags(props: Omit<SEOProps, 'children'>): string {
     keywords,
     robots = 'index, follow',
     jsonLd,
+    locale,
+    hreflang,
+    preconnect,
+    preload,
+    isWebSite,
+    isOrganization,
+    omitDefaultOrganizationDetails,
   } = props;
 
   const tags: string[] = [];
@@ -162,7 +301,59 @@ export function generateSEOTags(props: Omit<SEOProps, 'children'>): string {
   if (image) tags.push(`<meta name="twitter:image" content="${escapeAttr(image)}" />`);
   if (twitterSite) tags.push(`<meta name="twitter:site" content="${escapeAttr(twitterSite)}" />`);
 
+  // Additional Meta & Hints
+  if (locale) tags.push(`<meta property="og:locale" content="${escapeAttr(locale)}" />`);
+  if (hreflang) {
+    Object.entries(hreflang).forEach(([lang, href]) => {
+      tags.push(`<link rel="alternate" hreflang="${escapeAttr(lang)}" href="${escapeAttr(href)}" />`);
+    });
+  }
+  if (preconnect) {
+    preconnect.forEach((domain) => {
+      tags.push(`<link rel="preconnect" href="${escapeAttr(domain)}" crossorigin="anonymous" />`);
+    });
+  }
+  if (preload) {
+    preload.forEach((asset) => {
+      let link = `<link rel="preload" href="${escapeAttr(asset.href)}" as="${escapeAttr(asset.as)}"`;
+      if (asset.type) link += ` type="${escapeAttr(asset.type)}"`;
+      if (asset.crossOrigin) link += ` crossorigin="${escapeAttr(asset.crossOrigin)}"`;
+      link += ` />`;
+      tags.push(link);
+    });
+  }
+
   // JSON-LD
+  if (isOrganization) {
+    tags.push(
+      `<script type="application/ld+json">${JSON.stringify(
+        omitDefaultOrganizationDetails
+          ? {
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: siteName,
+              url: url || 'https://sapphire.kongmy.dev',
+              logo: image,
+            }
+          : {
+              ...DEFAULT_ORGANIZATION,
+              name: siteName || DEFAULT_ORGANIZATION.name,
+              url: url || DEFAULT_ORGANIZATION.url,
+              image: image || DEFAULT_ORGANIZATION.image,
+            }
+      )}</script>`
+    );
+  }
+  if (isWebSite) {
+    tags.push(
+      `<script type="application/ld+json">${JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: siteName,
+        url: url || 'https://sapphire.kongmy.dev',
+      })}</script>`
+    );
+  }
   if (jsonLd) {
     tags.push(`<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>`);
   }

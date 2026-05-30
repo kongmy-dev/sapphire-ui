@@ -13,7 +13,7 @@ const buttonVariants = cva(
         outline:
           'rounded-btn border-[1.5px] border-(--color-text-strong) bg-transparent text-(--color-text-strong) hover:bg-(--color-text-strong) hover:text-(--color-card-bg)',
         ghost:
-          'rounded-btn border-[1.5px] border-accent bg-transparent text-(--color-accent-text) hover:bg-(--color-hover-overlay)',
+          'rounded-btn border-none bg-transparent text-(--color-accent-text) hover:bg-(--color-hover-overlay)',
         accent:
           'rounded-btn border-none bg-accent text-primary hover:bg-accent-dark',
         'on-dark-primary':
@@ -28,6 +28,8 @@ const buttonVariants = cva(
           'rounded-btn border-none bg-(--color-error) text-(--color-text-on-dark) hover:bg-(--color-error-hover) focus-visible:ring-(--color-error-ring)',
         'destructive-outline':
           'rounded-btn border-[1.5px] border-(--color-error) bg-transparent text-(--color-error) hover:bg-(--color-error) hover:text-(--color-text-on-dark) focus-visible:ring-(--color-error-ring)',
+        'destructive-ghost':
+          'rounded-btn border-none bg-transparent text-(--color-error) hover:bg-(--color-hover-overlay) focus-visible:ring-(--color-error-ring)',
       },
       size: {
         sm: 'px-3 py-1.5 text-[13px]',

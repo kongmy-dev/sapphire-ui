@@ -1,0 +1,19 @@
+# Sapphire UI - Full Documentation
+
+Sapphire UI is the official design system for KONGMY Digital Solutions (kongmy.dev). It exports both a compiled stylesheet (`sapphire-ui.css`) and a typed React component library. All work here must honour the navy + gold editorial aesthetic.
+
+## Stack
+- Framework: React 19 + Vite 8
+- Styling: Tailwind CSS v4 (`@theme {}`)
+- Component Primitives: Radix UI
+- Variant Logic: `class-variance-authority` (CVA)
+- Class Merging: `clsx` + `tailwind-merge` via `cn()`
+- Icons: Material Symbols Outlined
+
+## Core Principles
+1. **Design Tokens**: Canonical design tokens are defined in CSS custom properties.
+2. **Aesthetics**: Navy + gold editorial aesthetic. No gradients in primary UI except specific variants.
+3. **Accessibility**: All components aim to pass WCAG AA contrast.
+
+## Additional Information
+- [Summary](/llms.txt)

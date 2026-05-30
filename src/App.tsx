@@ -23,6 +23,7 @@ const HooksPage = lazy(() => import('./pages/HooksPage'));
 import { CookieBanner } from './components/CookieBanner';
 import { Toast } from './components/Toast';
 import { Analytics } from './components/Analytics';
+import { SEOHead } from './components/ui/SEOHead';
 import { MobileNav } from './components/ui/MobileNav';
 import { ThemeProvider, useTheme } from './components/ThemeProvider';
 import { CommandPalette, type CommandItem } from './components/CommandPalette';
@@ -111,6 +112,15 @@ function AppShell() {
 
   return (
     <>
+      <SEOHead
+        title={`Sapphire UI ${DOCS_VERSION} — Design System`}
+        description="Visual catalog and design token specification for Sapphire UI."
+        url="https://sapphire.kongmy.dev"
+        image="/og-image.png"
+        siteName="Sapphire UI"
+        isWebSite
+        isOrganization
+      />
       {/* Mobile Drawer Navigation */}
       <MobileNav
         brandName="Sapphire"

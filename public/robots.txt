@@ -16,4 +16,4 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: https://blog.kongmy.dev/sitemap-index.xml
+Sitemap: https://sapphire.kongmy.dev/sitemap.xml

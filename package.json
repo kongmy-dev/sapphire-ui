@@ -1,6 +1,6 @@
 {
   "name": "@kongmy-dev/sapphire-ui",
-  "version": "1.5.11",
+  "version": "1.5.12",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
@@ -558,6 +558,7 @@
     "typescript-eslint": "^8.59.4",
     "vite": "^8.0.13",
     "vite-plugin-dts": "^5.0.1",
+    "vite-plugin-sitemap": "^0.8.2",
     "vitest": "^4.1.7",
     "wrangler": "^4.93.0"
   }

@@ -1,7 +1,7 @@
 /* Provide font-face declarations so consumers importing only style.css
-   get the correct typefaces without needing their own Google Fonts setup. */
-@import 'https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap';
-
+   get the correct typefaces without needing their own Google Fonts setup.
+   Note: Removed @import of Google Fonts because it causes Vite build warnings when
+   concatenated with other CSS. Consumers must load the fonts in their HTML head. */
 @import "tailwindcss";
 @source "./**/*.{js,ts,jsx,tsx}";
 

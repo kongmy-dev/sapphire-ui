@@ -1,0 +1,7 @@
+# Sapphire UI
+
+Sapphire UI is the official design system for KONGMY Digital Solutions. It provides a visual catalog of design tokens, React components, and styling guidelines built on Tailwind CSS v4.
+
+## Resources
+- [Full Documentation](/llms-full.txt)
+- [Visual Catalog Homepage](https://sapphire.kongmy.dev)
