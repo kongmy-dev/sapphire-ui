@@ -1,8 +1,28 @@
-import { defineConfig } from 'vite';
+import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import dts from 'vite-plugin-dts';
+import fs from 'node:fs';
 import path from 'path';
+
+/**
+ * Ship `src/theme.css` to `dist/theme.css` verbatim — NOT through the Tailwind
+ * build. It carries a raw `@theme {}` block that the *consumer's* Tailwind must
+ * process; compiling it here would flatten `@theme` into `:root` vars and strip
+ * the at-rule, defeating the purpose. A plain copy preserves the token contract.
+ */
+function copyRawThemeCss(): Plugin {
+  return {
+    name: 'sapphire-copy-raw-theme-css',
+    apply: 'build',
+    closeBundle() {
+      const from = path.resolve(__dirname, 'src/theme.css');
+      const to = path.resolve(__dirname, 'dist/theme.css');
+      fs.mkdirSync(path.dirname(to), { recursive: true });
+      fs.copyFileSync(from, to);
+    },
+  };
+}
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -17,6 +37,7 @@ export default defineConfig({
       exclude: ['src/App.tsx', 'src/main.tsx', 'src/pages/**', 'src/App.css'],
       tsconfigPath: './tsconfig.app.json',
     }),
+    copyRawThemeCss(),
   ],
   resolve: {
     alias: {

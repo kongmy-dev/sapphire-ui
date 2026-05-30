@@ -238,6 +238,18 @@ import { Button, Card, Badge } from '@kongmy-dev/sapphire-ui';
 
 The stylesheet exports all design tokens as CSS custom properties (`--color-primary`, `--font-serif`, `--space-6`, etc.), so even non-React projects can consume the system by importing the CSS and applying the variables.
 
+#### Tailwind v4 apps — extend your own utilities from Sapphire tokens
+
+`style.css` ships a **prebuilt** bundle: it includes the exact utility classes Sapphire's own components use, but your Tailwind can't see its tokens, so writing your own `text-text-muted` / `bg-primary-hover` requires re-declaring tokens. Instead, import the **raw token contract** into your Tailwind pipeline:
+
+```css
+/* your app's global.css */
+@import 'tailwindcss';
+@import '@kongmy-dev/sapphire-ui/theme.css';   /* contributes Sapphire's @theme tokens */
+```
+
+Now your Tailwind generates **any** utility referencing a Sapphire token on demand — `text-text-muted`, `bg-primary-hover`, `marker:text-accent`, etc. — with no token duplication, and dark-mode (`[data-theme="dark"]`) overrides flow through automatically. Use `style.css` for the components' baked styling and `theme.css` for your own markup; they share one source.
+
 ---
 
 ## ⚖️ License

@@ -1,0 +1,96 @@
+/* ════════════════════════════════════════════════════════════════════════
+   Sapphire UI — Public Design-Token Contract
+   ────────────────────────────────────────────────────────────────────────
+   This file is the SINGLE SOURCE for Sapphire's brand tokens, expressed as a
+   Tailwind v4 `@theme {}` block. It is shipped RAW (uncompiled) to consumers
+   so that a Tailwind v4 app can extend its own utility generation from these
+   tokens:
+
+       @import 'tailwindcss';
+       @import '@kongmy-dev/sapphire-ui/theme.css';   ← contributes @theme tokens
+
+   With this import, the consumer's Tailwind generates ANY utility referencing
+   a Sapphire token on demand (`text-text-muted`, `bg-primary-hover`,
+   `marker:text-accent`, …) — no re-declaring tokens in the app's own @theme.
+
+   IMPORTANT
+   - Keep this file framework-agnostic and build-free: only `@theme`, plain
+     custom-property declarations, and `[data-theme]` overrides. No utilities,
+     no component CSS, no `@import 'tailwindcss'` — the consumer owns that.
+   - `src/index.css` imports this file, so editing tokens here updates both the
+     prebuilt `sapphire-ui.css` bundle AND the raw `theme.css` consumers extend.
+   - Tailwind v4 emits every `@theme` token into `:root`; the `[data-theme="dark"]`
+     block below (a normal rule, higher specificity than `:root`) overrides the
+     subset that flips in dark mode — exactly as the prebuilt bundle does.
+
+   Contrast note (WCAG 2.1 AA): `--color-accent` (#c5a065) is a DECORATIVE fill.
+   For text on light surfaces use `--color-accent-text` (#8a5a1f, 4.6:1). On dark
+   surfaces the brand gold passes AA, so the dark block reverts accent-text to it.
+   ════════════════════════════════════════════════════════════════════════ */
+
+@theme {
+  /* ── Brand ──────────────────────────────────────────────── */
+  --color-primary: #0a192f; /* Dark navy — brand fill. Does NOT flip in dark mode. */
+  --color-primary-hover: #1a3358;
+  --color-accent: #c5a065; /* Gold — decorative fill only (not AA for text on light) */
+  --color-accent-dark: #b8904f; /* Gold hover (decorative) */
+  --color-accent-text: #8a5a1f; /* Gold — AA-safe for text on light surface (4.6:1) */
+  --color-surface: #f4f6f8; /* Off-white page background */
+
+  /* ── Text ───────────────────────────────────────────────── */
+  --color-text-main: #1e293b;
+  --color-text-strong: #0a192f; /* Headings/strong text — flips light in dark mode */
+  --color-text-muted: #475569; /* AA-safe (7.0:1) on --color-surface */
+  --color-text-on-dark: #f1f5f9;
+  --color-text-on-dark-muted: rgb(241, 245, 249, 0.65);
+
+  /* ── Semantic / Status ──────────────────────────────────── */
+  --color-success: #15803d;
+  --color-success-bg: rgb(34, 197, 94, 0.1);
+  --color-success-border: rgb(34, 197, 94, 0.2);
+  --color-error: #b91c1c;
+  --color-error-hover: #991b1b;
+  --color-error-ring: #dc2626;
+  --color-error-bg: rgb(239, 68, 68, 0.1);
+  --color-error-border: rgb(239, 68, 68, 0.2);
+  --color-warning: #b45309;
+  --color-warning-bg: rgb(245, 158, 11, 0.1);
+  --color-warning-border: rgb(245, 158, 11, 0.2);
+  --color-info: #1d4ed8;
+  --color-info-bg: rgb(59, 130, 246, 0.1);
+  --color-info-border: rgb(59, 130, 246, 0.2);
+
+  /* ── Borders / States / Surfaces ────────────────────────── */
+  --color-border: #e2e8f0;
+  --color-border-dark: rgb(255, 255, 255, 0.12);
+  --color-hover-overlay: rgb(197, 160, 101, 0.08);
+  --color-focus-ring: #c5a065;
+  --color-white: #fff;
+  --color-card-bg: #fff;
+  --color-card-dark-bg: var(--color-primary);
+
+  /* ── Typography families ────────────────────────────────── */
+  --font-serif: 'Newsreader', georgia, serif;
+  --font-sans: 'Source Sans 3', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* ── Radii ──────────────────────────────────────────────── */
+  --radius-sm: 4px;
+  --radius-md: 8px; /* Cards */
+  --radius-btn: 6px; /* Buttons */
+  --radius-pill: 9999px; /* Tags, badges */
+}
+
+/* ── Dark theme ───────────────────────────────────────────────
+   Activated by `data-theme="dark"` on <html> (or any ancestor). Only the
+   tokens that visually flip are listed; everything else inherits the @theme
+   light value above. --color-primary intentionally does NOT flip. */
+[data-theme='dark'] {
+  --color-surface: #0a192f;
+  --color-card-bg: #112240;
+  --color-text-main: #f1f5f9;
+  --color-text-strong: #f1f5f9;
+  --color-text-muted: rgb(241, 245, 249, 0.72);
+  --color-border: rgb(255, 255, 255, 0.12);
+  --color-accent-text: #c5a065;
+}

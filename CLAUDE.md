@@ -72,7 +72,7 @@ src/
 - **Bun only.** Never use `npm`, `npx`, or `yarn`.
 - **No new dependencies without justification.** This library ships to consumers; every dep has a size cost.
 - **Peer deps stay peer deps.** React and all Radix packages are peer deps — never move them to `dependencies`.
-- **Design tokens are in `index.css` (`@theme {}`) — that is the single source.** Never hard-code hex values; always reference CSS custom properties.
+- **Design tokens are in `src/theme.css` (`@theme {}`) — that is the single source.** `index.css` imports it; never re-declare tokens there. Never hard-code hex values; always reference CSS custom properties. `theme.css` ships RAW (uncompiled) to consumers as `@kongmy-dev/sapphire-ui/theme.css` so a Tailwind v4 app can `@import` it and generate utilities from Sapphire tokens without re-declaring them — do not run it through the Tailwind build (a copy plugin in `vite.config.ts` emits `dist/theme.css`).
 - **No gradients in primary UI** except the `premium` button variant (intentional exception).
 - **`--color-accent` is decorative.** For text on light surfaces always use `--color-accent-text` (`#8a5a1f`) — it passes WCAG AA contrast; `--color-accent` does not.
 - **Exports are explicit.** Every new component gets its own named export in `package.json → exports`. Update `src/index.ts` and `package.json` together.

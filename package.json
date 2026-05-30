@@ -1,6 +1,6 @@
 {
   "name": "@kongmy-dev/sapphire-ui",
-  "version": "1.5.12",
+  "version": "1.5.13",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
@@ -26,6 +26,7 @@
       "require": "./dist/elements.cjs"
     },
     "./style.css": "./dist/sapphire-ui.css",
+    "./theme.css": "./dist/theme.css",
     "./accordion": {
       "types": "./dist/components/ui/Accordion.d.ts",
       "import": "./dist/src/components/ui/Accordion.js",

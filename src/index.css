@@ -3,23 +3,13 @@
    Note: Removed @import of Google Fonts because it causes Vite build warnings when
    concatenated with other CSS. Consumers must load the fonts in their HTML head. */
 @import "tailwindcss";
+/* Brand tokens live in ./theme.css as a Tailwind v4 `@theme {}` block — the
+   single source, shipped raw to consumers as `@kongmy-dev/sapphire-ui/theme.css`.
+   Importing it here feeds the same tokens into this prebuilt bundle's build.
+   The `:root` blocks further down mirror these values at runtime for plain-CSS
+   (non-Tailwind) consumers of `sapphire-ui.css`. */
+@import "./theme.css";
 @source "./**/*.{js,ts,jsx,tsx}";
-
-@theme {
-  --color-primary: #0a192f;
-  --color-accent: #c5a065;
-  --color-accent-dark: #b8904f;
-  --color-surface: #f4f6f8;
-  --color-border: #e2e8f0;
-  --color-border-dark: rgb(255, 255, 255, 0.12);
-  --font-serif: 'Newsreader', georgia, serif;
-  --font-sans: 'Source Sans 3', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-btn: 6px;
-  --radius-pill: 9999px;
-}
 
 /* ─── Base Color Palette ─────────────────────────────────────────────── */
 /*
