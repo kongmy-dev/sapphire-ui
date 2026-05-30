@@ -1,6 +1,6 @@
 {
   "name": "@kongmy-dev/sapphire-ui",
-  "version": "1.5.13",
+  "version": "1.5.14",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
@@ -369,18 +369,18 @@
     },
     "./consent": {
       "types": "./dist/lib/consent.d.ts",
-      "import": "./dist/src/lib/consent.js",
-      "require": "./dist/src/lib/consent.cjs"
+      "import": "./dist/lib/consent.js",
+      "require": "./dist/lib/consent.cjs"
     },
     "./theme": {
       "types": "./dist/lib/theme.d.ts",
-      "import": "./dist/src/lib/theme.js",
-      "require": "./dist/src/lib/theme.cjs"
+      "import": "./dist/lib/theme.js",
+      "require": "./dist/lib/theme.cjs"
     },
     "./utils": {
       "types": "./dist/lib/utils.d.ts",
-      "import": "./dist/src/lib/utils.js",
-      "require": "./dist/src/lib/utils.cjs"
+      "import": "./dist/lib/utils.js",
+      "require": "./dist/lib/utils.cjs"
     },
     "./callout": {
       "types": "./dist/components/ui/Callout.d.ts",
