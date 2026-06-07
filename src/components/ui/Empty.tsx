@@ -23,7 +23,7 @@ function Empty({ className, icon, title, description, action, ...props }: EmptyP
     >
       {icon && (
         <span
-          className="material-symbols-outlined mb-4 text-(--color-text-muted)"
+          className="material-symbols-outlined mb-4 text-text-muted"
           style={{ fontSize: 56 }}
           aria-hidden="true"
         >
@@ -36,7 +36,7 @@ function Empty({ className, icon, title, description, action, ...props }: EmptyP
         </h3>
       )}
       {description && (
-        <p className="mb-6 max-w-sm font-sans text-sm text-(--color-text-muted)">
+        <p className="mb-6 max-w-sm font-sans text-sm text-text-muted">
           {description}
         </p>
       )}

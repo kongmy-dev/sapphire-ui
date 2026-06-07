@@ -27,8 +27,8 @@ const SelectTrigger = forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      'flex h-10 w-full cursor-pointer items-center justify-between rounded-sm border border-border bg-(--color-card-bg) px-3 py-2 font-sans text-sm text-(--color-text-main)',
-      'placeholder:text-(--color-text-muted)',
+      'flex h-10 w-full cursor-pointer items-center justify-between rounded-sm border border-border bg-(--color-card-bg) px-3 py-2 font-sans text-sm text-text-main',
+      'placeholder:text-text-muted',
       'focus:outline-none focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:ring-offset-1',
       'disabled:cursor-not-allowed disabled:opacity-50',
       '[&>span]:line-clamp-1',
@@ -55,7 +55,7 @@ const SelectContent = forwardRef<
       ref={ref}
       position={position}
       className={cn(
-        'relative z-50 max-h-96 min-w-32 overflow-hidden rounded-md border border-border bg-(--color-card-bg) text-(--color-text-main) shadow-md',
+        'relative z-50 max-h-96 min-w-32 overflow-hidden rounded-md border border-border bg-(--color-card-bg) text-text-main shadow-md',
         'data-[state=open]:animate-in data-[state=closed]:animate-out',
         'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
         position === 'popper' &&
@@ -84,7 +84,7 @@ const SelectLabel = forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.Label
     ref={ref}
-    className={cn('px-2 py-1.5 text-xs font-semibold tracking-wider text-(--color-text-muted) uppercase', className)}
+    className={cn('px-2 py-1.5 text-xs font-semibold tracking-wider text-text-muted uppercase', className)}
     {...props}
   />
 ));
@@ -98,7 +98,7 @@ const SelectItem = forwardRef<
     ref={ref}
     className={cn(
       'relative flex w-full cursor-pointer items-center rounded-sm py-1.5 pr-2 pl-8 font-sans text-sm outline-none select-none',
-      'focus:bg-surface focus:text-(--color-text-main)',
+      'focus:bg-surface focus:text-text-main',
       'data-disabled:pointer-events-none data-disabled:opacity-50',
       className,
     )}

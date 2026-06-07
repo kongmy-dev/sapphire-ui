@@ -63,7 +63,7 @@ const TableHead = forwardRef<HTMLTableCellElement, ThHTMLAttributes<HTMLTableCel
     <th
       ref={ref}
       className={cn(
-        'bg-page border-b border-border px-4 py-3 text-left font-sans text-[11px] font-semibold tracking-[0.08em] whitespace-nowrap text-(--color-text-muted) uppercase',
+        'bg-page border-b border-border px-4 py-3 text-left font-sans text-[11px] font-semibold tracking-[0.08em] whitespace-nowrap text-text-muted uppercase',
         className,
       )}
       {...props}

@@ -10,7 +10,7 @@ describe('Badge', () => {
 
   it('applies variant classes', () => {
     const { container } = render(<Badge variant="success">Pass</Badge>);
-    expect(container.firstChild).toHaveClass('bg-(--color-success-bg)');
+    expect(container.firstChild).toHaveClass('bg-success-bg');
   });
 
   it('merges custom className', () => {

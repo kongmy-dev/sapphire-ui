@@ -46,7 +46,7 @@ const PageSection = forwardRef<HTMLElement, PageSectionProps>(
             </h2>
           )}
           {subheading && (
-            <p className="m-0 mt-3 max-w-[640px] font-sans text-base/relaxed text-(--color-text-muted) md:text-lg">
+            <p className="m-0 mt-3 max-w-[640px] font-sans text-base/relaxed text-text-muted md:text-lg">
               {subheading}
             </p>
           )}

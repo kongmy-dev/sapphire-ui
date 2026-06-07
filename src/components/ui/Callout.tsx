@@ -7,8 +7,8 @@ const calloutVariants = cva(
   {
     variants: {
       variant: {
-        default: 'border-border bg-surface text-(--color-text-main)',
-        subtle: 'border-transparent bg-surface/30 text-(--color-text-main)',
+        default: 'border-border bg-surface text-text-main',
+        subtle: 'border-transparent bg-surface/30 text-text-main',
       },
     },
     defaultVariants: {
@@ -41,11 +41,11 @@ const Callout = forwardRef<HTMLDivElement, CalloutProps>(
         )}
         <div className="flex flex-1 flex-col gap-2">
           {title && (
-            <div className="text-text-strong font-serif text-lg font-semibold tracking-tight">
+            <div className="font-serif text-lg font-semibold tracking-tight text-text-strong">
               {title}
             </div>
           )}
-          <div className="text-sm/relaxed text-(--color-text-muted) [&>ul]:ml-4 [&>ul]:list-disc [&>ul]:space-y-1">
+          <div className="text-sm/relaxed text-text-muted [&>ul]:ml-4 [&>ul]:list-disc [&>ul]:space-y-1">
             {children}
           </div>
         </div>

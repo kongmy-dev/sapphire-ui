@@ -22,14 +22,14 @@ const MarginNote = forwardRef<HTMLSpanElement, MarginNoteProps>(
         {/* Mobile: reflows inline as a block after the text */}
         <span
           id={id}
-          className="mt-2 block rounded-sm bg-surface p-3 text-sm text-(--color-text-muted) lg:hidden"
+          className="mt-2 block rounded-sm bg-surface p-3 text-sm text-text-muted lg:hidden"
         >
           {note}
         </span>
         
         {/* Desktop: absolute positioned in right margin gutter */}
         <span
-          className="absolute top-0 left-[calc(100%+2rem)] hidden w-[240px] text-sm text-(--color-text-muted) transition-colors group-hover/note:text-(--color-text-main) lg:block"
+          className="absolute top-0 left-[calc(100%+2rem)] hidden w-[240px] text-sm text-text-muted transition-colors group-hover/note:text-text-main lg:block"
           aria-hidden="true"
         >
           {note}

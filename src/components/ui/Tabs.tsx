@@ -42,12 +42,12 @@ const TabsTrigger = forwardRef<
       ref={ref}
       className={cn(
         'inline-flex cursor-pointer items-center gap-2 font-sans text-sm font-medium transition-all outline-none',
-        'text-(--color-text-muted) hover:text-(--color-text-strong)',
+        'text-text-muted hover:text-(--color-text-strong)',
 
         // Underline variant
         variant === 'underline' && [
           '-mb-px border-b-2 border-transparent px-4 py-3',
-          'data-[state=active]:border-accent data-[state=active]:text-(--color-accent-text)',
+          'data-[state=active]:border-accent data-[state=active]:text-accent-text',
           // Vertical orientation overrides
           'data-[orientation=vertical]:-mr-px data-[orientation=vertical]:mb-0 data-[orientation=vertical]:w-full data-[orientation=vertical]:justify-start data-[orientation=vertical]:border-r-2 data-[orientation=vertical]:border-b-0 data-[orientation=vertical]:text-left data-[orientation=vertical]:whitespace-normal',
         ],
@@ -56,12 +56,12 @@ const TabsTrigger = forwardRef<
         variant === 'pills' && [
           'rounded-md px-3 py-2',
           'hover:bg-surface',
-          'data-[state=active]:bg-accent/10 data-[state=active]:text-(--color-accent-text)',
+          'data-[state=active]:bg-accent/10 data-[state=active]:text-accent-text',
         ],
 
         // Dashboard variant
         variant === 'dashboard' && [
-          'rounded-md px-3.5 py-[7px] text-[13px] font-semibold text-(--color-text-muted)',
+          'rounded-md px-3.5 py-[7px] text-[13px] font-semibold text-text-muted',
           'data-[state=active]:bg-primary data-[state=active]:text-white',
         ],
 

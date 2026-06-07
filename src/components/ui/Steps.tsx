@@ -86,11 +86,11 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
                       className={cn(
                         'flex size-7 items-center justify-center rounded-full font-mono text-xs font-semibold transition-colors',
                         status === 'done' &&
-                          'bg-primary text-(--color-text-on-dark)',
+                          'bg-primary text-text-on-dark',
                         status === 'active' &&
                           'bg-accent text-primary ring-4 ring-accent/18',
                         status === 'upcoming' &&
-                          'border border-border bg-surface text-(--color-text-muted)',
+                          'border border-border bg-surface text-text-muted',
                       )}
                     >
                       {status === 'done' ? (
@@ -114,13 +114,13 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
                       'text-xs font-semibold tracking-wider uppercase transition-colors',
                       status === 'done' && 'text-(--color-text-strong)',
                       status === 'active' && 'text-(--color-accent-text,var(--color-accent))',
-                      status === 'upcoming' && 'text-(--color-text-muted)',
+                      status === 'upcoming' && 'text-text-muted',
                     )}
                   >
                     {step.label}
                   </span>
                   {step.description && variant === 'default' && (
-                    <span className="text-[11px] leading-tight text-(--color-text-muted)">
+                    <span className="text-[11px] leading-tight text-text-muted">
                       {step.description}
                     </span>
                   )}

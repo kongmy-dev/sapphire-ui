@@ -11,7 +11,7 @@ export default function ElementsPage() {
       {/* ─── Custom Elements: site-header / site-footer ─────────────── */}
       <section className="docs-section">
         <h2 className="docs-section-title">Custom Elements (Astro / vanilla HTML)</h2>
-        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
+        <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
           Framework-agnostic Web Component versions of <code className="docs-props-table code">SiteHeader</code> and{' '}
           <code className="docs-props-table code">SiteFooter</code>. Same visual output — no React runtime required.
           Light-DOM elements, so consumer Tailwind utilities apply to slotted content.
@@ -30,7 +30,7 @@ import '@kongmy-dev/sapphire-ui/elements';`}
         />
 
         <h3 className="mt-6 mb-2 font-serif text-lg font-semibold">Usage</h3>
-        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
+        <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
           For <code className="docs-props-table code">sapphire-site-header</code>, children with{' '}
           <code className="docs-props-table code">data-slot=&quot;brand|nav|actions&quot;</code> are positioned into the layout.
           Add <code className="docs-props-table code">sticky</code> to make it sticky. For{' '}
@@ -127,7 +127,7 @@ import '@kongmy-dev/sapphire-ui/elements';`}
       {/* ─── SEOHead ────────────────────────────────────────────────── */}
       <section className="docs-section">
         <h2 className="docs-section-title">SEO / Head</h2>
-        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
+        <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
           Dual API for SEO meta tags: React <code className="docs-props-table code">&lt;SEOHead&gt;</code> component for SPAs, and <code className="docs-props-table code">generateSEOTags()</code> utility for Astro/SSR.
         </p>
         <div className="docs-preview">

@@ -47,7 +47,7 @@ const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
             {label && (
               <label
                 htmlFor={id}
-                className="cursor-pointer font-sans text-sm font-medium text-(--color-text-main) select-none"
+                className="cursor-pointer font-sans text-sm font-medium text-text-main select-none"
               >
                 {label}
               </label>
@@ -55,7 +55,7 @@ const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
             {description && (
               <span
                 id={descriptionId}
-                className="mt-0.5 font-sans text-xs text-(--color-text-muted)"
+                className="mt-0.5 font-sans text-xs text-text-muted"
               >
                 {description}
               </span>

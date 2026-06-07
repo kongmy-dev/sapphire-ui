@@ -23,7 +23,7 @@ const SplitHandle = forwardRef<
   >
     {withHandle && (
       <div className="z-10 flex h-4 w-3 items-center justify-center rounded-sm border border-border bg-surface">
-        <span className="material-symbols-outlined text-[10px] text-(--color-text-muted)">
+        <span className="material-symbols-outlined text-[10px] text-text-muted">
           drag_indicator
         </span>
       </div>

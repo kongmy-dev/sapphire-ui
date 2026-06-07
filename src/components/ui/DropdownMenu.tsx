@@ -33,7 +33,7 @@ const DropdownMenuContent = forwardRef<
       ref={ref}
       sideOffset={sideOffset}
       className={cn(
-        'z-50 min-w-32 overflow-hidden rounded-md border border-border bg-(--color-card-bg) p-1 text-(--color-text-main) shadow-md',
+        'z-50 min-w-32 overflow-hidden rounded-md border border-border bg-(--color-card-bg) p-1 text-text-main shadow-md',
         'data-[state=open]:animate-in data-[state=closed]:animate-out',
         'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
         'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
@@ -54,7 +54,7 @@ const DropdownMenuItem = forwardRef<
     ref={ref}
     className={cn(
       'relative flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 font-sans text-sm outline-none select-none',
-      'focus:bg-surface focus:text-(--color-text-main)',
+      'focus:bg-surface focus:text-text-main',
       'data-disabled:pointer-events-none data-disabled:opacity-50',
       inset && 'pl-8',
       className,
@@ -121,7 +121,7 @@ const DropdownMenuLabel = forwardRef<
 >(({ className, inset, ...props }, ref) => (
   <DropdownMenuPrimitive.Label
     ref={ref}
-    className={cn('px-2 py-1.5 text-xs font-semibold tracking-wider text-(--color-text-muted) uppercase', inset && 'pl-8', className)}
+    className={cn('px-2 py-1.5 text-xs font-semibold tracking-wider text-text-muted uppercase', inset && 'pl-8', className)}
     {...props}
   />
 ));
@@ -136,7 +136,7 @@ const DropdownMenuSeparator = forwardRef<
 DropdownMenuSeparator.displayName = 'DropdownMenuSeparator';
 
 const DropdownMenuShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => (
-  <span className={cn('ml-auto text-xs tracking-widest text-(--color-text-muted)', className)} {...props} />
+  <span className={cn('ml-auto text-xs tracking-widest text-text-muted', className)} {...props} />
 );
 
 export {

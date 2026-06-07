@@ -107,7 +107,7 @@ export function CommandPalette({
           style={{ maxHeight: 'calc(80vh - 80px)' }}
         >
           {filtered.length === 0 ? (
-            <p className="m-0 px-4 py-8 text-center font-sans text-sm text-(--color-text-muted)">
+            <p className="m-0 px-4 py-8 text-center font-sans text-sm text-text-muted">
               No matches for &quot;{query}&quot;.
             </p>
           ) : (

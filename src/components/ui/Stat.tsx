@@ -33,7 +33,7 @@ const Stat = forwardRef<HTMLDivElement, StatProps>(
       <dl className="m-0 flex flex-col gap-1">
         <dt
           className={cn(
-            'mb-1 flex items-center gap-1.5 font-semibold tracking-[0.06em] text-(--color-text-muted) uppercase',
+            'mb-1 flex items-center gap-1.5 font-semibold tracking-[0.06em] text-text-muted uppercase',
             size === 'sm' && 'text-[10px]',
             size === 'default' && 'text-[12px]',
             size === 'lg' && 'text-sm',
@@ -44,7 +44,7 @@ const Stat = forwardRef<HTMLDivElement, StatProps>(
         <dd className="m-0 flex flex-col items-start gap-1">
           <span
             className={cn(
-              'font-serif leading-none font-medium tracking-[-0.01em] text-(--color-text-main) tabular-nums',
+              'font-serif leading-none font-medium tracking-[-0.01em] text-text-main tabular-nums',
               size === 'sm' && 'text-2xl',
               size === 'default' && 'text-[28px]',
               size === 'lg' && 'text-4xl',
@@ -53,14 +53,14 @@ const Stat = forwardRef<HTMLDivElement, StatProps>(
             {value}
           </span>
           {change != null && (
-            <span className={cn('mt-1 text-[12px] font-normal tabular-nums', changeDirection === 'up' ? 'text-[#1f7a4d]' : changeDirection === 'down' ? 'text-[#b03a3a]' : 'text-(--color-text-muted)')}>
+            <span className={cn('mt-1 text-[12px] font-normal tabular-nums', changeDirection === 'up' ? 'text-[#1f7a4d]' : changeDirection === 'down' ? 'text-[#b03a3a]' : 'text-text-muted')}>
               {change}
             </span>
           )}
         </dd>
       </dl>
       {description && (
-        <p className="m-0 text-sm text-(--color-text-muted)">{description}</p>
+        <p className="m-0 text-sm text-text-muted">{description}</p>
       )}
     </div>
   ),

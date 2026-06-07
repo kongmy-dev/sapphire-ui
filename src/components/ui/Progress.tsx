@@ -39,7 +39,7 @@ const Progress = forwardRef<
         />
       </ProgressPrimitive.Root>
       {showLabel && (
-        <span className="min-w-[3ch] font-mono text-xs text-(--color-text-muted) tabular-nums">
+        <span className="min-w-[3ch] font-mono text-xs text-text-muted tabular-nums">
           {percentage}%
         </span>
       )}

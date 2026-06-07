@@ -46,8 +46,8 @@ const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
           className={cn(
             'm-0 overflow-x-auto font-mono text-[13px] leading-relaxed',
             'rounded-sm p-4',
-            variant === 'dark' && 'bg-primary text-(--color-text-on-dark)',
-            variant === 'light' && 'border border-border bg-surface text-(--color-text-main)',
+            variant === 'dark' && 'bg-primary text-text-on-dark',
+            variant === 'light' && 'border border-border bg-surface text-text-main',
             className,
           )}
           {...props}
@@ -62,8 +62,8 @@ const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
             className={cn(
               'absolute top-2 right-2 inline-flex cursor-pointer items-center gap-1 rounded-sm px-2 py-1 font-mono text-xs transition-opacity',
               'opacity-0 group-hover:opacity-100 focus-visible:opacity-100',
-              variant === 'dark' && 'border-none bg-white/10 text-(--color-text-on-dark) hover:bg-white/20',
-              variant === 'light' && 'border border-border bg-(--color-card-bg) text-(--color-text-muted) hover:bg-surface',
+              variant === 'dark' && 'border-none bg-white/10 text-text-on-dark hover:bg-white/20',
+              variant === 'light' && 'border border-border bg-(--color-card-bg) text-text-muted hover:bg-surface',
               'focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:outline-none',
             )}
           >

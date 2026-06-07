@@ -9,27 +9,27 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          'rounded-btn border-none bg-primary text-(--color-text-on-dark) hover:bg-(--color-primary-hover)',
+          'rounded-btn border-none bg-primary text-text-on-dark hover:bg-primary-hover',
         outline:
           'rounded-btn border-[1.5px] border-(--color-text-strong) bg-transparent text-(--color-text-strong) hover:bg-(--color-text-strong) hover:text-(--color-card-bg)',
         ghost:
-          'rounded-btn border-none bg-transparent text-(--color-accent-text) hover:bg-(--color-hover-overlay)',
+          'rounded-btn border-none bg-transparent text-accent-text hover:bg-hover-overlay',
         accent:
           'rounded-btn border-none bg-accent text-primary hover:bg-accent-dark',
         'on-dark-primary':
           'rounded-btn border-none bg-accent font-bold text-primary hover:bg-accent-dark',
         'on-dark-outline':
-          'rounded-btn border-[1.5px] border-white/30 bg-transparent text-(--color-text-on-dark) hover:border-white hover:text-(--color-text-on-dark)',
+          'rounded-btn border-[1.5px] border-white/30 bg-transparent text-text-on-dark hover:border-white hover:text-text-on-dark',
         link:
-          'border-none bg-transparent p-0 text-(--color-accent-text) underline-offset-4 hover:text-(--color-text-strong) hover:underline',
+          'border-none bg-transparent p-0 text-accent-text underline-offset-4 hover:text-(--color-text-strong) hover:underline',
         premium:
-          'rounded-btn border-none bg-linear-to-br from-accent to-accent-dark text-(--color-text-on-dark) shadow-[0_4px_14px] shadow-accent/30 hover:-translate-y-0.5 hover:shadow-[0_6px_20px] hover:shadow-accent/40',
+          'rounded-btn border-none bg-linear-to-br from-accent to-accent-dark text-text-on-dark shadow-[0_4px_14px] shadow-accent/30 hover:-translate-y-0.5 hover:shadow-[0_6px_20px] hover:shadow-accent/40',
         destructive:
-          'rounded-btn border-none bg-(--color-error) text-(--color-text-on-dark) hover:bg-(--color-error-hover) focus-visible:ring-(--color-error-ring)',
+          'rounded-btn border-none bg-error text-text-on-dark hover:bg-error-hover focus-visible:ring-error-ring',
         'destructive-outline':
-          'rounded-btn border-[1.5px] border-(--color-error) bg-transparent text-(--color-error) hover:bg-(--color-error) hover:text-(--color-text-on-dark) focus-visible:ring-(--color-error-ring)',
+          'rounded-btn border-[1.5px] border-error bg-transparent text-error hover:bg-error hover:text-text-on-dark focus-visible:ring-error-ring',
         'destructive-ghost':
-          'rounded-btn border-none bg-transparent text-(--color-error) hover:bg-(--color-hover-overlay) focus-visible:ring-(--color-error-ring)',
+          'rounded-btn border-none bg-transparent text-error hover:bg-hover-overlay focus-visible:ring-error-ring',
       },
       size: {
         sm: 'px-3 py-1.5 text-[13px]',

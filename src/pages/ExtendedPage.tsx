@@ -216,7 +216,7 @@ export default function ExtendedPage() {
 
           <Card style={{ padding: 24 }}>
             <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">Margin Note (Sidenote)</h3>
-            <p className="text-sm/relaxed text-(--color-text-main)" style={{ maxWidth: 600 }}>
+            <p className="text-sm/relaxed text-text-main" style={{ maxWidth: 600 }}>
               When writing highly technical blog posts, we often need to reference external sources or explain a tangential concept without interrupting the main prose. Here is an example of a <MarginNote id="mn-1" note="This note appears in the margin on desktop and reflows inline on mobile devices.">Tufte-style margin note</MarginNote> in action.
             </p>
           </Card>
@@ -233,7 +233,7 @@ export default function ExtendedPage() {
                   </TimelineIndicator>
                   <TimelineContent>
                     <div className="text-sm font-semibold">v1.2.0 - Core Update</div>
-                    <div className="text-xs text-(--color-text-muted)">Added timeline primitive.</div>
+                    <div className="text-xs text-text-muted">Added timeline primitive.</div>
                   </TimelineContent>
                 </TimelineItem>
                 <TimelineItem>
@@ -242,7 +242,7 @@ export default function ExtendedPage() {
                   </TimelineIndicator>
                   <TimelineContent>
                     <div className="text-sm font-semibold">v1.1.0 - Layouts</div>
-                    <div className="text-xs text-(--color-text-muted)">Added admin sidebar layout.</div>
+                    <div className="text-xs text-text-muted">Added admin sidebar layout.</div>
                   </TimelineContent>
                 </TimelineItem>
               </Timeline>

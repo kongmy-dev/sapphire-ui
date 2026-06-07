@@ -78,7 +78,7 @@ const Slider = forwardRef<HTMLSpanElement, SliderProps>(
           ))}
         </RadixSlider.Root>
         {showValue && (
-          <span className="min-w-[3ch] text-right font-mono text-sm text-(--color-text-muted) tabular-nums">
+          <span className="min-w-[3ch] text-right font-mono text-sm text-text-muted tabular-nums">
             {display.join('–')}
           </span>
         )}

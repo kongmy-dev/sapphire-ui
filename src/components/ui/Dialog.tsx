@@ -56,7 +56,7 @@ const DialogContent = forwardRef<
     >
       {children}
       {!hideClose && (
-        <DialogPrimitive.Close className="absolute top-4 right-4 cursor-pointer rounded-sm border-none bg-transparent p-1.5 text-(--color-text-muted) transition-colors outline-none hover:bg-surface hover:text-(--color-text-strong)">
+        <DialogPrimitive.Close className="absolute top-4 right-4 cursor-pointer rounded-sm border-none bg-transparent p-1.5 text-text-muted transition-colors outline-none hover:bg-surface hover:text-(--color-text-strong)">
           <Icon name="close" size={18} />
         </DialogPrimitive.Close>
       )}
@@ -103,7 +103,7 @@ const DialogDescription = forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn('mt-1 font-sans text-sm text-(--color-text-muted)', className)}
+    className={cn('mt-1 font-sans text-sm text-text-muted', className)}
     {...props}
   />
 ));
@@ -177,7 +177,7 @@ function ConfirmDialog({
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         <DialogBody>
-          <p className="m-0 font-sans text-sm/relaxed text-(--color-text-muted)">
+          <p className="m-0 font-sans text-sm/relaxed text-text-muted">
             {message}
           </p>
         </DialogBody>
@@ -190,7 +190,7 @@ function ConfirmDialog({
           </button>
           <button
             onClick={() => { onConfirm(); onOpenChange(false); }}
-            className="cursor-pointer rounded-btn border-none px-5 py-2.5 font-sans text-sm font-medium text-(--color-text-on-dark) transition-colors outline-none"
+            className="cursor-pointer rounded-btn border-none px-5 py-2.5 font-sans text-sm font-medium text-text-on-dark transition-colors outline-none"
             style={{ backgroundColor: isDanger ? 'var(--color-error)' : 'var(--color-primary)' }}
           >
             {confirmLabel}

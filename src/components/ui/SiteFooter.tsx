@@ -21,10 +21,10 @@ const SiteFooter = forwardRef<HTMLElement, SiteFooterProps>(
       className={cn(
         'w-full border-t',
         variant === 'dark'
-          ? 'border-border-dark bg-primary text-(--color-text-on-dark)'
+          ? 'border-border-dark bg-primary text-text-on-dark'
           // Light variant: hardcoded light palette so it stays light even
           // when the surrounding page is in dark theme.
-          : 'border-border bg-(--color-card-bg) text-(--color-text-main)',
+          : 'border-border bg-(--color-card-bg) text-text-main',
         className,
       )}
       {...props}
@@ -44,8 +44,8 @@ const SiteFooter = forwardRef<HTMLElement, SiteFooterProps>(
             'flex flex-col items-center justify-between gap-4 font-mono text-[11px] tracking-[0.06em] uppercase md:flex-row',
             (brand || links || children) && 'border-t pt-6',
             variant === 'dark'
-              ? 'border-border-dark text-(--color-text-on-dark-muted)'
-              : 'border-border text-(--color-text-muted)',
+              ? 'border-border-dark text-text-on-dark-muted'
+              : 'border-border text-text-muted',
           )}>
             {bottom}
           </div>
@@ -88,8 +88,8 @@ const SiteFooterLink = forwardRef<HTMLAnchorElement, SiteFooterLinkProps>(
       className={cn(
         'font-sans text-sm no-underline transition-colors',
         variant === 'dark'
-          ? 'text-(--color-text-on-dark-muted) hover:text-(--color-text-on-dark)'
-          : 'text-(--color-text-muted) hover:text-(--color-text-strong)',
+          ? 'text-text-on-dark-muted hover:text-text-on-dark'
+          : 'text-text-muted hover:text-(--color-text-strong)',
         className,
       )}
       {...props}

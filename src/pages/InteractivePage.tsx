@@ -35,7 +35,7 @@ export default function InteractivePage() {
       {/* ─── Dialog ─────────────────────────────────────────────────── */}
       <section className="docs-section">
         <h2 className="docs-section-title">Dialog</h2>
-        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
+        <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
           Accessible modal built on Radix Dialog. Includes focus trap, Escape close, and overlay click dismiss.
           Use the compound sub-components for custom layouts, or <code className="docs-props-table code">ConfirmDialog</code> for quick confirmations.
         </p>
@@ -103,7 +103,7 @@ export default function InteractivePage() {
       {/* ─── Toast ──────────────────────────────────────────────────── */}
       <section className="docs-section">
         <h2 className="docs-section-title">Toast</h2>
-        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
+        <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
           Framework-agnostic toast notifications via Web Component. React wrapper exposes <code className="docs-props-table code">show()</code> via ref.
           Also available in vanilla JS via <code className="docs-props-table code">window.__sapphireToast()</code>.
         </p>

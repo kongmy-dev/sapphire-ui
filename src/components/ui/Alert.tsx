@@ -7,11 +7,11 @@ const alertVariants = cva(
   {
     variants: {
       variant: {
-        info: 'border-(--color-info-border) bg-(--color-info-bg) text-(--color-text-main)',
-        success: 'border-(--color-success-border) bg-(--color-success-bg) text-(--color-text-main)',
-        warning: 'border-(--color-warning-border) bg-(--color-warning-bg) text-(--color-text-main)',
-        error: 'border-(--color-error-border) bg-(--color-error-bg) text-(--color-text-main)',
-        accent: 'border-accent/38 bg-accent/7 text-(--color-text-main)',
+        info: 'border-info-border bg-info-bg text-text-main',
+        success: 'border-success-border bg-success-bg text-text-main',
+        warning: 'border-warning-border bg-warning-bg text-text-main',
+        error: 'border-error-border bg-error-bg text-text-main',
+        accent: 'border-accent/38 bg-accent/7 text-text-main',
       },
     },
     defaultVariants: {

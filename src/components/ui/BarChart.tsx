@@ -28,7 +28,7 @@ export function BarChart({
             </div>
           </div>
           {labels && labels[i] && (
-            <span className="text-text-muted mt-1 font-mono text-[10px]">{labels[i]}</span>
+            <span className="mt-1 font-mono text-[10px] text-text-muted">{labels[i]}</span>
           )}
         </div>
       ))}

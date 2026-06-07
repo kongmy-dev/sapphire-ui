@@ -72,7 +72,7 @@ const WizardLayout = forwardRef<HTMLDivElement, WizardLayoutProps>(
       <div className="shrink-0 border-b border-border bg-surface p-6">
         <div className="mx-auto w-full max-w-3xl">
           {title && <h2 className="mb-2 font-serif text-xl font-semibold tracking-tight">{title}</h2>}
-          {description && <p className="mb-8 text-sm text-(--color-text-muted)">{description}</p>}
+          {description && <p className="mb-8 text-sm text-text-muted">{description}</p>}
           <Steps steps={steps} current={currentStep} />
         </div>
       </div>

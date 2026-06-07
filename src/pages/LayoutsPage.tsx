@@ -86,7 +86,7 @@ export default function LayoutsPage() {
       {/* ─── AdminLayout ────────────────────────────────────────────── */}
       <section className="docs-section" style={{ borderTop: 'none' }}>
         <h2 className="docs-section-title">Admin Layout</h2>
-        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
+        <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
           A comprehensive administrative workbench layout system using full whitespace.
         </p>
         
@@ -102,7 +102,7 @@ export default function LayoutsPage() {
                 brand={
                   <div className="flex items-center gap-2 pl-1">
                     <span className="flex size-6 items-center justify-center rounded-sm bg-accent font-serif text-sm font-semibold text-primary">K</span>
-                    <span className="font-serif text-base font-semibold tracking-wide text-(--color-text-on-dark)">
+                    <span className="font-serif text-base font-semibold tracking-wide text-text-on-dark">
                       KONGMY
                     </span>
                     <span className="font-sans text-[10px] tracking-wider text-accent uppercase">
@@ -115,8 +115,8 @@ export default function LayoutsPage() {
                     <Avatar size="sm" fallback="KM" />
                     {!collapsed && (
                       <div className="flex-1 truncate">
-                        <div className="text-xs font-semibold text-(--color-text-on-dark)">Kong My</div>
-                        <div className="text-[10px] text-(--color-text-on-dark)/50">Consultant</div>
+                        <div className="text-xs font-semibold text-text-on-dark">Kong My</div>
+                        <div className="text-[10px] text-text-on-dark/50">Consultant</div>
                       </div>
                     )}
                   </div>
@@ -273,7 +273,7 @@ export default function LayoutsPage() {
                       <h3 className="m-0 font-serif text-lg font-medium text-(--color-text-strong)">
                         Current Consulting Engagements
                       </h3>
-                      <p className="text-text-muted m-0 mt-1 text-sm">
+                      <p className="m-0 mt-1 text-sm text-text-muted">
                         I record client contracts, project scope categories, and active hourly metrics in real-time.
                       </p>
                     </div>
@@ -305,7 +305,7 @@ export default function LayoutsPage() {
                           className={`cursor-pointer rounded-btn px-3 py-1 text-xs font-semibold tracking-wider uppercase transition-colors ${
                             statusFilter === f
                               ? 'bg-(--color-text-strong) text-surface'
-                              : 'text-text-muted bg-surface hover:bg-border'
+                              : 'bg-surface text-text-muted hover:bg-border'
                           }`}
                           style={{ border: 'none', outline: 'none' }}
                         >
@@ -335,11 +335,11 @@ export default function LayoutsPage() {
                               <TableCell>
                                 <div>
                                   <div className="font-semibold text-(--color-text-strong)">{eng.client}</div>
-                                  <div className="text-text-muted mt-0.5 text-xs">{eng.project}</div>
+                                  <div className="mt-0.5 text-xs text-text-muted">{eng.project}</div>
                                 </div>
                               </TableCell>
                               <TableCell>
-                                <span className="text-text-muted font-mono text-xs">{eng.type}</span>
+                                <span className="font-mono text-xs text-text-muted">{eng.type}</span>
                               </TableCell>
                               <TableCell>
                                 <Badge
@@ -415,24 +415,24 @@ export default function LayoutsPage() {
                 <h3 className="mb-2 font-serif text-lg font-medium text-(--color-text-strong)">
                   My Core Consultancy Services
                 </h3>
-                <p className="text-text-muted mb-6 text-sm">
+                <p className="mb-6 text-sm text-text-muted">
                   Bespoke, elite consultancy services tailored for expanding technology stacks.
                 </p>
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
                   <div style={{ border: '1px solid var(--color-border)', padding: 20, borderRadius: 'var(--radius-md)' }}>
                     <span className="material-symbols-outlined text-accent" style={{ fontSize: 32 }}>architecture</span>
                     <h4 className="mt-3 mb-2 font-serif text-base font-semibold">Cloud System Architecture</h4>
-                    <p className="text-text-muted text-xs">High-scale AWS/GCP setups using Terraform, Docker, and serverless runtime architectures.</p>
+                    <p className="text-xs text-text-muted">High-scale AWS/GCP setups using Terraform, Docker, and serverless runtime architectures.</p>
                   </div>
                   <div style={{ border: '1px solid var(--color-border)', padding: 20, borderRadius: 'var(--radius-md)' }}>
                     <span className="material-symbols-outlined text-accent" style={{ fontSize: 32 }}>speed</span>
                     <h4 className="mt-3 mb-2 font-serif text-base font-semibold">Performance Engineering</h4>
-                    <p className="text-text-muted text-xs">Full-stack database query profiling, custom edge caching configurations, and API optimization.</p>
+                    <p className="text-xs text-text-muted">Full-stack database query profiling, custom edge caching configurations, and API optimization.</p>
                   </div>
                   <div style={{ border: '1px solid var(--color-border)', padding: 20, borderRadius: 'var(--radius-md)' }}>
                     <span className="material-symbols-outlined text-accent" style={{ fontSize: 32 }}>security</span>
                     <h4 className="mt-3 mb-2 font-serif text-base font-semibold">Technical Due Diligence</h4>
-                    <p className="text-text-muted text-xs">Strict cybersecurity audits, compliance reports, and architectural diligence for SaaS acquisitions.</p>
+                    <p className="text-xs text-text-muted">Strict cybersecurity audits, compliance reports, and architectural diligence for SaaS acquisitions.</p>
                   </div>
                 </div>
               </Card>
@@ -443,7 +443,7 @@ export default function LayoutsPage() {
                 <h3 className="mb-2 font-serif text-lg font-medium text-(--color-text-strong)">
                   Contracts & Fiscal Invoicing
                 </h3>
-                <p className="text-text-muted mb-4 text-sm">
+                <p className="mb-4 text-sm text-text-muted">
                   Electronic payments processed under standard Net-15 terms in Kuala Lumpur, Malaysia.
                 </p>
                 <div style={{ border: '1px solid var(--color-border)', borderRadius: 'var(--radius-sm)' }}>
@@ -490,7 +490,7 @@ export default function LayoutsPage() {
                 <h3 className="mb-2 font-serif text-lg font-medium text-(--color-text-strong)">
                   Metrics & Analytics
                 </h3>
-                <p className="text-text-muted mb-6 text-sm">
+                <p className="mb-6 text-sm text-text-muted">
                   Monthly billable hours analysis and revenue breakdown.
                 </p>
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -540,11 +540,11 @@ export default function LayoutsPage() {
                     <h3 className="mb-1 font-serif text-lg font-medium text-(--color-text-strong)">
                       System Status Monitor
                     </h3>
-                    <p className="text-text-muted m-0 text-sm">
+                    <p className="m-0 text-sm text-text-muted">
                       Real-time uptime and incident tracking across all regions.
                     </p>
                   </div>
-                  <Badge variant="success" className="shrink-0 self-start border border-(--color-success)/20 px-3 py-1.5 sm:self-auto">
+                  <Badge variant="success" className="shrink-0 self-start border border-success/20 px-3 py-1.5 sm:self-auto">
                     <span className="mr-2 size-2 animate-pulse rounded-full bg-current" />
                     All Systems Operational
                   </Badge>
@@ -560,7 +560,7 @@ export default function LayoutsPage() {
                       <div className="mb-3 flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <span className="text-sm font-medium text-(--color-text-strong)">{sys.name}</span>
-                          <span className="text-text-muted rounded-sm bg-surface px-1.5 py-0.5 font-mono text-[10px]">{sys.region}</span>
+                          <span className="rounded-sm bg-surface px-1.5 py-0.5 font-mono text-[10px] text-text-muted">{sys.region}</span>
                         </div>
                         <span className="font-mono text-xs font-medium" style={{ color: 'var(--color-success)' }}>{sys.uptime} uptime</span>
                       </div>
@@ -586,7 +586,7 @@ export default function LayoutsPage() {
       {/* ─── PageSection ────────────────────────────────────────────── */}
       <section className="docs-section">
         <h2 className="docs-section-title">PageSection</h2>
-        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
+        <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
           Consistent section wrapper with constrained width, optional label + heading + subheading.
         </p>
         <div className="docs-preview" style={{ padding: 0, overflow: 'hidden' }}>
@@ -599,8 +599,8 @@ export default function LayoutsPage() {
           >
             <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
               {['Cloud Ops', 'AI / ML', 'Web Apps'].map((t) => (
-                <div key={t} className="bg-card-bg rounded-md border border-border p-6">
-                  <span className="text-text-strong font-sans font-semibold">{t}</span>
+                <div key={t} className="rounded-md border border-border bg-card-bg p-6">
+                  <span className="font-sans font-semibold text-text-strong">{t}</span>
                 </div>
               ))}
             </div>
@@ -611,7 +611,7 @@ export default function LayoutsPage() {
       {/* ─── Layout ─────────────────────────────────────────────────── */}
       <section className="docs-section">
         <h2 className="docs-section-title">Layout</h2>
-        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
+        <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
           Canonical page shell — composes SiteHeader, SiteFooter, and an optional sidebar slot.
         </p>
         <div className="docs-preview" style={{ padding: 0, overflow: 'hidden', borderRadius: 'var(--radius-md)' }}>
@@ -637,7 +637,7 @@ export default function LayoutsPage() {
             footer={
               <SiteFooter
                 brand={
-                  <span className="font-sans text-sm text-(--color-text-on-dark-muted)">
+                  <span className="font-sans text-sm text-text-on-dark-muted">
                     © KONGMY Digital Solutions
                   </span>
                 }
@@ -646,10 +646,10 @@ export default function LayoutsPage() {
             }
           >
             <div style={{ padding: '2rem 1.5rem' }}>
-              <h3 className="text-text-strong m-0 mb-2 font-serif text-xl font-semibold">
+              <h3 className="m-0 mb-2 font-serif text-xl font-semibold text-text-strong">
                 Main content area
               </h3>
-              <p className="m-0 font-sans text-sm text-(--color-text-muted)">
+              <p className="m-0 font-sans text-sm text-text-muted">
                 Pages, routes, or any children render here between the header and footer slots.
               </p>
             </div>
@@ -660,7 +660,7 @@ export default function LayoutsPage() {
       {/* ─── SiteHeader ─────────────────────────────────────────────── */}
       <section className="docs-section">
         <h2 className="docs-section-title">SiteHeader</h2>
-        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
+        <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
           Composable sticky header with brand, nav, and actions slots.
         </p>
         <div className="docs-preview" style={{ padding: 0, overflow: 'hidden', borderRadius: 'var(--radius-md)' }}>
@@ -712,7 +712,7 @@ export default function LayoutsPage() {
       {/* ─── SiteFooter ─────────────────────────────────────────────── */}
       <section className="docs-section">
         <h2 className="docs-section-title">SiteFooter</h2>
-        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
+        <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
           Composable footer with brand, link groups, and bottom bar slots.
         </p>
         <div className="docs-preview" style={{ padding: 0, overflow: 'hidden', borderRadius: 'var(--radius-md)' }}>
@@ -720,10 +720,10 @@ export default function LayoutsPage() {
             brand={
               <div>
                 <div className="mb-3 flex items-center gap-2">
-                  <span className="font-serif text-xl font-bold text-(--color-text-on-dark)">KONGMY</span>
+                  <span className="font-serif text-xl font-bold text-text-on-dark">KONGMY</span>
                   <span className="font-sans text-xl font-light text-accent">dev</span>
                 </div>
-                <p className="m-0 font-sans text-sm/relaxed text-(--color-text-on-dark-muted)">
+                <p className="m-0 font-sans text-sm/relaxed text-text-on-dark-muted">
                   Helping businesses cut costs, automate operations, and build software that works.
                 </p>
               </div>
@@ -764,13 +764,13 @@ export default function LayoutsPage() {
             <SplitLayout orientation="horizontal">
               <SplitPanel defaultSize={30} minSize={20}>
                 <div className="flex h-full items-center justify-center bg-surface p-6">
-                  <span className="text-text-muted text-sm font-medium">Sidebar</span>
+                  <span className="text-sm font-medium text-text-muted">Sidebar</span>
                 </div>
               </SplitPanel>
               <SplitHandle withHandle />
               <SplitPanel defaultSize={70} minSize={30}>
                 <div className="flex h-full items-center justify-center p-6">
-                  <span className="text-text-main text-sm font-medium">Main Content Area</span>
+                  <span className="text-sm font-medium text-text-main">Main Content Area</span>
                 </div>
               </SplitPanel>
             </SplitLayout>
@@ -781,7 +781,7 @@ export default function LayoutsPage() {
       {/* ─── Wizard Layout ──────────────────────────────────────────── */}
       <section className="docs-section">
         <h2 className="docs-section-title">Wizard Layout</h2>
-        <p className="mb-4 text-sm text-(--color-text-muted)">A standardized multi-step flow supporting inline, fullscreen, and modal modes.</p>
+        <p className="mb-4 text-sm text-text-muted">A standardized multi-step flow supporting inline, fullscreen, and modal modes.</p>
         <div className="docs-preview">
           <Button onClick={() => { setWizardOpen(true); setWizardStep(0); }}>
             Launch Modal Wizard
@@ -804,7 +804,7 @@ export default function LayoutsPage() {
           >
             <div className="flex h-full flex-col items-center justify-center rounded-md border-2 border-dashed border-border p-8">
               <p className="text-lg font-medium">Content for Step {wizardStep + 1}</p>
-              <p className="text-text-muted mt-2 text-sm">Interactive configuration forms would go here.</p>
+              <p className="mt-2 text-sm text-text-muted">Interactive configuration forms would go here.</p>
             </div>
           </WizardLayout>
         </div>
@@ -816,7 +816,7 @@ export default function LayoutsPage() {
         <div className="docs-preview">
           <div className="overflow-hidden rounded-md border border-dashed border-accent/50 bg-surface/50">
             <Container maxWidth="md" padding="default" className="bg-background text-center outline-1 outline-border outline-dashed">
-              <p className="text-text-muted text-sm font-semibold">Content constrained to `md` (768px) inside the Container.</p>
+              <p className="text-sm font-semibold text-text-muted">Content constrained to `md` (768px) inside the Container.</p>
             </Container>
           </div>
         </div>
@@ -835,13 +835,13 @@ export default function LayoutsPage() {
                 <TabsTrigger value="tab3">Settings</TabsTrigger>
               </TabsList>
               <TabsContent value="tab1" className="mt-0 flex-1 px-4 md:px-6">
-                <p className="text-sm text-(--color-text-muted)">A vertical layout for tabs, commonly used for settings and large navigation rails.</p>
+                <p className="text-sm text-text-muted">A vertical layout for tabs, commonly used for settings and large navigation rails.</p>
               </TabsContent>
               <TabsContent value="tab2" className="mt-0 flex-1 px-4 md:px-6">
-                <p className="text-sm text-(--color-text-muted)">Webhook and API integrations configuration.</p>
+                <p className="text-sm text-text-muted">Webhook and API integrations configuration.</p>
               </TabsContent>
               <TabsContent value="tab3" className="mt-0 flex-1 px-4 md:px-6">
-                <p className="text-sm text-(--color-text-muted)">User preferences and security settings.</p>
+                <p className="text-sm text-text-muted">User preferences and security settings.</p>
               </TabsContent>
             </Tabs>
           </Card>

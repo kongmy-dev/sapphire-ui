@@ -73,7 +73,7 @@ function MobileThemeToggle() {
       type="button"
       onClick={() => setTheme(next)}
       aria-label={`Switch to ${next} theme`}
-      className="flex w-full cursor-pointer items-center gap-3 rounded-md border-none bg-transparent px-4 py-2.5 text-left font-sans text-sm font-medium text-(--color-text-on-dark)/70 transition-colors hover:bg-white/5 hover:text-(--color-text-on-dark)"
+      className="flex w-full cursor-pointer items-center gap-3 rounded-md border-none bg-transparent px-4 py-2.5 text-left font-sans text-sm font-medium text-text-on-dark/70 transition-colors hover:bg-white/5 hover:text-text-on-dark"
       style={{ outline: 'none' }}
     >
       <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
@@ -139,7 +139,7 @@ function AppShell() {
             <MobileThemeToggle />
             <button
               onClick={() => setShowCookies(true)}
-              className="flex w-full cursor-pointer items-center gap-3 rounded-md border-none bg-transparent px-4 py-2.5 text-left font-sans text-sm font-medium text-(--color-text-on-dark)/70 transition-colors hover:bg-white/5 hover:text-(--color-text-on-dark)"
+              className="flex w-full cursor-pointer items-center gap-3 rounded-md border-none bg-transparent px-4 py-2.5 text-left font-sans text-sm font-medium text-text-on-dark/70 transition-colors hover:bg-white/5 hover:text-text-on-dark"
               style={{ outline: 'none' }}
             >
               <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
@@ -215,7 +215,7 @@ function AppShell() {
             </div>
           </nav>
           <div className="docs-sidebar-footer">
-            <a href="https://kongmy.dev/?utm_source=sapphire-ui&utm_medium=sidebar" target="_blank" rel="noopener noreferrer" className="docs-footer-text no-underline transition-colors hover:text-(--color-text-on-dark)">kongmy.dev</a>
+            <a href="https://kongmy.dev/?utm_source=sapphire-ui&utm_medium=sidebar" target="_blank" rel="noopener noreferrer" className="docs-footer-text no-underline transition-colors hover:text-text-on-dark">kongmy.dev</a>
           </div>
         </aside>
         }

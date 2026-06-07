@@ -10,19 +10,19 @@ const badgeVariants = cva(
         // Foreground colors are darkened from the underlying brand/state
         // hue so 12px badge text passes WCAG AA contrast on the tinted bg.
         default:
-          'border border-border bg-surface text-(--color-text-muted)',
+          'border border-border bg-surface text-text-muted',
         accent:
-          'border border-accent/30 bg-accent/12 text-(--color-accent-text)',
+          'border border-accent/30 bg-accent/12 text-accent-text',
         dark:
-          'border border-border-dark bg-white/10 text-(--color-text-on-dark)',
+          'border border-border-dark bg-white/10 text-text-on-dark',
         success:
-          'border border-(--color-success-border) bg-(--color-success-bg) text-(--color-success)',
+          'border border-success-border bg-success-bg text-success',
         error:
-          'border border-(--color-error-border) bg-(--color-error-bg) text-(--color-error)',
+          'border border-error-border bg-error-bg text-error',
         warning:
-          'border border-(--color-warning-border) bg-(--color-warning-bg) text-(--color-warning)',
+          'border border-warning-border bg-warning-bg text-warning',
         info:
-          'border border-(--color-info-border) bg-(--color-info-bg) text-(--color-info)',
+          'border border-info-border bg-info-bg text-info',
       },
     },
     defaultVariants: {

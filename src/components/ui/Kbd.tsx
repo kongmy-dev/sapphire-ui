@@ -19,7 +19,7 @@ const Kbd = forwardRef<HTMLElement, KbdProps>(
       ref={ref}
       className={cn(
         'inline-flex items-center justify-center font-mono font-medium',
-        'bg-surface text-(--color-text-main)',
+        'bg-surface text-text-main',
         'border border-b-2 border-border',
         'rounded-sm shadow-[0_1px_0_0_var(--color-border)]',
         size === 'sm' && 'h-[18px] min-w-[18px] px-1 text-[10px]',

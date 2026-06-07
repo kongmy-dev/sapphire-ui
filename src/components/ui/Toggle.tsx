@@ -10,11 +10,11 @@ const toggleVariants = cva(
     variants: {
       variant: {
         default:
-          'border border-border bg-transparent text-(--color-text-main) hover:bg-surface data-[state=on]:border-primary data-[state=on]:bg-primary data-[state=on]:text-(--color-text-on-dark)',
+          'border border-border bg-transparent text-text-main hover:bg-surface data-[state=on]:border-primary data-[state=on]:bg-primary data-[state=on]:text-text-on-dark',
         outline:
-          'border border-border bg-transparent text-(--color-text-muted) hover:text-(--color-text-main) data-[state=on]:border-accent data-[state=on]:bg-accent data-[state=on]:text-primary',
+          'border border-border bg-transparent text-text-muted hover:text-text-main data-[state=on]:border-accent data-[state=on]:bg-accent data-[state=on]:text-primary',
         ghost:
-          'border-none bg-transparent text-(--color-text-muted) hover:bg-surface data-[state=on]:bg-surface data-[state=on]:text-(--color-text-main)',
+          'border-none bg-transparent text-text-muted hover:bg-surface data-[state=on]:bg-surface data-[state=on]:text-text-main',
       },
       size: {
         sm: 'h-8 rounded-btn px-2.5 text-xs',

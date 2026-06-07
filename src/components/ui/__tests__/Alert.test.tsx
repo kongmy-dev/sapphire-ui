@@ -12,7 +12,7 @@ describe('Alert', () => {
 
   it('applies variant classes', () => {
     const { container } = render(<Alert variant="error">Error!</Alert>);
-    expect(container.firstChild).toHaveClass('bg-(--color-error-bg)');
+    expect(container.firstChild).toHaveClass('bg-error-bg');
   });
 
   it('renders a custom icon', () => {

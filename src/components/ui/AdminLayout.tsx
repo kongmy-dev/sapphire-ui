@@ -1,5 +1,5 @@
-import { forwardRef, useState, type HTMLAttributes, type ReactNode } from 'react';
-import { Slot } from '@radix-ui/react-slot';
+import { forwardRef, useState, Children, cloneElement, type HTMLAttributes, type AnchorHTMLAttributes, type ReactNode, type ReactElement } from 'react';
+import { Slot, Slottable } from '@radix-ui/react-slot';
 import { cn } from '../../lib/utils';
 
 /* ─── AdminLayout ───────────────────────────────────────────────────── */
@@ -21,7 +21,7 @@ const AdminLayout = forwardRef<HTMLDivElement, AdminLayoutProps>(
       <div
         ref={ref}
         className={cn(
-          'sf-admin-shell text-main grid min-h-screen w-full grid-cols-[248px_1fr] bg-surface font-sans transition-colors duration-200 max-[760px]:grid-cols-1',
+          'sf-admin-shell text-main grid min-h-screen w-full bg-surface font-sans transition-colors duration-200 max-[760px]:grid-cols-1',
           className
         )}
         {...props}
@@ -76,14 +76,19 @@ const AdminSidebar = forwardRef<HTMLDivElement, AdminSidebarProps>(
       <aside
         ref={ref}
         className={cn(
-          'sf-admin-sidebar relative z-30 flex h-screen shrink-0 flex-col border-r border-border-dark bg-primary text-(--color-text-on-dark) transition-all duration-300 ease-in-out max-[760px]:h-auto max-[760px]:border-r-0 max-[760px]:border-b',
-          activeCollapsed ? 'w-16' : 'w-full',
+          'sf-admin-sidebar relative z-30 flex h-screen shrink-0 flex-col border-r border-border-dark bg-primary text-text-on-dark transition-all duration-300 ease-in-out max-[760px]:h-auto max-[760px]:border-r-0 max-[760px]:border-b',
+          activeCollapsed && 'collapsed',
           className
         )}
         {...props}
       >
         {/* Brand/Logo Area */}
-        <div className="flex items-center gap-2.5 border-b border-border-dark px-[22px] pt-[22px] pb-[18px]">
+        <div
+          className={cn(
+            'flex items-center border-b border-border-dark pt-[22px] pb-[18px] transition-all duration-300',
+            activeCollapsed ? 'justify-center px-4' : 'gap-2.5 px-[22px]'
+          )}
+        >
           <div className={cn('overflow-hidden transition-all duration-300', activeCollapsed ? 'w-0 opacity-0' : 'w-full opacity-100')}>
             {brand}
           </div>
@@ -91,7 +96,7 @@ const AdminSidebar = forwardRef<HTMLDivElement, AdminSidebarProps>(
             type="button"
             onClick={handleToggle}
             aria-label={activeCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-            className="flex size-8 cursor-pointer items-center justify-center rounded-btn border-none bg-white/5 text-(--color-text-on-dark)/70 hover:bg-white/10 hover:text-(--color-text-on-dark)"
+            className="flex size-8 cursor-pointer items-center justify-center rounded-btn border-none bg-white/5 text-text-on-dark/70 hover:bg-white/10 hover:text-text-on-dark"
             style={{ outline: 'none' }}
           >
             <span className="material-symbols-outlined text-[18px]">
@@ -132,7 +137,7 @@ const AdminSidebarSection = forwardRef<HTMLDivElement, AdminSidebarSectionProps>
     return (
       <div ref={ref} className={cn('', className)} {...props}>
         {title && !collapsed && (
-          <h5 className="mx-3 mt-[18px] mb-2 font-sans text-[10px] font-semibold tracking-[0.12em] text-(--color-text-on-dark-muted) uppercase first:mt-1">
+          <h5 className="mx-3 mt-[18px] mb-2 font-sans text-[10px] font-semibold tracking-[0.12em] text-text-on-dark-muted uppercase first:mt-1">
             {title}
           </h5>
         )}
@@ -145,7 +150,7 @@ AdminSidebarSection.displayName = 'AdminSidebarSection';
 
 /* ─── AdminSidebarLink ──────────────────────────────────────────────── */
 
-export interface AdminSidebarLinkProps extends HTMLAttributes<HTMLAnchorElement> {
+export interface AdminSidebarLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   /** Render as standard HTML anchor or polymorphically (e.g. NavLink) */
   asChild?: boolean;
   /** Icon name from Material Symbols Outlined */
@@ -162,15 +167,59 @@ export interface AdminSidebarLinkProps extends HTMLAttributes<HTMLAnchorElement>
 
 const AdminSidebarLink = forwardRef<HTMLAnchorElement, AdminSidebarLinkProps>(
   ({ className, asChild = false, icon, active = false, badge, collapsed = false, children, ...props }, ref) => {
-    const Comp = asChild ? Slot : 'a';
+    if (asChild) {
+      const child = Children.only(children) as ReactElement<{ children?: ReactNode }>;
+      const inner = (
+        <span key="label" className={cn(collapsed ? 'sr-only' : 'flex-1 truncate')}>
+          {child.props.children}
+        </span>
+      );
+      const newChild = cloneElement(child, {
+        children: inner
+      });
+
+      return (
+        <Slot
+          ref={ref}
+          className={cn(
+            'group flex items-center gap-2.5 rounded-md px-3 py-2 font-sans text-[14px] font-medium no-underline transition-all duration-150',
+            active
+              ? 'bg-accent/12 text-accent'
+              : 'text-text-on-dark hover:bg-white/5 hover:text-text-on-dark',
+            collapsed ? 'justify-center px-0' : '',
+            className
+          )}
+          {...props}
+        >
+          {icon && (
+            <span
+              key="icon"
+              className={cn(
+                'material-symbols-outlined text-[18px] transition-colors',
+                active ? 'text-accent opacity-100' : 'opacity-70 group-hover:text-white group-hover:opacity-100'
+              )}
+            >
+              {icon}
+            </span>
+          )}
+          <Slottable key="slottable">{newChild}</Slottable>
+          {!collapsed && badge && (
+            <span key="badge" className="ml-auto font-mono text-[11px] text-text-on-dark-muted">
+              {badge}
+            </span>
+          )}
+        </Slot>
+      );
+    }
+
     return (
-      <Comp
+      <a
         ref={ref}
         className={cn(
           'group flex items-center gap-2.5 rounded-md px-3 py-2 font-sans text-[14px] font-medium no-underline transition-all duration-150',
           active
             ? 'bg-accent/12 text-accent'
-            : 'text-(--color-text-on-dark) hover:bg-white/5 hover:text-(--color-text-on-dark)',
+            : 'text-text-on-dark hover:bg-white/5 hover:text-text-on-dark',
           collapsed ? 'justify-center px-0' : '',
           className
         )}
@@ -188,11 +237,11 @@ const AdminSidebarLink = forwardRef<HTMLAnchorElement, AdminSidebarLinkProps>(
         )}
         {!collapsed && <span className="flex-1 truncate">{children}</span>}
         {!collapsed && badge && (
-          <span className="ml-auto font-mono text-[11px] text-(--color-text-on-dark-muted)">
+          <span className="ml-auto font-mono text-[11px] text-text-on-dark-muted">
             {badge}
           </span>
         )}
-      </Comp>
+      </a>
     );
   }
 );

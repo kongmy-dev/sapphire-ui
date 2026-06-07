@@ -70,7 +70,7 @@ export default function FormsPage() {
 
       <section className="docs-section">
         <h2 className="docs-section-title">Switch</h2>
-        <p className="mb-4 font-sans text-sm/relaxed text-(--color-text-muted)">
+        <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
           Built on <code>@radix-ui/react-switch</code>. Use <code>checked</code> +{' '}
           <code>onCheckedChange</code> for controlled, or <code>defaultChecked</code> for
           uncontrolled. Override the active fill via the <code>--switch-active</code> CSS variable.

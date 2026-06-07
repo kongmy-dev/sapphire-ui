@@ -64,7 +64,7 @@ const TimelineIndicator = forwardRef<HTMLDivElement, TimelineIndicatorProps>(
         )}
         {...props}
       >
-        <div className="relative z-10 flex size-6 shrink-0 items-center justify-center rounded-full border-2 border-border bg-surface text-(--color-text-muted)">
+        <div className="relative z-10 flex size-6 shrink-0 items-center justify-center rounded-full border-2 border-border bg-surface text-text-muted">
           {children || <span className="size-2 rounded-full bg-primary/40" />}
         </div>
         {!isLast && (

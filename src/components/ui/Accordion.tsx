@@ -34,7 +34,7 @@ const AccordionTrigger = forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        'flex flex-1 cursor-pointer items-center justify-between py-4 font-sans text-sm font-medium text-(--color-text-main) transition-all',
+        'flex flex-1 cursor-pointer items-center justify-between py-4 font-sans text-sm font-medium text-text-main transition-all',
         'underline-offset-4 hover:underline',
         'focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:ring-offset-1 focus-visible:outline-none',
         '[&[data-state=open]>svg]:rotate-180',
@@ -43,7 +43,7 @@ const AccordionTrigger = forwardRef<
       {...props}
     >
       {children}
-      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" className="shrink-0 text-(--color-text-muted) transition-transform duration-200">
+      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" className="shrink-0 text-text-muted transition-transform duration-200">
         <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
       </svg>
     </AccordionPrimitive.Trigger>
@@ -57,7 +57,7 @@ const AccordionContent = forwardRef<
 >(({ className, children, ...props }, ref) => (
   <AccordionPrimitive.Content
     ref={ref}
-    className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden font-sans text-sm text-(--color-text-muted)"
+    className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden font-sans text-sm text-text-muted"
     {...props}
   >
     <div className={cn('pt-0 pb-4', className)}>{children}</div>

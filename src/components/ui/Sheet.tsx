@@ -79,7 +79,7 @@ const SheetContent = forwardRef<
       {!hideClose && (
         <DialogPrimitive.Close
           aria-label="Close"
-          className="absolute top-4 right-4 inline-flex size-7 cursor-pointer items-center justify-center rounded-sm border-none bg-transparent text-(--color-text-muted) hover:bg-surface hover:text-(--color-text-main) focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:outline-none"
+          className="absolute top-4 right-4 inline-flex size-7 cursor-pointer items-center justify-center rounded-sm border-none bg-transparent text-text-muted hover:bg-surface hover:text-text-main focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:outline-none"
         >
           <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
             <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />
