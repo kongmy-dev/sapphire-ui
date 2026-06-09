@@ -35,6 +35,10 @@
   --color-accent: #c5a065; /* Gold — decorative fill only (not AA for text on light) */
   --color-accent-dark: #b8904f; /* Gold hover (decorative) */
   --color-accent-text: #8a5a1f; /* Gold — AA-safe for text on light surface (4.6:1) */
+  --color-accent-on-fill: #b8904f; /* Brand gold for text/icons sitting ON a tinted or
+    coloured fill (accent-tinted callout, navy surface) where the fill — not the page —
+    supplies the contrast context. Brighter than --color-accent-text; do NOT use on the
+    plain page surface (use --color-accent-text there). */
   --color-surface: #f4f6f8; /* Off-white page background */
 
   /* ── Text ───────────────────────────────────────────────── */
@@ -79,6 +83,17 @@
   --radius-md: 8px; /* Cards */
   --radius-btn: 6px; /* Buttons */
   --radius-pill: 9999px; /* Tags, badges */
+
+  /* ── Elevation & motion ─────────────────────────────────────
+     Shared so card hover-lift and transitions are consistent across
+     consumers. `Card hoverable` uses --shadow-card-hover. */
+  --shadow-sm: 0 1px 3px rgb(10, 25, 47, 0.06), 0 1px 2px rgb(10, 25, 47, 0.04);
+  --shadow-md: 0 4px 16px rgb(10, 25, 47, 0.08), 0 2px 6px rgb(10, 25, 47, 0.05);
+  --shadow-lg: 0 8px 32px rgb(10, 25, 47, 0.12), 0 4px 12px rgb(10, 25, 47, 0.07);
+  --shadow-card-hover: 0 8px 24px rgb(10, 25, 47, 0.12);
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 350ms ease;
 }
 
 /* ── Dark theme ───────────────────────────────────────────────
@@ -93,4 +108,5 @@
   --color-text-muted: rgb(241, 245, 249, 0.72);
   --color-border: rgb(255, 255, 255, 0.12);
   --color-accent-text: #c5a065;
+  --color-accent-on-fill: #c5a065; /* brighter brand gold reads better on dark fills */
 }

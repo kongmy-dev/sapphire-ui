@@ -31,6 +31,8 @@
   --color-accent:        #c5a065;   /* Gold — backgrounds, decorative fills */
   --color-accent-dark:   #b8904f;   /* Gold hover (decorative use only) */
   --color-accent-text:   #8a5a1f;   /* Gold — AA-safe for text on light surface (4.6:1) */
+  --color-accent-on-fill: #b8904f;  /* Brand gold for text/icons ON a tinted/coloured fill
+                                       (callout, navy surface). Not for the plain page surface. */
   --color-surface:       #f4f6f8;   /* Off-white background */
 
   /* Text */
@@ -84,6 +86,7 @@
   --color-text-muted:    rgb(241, 245, 249, 0.72);
   --color-border:        rgb(255, 255, 255, 0.12);
   --color-accent-text:   #c5a065;
+  --color-accent-on-fill: #c5a065;  /* brighter brand gold on dark fills */
 }
 
 /* ─── Scrollbar Gutter ───────────────────────────────────────────────── */
