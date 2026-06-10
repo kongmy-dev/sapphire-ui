@@ -2,6 +2,10 @@
  * KONGMY Digital Solutions — Design Tokens
  * Source: src/styles/global.css (kongmy-dev/landing-page)
  * Fonts: Google Fonts (Newsreader, Source Sans 3, JetBrains Mono)
+ *
+ * LEGACY REFERENCE ONLY — this file is a readable catalog and is not part
+ * of the build. The authoritative token source is src/theme.css, shipped
+ * to consumers as @kongmy-dev/sapphire-ui/theme.css.
  */
 
 /* ─── Google Fonts ──────────────────────────────────────────────────── */

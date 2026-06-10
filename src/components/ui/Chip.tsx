@@ -35,9 +35,11 @@ export interface ChipProps
   leading?: ReactNode;
   /**
    * When provided, renders a close (×) button. The chip becomes
-   * dismissible and screen-reader–accessible via aria-label "Remove".
+   * dismissible and screen-reader–accessible via `dismissLabel`.
    */
   onDismiss?: (event: MouseEvent<HTMLButtonElement>) => void;
+  /** Accessible label for the dismiss button (override for i18n). */
+  dismissLabel?: string;
 }
 
 /**
@@ -46,7 +48,7 @@ export interface ChipProps
  * entity (selectable, removable).
  */
 const Chip = forwardRef<HTMLSpanElement, ChipProps>(
-  ({ className, variant, size, leading, children, onDismiss, ...props }, ref) => (
+  ({ className, variant, size, leading, children, onDismiss, dismissLabel = 'Remove', ...props }, ref) => (
     <span ref={ref} className={cn(chipVariants({ variant, size }), className)} {...props}>
       {leading && <span className="inline-flex shrink-0 items-center">{leading}</span>}
       <span className="truncate">{children}</span>
@@ -54,8 +56,9 @@ const Chip = forwardRef<HTMLSpanElement, ChipProps>(
         <button
           type="button"
           onClick={onDismiss}
-          aria-label="Remove"
-          className="ml-0.5 inline-flex size-4 cursor-pointer items-center justify-center rounded-full border-none bg-transparent p-0 text-inherit outline-none hover:bg-black/10 focus-visible:ring-2 focus-visible:ring-(--color-focus-ring)"
+          aria-label={dismissLabel}
+          // negative margin keeps the chip footprint while growing the hit area
+          className="-my-1 ml-0.5 inline-flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-full border-none bg-transparent p-0 text-inherit outline-none hover:bg-black/10 focus-visible:ring-2 focus-visible:ring-(--color-focus-ring)"
         >
           <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
             <path d="M1 1l8 8M9 1l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />

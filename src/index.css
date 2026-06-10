@@ -60,6 +60,7 @@
 
   /* Borders */
   --color-border:        #e2e8f0;
+  --color-border-strong: #cbd5e1;  /* Form-control borders — heavier than hairline */
   --color-border-dark:   rgb(255, 255, 255, 0.12);
 
   /* States */
@@ -85,6 +86,7 @@
   --color-text-strong:   #f1f5f9;   /* flips for headings/strong text */
   --color-text-muted:    rgb(241, 245, 249, 0.72);
   --color-border:        rgb(255, 255, 255, 0.12);
+  --color-border-strong: rgb(255, 255, 255, 0.28);
   --color-accent-text:   #c5a065;
   --color-accent-on-fill: #c5a065;  /* brighter brand gold on dark fills */
 }
@@ -254,9 +256,9 @@ html {
 
   .btn-primary {
     background: var(--color-primary);
-    color:      #fff;
+    color:      var(--color-white);
   }
-  .btn-primary:hover { background: var(--color-primary-hover); color: #fff; }
+  .btn-primary:hover { background: var(--color-primary-hover); color: var(--color-white); }
 
   .btn-outline {
     background:  transparent;
@@ -271,6 +273,30 @@ html {
     border:     1.5px solid var(--color-accent);
   }
   .btn-ghost:hover { background: var(--color-hover-overlay); }
+
+  .btn-accent {
+    background: var(--color-accent);
+    color:      var(--color-primary);
+  }
+  .btn-accent:hover { background: var(--color-accent-dark); }
+
+  .btn-destructive {
+    background: var(--color-error);
+    color:      var(--color-text-on-dark);
+  }
+  .btn-destructive:hover { background: var(--color-error-hover); }
+
+  /* Size modifiers — compose with any .btn-* variant: `btn btn-primary btn-sm` */
+  .btn-xs { padding: var(--space-1) var(--space-2); font-size: var(--text-xs); }
+  .btn-sm { padding: var(--space-2) var(--space-3); font-size: var(--text-sm); }
+  .btn-lg { padding: var(--space-4) var(--space-8); font-size: var(--text-lg); }
+  .btn-block { width: 100%; }
+
+  .btn:disabled, .btn[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  .btn:disabled:active, .btn[aria-disabled="true"]:active { transform: none; }
 
   /* Tags */
   .tag {
@@ -297,6 +323,29 @@ html {
     border-color: var(--color-border-dark);
   }
 
+  /* Badges — CSS parity with the React <Badge> variants */
+  .badge {
+    display:        inline-flex;
+    align-items:    center;
+    gap:            6px;
+    padding:        3px 10px;
+    font-family:    var(--font-sans);
+    font-size:      11px;
+    font-weight:    600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-radius:  var(--radius-pill);
+    border:         1px solid var(--color-border);
+    background:     var(--color-surface);
+    color:          var(--color-text-muted);
+  }
+  .badge-accent  { background: rgb(197, 160, 101, 0.12); border-color: rgb(197, 160, 101, 0.3); color: var(--color-accent-text); }
+  .badge-dark    { background: rgb(255, 255, 255, 0.1); border-color: var(--color-border-dark); color: var(--color-text-on-dark); }
+  .badge-success { background: var(--color-success-bg); border-color: var(--color-success-border); color: var(--color-success); }
+  .badge-error   { background: var(--color-error-bg); border-color: var(--color-error-border); color: var(--color-error); }
+  .badge-warning { background: var(--color-warning-bg); border-color: var(--color-warning-border); color: var(--color-warning); }
+  .badge-info    { background: var(--color-info-bg); border-color: var(--color-info-border); color: var(--color-info); }
+
   /* Cards */
   .card {
     background:    var(--bg-card);
@@ -319,6 +368,9 @@ html {
   }
   .card-dark .t-heading, .card-dark .t-subheading { color: var(--color-text-on-dark); }
   .card-dark .t-body-sm { color: var(--color-text-on-dark-muted); }
+  /* Size / state modifiers — compose: `card card-compact`, `card card-static` */
+  .card-compact { padding: var(--space-5); }
+  .card-static, .card-static:hover { box-shadow: none; transform: none; }
 
   /* Typography */
   .t-display { font-family: var(--font-serif); font-size: var(--text-display); font-weight: 600; line-height: 1.1; letter-spacing: -0.01em; color: var(--color-text-strong); }
@@ -349,9 +401,13 @@ html {
   .k-switch[data-state="checked"] { background-color: var(--switch-active, var(--color-accent)); border-color: var(--switch-active, var(--color-accent)); }
   .k-switch:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
   .k-switch[data-disabled] { opacity: 0.5; cursor: not-allowed; }
-  .k-switch-thumb { display: block; width: 16px; height: 16px; background-color: white; border-radius: 50%; box-shadow: 0 1px 3px rgb(0,0,0,0.15); transition: transform 0.2s; will-change: transform; transform: translateX(2px); }
+  .k-switch-thumb { display: block; width: 16px; height: 16px; background-color: var(--color-white); border-radius: 50%; box-shadow: 0 1px 3px rgb(0,0,0,0.15); transition: transform 0.2s; will-change: transform; transform: translateX(2px); }
   .k-switch[data-state="checked"] .k-switch-thumb { transform: translateX(20px); }
   [data-theme="dark"] .k-switch { --switch-inactive: rgb(255, 255, 255, 0.28); }
+  /* Compact switch — pair with size="sm" on the React component */
+  .k-switch--sm { width: 32px; height: 18px; }
+  .k-switch--sm .k-switch-thumb { width: 12px; height: 12px; }
+  .k-switch--sm[data-state="checked"] .k-switch-thumb { transform: translateX(16px); }
 
   /* Slider (Radix UI) */
   .k-slider { position: relative; display: flex; align-items: center; user-select: none; touch-action: none; width: 100%; height: 20px; margin: 12px 0; }
@@ -448,6 +504,13 @@ html {
 
 @media (prefers-reduced-motion: reduce) {
   .skeleton, .spinner { animation: none; }
+  .btn, .card, .card-dark, .input,
+  .sapphire-toast, .sapphire-banner-dismiss,
+  .k-switch, .k-switch-thumb, .k-checkbox, .site-header-link {
+    transition: none !important;
+  }
+  .btn:active { transform: none; }
+  .card:hover { transform: none; }
 }
 
 /* ─── Dialog / Modal Animations ──────────────────────────── */

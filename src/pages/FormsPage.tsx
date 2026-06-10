@@ -39,6 +39,13 @@ export default function FormsPage() {
             </div>
           </div>
         </div>
+        <div className="docs-preview" style={{ marginTop: 12 }}>
+          <div className="docs-stack" style={{ maxWidth: 400 }}>
+            <Input size="sm" placeholder="Small" aria-label="Small input" />
+            <Input placeholder="Default" aria-label="Default input" />
+            <Input size="lg" placeholder="Large" aria-label="Large input" />
+          </div>
+        </div>
         <div className="docs-preview docs-preview--dark">
           <div style={{ maxWidth: 400 }}>
             <Label htmlFor="input-dark" style={{ color: 'var(--color-text-on-dark)' }}>Search</Label>
@@ -85,6 +92,7 @@ export default function FormsPage() {
             <Switch label="Marketing emails" defaultChecked />
             <Switch label="Disabled" disabled />
             <Switch label="Disabled · on" disabled defaultChecked />
+            <Switch label="Compact" size="sm" defaultChecked />
             <Switch
               label="Custom accent"
               defaultChecked
@@ -211,16 +219,18 @@ export default function FormsPage() {
           </thead>
           <tbody>
             <tr><td><code>variant</code></td><td><code>&apos;default&apos; | &apos;dark&apos; | &apos;mono&apos;</code></td><td><code>&apos;default&apos;</code></td></tr>
+            <tr><td><code>size</code></td><td><code>&apos;sm&apos; | &apos;default&apos; | &apos;lg&apos;</code></td><td><code>&apos;default&apos;</code></td></tr>
           </tbody>
         </table>
-        
+
         <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">NativeSelect</h3>
         <table className="docs-props-table">
           <thead>
             <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>variant</code></td><td><code>&apos;default&apos; | &apos;dark&apos; | &apos;ghost&apos;</code></td><td><code>&apos;default&apos;</code></td></tr>
+            <tr><td><code>variant</code></td><td><code>&apos;default&apos; | &apos;dark&apos;</code></td><td><code>&apos;default&apos;</code></td></tr>
+            <tr><td><code>size</code></td><td><code>&apos;sm&apos; | &apos;default&apos; | &apos;lg&apos;</code></td><td><code>&apos;default&apos;</code></td></tr>
           </tbody>
         </table>
       </section>

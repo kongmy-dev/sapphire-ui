@@ -6,6 +6,8 @@ import { cn } from '../../lib/utils';
 export interface SwitchProps extends Omit<ComponentPropsWithoutRef<typeof RadixSwitch.Root>, 'asChild'> {
   /** Label rendered next to the switch. */
   label?: string;
+  /** Visual size. */
+  size?: 'sm' | 'default';
 }
 
 /**
@@ -16,7 +18,7 @@ export interface SwitchProps extends Omit<ComponentPropsWithoutRef<typeof RadixS
  * override `--switch-active` CSS variable instead.
  */
 const Switch = forwardRef<HTMLButtonElement, SwitchProps>(
-  ({ className, label, id: idProp, ...props }, ref) => {
+  ({ className, label, size = 'default', id: idProp, ...props }, ref) => {
     const autoId = useId();
     const id = idProp || autoId;
 
@@ -25,7 +27,7 @@ const Switch = forwardRef<HTMLButtonElement, SwitchProps>(
         <RadixSwitch.Root
           ref={ref}
           id={id}
-          className={cn('k-switch', className)}
+          className={cn('k-switch', size === 'sm' && 'k-switch--sm', className)}
           {...props}
         >
           <RadixSwitch.Thumb className="k-switch-thumb" />

@@ -1,9 +1,10 @@
-import { type HTMLAttributes } from 'react';
+import { forwardRef, type HTMLAttributes } from 'react';
+import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../lib/utils';
 
 const badgeVariants = cva(
-  'inline-flex items-center gap-1.5 rounded-full px-2.5 py-[3px] font-sans text-[11px] font-semibold tracking-[0.04em] uppercase transition-colors',
+  'inline-flex items-center gap-1.5 rounded-full font-sans font-semibold tracking-[0.04em] uppercase transition-colors',
   {
     variants: {
       variant: {
@@ -24,21 +25,38 @@ const badgeVariants = cva(
         info:
           'border border-info-border bg-info-bg text-info',
       },
+      size: {
+        sm: 'gap-1 px-2 py-[2px] text-[10px]',
+        default: 'px-2.5 py-[3px] text-[11px]',
+        lg: 'px-3 py-1 text-xs',
+      },
     },
     defaultVariants: {
       variant: 'default',
+      size: 'default',
     },
   },
 );
 
 export interface BadgeProps
   extends HTMLAttributes<HTMLSpanElement>,
-    VariantProps<typeof badgeVariants> {}
-
-function Badge({ className, variant, ...props }: BadgeProps) {
-  return (
-    <span className={cn(badgeVariants({ variant }), className)} {...props} />
-  );
+    VariantProps<typeof badgeVariants> {
+  /** Render as child element (e.g. <a>, router Link) */
+  asChild?: boolean;
 }
+
+const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : 'span';
+    return (
+      <Comp
+        ref={ref}
+        className={cn(badgeVariants({ variant, size }), className)}
+        {...props}
+      />
+    );
+  },
+);
+Badge.displayName = 'Badge';
 
 export { Badge, badgeVariants };

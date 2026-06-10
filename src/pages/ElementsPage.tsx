@@ -124,6 +124,75 @@ import '@kongmy-dev/sapphire-ui/elements';`}
         </table>
       </section>
 
+      {/* ─── Behaviour elements ─────────────────────────────────────── */}
+      <section className="docs-section">
+        <h2 className="docs-section-title">Toast, Banner &amp; Cookie Banner</h2>
+        <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
+          The behaviour elements are fully attribute-driven in v2 — copy, labels, and timing
+          are configurable per instance, so localized sites need no forks.
+        </p>
+        <div className="docs-preview">
+          <div className="docs-stack" style={{ gap: 16 }}>
+            <div>
+              <span className="mb-2 block font-mono text-xs font-bold tracking-widest text-accent uppercase">Toast</span>
+              <CodeBlock
+                variant="light"
+                language="html"
+                copyable
+                code={`<sapphire-toast duration="8000"></sapphire-toast>
+<script>
+  window.__sapphireToast('Saved.', 'success');           // uses duration attr
+  window.__sapphireToast('Slow down.', 'warning', 3000); // per-call override
+</script>`}
+              />
+            </div>
+            <div>
+              <span className="mb-2 block font-mono text-xs font-bold tracking-widest text-accent uppercase">Banner</span>
+              <CodeBlock
+                variant="light"
+                language="html"
+                copyable
+                code={`<sapphire-banner variant="accent" dismissible dismiss-label="Schließen"
+  storage-key="launch-2026">
+  Sapphire UI 2.0 is out.
+</sapphire-banner>`}
+              />
+            </div>
+            <div>
+              <span className="mb-2 block font-mono text-xs font-bold tracking-widest text-accent uppercase">Cookie Banner (localizable)</span>
+              <CodeBlock
+                variant="light"
+                language="html"
+                copyable
+                code={`<cookie-banner
+  heading="Privatsphäre"
+  description="Wir verwenden essenzielle Cookies."
+  privacy-url="/datenschutz"
+  privacy-label="Datenschutzerklärung"
+  accept-label="Akzeptieren"
+  decline-label="Ablehnen"
+></cookie-banner>`}
+              />
+            </div>
+          </div>
+        </div>
+
+        <h3 className="mt-6 mb-2 font-serif text-lg font-semibold">Attribute reference</h3>
+        <table className="docs-props-table">
+          <thead>
+            <tr><th>Attribute</th><th>Element</th><th>Effect</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>duration</code></td><td><code>sapphire-toast</code></td><td>Default auto-dismiss in ms (per-call argument wins). Default 5000.</td></tr>
+            <tr><td><code>variant</code></td><td><code>sapphire-banner</code></td><td><code>info | success | warning | error | accent</code>. Reactive.</td></tr>
+            <tr><td><code>dismissible</code> / <code>dismiss-label</code></td><td><code>sapphire-banner</code></td><td>Renders a close button; label overrides the accessible name.</td></tr>
+            <tr><td><code>storage-key</code></td><td><code>sapphire-banner</code></td><td>Persists dismissal in localStorage.</td></tr>
+            <tr><td><code>heading</code>, <code>description</code>, <code>privacy-url</code>, <code>privacy-label</code>, <code>accept-label</code>, <code>decline-label</code></td><td><code>cookie-banner</code></td><td>Localize every visible string.</td></tr>
+            <tr><td><code>force-show</code></td><td><code>cookie-banner</code></td><td>Re-opens the banner (e.g. from a “Cookie settings” footer link).</td></tr>
+          </tbody>
+        </table>
+      </section>
+
       {/* ─── SEOHead ────────────────────────────────────────────────── */}
       <section className="docs-section">
         <h2 className="docs-section-title">SEO / Head</h2>

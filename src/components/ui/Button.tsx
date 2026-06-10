@@ -32,10 +32,18 @@ const buttonVariants = cva(
           'rounded-btn border-none bg-transparent text-error hover:bg-hover-overlay focus-visible:ring-error-ring',
       },
       size: {
+        xs: 'gap-1.5 px-2.5 py-1 text-xs',
         sm: 'px-3 py-1.5 text-[13px]',
         default: 'px-4 py-[9px] text-[14px]',
         lg: 'px-8 py-4 text-lg',
+        xl: 'gap-2.5 px-10 py-5 text-xl',
+        'icon-sm': 'p-1.5',
         icon: 'p-2.5',
+        'icon-lg': 'p-3.5',
+      },
+      /** Stretch to fill the parent's inline axis — handy for mobile-first stacked CTAs. */
+      fullWidth: {
+        true: 'w-full',
       },
     },
     defaultVariants: {
@@ -45,27 +53,77 @@ const buttonVariants = cva(
   },
 );
 
+/** Icon / spinner sizing that tracks the button size so glyphs never look mismatched. */
+const iconSizeBySize: Record<string, string> = {
+  xs: 'text-[14px]',
+  sm: 'text-[16px]',
+  default: 'text-[20px]',
+  lg: 'text-[22px]',
+  xl: 'text-[24px]',
+  'icon-sm': 'text-[16px]',
+  icon: 'text-[20px]',
+  'icon-lg': 'text-[24px]',
+};
+
+const spinnerSizeBySize: Record<string, string> = {
+  xs: 'size-3',
+  sm: 'size-3.5',
+  default: 'size-4',
+  lg: 'size-5',
+  xl: 'size-5',
+  'icon-sm': 'size-3.5',
+  icon: 'size-4',
+  'icon-lg': 'size-5',
+};
+
 export interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   /** Render as child element (e.g. <a>, router Link) */
   asChild?: boolean;
-  /** Material Symbols icon name to prepend */
+  /** Material Symbols icon name */
   icon?: string;
-  /** Show loading spinner */
+  /** Which side of the label the icon sits on */
+  iconPosition?: 'start' | 'end';
+  /** Show loading spinner and disable interaction (sets aria-busy) */
   loading?: boolean;
   children?: ReactNode;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, icon, loading, children, disabled, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      fullWidth,
+      asChild = false,
+      icon,
+      iconPosition = 'start',
+      loading,
+      children,
+      disabled,
+      ...props
+    },
+    ref,
+  ) => {
     const Comp = asChild ? Slot : 'button';
+    const iconEl =
+      icon && !loading ? (
+        <span
+          aria-hidden="true"
+          className={cn('material-symbols-outlined', iconSizeBySize[size ?? 'default'])}
+        >
+          {icon}
+        </span>
+      ) : null;
 
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(buttonVariants({ variant, size, fullWidth, className }))}
         ref={ref}
         disabled={disabled || loading}
+        aria-busy={loading || undefined}
         {...props}
       >
         {asChild ? (
@@ -73,12 +131,17 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ) : (
           <>
             {loading && (
-              <span className="inline-block size-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+              <span
+                aria-hidden="true"
+                className={cn(
+                  'inline-block animate-spin rounded-full border-2 border-current border-t-transparent',
+                  spinnerSizeBySize[size ?? 'default'],
+                )}
+              />
             )}
-            {icon && !loading && (
-              <span className="material-symbols-outlined text-[20px]">{icon}</span>
-            )}
+            {iconPosition === 'start' && iconEl}
             {children}
+            {iconPosition === 'end' && iconEl}
           </>
         )}
       </Comp>

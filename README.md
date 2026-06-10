@@ -8,7 +8,13 @@ Sapphire UI is the official, editorial-focused design system for **KONGMY Digita
 
 ## 🎨 Architectural Design System
 
-Sapphire UI operates on a **dual-export architecture**, allowing it to be consumed as either an independent stylesheet (for HTML, Astro, and web products) or a strict typed React component library.
+Sapphire UI operates on a **three-layer export architecture** — consume it at whichever level fits your stack:
+
+1. **CSS layer** (`style.css`) — design tokens plus framework-agnostic component classes (`.btn .btn-primary .btn-lg`, `.badge-success`, `.card card-compact`, …) for plain HTML, Astro, Angular, Vue.
+2. **Web Components layer** (`/elements`) — `<sapphire-toast>`, `<sapphire-banner>`, `<sapphire-site-header>`, `<cookie-banner>` and friends; attribute-driven (including all user-facing copy for i18n), no React runtime.
+3. **React layer** (root export + per-component subpaths) — typed components on Radix UI primitives with CVA variants, exported `*Variants` for composition, and `asChild` polymorphism.
+
+All three layers read from one token contract (`theme.css`); override a CSS custom property once and every layer follows.
 
 ```mermaid
 graph TD

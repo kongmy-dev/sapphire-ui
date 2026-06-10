@@ -62,12 +62,14 @@ export interface SheetContentProps
     VariantProps<typeof sheetVariants> {
   /** Hide the default × close button in the top-right corner. */
   hideClose?: boolean;
+  /** Accessible label for the close button (override for i18n). */
+  closeLabel?: string;
 }
 
 const SheetContent = forwardRef<
   React.ComponentRef<typeof DialogPrimitive.Content>,
   SheetContentProps
->(({ className, side = 'right', hideClose, children, ...props }, ref) => (
+>(({ className, side = 'right', hideClose, closeLabel = 'Close', children, ...props }, ref) => (
   <SheetPortal>
     <SheetOverlay />
     <DialogPrimitive.Content
@@ -78,8 +80,8 @@ const SheetContent = forwardRef<
       {children}
       {!hideClose && (
         <DialogPrimitive.Close
-          aria-label="Close"
-          className="absolute top-4 right-4 inline-flex size-7 cursor-pointer items-center justify-center rounded-sm border-none bg-transparent text-text-muted hover:bg-surface hover:text-text-main focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:outline-none"
+          aria-label={closeLabel}
+          className="absolute top-3 right-3 inline-flex size-9 cursor-pointer items-center justify-center rounded-sm border-none bg-transparent text-text-muted hover:bg-surface hover:text-text-main focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:outline-none"
         >
           <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
             <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />
@@ -91,12 +93,22 @@ const SheetContent = forwardRef<
 ));
 SheetContent.displayName = 'SheetContent';
 
-const SheetHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('flex flex-col gap-1.5 text-left', className)} {...props} />
+const SheetHeader = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div ref={ref} className={cn('flex flex-col gap-1.5 text-left', className)} {...props} />
+  ),
 );
+SheetHeader.displayName = 'SheetHeader';
 
-const SheetFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end', className)} {...props} />
+const SheetFooter = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn('mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end', className)}
+      {...props}
+    />
+  ),
 );
+SheetFooter.displayName = 'SheetFooter';
 
-export { SheetContent, SheetHeader, SheetFooter, SheetOverlay };
+export { SheetContent, SheetHeader, SheetFooter, SheetOverlay, sheetVariants };
