@@ -41,7 +41,7 @@ function Icon({
         fontVariationSettings: `"FILL" ${filled ? 1 : 0}, "wght" ${weight}, "GRAD" 0, "opsz" ${size}`,
         ...style,
       }}
-      aria-hidden="true"
+      aria-hidden={props['aria-label'] ? undefined : 'true'}
       {...props}
     >
       {name}

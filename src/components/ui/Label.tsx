@@ -1,20 +1,36 @@
 import { forwardRef, type LabelHTMLAttributes } from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../lib/utils';
 
-export interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
+const labelVariants = cva(
+  'mb-1 block font-sans font-semibold text-(--color-text-strong)',
+  {
+    variants: {
+      size: {
+        sm: 'text-xs',
+        default: 'text-sm',
+        lg: 'text-base',
+      },
+    },
+    defaultVariants: {
+      size: 'default',
+    },
+  },
+);
+
+export interface LabelProps
+  extends LabelHTMLAttributes<HTMLLabelElement>,
+    VariantProps<typeof labelVariants> {
   /** Show red asterisk for required fields */
   required?: boolean;
 }
 
 const Label = forwardRef<HTMLLabelElement, LabelProps>(
-  ({ className, required, children, ...props }, ref) => {
+  ({ className, size, required, children, ...props }, ref) => {
     return (
       <label
         ref={ref}
-        className={cn(
-          'mb-1 block font-sans text-sm font-semibold text-(--color-text-strong)',
-          className,
-        )}
+        className={cn(labelVariants({ size }), className)}
         {...props}
       >
         {children}
@@ -29,4 +45,4 @@ const Label = forwardRef<HTMLLabelElement, LabelProps>(
 );
 Label.displayName = 'Label';
 
-export { Label };
+export { Label, labelVariants };

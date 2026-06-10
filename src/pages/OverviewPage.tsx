@@ -5,13 +5,19 @@ import { Icon } from '../components/ui/Icon';
 const layers = [
   {
     name: 'Layer 1: CSS Design System',
-    desc: 'Framework-agnostic tokens, utility classes, and component styles. Works in Astro, Angular, Vue, and vanilla HTML.',
+    desc: 'Framework-agnostic tokens, utility classes, and component styles — .btn, .badge, .card and friends. Works in Astro, Angular, Vue, and vanilla HTML.',
     icon: 'palette',
     code: `import '@kongmy-dev/sapphire-ui/style.css'`,
   },
   {
-    name: 'Layer 2: React Components',
-    desc: 'Typed React components built on Radix UI primitives. Used in React SPAs and Astro islands.',
+    name: 'Layer 2: Web Components',
+    desc: 'Framework-agnostic custom elements for site chrome and behaviour — <sapphire-toast>, <sapphire-banner>, <sapphire-site-header>. No React required.',
+    icon: 'deployed_code',
+    code: `import '@kongmy-dev/sapphire-ui/elements'`,
+  },
+  {
+    name: 'Layer 3: React Components',
+    desc: 'Typed React components built on Radix UI primitives, with CVA variants and asChild polymorphism. Used in React SPAs and Astro islands.',
     icon: 'code',
     code: `import { Button, Card } from '@kongmy-dev/sapphire-ui'`,
   },
@@ -169,7 +175,57 @@ export default function OverviewPage() {
               <code className="docs-code" style={{ display: 'block', padding: 12 }}>
 {`import '@kongmy-dev/sapphire-ui/style.css'
 
-<button class="btn-primary">Get Started</button>`}
+<button class="btn btn-primary btn-lg">Get Started</button>`}
+              </code>
+            </div>
+            <div>
+              <Badge variant="warning" style={{ marginBottom: 8 }}>Web Components (no framework)</Badge>
+              <code className="docs-code" style={{ display: 'block', padding: 12 }}>
+{`import '@kongmy-dev/sapphire-ui/elements'
+import '@kongmy-dev/sapphire-ui/style.css'
+
+<sapphire-banner variant="accent" dismissible>Ships today.</sapphire-banner>`}
+              </code>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="docs-section">
+        <h2 className="docs-section-title">Theming &amp; Customization</h2>
+        <p style={{ fontFamily: 'var(--font-sans)', fontSize: 14, color: 'var(--color-text-muted)', maxWidth: '64ch' }}>
+          Every component reads from the CSS custom properties declared in{' '}
+          <code className="docs-code">theme.css</code> — colors, type scale, spacing, radii,
+          shadows, and motion. Override any token after the import and the whole system
+          follows, across all three layers.
+        </p>
+        <div className="docs-preview" style={{ padding: 24 }}>
+          <div className="docs-stack" style={{ gap: 16 }}>
+            <div>
+              <Badge variant="accent" style={{ marginBottom: 8 }}>Override tokens</Badge>
+              <code className="docs-code" style={{ display: 'block', padding: 12, whiteSpace: 'pre' }}>
+{`/* after importing style.css */
+:root {
+  --color-accent: #7c9a65;     /* rebrand the gold */
+  --radius-btn: 10px;          /* rounder buttons everywhere */
+}`}
+              </code>
+            </div>
+            <div>
+              <Badge variant="info" style={{ marginBottom: 8 }}>Tailwind v4 consumers</Badge>
+              <code className="docs-code" style={{ display: 'block', padding: 12, whiteSpace: 'pre' }}>
+{`@import 'tailwindcss';
+@import '@kongmy-dev/sapphire-ui/theme.css';
+/* now bg-primary, text-accent-text, text-display … generate from Sapphire tokens */`}
+              </code>
+            </div>
+            <div>
+              <Badge variant="default" style={{ marginBottom: 8 }}>Per-component (React)</Badge>
+              <code className="docs-code" style={{ display: 'block', padding: 12, whiteSpace: 'pre' }}>
+{`// every primitive exports its CVA variants for composition
+import { Button, buttonVariants } from '@kongmy-dev/sapphire-ui/button'
+
+<a className={buttonVariants({ variant: 'outline', size: 'sm' })} href="/docs">Docs</a>`}
               </code>
             </div>
           </div>

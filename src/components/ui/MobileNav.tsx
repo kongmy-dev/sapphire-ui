@@ -25,6 +25,10 @@ export interface MobileNavProps {
    * closes regardless. Without this, items navigate via standard <a href>.
    */
   onNavigate?: (href: string, event: MouseEvent<HTMLAnchorElement>) => void;
+  /** Accessible label for the menu toggle button (override for i18n). */
+  toggleLabel?: string;
+  /** Accessible label for the drawer close button (override for i18n). */
+  closeLabel?: string;
 }
 
 /**
@@ -40,6 +44,8 @@ export function MobileNav({
   extraActions,
   onNavigate,
   pathname: externalPathname,
+  toggleLabel = 'Toggle navigation menu',
+  closeLabel = 'Close navigation menu',
 }: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [internalPathname, setInternalPathname] = useState<string>(() =>
@@ -89,7 +95,7 @@ export function MobileNav({
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="flex cursor-pointer items-center justify-center rounded-md border-none bg-transparent p-2 text-text-on-dark outline-none hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-accent"
-          aria-label="Toggle navigation menu"
+          aria-label={toggleLabel}
           aria-expanded={isOpen}
         >
           <span className="material-symbols-outlined" style={{ fontSize: 24 }}>
@@ -118,7 +124,7 @@ export function MobileNav({
 
       {/* Sliding Mobile Drawer */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-[280px] flex-col border-r border-white/10 bg-primary p-6 text-text-on-dark shadow-2xl transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-[min(280px,85vw)] flex-col border-r border-white/10 bg-primary p-6 text-text-on-dark shadow-2xl transition-transform duration-300 ease-in-out motion-reduce:transition-none ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -131,8 +137,8 @@ export function MobileNav({
           </div>
           <button
             onClick={() => setIsOpen(false)}
-            className="flex cursor-pointer items-center justify-center rounded-md border-none bg-transparent p-1.5 text-text-on-dark outline-none hover:bg-white/5"
-            aria-label="Close navigation menu"
+            className="flex cursor-pointer items-center justify-center rounded-md border-none bg-transparent p-2 text-text-on-dark outline-none hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-accent"
+            aria-label={closeLabel}
           >
             <span className="material-symbols-outlined" style={{ fontSize: 20 }}>
               close

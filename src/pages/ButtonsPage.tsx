@@ -3,7 +3,8 @@ import { IconMark } from '../components/ui/IconMark';
 
 type Variant = NonNullable<ButtonProps['variant']>;
 const variants: readonly Variant[] = ['primary', 'outline', 'ghost', 'accent', 'on-dark-primary', 'on-dark-outline', 'link', 'premium', 'destructive', 'destructive-outline'] as const;
-const sizes = ['sm', 'default', 'lg'] as const;
+const sizes = ['xs', 'sm', 'default', 'lg', 'xl'] as const;
+const iconSizes = ['icon-sm', 'icon', 'icon-lg'] as const;
 const showcaseVariants: readonly Variant[] = ['primary', 'outline', 'ghost', 'accent', 'link', 'destructive', 'destructive-outline'];
 
 export default function ButtonsPage() {
@@ -41,6 +42,16 @@ export default function ButtonsPage() {
             ))}
           </div>
         </div>
+        <div className="docs-preview" style={{ marginTop: 12 }}>
+          <div className="docs-flex" style={{ alignItems: 'center' }}>
+            {iconSizes.map((s) => (
+              <Button key={s} size={s} variant="outline" icon="settings" aria-label={`Settings (${s})`} />
+            ))}
+          </div>
+        </div>
+        <div className="docs-preview" style={{ marginTop: 12, maxWidth: 360 }}>
+          <Button fullWidth>Full width — stacked mobile CTA</Button>
+        </div>
       </section>
 
       <section className="docs-section">
@@ -48,11 +59,15 @@ export default function ButtonsPage() {
         <div className="docs-preview">
           <div className="docs-flex">
             <Button icon="arrow_forward">Continue</Button>
+            <Button icon="arrow_forward" iconPosition="end">Next step</Button>
             <Button variant="outline" icon="cloud">Deploy</Button>
             <Button variant="ghost" icon="smart_toy">AI Assist</Button>
             <Button size="icon" variant="outline" icon="settings" aria-label="Settings" />
           </div>
         </div>
+        <p className="mt-4 font-sans text-sm/relaxed text-text-muted">
+          The icon glyph and the loading spinner scale automatically with the button size.
+        </p>
       </section>
 
       <section className="docs-section">
@@ -130,9 +145,11 @@ export default function ButtonsPage() {
           </thead>
           <tbody>
             <tr><td><code>variant</code></td><td><code>{variants.join(' | ')}</code></td><td><code>primary</code></td></tr>
-            <tr><td><code>size</code></td><td><code>{sizes.join(' | ')} | icon</code></td><td><code>default</code></td></tr>
+            <tr><td><code>size</code></td><td><code>{sizes.join(' | ')} | {iconSizes.join(' | ')}</code></td><td><code>default</code></td></tr>
+            <tr><td><code>fullWidth</code></td><td><code>boolean</code></td><td><code>false</code></td></tr>
             <tr><td><code>asChild</code></td><td><code>boolean</code></td><td><code>false</code></td></tr>
             <tr><td><code>icon</code></td><td><code>string</code></td><td>—</td></tr>
+            <tr><td><code>iconPosition</code></td><td><code>start | end</code></td><td><code>start</code></td></tr>
             <tr><td><code>loading</code></td><td><code>boolean</code></td><td><code>false</code></td></tr>
           </tbody>
         </table>

@@ -80,7 +80,7 @@ export class BannerElement extends SSRHTMLElement {
     if (dismissible && !this.querySelector('[data-sapphire-banner-dismiss]')) {
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.setAttribute('aria-label', 'Dismiss');
+      btn.setAttribute('aria-label', this.getAttribute('dismiss-label') || 'Dismiss');
       btn.setAttribute('data-sapphire-banner-dismiss', '');
       btn.className = 'sapphire-banner-dismiss';
       btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>';

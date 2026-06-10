@@ -34,6 +34,13 @@ export default function DataPage() {
             ))}
           </div>
         </div>
+        <div className="docs-preview" style={{ marginTop: 12 }}>
+          <div className="docs-flex" style={{ alignItems: 'center' }}>
+            <Badge size="sm">Small</Badge>
+            <Badge>Default</Badge>
+            <Badge size="lg">Large</Badge>
+          </div>
+        </div>
         <div className="docs-preview docs-preview--dark" style={{ marginTop: 12 }}>
           <div className="docs-flex">
             <Badge variant="dark">On Dark</Badge>
@@ -256,6 +263,8 @@ export default function DataPage() {
           </thead>
           <tbody>
             <tr><td><code>variant</code></td><td><code>&apos;default&apos; | &apos;accent&apos; | &apos;dark&apos; | &apos;success&apos; | &apos;error&apos; | &apos;warning&apos; | &apos;info&apos;</code></td><td><code>&apos;default&apos;</code></td></tr>
+            <tr><td><code>size</code></td><td><code>&apos;sm&apos; | &apos;default&apos; | &apos;lg&apos;</code></td><td><code>&apos;default&apos;</code></td></tr>
+            <tr><td><code>asChild</code></td><td><code>boolean</code></td><td><code>false</code></td></tr>
           </tbody>
         </table>
         

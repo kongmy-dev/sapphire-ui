@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 import * as SelectPrimitive from '@radix-ui/react-select';
+import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../lib/utils';
 
 /**
@@ -20,20 +21,33 @@ export const Select = SelectPrimitive.Root;
 export const SelectGroup = SelectPrimitive.Group;
 export const SelectValue = SelectPrimitive.Value;
 
+const selectTriggerVariants = cva(
+  'flex w-full cursor-pointer items-center justify-between rounded-sm border border-border bg-(--color-card-bg) font-sans text-text-main placeholder:text-text-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
+  {
+    variants: {
+      size: {
+        sm: 'h-8 px-2.5 py-1.5 text-sm',
+        default: 'h-10 px-3 py-2 text-sm',
+        lg: 'h-12 px-4 py-2.5 text-base',
+      },
+    },
+    defaultVariants: {
+      size: 'default',
+    },
+  },
+);
+
+export interface SelectTriggerProps
+  extends React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>,
+    VariantProps<typeof selectTriggerVariants> {}
+
 const SelectTrigger = forwardRef<
   React.ComponentRef<typeof SelectPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
+  SelectTriggerProps
+>(({ className, size, children, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
-    className={cn(
-      'flex h-10 w-full cursor-pointer items-center justify-between rounded-sm border border-border bg-(--color-card-bg) px-3 py-2 font-sans text-sm text-text-main',
-      'placeholder:text-text-muted',
-      'focus:outline-none focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:ring-offset-1',
-      'disabled:cursor-not-allowed disabled:opacity-50',
-      '[&>span]:line-clamp-1',
-      className,
-    )}
+    className={cn(selectTriggerVariants({ size }), className)}
     {...props}
   >
     {children}
@@ -124,4 +138,11 @@ const SelectSeparator = forwardRef<
 ));
 SelectSeparator.displayName = 'SelectSeparator';
 
-export { SelectTrigger, SelectContent, SelectLabel, SelectItem, SelectSeparator };
+export {
+  SelectTrigger,
+  SelectContent,
+  SelectLabel,
+  SelectItem,
+  SelectSeparator,
+  selectTriggerVariants,
+};

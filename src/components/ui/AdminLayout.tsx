@@ -13,10 +13,12 @@ export interface AdminLayoutProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
   /** Class name for the inner main content wrapper */
   contentClassName?: string;
+  /** Max width of the main content column (any CSS length). Default 1280px. */
+  contentMaxWidth?: string;
 }
 
 const AdminLayout = forwardRef<HTMLDivElement, AdminLayoutProps>(
-  ({ className, sidebar, header, children, contentClassName, ...props }, ref) => {
+  ({ className, sidebar, header, children, contentClassName, contentMaxWidth, ...props }, ref) => {
     return (
       <div
         ref={ref}
@@ -34,6 +36,7 @@ const AdminLayout = forwardRef<HTMLDivElement, AdminLayoutProps>(
               'sf-admin-content mx-auto w-full max-w-[1280px] flex-1 overflow-y-auto p-8 pb-20 max-[760px]:px-4 max-[760px]:py-6',
               contentClassName
             )}
+            style={contentMaxWidth ? { maxWidth: contentMaxWidth } : undefined}
           >
             {children}
           </main>
@@ -55,11 +58,15 @@ export interface AdminSidebarProps extends HTMLAttributes<HTMLDivElement> {
   onToggleCollapse?: (collapsed: boolean) => void;
   /** Footer element, such as profile info or sign-out */
   footer?: ReactNode;
+  /** Accessible label for the expand button (override for i18n). */
+  expandLabel?: string;
+  /** Accessible label for the collapse button (override for i18n). */
+  collapseLabel?: string;
   children?: ReactNode;
 }
 
 const AdminSidebar = forwardRef<HTMLDivElement, AdminSidebarProps>(
-  ({ className, brand, collapsed = false, onToggleCollapse, footer, children, ...props }, ref) => {
+  ({ className, brand, collapsed = false, onToggleCollapse, footer, expandLabel = 'Expand sidebar', collapseLabel = 'Collapse sidebar', children, ...props }, ref) => {
     const isControlled = onToggleCollapse !== undefined;
     const [localCollapsed, setLocalCollapsed] = useState(false);
     const activeCollapsed = isControlled ? collapsed : localCollapsed;
@@ -95,9 +102,9 @@ const AdminSidebar = forwardRef<HTMLDivElement, AdminSidebarProps>(
           <button
             type="button"
             onClick={handleToggle}
-            aria-label={activeCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-            className="flex size-8 cursor-pointer items-center justify-center rounded-btn border-none bg-white/5 text-text-on-dark/70 hover:bg-white/10 hover:text-text-on-dark"
-            style={{ outline: 'none' }}
+            aria-label={activeCollapsed ? expandLabel : collapseLabel}
+            aria-expanded={!activeCollapsed}
+            className="flex size-8 cursor-pointer items-center justify-center rounded-btn border-none bg-white/5 text-text-on-dark/70 outline-none hover:bg-white/10 hover:text-text-on-dark focus-visible:ring-2 focus-visible:ring-accent"
           >
             <span className="material-symbols-outlined text-[18px]">
               {activeCollapsed ? 'menu_open' : 'menu'}

@@ -37,15 +37,17 @@ const DialogContent = forwardRef<
     maxWidth?: string;
     /** Hide the default close button */
     hideClose?: boolean;
+    /** Accessible label for the close button (override for i18n) */
+    closeLabel?: string;
   }
->(({ className, children, maxWidth = '800px', hideClose = false, ...props }, ref) => (
+>(({ className, children, maxWidth = '800px', hideClose = false, closeLabel = 'Close', ...props }, ref) => (
   <DialogPortal>
     <DialogOverlay />
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
         'fixed top-1/2 left-1/2 z-1001 -translate-1/2',
-        'flex max-h-[85vh] w-[90%] flex-col',
+        'flex max-h-[85vh] w-[calc(100vw-2rem)] flex-col sm:w-[90%]',
         'rounded-md bg-(--color-card-bg) shadow-(--shadow-lg)',
         'data-[state=closed]:animate-[dialogOut_150ms_ease] data-[state=open]:animate-[dialogIn_200ms_ease]',
         'outline-none',
@@ -56,7 +58,10 @@ const DialogContent = forwardRef<
     >
       {children}
       {!hideClose && (
-        <DialogPrimitive.Close className="absolute top-4 right-4 cursor-pointer rounded-sm border-none bg-transparent p-1.5 text-text-muted transition-colors outline-none hover:bg-surface hover:text-(--color-text-strong)">
+        <DialogPrimitive.Close
+          aria-label={closeLabel}
+          className="absolute top-3 right-3 inline-flex size-9 cursor-pointer items-center justify-center rounded-sm border-none bg-transparent text-text-muted transition-colors outline-none hover:bg-surface hover:text-(--color-text-strong) focus-visible:ring-2 focus-visible:ring-(--color-focus-ring)"
+        >
           <Icon name="close" size={18} />
         </DialogPrimitive.Close>
       )}
@@ -184,14 +189,18 @@ function ConfirmDialog({
         <DialogFooter>
           <button
             onClick={handleCancel}
-            className="cursor-pointer rounded-btn border border-border bg-surface px-5 py-2.5 font-sans text-sm font-medium text-(--color-text-strong) transition-colors outline-none hover:bg-border"
+            className="cursor-pointer rounded-btn border border-border bg-surface px-5 py-2.5 font-sans text-sm font-medium text-(--color-text-strong) transition-colors outline-none hover:bg-border focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:ring-offset-2"
           >
             {cancelLabel}
           </button>
           <button
             onClick={() => { onConfirm(); onOpenChange(false); }}
-            className="cursor-pointer rounded-btn border-none px-5 py-2.5 font-sans text-sm font-medium text-text-on-dark transition-colors outline-none"
-            style={{ backgroundColor: isDanger ? 'var(--color-error)' : 'var(--color-primary)' }}
+            className={cn(
+              'cursor-pointer rounded-btn border-none px-5 py-2.5 font-sans text-sm font-medium text-text-on-dark transition-colors outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+              isDanger
+                ? 'bg-error hover:bg-error-hover focus-visible:ring-error-ring'
+                : 'bg-primary hover:bg-primary-hover focus-visible:ring-(--color-focus-ring)',
+            )}
           >
             {confirmLabel}
           </button>

@@ -32,9 +32,12 @@ export class ToastElement extends SSRHTMLElement {
   connectedCallback() {
     if (typeof window === 'undefined') return;
 
-    // Create the fixed container
+    // Create the fixed container. role=status + aria-live makes screen
+    // readers announce each appended toast politely.
     this.container = document.createElement('div');
     this.container.className = 'sapphire-toast-container';
+    this.container.setAttribute('role', 'status');
+    this.container.setAttribute('aria-live', 'polite');
     this.appendChild(this.container);
 
     // Expose global helper
@@ -49,9 +52,13 @@ export class ToastElement extends SSRHTMLElement {
    * Show a toast notification.
    * Can be called via: `document.querySelector('sapphire-toast').show('Message', 'success')`
    * Or via the global: `window.__sapphireToast('Message', 'success')`
+   * Default duration is 5000ms — override per call or via the `duration`
+   * attribute on <sapphire-toast duration="8000">.
    */
-  public show(message: string, type: ToastType = 'success', durationMs = 5000) {
+  public show(message: string, type: ToastType = 'success', durationMs?: number) {
     if (!this.container) return;
+    const attrDuration = Number(this.getAttribute('duration'));
+    const duration = durationMs ?? (Number.isFinite(attrDuration) && attrDuration > 0 ? attrDuration : 5000);
 
     const toast = document.createElement('div');
     toast.className = 'sapphire-toast';
@@ -79,7 +86,7 @@ export class ToastElement extends SSRHTMLElement {
     setTimeout(() => {
       toast.classList.remove('is-visible');
       setTimeout(() => toast.remove(), 400);
-    }, durationMs);
+    }, duration);
   }
 }
 
