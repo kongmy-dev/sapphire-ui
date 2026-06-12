@@ -195,7 +195,7 @@ export default function LayoutsPage() {
                           <Avatar size="xs" fallback="KM" />
                         </button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent>
+                      <DropdownMenuContent align="end">
                         <DropdownMenuLabel>My Console</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem onSelect={() => toastRef.current?.show('Navigating to Profile Settings...', 'info')}>

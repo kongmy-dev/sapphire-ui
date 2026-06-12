@@ -271,7 +271,7 @@ const AdminHeader = forwardRef<HTMLElement, AdminHeaderProps>(
       <header
         ref={ref}
         className={cn(
-          'sf-admin-header bg-card sticky top-0 z-10 flex w-full items-center gap-4 border-b border-border px-8 py-3.5 transition-colors duration-200 max-[760px]:flex-wrap max-[760px]:gap-3 max-[760px]:px-4',
+          'sf-admin-header bg-card sticky top-0 z-10 flex w-full items-center justify-between gap-4 border-b border-border px-8 py-3.5 transition-colors duration-200 max-[760px]:flex-wrap max-[760px]:gap-3 max-[760px]:px-4',
           className
         )}
         {...props}
