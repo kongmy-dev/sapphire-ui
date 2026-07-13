@@ -40,9 +40,32 @@
   --color-destructive: var(--color-error);
   --color-destructive-foreground: var(--color-white);
 
+  /* status foregrounds (Sapphire defines the base colours) */
+  --color-success-foreground: var(--color-white);
+  --color-warning-foreground: var(--color-white);
+  --color-info-foreground: var(--color-white);
+
   /* --color-border already defined — add input + focus ring */
   --color-input: var(--color-border-strong);
   --color-ring: var(--color-focus-ring);
+
+  /* Sidebar (shadcn sidebar block / admin shell) — Sapphire's navy shell with
+     a gold active indicator. */
+  --color-sidebar: var(--color-primary);
+  --color-sidebar-foreground: var(--color-text-on-dark);
+  --color-sidebar-primary: var(--color-accent);
+  --color-sidebar-primary-foreground: var(--color-primary);
+  --color-sidebar-accent: var(--color-primary-hover);
+  --color-sidebar-accent-foreground: var(--color-text-on-dark);
+  --color-sidebar-border: var(--color-border-dark);
+  --color-sidebar-ring: var(--color-focus-ring);
+
+  /* Chart categorical slots → Sapphire palette (gold, navy, blue, green, amber) */
+  --color-chart-1: var(--color-accent);
+  --color-chart-2: var(--color-primary);
+  --color-chart-3: var(--color-info);
+  --color-chart-4: var(--color-success);
+  --color-chart-5: var(--color-warning);
 
   /* shadcn radius scale — Sapphire defines --radius-sm/md; add lg/xl */
   --radius-lg: 12px;

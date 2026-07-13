@@ -87,6 +87,10 @@ function assertBuiltCss(): void {
   const checks: Array<[string, boolean]> = [
     ['navy token #0a192f (bg-primary)', css.includes('#0a192f')],
     ['surface token #f4f6f8 (bg-background alias)', css.includes('#f4f6f8')],
+    [
+      'muted token #475569 (text-muted-foreground alias)',
+      css.includes('#475569'),
+    ],
   ];
   const missing = checks.filter(([, ok]) => !ok).map(([label]) => label);
   if (missing.length > 0) {

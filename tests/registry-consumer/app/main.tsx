@@ -12,6 +12,9 @@ function App() {
     <div className="bg-background text-foreground">
       <Button variant="primary">Primary</Button>
       <Button variant="accent">Accent</Button>
+      {/* exercise non-coinciding shadcn aliases (heavily used by consumers) */}
+      <p className="text-muted-foreground">Muted</p>
+      <nav className="bg-sidebar text-sidebar-foreground">Sidebar</nav>
     </div>
   );
 }
