@@ -14,7 +14,9 @@
  */
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { productItems } from '../registry/items.ts';
+import { productBlocks, productItems } from '../registry/items.ts';
+
+const BLOCKS_DIR = 'registry/blocks';
 
 const REGISTRY_NAME = 'sapphire-ui';
 const HOMEPAGE = 'https://design.kongmy.dev';
@@ -47,30 +49,32 @@ interface Processed {
   registryDependencies: string[];
 }
 
-function processSource(source: string): Processed {
-  let content = readFileSync(join(SRC_UI, `${source}.tsx`), 'utf8');
-  const registryDependencies = new Set<string>();
+function processSource(fullPath: string): Processed {
+  let content = readFileSync(fullPath, 'utf8');
 
-  // 1. cn() helper: ../../lib/utils -> @/lib/utils
+  // Rewrite library-relative imports to the shadcn `@/` alias (product items in
+  // src/ use relative paths; blocks in registry/blocks/ are already aliased).
   content = content.replace(/(['"])\.\.\/\.\.\/lib\/utils\1/g, "'@/lib/utils'");
-
-  // 2. hooks: ../../hooks/useX -> @/hooks/useX
   content = content.replace(
     /(['"])\.\.\/\.\.\/hooks\/([A-Za-z0-9]+)\1/g,
     "'@/hooks/$2'",
   );
-
-  // 3. sibling components: ./Label -> @/components/ui/label (records a registry dep)
   content = content.replace(
     /(['"])\.\/([A-Z][A-Za-z0-9]*)\1/g,
-    (_match, _quote, comp: string) => {
-      const kebab = pascalToKebab(comp);
-      registryDependencies.add(kebab);
-      return `'@/components/ui/${kebab}'`;
-    },
+    (_match, _quote, comp: string) =>
+      `'@/components/ui/${pascalToKebab(comp)}'`,
   );
 
-  // 4. derive npm deps from remaining bare (non-relative, non-alias) imports
+  // registryDependencies: any `@/components/ui/<name>` import — unified across
+  // rewritten product refs and blocks that compose primitives directly.
+  const registryDependencies = new Set<string>();
+  for (const match of content.matchAll(
+    /@\/components\/ui\/([a-z][a-z0-9-]*)/g,
+  )) {
+    registryDependencies.add(match[1]);
+  }
+
+  // npm deps from bare (non-relative, non-alias) imports
   const dependencies = new Set<string>();
   for (const match of content.matchAll(/from\s+['"]([^'"]+)['"]/g)) {
     const spec = match[1];
@@ -134,7 +138,7 @@ function main() {
 
   for (const item of productItems) {
     const { content, dependencies, registryDependencies } = processSource(
-      item.source,
+      join(SRC_UI, `${item.source}.tsx`),
     );
     // Every component requires the token layer — make `theme` an explicit dep
     // so `shadcn add <component>` also pulls the tokens it renders against.
@@ -170,6 +174,42 @@ function main() {
     });
   }
 
+  for (const block of productBlocks) {
+    const { content, dependencies, registryDependencies } = processSource(
+      join(BLOCKS_DIR, block.file),
+    );
+    const allRegistryDeps = ['theme', ...registryDependencies];
+    const file = {
+      path: `ui/${block.name}.tsx`,
+      content,
+      type: 'registry:block',
+      target: `components/ui/${block.name}.tsx`,
+    };
+    const registryItem = {
+      $schema: ITEM_SCHEMA,
+      name: block.name,
+      type: 'registry:block',
+      title: block.title,
+      description: block.description,
+      dependencies,
+      registryDependencies: allRegistryDeps,
+      files: [file],
+    };
+    writeFileSync(
+      join(OUT_DIR, `${block.name}.json`),
+      `${JSON.stringify(registryItem, null, 2)}\n`,
+    );
+    indexItems.push({
+      name: block.name,
+      type: 'registry:block',
+      title: block.title,
+      description: block.description,
+      dependencies,
+      registryDependencies: allRegistryDeps,
+      files: [{ path: file.path, type: file.type, target: file.target }],
+    });
+  }
+
   const registry = {
     $schema: REGISTRY_SCHEMA,
     name: REGISTRY_NAME,
@@ -182,7 +222,7 @@ function main() {
   );
 
   console.log(
-    `registry: wrote theme + ${productItems.length} items + registry.json to ${OUT_DIR}`,
+    `registry: wrote theme + ${productItems.length} items + ${productBlocks.length} blocks + registry.json to ${OUT_DIR}`,
   );
 }
 

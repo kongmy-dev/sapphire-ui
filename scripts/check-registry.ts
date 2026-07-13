@@ -71,9 +71,9 @@ function main() {
         );
       }
     }
-    // Checks 2 & 3 apply to component items — they consume tokens; the theme
-    // item defines them.
-    if (item.type !== 'registry:ui') continue;
+    // Checks 2–4 apply to component + block items — they consume tokens; the
+    // theme item defines them.
+    if (item.type !== 'registry:ui' && item.type !== 'registry:block') continue;
     for (const file of item.files) {
       // 2. no leaked relative imports
       for (const m of file.content.matchAll(/from\s+['"](\.[^'"]*)['"]/g)) {

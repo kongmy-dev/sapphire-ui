@@ -86,12 +86,14 @@ Do this before registry work so the build script and CI checks are authored unde
 
 Restyle each onto sapphire tokens (presentation only — no server/contract wiring). Declare each block's npm deps in its manifest; add them here as **devDeps only**.
 
+**Blocks infrastructure done:** blocks live in `registry/blocks/` (outside `src/`, so the npm lane never bundles them); the build engine reads them, derives deps + registryDependencies (unified from `@/components/ui/*` imports), and emits `registry:block` items. `check:registry` + the consumer fixture (`test:registry`) now type-check + build blocks against sapphire's real primitives. **The token alignment paid off**: donor blocks use shadcn utilities sapphire now provides, so restyle is near-free. **Remaining C:** C.1 DataTable, C.2 Sidebar (728-line donor + AdminLayout reconciliation — its own task), C.4 Calendar, C.7 specimens.
+
 - [ ] **C.1 DataTable** primitives (TanStack Table composition — presentation only; server-pagination wiring stays in the consuming application). **Compose sapphire's existing `Table` primitives (B.1), not the donor template's `table.tsx`** — otherwise the registry ships two divergent table primitive sets. New registry dep: `@tanstack/react-table`.
 - [ ] **C.2 Sidebar / app-shell**. Reconcile with existing `AdminLayout` — keep one, registry-shape it.
-- [ ] **C.3 Command palette** (cmdk). Reconcile with existing `src/components/CommandPalette.tsx` — reuse if compatible. New registry dep: `cmdk`.
+- [x] **C.3 Command** (cmdk). Done — `registry/blocks/command.tsx`, the cmdk Command family composing sapphire's `Dialog`. Deps `cmdk` + `lucide-react` (registry-item deps + devDeps only). (The higher-level `CommandPalette` editorial component is untouched; this is the reusable primitive product apps compose.)
 - [ ] **C.4 DatePicker / Calendar**. New registry deps: `react-day-picker`, `date-fns`.
-- [ ] **C.5 Combobox** (Popover + Command composition).
-- [ ] **C.6 Product-lane Toast** (sonner). The existing web-component `Toast` is editorial-lane; product apps need the React/sonner path. New registry dep: `sonner`. (Justify per Hard Rules — registry-item + devDep only, not a library dep.)
+- [x] **C.5 Combobox** (Popover + Command composition). Done — `registry/blocks/combobox.tsx`, a reusable searchable single-select over sapphire `Button` + `Popover` + the `command` block. Fixture builds + type-checks it.
+- [x] **C.6 Product-lane Toast** (sonner). Done — `registry/blocks/sonner.tsx` `Toaster`, wired to sapphire tokens (`var(--color-popover)` etc.); dropped the donor `next-themes` coupling. Registry dep `sonner` (devDep only).
 - [ ] **C.7 a11y specimens for every new block.** `test:a11y` (Playwright) runs against specimen pages — a block with no specimen silently escapes coverage. Add a specimen entry per C.1–C.6 block so R.3's a11y gate actually exercises them. If any block is intentionally left without a specimen, state the gap explicitly rather than let it pass silently.
 
 ### Phase D — Docs & handoff

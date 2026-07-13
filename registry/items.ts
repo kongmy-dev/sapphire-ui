@@ -169,3 +169,37 @@ export const productItems: RegistryItemConfig[] = [
     description: 'Grid of Stat items.',
   },
 ];
+
+export interface RegistryBlockConfig {
+  /** kebab-case registry name (served at /r/<name>.json). */
+  name: string;
+  /** Source file in registry/blocks (with extension). */
+  file: string;
+  title: string;
+  description: string;
+}
+
+// Admin blocks (Phase C) — restyled from an external shadcn admin template onto
+// Sapphire tokens. They compose Sapphire primitives via `@/` and bring their own
+// npm deps (sonner/cmdk/lucide), which stay devDeps here + land in the consumer
+// on `shadcn add`. Sources live outside src/ so the npm lane never bundles them.
+export const productBlocks: RegistryBlockConfig[] = [
+  {
+    name: 'toaster',
+    file: 'sonner.tsx',
+    title: 'Toaster',
+    description: 'Product-lane toast (sonner) wired to Sapphire tokens.',
+  },
+  {
+    name: 'command',
+    file: 'command.tsx',
+    title: 'Command',
+    description: 'Command menu / palette primitives (cmdk).',
+  },
+  {
+    name: 'combobox',
+    file: 'combobox.tsx',
+    title: 'Combobox',
+    description: 'Searchable single-select (Popover + Command).',
+  },
+];

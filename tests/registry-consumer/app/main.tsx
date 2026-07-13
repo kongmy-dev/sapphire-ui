@@ -5,7 +5,14 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Button } from '@/components/ui/button';
+import { Combobox } from '@/components/ui/combobox';
+import { Toaster } from '@/components/ui/toaster';
 import './index.css';
+
+const FRUITS = [
+  { value: 'apple', label: 'Apple' },
+  { value: 'banana', label: 'Banana' },
+];
 
 function App() {
   return (
@@ -15,6 +22,9 @@ function App() {
       {/* exercise non-coinciding shadcn aliases (heavily used by consumers) */}
       <p className="text-muted-foreground">Muted</p>
       <nav className="bg-sidebar text-sidebar-foreground">Sidebar</nav>
+      {/* exercise an admin block (Popover + Command + Button composition) */}
+      <Combobox options={FRUITS} />
+      <Toaster />
     </div>
   );
 }
