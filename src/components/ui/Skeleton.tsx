@@ -3,7 +3,7 @@ import type { HTMLAttributes } from 'react';
 import { cn } from '../../lib/utils';
 
 const skeletonVariants = cva(
-  'animate-[skeleton-shimmer_1.5s_ease-in-out_infinite] rounded-sm bg-linear-to-r bg-size-[200%_100%] from-surface via-border to-surface motion-reduce:animate-none',
+  'animate-[skeleton-shimmer_1.5s_ease-in-out_infinite] rounded-sm bg-linear-to-r bg-size-[200%_100%] from-surface via-border to-background motion-reduce:animate-none',
   {
     variants: {
       variant: {

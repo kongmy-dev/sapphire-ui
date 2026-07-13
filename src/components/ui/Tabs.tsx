@@ -44,7 +44,7 @@ const TabsTrigger = forwardRef<
       ref={ref}
       className={cn(
         'inline-flex cursor-pointer items-center gap-2 font-medium font-sans text-sm outline-none transition-all',
-        'text-text-muted hover:text-(--color-text-strong)',
+        'text-muted-foreground hover:text-(--color-text-strong)',
 
         // Underline variant
         variant === 'underline' && [
@@ -57,13 +57,13 @@ const TabsTrigger = forwardRef<
         // Pills variant
         variant === 'pills' && [
           'rounded-md px-3 py-2',
-          'hover:bg-surface',
+          'hover:bg-background',
           'data-[state=active]:bg-accent/10 data-[state=active]:text-accent-text',
         ],
 
         // Dashboard variant
         variant === 'dashboard' && [
-          'rounded-md px-3.5 py-[7px] font-semibold text-[13px] text-text-muted',
+          'rounded-md px-3.5 py-[7px] font-semibold text-[13px] text-muted-foreground',
           'data-[state=active]:bg-primary data-[state=active]:text-white',
         ],
 

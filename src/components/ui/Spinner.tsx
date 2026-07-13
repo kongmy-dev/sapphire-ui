@@ -13,7 +13,7 @@ const spinnerVariants = cva(
       },
       tone: {
         current: '',
-        muted: 'text-text-muted',
+        muted: 'text-muted-foreground',
         accent: 'text-accent-text',
       },
     },

@@ -8,9 +8,9 @@ const textareaVariants = cva(
     variants: {
       variant: {
         default:
-          'rounded-btn border border-border bg-(--color-card-bg) text-text-main focus:border-accent focus:shadow-[0_0_0_3px] focus:shadow-accent/12',
-        dark: 'rounded-sm border border-border-dark bg-black/20 text-text-on-dark focus:border-accent',
-        mono: 'rounded-btn border border-border bg-surface font-mono text-sm text-text-main focus:border-accent focus:shadow-[0_0_0_3px] focus:shadow-accent/12',
+          'rounded-btn border border-border bg-(--color-card-bg) text-foreground focus:border-accent focus:shadow-[0_0_0_3px] focus:shadow-accent/12',
+        dark: 'rounded-sm border border-border-dark bg-black/20 text-primary-foreground focus:border-accent',
+        mono: 'rounded-btn border border-border bg-background font-mono text-sm text-foreground focus:border-accent focus:shadow-[0_0_0_3px] focus:shadow-accent/12',
       },
       size: {
         sm: 'min-h-[80px] px-3 py-2 text-sm',

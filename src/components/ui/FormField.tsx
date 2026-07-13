@@ -86,7 +86,10 @@ const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
             {error}
           </p>
         ) : hint ? (
-          <p id={hintId} className="m-0 font-sans text-text-muted text-xs">
+          <p
+            id={hintId}
+            className="m-0 font-sans text-muted-foreground text-xs"
+          >
             {hint}
           </p>
         ) : null}

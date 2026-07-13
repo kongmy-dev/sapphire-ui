@@ -20,7 +20,6 @@ const REGISTRY_NAME = 'sapphire-ui';
 const HOMEPAGE = 'https://design.kongmy.dev';
 const SRC_UI = 'src/components/ui';
 const THEME_SRC = 'src/theme.css';
-const SHADCN_ALIASES = 'registry/shadcn-aliases.css';
 const OUT_DIR = process.env.REGISTRY_OUT ?? 'dist-docs/r';
 
 const ITEM_SCHEMA = 'https://ui.shadcn.com/schema/registry-item.json';
@@ -88,16 +87,14 @@ function processSource(source: string): Processed {
 }
 
 /**
- * The `theme` item carries Sapphire's Tailwind v4 `@theme` tokens plus the
- * shadcn-var alias layer, so `shadcn add theme` bootstraps a project's tokens
- * with no npm package. Every custom utility the product items use must resolve
- * from these tokens (enforced by scripts/check-registry.ts).
+ * The `theme` item ships Sapphire's `theme.css` verbatim — the single source,
+ * which already carries the brand tokens, the shadcn semantic-token layer, and
+ * the dark-mode block. `shadcn add theme` bootstraps a project's tokens with no
+ * npm package. Every utility the product items use must resolve from these
+ * tokens (enforced by scripts/check-registry.ts).
  */
 function buildThemeItem() {
-  const content = `${readFileSync(THEME_SRC, 'utf8')}\n${readFileSync(
-    SHADCN_ALIASES,
-    'utf8',
-  )}`;
+  const content = readFileSync(THEME_SRC, 'utf8');
   const file = {
     path: 'sapphire-theme.css',
     content,

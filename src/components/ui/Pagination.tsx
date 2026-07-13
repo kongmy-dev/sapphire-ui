@@ -102,7 +102,7 @@ const Pagination = forwardRef<HTMLElement, PaginationProps>(
             aria-label="Go to previous page"
             className={cn(
               buttonClass,
-              'border-border bg-transparent text-text-main hover:bg-surface',
+              'border-border bg-transparent text-foreground hover:bg-background',
             )}
           >
             <Arrow direction="left" />
@@ -113,7 +113,7 @@ const Pagination = forwardRef<HTMLElement, PaginationProps>(
             <span
               key={`ellipsis-${i}`}
               aria-hidden="true"
-              className="inline-flex size-8 select-none items-center justify-center text-text-muted"
+              className="inline-flex size-8 select-none items-center justify-center text-muted-foreground"
             >
               …
             </span>
@@ -127,8 +127,8 @@ const Pagination = forwardRef<HTMLElement, PaginationProps>(
               className={cn(
                 buttonClass,
                 item === currentPage
-                  ? 'border-primary bg-primary text-text-on-dark'
-                  : 'border-border bg-transparent text-text-main hover:bg-surface',
+                  ? 'border-primary bg-primary text-primary-foreground'
+                  : 'border-border bg-transparent text-foreground hover:bg-background',
               )}
             >
               {item}
@@ -143,7 +143,7 @@ const Pagination = forwardRef<HTMLElement, PaginationProps>(
             aria-label="Go to next page"
             className={cn(
               buttonClass,
-              'border-border bg-transparent text-text-main hover:bg-surface',
+              'border-border bg-transparent text-foreground hover:bg-background',
             )}
           >
             <Arrow direction="right" />

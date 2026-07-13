@@ -30,7 +30,7 @@ function Empty({
     >
       {icon && (
         <span
-          className="material-symbols-outlined mb-4 text-text-muted"
+          className="material-symbols-outlined mb-4 text-muted-foreground"
           style={{ fontSize: 56 }}
           aria-hidden="true"
         >
@@ -43,7 +43,7 @@ function Empty({
         </h3>
       )}
       {description && (
-        <p className="mb-6 max-w-sm font-sans text-sm text-text-muted">
+        <p className="mb-6 max-w-sm font-sans text-sm text-muted-foreground">
           {description}
         </p>
       )}

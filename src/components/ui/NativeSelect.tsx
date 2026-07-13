@@ -8,7 +8,7 @@ const nativeSelectVariants = cva(
     variants: {
       variant: {
         default:
-          'rounded-btn border border-border bg-(--color-card-bg) text-text-main focus:border-accent focus:shadow-[0_0_0_3px] focus:shadow-accent/12',
+          'rounded-btn border border-border bg-(--color-card-bg) text-foreground focus:border-accent focus:shadow-[0_0_0_3px] focus:shadow-accent/12',
         dark: 'k-input-dark',
       },
       size: {
@@ -54,7 +54,9 @@ const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
           aria-hidden="true"
           className={cn(
             'material-symbols-outlined pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-[20px]',
-            variant === 'dark' ? 'text-text-on-dark-muted' : 'text-text-muted',
+            variant === 'dark'
+              ? 'text-text-on-dark-muted'
+              : 'text-muted-foreground',
           )}
         >
           expand_more

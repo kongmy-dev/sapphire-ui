@@ -9,7 +9,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          'rounded-btn border-none bg-primary text-text-on-dark hover:bg-primary-hover',
+          'rounded-btn border-none bg-primary text-primary-foreground hover:bg-primary-hover',
         outline:
           'rounded-btn border-(--color-text-strong) border-[1.5px] bg-transparent text-(--color-text-strong) hover:bg-(--color-text-strong) hover:text-(--color-card-bg)',
         ghost:
@@ -19,14 +19,14 @@ const buttonVariants = cva(
         'on-dark-primary':
           'rounded-btn border-none bg-accent font-bold text-primary hover:bg-accent-dark',
         'on-dark-outline':
-          'rounded-btn border-[1.5px] border-white/30 bg-transparent text-text-on-dark hover:border-white hover:text-text-on-dark',
+          'rounded-btn border-[1.5px] border-white/30 bg-transparent text-primary-foreground hover:border-white hover:text-primary-foreground',
         link: 'border-none bg-transparent p-0 text-accent-text underline-offset-4 hover:text-(--color-text-strong) hover:underline',
         premium:
-          'rounded-btn border-none bg-linear-to-br from-accent to-accent-dark text-text-on-dark shadow-[0_4px_14px] shadow-accent/30 hover:-translate-y-0.5 hover:shadow-[0_6px_20px] hover:shadow-accent/40',
+          'rounded-btn border-none bg-linear-to-br from-accent to-accent-dark text-primary-foreground shadow-[0_4px_14px] shadow-accent/30 hover:-translate-y-0.5 hover:shadow-[0_6px_20px] hover:shadow-accent/40',
         destructive:
-          'rounded-btn border-none bg-error text-text-on-dark hover:bg-error-hover focus-visible:ring-error-ring',
+          'rounded-btn border-none bg-error text-primary-foreground hover:bg-error-hover focus-visible:ring-error-ring',
         'destructive-outline':
-          'rounded-btn border-[1.5px] border-error bg-transparent text-error hover:bg-error hover:text-text-on-dark focus-visible:ring-error-ring',
+          'rounded-btn border-[1.5px] border-error bg-transparent text-error hover:bg-error hover:text-primary-foreground focus-visible:ring-error-ring',
         'destructive-ghost':
           'rounded-btn border-none bg-transparent text-error hover:bg-hover-overlay focus-visible:ring-error-ring',
       },

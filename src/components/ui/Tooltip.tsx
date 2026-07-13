@@ -29,7 +29,7 @@ const TooltipContent = forwardRef<
       ref={ref}
       sideOffset={sideOffset}
       className={cn(
-        'z-50 max-w-xs rounded-sm bg-primary px-2.5 py-1.5 font-medium text-text-on-dark text-xs shadow-md',
+        'z-50 max-w-xs rounded-sm bg-primary px-2.5 py-1.5 font-medium text-primary-foreground text-xs shadow-md',
         'data-[state=closed]:animate-out data-[state=delayed-open]:animate-in',
         'data-[state=closed]:fade-out-0 data-[state=delayed-open]:fade-in-0',
         'data-[state=closed]:zoom-out-95 data-[state=delayed-open]:zoom-in-95',

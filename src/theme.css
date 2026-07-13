@@ -129,6 +129,76 @@
   --transition-slow: 350ms ease;
 }
 
+/* ════════════════════════════════════════════════════════════════════════
+   shadcn semantic-token layer (canonical vocabulary)
+   ────────────────────────────────────────────────────────────────────────
+   Sapphire speaks shadcn's semantic token names as its first-class vocabulary,
+   expressed as var() aliases onto the brand tokens above. This lets Sapphire
+   components AND community/upstream shadcn items share one vocabulary, and lets
+   Tailwind-v4 consumers use `bg-background`, `text-muted-foreground`,
+   `bg-sidebar`, … out of the box. Dark mode is free: every alias references a
+   brand token, so the [data-theme="dark"] block below flips them automatically.
+   Names Sapphire already owns (--color-primary, --color-accent, --color-border)
+   intentionally coincide. Brand-only tokens with no shadcn equivalent
+   (--color-accent-text, --color-text-strong, --color-hover-overlay,
+   --color-text-on-dark, --radius-btn) remain the Sapphire brand extension. */
+@theme {
+  --color-background: var(--color-surface);
+  --color-foreground: var(--color-text-main);
+
+  --color-card: var(--color-card-bg);
+  --color-card-foreground: var(--color-text-main);
+  --color-popover: var(--color-card-bg);
+  --color-popover-foreground: var(--color-text-main);
+
+  /* --color-primary already defined (navy) — add its foreground */
+  --color-primary-foreground: var(--color-text-on-dark);
+
+  --color-secondary: var(--color-surface);
+  --color-secondary-foreground: var(--color-text-main);
+
+  --color-muted: var(--color-surface);
+  --color-muted-foreground: var(--color-text-muted);
+
+  /* --color-accent already defined (gold) — shadcn accent surfaces render gold,
+     so its foreground is navy for AA contrast */
+  --color-accent-foreground: var(--color-primary);
+
+  --color-destructive: var(--color-error);
+  --color-destructive-foreground: var(--color-white);
+
+  /* status foregrounds (Sapphire defines the base colours) */
+  --color-success-foreground: var(--color-white);
+  --color-warning-foreground: var(--color-white);
+  --color-info-foreground: var(--color-white);
+
+  /* --color-border already defined — add input + focus ring */
+  --color-input: var(--color-border-strong);
+  --color-ring: var(--color-focus-ring);
+
+  /* Sidebar (shadcn sidebar block / admin shell) — Sapphire's navy shell with
+     a gold active indicator. */
+  --color-sidebar: var(--color-primary);
+  --color-sidebar-foreground: var(--color-text-on-dark);
+  --color-sidebar-primary: var(--color-accent);
+  --color-sidebar-primary-foreground: var(--color-primary);
+  --color-sidebar-accent: var(--color-primary-hover);
+  --color-sidebar-accent-foreground: var(--color-text-on-dark);
+  --color-sidebar-border: var(--color-border-dark);
+  --color-sidebar-ring: var(--color-focus-ring);
+
+  /* Chart categorical slots → Sapphire palette (gold, navy, blue, green, amber) */
+  --color-chart-1: var(--color-accent);
+  --color-chart-2: var(--color-primary);
+  --color-chart-3: var(--color-info);
+  --color-chart-4: var(--color-success);
+  --color-chart-5: var(--color-warning);
+
+  /* shadcn radius scale — Sapphire defines --radius-sm/md; add lg/xl */
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+}
+
 /* ── Dark theme ───────────────────────────────────────────────
    Activated by `data-theme="dark"` on <html> (or any ancestor). Only the
    tokens that visually flip are listed; everything else inherits the @theme

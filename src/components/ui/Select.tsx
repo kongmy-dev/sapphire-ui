@@ -22,7 +22,7 @@ export const SelectGroup = SelectPrimitive.Group;
 export const SelectValue = SelectPrimitive.Value;
 
 const selectTriggerVariants = cva(
-  'flex w-full cursor-pointer items-center justify-between rounded-sm border border-border bg-(--color-card-bg) font-sans text-text-main placeholder:text-text-muted focus:outline-none focus-visible:ring-(--color-focus-ring) focus-visible:ring-2 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
+  'flex w-full cursor-pointer items-center justify-between rounded-sm border border-border bg-(--color-card-bg) font-sans text-foreground placeholder:text-muted-foreground focus:outline-none focus-visible:ring-(--color-focus-ring) focus-visible:ring-2 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
   {
     variants: {
       size: {
@@ -82,7 +82,7 @@ const SelectContent = forwardRef<
       ref={ref}
       position={position}
       className={cn(
-        'relative z-50 max-h-96 min-w-32 overflow-hidden rounded-md border border-border bg-(--color-card-bg) text-text-main shadow-md',
+        'relative z-50 max-h-96 min-w-32 overflow-hidden rounded-md border border-border bg-(--color-card-bg) text-foreground shadow-md',
         'data-[state=closed]:animate-out data-[state=open]:animate-in',
         'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
         position === 'popper' &&
@@ -112,7 +112,7 @@ const SelectLabel = forwardRef<
   <SelectPrimitive.Label
     ref={ref}
     className={cn(
-      'px-2 py-1.5 font-semibold text-text-muted text-xs uppercase tracking-wider',
+      'px-2 py-1.5 font-semibold text-muted-foreground text-xs uppercase tracking-wider',
       className,
     )}
     {...props}
@@ -128,7 +128,7 @@ const SelectItem = forwardRef<
     ref={ref}
     className={cn(
       'relative flex w-full cursor-pointer select-none items-center rounded-sm py-1.5 pr-2 pl-8 font-sans text-sm outline-none',
-      'focus:bg-surface focus:text-text-main',
+      'focus:bg-background focus:text-foreground',
       'data-disabled:pointer-events-none data-disabled:opacity-50',
       className,
     )}

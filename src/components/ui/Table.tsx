@@ -77,7 +77,7 @@ const TableHead = forwardRef<
   <th
     ref={ref}
     className={cn(
-      'whitespace-nowrap border-border border-b bg-page px-4 py-3 text-left font-sans font-semibold text-[11px] text-text-muted uppercase tracking-[0.08em]',
+      'whitespace-nowrap border-border border-b bg-page px-4 py-3 text-left font-sans font-semibold text-[11px] text-muted-foreground uppercase tracking-[0.08em]',
       className,
     )}
     {...props}

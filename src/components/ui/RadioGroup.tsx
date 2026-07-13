@@ -63,7 +63,7 @@ const RadioGroupItem = forwardRef<
           {label && (
             <label
               htmlFor={id}
-              className="cursor-pointer select-none font-medium font-sans text-sm text-text-main"
+              className="cursor-pointer select-none font-medium font-sans text-sm text-foreground"
             >
               {label}
             </label>
@@ -71,7 +71,7 @@ const RadioGroupItem = forwardRef<
           {description && (
             <span
               id={descriptionId}
-              className="mt-0.5 font-sans text-text-muted text-xs"
+              className="mt-0.5 font-sans text-muted-foreground text-xs"
             >
               {description}
             </span>

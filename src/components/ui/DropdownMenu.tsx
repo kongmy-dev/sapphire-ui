@@ -33,7 +33,7 @@ const DropdownMenuContent = forwardRef<
       ref={ref}
       sideOffset={sideOffset}
       className={cn(
-        'z-50 min-w-32 overflow-hidden rounded-md border border-border bg-(--color-card-bg) p-1 text-text-main shadow-md',
+        'z-50 min-w-32 overflow-hidden rounded-md border border-border bg-(--color-card-bg) p-1 text-foreground shadow-md',
         'data-[state=closed]:animate-out data-[state=open]:animate-in',
         'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
         'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
@@ -56,7 +56,7 @@ const DropdownMenuItem = forwardRef<
     ref={ref}
     className={cn(
       'relative flex cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-1.5 font-sans text-sm outline-none',
-      'focus:bg-surface focus:text-text-main',
+      'focus:bg-background focus:text-foreground',
       'data-disabled:pointer-events-none data-disabled:opacity-50',
       inset && 'pl-8',
       className,
@@ -75,7 +75,7 @@ const DropdownMenuCheckboxItem = forwardRef<
     checked={checked}
     className={cn(
       'relative flex cursor-pointer select-none items-center rounded-sm py-1.5 pr-2 pl-8 font-sans text-sm outline-none',
-      'focus:bg-surface',
+      'focus:bg-background',
       'data-disabled:pointer-events-none data-disabled:opacity-50',
       className,
     )}
@@ -108,7 +108,7 @@ const DropdownMenuRadioItem = forwardRef<
     ref={ref}
     className={cn(
       'relative flex cursor-pointer select-none items-center rounded-sm py-1.5 pr-2 pl-8 font-sans text-sm outline-none',
-      'focus:bg-surface',
+      'focus:bg-background',
       'data-disabled:pointer-events-none data-disabled:opacity-50',
       className,
     )}
@@ -133,7 +133,7 @@ const DropdownMenuLabel = forwardRef<
   <DropdownMenuPrimitive.Label
     ref={ref}
     className={cn(
-      'px-2 py-1.5 font-semibold text-text-muted text-xs uppercase tracking-wider',
+      'px-2 py-1.5 font-semibold text-muted-foreground text-xs uppercase tracking-wider',
       inset && 'pl-8',
       className,
     )}
@@ -159,7 +159,10 @@ const DropdownMenuShortcut = ({
   ...props
 }: React.HTMLAttributes<HTMLSpanElement>) => (
   <span
-    className={cn('ml-auto text-text-muted text-xs tracking-widest', className)}
+    className={cn(
+      'ml-auto text-muted-foreground text-xs tracking-widest',
+      className,
+    )}
     {...props}
   />
 );

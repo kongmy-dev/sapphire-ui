@@ -8,11 +8,11 @@ const cardVariants = cva('rounded-md transition-all duration-200', {
   variants: {
     variant: {
       default: 'border border-border bg-(--color-card-bg)',
-      dark: 'border border-border-dark bg-primary text-text-on-dark',
+      dark: 'border border-border-dark bg-primary text-primary-foreground',
       feature:
         'grid gap-8 border border-border bg-(--color-card-bg) md:grid-cols-[1fr_auto]',
       dashed:
-        'border-[1.5px] border-border border-dashed bg-transparent text-text-muted',
+        'border-[1.5px] border-border border-dashed bg-transparent text-muted-foreground',
     },
     padding: {
       default: 'p-8',
@@ -62,7 +62,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
             'cursor-pointer hover:border-accent',
           hoverable &&
             variant === 'dashed' &&
-            'cursor-pointer hover:border-accent hover:text-text-main',
+            'cursor-pointer hover:border-accent hover:text-foreground',
           bordered && 'border-l-[6px] border-l-accent',
           className,
         )}

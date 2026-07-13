@@ -71,7 +71,7 @@ const DialogContent = forwardRef<
         {!hideClose && (
           <DialogPrimitive.Close
             aria-label={closeLabel}
-            className="absolute top-3 right-3 inline-flex size-9 cursor-pointer items-center justify-center rounded-sm border-none bg-transparent text-text-muted outline-none transition-colors hover:bg-surface hover:text-(--color-text-strong) focus-visible:ring-(--color-focus-ring) focus-visible:ring-2"
+            className="absolute top-3 right-3 inline-flex size-9 cursor-pointer items-center justify-center rounded-sm border-none bg-transparent text-muted-foreground outline-none transition-colors hover:bg-background hover:text-(--color-text-strong) focus-visible:ring-(--color-focus-ring) focus-visible:ring-2"
           >
             <Icon name="close" size={18} />
           </DialogPrimitive.Close>
@@ -124,7 +124,7 @@ const DialogDescription = forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn('mt-1 font-sans text-sm text-text-muted', className)}
+    className={cn('mt-1 font-sans text-sm text-muted-foreground', className)}
     {...props}
   />
 ));
@@ -200,14 +200,14 @@ function ConfirmDialog({
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         <DialogBody>
-          <p className="m-0 font-sans text-sm/relaxed text-text-muted">
+          <p className="m-0 font-sans text-sm/relaxed text-muted-foreground">
             {message}
           </p>
         </DialogBody>
         <DialogFooter>
           <button
             onClick={handleCancel}
-            className="cursor-pointer rounded-btn border border-border bg-surface px-5 py-2.5 font-medium font-sans text-(--color-text-strong) text-sm outline-none transition-colors hover:bg-border focus-visible:ring-(--color-focus-ring) focus-visible:ring-2 focus-visible:ring-offset-2"
+            className="cursor-pointer rounded-btn border border-border bg-background px-5 py-2.5 font-medium font-sans text-(--color-text-strong) text-sm outline-none transition-colors hover:bg-border focus-visible:ring-(--color-focus-ring) focus-visible:ring-2 focus-visible:ring-offset-2"
           >
             {cancelLabel}
           </button>
@@ -217,7 +217,7 @@ function ConfirmDialog({
               onOpenChange(false);
             }}
             className={cn(
-              'cursor-pointer rounded-btn border-none px-5 py-2.5 font-medium font-sans text-sm text-text-on-dark outline-none transition-colors focus-visible:ring-2 focus-visible:ring-offset-2',
+              'cursor-pointer rounded-btn border-none px-5 py-2.5 font-medium font-sans text-sm text-primary-foreground outline-none transition-colors focus-visible:ring-2 focus-visible:ring-offset-2',
               isDanger
                 ? 'bg-error hover:bg-error-hover focus-visible:ring-error-ring'
                 : 'bg-primary hover:bg-primary-hover focus-visible:ring-(--color-focus-ring)',
