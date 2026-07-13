@@ -125,6 +125,56 @@ import '@kongmy-dev/sapphire-ui/site-footer-element';
 
 ---
 
+## 🧩 Two lanes: npm package vs. shadcn registry
+
+Sapphire ships in **two distribution lanes**. Pick by what you're building:
+
+| Lane | How you consume | Best for |
+|---|---|---|
+| **Editorial / brand** (above) | npm package — import compiled components + `style.css` | kongmy.dev sites, blog, proposals, marketing — surfaces we fully control |
+| **Product** (below) | **shadcn registry** — `shadcn add` vendors the source into your repo | product & client apps that need to diverge (client theming, POS/kiosk touch targets, one-offs) |
+
+The **token contract is shared** — both lanes read the same `theme.css` custom properties — so a component looks identical in either lane, and you can reskin by overriding tokens.
+
+### Product lane — `shadcn add` from the registry
+
+The registry is public over HTTPS (no credentials, no PAT). Point your `components.json` at it:
+
+```jsonc
+// components.json
+{
+  "registries": {
+    "@sapphire": "https://design.kongmy.dev/r/{name}.json"
+  }
+}
+```
+
+Add the token layer once, then any component or block:
+
+```bash
+# 1. tokens (brand + shadcn semantic layer) — required, once per app
+bunx shadcn add @sapphire/theme
+
+# 2. primitives + admin blocks (vendored source you own)
+bunx shadcn add @sapphire/button @sapphire/dialog @sapphire/data-table
+bunx shadcn add @sapphire/command @sapphire/combobox @sapphire/toaster
+```
+
+Then import the token layer in your Tailwind entry CSS:
+
+```css
+@import 'tailwindcss';
+@import './styles/sapphire-theme.css';
+```
+
+**Sapphire speaks shadcn's token vocabulary.** The theme layer defines shadcn's semantic tokens (`bg-background`, `text-muted-foreground`, `bg-card`, `bg-sidebar`, `bg-primary`, …) as first-class, so Sapphire items and **community shadcn items render on the same tokens** — mix them freely under one `components.json`. Brand-only extras (`text-accent-text` for AA-safe gold, `rounded-btn`, the on-dark family) layer on top.
+
+**Requirements:** a Tailwind v4 app, and (for `icon`/icon-bearing components) the [Material Symbols Outlined](https://fonts.google.com/icons) font loaded in your HTML `<head>`, plus the Sapphire typefaces (Newsreader, Source Sans 3, JetBrains Mono).
+
+Dark mode: set `data-theme="dark"` on `<html>` — every token (including the shadcn aliases) flips automatically.
+
+---
+
 ## 🔗 CI/CD & Automated Publishing
 
 Every merge or push to `master` triggers our automated GitHub Actions workflow (`.github/workflows/publish.yml`), which features:

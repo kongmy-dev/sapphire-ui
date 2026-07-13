@@ -73,7 +73,7 @@ Do this before registry work so the build script and CI checks are authored unde
 
 **Token-vocabulary alignment (2026-07-13):** `theme.css` is now shadcn-canonical — shadcn semantic tokens are first-class (shipped to both lanes, additively/non-breaking), and the 25 product components were migrated to shadcn utility names where a value-identical equivalent exists (`text-text-muted`→`text-muted-foreground`, `bg-surface`→`bg-background`, `text-text-main`→`text-foreground`, `text-text-on-dark`→`text-primary-foreground`). Brand-only utilities with no shadcn equivalent stay (`text-accent-text`, `text-text-strong`, `rounded-btn`, `bg-hover-overlay`, `on-dark` family). Value-identical by construction (proven: `text-muted-foreground`→`var(--color-text-muted)`→`#475569`); a11y 48/48 confirms no contrast change.
   - [x] **A.3a — shadcn semantic-var alias layer.** Done (`registry/shadcn-aliases.css`, concatenated into the theme item). Adds the shadcn names sapphire lacks (`background`, `foreground`, `card`, `popover`, `muted`/`muted-foreground`, `secondary`, `destructive`, `input`, `ring`, `*-foreground`, `radius-lg/xl`) as `var()` aliases → sapphire tokens; names sapphire already owns (`primary`, `accent`, `border`) intentionally coincide. Dark mode is free (var() indirection flows through `[data-theme="dark"]`). Proven by B.3: `bg-background`/`text-muted-foreground` compile to sapphire tokens in the consumer build. **Now includes the full standard shadcn surface — `--color-sidebar-*` (7), `--color-chart-1..5`, and status `-foreground` companions — added after the emas-pos audit showed 27 sidebar usages depend on them (also unblocks Phase C's sidebar block).**
-- [x] **A.4** Mostly done. `build:docs` now runs `build:registry` (emits to `dist-docs/r/{item}.json`); `build:registry` script added. `public/_headers` has a `/r/*` block (permissive CORS + short cache; Cloudflare sets JSON content-type). **Remaining:** document the `design.kongmy.dev/r/{item}.json` URL + `components.json` setup in README (folds into D.1).
+- [x] **A.4** Mostly done. `build:docs` now runs `build:registry` (emits to `dist-docs/r/{item}.json`); `build:registry` script added. `public/_headers` has a `/r/*` block (permissive CORS + short cache; Cloudflare sets JSON content-type). URL + `components.json` setup documented in the README (D.1). ✅ complete.
 - [x] **A.5** Done (build-time checks). `scripts/check-registry.ts` (`bun run check:registry`, gated in CI) asserts: (a) closed dependency graph, (b) no leaked relative imports in emitted component files, (c) every sapphire `--color-*`/`--radius-*`/… token a component references is defined by the `theme` item. **Remaining:** the post-deploy `curl` smoke test on a live `/r/*.json` (serving-vs-SPA-fallback) — belongs with the deploy step (R.4), not build CI.
 
 ### Phase B — Product subset (~22 items)
@@ -98,8 +98,8 @@ Restyle each onto sapphire tokens (presentation only — no server/contract wiri
 
 ### Phase D — Docs & handoff
 
-- [ ] **D.1** Docs page: two-lane model + "which lane do I want" table + consumer setup (`components.json` registry URL, `shadcn add` examples).
-- [ ] **D.2** Sync README + CLAUDE.md (Commands table already partly updated in 0.3 — keep the two-lane section current).
+- [x] **D.1** Done. README "Two lanes" section: the which-lane-do-I-want table + product-lane consumer setup (`components.json` `registries` URL, `shadcn add @sapphire/…` examples, `@import` the theme layer, Material Symbols + font requirement, dark-mode note, and the shadcn-vocabulary/mix-with-community note). (A dedicated interactive specimen page in the docs app could follow, but the README is the canonical registry doc consumers read.)
+- [x] **D.2** Done. README registry-lane section added; CLAUDE.md carries the two-lane model + the shadcn-canonical token convention (added during the alignment work). Commands table current (Biome).
 
 ### Release — tag v3.0.0
 
