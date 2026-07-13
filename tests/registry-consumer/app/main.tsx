@@ -5,6 +5,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import { Combobox } from '@/components/ui/combobox';
 import { Toaster } from '@/components/ui/toaster';
 import './index.css';
@@ -24,6 +25,7 @@ function App() {
       <nav className="bg-sidebar text-sidebar-foreground">Sidebar</nav>
       {/* exercise an admin block (Popover + Command + Button composition) */}
       <Combobox options={FRUITS} />
+      <Calendar mode="single" />
       <Toaster />
     </div>
   );

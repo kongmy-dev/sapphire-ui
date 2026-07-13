@@ -73,6 +73,15 @@
   },
   "overrides": [
     {
+      "includes": ["registry/blocks/**"],
+      "linter": {
+        "rules": {
+          "correctness": { "useExhaustiveDependencies": "off" },
+          "nursery": { "useSortedClasses": "off" }
+        }
+      }
+    },
+    {
       "includes": ["src/components/*Element.ts", "src/elements.ts"],
       "linter": {
         "rules": {

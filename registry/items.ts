@@ -49,6 +49,12 @@ export const productItems: RegistryItemConfig[] = [
     description: 'Accessible form label.',
   },
   {
+    name: 'separator',
+    source: 'Separator',
+    title: 'Separator',
+    description: 'Visual or semantic divider (Radix).',
+  },
+  {
     name: 'checkbox',
     source: 'Checkbox',
     title: 'Checkbox',
@@ -201,5 +207,29 @@ export const productBlocks: RegistryBlockConfig[] = [
     file: 'combobox.tsx',
     title: 'Combobox',
     description: 'Searchable single-select (Popover + Command).',
+  },
+  {
+    name: 'calendar',
+    file: 'calendar.tsx',
+    title: 'Calendar',
+    description: 'Date picker calendar (react-day-picker).',
+  },
+  {
+    name: 'sidebar',
+    file: 'sidebar.tsx',
+    title: 'Sidebar',
+    description: 'Collapsible app-shell sidebar with mobile sheet.',
+  },
+  {
+    name: 'data-table-column-header',
+    file: 'data-table-column-header.tsx',
+    title: 'DataTable Column Header',
+    description: 'Sortable/hideable column header for a TanStack table.',
+  },
+  {
+    name: 'data-table-view-options',
+    file: 'data-table-view-options.tsx',
+    title: 'DataTable View Options',
+    description: 'Column-visibility menu for a TanStack table.',
   },
 ];
