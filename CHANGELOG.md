@@ -1,5 +1,29 @@
 # Changelog
 
+## 3.0.0 — Unreleased
+
+Architecture release: adds a second distribution lane (a shadcn-format **registry**
+on design.kongmy.dev) alongside the existing npm package. **No breaking API or
+export changes** — the npm lane's `dist/` is API-compatible; existing consumers
+need no migration. The major version signals the architecture shift, not a break.
+
+### Behavior changes
+
+- **`cn()` font-size conflicts now resolve later-class-wins.** Via the
+  `tailwind-merge` upgrade, `cn('text-lg text-sm')` now returns `'text-sm'`
+  (previously `'text-lg'`). This aligns with tailwind-merge's documented
+  conflict resolution; only affects call sites that passed conflicting
+  `text-{size}` utilities in one string.
+
+### Tooling
+
+- Linting/formatting migrated from ESLint + Stylelint to **Biome** (single
+  toolchain, TS/TSX + CSS). The `@kongmy-dev/sapphire-ui/stylelint` export is
+  retained unchanged for consumers.
+- All dependencies refreshed to latest (TypeScript held at 6.x; 7.0 pending
+  `vite-plugin-dts` support for the native compiler).
+- CI now gates the Playwright a11y suite and runs on pushes to `master`.
+
 ## 2.0.0 — 2026-06-10
 
 Design-system overhaul focused on usability, extensibility, and parity across

@@ -12,7 +12,7 @@ Three workstreams land together under the v3 tag:
 
 **The npm lane has no breaking change** — existing consumers receive an identical `dist/`. So `3.0.0` is an *architecture* major (new registry lane), not a semver-breaking one. The tag is meaningful only once the registry is live and vendorable, so **v3 is tagged at the end, after Phases A–D deploy and a clean `shadcn add` works end-to-end**.
 
-> **Semver caveat (deliberate):** by strict semver this is additive — a `2.1.0`. The `3.0.0` tag is a chosen architecture-signal, not a breakage flag. Because a major normally tells consumers "expect breakage," the CHANGELOG (R.2) **must state plainly, first line, that there is no breaking change to the npm lane**. If that framing ever feels misleading to a consumer, downgrade to `2.1.0` — the plan's own "no breaking change" logic supports it.
+> **Semver note (decided — v3, full A–D build):** by strict semver this is additive, but the `3.0.0` tag is a deliberate architecture-signal for the new registry lane. To keep it honest for consumers, the CHANGELOG leads with "**No breaking API or export changes**" and separately documents the one behavior change (`cn()` font-size conflict resolution, from the tailwind-merge upgrade). API/exports are compatible; no consumer migration required.
 
 ---
 
