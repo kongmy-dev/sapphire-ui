@@ -1,7 +1,8 @@
-import { forwardRef, useState, useCallback, type HTMLAttributes } from 'react';
+import { forwardRef, type HTMLAttributes, useCallback, useState } from 'react';
 import { cn } from '../../lib/utils';
 
-export interface CodeBlockProps extends Omit<HTMLAttributes<HTMLPreElement>, 'children'> {
+export interface CodeBlockProps
+  extends Omit<HTMLAttributes<HTMLPreElement>, 'children'> {
   /** Raw code string. */
   code: string;
   /** Language hint (e.g. "ts", "tsx", "css"). Sets data-lang for syntax
@@ -24,7 +25,10 @@ export interface CodeBlockProps extends Omit<HTMLAttributes<HTMLPreElement>, 'ch
  * use class/attribute selectors.
  */
 const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
-  ({ className, code, language, copyable, variant = 'dark', ...props }, ref) => {
+  (
+    { className, code, language, copyable, variant = 'dark', ...props },
+    ref,
+  ) => {
     const [copied, setCopied] = useState(false);
 
     const handleCopy = useCallback(async () => {
@@ -47,7 +51,8 @@ const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
             'm-0 overflow-x-auto font-mono text-[13px] leading-relaxed',
             'rounded-sm p-4',
             variant === 'dark' && 'bg-primary text-text-on-dark',
-            variant === 'light' && 'border border-border bg-surface text-text-main',
+            variant === 'light' &&
+              'border border-border bg-surface text-text-main',
             className,
           )}
           {...props}
@@ -61,10 +66,12 @@ const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
             aria-label={copied ? 'Copied' : 'Copy code to clipboard'}
             className={cn(
               'absolute top-2 right-2 inline-flex cursor-pointer items-center gap-1 rounded-sm px-2 py-1 font-mono text-xs transition-opacity',
-              'opacity-0 group-hover:opacity-100 focus-visible:opacity-100',
-              variant === 'dark' && 'border-none bg-white/10 text-text-on-dark hover:bg-white/20',
-              variant === 'light' && 'border border-border bg-(--color-card-bg) text-text-muted hover:bg-surface',
-              'focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:outline-none',
+              'opacity-0 focus-visible:opacity-100 group-hover:opacity-100',
+              variant === 'dark' &&
+                'border-none bg-white/10 text-text-on-dark hover:bg-white/20',
+              variant === 'light' &&
+                'border border-border bg-(--color-card-bg) text-text-muted hover:bg-surface',
+              'focus-visible:outline-none focus-visible:ring-(--color-focus-ring) focus-visible:ring-2',
             )}
           >
             {copied ? 'Copied!' : 'Copy'}

@@ -47,19 +47,25 @@ export function getConsentStatus(): ConsentState {
 export function setConsentStatus(preferences: ConsentPreferences) {
   if (typeof document === 'undefined') return;
 
-  const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  
-  Cookies.set(CONSENT_COOKIE_NAME, encodeURIComponent(JSON.stringify(preferences)), {
-    expires: 365,
-    domain: isLocalhost ? undefined : CONSENT_DOMAIN,
-    path: '/',
-    sameSite: 'Lax'
-  });
+  const isLocalhost =
+    window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1';
+
+  Cookies.set(
+    CONSENT_COOKIE_NAME,
+    encodeURIComponent(JSON.stringify(preferences)),
+    {
+      expires: 365,
+      domain: isLocalhost ? undefined : CONSENT_DOMAIN,
+      path: '/',
+      sameSite: 'Lax',
+    },
+  );
 
   // Clear legacy cookie to avoid conflicts
   Cookies.remove('ph_cookie_consent', {
     domain: isLocalhost ? undefined : CONSENT_DOMAIN,
-    path: '/'
+    path: '/',
   });
 }
 
@@ -69,7 +75,10 @@ export function updateTrackers(preferences: ConsentPreferences) {
   // Update PostHog
   if (window.posthog) {
     if (preferences.analytics) {
-      if (window.posthog.has_opted_out_capturing && window.posthog.has_opted_out_capturing()) {
+      if (
+        window.posthog.has_opted_out_capturing &&
+        window.posthog.has_opted_out_capturing()
+      ) {
         window.posthog.opt_in_capturing();
       }
       if (window.posthog.set_config) {
@@ -98,7 +107,10 @@ export function updateTrackers(preferences: ConsentPreferences) {
       // 1. Set global variable that can be used in custom Zaraz triggers/rules
       if (window.zaraz.set) {
         try {
-          window.zaraz.set('analytics_consent', preferences.analytics ? 'granted' : 'denied');
+          window.zaraz.set(
+            'analytics_consent',
+            preferences.analytics ? 'granted' : 'denied',
+          );
         } catch (e) {
           // Ignore
         }
@@ -111,7 +123,10 @@ export function updateTrackers(preferences: ConsentPreferences) {
             analytics: preferences.analytics,
           });
         } catch (e) {
-          console.warn('[Sapphire Analytics] Failed to sync consent with Cloudflare Zaraz:', e);
+          console.warn(
+            '[Sapphire Analytics] Failed to sync consent with Cloudflare Zaraz:',
+            e,
+          );
         }
       }
     }
@@ -120,6 +135,8 @@ export function updateTrackers(preferences: ConsentPreferences) {
   if (window.zaraz) {
     syncWithZaraz();
   } else {
-    document.addEventListener('zarazConsentAPIReady', syncWithZaraz, { once: true });
+    document.addEventListener('zarazConsentAPIReady', syncWithZaraz, {
+      once: true,
+    });
   }
 }

@@ -1,5 +1,5 @@
-import { forwardRef, useId, type ReactNode } from 'react';
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
+import { forwardRef, type ReactNode, useId } from 'react';
 import { cn } from '../../lib/utils';
 
 /**
@@ -47,7 +47,7 @@ const RadioGroupItem = forwardRef<
         aria-describedby={descriptionId}
         className={cn(
           'mt-0.5 size-[18px] shrink-0 cursor-pointer rounded-full border-[1.5px] border-border-strong bg-(--color-card-bg)',
-          'focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:ring-offset-1 focus-visible:outline-none',
+          'focus-visible:outline-none focus-visible:ring-(--color-focus-ring) focus-visible:ring-2 focus-visible:ring-offset-1',
           'data-[state=checked]:border-accent',
           'disabled:cursor-not-allowed disabled:opacity-50',
           className,
@@ -63,13 +63,16 @@ const RadioGroupItem = forwardRef<
           {label && (
             <label
               htmlFor={id}
-              className="cursor-pointer font-sans text-sm font-medium text-text-main select-none"
+              className="cursor-pointer select-none font-medium font-sans text-sm text-text-main"
             >
               {label}
             </label>
           )}
           {description && (
-            <span id={descriptionId} className="mt-0.5 font-sans text-xs text-text-muted">
+            <span
+              id={descriptionId}
+              className="mt-0.5 font-sans text-text-muted text-xs"
+            >
               {description}
             </span>
           )}

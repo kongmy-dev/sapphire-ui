@@ -1,5 +1,5 @@
-import { describe, it, expect, afterEach, vi } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { useMediaQuery } from './useMediaQuery';
 
 /** Minimal MediaQueryList stub whose `change` event we can drive by hand. */
@@ -12,17 +12,23 @@ function installMatchMedia(initial: boolean) {
     },
     media: '',
     onchange: null,
-    addEventListener: (_: string, cb: (e: MediaQueryListEvent) => void) => listeners.add(cb),
-    removeEventListener: (_: string, cb: (e: MediaQueryListEvent) => void) => listeners.delete(cb),
+    addEventListener: (_: string, cb: (e: MediaQueryListEvent) => void) =>
+      listeners.add(cb),
+    removeEventListener: (_: string, cb: (e: MediaQueryListEvent) => void) =>
+      listeners.delete(cb),
     addListener: () => {},
     removeListener: () => {},
     dispatchEvent: () => false,
   };
-  window.matchMedia = vi.fn().mockReturnValue(mql) as unknown as typeof window.matchMedia;
+  window.matchMedia = vi
+    .fn()
+    .mockReturnValue(mql) as unknown as typeof window.matchMedia;
   return {
     emit(next: boolean) {
       matches = next;
-      listeners.forEach((l) => l({ matches: next } as MediaQueryListEvent));
+      listeners.forEach((l) => {
+        l({ matches: next } as MediaQueryListEvent);
+      });
     },
     listenerCount: () => listeners.size,
   };

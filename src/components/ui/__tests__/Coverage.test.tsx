@@ -1,18 +1,33 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { describe, it } from 'vitest';
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '../DropdownMenu';
+import { Icon } from '../Icon';
 import { IconMark } from '../IconMark';
 import { MobileNav } from '../MobileNav';
-import { PassphraseGate } from '../PassphraseGate';
-import { ProposalLayout, ProposalHero, ProposalSection } from '../ProposalLayout';
-import { SEOHead, generateSEOTags } from '../SEOHead';
-import { ThemeToggle } from '../ThemeToggle';
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuGroup, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem } from '../DropdownMenu';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '../Sheet';
 import { Pagination } from '../Pagination';
-import { Steps } from '../Steps';
+import { PassphraseGate } from '../PassphraseGate';
+import {
+  ProposalHero,
+  ProposalLayout,
+  ProposalSection,
+} from '../ProposalLayout';
+import { generateSEOTags, SEOHead } from '../SEOHead';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '../Sheet';
 import { Sparkline } from '../Sparkline';
-import { Icon } from '../Icon';
-import userEvent from '@testing-library/user-event';
+import { Steps } from '../Steps';
+import { ThemeToggle } from '../ThemeToggle';
 
 describe('Coverage Smoke Tests', () => {
   it('renders IconMark', () => {
@@ -21,37 +36,51 @@ describe('Coverage Smoke Tests', () => {
 
   it('renders MobileNav', () => {
     render(
-      <MobileNav 
-        brandName="Brand"
-        navItems={[{ href: '/', label: 'Home' }]}
-      />
+      <MobileNav brandName="Brand" navItems={[{ href: '/', label: 'Home' }]} />,
     );
   });
 
   it('renders PassphraseGate', () => {
     render(
-      <PassphraseGate isHidden={false} brandMark={<div>Mark</div>} brandName="Brand" title="Title" documentTitle="Doc" description="Desc">
+      <PassphraseGate
+        isHidden={false}
+        brandMark={<div>Mark</div>}
+        brandName="Brand"
+        title="Title"
+        documentTitle="Doc"
+        description="Desc"
+      >
         <div>Content</div>
-      </PassphraseGate>
+      </PassphraseGate>,
     );
   });
 
   it('renders ProposalLayout components', () => {
     render(
-      <ProposalLayout brandMark={<div>M</div>} brandName="N" breadcrumbs={<span>Crumb</span>} metadata={<span>Meta</span>}>
-        <ProposalHero eyebrow="Eyebrow" title="Hero Title" lede="Lede" metaRows={[{label: 'L', value: 'V'}]} />
+      <ProposalLayout
+        brandMark={<div>M</div>}
+        brandName="N"
+        breadcrumbs={<span>Crumb</span>}
+        metadata={<span>Meta</span>}
+      >
+        <ProposalHero
+          eyebrow="Eyebrow"
+          title="Hero Title"
+          lede="Lede"
+          metaRows={[{ label: 'L', value: 'V' }]}
+        />
         <ProposalSection sectionNo="1" title="Section 1" lede="Lede">
           <p>Content</p>
         </ProposalSection>
-      </ProposalLayout>
+      </ProposalLayout>,
     );
   });
 
   it('renders SEOHead', () => {
     render(
-      <SEOHead 
-        title="Test" 
-        description="Desc" 
+      <SEOHead
+        title="Test"
+        description="Desc"
         url="https://example.com"
         image="img.png"
         twitterCard="summary_large_image"
@@ -59,8 +88,8 @@ describe('Coverage Smoke Tests', () => {
         publishedTime="2023-01-01"
         twitterSite="@kongmy"
         keywords={['a', 'b']}
-        jsonLd={{ "@context": "http://schema.org" }}
-      />
+        jsonLd={{ '@context': 'http://schema.org' }}
+      />,
     );
   });
 
@@ -75,7 +104,7 @@ describe('Coverage Smoke Tests', () => {
       publishedTime: '2023-01-01',
       twitterSite: '@kongmy',
       keywords: ['a', 'b'],
-      jsonLd: { "@context": "http://schema.org" }
+      jsonLd: { '@context': 'http://schema.org' },
     });
   });
 
@@ -94,13 +123,15 @@ describe('Coverage Smoke Tests', () => {
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem>Item 1</DropdownMenuItem>
-            <DropdownMenuCheckboxItem checked={true} onCheckedChange={() => {}}>Check</DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem checked={true} onCheckedChange={() => {}}>
+              Check
+            </DropdownMenuCheckboxItem>
             <DropdownMenuRadioGroup value="1">
               <DropdownMenuRadioItem value="1">Radio</DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
           </DropdownMenuGroup>
         </DropdownMenuContent>
-      </DropdownMenu>
+      </DropdownMenu>,
     );
   });
 
@@ -112,35 +143,32 @@ describe('Coverage Smoke Tests', () => {
             <SheetTitle>Title</SheetTitle>
           </SheetHeader>
         </SheetContent>
-      </Sheet>
+      </Sheet>,
     );
   });
 
   it('renders Pagination', () => {
     render(
-      <Pagination
-        currentPage={2}
-        totalPages={5}
-        onPageChange={() => {}}
-      />
+      <Pagination currentPage={2} totalPages={5} onPageChange={() => {}} />,
     );
   });
 
   it('renders Steps', () => {
     render(
-      <Steps 
-        current={1} 
-        steps={[{ label: 'Step 1' }, { label: 'Step 2' }]} 
-      />
+      <Steps current={1} steps={[{ label: 'Step 1' }, { label: 'Step 2' }]} />,
     );
   });
 
   it('renders Sparkline', () => {
-    render(<Sparkline data={[
-      { status: 'success' },
-      { status: 'warning' },
-      { status: 'error' },
-    ]} />);
+    render(
+      <Sparkline
+        data={[
+          { status: 'success' },
+          { status: 'warning' },
+          { status: 'error' },
+        ]}
+      />,
+    );
   });
 
   it('renders Icon', () => {

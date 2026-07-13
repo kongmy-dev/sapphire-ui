@@ -1,6 +1,9 @@
 // Toast Web Component — framework-agnostic notification system
 
-const SSRHTMLElement = typeof window !== 'undefined' ? HTMLElement : class {} as typeof HTMLElement;
+const SSRHTMLElement =
+  typeof window !== 'undefined'
+    ? HTMLElement
+    : (class {} as typeof HTMLElement);
 
 export type ToastType = 'success' | 'info' | 'warning' | 'error';
 
@@ -10,7 +13,11 @@ declare global {
      * Global toast bridge installed by <sapphire-toast> while it is mounted.
      * Lets vanilla / non-React consumers fire a toast without a component ref.
      */
-    __sapphireToast?: (message: string, type?: ToastType, durationMs?: number) => void;
+    __sapphireToast?: (
+      message: string,
+      type?: ToastType,
+      durationMs?: number,
+    ) => void;
   }
 }
 
@@ -55,10 +62,16 @@ export class ToastElement extends SSRHTMLElement {
    * Default duration is 5000ms — override per call or via the `duration`
    * attribute on <sapphire-toast duration="8000">.
    */
-  public show(message: string, type: ToastType = 'success', durationMs?: number) {
+  public show(
+    message: string,
+    type: ToastType = 'success',
+    durationMs?: number,
+  ) {
     if (!this.container) return;
     const attrDuration = Number(this.getAttribute('duration'));
-    const duration = durationMs ?? (Number.isFinite(attrDuration) && attrDuration > 0 ? attrDuration : 5000);
+    const duration =
+      durationMs ??
+      (Number.isFinite(attrDuration) && attrDuration > 0 ? attrDuration : 5000);
 
     const toast = document.createElement('div');
     toast.className = 'sapphire-toast';

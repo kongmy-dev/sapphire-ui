@@ -1,12 +1,12 @@
 import { render } from '@testing-library/react';
 import { describe, it } from 'vitest';
-import InteractivePage from '../InteractivePage';
-import ExtendedPage from '../ExtendedPage';
-import OverviewPage from '../OverviewPage';
-import FormsPage from '../FormsPage';
-import FeedbackPage from '../FeedbackPage';
 import DataPage from '../DataPage';
+import ExtendedPage from '../ExtendedPage';
+import FeedbackPage from '../FeedbackPage';
+import FormsPage from '../FormsPage';
+import InteractivePage from '../InteractivePage';
 import LayoutsPage from '../LayoutsPage';
+import OverviewPage from '../OverviewPage';
 
 describe('Pages Integration', () => {
   it('renders InteractivePage without crashing', () => {

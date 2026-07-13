@@ -1,9 +1,15 @@
-import { useEffect, useState, useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import {
+  getTheme,
+  setTheme,
+  subscribeTheme,
+  type Theme,
+} from '../../lib/theme';
 import { ThemeContext } from '../ThemeProvider';
 import { Button, type ButtonProps } from './Button';
-import { getTheme, setTheme, subscribeTheme, type Theme } from '../../lib/theme';
 
-export interface ThemeToggleProps extends Omit<ButtonProps, 'onClick' | 'icon' | 'children'> {
+export interface ThemeToggleProps
+  extends Omit<ButtonProps, 'onClick' | 'icon' | 'children'> {
   /** Optional custom class name */
   className?: string;
 }
@@ -45,8 +51,16 @@ export function ThemeToggle({
     }
   };
 
-  const nextModeLabel = !mounted ? 'dark' : activeTheme === 'dark' ? 'light' : 'dark';
-  const iconName = !mounted ? 'dark_mode' : activeTheme === 'dark' ? 'light_mode' : 'dark_mode';
+  const nextModeLabel = !mounted
+    ? 'dark'
+    : activeTheme === 'dark'
+      ? 'light'
+      : 'dark';
+  const iconName = !mounted
+    ? 'dark_mode'
+    : activeTheme === 'dark'
+      ? 'light_mode'
+      : 'dark_mode';
 
   return (
     <Button

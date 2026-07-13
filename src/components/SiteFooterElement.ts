@@ -24,20 +24,43 @@
 // Light DOM (no Shadow DOM); slotted content uses consumer Tailwind classes.
 
 const SSRHTMLElement =
-  typeof window !== 'undefined' ? HTMLElement : (class {} as typeof HTMLElement);
+  typeof window !== 'undefined'
+    ? HTMLElement
+    : (class {} as typeof HTMLElement);
 
 type FooterVariant = 'light' | 'dark';
 
 const HOST_CLASSES_BASE = ['w-full', 'border-t'];
-const HOST_CLASSES_DARK = ['border-border-dark', 'bg-primary', 'text-(--color-text-on-dark)'];
-const HOST_CLASSES_LIGHT = ['border-border', 'bg-(--color-card-bg)', 'text-(--color-text-main)'];
+const HOST_CLASSES_DARK = [
+  'border-border-dark',
+  'bg-primary',
+  'text-(--color-text-on-dark)',
+];
+const HOST_CLASSES_LIGHT = [
+  'border-border',
+  'bg-(--color-card-bg)',
+  'text-(--color-text-main)',
+];
 
 const INNER_CLASSES = ['mx-auto', 'max-w-7xl', 'px-6', 'py-12', 'md:py-16'];
 
-const ROW_CLASSES = ['mb-10', 'flex', 'flex-col', 'gap-10', 'md:flex-row', 'md:gap-16'];
+const ROW_CLASSES = [
+  'mb-10',
+  'flex',
+  'flex-col',
+  'gap-10',
+  'md:flex-row',
+  'md:gap-16',
+];
 
 const SLOT_BRAND_CLASSES = ['shrink-0', 'md:max-w-xs'];
-const SLOT_LINKS_CLASSES = ['flex', 'flex-1', 'flex-wrap', 'gap-10', 'md:gap-16'];
+const SLOT_LINKS_CLASSES = [
+  'flex',
+  'flex-1',
+  'flex-wrap',
+  'gap-10',
+  'md:gap-16',
+];
 
 const BOTTOM_CLASSES_BASE = [
   'flex',
@@ -51,14 +74,22 @@ const BOTTOM_CLASSES_BASE = [
   'uppercase',
   'md:flex-row',
 ];
-const BOTTOM_CLASSES_DARK = ['border-border-dark', 'text-(--color-text-on-dark-muted)'];
+const BOTTOM_CLASSES_DARK = [
+  'border-border-dark',
+  'text-(--color-text-on-dark-muted)',
+];
 const BOTTOM_CLASSES_LIGHT = ['border-border', 'text-(--color-text-muted)'];
 
 export class SiteFooterElement extends SSRHTMLElement {
   static observedAttributes = ['variant'];
 
   private rendered = false;
-  private slotCache: { brand: Node[]; links: Node[]; bottom: Node[]; extra: Node[] } = {
+  private slotCache: {
+    brand: Node[];
+    links: Node[];
+    bottom: Node[];
+    extra: Node[];
+  } = {
     brand: [],
     links: [],
     bottom: [],
@@ -102,7 +133,9 @@ export class SiteFooterElement extends SSRHTMLElement {
 
     this.classList.remove(...HOST_CLASSES_DARK, ...HOST_CLASSES_LIGHT);
     this.classList.add(...HOST_CLASSES_BASE);
-    this.classList.add(...(variant === 'dark' ? HOST_CLASSES_DARK : HOST_CLASSES_LIGHT));
+    this.classList.add(
+      ...(variant === 'dark' ? HOST_CLASSES_DARK : HOST_CLASSES_LIGHT),
+    );
 
     this.setAttribute('role', this.getAttribute('role') || 'contentinfo');
   }
@@ -111,7 +144,8 @@ export class SiteFooterElement extends SSRHTMLElement {
     const inner = document.createElement('div');
     inner.classList.add(...INNER_CLASSES);
 
-    const hasBrandOrLinks = this.slotCache.brand.length > 0 || this.slotCache.links.length > 0;
+    const hasBrandOrLinks =
+      this.slotCache.brand.length > 0 || this.slotCache.links.length > 0;
     if (hasBrandOrLinks) {
       const row = document.createElement('div');
       row.classList.add(...ROW_CLASSES);
@@ -155,14 +189,20 @@ export class SiteFooterElement extends SSRHTMLElement {
   private applyBottomVariant() {
     if (!this.bottomEl) return;
     const variant = (this.getAttribute('variant') || 'dark') as FooterVariant;
-    this.bottomEl.classList.remove(...BOTTOM_CLASSES_DARK, ...BOTTOM_CLASSES_LIGHT);
+    this.bottomEl.classList.remove(
+      ...BOTTOM_CLASSES_DARK,
+      ...BOTTOM_CLASSES_LIGHT,
+    );
     this.bottomEl.classList.add(...BOTTOM_CLASSES_BASE);
     this.bottomEl.classList.add(
-      ...(variant === 'dark' ? BOTTOM_CLASSES_DARK : BOTTOM_CLASSES_LIGHT)
+      ...(variant === 'dark' ? BOTTOM_CLASSES_DARK : BOTTOM_CLASSES_LIGHT),
     );
   }
 }
 
-if (typeof window !== 'undefined' && !customElements.get('sapphire-site-footer')) {
+if (
+  typeof window !== 'undefined' &&
+  !customElements.get('sapphire-site-footer')
+) {
   customElements.define('sapphire-site-footer', SiteFooterElement);
 }

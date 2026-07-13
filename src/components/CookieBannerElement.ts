@@ -1,6 +1,13 @@
-import { getConsentStatus, setConsentStatus, updateTrackers } from '../lib/consent';
+import {
+  getConsentStatus,
+  setConsentStatus,
+  updateTrackers,
+} from '../lib/consent';
 
-const SSRHTMLElement = typeof window !== 'undefined' ? HTMLElement : class {} as typeof HTMLElement;
+const SSRHTMLElement =
+  typeof window !== 'undefined'
+    ? HTMLElement
+    : (class {} as typeof HTMLElement);
 
 export class CookieBannerElement extends SSRHTMLElement {
   private isRendered = false;
@@ -29,7 +36,11 @@ export class CookieBannerElement extends SSRHTMLElement {
     if (this.mountTimer) clearTimeout(this.mountTimer);
   }
 
-  attributeChangedCallback(name: string, _oldValue: string | null, newValue: string | null) {
+  attributeChangedCallback(
+    name: string,
+    _oldValue: string | null,
+    newValue: string | null,
+  ) {
     if (name === 'force-show') {
       if (newValue !== null) {
         // Attribute was added or set
@@ -83,7 +94,7 @@ export class CookieBannerElement extends SSRHTMLElement {
     setTimeout(() => {
       // If the attribute was re-added during transition, abort destruction
       if (this.isVisible) return;
-      
+
       this.isRendered = false;
       this.innerHTML = '';
       this.container = null;
@@ -116,7 +127,8 @@ export class CookieBannerElement extends SSRHTMLElement {
     const description =
       this.getAttribute('description') ||
       'We use essential cookies and similar technologies to improve your browsing experience and analyze site traffic.';
-    const privacyUrl = this.getAttribute('privacy-url') || 'https://kongmy.dev/privacy';
+    const privacyUrl =
+      this.getAttribute('privacy-url') || 'https://kongmy.dev/privacy';
     const privacyLabel = this.getAttribute('privacy-label') || 'Privacy Policy';
     const acceptLabel = this.getAttribute('accept-label') || 'Accept';
     const declineLabel = this.getAttribute('decline-label') || 'Decline';
@@ -155,7 +167,9 @@ export class CookieBannerElement extends SSRHTMLElement {
     if (headingEl) headingEl.textContent = heading;
     const descriptionEl = this.querySelector('[data-description]');
     if (descriptionEl) descriptionEl.textContent = description;
-    const privacyLink = this.querySelector<HTMLAnchorElement>('[data-privacy-link]');
+    const privacyLink = this.querySelector<HTMLAnchorElement>(
+      '[data-privacy-link]',
+    );
     if (privacyLink) {
       privacyLink.href = privacyUrl;
       privacyLink.textContent = privacyLabel;
@@ -165,8 +179,12 @@ export class CookieBannerElement extends SSRHTMLElement {
     const declineBtn = this.querySelector('[data-decline-btn]');
     if (declineBtn) declineBtn.textContent = declineLabel;
 
-    this.querySelector('[data-accept-btn]')?.addEventListener('click', () => this.handleAccept());
-    this.querySelector('[data-decline-btn]')?.addEventListener('click', () => this.handleDecline());
+    this.querySelector('[data-accept-btn]')?.addEventListener('click', () =>
+      this.handleAccept(),
+    );
+    this.querySelector('[data-decline-btn]')?.addEventListener('click', () =>
+      this.handleDecline(),
+    );
 
     this.show();
   }

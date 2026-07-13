@@ -5,22 +5,38 @@ export default function ElementsPage() {
     <div>
       <header className="docs-page-header">
         <h1>Web Components & SEO</h1>
-        <p>Framework-agnostic elements and head utilities for Astro and vanilla contexts.</p>
+        <p>
+          Framework-agnostic elements and head utilities for Astro and vanilla
+          contexts.
+        </p>
       </header>
 
       {/* ─── Custom Elements: site-header / site-footer ─────────────── */}
       <section className="docs-section">
-        <h2 className="docs-section-title">Custom Elements (Astro / vanilla HTML)</h2>
+        <h2 className="docs-section-title">
+          Custom Elements (Astro / vanilla HTML)
+        </h2>
         <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
-          Framework-agnostic Web Component versions of <code className="docs-props-table code">SiteHeader</code> and{' '}
-          <code className="docs-props-table code">SiteFooter</code>. Same visual output — no React runtime required.
-          Light-DOM elements, so consumer Tailwind utilities apply to slotted content.
-          Available as <code className="docs-props-table code">@kongmy-dev/sapphire-ui/site-header-element</code> and{' '}
-          <code className="docs-props-table code">@kongmy-dev/sapphire-ui/site-footer-element</code>, or both via{' '}
-          <code className="docs-props-table code">@kongmy-dev/sapphire-ui/elements</code>.
+          Framework-agnostic Web Component versions of{' '}
+          <code className="docs-props-table code">SiteHeader</code> and{' '}
+          <code className="docs-props-table code">SiteFooter</code>. Same visual
+          output — no React runtime required. Light-DOM elements, so consumer
+          Tailwind utilities apply to slotted content. Available as{' '}
+          <code className="docs-props-table code">
+            @kongmy-dev/sapphire-ui/site-header-element
+          </code>{' '}
+          and{' '}
+          <code className="docs-props-table code">
+            @kongmy-dev/sapphire-ui/site-footer-element
+          </code>
+          , or both via{' '}
+          <code className="docs-props-table code">
+            @kongmy-dev/sapphire-ui/elements
+          </code>
+          .
         </p>
 
-        <h3 className="mt-6 mb-2 font-serif text-lg font-semibold">Setup</h3>
+        <h3 className="mt-6 mb-2 font-semibold font-serif text-lg">Setup</h3>
         <CodeBlock
           variant="light"
           language="tsx"
@@ -29,21 +45,34 @@ export default function ElementsPage() {
 import '@kongmy-dev/sapphire-ui/elements';`}
         />
 
-        <h3 className="mt-6 mb-2 font-serif text-lg font-semibold">Usage</h3>
+        <h3 className="mt-6 mb-2 font-semibold font-serif text-lg">Usage</h3>
         <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
-          For <code className="docs-props-table code">sapphire-site-header</code>, children with{' '}
-          <code className="docs-props-table code">data-slot=&quot;brand|nav|actions&quot;</code> are positioned into the layout.
-          Add <code className="docs-props-table code">sticky</code> to make it sticky. For{' '}
-          <code className="docs-props-table code">sapphire-site-footer</code>, slots are{' '}
-          <code className="docs-props-table code">brand</code>, <code className="docs-props-table code">links</code>, and{' '}
-          <code className="docs-props-table code">bottom</code>. Both elements accept{' '}
-          <code className="docs-props-table code">variant=&quot;light|dark&quot;</code> to switch palette.
+          For{' '}
+          <code className="docs-props-table code">sapphire-site-header</code>,
+          children with{' '}
+          <code className="docs-props-table code">
+            data-slot=&quot;brand|nav|actions&quot;
+          </code>{' '}
+          are positioned into the layout. Add{' '}
+          <code className="docs-props-table code">sticky</code> to make it
+          sticky. For{' '}
+          <code className="docs-props-table code">sapphire-site-footer</code>,
+          slots are <code className="docs-props-table code">brand</code>,{' '}
+          <code className="docs-props-table code">links</code>, and{' '}
+          <code className="docs-props-table code">bottom</code>. Both elements
+          accept{' '}
+          <code className="docs-props-table code">
+            variant=&quot;light|dark&quot;
+          </code>{' '}
+          to switch palette.
         </p>
 
         <div className="docs-preview">
           <div className="docs-stack" style={{ gap: 16 }}>
             <div>
-              <span className="mb-2 block font-mono text-xs font-bold tracking-widest text-accent uppercase">Header</span>
+              <span className="mb-2 block font-bold font-mono text-accent text-xs uppercase tracking-widest">
+                Header
+              </span>
               <CodeBlock
                 variant="light"
                 language="html"
@@ -64,7 +93,9 @@ import '@kongmy-dev/sapphire-ui/elements';`}
               />
             </div>
             <div>
-              <span className="mb-2 block font-mono text-xs font-bold tracking-widest text-accent uppercase">Footer</span>
+              <span className="mb-2 block font-bold font-mono text-accent text-xs uppercase tracking-widest">
+                Footer
+              </span>
               <CodeBlock
                 variant="light"
                 language="html"
@@ -96,29 +127,54 @@ import '@kongmy-dev/sapphire-ui/elements';`}
           </div>
         </div>
 
-        <h3 className="mt-6 mb-2 font-serif text-lg font-semibold">Attribute reference</h3>
+        <h3 className="mt-6 mb-2 font-semibold font-serif text-lg">
+          Attribute reference
+        </h3>
         <table className="docs-props-table">
           <thead>
-            <tr><th>Attribute</th><th>Values</th><th>Element</th><th>Effect</th></tr>
+            <tr>
+              <th>Attribute</th>
+              <th>Values</th>
+              <th>Element</th>
+              <th>Effect</th>
+            </tr>
           </thead>
           <tbody>
             <tr>
-              <td><code>variant</code></td>
-              <td><code>&quot;light&quot;</code> | <code>&quot;dark&quot;</code> (default)</td>
+              <td>
+                <code>variant</code>
+              </td>
+              <td>
+                <code>&quot;light&quot;</code> | <code>&quot;dark&quot;</code>{' '}
+                (default)
+              </td>
               <td>both</td>
-              <td>Switches palette. Reactive — changing the attribute at runtime re-applies classes.</td>
+              <td>
+                Switches palette. Reactive — changing the attribute at runtime
+                re-applies classes.
+              </td>
             </tr>
             <tr>
-              <td><code>sticky</code></td>
+              <td>
+                <code>sticky</code>
+              </td>
               <td>boolean (presence)</td>
               <td>header only</td>
-              <td>Adds <code>position: sticky; top: 0</code>.</td>
+              <td>
+                Adds <code>position: sticky; top: 0</code>.
+              </td>
             </tr>
             <tr>
-              <td><code>role</code></td>
+              <td>
+                <code>role</code>
+              </td>
               <td>auto-applied</td>
               <td>both</td>
-              <td>Header gets <code>banner</code>, footer gets <code>contentinfo</code>. Override by setting <code>role</code> explicitly.</td>
+              <td>
+                Header gets <code>banner</code>, footer gets{' '}
+                <code>contentinfo</code>. Override by setting <code>role</code>{' '}
+                explicitly.
+              </td>
             </tr>
           </tbody>
         </table>
@@ -126,15 +182,20 @@ import '@kongmy-dev/sapphire-ui/elements';`}
 
       {/* ─── Behaviour elements ─────────────────────────────────────── */}
       <section className="docs-section">
-        <h2 className="docs-section-title">Toast, Banner &amp; Cookie Banner</h2>
+        <h2 className="docs-section-title">
+          Toast, Banner &amp; Cookie Banner
+        </h2>
         <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
-          The behaviour elements are fully attribute-driven in v2 — copy, labels, and timing
-          are configurable per instance, so localized sites need no forks.
+          The behaviour elements are fully attribute-driven in v2 — copy,
+          labels, and timing are configurable per instance, so localized sites
+          need no forks.
         </p>
         <div className="docs-preview">
           <div className="docs-stack" style={{ gap: 16 }}>
             <div>
-              <span className="mb-2 block font-mono text-xs font-bold tracking-widest text-accent uppercase">Toast</span>
+              <span className="mb-2 block font-bold font-mono text-accent text-xs uppercase tracking-widest">
+                Toast
+              </span>
               <CodeBlock
                 variant="light"
                 language="html"
@@ -147,7 +208,9 @@ import '@kongmy-dev/sapphire-ui/elements';`}
               />
             </div>
             <div>
-              <span className="mb-2 block font-mono text-xs font-bold tracking-widest text-accent uppercase">Banner</span>
+              <span className="mb-2 block font-bold font-mono text-accent text-xs uppercase tracking-widest">
+                Banner
+              </span>
               <CodeBlock
                 variant="light"
                 language="html"
@@ -159,7 +222,9 @@ import '@kongmy-dev/sapphire-ui/elements';`}
               />
             </div>
             <div>
-              <span className="mb-2 block font-mono text-xs font-bold tracking-widest text-accent uppercase">Cookie Banner (localizable)</span>
+              <span className="mb-2 block font-bold font-mono text-accent text-xs uppercase tracking-widest">
+                Cookie Banner (localizable)
+              </span>
               <CodeBlock
                 variant="light"
                 language="html"
@@ -177,18 +242,84 @@ import '@kongmy-dev/sapphire-ui/elements';`}
           </div>
         </div>
 
-        <h3 className="mt-6 mb-2 font-serif text-lg font-semibold">Attribute reference</h3>
+        <h3 className="mt-6 mb-2 font-semibold font-serif text-lg">
+          Attribute reference
+        </h3>
         <table className="docs-props-table">
           <thead>
-            <tr><th>Attribute</th><th>Element</th><th>Effect</th></tr>
+            <tr>
+              <th>Attribute</th>
+              <th>Element</th>
+              <th>Effect</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td><code>duration</code></td><td><code>sapphire-toast</code></td><td>Default auto-dismiss in ms (per-call argument wins). Default 5000.</td></tr>
-            <tr><td><code>variant</code></td><td><code>sapphire-banner</code></td><td><code>info | success | warning | error | accent</code>. Reactive.</td></tr>
-            <tr><td><code>dismissible</code> / <code>dismiss-label</code></td><td><code>sapphire-banner</code></td><td>Renders a close button; label overrides the accessible name.</td></tr>
-            <tr><td><code>storage-key</code></td><td><code>sapphire-banner</code></td><td>Persists dismissal in localStorage.</td></tr>
-            <tr><td><code>heading</code>, <code>description</code>, <code>privacy-url</code>, <code>privacy-label</code>, <code>accept-label</code>, <code>decline-label</code></td><td><code>cookie-banner</code></td><td>Localize every visible string.</td></tr>
-            <tr><td><code>force-show</code></td><td><code>cookie-banner</code></td><td>Re-opens the banner (e.g. from a “Cookie settings” footer link).</td></tr>
+            <tr>
+              <td>
+                <code>duration</code>
+              </td>
+              <td>
+                <code>sapphire-toast</code>
+              </td>
+              <td>
+                Default auto-dismiss in ms (per-call argument wins). Default
+                5000.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>variant</code>
+              </td>
+              <td>
+                <code>sapphire-banner</code>
+              </td>
+              <td>
+                <code>info | success | warning | error | accent</code>.
+                Reactive.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>dismissible</code> / <code>dismiss-label</code>
+              </td>
+              <td>
+                <code>sapphire-banner</code>
+              </td>
+              <td>
+                Renders a close button; label overrides the accessible name.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>storage-key</code>
+              </td>
+              <td>
+                <code>sapphire-banner</code>
+              </td>
+              <td>Persists dismissal in localStorage.</td>
+            </tr>
+            <tr>
+              <td>
+                <code>heading</code>, <code>description</code>,{' '}
+                <code>privacy-url</code>, <code>privacy-label</code>,{' '}
+                <code>accept-label</code>, <code>decline-label</code>
+              </td>
+              <td>
+                <code>cookie-banner</code>
+              </td>
+              <td>Localize every visible string.</td>
+            </tr>
+            <tr>
+              <td>
+                <code>force-show</code>
+              </td>
+              <td>
+                <code>cookie-banner</code>
+              </td>
+              <td>
+                Re-opens the banner (e.g. from a “Cookie settings” footer link).
+              </td>
+            </tr>
           </tbody>
         </table>
       </section>
@@ -197,12 +328,18 @@ import '@kongmy-dev/sapphire-ui/elements';`}
       <section className="docs-section">
         <h2 className="docs-section-title">SEO / Head</h2>
         <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
-          Dual API for SEO meta tags: React <code className="docs-props-table code">&lt;SEOHead&gt;</code> component for SPAs, and <code className="docs-props-table code">generateSEOTags()</code> utility for Astro/SSR.
+          Dual API for SEO meta tags: React{' '}
+          <code className="docs-props-table code">&lt;SEOHead&gt;</code>{' '}
+          component for SPAs, and{' '}
+          <code className="docs-props-table code">generateSEOTags()</code>{' '}
+          utility for Astro/SSR.
         </p>
         <div className="docs-preview">
           <div className="docs-stack" style={{ gap: 16 }}>
             <div>
-              <span className="mb-2 block font-mono text-xs font-bold tracking-widest text-accent uppercase">React (SPA)</span>
+              <span className="mb-2 block font-bold font-mono text-accent text-xs uppercase tracking-widest">
+                React (SPA)
+              </span>
               <CodeBlock
                 variant="light"
                 language="tsx"
@@ -218,7 +355,9 @@ import '@kongmy-dev/sapphire-ui/elements';`}
               />
             </div>
             <div>
-              <span className="mb-2 block font-mono text-xs font-bold tracking-widest text-accent uppercase">Astro / SSR</span>
+              <span className="mb-2 block font-bold font-mono text-accent text-xs uppercase tracking-widest">
+                Astro / SSR
+              </span>
               <CodeBlock
                 variant="light"
                 language="astro"
@@ -242,17 +381,101 @@ const seo = generateSEOTags({
         </div>
 
         <table className="docs-props-table">
-          <thead><tr><th>Prop</th><th>Type</th><th>Default</th></tr></thead>
+          <thead>
+            <tr>
+              <th>Prop</th>
+              <th>Type</th>
+              <th>Default</th>
+            </tr>
+          </thead>
           <tbody>
-            <tr><td><code>title</code></td><td><code>string</code></td><td>—</td></tr>
-            <tr><td><code>description</code></td><td><code>string</code></td><td>—</td></tr>
-            <tr><td><code>url</code></td><td><code>string</code></td><td>—</td></tr>
-            <tr><td><code>image</code></td><td><code>string</code></td><td>—</td></tr>
-            <tr><td><code>siteName</code></td><td><code>string</code></td><td><code>&quot;KONGMY&quot;</code></td></tr>
-            <tr><td><code>type</code></td><td><code>website | article</code></td><td><code>website</code></td></tr>
-            <tr><td><code>twitterCard</code></td><td><code>summary | summary_large_image</code></td><td><code>summary_large_image</code></td></tr>
-            <tr><td><code>publishedTime</code></td><td><code>string (ISO)</code></td><td>—</td></tr>
-            <tr><td><code>jsonLd</code></td><td><code>Record</code></td><td>—</td></tr>
+            <tr>
+              <td>
+                <code>title</code>
+              </td>
+              <td>
+                <code>string</code>
+              </td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>
+                <code>description</code>
+              </td>
+              <td>
+                <code>string</code>
+              </td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>
+                <code>url</code>
+              </td>
+              <td>
+                <code>string</code>
+              </td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>
+                <code>image</code>
+              </td>
+              <td>
+                <code>string</code>
+              </td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>
+                <code>siteName</code>
+              </td>
+              <td>
+                <code>string</code>
+              </td>
+              <td>
+                <code>&quot;KONGMY&quot;</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>type</code>
+              </td>
+              <td>
+                <code>website | article</code>
+              </td>
+              <td>
+                <code>website</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>twitterCard</code>
+              </td>
+              <td>
+                <code>summary | summary_large_image</code>
+              </td>
+              <td>
+                <code>summary_large_image</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>publishedTime</code>
+              </td>
+              <td>
+                <code>string (ISO)</code>
+              </td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>
+                <code>jsonLd</code>
+              </td>
+              <td>
+                <code>Record</code>
+              </td>
+              <td>—</td>
+            </tr>
           </tbody>
         </table>
       </section>

@@ -1,4 +1,11 @@
-import { forwardRef, Children, cloneElement, isValidElement, type HTMLAttributes, type ReactElement } from 'react';
+import {
+  Children,
+  cloneElement,
+  forwardRef,
+  type HTMLAttributes,
+  isValidElement,
+  type ReactElement,
+} from 'react';
 import { cn } from '../../lib/utils';
 import { Avatar } from './Avatar';
 
@@ -26,7 +33,9 @@ export interface AvatarGroupProps extends HTMLAttributes<HTMLDivElement> {
  */
 const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
   ({ className, children, spacing = 8, max, ...props }, ref) => {
-    const items = Children.toArray(children).filter(isValidElement) as ReactElement[];
+    const items = Children.toArray(children).filter(
+      isValidElement,
+    ) as ReactElement[];
     const visible = max != null ? items.slice(0, max) : items;
     const overflow = max != null && items.length > max ? items.length - max : 0;
 

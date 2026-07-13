@@ -1,7 +1,8 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
 import { cn } from '../../lib/utils';
 
-export interface PassphraseGateProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
+export interface PassphraseGateProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   isHidden?: boolean;
   brandMark?: ReactNode;
   brandName?: ReactNode;
@@ -12,9 +13,26 @@ export interface PassphraseGateProps extends Omit<HTMLAttributes<HTMLDivElement>
 }
 
 export const PassphraseGate = forwardRef<HTMLDivElement, PassphraseGateProps>(
-  ({ className, isHidden = false, brandMark, brandName, title = 'Protected Document', documentTitle, description, children, ...props }, ref) => {
+  (
+    {
+      className,
+      isHidden = false,
+      brandMark,
+      brandName,
+      title = 'Protected Document',
+      documentTitle,
+      description,
+      children,
+      ...props
+    },
+    ref,
+  ) => {
     return (
-      <div ref={ref} className={cn('gate', isHidden && 'is-hidden', className)} {...props}>
+      <div
+        ref={ref}
+        className={cn('gate', isHidden && 'is-hidden', className)}
+        {...props}
+      >
         <div className="gate-card">
           {(brandMark || brandName) && (
             <div className="gate-brand">
@@ -22,15 +40,15 @@ export const PassphraseGate = forwardRef<HTMLDivElement, PassphraseGateProps>(
               {brandName && <span>{brandName}</span>}
             </div>
           )}
-          
+
           <h2>{title}</h2>
           {documentTitle && <div className="gate-doc">{documentTitle}</div>}
           {description && <p className="muted">{description}</p>}
-          
+
           {children}
         </div>
       </div>
     );
-  }
+  },
 );
 PassphraseGate.displayName = 'PassphraseGate';

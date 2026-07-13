@@ -1,4 +1,9 @@
-import { forwardRef, createContext, useContext, type HTMLAttributes } from 'react';
+import {
+  createContext,
+  forwardRef,
+  type HTMLAttributes,
+  useContext,
+} from 'react';
 import { cn } from '../../lib/utils';
 
 type Orientation = 'vertical' | 'horizontal';
@@ -18,12 +23,12 @@ const Timeline = forwardRef<HTMLDivElement, TimelineProps>(
         className={cn(
           'flex font-sans',
           orientation === 'vertical' ? 'flex-col' : 'flex-row',
-          className
+          className,
         )}
         {...props}
       />
     </TimelineContext.Provider>
-  )
+  ),
 );
 Timeline.displayName = 'Timeline';
 
@@ -37,13 +42,15 @@ const TimelineItem = forwardRef<HTMLDivElement, TimelineItemProps>(
         ref={ref}
         className={cn(
           'relative flex',
-          orientation === 'vertical' ? 'flex-row gap-4' : 'flex-1 flex-col gap-3',
-          className
+          orientation === 'vertical'
+            ? 'flex-row gap-4'
+            : 'flex-1 flex-col gap-3',
+          className,
         )}
         {...props}
       />
     );
-  }
+  },
 );
 TimelineItem.displayName = 'TimelineItem';
 
@@ -59,8 +66,10 @@ const TimelineIndicator = forwardRef<HTMLDivElement, TimelineIndicatorProps>(
         ref={ref}
         className={cn(
           'relative flex shrink-0 items-center',
-          orientation === 'vertical' ? 'w-6 flex-col justify-start' : 'h-6 flex-row justify-center',
-          className
+          orientation === 'vertical'
+            ? 'w-6 flex-col justify-start'
+            : 'h-6 flex-row justify-center',
+          className,
         )}
         {...props}
       >
@@ -73,14 +82,14 @@ const TimelineIndicator = forwardRef<HTMLDivElement, TimelineIndicatorProps>(
               'absolute bg-border',
               orientation === 'vertical'
                 ? 'top-6 bottom-[-16px] left-1/2 w-[2px] -translate-x-1/2'
-                : 'top-1/2 right-[-12px] left-6 h-[2px] -translate-y-1/2'
+                : 'top-1/2 right-[-12px] left-6 h-[2px] -translate-y-1/2',
             )}
             aria-hidden="true"
           />
         )}
       </div>
     );
-  }
+  },
 );
 TimelineIndicator.displayName = 'TimelineIndicator';
 
@@ -95,13 +104,13 @@ const TimelineContent = forwardRef<HTMLDivElement, TimelineContentProps>(
         className={cn(
           'flex flex-col gap-1',
           orientation === 'vertical' ? 'pt-0.5 pb-8' : 'pr-8',
-          className
+          className,
         )}
         {...props}
       />
     );
-  }
+  },
 );
 TimelineContent.displayName = 'TimelineContent';
 
-export { Timeline, TimelineItem, TimelineIndicator, TimelineContent };
+export { Timeline, TimelineContent, TimelineIndicator, TimelineItem };

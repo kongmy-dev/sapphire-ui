@@ -1,5 +1,5 @@
-import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
+import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
 import { cn } from '../../lib/utils';
 
 const calloutVariants = cva(
@@ -14,7 +14,7 @@ const calloutVariants = cva(
     defaultVariants: {
       variant: 'default',
     },
-  }
+  },
 );
 
 export interface CalloutProps
@@ -27,11 +27,18 @@ export interface CalloutProps
 const Callout = forwardRef<HTMLDivElement, CalloutProps>(
   ({ className, variant, title, icon, children, ...props }, ref) => {
     return (
-      <div ref={ref} className={cn(calloutVariants({ variant }), className)} {...props}>
+      <div
+        ref={ref}
+        className={cn(calloutVariants({ variant }), className)}
+        {...props}
+      >
         {icon && (
           <div className="mt-0.5 flex shrink-0 items-start text-(--color-text-strong)">
             {typeof icon === 'string' ? (
-              <span className="material-symbols-outlined text-[24px]" aria-hidden="true">
+              <span
+                className="material-symbols-outlined text-[24px]"
+                aria-hidden="true"
+              >
                 {icon}
               </span>
             ) : (
@@ -41,7 +48,7 @@ const Callout = forwardRef<HTMLDivElement, CalloutProps>(
         )}
         <div className="flex flex-1 flex-col gap-2">
           {title && (
-            <div className="font-serif text-lg font-semibold tracking-tight text-text-strong">
+            <div className="font-semibold font-serif text-lg text-text-strong tracking-tight">
               {title}
             </div>
           )}
@@ -51,7 +58,7 @@ const Callout = forwardRef<HTMLDivElement, CalloutProps>(
         </div>
       </div>
     );
-  }
+  },
 );
 Callout.displayName = 'Callout';
 

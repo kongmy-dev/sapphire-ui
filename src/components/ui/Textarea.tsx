@@ -1,18 +1,16 @@
-import { forwardRef, type TextareaHTMLAttributes } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
+import { forwardRef, type TextareaHTMLAttributes } from 'react';
 import { cn } from '../../lib/utils';
 
 const textareaVariants = cva(
-  'resize-vertical w-full font-sans transition-all duration-200 outline-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-error aria-invalid:focus:shadow-error/12',
+  'resize-vertical w-full font-sans outline-none transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-error aria-invalid:focus:shadow-error/12',
   {
     variants: {
       variant: {
         default:
           'rounded-btn border border-border bg-(--color-card-bg) text-text-main focus:border-accent focus:shadow-[0_0_0_3px] focus:shadow-accent/12',
-        dark:
-          'rounded-sm border border-border-dark bg-black/20 text-text-on-dark focus:border-accent',
-        mono:
-          'rounded-btn border border-border bg-surface font-mono text-sm text-text-main focus:border-accent focus:shadow-[0_0_0_3px] focus:shadow-accent/12',
+        dark: 'rounded-sm border border-border-dark bg-black/20 text-text-on-dark focus:border-accent',
+        mono: 'rounded-btn border border-border bg-surface font-mono text-sm text-text-main focus:border-accent focus:shadow-[0_0_0_3px] focus:shadow-accent/12',
       },
       size: {
         sm: 'min-h-[80px] px-3 py-2 text-sm',

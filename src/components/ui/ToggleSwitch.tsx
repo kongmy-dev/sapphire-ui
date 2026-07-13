@@ -1,9 +1,10 @@
-import { forwardRef, useId } from 'react';
-import type { ComponentPropsWithoutRef } from 'react';
 import * as RadixSwitch from '@radix-ui/react-switch';
+import type { ComponentPropsWithoutRef } from 'react';
+import { forwardRef, useId } from 'react';
 import { cn } from '../../lib/utils';
 
-export interface SwitchProps extends Omit<ComponentPropsWithoutRef<typeof RadixSwitch.Root>, 'asChild'> {
+export interface SwitchProps
+  extends Omit<ComponentPropsWithoutRef<typeof RadixSwitch.Root>, 'asChild'> {
   /** Label rendered next to the switch. */
   label?: string;
   /** Visual size. */
@@ -23,7 +24,12 @@ const Switch = forwardRef<HTMLButtonElement, SwitchProps>(
     const id = idProp || autoId;
 
     return (
-      <div className={cn('flex items-center gap-3', props.disabled && 'opacity-50')}>
+      <div
+        className={cn(
+          'flex items-center gap-3',
+          props.disabled && 'opacity-50',
+        )}
+      >
         <RadixSwitch.Root
           ref={ref}
           id={id}
@@ -35,7 +41,7 @@ const Switch = forwardRef<HTMLButtonElement, SwitchProps>(
         {label && (
           <label
             htmlFor={id}
-            className="cursor-pointer font-sans text-sm font-medium text-text-main select-none"
+            className="cursor-pointer select-none font-medium font-sans text-sm text-text-main"
           >
             {label}
           </label>
@@ -49,5 +55,5 @@ Switch.displayName = 'Switch';
 /** Backwards-friendly alias from the previous shipping name. */
 const ToggleSwitch = Switch;
 
-export { Switch, ToggleSwitch };
 export type { SwitchProps as ToggleSwitchProps };
+export { Switch, ToggleSwitch };

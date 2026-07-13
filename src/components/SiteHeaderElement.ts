@@ -21,15 +21,25 @@
 // utilities apply normally to slotted content.
 
 const SSRHTMLElement =
-  typeof window !== 'undefined' ? HTMLElement : (class {} as typeof HTMLElement);
+  typeof window !== 'undefined'
+    ? HTMLElement
+    : (class {} as typeof HTMLElement);
 
 type HeaderVariant = 'light' | 'dark';
 
 const HOST_CLASSES_BASE = ['z-40', 'w-full', 'border-b'];
 const HOST_CLASSES_STICKY = ['sticky', 'top-0'];
 // Match SiteHeader.tsx exactly so the compiled Tailwind output is reused.
-const HOST_CLASSES_DARK = ['border-border-dark', 'bg-primary', 'text-(--color-text-on-dark)'];
-const HOST_CLASSES_LIGHT = ['border-border', 'bg-(--color-card-bg)', 'text-(--color-text-strong)'];
+const HOST_CLASSES_DARK = [
+  'border-border-dark',
+  'bg-primary',
+  'text-(--color-text-on-dark)',
+];
+const HOST_CLASSES_LIGHT = [
+  'border-border',
+  'bg-(--color-card-bg)',
+  'text-(--color-text-strong)',
+];
 
 const INNER_CLASSES = [
   'mx-auto',
@@ -43,7 +53,13 @@ const INNER_CLASSES = [
 ];
 
 const SLOT_BRAND_CLASSES = ['flex', 'shrink-0', 'items-center', 'gap-3'];
-const SLOT_NAV_CLASSES = ['hidden', 'flex-1', 'items-center', 'gap-1', 'md:flex'];
+const SLOT_NAV_CLASSES = [
+  'hidden',
+  'flex-1',
+  'items-center',
+  'gap-1',
+  'md:flex',
+];
 const SLOT_ACTIONS_CLASSES = ['flex', 'shrink-0', 'items-center', 'gap-3'];
 
 export class SiteHeaderElement extends SSRHTMLElement {
@@ -51,7 +67,12 @@ export class SiteHeaderElement extends SSRHTMLElement {
 
   private rendered = false;
   /** Holds detached slot nodes so attribute changes can re-flow them. */
-  private slotCache: { brand: Node[]; nav: Node[]; actions: Node[]; extra: Node[] } = {
+  private slotCache: {
+    brand: Node[];
+    nav: Node[];
+    actions: Node[];
+    extra: Node[];
+  } = {
     brand: [],
     nav: [],
     actions: [],
@@ -96,11 +117,13 @@ export class SiteHeaderElement extends SSRHTMLElement {
     this.classList.remove(
       ...HOST_CLASSES_DARK,
       ...HOST_CLASSES_LIGHT,
-      ...HOST_CLASSES_STICKY
+      ...HOST_CLASSES_STICKY,
     );
     this.classList.add(...HOST_CLASSES_BASE);
     if (sticky) this.classList.add(...HOST_CLASSES_STICKY);
-    this.classList.add(...(variant === 'dark' ? HOST_CLASSES_DARK : HOST_CLASSES_LIGHT));
+    this.classList.add(
+      ...(variant === 'dark' ? HOST_CLASSES_DARK : HOST_CLASSES_LIGHT),
+    );
 
     // Element semantic for assistive tech: behave as a banner landmark.
     this.setAttribute('role', this.getAttribute('role') || 'banner');
@@ -150,6 +173,9 @@ export class SiteHeaderElement extends SSRHTMLElement {
   }
 }
 
-if (typeof window !== 'undefined' && !customElements.get('sapphire-site-header')) {
+if (
+  typeof window !== 'undefined' &&
+  !customElements.get('sapphire-site-header')
+) {
   customElements.define('sapphire-site-header', SiteHeaderElement);
 }

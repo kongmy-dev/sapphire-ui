@@ -1,9 +1,9 @@
-import { defineConfig, type Plugin } from 'vite';
-import react from '@vitejs/plugin-react';
-import tailwindcss from '@tailwindcss/vite';
-import dts from 'vite-plugin-dts';
 import fs from 'node:fs';
+import tailwindcss from '@tailwindcss/vite';
+import react from '@vitejs/plugin-react';
 import path from 'path';
+import { defineConfig, type Plugin } from 'vite';
+import dts from 'vite-plugin-dts';
 
 /**
  * Ship `src/theme.css` to `dist/theme.css` verbatim — NOT through the Tailwind

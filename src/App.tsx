@@ -1,5 +1,12 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route, NavLink, useNavigate, useLocation } from 'react-router-dom';
+import {
+  BrowserRouter,
+  NavLink,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import pkg from '../package.json';
 import './App.css';
 
@@ -20,15 +27,15 @@ const LayoutsPage = lazy(() => import('./pages/LayoutsPage'));
 const ElementsPage = lazy(() => import('./pages/ElementsPage'));
 const HooksPage = lazy(() => import('./pages/HooksPage'));
 
-import { CookieBanner } from './components/CookieBanner';
-import { Toast } from './components/Toast';
 import { Analytics } from './components/Analytics';
-import { SEOHead } from './components/ui/SEOHead';
-import { MobileNav } from './components/ui/MobileNav';
+import { type CommandItem, CommandPalette } from './components/CommandPalette';
+import { CookieBanner } from './components/CookieBanner';
 import { ThemeProvider, useTheme } from './components/ThemeProvider';
-import { CommandPalette, type CommandItem } from './components/CommandPalette';
+import { Toast } from './components/Toast';
 import { Kbd } from './components/ui/Kbd';
 import { Layout } from './components/ui/Layout';
+import { MobileNav } from './components/ui/MobileNav';
+import { SEOHead } from './components/ui/SEOHead';
 
 const navItems = [
   { href: '/', label: 'Overview', icon: 'home' },
@@ -73,7 +80,7 @@ function MobileThemeToggle() {
       type="button"
       onClick={() => setTheme(next)}
       aria-label={`Switch to ${next} theme`}
-      className="flex w-full cursor-pointer items-center gap-3 rounded-md border-none bg-transparent px-4 py-2.5 text-left font-sans text-sm font-medium text-text-on-dark/70 transition-colors hover:bg-white/5 hover:text-text-on-dark"
+      className="flex w-full cursor-pointer items-center gap-3 rounded-md border-none bg-transparent px-4 py-2.5 text-left font-medium font-sans text-sm text-text-on-dark/70 transition-colors hover:bg-white/5 hover:text-text-on-dark"
       style={{ outline: 'none' }}
     >
       <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
@@ -139,10 +146,13 @@ function AppShell() {
             <MobileThemeToggle />
             <button
               onClick={() => setShowCookies(true)}
-              className="flex w-full cursor-pointer items-center gap-3 rounded-md border-none bg-transparent px-4 py-2.5 text-left font-sans text-sm font-medium text-text-on-dark/70 transition-colors hover:bg-white/5 hover:text-text-on-dark"
+              className="flex w-full cursor-pointer items-center gap-3 rounded-md border-none bg-transparent px-4 py-2.5 text-left font-medium font-sans text-sm text-text-on-dark/70 transition-colors hover:bg-white/5 hover:text-text-on-dark"
               style={{ outline: 'none' }}
             >
-              <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
+              <span
+                className="material-symbols-outlined"
+                style={{ fontSize: 18 }}
+              >
                 cookie
               </span>
               Cookie Settings
@@ -153,78 +163,110 @@ function AppShell() {
 
       <Layout
         className="docs-layout"
-        mainClassName={isFullWidthPage ? "docs-main docs-main--full" : "docs-main"}
+        mainClassName={
+          isFullWidthPage ? 'docs-main docs-main--full' : 'docs-main'
+        }
         sidebar={
-        <aside className="docs-sidebar">
-          <div className="docs-sidebar-brand">
-            <span className="docs-brand-name">Sapphire</span>
-            <span className="docs-brand-suffix">UI</span>
-          </div>
-          <div className="docs-brand-version">{DOCS_VERSION}</div>
-          <nav className="docs-nav">
-            {/* Search — pinned to top so the keyboard-driven jump path
-                is the first thing in the visual hierarchy. */}
-            <button
-              type="button"
-              onClick={() => setPaletteOpen(true)}
-              aria-label="Open command palette"
-              className="docs-nav-link w-full cursor-pointer border-none bg-transparent text-left"
-              style={{ outline: 'none', display: 'flex', alignItems: 'center', gap: '0.75rem' }}
-            >
-              <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
-                search
-              </span>
-              <span style={{ flex: 1 }}>Search</span>
-              <Kbd size="sm">⌘K</Kbd>
-            </button>
-
-            <hr className="docs-nav-divider" />
-
-            {/* Page links — the catalog */}
-            {navItems.map((item) => (
-              <NavLink
-                key={item.href}
-                to={item.href}
-                end={item.href === '/'}
-                className={({ isActive }) =>
-                  `docs-nav-link ${isActive ? 'docs-nav-link--active' : ''}`
-                }
-              >
-                <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
-                  {item.icon}
-                </span>
-                {item.label}
-              </NavLink>
-            ))}
-
-            {/* Bottom group — utility actions, pinned to the bottom so
-                they read as preferences rather than additional pages. */}
-            <div className="docs-nav-bottom pb-4">
-              <hr className="docs-nav-divider" />
-              <ThemeToggle />
-              <button
-                onClick={() => setShowCookies(true)}
-                className="docs-nav-link w-full cursor-pointer border-none bg-transparent text-left"
-                style={{ outline: 'none' }}
-              >
-                <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
-                  cookie
-                </span>
-                Cookie Settings
-              </button>
+          <aside className="docs-sidebar">
+            <div className="docs-sidebar-brand">
+              <span className="docs-brand-name">Sapphire</span>
+              <span className="docs-brand-suffix">UI</span>
             </div>
-          </nav>
-          <div className="docs-sidebar-footer">
-            <a href="https://kongmy.dev/?utm_source=sapphire-ui&utm_medium=sidebar" target="_blank" rel="noopener noreferrer" className="docs-footer-text no-underline transition-colors hover:text-text-on-dark">kongmy.dev</a>
-          </div>
-        </aside>
+            <div className="docs-brand-version">{DOCS_VERSION}</div>
+            <nav className="docs-nav">
+              {/* Search — pinned to top so the keyboard-driven jump path
+                is the first thing in the visual hierarchy. */}
+              <button
+                type="button"
+                onClick={() => setPaletteOpen(true)}
+                aria-label="Open command palette"
+                className="docs-nav-link w-full cursor-pointer border-none bg-transparent text-left"
+                style={{
+                  outline: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                }}
+              >
+                <span
+                  className="material-symbols-outlined"
+                  style={{ fontSize: 18 }}
+                >
+                  search
+                </span>
+                <span style={{ flex: 1 }}>Search</span>
+                <Kbd size="sm">⌘K</Kbd>
+              </button>
+
+              <hr className="docs-nav-divider" />
+
+              {/* Page links — the catalog */}
+              {navItems.map((item) => (
+                <NavLink
+                  key={item.href}
+                  to={item.href}
+                  end={item.href === '/'}
+                  className={({ isActive }) =>
+                    `docs-nav-link ${isActive ? 'docs-nav-link--active' : ''}`
+                  }
+                >
+                  <span
+                    className="material-symbols-outlined"
+                    style={{ fontSize: 18 }}
+                  >
+                    {item.icon}
+                  </span>
+                  {item.label}
+                </NavLink>
+              ))}
+
+              {/* Bottom group — utility actions, pinned to the bottom so
+                they read as preferences rather than additional pages. */}
+              <div className="docs-nav-bottom pb-4">
+                <hr className="docs-nav-divider" />
+                <ThemeToggle />
+                <button
+                  onClick={() => setShowCookies(true)}
+                  className="docs-nav-link w-full cursor-pointer border-none bg-transparent text-left"
+                  style={{ outline: 'none' }}
+                >
+                  <span
+                    className="material-symbols-outlined"
+                    style={{ fontSize: 18 }}
+                  >
+                    cookie
+                  </span>
+                  Cookie Settings
+                </button>
+              </div>
+            </nav>
+            <div className="docs-sidebar-footer">
+              <a
+                href="https://kongmy.dev/?utm_source=sapphire-ui&utm_medium=sidebar"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="docs-footer-text no-underline transition-colors hover:text-text-on-dark"
+              >
+                kongmy.dev
+              </a>
+            </div>
+          </aside>
         }
       >
-        <Suspense fallback={
-          <div style={{ padding: '2rem', fontFamily: 'var(--font-sans)', color: 'var(--color-text-muted)', fontSize: 14 }}>
-            Loading…
-          </div>
-        }>
+        <Suspense
+          fallback={
+            <div
+              style={{
+                padding: '2rem',
+                fontFamily: 'var(--font-sans)',
+                color: 'var(--color-text-muted)',
+                fontSize: 14,
+              }}
+            >
+              Loading…
+            </div>
+          }
+        >
           <Routes>
             <Route path="/" element={<OverviewPage />} />
             <Route path="/colors" element={<ColorsPage />} />
@@ -243,7 +285,10 @@ function AppShell() {
         </Suspense>
       </Layout>
 
-      <CookieBanner forceShow={showCookies} onClose={() => setShowCookies(false)} />
+      <CookieBanner
+        forceShow={showCookies}
+        onClose={() => setShowCookies(false)}
+      />
       <Toast />
       <Analytics
         gaId={import.meta.env.VITE_PUBLIC_GA_ID}

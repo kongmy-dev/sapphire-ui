@@ -1,7 +1,7 @@
 /* eslint-disable better-tailwindcss/no-conflicting-classes, better-tailwindcss/enforce-consistent-class-order --
    This suite intentionally passes conflicting / unordered utility strings to
    verify that cn() (clsx + tailwind-merge) resolves them correctly. */
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { cn } from './utils';
 
 describe('cn', () => {
@@ -10,7 +10,9 @@ describe('cn', () => {
   });
 
   it('drops falsy / conditional inputs', () => {
-    expect(cn('a', false, null, undefined, 0 as unknown as string, 'b')).toBe('a b');
+    expect(cn('a', false, null, undefined, 0 as unknown as string, 'b')).toBe(
+      'a b',
+    );
     expect(cn('base', { active: true, hidden: false })).toBe('base active');
   });
 
@@ -22,7 +24,7 @@ describe('cn', () => {
     // tailwind-merge collapses same-property utilities, keeping the last one.
     expect(cn('px-2', 'px-4')).toBe('px-4');
     expect(cn('p-4', 'px-2')).toBe('p-4 px-2');
-    expect(cn('text-sm text-lg')).toBe('text-lg');
+    expect(cn('text-lg text-sm')).toBe('text-sm');
   });
 
   it('lets a consumer className override a base class', () => {

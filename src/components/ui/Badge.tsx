@@ -1,29 +1,22 @@
-import { forwardRef, type HTMLAttributes } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
+import { forwardRef, type HTMLAttributes } from 'react';
 import { cn } from '../../lib/utils';
 
 const badgeVariants = cva(
-  'inline-flex items-center gap-1.5 rounded-full font-sans font-semibold tracking-[0.04em] uppercase transition-colors',
+  'inline-flex items-center gap-1.5 rounded-full font-sans font-semibold uppercase tracking-[0.04em] transition-colors',
   {
     variants: {
       variant: {
         // Foreground colors are darkened from the underlying brand/state
         // hue so 12px badge text passes WCAG AA contrast on the tinted bg.
-        default:
-          'border border-border bg-surface text-text-muted',
-        accent:
-          'border border-accent/30 bg-accent/12 text-accent-text',
-        dark:
-          'border border-border-dark bg-white/10 text-text-on-dark',
-        success:
-          'border border-success-border bg-success-bg text-success',
-        error:
-          'border border-error-border bg-error-bg text-error',
-        warning:
-          'border border-warning-border bg-warning-bg text-warning',
-        info:
-          'border border-info-border bg-info-bg text-info',
+        default: 'border border-border bg-surface text-text-muted',
+        accent: 'border border-accent/30 bg-accent/12 text-accent-text',
+        dark: 'border border-border-dark bg-white/10 text-text-on-dark',
+        success: 'border border-success-border bg-success-bg text-success',
+        error: 'border border-error-border bg-error-bg text-error',
+        warning: 'border border-warning-border bg-warning-bg text-warning',
+        info: 'border border-info-border bg-info-bg text-info',
       },
       size: {
         sm: 'gap-1 px-2 py-[2px] text-[10px]',

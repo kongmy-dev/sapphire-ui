@@ -1,12 +1,14 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
-import { Button } from '../Button';
 import React from 'react';
+import { describe, expect, it } from 'vitest';
+import { Button } from '../Button';
 
 describe('Button', () => {
   it('renders without crashing', () => {
     render(<Button>Click me</Button>);
-    expect(screen.getByRole('button', { name: 'Click me' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Click me' }),
+    ).toBeInTheDocument();
   });
 
   it('applies variant classes', () => {
@@ -34,14 +36,16 @@ describe('Button', () => {
     render(<Button loading>Submit</Button>);
     expect(screen.getByRole('button')).toBeDisabled();
     // testing internal DOM for spinner presence
-    expect(screen.getByRole('button').querySelector('.animate-spin')).toBeInTheDocument();
+    expect(
+      screen.getByRole('button').querySelector('.animate-spin'),
+    ).toBeInTheDocument();
   });
 
   it('supports asChild rendering', () => {
     render(
       <Button asChild>
         <a href="/link">Link Button</a>
-      </Button>
+      </Button>,
     );
     const link = screen.getByRole('link', { name: 'Link Button' });
     expect(link).toBeInTheDocument();

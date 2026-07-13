@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 // In-memory js-cookie mock so we can drive every getConsentStatus branch
 // without touching document.cookie / jsdom encoding quirks.
@@ -18,14 +18,18 @@ const cookieMock = vi.hoisted(() => {
 });
 
 vi.mock('js-cookie', () => ({
-  default: { get: cookieMock.get, set: cookieMock.set, remove: cookieMock.remove },
+  default: {
+    get: cookieMock.get,
+    set: cookieMock.set,
+    remove: cookieMock.remove,
+  },
 }));
 
 import {
+  CONSENT_COOKIE_NAME,
   getConsentStatus,
   setConsentStatus,
   updateTrackers,
-  CONSENT_COOKIE_NAME,
 } from './consent';
 
 function clearStore() {
@@ -35,7 +39,10 @@ function clearStore() {
 describe('getConsentStatus', () => {
   beforeEach(() => {
     clearStore();
-    Object.defineProperty(navigator, 'doNotTrack', { value: null, configurable: true });
+    Object.defineProperty(navigator, 'doNotTrack', {
+      value: null,
+      configurable: true,
+    });
   });
 
   it('parses the JSON consent cookie', () => {
@@ -53,7 +60,10 @@ describe('getConsentStatus', () => {
   });
 
   it('honours Do Not Track when no cookie is present', () => {
-    Object.defineProperty(navigator, 'doNotTrack', { value: '1', configurable: true });
+    Object.defineProperty(navigator, 'doNotTrack', {
+      value: '1',
+      configurable: true,
+    });
     expect(getConsentStatus()).toEqual({ analytics: false });
   });
 
@@ -80,12 +90,19 @@ describe('setConsentStatus', () => {
     expect(cookieMock.set).toHaveBeenCalledTimes(1);
     const [name, , options] = cookieMock.set.mock.calls[0];
     expect(name).toBe(CONSENT_COOKIE_NAME);
-    expect(options).toMatchObject({ domain: undefined, path: '/', sameSite: 'Lax' });
+    expect(options).toMatchObject({
+      domain: undefined,
+      path: '/',
+      sameSite: 'Lax',
+    });
   });
 
   it('clears the legacy cookie to avoid conflicts', () => {
     setConsentStatus({ analytics: false });
-    expect(cookieMock.remove).toHaveBeenCalledWith('ph_cookie_consent', expect.any(Object));
+    expect(cookieMock.remove).toHaveBeenCalledWith(
+      'ph_cookie_consent',
+      expect.any(Object),
+    );
   });
 });
 

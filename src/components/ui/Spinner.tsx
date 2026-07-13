@@ -1,5 +1,5 @@
-import { type HTMLAttributes } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
+import type { HTMLAttributes } from 'react';
 import { cn } from '../../lib/utils';
 
 const spinnerVariants = cva(
@@ -31,7 +31,13 @@ export interface SpinnerProps
   label?: string;
 }
 
-function Spinner({ className, size, tone, label = 'Loading', ...props }: SpinnerProps) {
+function Spinner({
+  className,
+  size,
+  tone,
+  label = 'Loading',
+  ...props
+}: SpinnerProps) {
   return (
     <span
       role="status"

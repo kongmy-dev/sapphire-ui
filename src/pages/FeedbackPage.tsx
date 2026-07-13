@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { Skeleton } from '../components/ui/Skeleton';
-import { Spinner } from '../components/ui/Spinner';
+import { useEffect, useState } from 'react';
+import { Alert } from '../components/ui/Alert';
+import { Button } from '../components/ui/Button';
+import { Empty } from '../components/ui/Empty';
 import { Progress } from '../components/ui/Progress';
 import { SegmentedBar } from '../components/ui/SegmentedBar';
-import { Alert } from '../components/ui/Alert';
-import { Empty } from '../components/ui/Empty';
-import { Button } from '../components/ui/Button';
+import { Skeleton } from '../components/ui/Skeleton';
+import { Spinner } from '../components/ui/Spinner';
 
 export default function FeedbackPage() {
   const [progress, setProgress] = useState(35);
@@ -59,7 +59,11 @@ export default function FeedbackPage() {
         <h2 className="docs-section-title">Progress</h2>
         <div className="docs-preview">
           <div className="docs-stack" style={{ maxWidth: 400 }}>
-            <Progress aria-label="Loading progress" value={progress} showLabel />
+            <Progress
+              aria-label="Loading progress"
+              value={progress}
+              showLabel
+            />
             <Progress aria-label="Upload progress" value={75} size="sm" />
             <Progress aria-label="Completion" value={100} size="lg" showLabel />
           </div>
@@ -71,7 +75,14 @@ export default function FeedbackPage() {
         <div className="docs-preview">
           <div className="docs-stack" style={{ maxWidth: 480, gap: 20 }}>
             <div>
-              <div style={{ fontFamily: 'var(--font-sans)', fontSize: 12, color: 'var(--color-text-muted)', marginBottom: 6 }}>
+              <div
+                style={{
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: 12,
+                  color: 'var(--color-text-muted)',
+                  marginBottom: 6,
+                }}
+              >
                 Budget allocation (compute / storage / network / other)
               </div>
               <SegmentedBar
@@ -85,7 +96,14 @@ export default function FeedbackPage() {
               />
             </div>
             <div>
-              <div style={{ fontFamily: 'var(--font-sans)', fontSize: 12, color: 'var(--color-text-muted)', marginBottom: 6 }}>
+              <div
+                style={{
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: 12,
+                  color: 'var(--color-text-muted)',
+                  marginBottom: 6,
+                }}
+              >
                 Small — with target marker at 50 %
               </div>
               <SegmentedBar
@@ -99,7 +117,14 @@ export default function FeedbackPage() {
               />
             </div>
             <div>
-              <div style={{ fontFamily: 'var(--font-sans)', fontSize: 12, color: 'var(--color-text-muted)', marginBottom: 6 }}>
+              <div
+                style={{
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: 12,
+                  color: 'var(--color-text-muted)',
+                  marginBottom: 6,
+                }}
+              >
                 Large — single fill
               </div>
               <SegmentedBar
@@ -145,28 +170,48 @@ export default function FeedbackPage() {
             <Button
               variant="primary"
               icon="check_circle"
-              onClick={() => window.__sapphireToast?.('Changes saved successfully.', 'success')}
+              onClick={() =>
+                window.__sapphireToast?.(
+                  'Changes saved successfully.',
+                  'success',
+                )
+              }
             >
               Success
             </Button>
             <Button
               variant="outline"
               icon="info"
-              onClick={() => window.__sapphireToast?.('Syncing data in the background.', 'info')}
+              onClick={() =>
+                window.__sapphireToast?.(
+                  'Syncing data in the background.',
+                  'info',
+                )
+              }
             >
               Info
             </Button>
             <Button
               variant="outline"
               icon="warning"
-              onClick={() => window.__sapphireToast?.('API usage is approaching the limit.', 'warning')}
+              onClick={() =>
+                window.__sapphireToast?.(
+                  'API usage is approaching the limit.',
+                  'warning',
+                )
+              }
             >
               Warning
             </Button>
             <Button
               variant="destructive"
               icon="error"
-              onClick={() => window.__sapphireToast?.('Failed to connect to the server.', 'error')}
+              onClick={() =>
+                window.__sapphireToast?.(
+                  'Failed to connect to the server.',
+                  'error',
+                )
+              }
             >
               Error
             </Button>
@@ -187,15 +232,50 @@ export default function FeedbackPage() {
       </section>
       <section className="docs-section">
         <h2 className="docs-section-title">Props</h2>
-        <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">Alert</h3>
+        <h3 className="mb-4 font-semibold font-serif text-(--color-text-strong) text-lg">
+          Alert
+        </h3>
         <table className="docs-props-table">
           <thead>
-            <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
+            <tr>
+              <th>Prop</th>
+              <th>Type</th>
+              <th>Default</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td><code>variant</code></td><td><code>&apos;info&apos; | &apos;success&apos; | &apos;warning&apos; | &apos;error&apos; | &apos;accent&apos;</code></td><td><code>&apos;info&apos;</code></td></tr>
-            <tr><td><code>title</code></td><td><code>string</code></td><td>—</td></tr>
-            <tr><td><code>icon</code></td><td><code>string</code></td><td>—</td></tr>
+            <tr>
+              <td>
+                <code>variant</code>
+              </td>
+              <td>
+                <code>
+                  &apos;info&apos; | &apos;success&apos; | &apos;warning&apos; |
+                  &apos;error&apos; | &apos;accent&apos;
+                </code>
+              </td>
+              <td>
+                <code>&apos;info&apos;</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>title</code>
+              </td>
+              <td>
+                <code>string</code>
+              </td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>
+                <code>icon</code>
+              </td>
+              <td>
+                <code>string</code>
+              </td>
+              <td>—</td>
+            </tr>
           </tbody>
         </table>
       </section>

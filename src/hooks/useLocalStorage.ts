@@ -28,7 +28,9 @@ export function useLocalStorage<T>(
   key: string,
   initialValue: T,
 ): [T, SetValue<T>] {
-  const [value, setValue] = useState<T>(() => readFromStorage(key, initialValue));
+  const [value, setValue] = useState<T>(() =>
+    readFromStorage(key, initialValue),
+  );
 
   const setStoredValue = useCallback<SetValue<T>>(
     (next) => {

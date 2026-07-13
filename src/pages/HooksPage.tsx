@@ -1,16 +1,16 @@
-import { useRef, useState, useEffect } from 'react';
-import { Button } from '../components/ui/Button';
-import { Input } from '../components/ui/Input';
-import { Label } from '../components/ui/Label';
-import { Card } from '../components/ui/Card';
+import { useEffect, useRef, useState } from 'react';
 import { Badge } from '../components/ui/Badge';
-import { Kbd } from '../components/ui/Kbd';
+import { Button } from '../components/ui/Button';
+import { Card } from '../components/ui/Card';
 import { CodeBlock } from '../components/ui/CodeBlock';
+import { Input } from '../components/ui/Input';
+import { Kbd } from '../components/ui/Kbd';
+import { Label } from '../components/ui/Label';
+import { useCopyToClipboard } from '../hooks/useCopyToClipboard';
 import { useDebounce } from '../hooks/useDebounce';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { useCopyToClipboard } from '../hooks/useCopyToClipboard';
-import { useOnClickOutside } from '../hooks/useOnClickOutside';
 import { useMediaQuery } from '../hooks/useMediaQuery';
+import { useOnClickOutside } from '../hooks/useOnClickOutside';
 
 /**
  * Docs page for Phase 4 React hooks + framework-agnostic CSS utilities.
@@ -27,7 +27,10 @@ export default function HooksPage() {
   }, [debouncedQuery]);
 
   // useLocalStorage
-  const [favColor, setFavColor] = useLocalStorage<string>('sapphire-fav-color', 'sapphire');
+  const [favColor, setFavColor] = useLocalStorage<string>(
+    'sapphire-fav-color',
+    'sapphire',
+  );
 
   // useCopyToClipboard
   const { copy, isCopied } = useCopyToClipboard({ resetMs: 1500 });
@@ -54,10 +57,16 @@ export default function HooksPage() {
       {/* ─── useDebounce ─── */}
       <section className="docs-section">
         <h2 className="docs-section-title">useDebounce</h2>
-        <p style={{ color: 'var(--color-text-muted)', maxWidth: '60ch', margin: '0 0 1rem' }}>
+        <p
+          style={{
+            color: 'var(--color-text-muted)',
+            maxWidth: '60ch',
+            margin: '0 0 1rem',
+          }}
+        >
           Returns the latest value only after a stable pause. Use for search
-          inputs, autosave, and any handler that&apos;s expensive to run on every
-          keystroke.
+          inputs, autosave, and any handler that&apos;s expensive to run on
+          every keystroke.
         </p>
         <div className="docs-preview">
           <div className="docs-stack" style={{ maxWidth: 400 }}>
@@ -80,22 +89,40 @@ export default function HooksPage() {
       {/* ─── useLocalStorage ─── */}
       <section className="docs-section">
         <h2 className="docs-section-title">useLocalStorage</h2>
-        <p style={{ color: 'var(--color-text-muted)', maxWidth: '60ch', margin: '0 0 1rem' }}>
+        <p
+          style={{
+            color: 'var(--color-text-muted)',
+            maxWidth: '60ch',
+            margin: '0 0 1rem',
+          }}
+        >
           A drop-in for <code>useState</code> that persists across reloads and
           syncs across browser tabs via the <code>storage</code> event.
         </p>
         <div className="docs-preview">
           <div className="docs-stack" style={{ maxWidth: 400 }}>
-            <Label htmlFor="ls-input">Favourite colour (persists in localStorage)</Label>
+            <Label htmlFor="ls-input">
+              Favourite colour (persists in localStorage)
+            </Label>
             <Input
               id="ls-input"
               value={favColor}
               onChange={(e) => setFavColor(e.target.value)}
             />
-            <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--color-text-muted)' }}>
+            <p
+              style={{
+                margin: 0,
+                fontSize: '0.875rem',
+                color: 'var(--color-text-muted)',
+              }}
+            >
               Reload the page or open another tab — the value stays in sync.
             </p>
-            <Button variant="outline" size="sm" onClick={() => setFavColor('sapphire')}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setFavColor('sapphire')}
+            >
               Reset to &quot;sapphire&quot;
             </Button>
           </div>
@@ -105,13 +132,24 @@ export default function HooksPage() {
       {/* ─── useCopyToClipboard ─── */}
       <section className="docs-section">
         <h2 className="docs-section-title">useCopyToClipboard</h2>
-        <p style={{ color: 'var(--color-text-muted)', maxWidth: '60ch', margin: '0 0 1rem' }}>
+        <p
+          style={{
+            color: 'var(--color-text-muted)',
+            maxWidth: '60ch',
+            margin: '0 0 1rem',
+          }}
+        >
           Wraps the Clipboard API and flips an <code>isCopied</code> flag for
           two seconds — perfect for &quot;Copy code&quot; or share buttons.
         </p>
         <div className="docs-preview">
           <div className="docs-stack" style={{ maxWidth: 480 }}>
-            <CodeBlock language="bash" code="npm install @kongmy-dev/sapphire-ui" copyable variant="light" />
+            <CodeBlock
+              language="bash"
+              code="npm install @kongmy-dev/sapphire-ui"
+              copyable
+              variant="light"
+            />
             <Button
               variant={isCopied ? 'accent' : 'outline'}
               onClick={() => copy('npm install @kongmy-dev/sapphire-ui')}
@@ -125,10 +163,16 @@ export default function HooksPage() {
       {/* ─── useOnClickOutside ─── */}
       <section className="docs-section">
         <h2 className="docs-section-title">useOnClickOutside</h2>
-        <p style={{ color: 'var(--color-text-muted)', maxWidth: '60ch', margin: '0 0 1rem' }}>
+        <p
+          style={{
+            color: 'var(--color-text-muted)',
+            maxWidth: '60ch',
+            margin: '0 0 1rem',
+          }}
+        >
           Detects clicks, touches, and focus changes outside a referenced
-          element. Use it to dismiss lightweight menus and popovers that aren&apos;t
-          worth a full Radix primitive.
+          element. Use it to dismiss lightweight menus and popovers that
+          aren&apos;t worth a full Radix primitive.
         </p>
         <div className="docs-preview">
           <div style={{ position: 'relative', display: 'inline-block' }}>
@@ -165,7 +209,13 @@ export default function HooksPage() {
       {/* ─── useMediaQuery ─── */}
       <section className="docs-section">
         <h2 className="docs-section-title">useMediaQuery</h2>
-        <p style={{ color: 'var(--color-text-muted)', maxWidth: '60ch', margin: '0 0 1rem' }}>
+        <p
+          style={{
+            color: 'var(--color-text-muted)',
+            maxWidth: '60ch',
+            margin: '0 0 1rem',
+          }}
+        >
           Subscribes to a CSS media query and re-renders when it flips. Useful
           for SSR-safe responsive logic and OS-level signals like
           <code> prefers-color-scheme</code>.
@@ -185,7 +235,13 @@ export default function HooksPage() {
       {/* ─── useIsomorphicLayoutEffect ─── */}
       <section className="docs-section">
         <h2 className="docs-section-title">useIsomorphicLayoutEffect</h2>
-        <p style={{ color: 'var(--color-text-muted)', maxWidth: '60ch', margin: '0 0 1rem' }}>
+        <p
+          style={{
+            color: 'var(--color-text-muted)',
+            maxWidth: '60ch',
+            margin: '0 0 1rem',
+          }}
+        >
           Aliases <code>useLayoutEffect</code> on the client and{' '}
           <code>useEffect</code> on the server so SSR frameworks (Next.js,
           Astro, Remix) don&apos;t spam warnings about mismatched effect timing.
@@ -205,13 +261,28 @@ useIsomorphicLayoutEffect(() => {
       {/* ─── CSS utilities ─── */}
       <section className="docs-section">
         <h2 className="docs-section-title">CSS utilities</h2>
-        <p style={{ color: 'var(--color-text-muted)', maxWidth: '60ch', margin: '0 0 1rem' }}>
+        <p
+          style={{
+            color: 'var(--color-text-muted)',
+            maxWidth: '60ch',
+            margin: '0 0 1rem',
+          }}
+        >
           These class APIs ship in <code>style.css</code> and need no React
-          import — usable from plain HTML, Astro, Vue, or any consumer that
-          can include the stylesheet.
+          import — usable from plain HTML, Astro, Vue, or any consumer that can
+          include the stylesheet.
         </p>
 
-        <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', fontWeight: 600, margin: '1.5rem 0 0.75rem' }}>.stack — vertical rhythm</h3>
+        <h3
+          style={{
+            fontFamily: 'var(--font-sans)',
+            fontSize: '1rem',
+            fontWeight: 600,
+            margin: '1.5rem 0 0.75rem',
+          }}
+        >
+          .stack — vertical rhythm
+        </h3>
         <div className="docs-preview">
           <div className="stack" style={{ width: '100%', maxWidth: 360 }}>
             <Card>First item</Card>
@@ -220,7 +291,16 @@ useIsomorphicLayoutEffect(() => {
           </div>
         </div>
 
-        <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', fontWeight: 600, margin: '1.5rem 0 0.75rem' }}>.cluster — wrapping horizontal group</h3>
+        <h3
+          style={{
+            fontFamily: 'var(--font-sans)',
+            fontSize: '1rem',
+            fontWeight: 600,
+            margin: '1.5rem 0 0.75rem',
+          }}
+        >
+          .cluster — wrapping horizontal group
+        </h3>
         <div className="docs-preview">
           <div className="cluster">
             <Badge>React</Badge>
@@ -232,18 +312,43 @@ useIsomorphicLayoutEffect(() => {
           </div>
         </div>
 
-        <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', fontWeight: 600, margin: '1.5rem 0 0.75rem' }}>.visually-hidden — accessible-only text</h3>
+        <h3
+          style={{
+            fontFamily: 'var(--font-sans)',
+            fontSize: '1rem',
+            fontWeight: 600,
+            margin: '1.5rem 0 0.75rem',
+          }}
+        >
+          .visually-hidden — accessible-only text
+        </h3>
         <div className="docs-preview">
           <Button>
             <span aria-hidden="true">✕</span>
             <span className="visually-hidden">Close dialog</span>
           </Button>
-          <p style={{ margin: '0.5rem 0 0', fontSize: '0.8125rem', color: 'var(--color-text-muted)' }}>
-            Screen readers announce &quot;Close dialog&quot;; sighted users see only the icon.
+          <p
+            style={{
+              margin: '0.5rem 0 0',
+              fontSize: '0.8125rem',
+              color: 'var(--color-text-muted)',
+            }}
+          >
+            Screen readers announce &quot;Close dialog&quot;; sighted users see
+            only the icon.
           </p>
         </div>
 
-        <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', fontWeight: 600, margin: '1.5rem 0 0.75rem' }}>.prose — long-form content</h3>
+        <h3
+          style={{
+            fontFamily: 'var(--font-sans)',
+            fontSize: '1rem',
+            fontWeight: 600,
+            margin: '1.5rem 0 0.75rem',
+          }}
+        >
+          .prose — long-form content
+        </h3>
         <div className="docs-preview">
           <article className="prose">
             <h2>Editorial content</h2>
@@ -263,11 +368,26 @@ useIsomorphicLayoutEffect(() => {
           </article>
         </div>
 
-        <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', fontWeight: 600, margin: '1.5rem 0 0.75rem' }}>.cq — container queries</h3>
-        <p style={{ color: 'var(--color-text-muted)', maxWidth: '60ch', margin: '0 0 1rem' }}>
+        <h3
+          style={{
+            fontFamily: 'var(--font-sans)',
+            fontSize: '1rem',
+            fontWeight: 600,
+            margin: '1.5rem 0 0.75rem',
+          }}
+        >
+          .cq — container queries
+        </h3>
+        <p
+          style={{
+            color: 'var(--color-text-muted)',
+            maxWidth: '60ch',
+            margin: '0 0 1rem',
+          }}
+        >
           Add <code>.cq</code> on a parent, then use modifiers like
-          <code> .cq-md:cols-3</code> on descendants. Resize the panel below
-          to watch the grid reflow without touching the viewport width.
+          <code> .cq-md:cols-3</code> on descendants. Resize the panel below to
+          watch the grid reflow without touching the viewport width.
         </p>
         <div className="docs-preview">
           <div
@@ -283,13 +403,23 @@ useIsomorphicLayoutEffect(() => {
               maxWidth: '100%',
             }}
           >
-            <div className="cq-md:grid cq-md:cols-3 stack stack-sm" style={{ display: 'grid', gap: '0.75rem' }}>
+            <div
+              className="cq-md:cols-3 stack stack-sm cq-md:grid"
+              style={{ display: 'grid', gap: '0.75rem' }}
+            >
               <Card>One</Card>
               <Card>Two</Card>
               <Card>Three</Card>
             </div>
-            <p style={{ margin: '0.75rem 0 0', fontSize: '0.8125rem', color: 'var(--color-text-muted)' }}>
-              Drag the bottom-right corner. Cards switch to 3-up at ≥ 48rem container width.
+            <p
+              style={{
+                margin: '0.75rem 0 0',
+                fontSize: '0.8125rem',
+                color: 'var(--color-text-muted)',
+              }}
+            >
+              Drag the bottom-right corner. Cards switch to 3-up at ≥ 48rem
+              container width.
             </p>
           </div>
         </div>

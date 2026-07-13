@@ -1,6 +1,12 @@
-import React, { useRef, useImperativeHandle, useEffect, forwardRef, type ReactNode } from 'react';
+import React, {
+  forwardRef,
+  type ReactNode,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+} from 'react';
 import './BannerElement';
-import { BannerElement, type BannerVariant } from './BannerElement';
+import type { BannerElement, BannerVariant } from './BannerElement';
 
 export interface BannerRef {
   /** Dismiss the banner imperatively. */
@@ -35,13 +41,27 @@ export interface BannerProps {
  *   </sapphire-banner>
  */
 const Banner = forwardRef<BannerRef, BannerProps>(
-  ({ variant = 'info', dismissible = true, storageKey, onDismiss, children, className }, ref) => {
+  (
+    {
+      variant = 'info',
+      dismissible = true,
+      storageKey,
+      onDismiss,
+      children,
+      className,
+    },
+    ref,
+  ) => {
     const elRef = useRef<HTMLElement>(null);
 
-    useImperativeHandle(ref, () => ({
-      dismiss: () => (elRef.current as BannerElement | null)?.dismiss?.(),
-      show: () => (elRef.current as BannerElement | null)?.show?.(),
-    }), []);
+    useImperativeHandle(
+      ref,
+      () => ({
+        dismiss: () => (elRef.current as BannerElement | null)?.dismiss?.(),
+        show: () => (elRef.current as BannerElement | null)?.show?.(),
+      }),
+      [],
+    );
 
     useEffect(() => {
       const el = elRef.current;
@@ -65,5 +85,5 @@ const Banner = forwardRef<BannerRef, BannerProps>(
 );
 Banner.displayName = 'Banner';
 
-export { Banner };
 export type { BannerVariant };
+export { Banner };

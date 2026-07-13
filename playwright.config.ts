@@ -15,7 +15,8 @@ export default defineConfig({
   },
   webServer: {
     // Use preview (built docs) rather than dev to catch production-only issues.
-    command: 'bun run build:docs && vite preview --config vite.docs.config.ts --port 4173',
+    command:
+      'bun run build:docs && vite preview --config vite.docs.config.ts --port 4173',
     url: 'http://localhost:4173',
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,

@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, it, expect, vi } from 'vitest';
-import { Input } from '../Input';
 import React from 'react';
+import { describe, expect, it, vi } from 'vitest';
+import { Input } from '../Input';
 
 describe('Input', () => {
   it('renders without crashing', () => {
@@ -24,10 +24,10 @@ describe('Input', () => {
   it('handles user input', async () => {
     const onChange = vi.fn();
     render(<Input onChange={onChange} data-testid="input" />);
-    
+
     const input = screen.getByTestId('input');
     await userEvent.type(input, 'hello');
-    
+
     expect(input).toHaveValue('hello');
     expect(onChange).toHaveBeenCalled();
   });

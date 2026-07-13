@@ -10,33 +10,50 @@ export interface ProposalLayoutProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const ProposalLayout = forwardRef<HTMLDivElement, ProposalLayoutProps>(
-  ({ className, children, brandMark, brandName, breadcrumbs, metadata, ...props }, ref) => {
+  (
+    {
+      className,
+      children,
+      brandMark,
+      brandName,
+      breadcrumbs,
+      metadata,
+      ...props
+    },
+    ref,
+  ) => {
     return (
-      <div ref={ref} className={cn('bg-page min-h-screen font-sans text-primary', className)} {...props}>
+      <div
+        ref={ref}
+        className={cn('min-h-screen bg-page font-sans text-primary', className)}
+        {...props}
+      >
         {/* Document Bar */}
         <div className="doc-bar">
           {brandMark && <div className="sf-mark">{brandMark}</div>}
           {brandName && <div className="wm">{brandName}</div>}
           {breadcrumbs && (
-            <span className="material-symbols-outlined doc-bar-sep" aria-hidden="true">
+            <span
+              className="material-symbols-outlined doc-bar-sep"
+              aria-hidden="true"
+            >
               chevron_right
             </span>
           )}
           {breadcrumbs && <div className="crumb">{breadcrumbs}</div>}
           {metadata && <div className="doc-meta">{metadata}</div>}
         </div>
-        
+
         {/* Document Shell */}
-        <div className="doc-shell">
-          {children}
-        </div>
+        <div className="doc-shell">{children}</div>
       </div>
     );
-  }
+  },
 );
 ProposalLayout.displayName = 'ProposalLayout';
 
-export interface ProposalHeroProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
+export interface ProposalHeroProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   eyebrow?: ReactNode;
   title: ReactNode;
   lede?: ReactNode;
@@ -50,7 +67,7 @@ export const ProposalHero = forwardRef<HTMLDivElement, ProposalHeroProps>(
         {eyebrow && <div className="eyebrow">{eyebrow}</div>}
         <h1>{title}</h1>
         {lede && <p className="lede">{lede}</p>}
-        
+
         {metaRows && metaRows.length > 0 && (
           <dl className="meta-row">
             {metaRows.map((row, i) => (
@@ -63,11 +80,12 @@ export const ProposalHero = forwardRef<HTMLDivElement, ProposalHeroProps>(
         )}
       </div>
     );
-  }
+  },
 );
 ProposalHero.displayName = 'ProposalHero';
 
-export interface ProposalSectionProps extends Omit<HTMLAttributes<HTMLElement>, 'title'> {
+export interface ProposalSectionProps
+  extends Omit<HTMLAttributes<HTMLElement>, 'title'> {
   sectionNo?: string;
   title: ReactNode;
   lede?: ReactNode;
@@ -84,6 +102,6 @@ export const ProposalSection = forwardRef<HTMLElement, ProposalSectionProps>(
         {children}
       </section>
     );
-  }
+  },
 );
 ProposalSection.displayName = 'ProposalSection';

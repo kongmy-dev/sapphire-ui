@@ -53,7 +53,7 @@ const SegmentedBar = forwardRef<HTMLDivElement, SegmentedBarProps>(
             key={idx}
             className={cn(
               'absolute inset-y-0 z-10 h-full border-r-2 opacity-65 transition-all duration-300',
-              marker.className
+              marker.className,
             )}
             style={{
               left: `${marker.position}%`,
@@ -67,7 +67,10 @@ const SegmentedBar = forwardRef<HTMLDivElement, SegmentedBarProps>(
         {segments.map((segment, idx) => (
           <div
             key={idx}
-            className={cn('h-full transition-all duration-300 ease-in-out', segment.className)}
+            className={cn(
+              'h-full transition-all duration-300 ease-in-out',
+              segment.className,
+            )}
             style={{
               width: `${segment.value}%`,
               backgroundColor: segment.color,

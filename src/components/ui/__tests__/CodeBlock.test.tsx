@@ -1,10 +1,12 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { CodeBlock } from '../CodeBlock';
 
 describe('CodeBlock', () => {
   it('renders the code and forwards language as data-lang', () => {
-    const { container } = render(<CodeBlock code="const x = 1;" language="ts" />);
+    const { container } = render(
+      <CodeBlock code="const x = 1;" language="ts" />,
+    );
     expect(screen.getByText('const x = 1;')).toBeInTheDocument();
     expect(container.querySelector('pre')).toHaveAttribute('data-lang', 'ts');
   });
@@ -26,11 +28,15 @@ describe('CodeBlock', () => {
     it('copies the code and shows a transient "Copied!" label', async () => {
       render(<CodeBlock code="copy me" copyable />);
 
-      fireEvent.click(screen.getByRole('button', { name: 'Copy code to clipboard' }));
+      fireEvent.click(
+        screen.getByRole('button', { name: 'Copy code to clipboard' }),
+      );
 
       expect(navigator.clipboard.writeText).toHaveBeenCalledWith('copy me');
       // State flips once the writeText promise resolves (findBy awaits it).
-      expect(await screen.findByRole('button', { name: 'Copied' })).toHaveTextContent('Copied!');
+      expect(
+        await screen.findByRole('button', { name: 'Copied' }),
+      ).toHaveTextContent('Copied!');
     });
   });
 });

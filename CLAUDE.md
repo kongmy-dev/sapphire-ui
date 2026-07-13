@@ -36,9 +36,9 @@ Why: product apps must diverge (client theming, POS touch UIs) — vendored sour
 ```bash
 bun run dev          # specimen viewer at localhost:5173
 bun run build        # tsc + vite build → dist/
-bun run lint         # ESLint check
-bun run lint:fix     # ESLint auto-fix (Tailwind class order, escaped entities, etc.)
-bun run format       # Full auto-format (ESLint + Stylelint fixes)
+bun run lint         # Biome check (lint + format, TS/TSX + CSS)
+bun run lint:fix     # Biome check --write (auto-fix + format, incl. Tailwind class sort)
+bun run format       # Alias of lint:fix (Biome check --write)
 bun run test:a11y    # Playwright a11y tests
 bun run build:docs   # docs site → dist-docs/
 bun run deploy:docs  # deploy docs to Cloudflare Pages

@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { Icon, materialSymbolsFontHref, materialSymbolsLinkTag } from '../Icon';
 
 describe('Icon', () => {
@@ -30,7 +30,9 @@ describe('Icon', () => {
   });
 
   it('merges custom className and inline style', () => {
-    render(<Icon name="home" className="text-accent" style={{ color: 'red' }} />);
+    render(
+      <Icon name="home" className="text-accent" style={{ color: 'red' }} />,
+    );
     const el = screen.getByText('home');
     expect(el).toHaveClass('text-accent');
     expect(el.style.color).toBe('red');
@@ -48,6 +50,8 @@ describe('materialSymbolsFontHref', () => {
 describe('materialSymbolsLinkTag', () => {
   it('wraps the font href in a stylesheet link tag', () => {
     const tag = materialSymbolsLinkTag();
-    expect(tag).toBe(`<link rel="stylesheet" href="${materialSymbolsFontHref()}" />`);
+    expect(tag).toBe(
+      `<link rel="stylesheet" href="${materialSymbolsFontHref()}" />`,
+    );
   });
 });

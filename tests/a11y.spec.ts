@@ -1,5 +1,5 @@
-import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { expect, test } from '@playwright/test';
 
 // Each route in the docs SPA is exercised. The smoke goal is zero
 // WCAG 2.1 A/AA violations on initial render. Per-component interactive
@@ -54,8 +54,8 @@ for (const { path, name } of ROUTES) {
         results.violations.map((v) => ({
           id: v.id,
           impact: v.impact,
-          nodes: v.nodes.map(n => n.html),
-        }))
+          nodes: v.nodes.map((n) => n.html),
+        })),
       );
     }
 

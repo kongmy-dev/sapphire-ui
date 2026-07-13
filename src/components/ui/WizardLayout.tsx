@@ -1,8 +1,13 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
 import { cn } from '../../lib/utils';
-import { Steps, type StepItem } from './Steps';
-import { Dialog, DialogContent, DialogTitle, DialogDescription } from './Dialog';
 import { Button } from './Button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from './Dialog';
+import { type StepItem, Steps } from './Steps';
 
 export interface WizardLayoutProps extends HTMLAttributes<HTMLDivElement> {
   mode?: 'inline' | 'fullscreen' | 'modal';
@@ -47,17 +52,25 @@ const WizardLayout = forwardRef<HTMLDivElement, WizardLayoutProps>(
       children,
       ...props
     },
-    ref
+    ref,
   ) => {
     const isLastStep = currentStep === steps.length - 1;
 
     const Footer = (
-      <div className="flex shrink-0 items-center justify-between border-t border-border bg-surface/50 px-6 py-4">
-        <Button variant="outline" onClick={onPrev} disabled={isPrevDisabled || currentStep === 0}>
+      <div className="flex shrink-0 items-center justify-between border-border border-t bg-surface/50 px-6 py-4">
+        <Button
+          variant="outline"
+          onClick={onPrev}
+          disabled={isPrevDisabled || currentStep === 0}
+        >
           {prevLabel}
         </Button>
         {isLastStep ? (
-          <Button variant="primary" onClick={onFinish} disabled={isFinishDisabled}>
+          <Button
+            variant="primary"
+            onClick={onFinish}
+            disabled={isFinishDisabled}
+          >
             {finishLabel}
           </Button>
         ) : (
@@ -69,17 +82,23 @@ const WizardLayout = forwardRef<HTMLDivElement, WizardLayoutProps>(
     );
 
     const Header = (
-      <div className="shrink-0 border-b border-border bg-surface p-6">
+      <div className="shrink-0 border-border border-b bg-surface p-6">
         <div className="mx-auto w-full max-w-3xl">
-          {title && <h2 className="mb-2 font-serif text-xl font-semibold tracking-tight">{title}</h2>}
-          {description && <p className="mb-8 text-sm text-text-muted">{description}</p>}
+          {title && (
+            <h2 className="mb-2 font-semibold font-serif text-xl tracking-tight">
+              {title}
+            </h2>
+          )}
+          {description && (
+            <p className="mb-8 text-sm text-text-muted">{description}</p>
+          )}
           <Steps steps={steps} current={currentStep} />
         </div>
       </div>
     );
 
     const ContentArea = (
-      <div className="bg-background flex flex-1 flex-col overflow-hidden">
+      <div className="flex flex-1 flex-col overflow-hidden bg-background">
         <div className="flex-1 overflow-y-auto p-6">{children}</div>
         {Footer}
       </div>
@@ -91,7 +110,9 @@ const WizardLayout = forwardRef<HTMLDivElement, WizardLayoutProps>(
           <DialogContent className="flex max-h-[90vh] w-[95vw] max-w-[800px] flex-col gap-0 overflow-hidden p-0">
             <div className="sr-only">
               <DialogTitle>{title || 'Wizard Modal'}</DialogTitle>
-              <DialogDescription>{description || 'Follow the steps to complete.'}</DialogDescription>
+              <DialogDescription>
+                {description || 'Follow the steps to complete.'}
+              </DialogDescription>
             </div>
             {Header}
             {ContentArea}
@@ -104,7 +125,10 @@ const WizardLayout = forwardRef<HTMLDivElement, WizardLayoutProps>(
       return (
         <div
           ref={ref}
-          className={cn('bg-background fixed inset-0 z-50 flex flex-col font-sans', className)}
+          className={cn(
+            'fixed inset-0 z-50 flex flex-col bg-background font-sans',
+            className,
+          )}
           {...props}
         >
           {Header}
@@ -117,8 +141,8 @@ const WizardLayout = forwardRef<HTMLDivElement, WizardLayoutProps>(
       <div
         ref={ref}
         className={cn(
-          'bg-background flex min-h-[500px] flex-col overflow-hidden rounded-md border border-border font-sans',
-          className
+          'flex min-h-[500px] flex-col overflow-hidden rounded-md border border-border bg-background font-sans',
+          className,
         )}
         {...props}
       >
@@ -126,7 +150,7 @@ const WizardLayout = forwardRef<HTMLDivElement, WizardLayoutProps>(
         {ContentArea}
       </div>
     );
-  }
+  },
 );
 WizardLayout.displayName = 'WizardLayout';
 

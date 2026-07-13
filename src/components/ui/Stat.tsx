@@ -16,24 +16,37 @@ export interface StatProps extends HTMLAttributes<HTMLDivElement> {
   size?: 'sm' | 'default' | 'lg';
 }
 
-
-
 /**
  * Single metric display. Compose multiple Stats in a grid for a dashboard
  * card row. Renders semantic <dl>/<dt>/<dd> so screen readers announce
  * the label–value pairing correctly.
  */
 const Stat = forwardRef<HTMLDivElement, StatProps>(
-  ({ className, label, value, description, change, changeDirection = 'neutral', size = 'default', ...props }, ref) => (
+  (
+    {
+      className,
+      label,
+      value,
+      description,
+      change,
+      changeDirection = 'neutral',
+      size = 'default',
+      ...props
+    },
+    ref,
+  ) => (
     <div
       ref={ref}
-      className={cn('bg-card flex flex-col gap-1 rounded-md border border-border px-5 py-[18px] font-sans', className)}
+      className={cn(
+        'flex flex-col gap-1 rounded-md border border-border bg-card px-5 py-[18px] font-sans',
+        className,
+      )}
       {...props}
     >
       <dl className="m-0 flex flex-col gap-1">
         <dt
           className={cn(
-            'mb-1 flex items-center gap-1.5 font-semibold tracking-[0.06em] text-text-muted uppercase',
+            'mb-1 flex items-center gap-1.5 font-semibold text-text-muted uppercase tracking-[0.06em]',
             size === 'sm' && 'text-[10px]',
             size === 'default' && 'text-[12px]',
             size === 'lg' && 'text-sm',
@@ -44,7 +57,7 @@ const Stat = forwardRef<HTMLDivElement, StatProps>(
         <dd className="m-0 flex flex-col items-start gap-1">
           <span
             className={cn(
-              'font-serif leading-none font-medium tracking-[-0.01em] text-text-main tabular-nums',
+              'font-medium font-serif text-text-main tabular-nums leading-none tracking-[-0.01em]',
               size === 'sm' && 'text-2xl',
               size === 'default' && 'text-[28px]',
               size === 'lg' && 'text-4xl',
@@ -53,7 +66,16 @@ const Stat = forwardRef<HTMLDivElement, StatProps>(
             {value}
           </span>
           {change != null && (
-            <span className={cn('mt-1 text-[12px] font-normal tabular-nums', changeDirection === 'up' ? 'text-[#1f7a4d]' : changeDirection === 'down' ? 'text-[#b03a3a]' : 'text-text-muted')}>
+            <span
+              className={cn(
+                'mt-1 font-normal text-[12px] tabular-nums',
+                changeDirection === 'up'
+                  ? 'text-[#1f7a4d]'
+                  : changeDirection === 'down'
+                    ? 'text-[#b03a3a]'
+                    : 'text-text-muted',
+              )}
+            >
               {change}
             </span>
           )}

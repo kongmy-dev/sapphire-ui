@@ -1,5 +1,5 @@
-import { forwardRef, type ReactNode } from 'react';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
+import { forwardRef, type ReactNode } from 'react';
 import { cn } from '../../lib/utils';
 
 /**
@@ -16,7 +16,9 @@ export const TooltipProvider = TooltipPrimitive.Provider;
 export const TooltipRoot = TooltipPrimitive.Root;
 export const TooltipTrigger = TooltipPrimitive.Trigger;
 
-export type TooltipContentProps = React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>;
+export type TooltipContentProps = React.ComponentPropsWithoutRef<
+  typeof TooltipPrimitive.Content
+>;
 
 const TooltipContent = forwardRef<
   React.ComponentRef<typeof TooltipPrimitive.Content>,
@@ -27,8 +29,8 @@ const TooltipContent = forwardRef<
       ref={ref}
       sideOffset={sideOffset}
       className={cn(
-        'z-50 max-w-xs rounded-sm bg-primary px-2.5 py-1.5 text-xs font-medium text-text-on-dark shadow-md',
-        'data-[state=delayed-open]:animate-in data-[state=closed]:animate-out',
+        'z-50 max-w-xs rounded-sm bg-primary px-2.5 py-1.5 font-medium text-text-on-dark text-xs shadow-md',
+        'data-[state=closed]:animate-out data-[state=delayed-open]:animate-in',
         'data-[state=closed]:fade-out-0 data-[state=delayed-open]:fade-in-0',
         'data-[state=closed]:zoom-out-95 data-[state=delayed-open]:zoom-in-95',
         'data-[side=bottom]:slide-in-from-top-1 data-[side=left]:slide-in-from-right-1 data-[side=right]:slide-in-from-left-1 data-[side=top]:slide-in-from-bottom-1',
@@ -58,14 +60,22 @@ export interface TooltipProps {
  * a single <TooltipProvider> at the root and use the lower-level pieces
  * directly to avoid duplicate provider trees.
  */
-function Tooltip({ children, content, delayDuration = 300, side = 'top', noProvider }: TooltipProps) {
+function Tooltip({
+  children,
+  content,
+  delayDuration = 300,
+  side = 'top',
+  noProvider,
+}: TooltipProps) {
   const inner = (
     <TooltipRoot>
       <TooltipTrigger asChild>{children}</TooltipTrigger>
       <TooltipContent side={side}>{content}</TooltipContent>
     </TooltipRoot>
   );
-  return noProvider ? inner : (
+  return noProvider ? (
+    inner
+  ) : (
     <TooltipProvider delayDuration={delayDuration}>{inner}</TooltipProvider>
   );
 }

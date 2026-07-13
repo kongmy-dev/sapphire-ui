@@ -1,11 +1,15 @@
-import { forwardRef, useId } from 'react';
-import type { ComponentPropsWithoutRef } from 'react';
 import * as RadixCheckbox from '@radix-ui/react-checkbox';
+import type { ComponentPropsWithoutRef } from 'react';
+import { forwardRef, useId } from 'react';
 import { cn } from '../../lib/utils';
 
 type CheckedState = boolean | 'indeterminate';
 
-export interface CheckboxProps extends Omit<ComponentPropsWithoutRef<typeof RadixCheckbox.Root>, 'asChild' | 'checked' | 'defaultChecked' | 'onCheckedChange'> {
+export interface CheckboxProps
+  extends Omit<
+    ComponentPropsWithoutRef<typeof RadixCheckbox.Root>,
+    'asChild' | 'checked' | 'defaultChecked' | 'onCheckedChange'
+  > {
   /** Controlled checked state. Use 'indeterminate' for the mixed visual. */
   checked?: CheckedState;
   /** Uncontrolled initial checked state. */
@@ -47,7 +51,7 @@ const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
             {label && (
               <label
                 htmlFor={id}
-                className="cursor-pointer font-sans text-sm font-medium text-text-main select-none"
+                className="cursor-pointer select-none font-medium font-sans text-sm text-text-main"
               >
                 {label}
               </label>
@@ -55,7 +59,7 @@ const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
             {description && (
               <span
                 id={descriptionId}
-                className="mt-0.5 font-sans text-xs text-text-muted"
+                className="mt-0.5 font-sans text-text-muted text-xs"
               >
                 {description}
               </span>

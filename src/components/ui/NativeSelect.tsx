@@ -1,9 +1,9 @@
-import { forwardRef, type SelectHTMLAttributes, type ReactNode } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
+import { forwardRef, type ReactNode, type SelectHTMLAttributes } from 'react';
 import { cn } from '../../lib/utils';
 
 const nativeSelectVariants = cva(
-  'w-full cursor-pointer appearance-none pr-10 font-sans transition-all duration-200 outline-none disabled:cursor-not-allowed disabled:opacity-50',
+  'w-full cursor-pointer appearance-none pr-10 font-sans outline-none transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {

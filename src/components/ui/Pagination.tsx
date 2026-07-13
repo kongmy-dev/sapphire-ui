@@ -1,4 +1,4 @@
-import { forwardRef, useMemo, type HTMLAttributes } from 'react';
+import { forwardRef, type HTMLAttributes, useMemo } from 'react';
 import { cn } from '../../lib/utils';
 
 export interface PaginationProps extends HTMLAttributes<HTMLElement> {
@@ -24,7 +24,11 @@ type Item = number | 'ellipsis';
  * the current page, and ellipsis tokens between the windows. Returns
  * `'ellipsis'` for gaps to keep the rendering loop free of edge cases.
  */
-function buildPageList(currentPage: number, totalPages: number, siblings: number): Item[] {
+function buildPageList(
+  currentPage: number,
+  totalPages: number,
+  siblings: number,
+): Item[] {
   const windowStart = Math.max(2, currentPage - siblings);
   const windowEnd = Math.min(totalPages - 1, currentPage + siblings);
   const items: Item[] = [1];
@@ -59,7 +63,18 @@ const buttonClass =
  * or similar.
  */
 const Pagination = forwardRef<HTMLElement, PaginationProps>(
-  ({ className, currentPage, totalPages, onPageChange, siblings = 1, hideControls, ...props }, ref) => {
+  (
+    {
+      className,
+      currentPage,
+      totalPages,
+      onPageChange,
+      siblings = 1,
+      hideControls,
+      ...props
+    },
+    ref,
+  ) => {
     const pages = useMemo(
       () => buildPageList(currentPage, totalPages, siblings),
       [currentPage, totalPages, siblings],
@@ -98,7 +113,7 @@ const Pagination = forwardRef<HTMLElement, PaginationProps>(
             <span
               key={`ellipsis-${i}`}
               aria-hidden="true"
-              className="inline-flex size-8 items-center justify-center text-text-muted select-none"
+              className="inline-flex size-8 select-none items-center justify-center text-text-muted"
             >
               …
             </span>

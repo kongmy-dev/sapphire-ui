@@ -1,8 +1,10 @@
-import { forwardRef } from 'react';
 import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area';
+import { forwardRef } from 'react';
 import { cn } from '../../lib/utils';
 
-export type ScrollAreaProps = React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>;
+export type ScrollAreaProps = React.ComponentPropsWithoutRef<
+  typeof ScrollAreaPrimitive.Root
+>;
 
 /**
  * Custom-styled scroll container. Built on @radix-ui/react-scroll-area —
@@ -23,7 +25,10 @@ const ScrollArea = forwardRef<
     {/* tabIndex=0 makes the scrollable region keyboard-focusable —
         required by axe's scrollable-region-focusable rule so users on
         keyboard-only navigation can scroll the content. */}
-    <ScrollAreaPrimitive.Viewport tabIndex={0} className="size-full rounded-[inherit] focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:ring-offset-1 focus-visible:outline-none">
+    <ScrollAreaPrimitive.Viewport
+      tabIndex={0}
+      className="size-full rounded-[inherit] focus-visible:outline-none focus-visible:ring-(--color-focus-ring) focus-visible:ring-2 focus-visible:ring-offset-1"
+    >
       {children}
     </ScrollAreaPrimitive.Viewport>
     <ScrollBar />
@@ -40,9 +45,11 @@ const ScrollBar = forwardRef<
     ref={ref}
     orientation={orientation}
     className={cn(
-      'flex touch-none transition-colors select-none',
-      orientation === 'vertical' && 'h-full w-2 border-l border-l-transparent p-px',
-      orientation === 'horizontal' && 'h-2 flex-col border-t border-t-transparent p-px',
+      'flex touch-none select-none transition-colors',
+      orientation === 'vertical' &&
+        'h-full w-2 border-l border-l-transparent p-px',
+      orientation === 'horizontal' &&
+        'h-2 flex-col border-t border-t-transparent p-px',
       className,
     )}
     {...props}

@@ -1,36 +1,62 @@
-import { useState, useRef } from 'react';
-import { PageSection } from '../components/ui/PageSection';
-import { SiteHeader, SiteHeaderLink } from '../components/ui/SiteHeader';
-import { SiteFooter, SiteFooterGroup, SiteFooterLink } from '../components/ui/SiteFooter';
-import { Layout } from '../components/ui/Layout';
+import { useRef, useState } from 'react';
+import { Banner } from '../components/Banner';
+import { Toast, type ToastRef } from '../components/Toast';
 import {
+  AdminHeader,
   AdminLayout,
   AdminSidebar,
-  AdminSidebarSection,
   AdminSidebarLink,
-  AdminHeader,
+  AdminSidebarSection,
 } from '../components/ui/AdminLayout';
-import { Stat } from '../components/ui/Stat';
-import { Badge } from '../components/ui/Badge';
 import { Avatar } from '../components/ui/Avatar';
-import { Button } from '../components/ui/Button';
-import { Breadcrumb } from '../components/ui/Breadcrumb';
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '../components/ui/DropdownMenu';
-import { Card } from '../components/ui/Card';
-import { Input } from '../components/ui/Input';
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '../components/ui/Table';
-import { ThemeToggle } from '../components/ui/ThemeToggle';
-import { Banner } from '../components/Banner';
-import { Container } from '../components/ui/Container';
-import { SplitLayout, SplitPanel, SplitHandle } from '../components/ui/SplitLayout';
-import { WizardLayout } from '../components/ui/WizardLayout';
-import { StatGroup } from '../components/ui/StatGroup';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '../components/ui/Tabs';
-import { Toast, type ToastRef } from '../components/Toast';
+import { Badge } from '../components/ui/Badge';
 import { BarChart } from '../components/ui/BarChart';
-import { Sparkline } from '../components/ui/Sparkline';
+import { Breadcrumb } from '../components/ui/Breadcrumb';
+import { Button } from '../components/ui/Button';
+import { Card } from '../components/ui/Card';
+import { Container } from '../components/ui/Container';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '../components/ui/DropdownMenu';
+import { Input } from '../components/ui/Input';
+import { Layout } from '../components/ui/Layout';
+import { PageSection } from '../components/ui/PageSection';
 import { Progress } from '../components/ui/Progress';
-
+import {
+  SiteFooter,
+  SiteFooterGroup,
+  SiteFooterLink,
+} from '../components/ui/SiteFooter';
+import { SiteHeader, SiteHeaderLink } from '../components/ui/SiteHeader';
+import { Sparkline } from '../components/ui/Sparkline';
+import {
+  SplitHandle,
+  SplitLayout,
+  SplitPanel,
+} from '../components/ui/SplitLayout';
+import { Stat } from '../components/ui/Stat';
+import { StatGroup } from '../components/ui/StatGroup';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../components/ui/Table';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '../components/ui/Tabs';
+import { ThemeToggle } from '../components/ui/ThemeToggle';
+import { WizardLayout } from '../components/ui/WizardLayout';
 
 // Mock consulting projects for the interactive table
 interface Engagement {
@@ -44,31 +70,76 @@ interface Engagement {
 }
 
 const initialEngagements: Engagement[] = [
-  { id: '1', client: 'Kuala Lumpur Tech Corp', project: 'Microservice Migration', type: 'Architecture', status: 'active', budget: 'RM 85,000', hours: 74 },
-  { id: '2', client: 'Sime Darby Retail', project: 'eCommerce Optimization', type: 'Advisory', status: 'active', budget: 'RM 48,000', hours: 32 },
-  { id: '3', client: 'Petronas Digital', project: 'API Gateway Strategy', type: 'Architecture', status: 'on_hold', budget: 'RM 120,000', hours: 15 },
-  { id: '4', client: 'Maybank Innovation', project: 'Cloud Compliance Audit', type: 'Advisory', status: 'completed', budget: 'RM 35,000', hours: 40 },
-  { id: '5', client: 'Axiata Digital', project: 'DevOps Orchestration Plan', type: 'Delivery', status: 'active', budget: 'RM 62,500', hours: 55 },
+  {
+    id: '1',
+    client: 'Kuala Lumpur Tech Corp',
+    project: 'Microservice Migration',
+    type: 'Architecture',
+    status: 'active',
+    budget: 'RM 85,000',
+    hours: 74,
+  },
+  {
+    id: '2',
+    client: 'Sime Darby Retail',
+    project: 'eCommerce Optimization',
+    type: 'Advisory',
+    status: 'active',
+    budget: 'RM 48,000',
+    hours: 32,
+  },
+  {
+    id: '3',
+    client: 'Petronas Digital',
+    project: 'API Gateway Strategy',
+    type: 'Architecture',
+    status: 'on_hold',
+    budget: 'RM 120,000',
+    hours: 15,
+  },
+  {
+    id: '4',
+    client: 'Maybank Innovation',
+    project: 'Cloud Compliance Audit',
+    type: 'Advisory',
+    status: 'completed',
+    budget: 'RM 35,000',
+    hours: 40,
+  },
+  {
+    id: '5',
+    client: 'Axiata Digital',
+    project: 'DevOps Orchestration Plan',
+    type: 'Delivery',
+    status: 'active',
+    budget: 'RM 62,500',
+    hours: 55,
+  },
 ];
 
 export default function LayoutsPage() {
   const [collapsed, setCollapsed] = useState(false);
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'services' | 'billing' | 'metrics' | 'status'>('dashboard');
+  const [activeTab, setActiveTab] = useState<
+    'dashboard' | 'services' | 'billing' | 'metrics' | 'status'
+  >('dashboard');
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'on_hold' | 'completed'>('all');
-  const [engagements, setEngagements] = useState<Engagement[]>(initialEngagements);
+  const [statusFilter, setStatusFilter] = useState<
+    'all' | 'active' | 'on_hold' | 'completed'
+  >('all');
+  const [engagements, setEngagements] =
+    useState<Engagement[]>(initialEngagements);
   const [wizardOpen, setWizardOpen] = useState(false);
   const [wizardStep, setWizardStep] = useState(0);
   const toastRef = useRef<ToastRef>(null);
 
   // Handle mock status changes
   const updateStatus = (id: string, newStatus: Engagement['status']) => {
-    setEngagements(prev =>
-      prev.map(eng => (eng.id === id ? { ...eng, status: newStatus } : eng))
+    setEngagements((prev) =>
+      prev.map((eng) => (eng.id === id ? { ...eng, status: newStatus } : eng)),
     );
   };
 
-  const filteredEngagements = engagements.filter(eng => {
+  const filteredEngagements = engagements.filter((eng) => {
     const matchesSearch =
       eng.client.toLowerCase().includes(searchTerm.toLowerCase()) ||
       eng.project.toLowerCase().includes(searchTerm.toLowerCase());
@@ -80,18 +151,25 @@ export default function LayoutsPage() {
     <div style={{ paddingBottom: '4rem' }}>
       <header className="docs-page-header">
         <h1>Layouts</h1>
-        <p>Structural page components for building applications, dashboards, and websites.</p>
+        <p>
+          Structural page components for building applications, dashboards, and
+          websites.
+        </p>
       </header>
 
       {/* ─── AdminLayout ────────────────────────────────────────────── */}
       <section className="docs-section" style={{ borderTop: 'none' }}>
         <h2 className="docs-section-title">Admin Layout</h2>
         <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
-          A comprehensive administrative workbench layout system using full whitespace.
+          A comprehensive administrative workbench layout system using full
+          whitespace.
         </p>
-        
+
         {/* Full whitespace container breaking out of docs padding */}
-        <div className="-mx-4 mb-12 overflow-hidden border-y border-border md:-mx-8" style={{ height: '85vh', minHeight: 700 }}>
+        <div
+          className="-mx-4 mb-12 overflow-hidden border-border border-y md:-mx-8"
+          style={{ height: '85vh', minHeight: 700 }}
+        >
           <AdminLayout
             className="h-full min-h-0"
             sidebar={
@@ -101,22 +179,34 @@ export default function LayoutsPage() {
                 onToggleCollapse={setCollapsed}
                 brand={
                   <div className="flex items-center gap-2 pl-1">
-                    <span className="flex size-6 items-center justify-center rounded-sm bg-accent font-serif text-sm font-semibold text-primary">K</span>
-                    <span className="font-serif text-base font-semibold tracking-wide text-text-on-dark">
+                    <span className="flex size-6 items-center justify-center rounded-sm bg-accent font-semibold font-serif text-primary text-sm">
+                      K
+                    </span>
+                    <span className="font-semibold font-serif text-base text-text-on-dark tracking-wide">
                       KONGMY
                     </span>
-                    <span className="font-sans text-[10px] tracking-wider text-accent uppercase">
+                    <span className="font-sans text-[10px] text-accent uppercase tracking-wider">
                       Console
                     </span>
                   </div>
                 }
                 footer={
-                  <div className={collapsed ? "flex justify-center" : "flex items-center gap-3 p-1"}>
+                  <div
+                    className={
+                      collapsed
+                        ? 'flex justify-center'
+                        : 'flex items-center gap-3 p-1'
+                    }
+                  >
                     <Avatar size="sm" fallback="KM" />
                     {!collapsed && (
                       <div className="flex-1 truncate">
-                        <div className="text-xs font-semibold text-text-on-dark">Kong My</div>
-                        <div className="text-[10px] text-text-on-dark/50">Consultant</div>
+                        <div className="font-semibold text-text-on-dark text-xs">
+                          Kong My
+                        </div>
+                        <div className="text-[10px] text-text-on-dark/50">
+                          Consultant
+                        </div>
                       </div>
                     )}
                   </div>
@@ -154,20 +244,20 @@ export default function LayoutsPage() {
                 </AdminSidebarSection>
 
                 <AdminSidebarSection title="Insights" collapsed={collapsed}>
-                  <AdminSidebarLink 
-                    icon="bar_chart" 
-                    active={activeTab === 'metrics'} 
-                    onClick={() => setActiveTab('metrics')} 
-                    collapsed={collapsed} 
+                  <AdminSidebarLink
+                    icon="bar_chart"
+                    active={activeTab === 'metrics'}
+                    onClick={() => setActiveTab('metrics')}
+                    collapsed={collapsed}
                     style={{ cursor: 'pointer' }}
                   >
                     Metrics & Analytics
                   </AdminSidebarLink>
-                  <AdminSidebarLink 
-                    icon="dns" 
-                    active={activeTab === 'status'} 
-                    onClick={() => setActiveTab('status')} 
-                    collapsed={collapsed} 
+                  <AdminSidebarLink
+                    icon="dns"
+                    active={activeTab === 'status'}
+                    onClick={() => setActiveTab('status')}
+                    collapsed={collapsed}
                     style={{ cursor: 'pointer' }}
                   >
                     Status Monitor
@@ -182,7 +272,18 @@ export default function LayoutsPage() {
                     items={[
                       { label: 'Admin', href: '#' },
                       { label: 'Consulting' },
-                      { label: activeTab === 'dashboard' ? 'Overview' : activeTab === 'services' ? 'Services' : activeTab === 'billing' ? 'Billing' : activeTab === 'metrics' ? 'Metrics' : 'Status' }
+                      {
+                        label:
+                          activeTab === 'dashboard'
+                            ? 'Overview'
+                            : activeTab === 'services'
+                              ? 'Services'
+                              : activeTab === 'billing'
+                                ? 'Billing'
+                                : activeTab === 'metrics'
+                                  ? 'Metrics'
+                                  : 'Status',
+                      },
                     ]}
                   />
                 }
@@ -198,14 +299,36 @@ export default function LayoutsPage() {
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>My Console</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem onSelect={() => toastRef.current?.show('Navigating to Profile Settings...', 'info')}>
+                        <DropdownMenuItem
+                          onSelect={() =>
+                            toastRef.current?.show(
+                              'Navigating to Profile Settings...',
+                              'info',
+                            )
+                          }
+                        >
                           Profile Settings
                         </DropdownMenuItem>
-                        <DropdownMenuItem onSelect={() => toastRef.current?.show('Navigating to Support Tickets...', 'info')}>
+                        <DropdownMenuItem
+                          onSelect={() =>
+                            toastRef.current?.show(
+                              'Navigating to Support Tickets...',
+                              'info',
+                            )
+                          }
+                        >
                           Support Tickets
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem onSelect={() => toastRef.current?.show('Log Out action triggered (mocked)', 'warning')} style={{ color: 'var(--color-error)' }}>
+                        <DropdownMenuItem
+                          onSelect={() =>
+                            toastRef.current?.show(
+                              'Log Out action triggered (mocked)',
+                              'warning',
+                            )
+                          }
+                          style={{ color: 'var(--color-error)' }}
+                        >
                           Log Out
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -218,7 +341,8 @@ export default function LayoutsPage() {
             {/* Banner message displaying editorial first-person singular voice */}
             <div style={{ marginBottom: 24 }}>
               <Banner variant="accent">
-                I am currently serving 3 active clients under advisory SLA. Weekly timesheets close every Friday at 18:00 UTC.
+                I am currently serving 3 active clients under advisory SLA.
+                Weekly timesheets close every Friday at 18:00 UTC.
               </Banner>
             </div>
 
@@ -270,19 +394,39 @@ export default function LayoutsPage() {
                 <Card style={{ padding: 24 }}>
                   <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <div>
-                      <h3 className="m-0 font-serif text-lg font-medium text-(--color-text-strong)">
+                      <h3 className="m-0 font-medium font-serif text-(--color-text-strong) text-lg">
                         Current Consulting Engagements
                       </h3>
                       <p className="m-0 mt-1 text-sm text-text-muted">
-                        I record client contracts, project scope categories, and active hourly metrics in real-time.
+                        I record client contracts, project scope categories, and
+                        active hourly metrics in real-time.
                       </p>
                     </div>
-                    
+
                     <div className="flex items-center gap-2">
-                      <Button variant="outline" size="sm" onClick={() => { setEngagements(initialEngagements); toastRef.current?.show('Consulting engagement data reset.', 'info'); }}>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          setEngagements(initialEngagements);
+                          toastRef.current?.show(
+                            'Consulting engagement data reset.',
+                            'info',
+                          );
+                        }}
+                      >
                         Reset Data
                       </Button>
-                      <Button variant="primary" size="sm" onClick={() => toastRef.current?.show('Adding a new contract capability is mocked.', 'warning')}>
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={() =>
+                          toastRef.current?.show(
+                            'Adding a new contract capability is mocked.',
+                            'warning',
+                          )
+                        }
+                      >
                         New Contract
                       </Button>
                     </div>
@@ -298,34 +442,48 @@ export default function LayoutsPage() {
                       />
                     </div>
                     <div className="flex gap-2">
-                      {(['all', 'active', 'on_hold', 'completed'] as const).map(f => (
-                        <button
-                          key={f}
-                          onClick={() => setStatusFilter(f)}
-                          className={`cursor-pointer rounded-btn px-3 py-1 text-xs font-semibold tracking-wider uppercase transition-colors ${
-                            statusFilter === f
-                              ? 'bg-(--color-text-strong) text-surface'
-                              : 'bg-surface text-text-muted hover:bg-border'
-                          }`}
-                          style={{ border: 'none', outline: 'none' }}
-                        >
-                          {f === 'on_hold' ? 'on hold' : f}
-                        </button>
-                      ))}
+                      {(['all', 'active', 'on_hold', 'completed'] as const).map(
+                        (f) => (
+                          <button
+                            key={f}
+                            onClick={() => setStatusFilter(f)}
+                            className={`cursor-pointer rounded-btn px-3 py-1 font-semibold text-xs uppercase tracking-wider transition-colors ${
+                              statusFilter === f
+                                ? 'bg-(--color-text-strong) text-surface'
+                                : 'bg-surface text-text-muted hover:bg-border'
+                            }`}
+                            style={{ border: 'none', outline: 'none' }}
+                          >
+                            {f === 'on_hold' ? 'on hold' : f}
+                          </button>
+                        ),
+                      )}
                     </div>
                   </div>
 
                   {/* Tabular records section */}
-                  <div className="overflow-x-auto" style={{ border: '1px solid var(--color-border)', borderRadius: 'var(--radius-sm)' }}>
+                  <div
+                    className="overflow-x-auto"
+                    style={{
+                      border: '1px solid var(--color-border)',
+                      borderRadius: 'var(--radius-sm)',
+                    }}
+                  >
                     <Table>
                       <TableHeader>
                         <TableRow>
                           <TableHead>Client & Scope</TableHead>
                           <TableHead>Service Category</TableHead>
                           <TableHead>Status</TableHead>
-                          <TableHead style={{ textAlign: 'right' }}>Hours Logged</TableHead>
-                          <TableHead style={{ textAlign: 'right' }}>Budget Cap</TableHead>
-                          <TableHead style={{ textAlign: 'center' }}>Admin Operations</TableHead>
+                          <TableHead style={{ textAlign: 'right' }}>
+                            Hours Logged
+                          </TableHead>
+                          <TableHead style={{ textAlign: 'right' }}>
+                            Budget Cap
+                          </TableHead>
+                          <TableHead style={{ textAlign: 'center' }}>
+                            Admin Operations
+                          </TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -334,12 +492,18 @@ export default function LayoutsPage() {
                             <TableRow key={eng.id}>
                               <TableCell>
                                 <div>
-                                  <div className="font-semibold text-(--color-text-strong)">{eng.client}</div>
-                                  <div className="mt-0.5 text-xs text-text-muted">{eng.project}</div>
+                                  <div className="font-semibold text-(--color-text-strong)">
+                                    {eng.client}
+                                  </div>
+                                  <div className="mt-0.5 text-text-muted text-xs">
+                                    {eng.project}
+                                  </div>
                                 </div>
                               </TableCell>
                               <TableCell>
-                                <span className="font-mono text-xs text-text-muted">{eng.type}</span>
+                                <span className="font-mono text-text-muted text-xs">
+                                  {eng.type}
+                                </span>
                               </TableCell>
                               <TableCell>
                                 <Badge
@@ -347,17 +511,27 @@ export default function LayoutsPage() {
                                     eng.status === 'active'
                                       ? 'success'
                                       : eng.status === 'on_hold'
-                                      ? 'warning'
-                                      : 'info'
+                                        ? 'warning'
+                                        : 'info'
                                   }
                                 >
-                                  {eng.status === 'active' ? 'Active' : eng.status === 'on_hold' ? 'On Hold' : 'Completed'}
+                                  {eng.status === 'active'
+                                    ? 'Active'
+                                    : eng.status === 'on_hold'
+                                      ? 'On Hold'
+                                      : 'Completed'}
                                 </Badge>
                               </TableCell>
-                              <TableCell style={{ textAlign: 'right', fontWeight: 500 }} className="font-mono">
+                              <TableCell
+                                style={{ textAlign: 'right', fontWeight: 500 }}
+                                className="font-mono"
+                              >
                                 {eng.hours} hrs
                               </TableCell>
-                              <TableCell style={{ textAlign: 'right', fontWeight: 600 }} className="font-mono">
+                              <TableCell
+                                style={{ textAlign: 'right', fontWeight: 600 }}
+                                className="font-mono"
+                              >
                                 {eng.budget}
                               </TableCell>
                               <TableCell style={{ textAlign: 'center' }}>
@@ -366,8 +540,13 @@ export default function LayoutsPage() {
                                     <Button
                                       size="sm"
                                       variant="ghost"
-                                      onClick={() => updateStatus(eng.id, 'active')}
-                                      style={{ padding: '4px 8px', fontSize: 11 }}
+                                      onClick={() =>
+                                        updateStatus(eng.id, 'active')
+                                      }
+                                      style={{
+                                        padding: '4px 8px',
+                                        fontSize: 11,
+                                      }}
                                     >
                                       Activate
                                     </Button>
@@ -376,8 +555,13 @@ export default function LayoutsPage() {
                                     <Button
                                       size="sm"
                                       variant="outline"
-                                      onClick={() => updateStatus(eng.id, 'on_hold')}
-                                      style={{ padding: '4px 8px', fontSize: 11 }}
+                                      onClick={() =>
+                                        updateStatus(eng.id, 'on_hold')
+                                      }
+                                      style={{
+                                        padding: '4px 8px',
+                                        fontSize: 11,
+                                      }}
                                     >
                                       Hold
                                     </Button>
@@ -386,8 +570,15 @@ export default function LayoutsPage() {
                                     <Button
                                       size="sm"
                                       variant="outline"
-                                      onClick={() => updateStatus(eng.id, 'completed')}
-                                      style={{ padding: '4px 8px', fontSize: 11, borderColor: 'var(--color-border)', color: 'var(--color-text-muted)' }}
+                                      onClick={() =>
+                                        updateStatus(eng.id, 'completed')
+                                      }
+                                      style={{
+                                        padding: '4px 8px',
+                                        fontSize: 11,
+                                        borderColor: 'var(--color-border)',
+                                        color: 'var(--color-text-muted)',
+                                      }}
                                     >
                                       Finish
                                     </Button>
@@ -398,7 +589,14 @@ export default function LayoutsPage() {
                           ))
                         ) : (
                           <TableRow>
-                            <TableCell colSpan={6} style={{ textAlign: 'center', padding: '40px 0', color: 'var(--color-text-muted)' }}>
+                            <TableCell
+                              colSpan={6}
+                              style={{
+                                textAlign: 'center',
+                                padding: '40px 0',
+                                color: 'var(--color-text-muted)',
+                              }}
+                            >
                               No client contracts found matching your filters.
                             </TableCell>
                           </TableRow>
@@ -409,30 +607,79 @@ export default function LayoutsPage() {
                 </Card>
               </div>
             )}
-            
+
             {activeTab === 'services' && (
               <Card style={{ padding: 24 }}>
-                <h3 className="mb-2 font-serif text-lg font-medium text-(--color-text-strong)">
+                <h3 className="mb-2 font-medium font-serif text-(--color-text-strong) text-lg">
                   My Core Consultancy Services
                 </h3>
                 <p className="mb-6 text-sm text-text-muted">
-                  Bespoke, elite consultancy services tailored for expanding technology stacks.
+                  Bespoke, elite consultancy services tailored for expanding
+                  technology stacks.
                 </p>
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                  <div style={{ border: '1px solid var(--color-border)', padding: 20, borderRadius: 'var(--radius-md)' }}>
-                    <span className="material-symbols-outlined text-accent" style={{ fontSize: 32 }}>architecture</span>
-                    <h4 className="mt-3 mb-2 font-serif text-base font-semibold">Cloud System Architecture</h4>
-                    <p className="text-xs text-text-muted">High-scale AWS/GCP setups using Terraform, Docker, and serverless runtime architectures.</p>
+                  <div
+                    style={{
+                      border: '1px solid var(--color-border)',
+                      padding: 20,
+                      borderRadius: 'var(--radius-md)',
+                    }}
+                  >
+                    <span
+                      className="material-symbols-outlined text-accent"
+                      style={{ fontSize: 32 }}
+                    >
+                      architecture
+                    </span>
+                    <h4 className="mt-3 mb-2 font-semibold font-serif text-base">
+                      Cloud System Architecture
+                    </h4>
+                    <p className="text-text-muted text-xs">
+                      High-scale AWS/GCP setups using Terraform, Docker, and
+                      serverless runtime architectures.
+                    </p>
                   </div>
-                  <div style={{ border: '1px solid var(--color-border)', padding: 20, borderRadius: 'var(--radius-md)' }}>
-                    <span className="material-symbols-outlined text-accent" style={{ fontSize: 32 }}>speed</span>
-                    <h4 className="mt-3 mb-2 font-serif text-base font-semibold">Performance Engineering</h4>
-                    <p className="text-xs text-text-muted">Full-stack database query profiling, custom edge caching configurations, and API optimization.</p>
+                  <div
+                    style={{
+                      border: '1px solid var(--color-border)',
+                      padding: 20,
+                      borderRadius: 'var(--radius-md)',
+                    }}
+                  >
+                    <span
+                      className="material-symbols-outlined text-accent"
+                      style={{ fontSize: 32 }}
+                    >
+                      speed
+                    </span>
+                    <h4 className="mt-3 mb-2 font-semibold font-serif text-base">
+                      Performance Engineering
+                    </h4>
+                    <p className="text-text-muted text-xs">
+                      Full-stack database query profiling, custom edge caching
+                      configurations, and API optimization.
+                    </p>
                   </div>
-                  <div style={{ border: '1px solid var(--color-border)', padding: 20, borderRadius: 'var(--radius-md)' }}>
-                    <span className="material-symbols-outlined text-accent" style={{ fontSize: 32 }}>security</span>
-                    <h4 className="mt-3 mb-2 font-serif text-base font-semibold">Technical Due Diligence</h4>
-                    <p className="text-xs text-text-muted">Strict cybersecurity audits, compliance reports, and architectural diligence for SaaS acquisitions.</p>
+                  <div
+                    style={{
+                      border: '1px solid var(--color-border)',
+                      padding: 20,
+                      borderRadius: 'var(--radius-md)',
+                    }}
+                  >
+                    <span
+                      className="material-symbols-outlined text-accent"
+                      style={{ fontSize: 32 }}
+                    >
+                      security
+                    </span>
+                    <h4 className="mt-3 mb-2 font-semibold font-serif text-base">
+                      Technical Due Diligence
+                    </h4>
+                    <p className="text-text-muted text-xs">
+                      Strict cybersecurity audits, compliance reports, and
+                      architectural diligence for SaaS acquisitions.
+                    </p>
                   </div>
                 </div>
               </Card>
@@ -440,44 +687,87 @@ export default function LayoutsPage() {
 
             {activeTab === 'billing' && (
               <Card style={{ padding: 24 }}>
-                <h3 className="mb-2 font-serif text-lg font-medium text-(--color-text-strong)">
+                <h3 className="mb-2 font-medium font-serif text-(--color-text-strong) text-lg">
                   Contracts & Fiscal Invoicing
                 </h3>
                 <p className="mb-4 text-sm text-text-muted">
-                  Electronic payments processed under standard Net-15 terms in Kuala Lumpur, Malaysia.
+                  Electronic payments processed under standard Net-15 terms in
+                  Kuala Lumpur, Malaysia.
                 </p>
-                <div style={{ border: '1px solid var(--color-border)', borderRadius: 'var(--radius-sm)' }}>
+                <div
+                  style={{
+                    border: '1px solid var(--color-border)',
+                    borderRadius: 'var(--radius-sm)',
+                  }}
+                >
                   <Table>
                     <TableHeader>
                       <TableRow>
                         <TableHead>Invoice ID</TableHead>
                         <TableHead>Date Issued</TableHead>
                         <TableHead>Recipient Client</TableHead>
-                        <TableHead style={{ textAlign: 'right' }}>Amount</TableHead>
-                        <TableHead style={{ textAlign: 'center' }}>Fulfillment</TableHead>
+                        <TableHead style={{ textAlign: 'right' }}>
+                          Amount
+                        </TableHead>
+                        <TableHead style={{ textAlign: 'center' }}>
+                          Fulfillment
+                        </TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       <TableRow>
-                        <TableCell className="font-mono text-xs">INV-2026-042</TableCell>
+                        <TableCell className="font-mono text-xs">
+                          INV-2026-042
+                        </TableCell>
                         <TableCell>May 15, 2026</TableCell>
-                        <TableCell className="font-semibold text-(--color-text-strong)">Kuala Lumpur Tech Corp</TableCell>
-                        <TableCell style={{ textAlign: 'right', fontWeight: 600 }} className="font-mono">RM 32,000</TableCell>
-                        <TableCell style={{ textAlign: 'center' }}><Badge variant="success">Paid</Badge></TableCell>
+                        <TableCell className="font-semibold text-(--color-text-strong)">
+                          Kuala Lumpur Tech Corp
+                        </TableCell>
+                        <TableCell
+                          style={{ textAlign: 'right', fontWeight: 600 }}
+                          className="font-mono"
+                        >
+                          RM 32,000
+                        </TableCell>
+                        <TableCell style={{ textAlign: 'center' }}>
+                          <Badge variant="success">Paid</Badge>
+                        </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className="font-mono text-xs">INV-2026-041</TableCell>
+                        <TableCell className="font-mono text-xs">
+                          INV-2026-041
+                        </TableCell>
                         <TableCell>May 01, 2026</TableCell>
-                        <TableCell className="font-semibold text-(--color-text-strong)">Sime Darby Retail</TableCell>
-                        <TableCell style={{ textAlign: 'right', fontWeight: 600 }} className="font-mono">RM 16,500</TableCell>
-                        <TableCell style={{ textAlign: 'center' }}><Badge variant="success">Paid</Badge></TableCell>
+                        <TableCell className="font-semibold text-(--color-text-strong)">
+                          Sime Darby Retail
+                        </TableCell>
+                        <TableCell
+                          style={{ textAlign: 'right', fontWeight: 600 }}
+                          className="font-mono"
+                        >
+                          RM 16,500
+                        </TableCell>
+                        <TableCell style={{ textAlign: 'center' }}>
+                          <Badge variant="success">Paid</Badge>
+                        </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className="font-mono text-xs">INV-2026-040</TableCell>
+                        <TableCell className="font-mono text-xs">
+                          INV-2026-040
+                        </TableCell>
                         <TableCell>April 15, 2026</TableCell>
-                        <TableCell className="font-semibold text-(--color-text-strong)">Maybank Innovation</TableCell>
-                        <TableCell style={{ textAlign: 'right', fontWeight: 600 }} className="font-mono">RM 35,000</TableCell>
-                        <TableCell style={{ textAlign: 'center' }}><Badge variant="success">Paid</Badge></TableCell>
+                        <TableCell className="font-semibold text-(--color-text-strong)">
+                          Maybank Innovation
+                        </TableCell>
+                        <TableCell
+                          style={{ textAlign: 'right', fontWeight: 600 }}
+                          className="font-mono"
+                        >
+                          RM 35,000
+                        </TableCell>
+                        <TableCell style={{ textAlign: 'center' }}>
+                          <Badge variant="success">Paid</Badge>
+                        </TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
@@ -487,45 +777,88 @@ export default function LayoutsPage() {
 
             {activeTab === 'metrics' && (
               <Card style={{ padding: 24 }}>
-                <h3 className="mb-2 font-serif text-lg font-medium text-(--color-text-strong)">
+                <h3 className="mb-2 font-medium font-serif text-(--color-text-strong) text-lg">
                   Metrics & Analytics
                 </h3>
                 <p className="mb-6 text-sm text-text-muted">
                   Monthly billable hours analysis and revenue breakdown.
                 </p>
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                  <div style={{ border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)', padding: '24px' }}>
-                    <h4 className="mb-4 font-sans text-sm font-semibold text-(--color-text-strong)">Billable Hours (Last 6 Months)</h4>
-                    <BarChart 
-                      data={[45, 60, 35, 80, 55, 90]} 
-                      labels={['M1', 'M2', 'M3', 'M4', 'M5', 'M6']} 
-                      height="12rem" 
+                  <div
+                    style={{
+                      border: '1px solid var(--color-border)',
+                      borderRadius: 'var(--radius-md)',
+                      padding: '24px',
+                    }}
+                  >
+                    <h4 className="mb-4 font-sans font-semibold text-(--color-text-strong) text-sm">
+                      Billable Hours (Last 6 Months)
+                    </h4>
+                    <BarChart
+                      data={[45, 60, 35, 80, 55, 90]}
+                      labels={['M1', 'M2', 'M3', 'M4', 'M5', 'M6']}
+                      height="12rem"
                       tooltipSuffix="h"
                     />
                   </div>
-                  <div style={{ border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)', padding: '24px' }}>
-                    <h4 className="mb-6 font-sans text-sm font-semibold text-(--color-text-strong)">Revenue by Service Type</h4>
+                  <div
+                    style={{
+                      border: '1px solid var(--color-border)',
+                      borderRadius: 'var(--radius-md)',
+                      padding: '24px',
+                    }}
+                  >
+                    <h4 className="mb-6 font-sans font-semibold text-(--color-text-strong) text-sm">
+                      Revenue by Service Type
+                    </h4>
                     <div className="space-y-5">
                       <div>
                         <div className="mb-2 flex justify-between text-xs">
-                          <span className="font-medium text-(--color-text-strong)">Architecture</span>
-                          <span className="font-mono font-medium text-accent">45%</span>
+                          <span className="font-medium text-(--color-text-strong)">
+                            Architecture
+                          </span>
+                          <span className="font-medium font-mono text-accent">
+                            45%
+                          </span>
                         </div>
-                        <Progress value={45} size="default" indicatorClassName="bg-accent" className="h-2.5" />
+                        <Progress
+                          value={45}
+                          size="default"
+                          indicatorClassName="bg-accent"
+                          className="h-2.5"
+                        />
                       </div>
                       <div>
                         <div className="mb-2 flex justify-between text-xs">
-                          <span className="font-medium text-(--color-text-strong)">Advisory</span>
-                          <span className="font-mono font-medium text-accent">35%</span>
+                          <span className="font-medium text-(--color-text-strong)">
+                            Advisory
+                          </span>
+                          <span className="font-medium font-mono text-accent">
+                            35%
+                          </span>
                         </div>
-                        <Progress value={35} size="default" indicatorClassName="bg-(--color-text-strong)" className="h-2.5" />
+                        <Progress
+                          value={35}
+                          size="default"
+                          indicatorClassName="bg-(--color-text-strong)"
+                          className="h-2.5"
+                        />
                       </div>
                       <div>
                         <div className="mb-2 flex justify-between text-xs">
-                          <span className="font-medium text-(--color-text-strong)">Delivery</span>
-                          <span className="font-mono font-medium text-accent">20%</span>
+                          <span className="font-medium text-(--color-text-strong)">
+                            Delivery
+                          </span>
+                          <span className="font-medium font-mono text-accent">
+                            20%
+                          </span>
                         </div>
-                        <Progress value={20} size="default" indicatorClassName="bg-(--color-text-muted)" className="h-2.5" />
+                        <Progress
+                          value={20}
+                          size="default"
+                          indicatorClassName="bg-(--color-text-muted)"
+                          className="h-2.5"
+                        />
                       </div>
                     </div>
                   </div>
@@ -537,42 +870,75 @@ export default function LayoutsPage() {
               <Card style={{ padding: 24 }}>
                 <div className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
                   <div>
-                    <h3 className="mb-1 font-serif text-lg font-medium text-(--color-text-strong)">
+                    <h3 className="mb-1 font-medium font-serif text-(--color-text-strong) text-lg">
                       System Status Monitor
                     </h3>
                     <p className="m-0 text-sm text-text-muted">
                       Real-time uptime and incident tracking across all regions.
                     </p>
                   </div>
-                  <Badge variant="success" className="shrink-0 self-start border border-success/20 px-3 py-1.5 sm:self-auto">
+                  <Badge
+                    variant="success"
+                    className="shrink-0 self-start border border-success/20 px-3 py-1.5 sm:self-auto"
+                  >
                     <span className="mr-2 size-2 animate-pulse rounded-full bg-current" />
                     All Systems Operational
                   </Badge>
                 </div>
-                
+
                 <div className="space-y-6">
                   {[
-                    { name: 'API Gateway', uptime: '99.99%', region: 'ap-southeast-1' },
-                    { name: 'Authentication Services', uptime: '100%', region: 'global' },
-                    { name: 'Database Clusters', uptime: '99.95%', region: 'ap-southeast-1' },
+                    {
+                      name: 'API Gateway',
+                      uptime: '99.99%',
+                      region: 'ap-southeast-1',
+                    },
+                    {
+                      name: 'Authentication Services',
+                      uptime: '100%',
+                      region: 'global',
+                    },
+                    {
+                      name: 'Database Clusters',
+                      uptime: '99.95%',
+                      region: 'ap-southeast-1',
+                    },
                   ].map((sys, idx) => (
-                    <div key={idx} style={{ borderBottom: idx < 2 ? '1px solid var(--color-border)' : 'none', paddingBottom: idx < 2 ? '24px' : '0' }}>
+                    <div
+                      key={idx}
+                      style={{
+                        borderBottom:
+                          idx < 2 ? '1px solid var(--color-border)' : 'none',
+                        paddingBottom: idx < 2 ? '24px' : '0',
+                      }}
+                    >
                       <div className="mb-3 flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium text-(--color-text-strong)">{sys.name}</span>
-                          <span className="rounded-sm bg-surface px-1.5 py-0.5 font-mono text-[10px] text-text-muted">{sys.region}</span>
+                          <span className="font-medium text-(--color-text-strong) text-sm">
+                            {sys.name}
+                          </span>
+                          <span className="rounded-sm bg-surface px-1.5 py-0.5 font-mono text-[10px] text-text-muted">
+                            {sys.region}
+                          </span>
                         </div>
-                        <span className="font-mono text-xs font-medium" style={{ color: 'var(--color-success)' }}>{sys.uptime} uptime</span>
+                        <span
+                          className="font-medium font-mono text-xs"
+                          style={{ color: 'var(--color-success)' }}
+                        >
+                          {sys.uptime} uptime
+                        </span>
                       </div>
-                      <Sparkline 
-                        height="2rem" 
+                      <Sparkline
+                        height="2rem"
                         data={Array.from({ length: 45 }).map(() => {
                           const isWarn = Math.random() > 0.96;
                           return {
                             status: isWarn ? 'warning' : 'success',
-                            tooltip: isWarn ? 'Minor latency issues detected' : 'No downtime recorded'
-                          }
-                        })} 
+                            tooltip: isWarn
+                              ? 'Minor latency issues detected'
+                              : 'No downtime recorded',
+                          };
+                        })}
                       />
                     </div>
                   ))}
@@ -587,20 +953,32 @@ export default function LayoutsPage() {
       <section className="docs-section">
         <h2 className="docs-section-title">PageSection</h2>
         <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
-          Consistent section wrapper with constrained width, optional label + heading + subheading.
+          Consistent section wrapper with constrained width, optional label +
+          heading + subheading.
         </p>
-        <div className="docs-preview" style={{ padding: 0, overflow: 'hidden' }}>
+        <div
+          className="docs-preview"
+          style={{ padding: 0, overflow: 'hidden' }}
+        >
           <PageSection
             label="01 — Services"
             heading="What we build"
             subheading="Cloud infrastructure, AI/ML pipelines, and custom software for growing businesses."
             maxWidth="full"
-            style={{ padding: '2rem 1.5rem', background: 'var(--color-surface)' }}
+            style={{
+              padding: '2rem 1.5rem',
+              background: 'var(--color-surface)',
+            }}
           >
             <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
               {['Cloud Ops', 'AI / ML', 'Web Apps'].map((t) => (
-                <div key={t} className="rounded-md border border-border bg-card-bg p-6">
-                  <span className="font-sans font-semibold text-text-strong">{t}</span>
+                <div
+                  key={t}
+                  className="rounded-md border border-border bg-card-bg p-6"
+                >
+                  <span className="font-sans font-semibold text-text-strong">
+                    {t}
+                  </span>
                 </div>
               ))}
             </div>
@@ -612,9 +990,17 @@ export default function LayoutsPage() {
       <section className="docs-section">
         <h2 className="docs-section-title">Layout</h2>
         <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
-          Canonical page shell — composes SiteHeader, SiteFooter, and an optional sidebar slot.
+          Canonical page shell — composes SiteHeader, SiteFooter, and an
+          optional sidebar slot.
         </p>
-        <div className="docs-preview" style={{ padding: 0, overflow: 'hidden', borderRadius: 'var(--radius-md)' }}>
+        <div
+          className="docs-preview"
+          style={{
+            padding: 0,
+            overflow: 'hidden',
+            borderRadius: 'var(--radius-md)',
+          }}
+        >
           <Layout
             style={{ minHeight: 360 }}
             header={
@@ -622,13 +1008,17 @@ export default function LayoutsPage() {
                 sticky={false}
                 brand={
                   <>
-                    <span className="font-serif text-lg font-bold">KONGMY</span>
-                    <span className="font-sans text-lg font-light text-accent">dev</span>
+                    <span className="font-bold font-serif text-lg">KONGMY</span>
+                    <span className="font-light font-sans text-accent text-lg">
+                      dev
+                    </span>
                   </>
                 }
                 nav={
                   <>
-                    <SiteHeaderLink href="#" active>Home</SiteHeaderLink>
+                    <SiteHeaderLink href="#" active>
+                      Home
+                    </SiteHeaderLink>
                     <SiteHeaderLink href="#">Docs</SiteHeaderLink>
                   </>
                 }
@@ -646,11 +1036,12 @@ export default function LayoutsPage() {
             }
           >
             <div style={{ padding: '2rem 1.5rem' }}>
-              <h3 className="m-0 mb-2 font-serif text-xl font-semibold text-text-strong">
+              <h3 className="m-0 mb-2 font-semibold font-serif text-text-strong text-xl">
                 Main content area
               </h3>
               <p className="m-0 font-sans text-sm text-text-muted">
-                Pages, routes, or any children render here between the header and footer slots.
+                Pages, routes, or any children render here between the header
+                and footer slots.
               </p>
             </div>
           </Layout>
@@ -663,47 +1054,78 @@ export default function LayoutsPage() {
         <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
           Composable sticky header with brand, nav, and actions slots.
         </p>
-        <div className="docs-preview" style={{ padding: 0, overflow: 'hidden', borderRadius: 'var(--radius-md)' }}>
+        <div
+          className="docs-preview"
+          style={{
+            padding: 0,
+            overflow: 'hidden',
+            borderRadius: 'var(--radius-md)',
+          }}
+        >
           <SiteHeader
             sticky={false}
             brand={
               <>
-                <span className="font-serif text-lg font-bold">KONGMY</span>
-                <span className="font-sans text-lg font-light text-accent">dev</span>
+                <span className="font-bold font-serif text-lg">KONGMY</span>
+                <span className="font-light font-sans text-accent text-lg">
+                  dev
+                </span>
               </>
             }
             nav={
               <>
-                <SiteHeaderLink href="#" active>Home</SiteHeaderLink>
+                <SiteHeaderLink href="#" active>
+                  Home
+                </SiteHeaderLink>
                 <SiteHeaderLink href="#">Services</SiteHeaderLink>
                 <SiteHeaderLink href="#">Blog</SiteHeaderLink>
                 <SiteHeaderLink href="#">Contact</SiteHeaderLink>
               </>
             }
             actions={
-              <Button variant="on-dark-primary" size="sm">Get Started</Button>
+              <Button variant="on-dark-primary" size="sm">
+                Get Started
+              </Button>
             }
           />
         </div>
-        <div className="docs-preview" style={{ padding: 0, overflow: 'hidden', borderRadius: 'var(--radius-md)', marginTop: 12 }}>
+        <div
+          className="docs-preview"
+          style={{
+            padding: 0,
+            overflow: 'hidden',
+            borderRadius: 'var(--radius-md)',
+            marginTop: 12,
+          }}
+        >
           <SiteHeader
             sticky={false}
             variant="light"
             brand={
               <>
-                <span className="font-serif text-lg font-bold">Cloud</span>
-                <span className="font-sans text-lg font-light text-accent">Cost</span>
+                <span className="font-bold font-serif text-lg">Cloud</span>
+                <span className="font-light font-sans text-accent text-lg">
+                  Cost
+                </span>
               </>
             }
             nav={
               <>
-                <SiteHeaderLink href="#" variant="light" active>Dashboard</SiteHeaderLink>
-                <SiteHeaderLink href="#" variant="light">Projects</SiteHeaderLink>
-                <SiteHeaderLink href="#" variant="light">Settings</SiteHeaderLink>
+                <SiteHeaderLink href="#" variant="light" active>
+                  Dashboard
+                </SiteHeaderLink>
+                <SiteHeaderLink href="#" variant="light">
+                  Projects
+                </SiteHeaderLink>
+                <SiteHeaderLink href="#" variant="light">
+                  Settings
+                </SiteHeaderLink>
               </>
             }
             actions={
-              <Button variant="primary" size="sm">Sync</Button>
+              <Button variant="primary" size="sm">
+                Sync
+              </Button>
             }
           />
         </div>
@@ -715,16 +1137,28 @@ export default function LayoutsPage() {
         <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
           Composable footer with brand, link groups, and bottom bar slots.
         </p>
-        <div className="docs-preview" style={{ padding: 0, overflow: 'hidden', borderRadius: 'var(--radius-md)' }}>
+        <div
+          className="docs-preview"
+          style={{
+            padding: 0,
+            overflow: 'hidden',
+            borderRadius: 'var(--radius-md)',
+          }}
+        >
           <SiteFooter
             brand={
               <div>
                 <div className="mb-3 flex items-center gap-2">
-                  <span className="font-serif text-xl font-bold text-text-on-dark">KONGMY</span>
-                  <span className="font-sans text-xl font-light text-accent">dev</span>
+                  <span className="font-bold font-serif text-text-on-dark text-xl">
+                    KONGMY
+                  </span>
+                  <span className="font-light font-sans text-accent text-xl">
+                    dev
+                  </span>
                 </div>
                 <p className="m-0 font-sans text-sm/relaxed text-text-on-dark-muted">
-                  Helping businesses cut costs, automate operations, and build software that works.
+                  Helping businesses cut costs, automate operations, and build
+                  software that works.
                 </p>
               </div>
             }
@@ -764,13 +1198,17 @@ export default function LayoutsPage() {
             <SplitLayout orientation="horizontal">
               <SplitPanel defaultSize={30} minSize={20}>
                 <div className="flex h-full items-center justify-center bg-surface p-6">
-                  <span className="text-sm font-medium text-text-muted">Sidebar</span>
+                  <span className="font-medium text-sm text-text-muted">
+                    Sidebar
+                  </span>
                 </div>
               </SplitPanel>
               <SplitHandle withHandle />
               <SplitPanel defaultSize={70} minSize={30}>
                 <div className="flex h-full items-center justify-center p-6">
-                  <span className="text-sm font-medium text-text-main">Main Content Area</span>
+                  <span className="font-medium text-sm text-text-main">
+                    Main Content Area
+                  </span>
                 </div>
               </SplitPanel>
             </SplitLayout>
@@ -781,9 +1219,17 @@ export default function LayoutsPage() {
       {/* ─── Wizard Layout ──────────────────────────────────────────── */}
       <section className="docs-section">
         <h2 className="docs-section-title">Wizard Layout</h2>
-        <p className="mb-4 text-sm text-text-muted">A standardized multi-step flow supporting inline, fullscreen, and modal modes.</p>
+        <p className="mb-4 text-sm text-text-muted">
+          A standardized multi-step flow supporting inline, fullscreen, and
+          modal modes.
+        </p>
         <div className="docs-preview">
-          <Button onClick={() => { setWizardOpen(true); setWizardStep(0); }}>
+          <Button
+            onClick={() => {
+              setWizardOpen(true);
+              setWizardStep(0);
+            }}
+          >
             Launch Modal Wizard
           </Button>
           <WizardLayout
@@ -795,16 +1241,26 @@ export default function LayoutsPage() {
             steps={[
               { label: 'Region', description: 'Select datacenter' },
               { label: 'Compute', description: 'Instance sizing' },
-              { label: 'Review', description: 'Confirm costs' }
+              { label: 'Review', description: 'Confirm costs' },
             ]}
             currentStep={wizardStep}
-            onNext={() => setWizardStep(s => Math.min(2, s + 1))}
-            onPrev={() => setWizardStep(s => Math.max(0, s - 1))}
-            onFinish={() => { toastRef.current?.show('Cloud Infrastructure Provisioned Successfully!', 'success'); setWizardOpen(false); }}
+            onNext={() => setWizardStep((s) => Math.min(2, s + 1))}
+            onPrev={() => setWizardStep((s) => Math.max(0, s - 1))}
+            onFinish={() => {
+              toastRef.current?.show(
+                'Cloud Infrastructure Provisioned Successfully!',
+                'success',
+              );
+              setWizardOpen(false);
+            }}
           >
-            <div className="flex h-full flex-col items-center justify-center rounded-md border-2 border-dashed border-border p-8">
-              <p className="text-lg font-medium">Content for Step {wizardStep + 1}</p>
-              <p className="mt-2 text-sm text-text-muted">Interactive configuration forms would go here.</p>
+            <div className="flex h-full flex-col items-center justify-center rounded-md border-2 border-border border-dashed p-8">
+              <p className="font-medium text-lg">
+                Content for Step {wizardStep + 1}
+              </p>
+              <p className="mt-2 text-sm text-text-muted">
+                Interactive configuration forms would go here.
+              </p>
             </div>
           </WizardLayout>
         </div>
@@ -814,9 +1270,15 @@ export default function LayoutsPage() {
       <section className="docs-section">
         <h2 className="docs-section-title">Container Layout</h2>
         <div className="docs-preview">
-          <div className="overflow-hidden rounded-md border border-dashed border-accent/50 bg-surface/50">
-            <Container maxWidth="md" padding="default" className="bg-background text-center outline-1 outline-border outline-dashed">
-              <p className="text-sm font-semibold text-text-muted">Content constrained to `md` (768px) inside the Container.</p>
+          <div className="overflow-hidden rounded-md border border-accent/50 border-dashed bg-surface/50">
+            <Container
+              maxWidth="md"
+              padding="default"
+              className="bg-background text-center outline-dashed outline-1 outline-border"
+            >
+              <p className="font-semibold text-sm text-text-muted">
+                Content constrained to `md` (768px) inside the Container.
+              </p>
             </Container>
           </div>
         </div>
@@ -827,21 +1289,37 @@ export default function LayoutsPage() {
         <h2 className="docs-section-title">Vertical Tabs Layout</h2>
         <div className="docs-preview">
           <Card style={{ padding: 24, width: '100%' }}>
-            <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">Vertical Tabs</h3>
-            <Tabs orientation="vertical" defaultValue="tab1" className="flex min-h-[150px]">
-              <TabsList variant="underline" className="w-24 shrink-0 sm:w-32 md:w-48">
+            <h3 className="mb-4 font-semibold font-serif text-(--color-text-strong) text-lg">
+              Vertical Tabs
+            </h3>
+            <Tabs
+              orientation="vertical"
+              defaultValue="tab1"
+              className="flex min-h-[150px]"
+            >
+              <TabsList
+                variant="underline"
+                className="w-24 shrink-0 sm:w-32 md:w-48"
+              >
                 <TabsTrigger value="tab1">Overview</TabsTrigger>
                 <TabsTrigger value="tab2">Integrations</TabsTrigger>
                 <TabsTrigger value="tab3">Settings</TabsTrigger>
               </TabsList>
               <TabsContent value="tab1" className="mt-0 flex-1 px-4 md:px-6">
-                <p className="text-sm text-text-muted">A vertical layout for tabs, commonly used for settings and large navigation rails.</p>
+                <p className="text-sm text-text-muted">
+                  A vertical layout for tabs, commonly used for settings and
+                  large navigation rails.
+                </p>
               </TabsContent>
               <TabsContent value="tab2" className="mt-0 flex-1 px-4 md:px-6">
-                <p className="text-sm text-text-muted">Webhook and API integrations configuration.</p>
+                <p className="text-sm text-text-muted">
+                  Webhook and API integrations configuration.
+                </p>
               </TabsContent>
               <TabsContent value="tab3" className="mt-0 flex-1 px-4 md:px-6">
-                <p className="text-sm text-text-muted">User preferences and security settings.</p>
+                <p className="text-sm text-text-muted">
+                  User preferences and security settings.
+                </p>
               </TabsContent>
             </Tabs>
           </Card>
@@ -851,35 +1329,101 @@ export default function LayoutsPage() {
       <Toast ref={toastRef} />
       <section className="docs-section">
         <h2 className="docs-section-title">Props</h2>
-        <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">SiteHeader</h3>
+        <h3 className="mb-4 font-semibold font-serif text-(--color-text-strong) text-lg">
+          SiteHeader
+        </h3>
         <table className="docs-props-table mb-8">
           <thead>
-            <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
+            <tr>
+              <th>Prop</th>
+              <th>Type</th>
+              <th>Default</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td><code>variant</code></td><td><code>&apos;light&apos; | &apos;dark&apos; | &apos;transparent&apos;</code></td><td><code>&apos;light&apos;</code></td></tr>
-            <tr><td><code>sticky</code></td><td><code>boolean</code></td><td><code>false</code></td></tr>
+            <tr>
+              <td>
+                <code>variant</code>
+              </td>
+              <td>
+                <code>
+                  &apos;light&apos; | &apos;dark&apos; | &apos;transparent&apos;
+                </code>
+              </td>
+              <td>
+                <code>&apos;light&apos;</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>sticky</code>
+              </td>
+              <td>
+                <code>boolean</code>
+              </td>
+              <td>
+                <code>false</code>
+              </td>
+            </tr>
           </tbody>
         </table>
-        
-        <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">SiteFooter</h3>
+
+        <h3 className="mb-4 font-semibold font-serif text-(--color-text-strong) text-lg">
+          SiteFooter
+        </h3>
         <table className="docs-props-table mb-8">
           <thead>
-            <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
+            <tr>
+              <th>Prop</th>
+              <th>Type</th>
+              <th>Default</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td><code>variant</code></td><td><code>&apos;light&apos; | &apos;dark&apos;</code></td><td><code>&apos;light&apos;</code></td></tr>
+            <tr>
+              <td>
+                <code>variant</code>
+              </td>
+              <td>
+                <code>&apos;light&apos; | &apos;dark&apos;</code>
+              </td>
+              <td>
+                <code>&apos;light&apos;</code>
+              </td>
+            </tr>
           </tbody>
         </table>
-        
-        <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">AdminLayout</h3>
+
+        <h3 className="mb-4 font-semibold font-serif text-(--color-text-strong) text-lg">
+          AdminLayout
+        </h3>
         <table className="docs-props-table">
           <thead>
-            <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
+            <tr>
+              <th>Prop</th>
+              <th>Type</th>
+              <th>Default</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td><code>sidebar</code></td><td><code>ReactNode</code></td><td>—</td></tr>
-            <tr><td><code>header</code></td><td><code>ReactNode</code></td><td>—</td></tr>
+            <tr>
+              <td>
+                <code>sidebar</code>
+              </td>
+              <td>
+                <code>ReactNode</code>
+              </td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>
+                <code>header</code>
+              </td>
+              <td>
+                <code>ReactNode</code>
+              </td>
+              <td>—</td>
+            </tr>
           </tbody>
         </table>
       </section>

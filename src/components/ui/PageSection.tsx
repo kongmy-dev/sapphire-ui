@@ -23,25 +23,33 @@ const maxWidthMap = {
 };
 
 const PageSection = forwardRef<HTMLElement, PageSectionProps>(
-  ({ className, heading, subheading, label, maxWidth = '7xl', children, ...props }, ref) => (
+  (
+    {
+      className,
+      heading,
+      subheading,
+      label,
+      maxWidth = '7xl',
+      children,
+      ...props
+    },
+    ref,
+  ) => (
     <section
       ref={ref}
-      className={cn(
-        'mx-auto w-full px-6 py-16 md:py-24',
-        className,
-      )}
+      className={cn('mx-auto w-full px-6 py-16 md:py-24', className)}
       style={{ maxWidth: maxWidthMap[maxWidth] }}
       {...props}
     >
       {(label || heading || subheading) && (
         <div className="mb-10 md:mb-14">
           {label && (
-            <span className="mb-3 block font-mono text-xs font-bold tracking-widest text-accent uppercase">
+            <span className="mb-3 block font-bold font-mono text-accent text-xs uppercase tracking-widest">
               {label}
             </span>
           )}
           {heading && (
-            <h2 className="m-0 font-serif text-[clamp(1.5rem,3vw,2.5rem)] leading-tight font-bold text-(--color-text-strong)">
+            <h2 className="m-0 font-bold font-serif text-(--color-text-strong) text-[clamp(1.5rem,3vw,2.5rem)] leading-tight">
               {heading}
             </h2>
           )}

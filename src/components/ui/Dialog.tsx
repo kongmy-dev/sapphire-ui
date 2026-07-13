@@ -40,50 +40,63 @@ const DialogContent = forwardRef<
     /** Accessible label for the close button (override for i18n) */
     closeLabel?: string;
   }
->(({ className, children, maxWidth = '800px', hideClose = false, closeLabel = 'Close', ...props }, ref) => (
-  <DialogPortal>
-    <DialogOverlay />
-    <DialogPrimitive.Content
-      ref={ref}
-      className={cn(
-        'fixed top-1/2 left-1/2 z-1001 -translate-1/2',
-        'flex max-h-[85vh] w-[calc(100vw-2rem)] flex-col sm:w-[90%]',
-        'rounded-md bg-(--color-card-bg) shadow-(--shadow-lg)',
-        'data-[state=closed]:animate-[dialogOut_150ms_ease] data-[state=open]:animate-[dialogIn_200ms_ease]',
-        'outline-none',
-        className,
-      )}
-      style={{ maxWidth }}
-      {...props}
-    >
-      {children}
-      {!hideClose && (
-        <DialogPrimitive.Close
-          aria-label={closeLabel}
-          className="absolute top-3 right-3 inline-flex size-9 cursor-pointer items-center justify-center rounded-sm border-none bg-transparent text-text-muted transition-colors outline-none hover:bg-surface hover:text-(--color-text-strong) focus-visible:ring-2 focus-visible:ring-(--color-focus-ring)"
-        >
-          <Icon name="close" size={18} />
-        </DialogPrimitive.Close>
-      )}
-    </DialogPrimitive.Content>
-  </DialogPortal>
-));
+>(
+  (
+    {
+      className,
+      children,
+      maxWidth = '800px',
+      hideClose = false,
+      closeLabel = 'Close',
+      ...props
+    },
+    ref,
+  ) => (
+    <DialogPortal>
+      <DialogOverlay />
+      <DialogPrimitive.Content
+        ref={ref}
+        className={cn(
+          '-translate-1/2 fixed top-1/2 left-1/2 z-1001',
+          'flex max-h-[85vh] w-[calc(100vw-2rem)] flex-col sm:w-[90%]',
+          'rounded-md bg-(--color-card-bg) shadow-(--shadow-lg)',
+          'data-[state=closed]:animate-[dialogOut_150ms_ease] data-[state=open]:animate-[dialogIn_200ms_ease]',
+          'outline-none',
+          className,
+        )}
+        style={{ maxWidth }}
+        {...props}
+      >
+        {children}
+        {!hideClose && (
+          <DialogPrimitive.Close
+            aria-label={closeLabel}
+            className="absolute top-3 right-3 inline-flex size-9 cursor-pointer items-center justify-center rounded-sm border-none bg-transparent text-text-muted outline-none transition-colors hover:bg-surface hover:text-(--color-text-strong) focus-visible:ring-(--color-focus-ring) focus-visible:ring-2"
+          >
+            <Icon name="close" size={18} />
+          </DialogPrimitive.Close>
+        )}
+      </DialogPrimitive.Content>
+    </DialogPortal>
+  ),
+);
 DialogContent.displayName = 'DialogContent';
 
 /* ─── Header ────────────────────────────────────────────────────────── */
 
-const DialogHeader = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn(
-        'flex items-center justify-between border-b border-border px-6 py-4',
-        className,
-      )}
-      {...props}
-    />
-  ),
-);
+const DialogHeader = forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      'flex items-center justify-between border-border border-b px-6 py-4',
+      className,
+    )}
+    {...props}
+  />
+));
 DialogHeader.displayName = 'DialogHeader';
 
 /* ─── Title ─────────────────────────────────────────────────────────── */
@@ -94,7 +107,10 @@ const DialogTitle = forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    className={cn('m-0 font-serif text-lg font-semibold text-(--color-text-strong)', className)}
+    className={cn(
+      'm-0 font-semibold font-serif text-(--color-text-strong) text-lg',
+      className,
+    )}
     {...props}
   />
 ));
@@ -116,31 +132,33 @@ DialogDescription.displayName = 'DialogDescription';
 
 /* ─── Body ──────────────────────────────────────────────────────────── */
 
-const DialogBody = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn('flex-1 overflow-y-auto px-6 py-5', className)}
-      {...props}
-    />
-  ),
-);
+const DialogBody = forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn('flex-1 overflow-y-auto px-6 py-5', className)}
+    {...props}
+  />
+));
 DialogBody.displayName = 'DialogBody';
 
 /* ─── Footer ────────────────────────────────────────────────────────── */
 
-const DialogFooter = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn(
-        'flex justify-end gap-3 border-t border-border px-6 py-4',
-        className,
-      )}
-      {...props}
-    />
-  ),
-);
+const DialogFooter = forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      'flex justify-end gap-3 border-border border-t px-6 py-4',
+      className,
+    )}
+    {...props}
+  />
+));
 DialogFooter.displayName = 'DialogFooter';
 
 /* ─── ConfirmDialog (pre-composed) ──────────────────────────────────── */
@@ -189,14 +207,17 @@ function ConfirmDialog({
         <DialogFooter>
           <button
             onClick={handleCancel}
-            className="cursor-pointer rounded-btn border border-border bg-surface px-5 py-2.5 font-sans text-sm font-medium text-(--color-text-strong) transition-colors outline-none hover:bg-border focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:ring-offset-2"
+            className="cursor-pointer rounded-btn border border-border bg-surface px-5 py-2.5 font-medium font-sans text-(--color-text-strong) text-sm outline-none transition-colors hover:bg-border focus-visible:ring-(--color-focus-ring) focus-visible:ring-2 focus-visible:ring-offset-2"
           >
             {cancelLabel}
           </button>
           <button
-            onClick={() => { onConfirm(); onOpenChange(false); }}
+            onClick={() => {
+              onConfirm();
+              onOpenChange(false);
+            }}
             className={cn(
-              'cursor-pointer rounded-btn border-none px-5 py-2.5 font-sans text-sm font-medium text-text-on-dark transition-colors outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+              'cursor-pointer rounded-btn border-none px-5 py-2.5 font-medium font-sans text-sm text-text-on-dark outline-none transition-colors focus-visible:ring-2 focus-visible:ring-offset-2',
               isDanger
                 ? 'bg-error hover:bg-error-hover focus-visible:ring-error-ring'
                 : 'bg-primary hover:bg-primary-hover focus-visible:ring-(--color-focus-ring)',
@@ -211,16 +232,16 @@ function ConfirmDialog({
 }
 
 export {
-  Dialog,
-  DialogTrigger,
-  DialogClose,
-  DialogPortal,
-  DialogOverlay,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogBody,
-  DialogFooter,
   ConfirmDialog,
+  Dialog,
+  DialogBody,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogOverlay,
+  DialogPortal,
+  DialogTitle,
+  DialogTrigger,
 };

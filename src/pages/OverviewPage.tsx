@@ -1,5 +1,5 @@
-import { Card, CardBody } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
+import { Card, CardBody } from '../components/ui/Card';
 import { Icon } from '../components/ui/Icon';
 
 const layers = [
@@ -104,8 +104,9 @@ export default function OverviewPage() {
       <header className="docs-page-header">
         <h1>Sapphire UI</h1>
         <p>
-          A cohesive design system and React component library for the KONGMY ecosystem.
-          Navy &amp; gold editorial aesthetic. Built on Tailwind CSS v4 + Radix UI.
+          A cohesive design system and React component library for the KONGMY
+          ecosystem. Navy &amp; gold editorial aesthetic. Built on Tailwind CSS
+          v4 + Radix UI.
         </p>
       </header>
 
@@ -113,17 +114,47 @@ export default function OverviewPage() {
         <h2 className="docs-section-title">Architecture</h2>
         <div className="docs-stack">
           {layers.map((layer) => (
-            <div key={layer.name} className="docs-preview" style={{ padding: 24 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
-                <Icon name={layer.icon} size={24} style={{ color: 'var(--color-text-strong)' }} />
-                <strong style={{ fontFamily: 'var(--font-sans)', color: 'var(--color-text-strong)' }}>
+            <div
+              key={layer.name}
+              className="docs-preview"
+              style={{ padding: 24 }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 12,
+                  marginBottom: 8,
+                }}
+              >
+                <Icon
+                  name={layer.icon}
+                  size={24}
+                  style={{ color: 'var(--color-text-strong)' }}
+                />
+                <strong
+                  style={{
+                    fontFamily: 'var(--font-sans)',
+                    color: 'var(--color-text-strong)',
+                  }}
+                >
                   {layer.name}
                 </strong>
               </div>
-              <p style={{ fontFamily: 'var(--font-sans)', fontSize: 14, color: 'var(--color-text-muted)', marginBottom: 12 }}>
+              <p
+                style={{
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: 14,
+                  color: 'var(--color-text-muted)',
+                  marginBottom: 12,
+                }}
+              >
                 {layer.desc}
               </p>
-              <code className="docs-code" style={{ display: 'block', padding: 12 }}>
+              <code
+                className="docs-code"
+                style={{ display: 'block', padding: 12 }}
+              >
                 {layer.code}
               </code>
             </div>
@@ -133,17 +164,47 @@ export default function OverviewPage() {
 
       <section className="docs-section">
         <h2 className="docs-section-title">Catalog</h2>
-        <div className="docs-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))' }}>
+        <div
+          className="docs-grid"
+          style={{
+            gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+          }}
+        >
           {categories.map((cat) => (
             <Card key={cat.title} hoverable>
               <CardBody>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
-                  <Icon name={cat.icon} size={22} style={{ color: 'var(--color-text-strong)' }} />
-                  <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 15, color: 'var(--color-text-strong)' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 10,
+                    marginBottom: 8,
+                  }}
+                >
+                  <Icon
+                    name={cat.icon}
+                    size={22}
+                    style={{ color: 'var(--color-text-strong)' }}
+                  />
+                  <span
+                    style={{
+                      fontFamily: 'var(--font-sans)',
+                      fontWeight: 600,
+                      fontSize: 15,
+                      color: 'var(--color-text-strong)',
+                    }}
+                  >
                     {cat.title}
                   </span>
                 </div>
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--color-text-muted)', lineHeight: 1.5 }}>
+                <p
+                  style={{
+                    fontFamily: 'var(--font-sans)',
+                    fontSize: 13,
+                    color: 'var(--color-text-muted)',
+                    lineHeight: 1.5,
+                  }}
+                >
                   {cat.desc}
                 </p>
               </CardBody>
@@ -157,31 +218,51 @@ export default function OverviewPage() {
         <div className="docs-preview" style={{ padding: 24 }}>
           <div className="docs-stack" style={{ gap: 16 }}>
             <div>
-              <Badge variant="accent" style={{ marginBottom: 8 }}>Install</Badge>
-              <code className="docs-code" style={{ display: 'block', padding: 12 }}>
+              <Badge variant="accent" style={{ marginBottom: 8 }}>
+                Install
+              </Badge>
+              <code
+                className="docs-code"
+                style={{ display: 'block', padding: 12 }}
+              >
                 bun add @kongmy-dev/sapphire-ui
               </code>
             </div>
             <div>
-              <Badge variant="info" style={{ marginBottom: 8 }}>React</Badge>
-              <code className="docs-code" style={{ display: 'block', padding: 12 }}>
-{`import { Button, Card } from '@kongmy-dev/sapphire-ui'
+              <Badge variant="info" style={{ marginBottom: 8 }}>
+                React
+              </Badge>
+              <code
+                className="docs-code"
+                style={{ display: 'block', padding: 12 }}
+              >
+                {`import { Button, Card } from '@kongmy-dev/sapphire-ui'
 
 <Button variant="primary">Get Started</Button>`}
               </code>
             </div>
             <div>
-              <Badge variant="default" style={{ marginBottom: 8 }}>CSS-only (Astro / Angular)</Badge>
-              <code className="docs-code" style={{ display: 'block', padding: 12 }}>
-{`import '@kongmy-dev/sapphire-ui/style.css'
+              <Badge variant="default" style={{ marginBottom: 8 }}>
+                CSS-only (Astro / Angular)
+              </Badge>
+              <code
+                className="docs-code"
+                style={{ display: 'block', padding: 12 }}
+              >
+                {`import '@kongmy-dev/sapphire-ui/style.css'
 
 <button class="btn btn-primary btn-lg">Get Started</button>`}
               </code>
             </div>
             <div>
-              <Badge variant="warning" style={{ marginBottom: 8 }}>Web Components (no framework)</Badge>
-              <code className="docs-code" style={{ display: 'block', padding: 12 }}>
-{`import '@kongmy-dev/sapphire-ui/elements'
+              <Badge variant="warning" style={{ marginBottom: 8 }}>
+                Web Components (no framework)
+              </Badge>
+              <code
+                className="docs-code"
+                style={{ display: 'block', padding: 12 }}
+              >
+                {`import '@kongmy-dev/sapphire-ui/elements'
 import '@kongmy-dev/sapphire-ui/style.css'
 
 <sapphire-banner variant="accent" dismissible>Ships today.</sapphire-banner>`}
@@ -193,18 +274,30 @@ import '@kongmy-dev/sapphire-ui/style.css'
 
       <section className="docs-section">
         <h2 className="docs-section-title">Theming &amp; Customization</h2>
-        <p style={{ fontFamily: 'var(--font-sans)', fontSize: 14, color: 'var(--color-text-muted)', maxWidth: '64ch' }}>
+        <p
+          style={{
+            fontFamily: 'var(--font-sans)',
+            fontSize: 14,
+            color: 'var(--color-text-muted)',
+            maxWidth: '64ch',
+          }}
+        >
           Every component reads from the CSS custom properties declared in{' '}
-          <code className="docs-code">theme.css</code> — colors, type scale, spacing, radii,
-          shadows, and motion. Override any token after the import and the whole system
-          follows, across all three layers.
+          <code className="docs-code">theme.css</code> — colors, type scale,
+          spacing, radii, shadows, and motion. Override any token after the
+          import and the whole system follows, across all three layers.
         </p>
         <div className="docs-preview" style={{ padding: 24 }}>
           <div className="docs-stack" style={{ gap: 16 }}>
             <div>
-              <Badge variant="accent" style={{ marginBottom: 8 }}>Override tokens</Badge>
-              <code className="docs-code" style={{ display: 'block', padding: 12, whiteSpace: 'pre' }}>
-{`/* after importing style.css */
+              <Badge variant="accent" style={{ marginBottom: 8 }}>
+                Override tokens
+              </Badge>
+              <code
+                className="docs-code"
+                style={{ display: 'block', padding: 12, whiteSpace: 'pre' }}
+              >
+                {`/* after importing style.css */
 :root {
   --color-accent: #7c9a65;     /* rebrand the gold */
   --radius-btn: 10px;          /* rounder buttons everywhere */
@@ -212,17 +305,27 @@ import '@kongmy-dev/sapphire-ui/style.css'
               </code>
             </div>
             <div>
-              <Badge variant="info" style={{ marginBottom: 8 }}>Tailwind v4 consumers</Badge>
-              <code className="docs-code" style={{ display: 'block', padding: 12, whiteSpace: 'pre' }}>
-{`@import 'tailwindcss';
+              <Badge variant="info" style={{ marginBottom: 8 }}>
+                Tailwind v4 consumers
+              </Badge>
+              <code
+                className="docs-code"
+                style={{ display: 'block', padding: 12, whiteSpace: 'pre' }}
+              >
+                {`@import 'tailwindcss';
 @import '@kongmy-dev/sapphire-ui/theme.css';
 /* now bg-primary, text-accent-text, text-display … generate from Sapphire tokens */`}
               </code>
             </div>
             <div>
-              <Badge variant="default" style={{ marginBottom: 8 }}>Per-component (React)</Badge>
-              <code className="docs-code" style={{ display: 'block', padding: 12, whiteSpace: 'pre' }}>
-{`// every primitive exports its CVA variants for composition
+              <Badge variant="default" style={{ marginBottom: 8 }}>
+                Per-component (React)
+              </Badge>
+              <code
+                className="docs-code"
+                style={{ display: 'block', padding: 12, whiteSpace: 'pre' }}
+              >
+                {`// every primitive exports its CVA variants for composition
 import { Button, buttonVariants } from '@kongmy-dev/sapphire-ui/button'
 
 <a className={buttonVariants({ variant: 'outline', size: 'sm' })} href="/docs">Docs</a>`}

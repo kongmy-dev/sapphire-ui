@@ -14,28 +14,26 @@ import './components/BannerElement';
 import './components/SiteHeaderElement';
 import './components/SiteFooterElement';
 
-export { ToastElement } from './components/ToastElement';
-export type { ToastType } from './components/ToastElement';
-export { CookieBannerElement } from './components/CookieBannerElement';
 export { AnalyticsElement } from './components/AnalyticsElement';
-export { BannerElement } from './components/BannerElement';
 export type { BannerVariant } from './components/BannerElement';
-export { SiteHeaderElement } from './components/SiteHeaderElement';
+export { BannerElement } from './components/BannerElement';
+export { CookieBannerElement } from './components/CookieBannerElement';
 export { SiteFooterElement } from './components/SiteFooterElement';
-
+export { SiteHeaderElement } from './components/SiteHeaderElement';
+export type { ToastType } from './components/ToastElement';
+export { ToastElement } from './components/ToastElement';
+export type { ConsentPreferences, ConsentState } from './lib/consent';
 export {
   getConsentStatus,
   setConsentStatus,
   updateTrackers,
 } from './lib/consent';
-export type { ConsentPreferences, ConsentState } from './lib/consent';
-
+export type { Theme, ThemePreference } from './lib/theme';
 export {
   getTheme,
   getThemePreference,
-  setTheme,
-  resolveSystemTheme,
-  subscribeTheme,
   initTheme,
+  resolveSystemTheme,
+  setTheme,
+  subscribeTheme,
 } from './lib/theme';
-export type { Theme, ThemePreference } from './lib/theme';

@@ -1,4 +1,10 @@
-import { forwardRef, Fragment, type HTMLAttributes, type ReactNode, type MouseEvent } from 'react';
+import {
+  Fragment,
+  forwardRef,
+  type HTMLAttributes,
+  type MouseEvent,
+  type ReactNode,
+} from 'react';
 import { cn } from '../../lib/utils';
 
 export interface BreadcrumbItem {
@@ -37,14 +43,18 @@ const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(
                 {isLast || !item.href ? (
                   <span
                     aria-current={isLast ? 'page' : undefined}
-                    className={isLast ? 'font-medium text-text-main' : undefined}
+                    className={
+                      isLast ? 'font-medium text-text-main' : undefined
+                    }
                   >
                     {item.label}
                   </span>
                 ) : (
                   <a
                     href={item.href}
-                    onClick={onNavigate ? (e) => onNavigate(item.href!, e) : undefined}
+                    onClick={
+                      onNavigate ? (e) => onNavigate(item.href!, e) : undefined
+                    }
                     className="text-text-muted no-underline transition-colors hover:text-accent-text"
                   >
                     {item.label}
@@ -52,7 +62,10 @@ const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(
                 )}
               </li>
               {!isLast && (
-                <li aria-hidden="true" className="inline-flex items-center text-text-muted select-none">
+                <li
+                  aria-hidden="true"
+                  className="inline-flex select-none items-center text-text-muted"
+                >
                   {separator}
                 </li>
               )}

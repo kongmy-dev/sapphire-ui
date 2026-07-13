@@ -9,19 +9,23 @@ export type ThemePreference = Theme | 'system';
 const STORAGE_KEY = 'sapphire-theme';
 const ATTRIBUTE = 'data-theme';
 
-const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
+const isBrowser =
+  typeof window !== 'undefined' && typeof document !== 'undefined';
 
 /** Resolve `'system'` against the user's OS preference. */
 export function resolveSystemTheme(): Theme {
   if (!isBrowser) return 'light';
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light';
 }
 
 /** Read the user's stored preference, falling back to `'system'`. */
 export function getThemePreference(): ThemePreference {
   if (!isBrowser) return 'system';
   const stored = window.localStorage.getItem(STORAGE_KEY);
-  if (stored === 'light' || stored === 'dark' || stored === 'system') return stored;
+  if (stored === 'light' || stored === 'dark' || stored === 'system')
+    return stored;
   return 'system';
 }
 
@@ -88,5 +92,4 @@ export function initTheme(): Theme {
  * <script is:inline set:html={THEME_INIT_SCRIPT} />
  * ```
  */
-export const THEME_INIT_SCRIPT =
-  `(function(){var k='${STORAGE_KEY}',a='${ATTRIBUTE}',s=function(){return window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';},p;try{p=localStorage.getItem(k)}catch(e){}p=p==='light'||p==='dark'||p==='system'?p:'system';document.documentElement.setAttribute(a,p==='system'?s():p);})();`;
+export const THEME_INIT_SCRIPT = `(function(){var k='${STORAGE_KEY}',a='${ATTRIBUTE}',s=function(){return window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';},p;try{p=localStorage.getItem(k)}catch(e){}p=p==='light'||p==='dark'||p==='system'?p:'system';document.documentElement.setAttribute(a,p==='system'?s():p);})();`;

@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { AdminSidebarLink } from '../AdminLayout';
 
 describe('AdminSidebarLink', () => {
@@ -16,7 +16,7 @@ describe('AdminSidebarLink', () => {
         <a href="/home" data-testid="custom-link">
           Home Link
         </a>
-      </AdminSidebarLink>
+      </AdminSidebarLink>,
     );
 
     const link = screen.getByTestId('custom-link');
@@ -37,7 +37,7 @@ describe('AdminSidebarLink', () => {
         <a href="/settings" data-testid="collapsed-link">
           Settings
         </a>
-      </AdminSidebarLink>
+      </AdminSidebarLink>,
     );
 
     const link = screen.getByTestId('collapsed-link');

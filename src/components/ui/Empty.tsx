@@ -1,4 +1,4 @@
-import { type HTMLAttributes, type ReactNode } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 import { cn } from '../../lib/utils';
 
 export interface EmptyProps extends HTMLAttributes<HTMLDivElement> {
@@ -12,7 +12,14 @@ export interface EmptyProps extends HTMLAttributes<HTMLDivElement> {
   action?: ReactNode;
 }
 
-function Empty({ className, icon, title, description, action, ...props }: EmptyProps) {
+function Empty({
+  className,
+  icon,
+  title,
+  description,
+  action,
+  ...props
+}: EmptyProps) {
   return (
     <div
       className={cn(
@@ -31,7 +38,7 @@ function Empty({ className, icon, title, description, action, ...props }: EmptyP
         </span>
       )}
       {title && (
-        <h3 className="mb-2 font-serif text-lg font-medium text-(--color-text-strong)">
+        <h3 className="mb-2 font-medium font-serif text-(--color-text-strong) text-lg">
           {title}
         </h3>
       )}

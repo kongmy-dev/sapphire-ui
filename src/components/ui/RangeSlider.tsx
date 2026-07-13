@@ -1,9 +1,18 @@
-import { forwardRef } from 'react';
-import type { ComponentPropsWithoutRef } from 'react';
 import * as RadixSlider from '@radix-ui/react-slider';
+import type { ComponentPropsWithoutRef } from 'react';
+import { forwardRef } from 'react';
 import { cn } from '../../lib/utils';
 
-export interface SliderProps extends Omit<ComponentPropsWithoutRef<typeof RadixSlider.Root>, 'asChild' | 'value' | 'defaultValue' | 'onValueChange' | 'onValueCommit' | 'aria-label'> {
+export interface SliderProps
+  extends Omit<
+    ComponentPropsWithoutRef<typeof RadixSlider.Root>,
+    | 'asChild'
+    | 'value'
+    | 'defaultValue'
+    | 'onValueChange'
+    | 'onValueCommit'
+    | 'aria-label'
+  > {
   /** Controlled value array. Use a single-element array for one thumb. */
   value?: number[];
   /** Uncontrolled initial value. */
@@ -91,5 +100,5 @@ Slider.displayName = 'Slider';
 /** Backwards-friendly alias from the previous shipping name. */
 const RangeSlider = Slider;
 
-export { Slider, RangeSlider };
 export type { SliderProps as RangeSliderProps };
+export { RangeSlider, Slider };

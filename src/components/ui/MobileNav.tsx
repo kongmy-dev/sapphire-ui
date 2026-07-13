@@ -1,4 +1,4 @@
-import { useState, useEffect, type MouseEvent, type ReactNode } from 'react';
+import { type MouseEvent, type ReactNode, useEffect, useState } from 'react';
 
 export interface MobileNavItem {
   href: string;
@@ -52,7 +52,8 @@ export function MobileNav({
     typeof window === 'undefined' ? '' : window.location.pathname,
   );
 
-  const currentPathname = externalPathname !== undefined ? externalPathname : internalPathname;
+  const currentPathname =
+    externalPathname !== undefined ? externalPathname : internalPathname;
 
   // Track pathname for active-link styling. popstate covers browser
   // back/forward; SPA push-state navigations should be signaled by the
@@ -77,10 +78,11 @@ export function MobileNav({
     };
   }, [isOpen]);
 
-  const handleClick = (item: MobileNavItem) => (event: MouseEvent<HTMLAnchorElement>) => {
-    onNavigate?.(item.href, event);
-    setIsOpen(false);
-  };
+  const handleClick =
+    (item: MobileNavItem) => (event: MouseEvent<HTMLAnchorElement>) => {
+      onNavigate?.(item.href, event);
+      setIsOpen(false);
+    };
 
   const isActive = (item: MobileNavItem): boolean => {
     if (typeof item.active === 'boolean') return item.active;
@@ -91,7 +93,7 @@ export function MobileNav({
   return (
     <div className="md:hidden">
       {/* Fixed Mobile Header */}
-      <header className="fixed inset-x-0 top-0 z-40 flex h-16 items-center justify-start gap-1 border-b border-white/10 bg-primary px-4 text-text-on-dark shadow-md">
+      <header className="fixed inset-x-0 top-0 z-40 flex h-16 items-center justify-start gap-1 border-white/10 border-b bg-primary px-4 text-text-on-dark shadow-md">
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="flex cursor-pointer items-center justify-center rounded-md border-none bg-transparent p-2 text-text-on-dark outline-none hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-accent"
@@ -104,12 +106,18 @@ export function MobileNav({
         </button>
 
         <div className="ml-1 flex items-center gap-1.5">
-          <span className="font-serif text-lg font-bold text-text-on-dark">{brandName}</span>
+          <span className="font-bold font-serif text-lg text-text-on-dark">
+            {brandName}
+          </span>
           {brandSuffix && (
-            <span className="font-sans text-lg font-light text-accent">{brandSuffix}</span>
+            <span className="font-light font-sans text-accent text-lg">
+              {brandSuffix}
+            </span>
           )}
           {version && (
-            <span className="mb-0.5 ml-1.5 self-end font-mono text-[10px] text-text-on-dark/50">{version}</span>
+            <span className="mb-0.5 ml-1.5 self-end font-mono text-[10px] text-text-on-dark/50">
+              {version}
+            </span>
           )}
         </div>
       </header>
@@ -117,22 +125,28 @@ export function MobileNav({
       {/* Backdrop Glass Overlay */}
       <div
         className={`fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
-          isOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+          isOpen
+            ? 'pointer-events-auto opacity-100'
+            : 'pointer-events-none opacity-0'
         }`}
         onClick={() => setIsOpen(false)}
       />
 
       {/* Sliding Mobile Drawer */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-[min(280px,85vw)] flex-col border-r border-white/10 bg-primary p-6 text-text-on-dark shadow-2xl transition-transform duration-300 ease-in-out motion-reduce:transition-none ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-[min(280px,85vw)] flex-col border-white/10 border-r bg-primary p-6 text-text-on-dark shadow-2xl transition-transform duration-300 ease-in-out motion-reduce:transition-none ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div className="mb-2 flex items-center justify-between">
           <div className="flex items-center gap-1.5">
-            <span className="font-serif text-xl font-bold text-text-on-dark">{brandName}</span>
+            <span className="font-bold font-serif text-text-on-dark text-xl">
+              {brandName}
+            </span>
             {brandSuffix && (
-              <span className="font-sans text-xl font-light text-accent">{brandSuffix}</span>
+              <span className="font-light font-sans text-accent text-xl">
+                {brandSuffix}
+              </span>
             )}
           </div>
           <button
@@ -140,7 +154,10 @@ export function MobileNav({
             className="flex cursor-pointer items-center justify-center rounded-md border-none bg-transparent p-2 text-text-on-dark outline-none hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-accent"
             aria-label={closeLabel}
           >
-            <span className="material-symbols-outlined" style={{ fontSize: 20 }}>
+            <span
+              className="material-symbols-outlined"
+              style={{ fontSize: 20 }}
+            >
               close
             </span>
           </button>
@@ -161,14 +178,17 @@ export function MobileNav({
                 href={item.href}
                 onClick={handleClick(item)}
                 aria-current={active ? 'page' : undefined}
-                className={`flex items-center gap-3 rounded-md px-4 py-2.5 font-sans text-sm font-medium no-underline transition-colors ${
+                className={`flex items-center gap-3 rounded-md px-4 py-2.5 font-medium font-sans text-sm no-underline transition-colors ${
                   active
                     ? 'bg-accent/10 text-accent'
                     : 'text-text-on-dark/70 hover:bg-white/5 hover:text-text-on-dark'
                 }`}
               >
                 {item.icon && (
-                  <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
+                  <span
+                    className="material-symbols-outlined"
+                    style={{ fontSize: 18 }}
+                  >
                     {item.icon}
                   </span>
                 )}
@@ -178,14 +198,19 @@ export function MobileNav({
           })}
 
           {extraActions && (
-            <div className="mt-2 flex flex-col gap-1 border-t border-white/5 pt-2">
+            <div className="mt-2 flex flex-col gap-1 border-white/5 border-t pt-2">
               {extraActions}
             </div>
           )}
         </nav>
 
-        <div className="mt-auto border-t border-white/10 pt-4">
-          <a href="https://kongmy.dev/?utm_source=sapphire-ui&utm_medium=sidebar" target="_blank" rel="noopener noreferrer" className="block font-mono text-[9px] tracking-wider text-text-on-dark/40 uppercase no-underline transition-colors hover:text-text-on-dark">
+        <div className="mt-auto border-white/10 border-t pt-4">
+          <a
+            href="https://kongmy.dev/?utm_source=sapphire-ui&utm_medium=sidebar"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block font-mono text-[9px] text-text-on-dark/40 uppercase tracking-wider no-underline transition-colors hover:text-text-on-dark"
+          >
             kongmy.dev
           </a>
         </div>

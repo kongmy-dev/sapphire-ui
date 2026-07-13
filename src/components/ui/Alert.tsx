@@ -1,24 +1,21 @@
-import { type HTMLAttributes, type ReactNode } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
+import type { HTMLAttributes, ReactNode } from 'react';
 import { cn } from '../../lib/utils';
 
-const alertVariants = cva(
-  'rounded-md border-[1.5px] p-5 font-sans',
-  {
-    variants: {
-      variant: {
-        info: 'border-info-border bg-info-bg text-text-main',
-        success: 'border-success-border bg-success-bg text-text-main',
-        warning: 'border-warning-border bg-warning-bg text-text-main',
-        error: 'border-error-border bg-error-bg text-text-main',
-        accent: 'border-accent/38 bg-accent/7 text-text-main',
-      },
-    },
-    defaultVariants: {
-      variant: 'info',
+const alertVariants = cva('rounded-md border-[1.5px] p-5 font-sans', {
+  variants: {
+    variant: {
+      info: 'border-info-border bg-info-bg text-text-main',
+      success: 'border-success-border bg-success-bg text-text-main',
+      warning: 'border-warning-border bg-warning-bg text-text-main',
+      error: 'border-error-border bg-error-bg text-text-main',
+      accent: 'border-accent/38 bg-accent/7 text-text-main',
     },
   },
-);
+  defaultVariants: {
+    variant: 'info',
+  },
+});
 
 const iconMap: Record<string, string> = {
   info: 'info',
@@ -50,13 +47,24 @@ export interface AlertProps
   children?: ReactNode;
 }
 
-function Alert({ className, variant = 'info', title, icon, children, ...props }: AlertProps) {
+function Alert({
+  className,
+  variant = 'info',
+  title,
+  icon,
+  children,
+  ...props
+}: AlertProps) {
   const key = variant || 'info';
   const iconName = icon || iconMap[key];
   const color = variantColorMap[key];
 
   return (
-    <div className={cn(alertVariants({ variant }), className)} role="alert" {...props}>
+    <div
+      className={cn(alertVariants({ variant }), className)}
+      role="alert"
+      {...props}
+    >
       <div className="flex items-start gap-3">
         <span
           className="material-symbols-outlined mt-0.5 shrink-0"
@@ -67,7 +75,7 @@ function Alert({ className, variant = 'info', title, icon, children, ...props }:
         </span>
         <div className="min-w-0 flex-1">
           {title && (
-            <div className="mb-1 text-sm font-semibold" style={{ color }}>
+            <div className="mb-1 font-semibold text-sm" style={{ color }}>
               {title}
             </div>
           )}

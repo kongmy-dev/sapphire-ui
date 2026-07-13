@@ -24,14 +24,17 @@ const TableOfContents = forwardRef<HTMLDivElement, TableOfContentsProps>(
         className={cn('font-sans', className)}
         {...props}
       >
-        <p className="mb-4 text-sm font-semibold tracking-wider text-text-strong uppercase">
+        <p className="mb-4 font-semibold text-sm text-text-strong uppercase tracking-wider">
           {title}
         </p>
         <ul className="m-0 flex list-none flex-col gap-2.5 p-0">
           {items.map((item) => (
             <li
               key={item.id}
-              className={cn('text-sm transition-colors', item.level === 3 && 'ml-4')}
+              className={cn(
+                'text-sm transition-colors',
+                item.level === 3 && 'ml-4',
+              )}
             >
               <a
                 href={`#${item.id}`}
@@ -39,7 +42,7 @@ const TableOfContents = forwardRef<HTMLDivElement, TableOfContentsProps>(
                   'line-clamp-2 block hover:text-text-strong',
                   activeId === item.id
                     ? 'font-medium text-(--color-text-strong)'
-                    : 'text-text-muted'
+                    : 'text-text-muted',
                 )}
               >
                 {item.title}
@@ -49,7 +52,7 @@ const TableOfContents = forwardRef<HTMLDivElement, TableOfContentsProps>(
         </ul>
       </nav>
     );
-  }
+  },
 );
 TableOfContents.displayName = 'TableOfContents';
 

@@ -1,11 +1,12 @@
-import { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 const DEFAULT_ORGANIZATION = {
   '@context': 'https://schema.org',
   '@type': ['ProfessionalService', 'Organization', 'LocalBusiness'],
   '@id': 'https://kongmy.dev/#organization',
   name: 'KONGMY Digital Solutions',
-  description: 'Independent technology consultant helping SMEs with serverless platforms, AI workflow automation, and custom software solutions.',
+  description:
+    'Independent technology consultant helping SMEs with serverless platforms, AI workflow automation, and custom software solutions.',
   url: 'https://kongmy.dev',
   logo: {
     '@type': 'ImageObject',
@@ -75,7 +76,12 @@ export interface SEOProps {
   /** Domains to preconnect */
   preconnect?: string[];
   /** Assets to preload */
-  preload?: Array<{ href: string; as: string; type?: string; crossOrigin?: "" | "anonymous" | "use-credentials" }>;
+  preload?: Array<{
+    href: string;
+    as: string;
+    type?: string;
+    crossOrigin?: '' | 'anonymous' | 'use-credentials';
+  }>;
   /** Quick flag to include WebSite schema */
   isWebSite?: boolean;
   /** Quick flag to include Organization schema */
@@ -145,7 +151,9 @@ export function SEOHead({
       <title>{title}</title>
       <meta name="description" content={description} />
       {robots && <meta name="robots" content={robots} />}
-      {keywords && keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
+      {keywords && keywords.length > 0 && (
+        <meta name="keywords" content={keywords.join(', ')} />
+      )}
       {url && <link rel="canonical" href={url} />}
 
       {/* Open Graph */}
@@ -155,7 +163,9 @@ export function SEOHead({
       {siteName && <meta property="og:site_name" content={siteName} />}
       {url && <meta property="og:url" content={url} />}
       {image && <meta property="og:image" content={image} />}
-      {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+      {publishedTime && (
+        <meta property="article:published_time" content={publishedTime} />
+      )}
       {author && <meta property="article:author" content={author} />}
 
       {/* Twitter */}
@@ -174,7 +184,12 @@ export function SEOHead({
 
       {/* Resource Hints */}
       {preconnect?.map((domain) => (
-        <link key={domain} rel="preconnect" href={domain} crossOrigin="anonymous" />
+        <link
+          key={domain}
+          rel="preconnect"
+          href={domain}
+          crossOrigin="anonymous"
+        />
       ))}
       {preload?.map((asset) => (
         <link
@@ -206,7 +221,7 @@ export function SEOHead({
                     name: siteName || DEFAULT_ORGANIZATION.name,
                     url: url || DEFAULT_ORGANIZATION.url,
                     image: image || DEFAULT_ORGANIZATION.image,
-                  }
+                  },
             ),
           }}
         />
@@ -280,44 +295,72 @@ export function generateSEOTags(props: Omit<SEOProps, 'children'>): string {
 
   tags.push(`<title>${escapeHtml(title)}</title>`);
   tags.push(`<meta name="description" content="${escapeAttr(description)}" />`);
-  if (robots) tags.push(`<meta name="robots" content="${escapeAttr(robots)}" />`);
-  if (keywords?.length) tags.push(`<meta name="keywords" content="${escapeAttr(keywords.join(', '))}" />`);
+  if (robots)
+    tags.push(`<meta name="robots" content="${escapeAttr(robots)}" />`);
+  if (keywords?.length)
+    tags.push(
+      `<meta name="keywords" content="${escapeAttr(keywords.join(', '))}" />`,
+    );
   if (url) tags.push(`<link rel="canonical" href="${escapeAttr(url)}" />`);
 
   // OG
   tags.push(`<meta property="og:title" content="${escapeAttr(title)}" />`);
-  tags.push(`<meta property="og:description" content="${escapeAttr(description)}" />`);
+  tags.push(
+    `<meta property="og:description" content="${escapeAttr(description)}" />`,
+  );
   tags.push(`<meta property="og:type" content="${type}" />`);
-  if (siteName) tags.push(`<meta property="og:site_name" content="${escapeAttr(siteName)}" />`);
+  if (siteName)
+    tags.push(
+      `<meta property="og:site_name" content="${escapeAttr(siteName)}" />`,
+    );
   if (url) tags.push(`<meta property="og:url" content="${escapeAttr(url)}" />`);
-  if (image) tags.push(`<meta property="og:image" content="${escapeAttr(image)}" />`);
-  if (publishedTime) tags.push(`<meta property="article:published_time" content="${escapeAttr(publishedTime)}" />`);
-  if (author) tags.push(`<meta property="article:author" content="${escapeAttr(author)}" />`);
+  if (image)
+    tags.push(`<meta property="og:image" content="${escapeAttr(image)}" />`);
+  if (publishedTime)
+    tags.push(
+      `<meta property="article:published_time" content="${escapeAttr(publishedTime)}" />`,
+    );
+  if (author)
+    tags.push(
+      `<meta property="article:author" content="${escapeAttr(author)}" />`,
+    );
 
   // Twitter
   tags.push(`<meta name="twitter:card" content="${twitterCard}" />`);
   tags.push(`<meta name="twitter:title" content="${escapeAttr(title)}" />`);
-  tags.push(`<meta name="twitter:description" content="${escapeAttr(description)}" />`);
-  if (image) tags.push(`<meta name="twitter:image" content="${escapeAttr(image)}" />`);
-  if (twitterSite) tags.push(`<meta name="twitter:site" content="${escapeAttr(twitterSite)}" />`);
+  tags.push(
+    `<meta name="twitter:description" content="${escapeAttr(description)}" />`,
+  );
+  if (image)
+    tags.push(`<meta name="twitter:image" content="${escapeAttr(image)}" />`);
+  if (twitterSite)
+    tags.push(
+      `<meta name="twitter:site" content="${escapeAttr(twitterSite)}" />`,
+    );
 
   // Additional Meta & Hints
-  if (locale) tags.push(`<meta property="og:locale" content="${escapeAttr(locale)}" />`);
+  if (locale)
+    tags.push(`<meta property="og:locale" content="${escapeAttr(locale)}" />`);
   if (hreflang) {
     Object.entries(hreflang).forEach(([lang, href]) => {
-      tags.push(`<link rel="alternate" hreflang="${escapeAttr(lang)}" href="${escapeAttr(href)}" />`);
+      tags.push(
+        `<link rel="alternate" hreflang="${escapeAttr(lang)}" href="${escapeAttr(href)}" />`,
+      );
     });
   }
   if (preconnect) {
     preconnect.forEach((domain) => {
-      tags.push(`<link rel="preconnect" href="${escapeAttr(domain)}" crossorigin="anonymous" />`);
+      tags.push(
+        `<link rel="preconnect" href="${escapeAttr(domain)}" crossorigin="anonymous" />`,
+      );
     });
   }
   if (preload) {
     preload.forEach((asset) => {
       let link = `<link rel="preload" href="${escapeAttr(asset.href)}" as="${escapeAttr(asset.as)}"`;
       if (asset.type) link += ` type="${escapeAttr(asset.type)}"`;
-      if (asset.crossOrigin) link += ` crossorigin="${escapeAttr(asset.crossOrigin)}"`;
+      if (asset.crossOrigin)
+        link += ` crossorigin="${escapeAttr(asset.crossOrigin)}"`;
       link += ` />`;
       tags.push(link);
     });
@@ -340,8 +383,8 @@ export function generateSEOTags(props: Omit<SEOProps, 'children'>): string {
               name: siteName || DEFAULT_ORGANIZATION.name,
               url: url || DEFAULT_ORGANIZATION.url,
               image: image || DEFAULT_ORGANIZATION.image,
-            }
-      )}</script>`
+            },
+      )}</script>`,
     );
   }
   if (isWebSite) {
@@ -351,11 +394,13 @@ export function generateSEOTags(props: Omit<SEOProps, 'children'>): string {
         '@type': 'WebSite',
         name: siteName,
         url: url || 'https://sapphire.kongmy.dev',
-      })}</script>`
+      })}</script>`,
     );
   }
   if (jsonLd) {
-    tags.push(`<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>`);
+    tags.push(
+      `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>`,
+    );
   }
 
   return tags.join('\n');
@@ -366,5 +411,9 @@ function escapeHtml(s: string): string {
 }
 
 function escapeAttr(s: string): string {
-  return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }

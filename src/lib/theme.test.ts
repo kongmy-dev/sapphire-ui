@@ -1,11 +1,11 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
-  resolveSystemTheme,
-  getThemePreference,
   getTheme,
+  getThemePreference,
+  initTheme,
+  resolveSystemTheme,
   setTheme,
   subscribeTheme,
-  initTheme,
   THEME_INIT_SCRIPT,
 } from './theme';
 
@@ -118,7 +118,9 @@ describe('theme', () => {
     it('ignores storage events for unrelated keys', () => {
       const cb = vi.fn();
       subscribeTheme(cb);
-      window.dispatchEvent(new StorageEvent('storage', { key: 'something-else' }));
+      window.dispatchEvent(
+        new StorageEvent('storage', { key: 'something-else' }),
+      );
       expect(cb).not.toHaveBeenCalled();
     });
   });

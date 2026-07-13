@@ -1,6 +1,6 @@
-import { describe, it, expect, vi } from 'vitest';
-import { useLayoutEffect } from 'react';
 import { renderHook } from '@testing-library/react';
+import { useLayoutEffect } from 'react';
+import { describe, expect, it, vi } from 'vitest';
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
 describe('useIsomorphicLayoutEffect', () => {

@@ -1,25 +1,65 @@
-import { useState, useRef } from 'react';
-import {
-  Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle,
-  DialogDescription, DialogBody, DialogFooter, DialogClose, ConfirmDialog,
-} from '../components/ui/Dialog';
-import { Button } from '../components/ui/Button';
+import { useRef, useState } from 'react';
 import { Toast, type ToastRef } from '../components/Toast';
-import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetFooter, SheetClose } from '../components/ui/Sheet';
-import { Popover, PopoverTrigger, PopoverContent } from '../components/ui/Popover';
-import { Tooltip, TooltipProvider, TooltipRoot, TooltipTrigger, TooltipContent } from '../components/ui/Tooltip';
-import { HoverCard, HoverCardTrigger, HoverCardContent } from '../components/ui/HoverCard';
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem, DropdownMenuShortcut } from '../components/ui/DropdownMenu';
 import { Avatar } from '../components/ui/Avatar';
+import { Button } from '../components/ui/Button';
+import {
+  ConfirmDialog,
+  Dialog,
+  DialogBody,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '../components/ui/Dialog';
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from '../components/ui/DropdownMenu';
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '../components/ui/HoverCard';
 import { Input } from '../components/ui/Input';
 import { Label } from '../components/ui/Label';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '../components/ui/Popover';
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '../components/ui/Sheet';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipRoot,
+  TooltipTrigger,
+} from '../components/ui/Tooltip';
 
 export default function InteractivePage() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [dangerOpen, setDangerOpen] = useState(false);
   const toastRef = useRef<ToastRef>(null);
-  
+
   const [showCompleted, setShowCompleted] = useState(true);
   const [showDrafts, setShowDrafts] = useState(false);
 
@@ -36,8 +76,11 @@ export default function InteractivePage() {
       <section className="docs-section">
         <h2 className="docs-section-title">Dialog</h2>
         <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
-          Accessible modal built on Radix Dialog. Includes focus trap, Escape close, and overlay click dismiss.
-          Use the compound sub-components for custom layouts, or <code className="docs-props-table code">ConfirmDialog</code> for quick confirmations.
+          Accessible modal built on Radix Dialog. Includes focus trap, Escape
+          close, and overlay click dismiss. Use the compound sub-components for
+          custom layouts, or{' '}
+          <code className="docs-props-table code">ConfirmDialog</code> for quick
+          confirmations.
         </p>
         <div className="docs-preview">
           <div className="docs-flex">
@@ -51,7 +94,9 @@ export default function InteractivePage() {
                   <DialogTitle>Edit Profile</DialogTitle>
                 </DialogHeader>
                 <DialogBody>
-                  <DialogDescription>Update your display name and email address.</DialogDescription>
+                  <DialogDescription>
+                    Update your display name and email address.
+                  </DialogDescription>
                   <div className="mt-4 flex flex-col gap-4">
                     <div>
                       <Label htmlFor="dialog-name">Name</Label>
@@ -73,18 +118,26 @@ export default function InteractivePage() {
             </Dialog>
 
             {/* ConfirmDialog */}
-            <Button variant="outline" onClick={() => setConfirmOpen(true)}>Confirm Dialog</Button>
+            <Button variant="outline" onClick={() => setConfirmOpen(true)}>
+              Confirm Dialog
+            </Button>
             <ConfirmDialog
               open={confirmOpen}
               onOpenChange={setConfirmOpen}
               title="Confirm Action"
               message="Are you sure you want to sync all cloud accounts? This may take a few minutes."
               confirmLabel="Sync Now"
-              onConfirm={() => toastRef.current?.show('Sync started!', 'success')}
+              onConfirm={() =>
+                toastRef.current?.show('Sync started!', 'success')
+              }
             />
 
             {/* Danger Dialog */}
-            <Button variant="outline" onClick={() => setDangerOpen(true)} style={{ color: 'var(--color-error)' }}>
+            <Button
+              variant="outline"
+              onClick={() => setDangerOpen(true)}
+              style={{ color: 'var(--color-error)' }}
+            >
               Danger Dialog
             </Button>
             <ConfirmDialog
@@ -94,7 +147,9 @@ export default function InteractivePage() {
               message="This action is permanent and cannot be undone. All data will be lost."
               confirmLabel="Delete"
               isDanger
-              onConfirm={() => toastRef.current?.show('Account deleted.', 'error')}
+              onConfirm={() =>
+                toastRef.current?.show('Account deleted.', 'error')
+              }
             />
           </div>
         </div>
@@ -104,21 +159,46 @@ export default function InteractivePage() {
       <section className="docs-section">
         <h2 className="docs-section-title">Toast</h2>
         <p className="mb-4 font-sans text-sm/relaxed text-text-muted">
-          Framework-agnostic toast notifications via Web Component. React wrapper exposes <code className="docs-props-table code">show()</code> via ref.
-          Also available in vanilla JS via <code className="docs-props-table code">window.__sapphireToast()</code>.
+          Framework-agnostic toast notifications via Web Component. React
+          wrapper exposes <code className="docs-props-table code">show()</code>{' '}
+          via ref. Also available in vanilla JS via{' '}
+          <code className="docs-props-table code">
+            window.__sapphireToast()
+          </code>
+          .
         </p>
         <div className="docs-preview">
           <div className="docs-flex">
-            <Button variant="primary" onClick={() => toastRef.current?.show('Changes saved successfully!', 'success')}>
+            <Button
+              variant="primary"
+              onClick={() =>
+                toastRef.current?.show('Changes saved successfully!', 'success')
+              }
+            >
               Success Toast
             </Button>
-            <Button variant="outline" onClick={() => toastRef.current?.show('New version available.', 'info')}>
+            <Button
+              variant="outline"
+              onClick={() =>
+                toastRef.current?.show('New version available.', 'info')
+              }
+            >
               Info Toast
             </Button>
-            <Button variant="outline" onClick={() => toastRef.current?.show('API rate limit approaching.', 'warning')}>
+            <Button
+              variant="outline"
+              onClick={() =>
+                toastRef.current?.show('API rate limit approaching.', 'warning')
+              }
+            >
               Warning Toast
             </Button>
-            <Button variant="outline" onClick={() => toastRef.current?.show('Connection failed.', 'error')}>
+            <Button
+              variant="outline"
+              onClick={() =>
+                toastRef.current?.show('Connection failed.', 'error')
+              }
+            >
               Error Toast
             </Button>
           </div>
@@ -134,23 +214,48 @@ export default function InteractivePage() {
             {(['top', 'right', 'bottom', 'left'] as const).map((side) => (
               <Sheet key={side}>
                 <SheetTrigger asChild>
-                  <Button variant="outline" size="sm">{side}</Button>
+                  <Button variant="outline" size="sm">
+                    {side}
+                  </Button>
                 </SheetTrigger>
                 <SheetContent side={side}>
                   <SheetHeader>
-                    <SheetTitle style={{ fontFamily: 'var(--font-serif)', fontSize: 20, fontWeight: 600, margin: 0 }}>
+                    <SheetTitle
+                      style={{
+                        fontFamily: 'var(--font-serif)',
+                        fontSize: 20,
+                        fontWeight: 600,
+                        margin: 0,
+                      }}
+                    >
                       Sheet from {side}
                     </SheetTitle>
-                    <SheetDescription style={{ fontFamily: 'var(--font-sans)', fontSize: 14, color: 'var(--color-text-muted)', margin: 0 }}>
-                      Anything can go inside a Sheet — forms, content, configuration panels.
+                    <SheetDescription
+                      style={{
+                        fontFamily: 'var(--font-sans)',
+                        fontSize: 14,
+                        color: 'var(--color-text-muted)',
+                        margin: 0,
+                      }}
+                    >
+                      Anything can go inside a Sheet — forms, content,
+                      configuration panels.
                     </SheetDescription>
                   </SheetHeader>
-                  <div style={{ marginTop: 16, fontFamily: 'var(--font-sans)', fontSize: 14 }}>
+                  <div
+                    style={{
+                      marginTop: 16,
+                      fontFamily: 'var(--font-sans)',
+                      fontSize: 14,
+                    }}
+                  >
                     Slot content here.
                   </div>
                   <SheetFooter>
                     <SheetClose asChild>
-                      <Button variant="outline" size="sm">Cancel</Button>
+                      <Button variant="outline" size="sm">
+                        Cancel
+                      </Button>
                     </SheetClose>
                     <SheetClose asChild>
                       <Button size="sm">Save</Button>
@@ -193,19 +298,28 @@ export default function InteractivePage() {
         <h2 className="docs-section-title">Tooltip</h2>
         <div className="docs-preview">
           <TooltipProvider delayDuration={200}>
-            <div className="docs-flex" style={{ gap: 12, alignItems: 'center' }}>
+            <div
+              className="docs-flex"
+              style={{ gap: 12, alignItems: 'center' }}
+            >
               <Tooltip content="Quick info shown on hover" noProvider>
-                <Button variant="outline" size="sm">Hover me</Button>
+                <Button variant="outline" size="sm">
+                  Hover me
+                </Button>
               </Tooltip>
               <TooltipRoot>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" aria-label="Settings">⚙</Button>
+                  <Button variant="ghost" size="icon" aria-label="Settings">
+                    ⚙
+                  </Button>
                 </TooltipTrigger>
                 <TooltipContent side="bottom">Settings</TooltipContent>
               </TooltipRoot>
               <TooltipRoot>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" aria-label="Help">?</Button>
+                  <Button variant="ghost" size="icon" aria-label="Help">
+                    ?
+                  </Button>
                 </TooltipTrigger>
                 <TooltipContent side="right">Documentation</TooltipContent>
               </TooltipRoot>
@@ -219,19 +333,37 @@ export default function InteractivePage() {
         <h2 className="docs-section-title">Hover Card</h2>
         <div className="docs-preview">
           <div className="docs-flex" style={{ gap: 16, alignItems: 'center' }}>
-            <span style={{ fontFamily: 'var(--font-sans)', fontSize: 14 }}>Hover over:</span>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: 14 }}>
+              Hover over:
+            </span>
             <HoverCard>
               <HoverCardTrigger asChild>
-                <a href="#" onClick={(e) => e.preventDefault()} style={{ color: 'var(--color-accent-text)', textDecoration: 'underline', textUnderlineOffset: 3 }}>
+                <a
+                  href="#"
+                  onClick={(e) => e.preventDefault()}
+                  style={{
+                    color: 'var(--color-accent-text)',
+                    textDecoration: 'underline',
+                    textUnderlineOffset: 3,
+                  }}
+                >
                   @kongmy
                 </a>
               </HoverCardTrigger>
               <HoverCardContent>
-                <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                <div
+                  style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}
+                >
                   <Avatar fallback="KM" size="md" />
                   <div>
                     <div style={{ fontWeight: 600 }}>KONGMY Digital</div>
-                    <div style={{ color: 'var(--color-text-muted)', fontSize: 12, marginTop: 2 }}>
+                    <div
+                      style={{
+                        color: 'var(--color-text-muted)',
+                        fontSize: 12,
+                        marginTop: 2,
+                      }}
+                    >
                       Editorial-grade design system for IT consultancies.
                     </div>
                   </div>
@@ -249,20 +381,35 @@ export default function InteractivePage() {
           <div className="docs-flex" style={{ gap: 12 }}>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm">Actions</Button>
+                <Button variant="outline" size="sm">
+                  Actions
+                </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>Item</DropdownMenuLabel>
-                 <DropdownMenuItem onSelect={() => toastRef.current?.show('Edit action triggered', 'info')}>
+                <DropdownMenuItem
+                  onSelect={() =>
+                    toastRef.current?.show('Edit action triggered', 'info')
+                  }
+                >
                   Edit
                   <DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
                 </DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => toastRef.current?.show('Duplicate action triggered', 'info')}>
+                <DropdownMenuItem
+                  onSelect={() =>
+                    toastRef.current?.show('Duplicate action triggered', 'info')
+                  }
+                >
                   Duplicate
                   <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onSelect={() => toastRef.current?.show('Delete action triggered', 'warning')} style={{ color: 'var(--color-error)' }}>
+                <DropdownMenuItem
+                  onSelect={() =>
+                    toastRef.current?.show('Delete action triggered', 'warning')
+                  }
+                  style={{ color: 'var(--color-error)' }}
+                >
                   Delete
                   <DropdownMenuShortcut>⌫</DropdownMenuShortcut>
                 </DropdownMenuItem>
@@ -271,14 +418,22 @@ export default function InteractivePage() {
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm">View options</Button>
+                <Button variant="outline" size="sm">
+                  View options
+                </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>Filters</DropdownMenuLabel>
-                <DropdownMenuCheckboxItem checked={showCompleted} onCheckedChange={setShowCompleted}>
+                <DropdownMenuCheckboxItem
+                  checked={showCompleted}
+                  onCheckedChange={setShowCompleted}
+                >
                   Show completed
                 </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem checked={showDrafts} onCheckedChange={setShowDrafts}>
+                <DropdownMenuCheckboxItem
+                  checked={showDrafts}
+                  onCheckedChange={setShowDrafts}
+                >
                   Show drafts
                 </DropdownMenuCheckboxItem>
               </DropdownMenuContent>
@@ -289,19 +444,87 @@ export default function InteractivePage() {
 
       <section className="docs-section">
         <h2 className="docs-section-title">Props</h2>
-        <h3 className="mb-4 font-serif text-lg font-semibold text-(--color-text-strong)">ConfirmDialog</h3>
+        <h3 className="mb-4 font-semibold font-serif text-(--color-text-strong) text-lg">
+          ConfirmDialog
+        </h3>
         <table className="docs-props-table">
           <thead>
-            <tr><th>Prop</th><th>Type</th><th>Default</th></tr>
+            <tr>
+              <th>Prop</th>
+              <th>Type</th>
+              <th>Default</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td><code>open</code></td><td><code>boolean</code></td><td>—</td></tr>
-            <tr><td><code>onOpenChange</code></td><td><code>(open: boolean) =&gt; void</code></td><td>—</td></tr>
-            <tr><td><code>title</code></td><td><code>string</code></td><td>—</td></tr>
-            <tr><td><code>message</code></td><td><code>string</code></td><td>—</td></tr>
-            <tr><td><code>confirmLabel</code></td><td><code>string</code></td><td><code>&apos;Confirm&apos;</code></td></tr>
-            <tr><td><code>cancelLabel</code></td><td><code>string</code></td><td><code>&apos;Cancel&apos;</code></td></tr>
-            <tr><td><code>isDanger</code></td><td><code>boolean</code></td><td><code>false</code></td></tr>
+            <tr>
+              <td>
+                <code>open</code>
+              </td>
+              <td>
+                <code>boolean</code>
+              </td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>
+                <code>onOpenChange</code>
+              </td>
+              <td>
+                <code>(open: boolean) =&gt; void</code>
+              </td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>
+                <code>title</code>
+              </td>
+              <td>
+                <code>string</code>
+              </td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>
+                <code>message</code>
+              </td>
+              <td>
+                <code>string</code>
+              </td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>
+                <code>confirmLabel</code>
+              </td>
+              <td>
+                <code>string</code>
+              </td>
+              <td>
+                <code>&apos;Confirm&apos;</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>cancelLabel</code>
+              </td>
+              <td>
+                <code>string</code>
+              </td>
+              <td>
+                <code>&apos;Cancel&apos;</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>isDanger</code>
+              </td>
+              <td>
+                <code>boolean</code>
+              </td>
+              <td>
+                <code>false</code>
+              </td>
+            </tr>
           </tbody>
         </table>
       </section>

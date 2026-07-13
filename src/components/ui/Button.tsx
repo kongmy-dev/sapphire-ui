@@ -1,17 +1,17 @@
-import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
+import { type ButtonHTMLAttributes, forwardRef, type ReactNode } from 'react';
 import { cn } from '../../lib/utils';
 
 const buttonVariants = cva(
-  'inline-flex cursor-pointer items-center justify-center gap-2 font-sans font-semibold no-underline transition-all outline-none select-none focus-visible:ring-2 focus-visible:ring-(--color-focus-ring) focus-visible:ring-offset-2 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100',
+  'inline-flex cursor-pointer select-none items-center justify-center gap-2 font-sans font-semibold no-underline outline-none transition-all focus-visible:ring-(--color-focus-ring) focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100',
   {
     variants: {
       variant: {
         primary:
           'rounded-btn border-none bg-primary text-text-on-dark hover:bg-primary-hover',
         outline:
-          'rounded-btn border-[1.5px] border-(--color-text-strong) bg-transparent text-(--color-text-strong) hover:bg-(--color-text-strong) hover:text-(--color-card-bg)',
+          'rounded-btn border-(--color-text-strong) border-[1.5px] bg-transparent text-(--color-text-strong) hover:bg-(--color-text-strong) hover:text-(--color-card-bg)',
         ghost:
           'rounded-btn border-none bg-transparent text-accent-text hover:bg-hover-overlay',
         accent:
@@ -20,8 +20,7 @@ const buttonVariants = cva(
           'rounded-btn border-none bg-accent font-bold text-primary hover:bg-accent-dark',
         'on-dark-outline':
           'rounded-btn border-[1.5px] border-white/30 bg-transparent text-text-on-dark hover:border-white hover:text-text-on-dark',
-        link:
-          'border-none bg-transparent p-0 text-accent-text underline-offset-4 hover:text-(--color-text-strong) hover:underline',
+        link: 'border-none bg-transparent p-0 text-accent-text underline-offset-4 hover:text-(--color-text-strong) hover:underline',
         premium:
           'rounded-btn border-none bg-linear-to-br from-accent to-accent-dark text-text-on-dark shadow-[0_4px_14px] shadow-accent/30 hover:-translate-y-0.5 hover:shadow-[0_6px_20px] hover:shadow-accent/40',
         destructive:
@@ -112,7 +111,10 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       icon && !loading ? (
         <span
           aria-hidden="true"
-          className={cn('material-symbols-outlined', iconSizeBySize[size ?? 'default'])}
+          className={cn(
+            'material-symbols-outlined',
+            iconSizeBySize[size ?? 'default'],
+          )}
         >
           {icon}
         </span>

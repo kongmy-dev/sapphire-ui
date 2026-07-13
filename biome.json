@@ -1,0 +1,106 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.3/schema.json",
+  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+  "files": {
+    "ignoreUnknown": true,
+    "includes": ["**", "!dist", "!dist-docs", "!coverage", "!design", "!public"]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 80
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "jsxQuoteStyle": "double",
+      "semicolons": "always",
+      "trailingCommas": "all"
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended",
+      "nursery": {
+        "useSortedClasses": {
+          "level": "warn",
+          "options": {
+            "functions": ["clsx", "cva", "cn"],
+            "attributes": ["className", "class"]
+          }
+        }
+      },
+      "a11y": {
+        "noNoninteractiveElementToInteractiveRole": "off",
+        "noStaticElementInteractions": "off",
+        "useButtonType": "off",
+        "useFocusableInteractive": "off",
+        "useKeyWithClickEvents": "off",
+        "useSemanticElements": "off",
+        "useValidAnchor": "off",
+        "noLabelWithoutControl": "off"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
+      },
+      "suspicious": {
+        "noArrayIndexKey": "off"
+      },
+      "complexity": {
+        "noImportantStyles": "off"
+      },
+      "style": {
+        "noDescendingSpecificity": "off"
+      }
+    }
+  },
+  "css": {
+    "parser": { "tailwindDirectives": true },
+    "formatter": { "enabled": true },
+    "linter": { "enabled": true }
+  },
+  "overrides": [
+    {
+      "includes": ["src/components/*Element.ts", "src/elements.ts"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noExplicitAny": "off",
+            "noAssignInExpressions": "off",
+            "useIterableCallbackReturn": "off",
+            "noImplicitAnyLet": "off",
+            "noDoubleEquals": "off"
+          },
+          "correctness": {
+            "noUnusedVariables": "off",
+            "noInnerDeclarations": "off"
+          },
+          "complexity": {
+            "noArguments": "off",
+            "noCommaOperator": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "src/components/Toast.tsx",
+        "src/components/ui/Dialog.tsx",
+        "src/components/ui/PageSection.tsx",
+        "src/components/ui/SEOHead.tsx",
+        "src/components/ui/SiteFooter.tsx",
+        "src/components/ui/SiteHeader.tsx",
+        "src/pages/**",
+        "src/lib/consent.ts"
+      ],
+      "linter": {
+        "rules": {
+          "suspicious": { "noExplicitAny": "off" },
+          "correctness": { "noUnusedVariables": "off" }
+        }
+      }
+    }
+  ]
+}

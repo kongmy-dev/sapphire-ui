@@ -10,15 +10,19 @@ export interface MarginNoteProps extends HTMLAttributes<HTMLSpanElement> {
 const MarginNote = forwardRef<HTMLSpanElement, MarginNoteProps>(
   ({ className, id, note, children, ...props }, ref) => {
     return (
-      <span ref={ref} className={cn('group/note relative inline', className)} {...props}>
+      <span
+        ref={ref}
+        className={cn('group/note relative inline', className)}
+        {...props}
+      >
         {/* The inline text that triggers the note */}
         <span
-          className="cursor-help border-b border-dashed border-accent/50 transition-colors hover:border-accent hover:bg-accent/10"
+          className="cursor-help border-accent/50 border-b border-dashed transition-colors hover:border-accent hover:bg-accent/10"
           aria-describedby={id}
         >
           {children}
         </span>
-        
+
         {/* Mobile: reflows inline as a block after the text */}
         <span
           id={id}
@@ -26,7 +30,7 @@ const MarginNote = forwardRef<HTMLSpanElement, MarginNoteProps>(
         >
           {note}
         </span>
-        
+
         {/* Desktop: absolute positioned in right margin gutter */}
         <span
           className="absolute top-0 left-[calc(100%+2rem)] hidden w-[240px] text-sm text-text-muted transition-colors group-hover/note:text-text-main lg:block"
@@ -36,7 +40,7 @@ const MarginNote = forwardRef<HTMLSpanElement, MarginNoteProps>(
         </span>
       </span>
     );
-  }
+  },
 );
 MarginNote.displayName = 'MarginNote';
 

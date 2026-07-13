@@ -1,8 +1,18 @@
-import { forwardRef, useId, Children, cloneElement, isValidElement, type HTMLAttributes, type ReactNode, type ReactElement } from 'react';
+import {
+  Children,
+  cloneElement,
+  forwardRef,
+  type HTMLAttributes,
+  isValidElement,
+  type ReactElement,
+  type ReactNode,
+  useId,
+} from 'react';
 import { cn } from '../../lib/utils';
 import { Label } from './Label';
 
-export interface FormFieldProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+export interface FormFieldProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
   /** Label text. Rendered as <Label htmlFor={fieldId}>. */
   label?: ReactNode;
   /** Mark field as required (visual asterisk + required prop on the child input). */
@@ -33,7 +43,10 @@ export interface FormFieldProps extends Omit<HTMLAttributes<HTMLDivElement>, 'ch
  * (via SelectTrigger), Radix RadioGroup, Checkbox, etc.
  */
 const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
-  ({ className, label, required, hint, error, children, id: idProp, ...props }, ref) => {
+  (
+    { className, label, required, hint, error, children, id: idProp, ...props },
+    ref,
+  ) => {
     const autoId = useId();
     const id = idProp || autoId;
     const descriptionIds: string[] = [];
@@ -49,12 +62,17 @@ const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
           id: (child.props as { id?: string }).id ?? id,
           'aria-describedby': descriptionIds.join(' ') || undefined,
           'aria-invalid': error ? true : undefined,
-          required: required || (child.props as { required?: boolean }).required,
+          required:
+            required || (child.props as { required?: boolean }).required,
         }
       : {};
 
     return (
-      <div ref={ref} className={cn('flex flex-col gap-1.5', className)} {...props}>
+      <div
+        ref={ref}
+        className={cn('flex flex-col gap-1.5', className)}
+        {...props}
+      >
         {label && (
           <Label htmlFor={id} required={required}>
             {label}
@@ -64,11 +82,11 @@ const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
           ? cloneElement(child, childProps as Partial<typeof child.props>)
           : child}
         {error ? (
-          <p id={errorId} className="m-0 font-sans text-xs text-error">
+          <p id={errorId} className="m-0 font-sans text-error text-xs">
             {error}
           </p>
         ) : hint ? (
-          <p id={hintId} className="m-0 font-sans text-xs text-text-muted">
+          <p id={hintId} className="m-0 font-sans text-text-muted text-xs">
             {hint}
           </p>
         ) : null}

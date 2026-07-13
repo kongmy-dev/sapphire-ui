@@ -7,28 +7,38 @@ declare global {
   }
 }
 
-const SSRHTMLElement = typeof window !== 'undefined' ? HTMLElement : class {} as typeof HTMLElement;
+const SSRHTMLElement =
+  typeof window !== 'undefined'
+    ? HTMLElement
+    : (class {} as typeof HTMLElement);
 
 export class AnalyticsElement extends SSRHTMLElement {
   connectedCallback() {
     if (typeof window === 'undefined') return;
 
     // Detect localhost or local development domains to prevent data pollution
-    const isLocalhost = window.location.hostname === 'localhost' || 
-                        window.location.hostname === '127.0.0.1' || 
-                        window.location.hostname.endsWith('.local');
+    const isLocalhost =
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname.endsWith('.local');
 
     if (isLocalhost) {
-      console.log('[Sapphire Analytics] Localhost environment detected. Tracking is disabled.');
+      console.log(
+        '[Sapphire Analytics] Localhost environment detected. Tracking is disabled.',
+      );
       return;
     }
 
     const gaId = this.getAttribute('ga-id');
     const posthogToken = this.getAttribute('posthog-token');
-    const posthogHost = this.getAttribute('posthog-host') || 'https://phg-t.kongmy.dev';
-    const posthogUiHost = this.getAttribute('posthog-ui-host') || 'https://eu.posthog.com';
+    const posthogHost =
+      this.getAttribute('posthog-host') || 'https://phg-t.kongmy.dev';
+    const posthogUiHost =
+      this.getAttribute('posthog-ui-host') || 'https://eu.posthog.com';
     const domainsAttr = this.getAttribute('domains') || '';
-    const domains = domainsAttr ? domainsAttr.split(',').map(d => d.trim()) : [];
+    const domains = domainsAttr
+      ? domainsAttr.split(',').map((d) => d.trim())
+      : [];
 
     // Parse current consent status
     const consent = this.parseConsent();
@@ -39,13 +49,20 @@ export class AnalyticsElement extends SSRHTMLElement {
       if (!isZarazActive) {
         this.initGA(gaId, consent.analytics, domains);
       } else {
-        console.log('[Sapphire Analytics] Cloudflare Zaraz detected. Bypassing client-side Google Analytics to prevent double-tracking.');
+        console.log(
+          '[Sapphire Analytics] Cloudflare Zaraz detected. Bypassing client-side Google Analytics to prevent double-tracking.',
+        );
       }
     }
 
     // 2. Initialize PostHog
     if (posthogToken) {
-      this.initPostHog(posthogToken, posthogHost, posthogUiHost, consent.analytics);
+      this.initPostHog(
+        posthogToken,
+        posthogHost,
+        posthogUiHost,
+        consent.analytics,
+      );
     }
 
     // 3. Sync initial consent state with all trackers
@@ -69,9 +86,11 @@ export class AnalyticsElement extends SSRHTMLElement {
 
     // Set up gtag global function
     window.dataLayer = window.dataLayer || [];
-    window.gtag = window.gtag || function() {
-      window.dataLayer!.push(arguments);
-    };
+    window.gtag =
+      window.gtag ||
+      function () {
+        window.dataLayer!.push(arguments);
+      };
 
     window.gtag('consent', 'default', {
       ad_storage: 'denied',
@@ -93,38 +112,49 @@ export class AnalyticsElement extends SSRHTMLElement {
     });
   }
 
-  private initPostHog(token: string, host: string, uiHost: string, allowed: boolean) {
+  private initPostHog(
+    token: string,
+    host: string,
+    uiHost: string,
+    allowed: boolean,
+  ) {
     // Dynamic snippet setup
-    (function(t, e: any) {
+    ((t, e: any) => {
       var r;
-      e.__SV || (window.posthog = e, e._i = [], e.init = function(i: any, s: any, a: any) {
-        function g(t: any, e: any) {
-          var o = e.split(".");
-          2 == o.length && (t = t[o[0]], e = o[1]), t[e] = function() {
-            t.push([e].concat(Array.prototype.slice.call(arguments, 0)))
+      e.__SV ||
+        ((window.posthog = e),
+        (e._i = []),
+        (e.init = (i: any, s: any, a: any) => {
+          function g(t: any, e: any) {
+            var o = e.split('.');
+            2 == o.length && ((t = t[o[0]]), (e = o[1])),
+              (t[e] = function () {
+                t.push([e].concat(Array.prototype.slice.call(arguments, 0)));
+              });
           }
-        }
-        var o = t.createElement("script");
-        o.type = "text/javascript";
-        o.crossOrigin = "anonymous";
-        o.async = !0;
-        o.src = s.api_host + "/static/array.js";
-        var n = t.getElementsByTagName("script")[0];
-        n.parentNode?.insertBefore(o, n);
-        var p = e;
-        void 0 !== a ? p = e[a] = [] : a = "posthog";
-        p.people = p.people || [];
-        p.toString = function(t: any) {
-          var e = "posthog";
-          return "posthog" !== a && (e += "." + a), t || (e += " (stub)"), e
-        };
-        p.people.toString = function() {
-          return p.toString(1) + ".people (stub)"
-        };
-        r = "capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys getNextSurveyStep onSessionId".split(" ");
-        for (var c = 0; c < r.length; c++) g(p, r[c]);
-        e._i.push([i, s, a]);
-      }, e.__SV = 1)
+          var o = t.createElement('script');
+          o.type = 'text/javascript';
+          o.crossOrigin = 'anonymous';
+          o.async = !0;
+          o.src = s.api_host + '/static/array.js';
+          var n = t.getElementsByTagName('script')[0];
+          n.parentNode?.insertBefore(o, n);
+          var p = e;
+          void 0 !== a ? (p = e[a] = []) : (a = 'posthog');
+          p.people = p.people || [];
+          p.toString = (t: any) => {
+            var e = 'posthog';
+            return 'posthog' !== a && (e += '.' + a), t || (e += ' (stub)'), e;
+          };
+          p.people.toString = () => p.toString(1) + '.people (stub)';
+          r =
+            'capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys getNextSurveyStep onSessionId'.split(
+              ' ',
+            );
+          for (var c = 0; c < r.length; c++) g(p, r[c]);
+          e._i.push([i, s, a]);
+        }),
+        (e.__SV = 1));
     })(document, (window as any).posthog || []);
 
     if (window.posthog) {
@@ -148,6 +178,9 @@ export class AnalyticsElement extends SSRHTMLElement {
   }
 }
 
-if (typeof window !== 'undefined' && !customElements.get('sapphire-analytics')) {
+if (
+  typeof window !== 'undefined' &&
+  !customElements.get('sapphire-analytics')
+) {
   customElements.define('sapphire-analytics', AnalyticsElement);
 }

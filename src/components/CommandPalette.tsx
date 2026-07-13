@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from './ui/Sheet';
 import { Input } from './ui/Input';
 import { Kbd } from './ui/Kbd';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from './ui/Sheet';
 
 export interface CommandItem {
   /** Stable identifier; also used for keyboard match scoring. */
@@ -62,6 +62,7 @@ export function CommandPalette({
     return () => cancelAnimationFrame(handle);
   }, [open]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: setState setters are stable per React; only query drives this reset.
   useEffect(() => {
     setActiveIndex(0);
   }, [query]);
@@ -86,7 +87,7 @@ export function CommandPalette({
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="top" className="max-h-[80vh] overflow-hidden p-0">
-        <SheetHeader className="border-b border-border p-4 pb-2">
+        <SheetHeader className="border-border border-b p-4 pb-2">
           <SheetTitle className="sr-only">Command palette</SheetTitle>
           <div onKeyDown={handleKey}>
             <Input
@@ -97,7 +98,9 @@ export function CommandPalette({
               aria-label="Search commands"
               aria-controls="command-palette-list"
               aria-activedescendant={
-                filtered[activeIndex] ? `cmd-${filtered[activeIndex].id}` : undefined
+                filtered[activeIndex]
+                  ? `cmd-${filtered[activeIndex].id}`
+                  : undefined
               }
             />
           </div>
@@ -133,14 +136,19 @@ export function CommandPalette({
                     }}
                     className="flex cursor-pointer items-center gap-3 rounded-md px-3 py-2 font-sans text-sm"
                     style={{
-                      background: isActive ? 'var(--color-surface)' : 'transparent',
+                      background: isActive
+                        ? 'var(--color-surface)'
+                        : 'transparent',
                       color: 'var(--color-text-main)',
                     }}
                   >
                     {item.icon && (
                       <span
                         className="material-symbols-outlined shrink-0"
-                        style={{ fontSize: 18, color: 'var(--color-text-muted)' }}
+                        style={{
+                          fontSize: 18,
+                          color: 'var(--color-text-muted)',
+                        }}
                         aria-hidden="true"
                       >
                         {item.icon}
@@ -162,7 +170,7 @@ export function CommandPalette({
           )}
         </div>
         <footer
-          className="flex items-center gap-3 border-t border-border px-4 py-2 font-sans text-xs"
+          className="flex items-center gap-3 border-border border-t px-4 py-2 font-sans text-xs"
           style={{ color: 'var(--color-text-muted)' }}
         >
           <span className="flex items-center gap-1">

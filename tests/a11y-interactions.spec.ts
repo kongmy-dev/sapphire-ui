@@ -1,5 +1,5 @@
-import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { expect, test } from '@playwright/test';
 
 // Initial-render a11y is covered in a11y.spec.ts. This suite exercises the
 // *open* state of portaled primitives — focus traps, role wiring, contrast
@@ -29,7 +29,10 @@ test.describe('Extended page interactions', () => {
     await page.waitForTimeout(300);
     const results = await runAxe(page);
     if (results.violations.length > 0) {
-      console.warn('[a11y] accordion-open', results.violations.map((v) => v.id));
+      console.warn(
+        '[a11y] accordion-open',
+        results.violations.map((v) => v.id),
+      );
     }
     if (strict) expect(results.violations).toEqual([]);
   });
@@ -46,7 +49,10 @@ test.describe('Interactive page interactions', () => {
     await page.waitForSelector('[role="dialog"]', { timeout: 2_000 });
     const results = await runAxe(page);
     if (results.violations.length > 0) {
-      console.warn('[a11y] popover-open', results.violations.map((v) => v.id));
+      console.warn(
+        '[a11y] popover-open',
+        results.violations.map((v) => v.id),
+      );
     }
     if (strict) expect(results.violations).toEqual([]);
   });
@@ -56,7 +62,10 @@ test.describe('Interactive page interactions', () => {
     await page.waitForSelector('[role="dialog"]', { timeout: 2_000 });
     const results = await runAxe(page);
     if (results.violations.length > 0) {
-      console.warn('[a11y] sheet-open', results.violations.map((v) => v.id));
+      console.warn(
+        '[a11y] sheet-open',
+        results.violations.map((v) => v.id),
+      );
     }
     if (strict) expect(results.violations).toEqual([]);
   });
@@ -66,7 +75,10 @@ test.describe('Interactive page interactions', () => {
     await page.waitForSelector('[role="menu"]', { timeout: 2_000 });
     const results = await runAxe(page);
     if (results.violations.length > 0) {
-      console.warn('[a11y] dropdown-open', results.violations.map((v) => v.id));
+      console.warn(
+        '[a11y] dropdown-open',
+        results.violations.map((v) => v.id),
+      );
     }
     if (strict) expect(results.violations).toEqual([]);
   });
@@ -83,7 +95,10 @@ test.describe('App shell interactions', () => {
     await page.waitForSelector('[role="listbox"]', { timeout: 2_000 });
     const results = await runAxe(page);
     if (results.violations.length > 0) {
-      console.warn('[a11y] command-palette-open', results.violations.map((v) => v.id));
+      console.warn(
+        '[a11y] command-palette-open',
+        results.violations.map((v) => v.id),
+      );
     }
     if (strict) expect(results.violations).toEqual([]);
   });

@@ -1,7 +1,7 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
+import react from '@vitejs/plugin-react';
 import path from 'path';
+import { defineConfig } from 'vite';
 import Sitemap from 'vite-plugin-sitemap';
 
 /**
@@ -46,7 +46,8 @@ export default defineConfig({
       output: {
         manualChunks(id: string) {
           if (!id.includes('node_modules')) return;
-          if (id.includes('react-dom') || id.includes('scheduler')) return 'react';
+          if (id.includes('react-dom') || id.includes('scheduler'))
+            return 'react';
           if (id.includes('react-router')) return 'router';
           if (id.includes('@radix-ui')) return 'radix';
           return 'vendor';

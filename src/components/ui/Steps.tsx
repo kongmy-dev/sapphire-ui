@@ -16,10 +16,16 @@ export interface StepsProps extends HTMLAttributes<HTMLDivElement> {
   /** Visual variant. */
   variant?: 'default' | 'compact';
   /** Render custom content for each step indicator. */
-  renderIndicator?: (index: number, status: 'done' | 'active' | 'upcoming') => ReactNode;
+  renderIndicator?: (
+    index: number,
+    status: 'done' | 'active' | 'upcoming',
+  ) => ReactNode;
 }
 
-function getStatus(index: number, current: number): 'done' | 'active' | 'upcoming' {
+function getStatus(
+  index: number,
+  current: number,
+): 'done' | 'active' | 'upcoming' {
   if (index < current) return 'done';
   if (index === current) return 'active';
   return 'upcoming';
@@ -41,7 +47,17 @@ function getStatus(index: number, current: number): 'done' | 'active' | 'upcomin
  * ```
  */
 const Steps = forwardRef<HTMLDivElement, StepsProps>(
-  ({ className, steps, current, variant = 'default', renderIndicator, ...props }, ref) => {
+  (
+    {
+      className,
+      steps,
+      current,
+      variant = 'default',
+      renderIndicator,
+      ...props
+    },
+    ref,
+  ) => {
     return (
       <nav
         ref={ref}
@@ -84,9 +100,8 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
                   ) : (
                     <div
                       className={cn(
-                        'flex size-7 items-center justify-center rounded-full font-mono text-xs font-semibold transition-colors',
-                        status === 'done' &&
-                          'bg-primary text-text-on-dark',
+                        'flex size-7 items-center justify-center rounded-full font-mono font-semibold text-xs transition-colors',
+                        status === 'done' && 'bg-primary text-text-on-dark',
                         status === 'active' &&
                           'bg-accent text-primary ring-4 ring-accent/18',
                         status === 'upcoming' &&
@@ -111,16 +126,17 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>(
                 <div className="flex flex-col gap-0.5">
                   <span
                     className={cn(
-                      'text-xs font-semibold tracking-wider uppercase transition-colors',
+                      'font-semibold text-xs uppercase tracking-wider transition-colors',
                       status === 'done' && 'text-(--color-text-strong)',
-                      status === 'active' && 'text-(--color-accent-text,var(--color-accent))',
+                      status === 'active' &&
+                        'text-(--color-accent-text,var(--color-accent))',
                       status === 'upcoming' && 'text-text-muted',
                     )}
                   >
                     {step.label}
                   </span>
                   {step.description && variant === 'default' && (
-                    <span className="text-[11px] leading-tight text-text-muted">
+                    <span className="text-[11px] text-text-muted leading-tight">
                       {step.description}
                     </span>
                   )}

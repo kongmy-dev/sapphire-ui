@@ -15,37 +15,53 @@ export interface ProgressProps
 const Progress = forwardRef<
   React.ComponentRef<typeof ProgressPrimitive.Root>,
   ProgressProps
->(({ className, value = 0, max = 100, showLabel, size = 'default', indicatorClassName, ...props }, ref) => {
-  const percentage = Math.round(((value ?? 0) / max) * 100);
+>(
+  (
+    {
+      className,
+      value = 0,
+      max = 100,
+      showLabel,
+      size = 'default',
+      indicatorClassName,
+      ...props
+    },
+    ref,
+  ) => {
+    const percentage = Math.round(((value ?? 0) / max) * 100);
 
-  return (
-    <div className="flex w-full items-center gap-3">
-      <ProgressPrimitive.Root
-        ref={ref}
-        value={value}
-        max={max}
-        className={cn(
-          'relative w-full overflow-hidden rounded-full border border-border bg-surface',
-          size === 'sm' && 'h-1.5',
-          size === 'default' && 'h-2.5',
-          size === 'lg' && 'h-4',
-          className,
+    return (
+      <div className="flex w-full items-center gap-3">
+        <ProgressPrimitive.Root
+          ref={ref}
+          value={value}
+          max={max}
+          className={cn(
+            'relative w-full overflow-hidden rounded-full border border-border bg-surface',
+            size === 'sm' && 'h-1.5',
+            size === 'default' && 'h-2.5',
+            size === 'lg' && 'h-4',
+            className,
+          )}
+          {...props}
+        >
+          <ProgressPrimitive.Indicator
+            className={cn(
+              'h-full rounded-full transition-transform duration-500 ease-out',
+              indicatorClassName || 'bg-accent',
+            )}
+            style={{ transform: `translateX(-${100 - percentage}%)` }}
+          />
+        </ProgressPrimitive.Root>
+        {showLabel && (
+          <span className="min-w-[3ch] font-mono text-text-muted text-xs tabular-nums">
+            {percentage}%
+          </span>
         )}
-        {...props}
-      >
-        <ProgressPrimitive.Indicator
-          className={cn("h-full rounded-full transition-transform duration-500 ease-out", indicatorClassName || "bg-accent")}
-          style={{ transform: `translateX(-${100 - percentage}%)` }}
-        />
-      </ProgressPrimitive.Root>
-      {showLabel && (
-        <span className="min-w-[3ch] font-mono text-xs text-text-muted tabular-nums">
-          {percentage}%
-        </span>
-      )}
-    </div>
-  );
-});
+      </div>
+    );
+  },
+);
 Progress.displayName = 'Progress';
 
 export { Progress };

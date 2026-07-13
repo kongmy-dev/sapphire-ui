@@ -23,12 +23,12 @@ const Container = forwardRef<HTMLDivElement, ContainerProps>(
         'mx-auto w-full font-sans',
         padding === 'default' && 'px-4 py-8 sm:px-6 md:py-12',
         padding === 'lg' && 'px-6 py-16 sm:px-8 md:py-24',
-        className
+        className,
       )}
       style={{ maxWidth: maxWidthMap[maxWidth] }}
       {...props}
     />
-  )
+  ),
 );
 Container.displayName = 'Container';
 

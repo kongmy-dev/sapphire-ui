@@ -1,4 +1,11 @@
-import { useEffect, useState, useCallback, createContext, useContext, type ReactNode } from 'react';
+import {
+  createContext,
+  type ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import {
   getTheme,
   getThemePreference,
@@ -34,7 +41,10 @@ export interface ThemeProviderProps {
  * `@kongmy-dev/sapphire-ui` (`getTheme`, `setTheme`, `initTheme`,
  * `subscribeTheme`) directly — this provider is just a React convenience.
  */
-export function ThemeProvider({ defaultPreference = 'system', children }: ThemeProviderProps) {
+export function ThemeProvider({
+  defaultPreference = 'system',
+  children,
+}: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(() => getTheme());
   const [preference, setPreference] = useState<ThemePreference>(() => {
     const stored = getThemePreference();
@@ -53,7 +63,9 @@ export function ThemeProvider({ defaultPreference = 'system', children }: ThemeP
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ theme, preference, setTheme: updatePreference }}>
+    <ThemeContext.Provider
+      value={{ theme, preference, setTheme: updatePreference }}
+    >
       {children}
     </ThemeContext.Provider>
   );

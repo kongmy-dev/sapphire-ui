@@ -1,5 +1,14 @@
-import { forwardRef, useState, Children, cloneElement, type HTMLAttributes, type AnchorHTMLAttributes, type ReactNode, type ReactElement } from 'react';
 import { Slot, Slottable } from '@radix-ui/react-slot';
+import {
+  type AnchorHTMLAttributes,
+  Children,
+  cloneElement,
+  forwardRef,
+  type HTMLAttributes,
+  type ReactElement,
+  type ReactNode,
+  useState,
+} from 'react';
 import { cn } from '../../lib/utils';
 
 /* ─── AdminLayout ───────────────────────────────────────────────────── */
@@ -18,13 +27,24 @@ export interface AdminLayoutProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const AdminLayout = forwardRef<HTMLDivElement, AdminLayoutProps>(
-  ({ className, sidebar, header, children, contentClassName, contentMaxWidth, ...props }, ref) => {
+  (
+    {
+      className,
+      sidebar,
+      header,
+      children,
+      contentClassName,
+      contentMaxWidth,
+      ...props
+    },
+    ref,
+  ) => {
     return (
       <div
         ref={ref}
         className={cn(
-          'sf-admin-shell text-main grid min-h-screen w-full bg-surface font-sans transition-colors duration-200 max-[760px]:grid-cols-1',
-          className
+          'sf-admin-shell grid min-h-screen w-full bg-surface font-sans text-main transition-colors duration-200 max-[760px]:grid-cols-1',
+          className,
         )}
         {...props}
       >
@@ -34,7 +54,7 @@ const AdminLayout = forwardRef<HTMLDivElement, AdminLayoutProps>(
           <main
             className={cn(
               'sf-admin-content mx-auto w-full max-w-[1280px] flex-1 overflow-y-auto p-8 pb-20 max-[760px]:px-4 max-[760px]:py-6',
-              contentClassName
+              contentClassName,
             )}
             style={contentMaxWidth ? { maxWidth: contentMaxWidth } : undefined}
           >
@@ -43,7 +63,7 @@ const AdminLayout = forwardRef<HTMLDivElement, AdminLayoutProps>(
         </div>
       </div>
     );
-  }
+  },
 );
 AdminLayout.displayName = 'AdminLayout';
 
@@ -66,7 +86,20 @@ export interface AdminSidebarProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const AdminSidebar = forwardRef<HTMLDivElement, AdminSidebarProps>(
-  ({ className, brand, collapsed = false, onToggleCollapse, footer, expandLabel = 'Expand sidebar', collapseLabel = 'Collapse sidebar', children, ...props }, ref) => {
+  (
+    {
+      className,
+      brand,
+      collapsed = false,
+      onToggleCollapse,
+      footer,
+      expandLabel = 'Expand sidebar',
+      collapseLabel = 'Collapse sidebar',
+      children,
+      ...props
+    },
+    ref,
+  ) => {
     const isControlled = onToggleCollapse !== undefined;
     const [localCollapsed, setLocalCollapsed] = useState(false);
     const activeCollapsed = isControlled ? collapsed : localCollapsed;
@@ -83,20 +116,25 @@ const AdminSidebar = forwardRef<HTMLDivElement, AdminSidebarProps>(
       <aside
         ref={ref}
         className={cn(
-          'sf-admin-sidebar relative z-30 flex h-screen shrink-0 flex-col border-r border-border-dark bg-primary text-text-on-dark transition-all duration-300 ease-in-out max-[760px]:h-auto max-[760px]:border-r-0 max-[760px]:border-b',
+          'sf-admin-sidebar relative z-30 flex h-screen shrink-0 flex-col border-border-dark border-r bg-primary text-text-on-dark transition-all duration-300 ease-in-out max-[760px]:h-auto max-[760px]:border-r-0 max-[760px]:border-b',
           activeCollapsed && 'collapsed',
-          className
+          className,
         )}
         {...props}
       >
         {/* Brand/Logo Area */}
         <div
           className={cn(
-            'flex items-center border-b border-border-dark pt-[22px] pb-[18px] transition-all duration-300',
-            activeCollapsed ? 'justify-center px-4' : 'gap-2.5 px-[22px]'
+            'flex items-center border-border-dark border-b pt-[22px] pb-[18px] transition-all duration-300',
+            activeCollapsed ? 'justify-center px-4' : 'gap-2.5 px-[22px]',
           )}
         >
-          <div className={cn('overflow-hidden transition-all duration-300', activeCollapsed ? 'w-0 opacity-0' : 'w-full opacity-100')}>
+          <div
+            className={cn(
+              'overflow-hidden transition-all duration-300',
+              activeCollapsed ? 'w-0 opacity-0' : 'w-full opacity-100',
+            )}
+          >
             {brand}
           </div>
           <button
@@ -113,25 +151,24 @@ const AdminSidebar = forwardRef<HTMLDivElement, AdminSidebarProps>(
         </div>
 
         {/* Scrollable Nav Area */}
-        <div className="flex-1 scrollbar-thin scrollbar-thumb-white/10 overflow-y-auto px-3 py-3.5">
+        <div className="scrollbar-thin scrollbar-thumb-white/10 flex-1 overflow-y-auto px-3 py-3.5">
           {children}
         </div>
 
         {/* Footer Area */}
         {footer && (
-          <div className="border-t border-border-dark p-3">
-            {footer}
-          </div>
+          <div className="border-border-dark border-t p-3">{footer}</div>
         )}
       </aside>
     );
-  }
+  },
 );
 AdminSidebar.displayName = 'AdminSidebar';
 
 /* ─── AdminSidebarSection ───────────────────────────────────────────── */
 
-export interface AdminSidebarSectionProps extends HTMLAttributes<HTMLDivElement> {
+export interface AdminSidebarSectionProps
+  extends HTMLAttributes<HTMLDivElement> {
   /** The header title of this group of links */
   title?: string;
   /** Whether the sidebar is collapsed (to hide the section title) */
@@ -139,25 +176,27 @@ export interface AdminSidebarSectionProps extends HTMLAttributes<HTMLDivElement>
   children: ReactNode;
 }
 
-const AdminSidebarSection = forwardRef<HTMLDivElement, AdminSidebarSectionProps>(
-  ({ className, title, collapsed = false, children, ...props }, ref) => {
-    return (
-      <div ref={ref} className={cn('', className)} {...props}>
-        {title && !collapsed && (
-          <h5 className="mx-3 mt-[18px] mb-2 font-sans text-[10px] font-semibold tracking-[0.12em] text-text-on-dark-muted uppercase first:mt-1">
-            {title}
-          </h5>
-        )}
-        <nav className="flex flex-col gap-0.5">{children}</nav>
-      </div>
-    );
-  }
-);
+const AdminSidebarSection = forwardRef<
+  HTMLDivElement,
+  AdminSidebarSectionProps
+>(({ className, title, collapsed = false, children, ...props }, ref) => {
+  return (
+    <div ref={ref} className={cn('', className)} {...props}>
+      {title && !collapsed && (
+        <h5 className="mx-3 mt-[18px] mb-2 font-sans font-semibold text-[10px] text-text-on-dark-muted uppercase tracking-[0.12em] first:mt-1">
+          {title}
+        </h5>
+      )}
+      <nav className="flex flex-col gap-0.5">{children}</nav>
+    </div>
+  );
+});
 AdminSidebarSection.displayName = 'AdminSidebarSection';
 
 /* ─── AdminSidebarLink ──────────────────────────────────────────────── */
 
-export interface AdminSidebarLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
+export interface AdminSidebarLinkProps
+  extends AnchorHTMLAttributes<HTMLAnchorElement> {
   /** Render as standard HTML anchor or polymorphically (e.g. NavLink) */
   asChild?: boolean;
   /** Icon name from Material Symbols Outlined */
@@ -173,28 +212,45 @@ export interface AdminSidebarLinkProps extends AnchorHTMLAttributes<HTMLAnchorEl
 }
 
 const AdminSidebarLink = forwardRef<HTMLAnchorElement, AdminSidebarLinkProps>(
-  ({ className, asChild = false, icon, active = false, badge, collapsed = false, children, ...props }, ref) => {
+  (
+    {
+      className,
+      asChild = false,
+      icon,
+      active = false,
+      badge,
+      collapsed = false,
+      children,
+      ...props
+    },
+    ref,
+  ) => {
     if (asChild) {
-      const child = Children.only(children) as ReactElement<{ children?: ReactNode }>;
+      const child = Children.only(children) as ReactElement<{
+        children?: ReactNode;
+      }>;
       const inner = (
-        <span key="label" className={cn(collapsed ? 'sr-only' : 'flex-1 truncate')}>
+        <span
+          key="label"
+          className={cn(collapsed ? 'sr-only' : 'flex-1 truncate')}
+        >
           {child.props.children}
         </span>
       );
       const newChild = cloneElement(child, {
-        children: inner
+        children: inner,
       });
 
       return (
         <Slot
           ref={ref}
           className={cn(
-            'group flex items-center gap-2.5 rounded-md px-3 py-2 font-sans text-[14px] font-medium no-underline transition-all duration-150',
+            'group flex items-center gap-2.5 rounded-md px-3 py-2 font-medium font-sans text-[14px] no-underline transition-all duration-150',
             active
               ? 'bg-accent/12 text-accent'
               : 'text-text-on-dark hover:bg-white/5 hover:text-text-on-dark',
             collapsed ? 'justify-center px-0' : '',
-            className
+            className,
           )}
           {...props}
         >
@@ -203,7 +259,9 @@ const AdminSidebarLink = forwardRef<HTMLAnchorElement, AdminSidebarLinkProps>(
               key="icon"
               className={cn(
                 'material-symbols-outlined text-[18px] transition-colors',
-                active ? 'text-accent opacity-100' : 'opacity-70 group-hover:text-white group-hover:opacity-100'
+                active
+                  ? 'text-accent opacity-100'
+                  : 'opacity-70 group-hover:text-white group-hover:opacity-100',
               )}
             >
               {icon}
@@ -211,7 +269,10 @@ const AdminSidebarLink = forwardRef<HTMLAnchorElement, AdminSidebarLinkProps>(
           )}
           <Slottable key="slottable">{newChild}</Slottable>
           {!collapsed && badge && (
-            <span key="badge" className="ml-auto font-mono text-[11px] text-text-on-dark-muted">
+            <span
+              key="badge"
+              className="ml-auto font-mono text-[11px] text-text-on-dark-muted"
+            >
               {badge}
             </span>
           )}
@@ -223,12 +284,12 @@ const AdminSidebarLink = forwardRef<HTMLAnchorElement, AdminSidebarLinkProps>(
       <a
         ref={ref}
         className={cn(
-          'group flex items-center gap-2.5 rounded-md px-3 py-2 font-sans text-[14px] font-medium no-underline transition-all duration-150',
+          'group flex items-center gap-2.5 rounded-md px-3 py-2 font-medium font-sans text-[14px] no-underline transition-all duration-150',
           active
             ? 'bg-accent/12 text-accent'
             : 'text-text-on-dark hover:bg-white/5 hover:text-text-on-dark',
           collapsed ? 'justify-center px-0' : '',
-          className
+          className,
         )}
         {...props}
       >
@@ -236,7 +297,9 @@ const AdminSidebarLink = forwardRef<HTMLAnchorElement, AdminSidebarLinkProps>(
           <span
             className={cn(
               'material-symbols-outlined text-[18px] transition-colors',
-              active ? 'text-accent opacity-100' : 'opacity-70 group-hover:text-white group-hover:opacity-100'
+              active
+                ? 'text-accent opacity-100'
+                : 'opacity-70 group-hover:text-white group-hover:opacity-100',
             )}
           >
             {icon}
@@ -250,7 +313,7 @@ const AdminSidebarLink = forwardRef<HTMLAnchorElement, AdminSidebarLinkProps>(
         )}
       </a>
     );
-  }
+  },
 );
 AdminSidebarLink.displayName = 'AdminSidebarLink';
 
@@ -271,8 +334,8 @@ const AdminHeader = forwardRef<HTMLElement, AdminHeaderProps>(
       <header
         ref={ref}
         className={cn(
-          'sf-admin-header bg-card sticky top-0 z-10 flex w-full items-center justify-between gap-4 border-b border-border px-8 py-3.5 transition-colors duration-200 max-[760px]:flex-wrap max-[760px]:gap-3 max-[760px]:px-4',
-          className
+          'sf-admin-header sticky top-0 z-10 flex w-full items-center justify-between gap-4 border-border border-b bg-card px-8 py-3.5 transition-colors duration-200 max-[760px]:flex-wrap max-[760px]:gap-3 max-[760px]:px-4',
+          className,
         )}
         {...props}
       >
@@ -285,14 +348,14 @@ const AdminHeader = forwardRef<HTMLElement, AdminHeaderProps>(
         </div>
       </header>
     );
-  }
+  },
 );
 AdminHeader.displayName = 'AdminHeader';
 
 export {
+  AdminHeader,
   AdminLayout,
   AdminSidebar,
-  AdminSidebarSection,
   AdminSidebarLink,
-  AdminHeader,
+  AdminSidebarSection,
 };

@@ -15,16 +15,19 @@ export interface SiteFooterProps extends HTMLAttributes<HTMLElement> {
 }
 
 const SiteFooter = forwardRef<HTMLElement, SiteFooterProps>(
-  ({ className, brand, links, bottom, variant = 'dark', children, ...props }, ref) => (
+  (
+    { className, brand, links, bottom, variant = 'dark', children, ...props },
+    ref,
+  ) => (
     <footer
       ref={ref}
       className={cn(
         'w-full border-t',
         variant === 'dark'
           ? 'border-border-dark bg-primary text-text-on-dark'
-          // Light variant: hardcoded light palette so it stays light even
-          // when the surrounding page is in dark theme.
-          : 'border-border bg-(--color-card-bg) text-text-main',
+          : // Light variant: hardcoded light palette so it stays light even
+            // when the surrounding page is in dark theme.
+            'border-border bg-(--color-card-bg) text-text-main',
         className,
       )}
       {...props}
@@ -34,19 +37,25 @@ const SiteFooter = forwardRef<HTMLElement, SiteFooterProps>(
         {(brand || links) && (
           <div className="mb-10 flex flex-col gap-10 md:flex-row md:gap-16">
             {brand && <div className="shrink-0 md:max-w-xs">{brand}</div>}
-            {links && <div className="flex flex-1 flex-wrap gap-10 md:gap-16">{links}</div>}
+            {links && (
+              <div className="flex flex-1 flex-wrap gap-10 md:gap-16">
+                {links}
+              </div>
+            )}
           </div>
         )}
         {children}
         {/* Bottom bar */}
         {bottom && (
-          <div className={cn(
-            'flex flex-col items-center justify-between gap-4 font-mono text-[11px] tracking-[0.06em] uppercase md:flex-row',
-            (brand || links || children) && 'border-t pt-6',
-            variant === 'dark'
-              ? 'border-border-dark text-text-on-dark-muted'
-              : 'border-border text-text-muted',
-          )}>
+          <div
+            className={cn(
+              'flex flex-col items-center justify-between gap-4 font-mono text-[11px] uppercase tracking-[0.06em] md:flex-row',
+              (brand || links || children) && 'border-t pt-6',
+              variant === 'dark'
+                ? 'border-border-dark text-text-on-dark-muted'
+                : 'border-border text-text-muted',
+            )}
+          >
             {bottom}
           </div>
         )}
@@ -65,7 +74,7 @@ export interface SiteFooterGroupProps extends HTMLAttributes<HTMLDivElement> {
 const SiteFooterGroup = forwardRef<HTMLDivElement, SiteFooterGroupProps>(
   ({ className, title, children, ...props }, ref) => (
     <div ref={ref} className={cn('flex flex-col gap-3', className)} {...props}>
-      <span className="font-mono text-xs font-bold tracking-widest text-accent uppercase">
+      <span className="font-bold font-mono text-accent text-xs uppercase tracking-widest">
         {title}
       </span>
       <div className="flex flex-col gap-2">{children}</div>

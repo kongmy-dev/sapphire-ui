@@ -2,14 +2,22 @@
 // localStorage persistence so dismissals stick across sessions/pages.
 // Framework-agnostic; pair with the React wrapper in Banner.tsx.
 
-const SSRHTMLElement = typeof window !== 'undefined' ? HTMLElement : class {} as typeof HTMLElement;
+const SSRHTMLElement =
+  typeof window !== 'undefined'
+    ? HTMLElement
+    : (class {} as typeof HTMLElement);
 
 export type BannerVariant = 'info' | 'success' | 'warning' | 'error' | 'accent';
 
 const STORAGE_PREFIX = 'sapphire-banner:';
 
 export class BannerElement extends SSRHTMLElement {
-  static observedAttributes = ['variant', 'dismissible', 'storage-key', 'hidden'];
+  static observedAttributes = [
+    'variant',
+    'dismissible',
+    'storage-key',
+    'hidden',
+  ];
 
   private rendered = false;
 
@@ -80,10 +88,14 @@ export class BannerElement extends SSRHTMLElement {
     if (dismissible && !this.querySelector('[data-sapphire-banner-dismiss]')) {
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.setAttribute('aria-label', this.getAttribute('dismiss-label') || 'Dismiss');
+      btn.setAttribute(
+        'aria-label',
+        this.getAttribute('dismiss-label') || 'Dismiss',
+      );
       btn.setAttribute('data-sapphire-banner-dismiss', '');
       btn.className = 'sapphire-banner-dismiss';
-      btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>';
+      btn.innerHTML =
+        '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>';
       btn.addEventListener('click', () => this.dismiss());
       this.appendChild(btn);
     }

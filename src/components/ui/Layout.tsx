@@ -29,14 +29,14 @@ export interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
  * pass the rail via `sidebar`.
  */
 const Layout = forwardRef<HTMLDivElement, LayoutProps>(
-  ({ header, sidebar, footer, mainClassName, children, className, ...props }, ref) => {
+  (
+    { header, sidebar, footer, mainClassName, children, className, ...props },
+    ref,
+  ) => {
     return (
       <div
         ref={ref}
-        className={cn(
-          'flex min-h-screen flex-col bg-surface',
-          className,
-        )}
+        className={cn('flex min-h-screen flex-col bg-surface', className)}
         {...props}
       >
         {header}

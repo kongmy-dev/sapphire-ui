@@ -10,7 +10,11 @@ const tokenColors = [
   { name: '--color-text-muted', value: '#475569', label: 'Text Muted' },
   { name: '--color-text-on-dark', value: '#f1f5f9', label: 'Text on Dark' },
   { name: '--color-border', value: '#e2e8f0', label: 'Border' },
-  { name: '--color-border-dark', value: 'rgba(255,255,255,0.12)', label: 'Border Dark' },
+  {
+    name: '--color-border-dark',
+    value: 'rgba(255,255,255,0.12)',
+    label: 'Border Dark',
+  },
 ];
 
 const statusColors = [
@@ -20,39 +24,89 @@ const statusColors = [
   { name: '--color-info', value: '#1d4ed8', label: 'Info' },
 ];
 
-function ColorSwatch({ name, value, label }: { name: string; value: string; label: string }) {
+function ColorSwatch({
+  name,
+  value,
+  label,
+}: {
+  name: string;
+  value: string;
+  label: string;
+}) {
   const [copied, setCopied] = useState(false);
   const isDark = ['#0a192f', '#1a3358', '#1e293b'].includes(value);
 
   return (
     <button
       className="docs-preview"
-      style={{ padding: 0, cursor: 'pointer', overflow: 'hidden', border: '1px solid var(--color-border)', textAlign: 'left' }}
+      style={{
+        padding: 0,
+        cursor: 'pointer',
+        overflow: 'hidden',
+        border: '1px solid var(--color-border)',
+        textAlign: 'left',
+      }}
       onClick={() => {
         navigator.clipboard.writeText(value);
         setCopied(true);
         setTimeout(() => setCopied(false), 1500);
       }}
     >
-      <div style={{ background: value, height: 80, width: '100%', position: 'relative' }}>
+      <div
+        style={{
+          background: value,
+          height: 80,
+          width: '100%',
+          position: 'relative',
+        }}
+      >
         {copied && (
-          <span style={{
-            position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)',
-            fontFamily: 'var(--font-mono)', fontSize: 11, color: isDark ? 'white' : 'var(--color-text-strong)',
-            background: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.8)', padding: '2px 8px', borderRadius: 4,
-          }}>
+          <span
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%,-50%)',
+              fontFamily: 'var(--font-mono)',
+              fontSize: 11,
+              color: isDark ? 'white' : 'var(--color-text-strong)',
+              background: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.8)',
+              padding: '2px 8px',
+              borderRadius: 4,
+            }}
+          >
             Copied!
           </span>
         )}
       </div>
       <div style={{ padding: '10px 12px' }}>
-        <div style={{ fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 600, color: 'var(--color-text-strong)' }}>
+        <div
+          style={{
+            fontFamily: 'var(--font-sans)',
+            fontSize: 13,
+            fontWeight: 600,
+            color: 'var(--color-text-strong)',
+          }}
+        >
           {label}
         </div>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--color-text-muted)', marginTop: 2 }}>
+        <div
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 11,
+            color: 'var(--color-text-muted)',
+            marginTop: 2,
+          }}
+        >
           {name}
         </div>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--color-text-subtle)' }}>
+        <div
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 11,
+            color: 'var(--color-text-subtle)',
+          }}
+        >
           {value}
         </div>
       </div>
@@ -65,20 +119,27 @@ export default function ColorsPage() {
     <div>
       <header className="docs-page-header">
         <h1>Colors</h1>
-        <p>The Sapphire UI color palette. Click any swatch to copy its hex color code.</p>
+        <p>
+          The Sapphire UI color palette. Click any swatch to copy its hex color
+          code.
+        </p>
       </header>
 
       <section className="docs-section">
         <h2 className="docs-section-title">Brand Colors</h2>
         <div className="docs-grid">
-          {tokenColors.map((c) => <ColorSwatch key={c.name} {...c} />)}
+          {tokenColors.map((c) => (
+            <ColorSwatch key={c.name} {...c} />
+          ))}
         </div>
       </section>
 
       <section className="docs-section">
         <h2 className="docs-section-title">Status Colors</h2>
         <div className="docs-grid">
-          {statusColors.map((c) => <ColorSwatch key={c.name} {...c} />)}
+          {statusColors.map((c) => (
+            <ColorSwatch key={c.name} {...c} />
+          ))}
         </div>
       </section>
     </div>

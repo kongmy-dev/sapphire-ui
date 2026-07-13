@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeEach } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { useLocalStorage } from './useLocalStorage';
 
 describe('useLocalStorage', () => {
@@ -33,7 +33,10 @@ describe('useLocalStorage', () => {
     const { result } = renderHook(() => useLocalStorage('k', 'a'));
     act(() => {
       window.dispatchEvent(
-        new StorageEvent('storage', { key: 'k', newValue: JSON.stringify('b') }),
+        new StorageEvent('storage', {
+          key: 'k',
+          newValue: JSON.stringify('b'),
+        }),
       );
     });
     expect(result.current[0]).toBe('b');

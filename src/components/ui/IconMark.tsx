@@ -14,7 +14,17 @@ export interface IconMarkProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const IconMark = forwardRef<HTMLDivElement, IconMarkProps>(
-  ({ className, icon, variant = 'default', size = 'default', filled = false, ...props }, ref) => {
+  (
+    {
+      className,
+      icon,
+      variant = 'default',
+      size = 'default',
+      filled = false,
+      ...props
+    },
+    ref,
+  ) => {
     // Determine dimensions and icon size based on size prop
     const containerSizeClass = {
       sm: 'w-8 h-8',
@@ -33,7 +43,9 @@ const IconMark = forwardRef<HTMLDivElement, IconMarkProps>(
         ref={ref}
         className={cn(
           'icon-mark flex shrink-0 items-center justify-center rounded-sm text-lg transition-colors',
-          variant === 'default' ? 'bg-surface text-(--color-text-strong)' : 'icon-mark-dark bg-white/5 text-accent',
+          variant === 'default'
+            ? 'bg-surface text-(--color-text-strong)'
+            : 'icon-mark-dark bg-white/5 text-accent',
           containerSizeClass,
           className,
         )}
