@@ -103,10 +103,10 @@ Restyle each onto sapphire tokens (presentation only — no server/contract wiri
 
 ### Release — tag v3.0.0
 
-- [ ] **R.1** Bump `package.json` 2.0.3 → 3.0.0.
-- [ ] **R.2** CHANGELOG entry, framed additive: new registry lane + Biome + dep refresh; **npm lane unchanged**.
-- [ ] **R.3** Final gate: `bun run build` + `bun run test` + `bun run test:a11y` + `biome check` green; the `tests/registry-consumer/` fixture (B.3) re-vendors and type-checks clean; registry smoke test (A.5) passes against the deployed URL.
-- [ ] **R.4** `git tag v3.0.0`, publish npm (identical artifact), `bun run deploy:docs` (docs + registry).
+- [x] **R.1** Done. `package.json` → 3.0.0.
+- [x] **R.2** Done. CHANGELOG 3.0.0 (2026-07-13): registry lane + shadcn-canonical tokens + Biome + dep refresh; leads with "No breaking API or export changes".
+- [x] **R.3** Final gate green: `build` + `test` (117/117) + `test:a11y` (48/48) + `lint` (Biome) + `check:registry` + `test:registry`. (The `curl` smoke test runs post-deploy — R.4.)
+- [~] **R.4** Publish is automated: pushing `master` runs `publish.yml` → GitHub Packages + npm + tag `v3.0.0` + GitHub Release (tag-guarded, no double-publish). **Manual step remaining:** `bun run deploy:docs` (wrangler → design.kongmy.dev) to make the registry live — needs Cloudflare auth; then the `/r/*.json` smoke test.
 
 ### Explicitly NOT in scope
 

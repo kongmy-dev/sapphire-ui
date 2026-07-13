@@ -1,11 +1,26 @@
 # Changelog
 
-## 3.0.0 — Unreleased
+## 3.0.0 — 2026-07-13
 
 Architecture release: adds a second distribution lane (a shadcn-format **registry**
 on design.kongmy.dev) alongside the existing npm package. **No breaking API or
 export changes** — the npm lane's `dist/` is API-compatible; existing consumers
 need no migration. The major version signals the architecture shift, not a break.
+
+### Registry lane (new)
+
+- **shadcn-format registry** — vendor Sapphire source into any Tailwind v4 app
+  with `shadcn add` from `design.kongmy.dev/r/{name}.json`, no credentials. 34
+  items: a `theme` token item, 26 primitives, and 7 admin blocks (Toaster,
+  Command, Combobox, Calendar, Sidebar, DataTable column-header + view-options).
+- **shadcn-canonical tokens.** `theme.css` now defines shadcn's semantic token
+  vocabulary (`--color-background`, `--color-muted-foreground`, `--color-card`,
+  `--color-sidebar-*`, `--color-chart-*`, …) as first-class aliases onto the
+  brand tokens — shipped to **both** lanes (additive). Sapphire components and
+  community shadcn items now share one token vocabulary; brand-only tokens
+  (`--color-accent-text`, `--radius-btn`, the on-dark family) remain as an
+  extension. Product components migrated to shadcn utility names where a
+  value-identical equivalent exists (rendering unchanged).
 
 ### Behavior changes
 
