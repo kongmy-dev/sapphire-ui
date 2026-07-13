@@ -1,0 +1,143 @@
+#!/usr/bin/env bun
+/**
+ * Build the Sapphire UI product registry (shadcn format).
+ *
+ * For each item in registry/items.ts:
+ *   1. read the library source (src/components/ui/<Source>.tsx),
+ *   2. rewrite the library's relative imports to the shadcn `@/` alias,
+ *   3. derive npm `dependencies` + `registryDependencies` from the imports,
+ *   4. emit a self-contained registry-item JSON to <outDir>/<name>.json.
+ *
+ * Also emits <outDir>/registry.json (the index). Output dir defaults to
+ * dist-docs/r (served at design.kongmy.dev/r/<name>.json); override with
+ * REGISTRY_OUT. The library's own npm build is untouched — this only reads.
+ */
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { productItems } from '../registry/items.ts';
+
+const REGISTRY_NAME = 'sapphire-ui';
+const HOMEPAGE = 'https://design.kongmy.dev';
+const SRC_UI = 'src/components/ui';
+const OUT_DIR = process.env.REGISTRY_OUT ?? 'dist-docs/r';
+
+const ITEM_SCHEMA = 'https://ui.shadcn.com/schema/registry-item.json';
+const REGISTRY_SCHEMA = 'https://ui.shadcn.com/schema/registry.json';
+
+// react/react-dom are peer deps every consumer already has; shadcn omits them.
+const PEER_DEPS = new Set(['react', 'react-dom']);
+
+function pascalToKebab(name: string): string {
+  return name
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2')
+    .toLowerCase();
+}
+
+/** Bare package name from a specifier: '@radix-ui/react-slot' -> '@radix-ui/react-slot', 'clsx/x' -> 'clsx'. */
+function packageBase(spec: string): string {
+  if (spec.startsWith('@')) return spec.split('/').slice(0, 2).join('/');
+  return spec.split('/')[0];
+}
+
+interface Processed {
+  content: string;
+  dependencies: string[];
+  registryDependencies: string[];
+}
+
+function processSource(source: string): Processed {
+  let content = readFileSync(join(SRC_UI, `${source}.tsx`), 'utf8');
+  const registryDependencies = new Set<string>();
+
+  // 1. cn() helper: ../../lib/utils -> @/lib/utils
+  content = content.replace(/(['"])\.\.\/\.\.\/lib\/utils\1/g, "'@/lib/utils'");
+
+  // 2. hooks: ../../hooks/useX -> @/hooks/useX
+  content = content.replace(
+    /(['"])\.\.\/\.\.\/hooks\/([A-Za-z0-9]+)\1/g,
+    "'@/hooks/$2'",
+  );
+
+  // 3. sibling components: ./Label -> @/components/ui/label (records a registry dep)
+  content = content.replace(
+    /(['"])\.\/([A-Z][A-Za-z0-9]*)\1/g,
+    (_match, _quote, comp: string) => {
+      const kebab = pascalToKebab(comp);
+      registryDependencies.add(kebab);
+      return `'@/components/ui/${kebab}'`;
+    },
+  );
+
+  // 4. derive npm deps from remaining bare (non-relative, non-alias) imports
+  const dependencies = new Set<string>();
+  for (const match of content.matchAll(/from\s+['"]([^'"]+)['"]/g)) {
+    const spec = match[1];
+    if (spec.startsWith('.') || spec.startsWith('@/')) continue;
+    const base = packageBase(spec);
+    if (!PEER_DEPS.has(base)) dependencies.add(base);
+  }
+
+  return {
+    content,
+    dependencies: [...dependencies].sort(),
+    registryDependencies: [...registryDependencies].sort(),
+  };
+}
+
+function main() {
+  mkdirSync(OUT_DIR, { recursive: true });
+  const indexItems: Array<Record<string, unknown>> = [];
+
+  for (const item of productItems) {
+    const { content, dependencies, registryDependencies } = processSource(
+      item.source,
+    );
+    const file = {
+      path: `ui/${item.name}.tsx`,
+      content,
+      type: 'registry:ui',
+      target: `components/ui/${item.name}.tsx`,
+    };
+    const registryItem = {
+      $schema: ITEM_SCHEMA,
+      name: item.name,
+      type: 'registry:ui',
+      title: item.title,
+      description: item.description,
+      dependencies,
+      registryDependencies,
+      files: [file],
+    };
+    writeFileSync(
+      join(OUT_DIR, `${item.name}.json`),
+      `${JSON.stringify(registryItem, null, 2)}\n`,
+    );
+    indexItems.push({
+      name: item.name,
+      type: 'registry:ui',
+      title: item.title,
+      description: item.description,
+      dependencies,
+      registryDependencies,
+      files: [{ path: file.path, type: file.type, target: file.target }],
+    });
+  }
+
+  const registry = {
+    $schema: REGISTRY_SCHEMA,
+    name: REGISTRY_NAME,
+    homepage: HOMEPAGE,
+    items: indexItems,
+  };
+  writeFileSync(
+    join(OUT_DIR, 'registry.json'),
+    `${JSON.stringify(registry, null, 2)}\n`,
+  );
+
+  console.log(
+    `registry: wrote ${productItems.length} items + registry.json to ${OUT_DIR}`,
+  );
+}
+
+main();

@@ -25,6 +25,13 @@
 /*.webmanifest
   Cache-Control: public, max-age=604800, stale-while-revalidate=86400
 
+# Registry items (consumed by `shadcn add`) — permissive CORS + short cache
+# so vendored components pick up updates; SPA-fallback typos are caught by the
+# registry smoke test, not here.
+/r/*
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=300, stale-while-revalidate=3600
+
 # Configuration and Text files
 /robots.txt
   Cache-Control: public, max-age=3600
