@@ -19,6 +19,8 @@ import { productItems } from '../registry/items.ts';
 const REGISTRY_NAME = 'sapphire-ui';
 const HOMEPAGE = 'https://design.kongmy.dev';
 const SRC_UI = 'src/components/ui';
+const THEME_SRC = 'src/theme.css';
+const SHADCN_ALIASES = 'registry/shadcn-aliases.css';
 const OUT_DIR = process.env.REGISTRY_OUT ?? 'dist-docs/r';
 
 const ITEM_SCHEMA = 'https://ui.shadcn.com/schema/registry-item.json';
@@ -85,14 +87,61 @@ function processSource(source: string): Processed {
   };
 }
 
+/**
+ * The `theme` item carries Sapphire's Tailwind v4 `@theme` tokens plus the
+ * shadcn-var alias layer, so `shadcn add theme` bootstraps a project's tokens
+ * with no npm package. Every custom utility the product items use must resolve
+ * from these tokens (enforced by scripts/check-registry.ts).
+ */
+function buildThemeItem() {
+  const content = `${readFileSync(THEME_SRC, 'utf8')}\n${readFileSync(
+    SHADCN_ALIASES,
+    'utf8',
+  )}`;
+  const file = {
+    path: 'sapphire-theme.css',
+    content,
+    type: 'registry:file',
+    target: 'styles/sapphire-theme.css',
+  };
+  const item = {
+    $schema: ITEM_SCHEMA,
+    name: 'theme',
+    type: 'registry:style',
+    title: 'Sapphire Theme',
+    description:
+      'Sapphire design tokens (Tailwind v4 @theme) + shadcn-var aliases. Import once per app; required by every Sapphire component.',
+    dependencies: [] as string[],
+    registryDependencies: [] as string[],
+    files: [file],
+  };
+  return {
+    item,
+    indexEntry: {
+      ...item,
+      files: [{ path: file.path, type: file.type, target: file.target }],
+    },
+  };
+}
+
 function main() {
   mkdirSync(OUT_DIR, { recursive: true });
   const indexItems: Array<Record<string, unknown>> = [];
+
+  const theme = buildThemeItem();
+  writeFileSync(
+    join(OUT_DIR, 'theme.json'),
+    `${JSON.stringify(theme.item, null, 2)}\n`,
+  );
+  indexItems.push(theme.indexEntry);
 
   for (const item of productItems) {
     const { content, dependencies, registryDependencies } = processSource(
       item.source,
     );
+    // Every component requires the token layer — make `theme` an explicit dep
+    // so `shadcn add <component>` also pulls the tokens it renders against.
+    const allRegistryDeps = ['theme', ...registryDependencies];
     const file = {
       path: `ui/${item.name}.tsx`,
       content,
@@ -106,7 +155,7 @@ function main() {
       title: item.title,
       description: item.description,
       dependencies,
-      registryDependencies,
+      registryDependencies: allRegistryDeps,
       files: [file],
     };
     writeFileSync(
@@ -119,7 +168,7 @@ function main() {
       title: item.title,
       description: item.description,
       dependencies,
-      registryDependencies,
+      registryDependencies: allRegistryDeps,
       files: [{ path: file.path, type: file.type, target: file.target }],
     });
   }
@@ -136,7 +185,7 @@ function main() {
   );
 
   console.log(
-    `registry: wrote ${productItems.length} items + registry.json to ${OUT_DIR}`,
+    `registry: wrote theme + ${productItems.length} items + registry.json to ${OUT_DIR}`,
   );
 }
 

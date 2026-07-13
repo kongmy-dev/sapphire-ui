@@ -476,9 +476,11 @@
     "format": "biome check --write",
     "build:docs": "vite build --config vite.docs.config.ts --outDir dist-docs && bun run build:registry",
     "build:registry": "bun scripts/build-registry.ts",
+    "check:registry": "bun scripts/check-registry.ts",
     "preview": "vite preview",
     "test:a11y": "playwright test",
     "test": "vitest run",
+    "test:registry": "bun scripts/verify-consumer.ts",
     "deploy:docs": "bun run build:docs && wrangler deploy"
   },
   "peerDependencies": {

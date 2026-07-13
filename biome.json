@@ -3,7 +3,17 @@
   "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!dist", "!dist-docs", "!coverage", "!design", "!public"]
+    "includes": [
+      "**",
+      "!dist",
+      "!dist-docs",
+      "!coverage",
+      "!design",
+      "!public",
+      "!tests/registry-consumer/app/components",
+      "!tests/registry-consumer/app/styles",
+      "!tests/registry-consumer/dist"
+    ]
   },
   "formatter": {
     "enabled": true,

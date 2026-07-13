@@ -40,6 +40,12 @@ jobs:
       - name: Unit tests
         run: bun run test
 
+      - name: Registry self-containment check
+        run: bun run check:registry
+
+      - name: Registry consumer test (vendor + typecheck + build)
+        run: bun run test:registry
+
   a11y:
     runs-on: ubuntu-latest
     steps:

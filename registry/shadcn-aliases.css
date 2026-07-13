@@ -1,0 +1,50 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   shadcn semantic-variable aliases → Sapphire tokens.
+
+   Lets community / upstream shadcn components render acceptably on Sapphire
+   tokens with no per-item restyling. This ADDS the shadcn token names Sapphire
+   doesn't already define, and adds `-foreground` companions for the ones it
+   does. Names Sapphire already owns (--color-primary = navy, --color-accent =
+   gold, --color-border) intentionally COINCIDE — shadcn `bg-primary` /
+   `bg-accent` / `border-border` map straight onto the brand palette.
+
+   Dark mode is free: every alias is a var() reference to a Sapphire token, so
+   Sapphire's [data-theme="dark"] block flips them automatically (no `.dark`
+   duplication needed — consumers use Sapphire's [data-theme] convention).
+
+   Concatenated after theme.css into the `theme` registry item by
+   scripts/build-registry.ts. Keep in sync with donor-block var usage (Phase C
+   adds --color-sidebar-* here). */
+@theme {
+  --color-background: var(--color-surface);
+  --color-foreground: var(--color-text-main);
+
+  --color-card: var(--color-card-bg);
+  --color-card-foreground: var(--color-text-main);
+  --color-popover: var(--color-card-bg);
+  --color-popover-foreground: var(--color-text-main);
+
+  /* --color-primary already defined (navy) — add its foreground */
+  --color-primary-foreground: var(--color-text-on-dark);
+
+  --color-secondary: var(--color-surface);
+  --color-secondary-foreground: var(--color-text-main);
+
+  --color-muted: var(--color-surface);
+  --color-muted-foreground: var(--color-text-muted);
+
+  /* --color-accent already defined (gold) — shadcn accent surfaces render gold,
+     so its foreground is navy for AA contrast */
+  --color-accent-foreground: var(--color-primary);
+
+  --color-destructive: var(--color-error);
+  --color-destructive-foreground: var(--color-white);
+
+  /* --color-border already defined — add input + focus ring */
+  --color-input: var(--color-border-strong);
+  --color-ring: var(--color-focus-ring);
+
+  /* shadcn radius scale — Sapphire defines --radius-sm/md; add lg/xl */
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+}
