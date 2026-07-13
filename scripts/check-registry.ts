@@ -85,6 +85,14 @@ function main() {
           errors.push(`${item.name}: references undefined token "${ref}"`);
         }
       }
+      // 4. no custom index.css semantic classes — registry items must be
+      // self-contained tailwind/shadcn; a `k-*` class lives only in the
+      // library's index.css and would render unstyled in a consumer.
+      for (const m of file.content.matchAll(/[\s'"`](k-[a-z][a-z-]*)/g)) {
+        errors.push(
+          `${item.name}: references custom class "${m[1]}" (not tailwind/shadcn — inline it)`,
+        );
+      }
     }
   }
 

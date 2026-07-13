@@ -8,8 +8,8 @@ const nativeSelectVariants = cva(
     variants: {
       variant: {
         default:
-          'rounded-btn border border-border bg-(--color-card-bg) text-foreground focus:border-accent focus:shadow-[0_0_0_3px] focus:shadow-accent/12',
-        dark: 'k-input-dark',
+          'rounded-btn border border-border bg-card text-foreground focus:border-accent focus:shadow-[0_0_0_3px] focus:shadow-accent/12',
+        dark: 'rounded-sm border border-border-dark bg-black/20 text-text-on-dark focus:border-accent [&>option]:bg-primary [&>option]:text-text-on-dark',
       },
       size: {
         sm: 'px-3 py-2 text-sm',
@@ -50,17 +50,25 @@ const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
         >
           {children}
         </select>
-        <span
+        <svg
           aria-hidden="true"
+          viewBox="0 0 16 16"
+          fill="none"
           className={cn(
-            'material-symbols-outlined pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-[20px]',
+            'pointer-events-none absolute top-1/2 right-3 size-5 -translate-y-1/2',
             variant === 'dark'
               ? 'text-text-on-dark-muted'
               : 'text-muted-foreground',
           )}
         >
-          expand_more
-        </span>
+          <path
+            d="m4 6 4 4 4-4"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
       </div>
     );
   },

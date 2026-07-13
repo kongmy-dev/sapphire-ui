@@ -41,10 +41,29 @@ const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
           ref={ref}
           id={id}
           aria-describedby={descriptionId}
-          className={cn('k-checkbox', className)}
+          className={cn(
+            'mt-px inline-flex size-[18px] shrink-0 cursor-pointer items-center justify-center rounded-sm border-[1.5px] border-border-strong bg-card p-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 data-[state=checked]:border-accent data-[state=checked]:bg-accent data-[state=indeterminate]:border-accent data-[state=indeterminate]:bg-accent data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50',
+            className,
+          )}
           {...props}
         >
-          <RadixCheckbox.Indicator className="k-checkbox-indicator" />
+          <RadixCheckbox.Indicator className="group flex items-center justify-center text-white">
+            <svg
+              viewBox="0 0 10 10"
+              fill="none"
+              aria-hidden="true"
+              className="hidden size-2.5 group-data-[state=checked]:block"
+            >
+              <path
+                d="M1.5 5.5 4 8l4.5-5"
+                stroke="currentColor"
+                strokeWidth="1.75"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <span className="hidden h-0.5 w-2 rounded-[1px] bg-white group-data-[state=indeterminate]:block" />
+          </RadixCheckbox.Indicator>
         </RadixCheckbox.Root>
         {(label || description) && (
           <div className="flex flex-col">
