@@ -2,6 +2,17 @@
 
 Sapphire UI is the official design system for **KONGMY Digital Solutions** (`kongmy.dev`). It exports both a compiled stylesheet (`sapphire-ui.css`) and a typed React component library. All work here must honour the navy + gold editorial aesthetic.
 
+## Two-lane model (v3 — decided 2026-07-13)
+
+| Lane | Distribution | Audience |
+|---|---|---|
+| **Editorial/brand** | npm package (unchanged) | kongmy.dev properties, blog, proposals |
+| **Product** | shadcn-format **registry** (vendored source, hosted on design.kongmy.dev) | product/client apps scaffolded from `~/Projects/kongmy-stack` |
+
+Why: product apps must diverge (client theming, POS touch UIs) — vendored source makes divergence an edit, not a fork; a public registry also kills GitHub-Packages PAT friction. Only the **product subset** (~15 components + admin blocks imported from `~/Projects/references/shadcn-admin`, restyled onto tokens) gets registry-shaped; editorial components stay npm-only. Existing npm consumers are never broken.
+
+**Plan + task list: `REGISTRY-PLAN.md`.** Hard boundary: sapphire stays backend-agnostic — never import from kongmy-stack, no contract/API types here; contract-aware blocks live in kongmy-stack, composed from sapphire primitives. Registry items must be self-contained (shadcn conventions) and read tokens only via CSS custom properties.
+
 ---
 
 ## Stack
