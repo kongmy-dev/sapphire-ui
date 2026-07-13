@@ -8,7 +8,7 @@ Three workstreams land together under the v3 tag:
 
 1. **Registry lane** — the two-lane design system (below): editorial stays npm, product subset + admin blocks become a shadcn-format registry on `design.kongmy.dev`.
 2. **Toolchain migration** — ESLint + Stylelint → **Biome**; lint-staged/husky rewired to Biome.
-3. **Dependency refresh** — all deps bumped to latest (currently all pending bumps are minor/patch — Radix minors, Playwright, React patch; no majors).
+3. **Dependency refresh** — all deps bumped to latest, with two majors handled deliberately: `@types/node` 25→26 taken (dev-only types), **TypeScript held at latest 6.x** (7.0 is the native/Go compiler that drops the JS Compiler API `vite-plugin-dts` needs — its own migration, out of scope here).
 
 **The npm lane has no breaking change** — existing consumers receive an identical `dist/`. So `3.0.0` is an *architecture* major (new registry lane), not a semver-breaking one. The tag is meaningful only once the registry is live and vendorable, so **v3 is tagged at the end, after Phases A–D deploy and a clean `shadcn add` works end-to-end**.
 
@@ -61,7 +61,7 @@ Facts that shape the work, confirmed by inspection:
 
 Do this before registry work so the build script and CI checks are authored under the final toolchain, and the dep churn doesn't collide with in-flight registry files.
 
-- [ ] **0.1 Bump all deps to latest.** `bun update` (all pending are minor/patch). Keep peer-dep *ranges* permissive (`^1.0.0` style) — only bump the devDep pins. Verify: `bun run build` + `bun run test` + `bun run test:a11y` all green.
+- [x] **0.1 Bump all deps to latest.** Done. Bumped all except TypeScript (held at `6` — see above); `@types/node` 26 taken. Kept peer-dep *ranges* permissive: `--latest` tightened `react`/`react-dom`/`react-resizable-panels` peers, reverted to `^19.2.0`/`^4.11.2`. Also restored a green unit baseline first — jsdom 29 drops Web Storage under vitest 4, so `localStorage` is now polyfilled in `vitest.setup.ts`. Verified: `build` + `test` (117/117) + `test:a11y` (48/48, all 3 engines) green.
 - [ ] **0.2 Migrate to Biome.** Add `biome.json`; port the rule intent from `eslint.config.js` (80 lines) + `.stylelintrc.json`: React/hooks rules, escaped-entity handling, Tailwind class ordering (Biome `useSortedClasses`, nursery — enable explicitly). Replace scripts `lint`/`lint:fix`/`format`/`lint:css`/`lint:css:fix` with `biome check` / `biome check --write`. Rewrite `.lintstagedrc.json` and `.husky/pre-commit` from `bunx eslint`/`bunx stylelint` to `biome check --write`. Remove eslint/stylelint deps + config files.
   - **Decision in execution — CSS linting:** Biome's CSS linter may flag Tailwind v4 at-rules (`@theme`, `@source`, `@utility`) via `noUnknownAtRule`. Try disabling that rule first; if Biome still can't cleanly handle `theme.css`/`index.css`, **keep Stylelint for CSS only** and use Biome for TS/TSX. Don't block the migration on perfect CSS parity.
 - [ ] **0.3 Green baseline.** `bun run build`, `bun run test`, `bun run test:a11y`, `biome check` all pass. Update CLAUDE.md Commands table (lint/format entries). Commit.
