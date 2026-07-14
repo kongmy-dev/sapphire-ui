@@ -9,11 +9,16 @@
  * `shadcn add` (the CLI resolves bare names against ui.shadcn.com).
  *
  * Modes:
- *   default            — builds the registry to a temp dir, serves it on
- *                         localhost, and adds from there (pre-deploy gate, CI).
- *   REGISTRY_URL=<url> — adds from a deployed registry instead, e.g.
- *                         REGISTRY_URL='https://design.kongmy.dev/r/{name}.json'
- *                         (post-deploy verification).
+ *   default — builds the registry to a temp dir, serves it on localhost, and
+ *             adds from there (pre-deploy gate, CI).
+ *   SAPPHIRE_REGISTRY_URL=<url> — adds from a deployed registry instead, e.g.
+ *             SAPPHIRE_REGISTRY_URL='https://design.kongmy.dev/r/{name}.json'
+ *             (post-deploy verification).
+ *
+ * NOT named REGISTRY_URL: the shadcn CLI reads that env var as its DEFAULT
+ * registry base (replacing ui.shadcn.com), which reroutes internal fetches
+ * like colors/<baseColor>.json to our registry and fails the add. It is also
+ * scrubbed from the CLI's env below for the same reason.
  *
  * Adds theme + button + sidebar (the deepest registryDependencies chain) and
  * asserts every expected file, including transitive deps, was vendored.
@@ -190,10 +195,13 @@ function scaffoldConsumer(urlTemplate: string): string {
 }
 
 async function main() {
-  const { urlTemplate, base, stop } = process.env.REGISTRY_URL
+  const { urlTemplate, base, stop } = process.env.SAPPHIRE_REGISTRY_URL
     ? {
-        urlTemplate: process.env.REGISTRY_URL,
-        base: process.env.REGISTRY_URL.replace(/\/r\/\{name\}\.json$/, ''),
+        urlTemplate: process.env.SAPPHIRE_REGISTRY_URL,
+        base: process.env.SAPPHIRE_REGISTRY_URL.replace(
+          /\/r\/\{name\}\.json$/,
+          '',
+        ),
         stop: () => {},
       }
     : await serveLocalRegistry();
@@ -203,10 +211,13 @@ async function main() {
   console.log(`smoke: bunx shadcn add ${items.join(' ')}`);
   // stdin ignored + hard timeout: an unexpected CLI prompt must fail loudly
   // (with captured output), never hang the gate.
+  const cliEnv = { ...process.env };
+  delete cliEnv.REGISTRY_URL; // shadcn's own default-registry override
   const add = Bun.spawnSync(
     ['bunx', '--bun', 'shadcn@latest', 'add', ...items, '--yes', '--overwrite'],
     {
       cwd: app,
+      env: cliEnv,
       stdin: 'ignore',
       stdout: 'pipe',
       stderr: 'pipe',
