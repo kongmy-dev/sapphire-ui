@@ -112,7 +112,8 @@ Restyle each onto sapphire tokens (presentation only — no server/contract wiri
   - `check-registry.ts` now *requires* URL form (bare name = CI failure).
   - New `scripts/smoke-registry.ts` (`bun run smoke:registry`, in CI): drives the **real** `shadcn` CLI against the built registry served on localhost (`REGISTRY_HOMEPAGE` override); `REGISTRY_URL='https://design.kongmy.dev/r/{name}.json' bun run smoke:registry` re-runs it post-deploy against production. Adds theme+button+sidebar and asserts all transitive deps vendor.
   - Also fixed: README example referenced nonexistent `@sapphire/data-table` (real items: `data-table-column-header`, `data-table-view-options`); `/r/*` Cache-Control was invalid (Cloudflare `_headers` **combines** matching rules — `/*` and `/*.json` also match — so `/r/*` now detaches with `! Cache-Control` and is the last rule).
-  - **Requires redeploy** (`bun run deploy:docs`) — the live registry still serves bare-name deps until then. Known tradeoff kept: missing `/r/*` items return the SPA index.html (200 text/html), so typos surface as JSON parse errors, not 404s; the smoke test warns about it.
+  - Deployed via git auto-deploy (2026-07-14); URL-form deps verified live.
+  - **The SPA fallback was NOT a tolerable tradeoff after all**: the post-deploy smoke run failed because the shadcn CLI probes speculative registry URLs on every fresh install (`{registry}/colors/<baseColor>.json`, unsubstituted `{name}` and all) — a 404 is tolerated (CLI falls back to its default colors), but the SPA's 200+HTML is a fatal "Failed to parse JSON". So the fallback broke `shadcn add` for every *fresh* consumer app (apps whose CSS was already seeded didn't re-fetch, which masked it). Fixed server-side: `worker/registry-404.ts` + `run_worker_first = ["/r/*"]` in `wrangler.toml` turn missing `/r/*` paths into real 404s; the smoke test now hard-fails on an HTML fallback.
 
 ### Explicitly NOT in scope
 

@@ -251,11 +251,15 @@ async function main() {
     fail('vendored button.tsx is not the Sapphire item (no rounded-btn)');
   }
 
-  // Informational: a missing item should not 200 as HTML (SPA fallback).
+  // Missing /r/* paths must 404, never 200 as HTML: the CLI probes
+  // speculative URLs (e.g. {registry}/colors/<baseColor>.json) on every fresh
+  // install and dies on HTML with "Failed to parse JSON" — an SPA fallback
+  // here breaks `shadcn add` for every new consumer app. Served by
+  // worker/registry-404.ts in production.
   const bogus = await fetch(`${base}/r/definitely-not-an-item.json`);
   if (bogus.ok && (bogus.headers.get('content-type') ?? '').includes('html')) {
-    console.warn(
-      'smoke: WARN — missing /r/* items return the SPA index.html (typos will surface as JSON parse errors, not 404s)',
+    fail(
+      'missing /r/* items return the SPA index.html instead of 404 — this breaks shadcn add in fresh apps (registry-404 worker not active?)',
     );
   }
   stop();
