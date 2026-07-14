@@ -481,6 +481,7 @@
     "test:a11y": "playwright test",
     "test": "vitest run",
     "test:registry": "bun scripts/verify-consumer.ts",
+    "smoke:registry": "bun scripts/smoke-registry.ts",
     "deploy:docs": "bun run build:docs && wrangler deploy"
   },
   "peerDependencies": {

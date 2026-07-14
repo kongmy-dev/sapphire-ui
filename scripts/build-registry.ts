@@ -19,13 +19,25 @@ import { productBlocks, productItems } from '../registry/items.ts';
 const BLOCKS_DIR = 'registry/blocks';
 
 const REGISTRY_NAME = 'sapphire-ui';
-const HOMEPAGE = 'https://design.kongmy.dev';
+// REGISTRY_HOMEPAGE override exists for the smoke test, which serves the build
+// from localhost and needs registryDependency URLs to resolve there.
+const HOMEPAGE = process.env.REGISTRY_HOMEPAGE ?? 'https://design.kongmy.dev';
 const SRC_UI = 'src/components/ui';
 const THEME_SRC = 'src/theme.css';
 const OUT_DIR = process.env.REGISTRY_OUT ?? 'dist-docs/r';
 
 const ITEM_SCHEMA = 'https://ui.shadcn.com/schema/registry-item.json';
 const REGISTRY_SCHEMA = 'https://ui.shadcn.com/schema/registry.json';
+
+/**
+ * registryDependencies must be full URLs: the shadcn CLI resolves bare names
+ * against ITS default registry (ui.shadcn.com), not the registry an item was
+ * fetched from. URL form also works regardless of what namespace the consumer
+ * picks in components.json.
+ */
+function registryUrl(name: string): string {
+  return `${HOMEPAGE}/r/${name}.json`;
+}
 
 // react/react-dom are peer deps every consumer already has; shadcn omits them.
 const PEER_DEPS = new Set(['react', 'react-dom']);
@@ -142,7 +154,7 @@ function main() {
     );
     // Every component requires the token layer — make `theme` an explicit dep
     // so `shadcn add <component>` also pulls the tokens it renders against.
-    const allRegistryDeps = ['theme', ...registryDependencies];
+    const allRegistryDeps = ['theme', ...registryDependencies].map(registryUrl);
     const file = {
       path: `ui/${item.name}.tsx`,
       content,
@@ -178,7 +190,7 @@ function main() {
     const { content, dependencies, registryDependencies } = processSource(
       join(BLOCKS_DIR, block.file),
     );
-    const allRegistryDeps = ['theme', ...registryDependencies];
+    const allRegistryDeps = ['theme', ...registryDependencies].map(registryUrl);
     const file = {
       path: `ui/${block.name}.tsx`,
       content,

@@ -4,7 +4,10 @@
  * and asserts three invariants that keep registry items self-contained and
  * consumable:
  *
- *   1. Closed graph      — every registryDependency resolves to a known item.
+ *   1. Closed graph      — every registryDependency is a full design.kongmy.dev
+ *                           URL resolving to a known item. Bare names are an
+ *                           error: the shadcn CLI resolves them against its own
+ *                           default registry, not ours (breaks `shadcn add`).
  *   2. No leaked imports  — emitted files carry no library-relative imports
  *                           (`../…` / `./…`); everything is on the `@/` alias.
  *   3. Token coverage     — every Sapphire CSS var a component references
@@ -20,6 +23,8 @@ import { join } from 'node:path';
 
 const SAPPHIRE_VAR =
   /--(?:color|radius|font|text|leading|space|shadow|transition)-[a-z0-9-]+/g;
+
+const DEP_URL = /^https:\/\/design\.kongmy\.dev\/r\/([a-z0-9-]+)\.json$/;
 
 function buildToTemp(): string {
   const out = mkdtempSync(join(tmpdir(), 'sapphire-registry-'));
@@ -63,9 +68,14 @@ function main() {
   );
 
   for (const item of items) {
-    // 1. closed graph
+    // 1. closed graph, URL form only
     for (const dep of item.registryDependencies ?? []) {
-      if (!names.has(dep)) {
+      const m = dep.match(DEP_URL);
+      if (!m) {
+        errors.push(
+          `${item.name}: registryDependency "${dep}" must be a full https://design.kongmy.dev/r/<name>.json URL (bare names resolve against shadcn's default registry)`,
+        );
+      } else if (!names.has(m[1])) {
         errors.push(
           `${item.name}: registryDependency "${dep}" is not a registry item`,
         );

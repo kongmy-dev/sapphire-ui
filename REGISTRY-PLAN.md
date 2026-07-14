@@ -106,7 +106,13 @@ Restyle each onto sapphire tokens (presentation only — no server/contract wiri
 - [x] **R.1** Done. `package.json` → 3.0.0.
 - [x] **R.2** Done. CHANGELOG 3.0.0 (2026-07-13): registry lane + shadcn-canonical tokens + Biome + dep refresh; leads with "No breaking API or export changes".
 - [x] **R.3** Final gate green: `build` + `test` (117/117) + `test:a11y` (48/48) + `lint` (Biome) + `check:registry` + `test:registry`. (The `curl` smoke test runs post-deploy — R.4.)
-- [~] **R.4** Publish is automated: pushing `master` runs `publish.yml` → GitHub Packages + npm + tag `v3.0.0` + GitHub Release (tag-guarded, no double-publish). **Manual step remaining:** `bun run deploy:docs` (wrangler → design.kongmy.dev) to make the registry live — needs Cloudflare auth; then the `/r/*.json` smoke test.
+- [x] **R.4** Publish is automated: pushing `master` runs `publish.yml` → GitHub Packages + npm + tag `v3.0.0` + GitHub Release (tag-guarded, no double-publish). Deployed 2026-07-13/14 — registry live on design.kongmy.dev (verified byte-identical to local build). The `/r/*.json` smoke test is now a real script (see R.5).
+- [x] **R.5 — registryDependencies URL fix + true-CLI smoke gate (2026-07-14).** Post-release review ran acceptance criterion 1 for real and it **failed**: items declared `registryDependencies` as bare names (`"theme"`), which the shadcn CLI resolves against **its own** default registry (ui.shadcn.com) — so only `theme` was installable; every component 404'd on `https://ui.shadcn.com/r/styles/new-york-v4/theme.json`. Neither local gate could catch this: both reimplement the consumer instead of driving the CLI. Fixes:
+  - `build-registry.ts` emits registryDependencies as full URLs (`https://design.kongmy.dev/r/<name>.json`) — namespace-agnostic, per shadcn convention for third-party registries.
+  - `check-registry.ts` now *requires* URL form (bare name = CI failure).
+  - New `scripts/smoke-registry.ts` (`bun run smoke:registry`, in CI): drives the **real** `shadcn` CLI against the built registry served on localhost (`REGISTRY_HOMEPAGE` override); `REGISTRY_URL='https://design.kongmy.dev/r/{name}.json' bun run smoke:registry` re-runs it post-deploy against production. Adds theme+button+sidebar and asserts all transitive deps vendor.
+  - Also fixed: README example referenced nonexistent `@sapphire/data-table` (real items: `data-table-column-header`, `data-table-view-options`); `/r/*` Cache-Control was invalid (Cloudflare `_headers` **combines** matching rules — `/*` and `/*.json` also match — so `/r/*` now detaches with `! Cache-Control` and is the last rule).
+  - **Requires redeploy** (`bun run deploy:docs`) — the live registry still serves bare-name deps until then. Known tradeoff kept: missing `/r/*` items return the SPA index.html (200 text/html), so typos surface as JSON parse errors, not 404s; the smoke test warns about it.
 
 ### Explicitly NOT in scope
 
@@ -118,6 +124,6 @@ Restyle each onto sapphire tokens (presentation only — no server/contract wiri
 
 ## Acceptance criteria
 
-- [ ] A clean Vite app can `shadcn add` the product subset + one admin block from design.kongmy.dev with zero credentials and render correctly with sapphire tokens.
-- [ ] npm lane consumers observe zero change.
-- [ ] Toolchain is Biome (with CSS fallback documented if retained); all deps at latest; full test + a11y suite green.
+- [~] A clean Vite app can `shadcn add` the product subset + one admin block from design.kongmy.dev with zero credentials and render correctly with sapphire tokens. *Proven against the local build by `smoke:registry` (real CLI, theme+button+sidebar incl. transitive deps); tick after redeploy + `REGISTRY_URL=… bun run smoke:registry` passes against production.*
+- [x] npm lane consumers observe zero change.
+- [x] Toolchain is Biome (with CSS fallback documented if retained); all deps at latest; full test + a11y suite green.

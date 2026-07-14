@@ -156,8 +156,9 @@ Add the token layer once, then any component or block:
 bunx shadcn add @sapphire/theme
 
 # 2. primitives + admin blocks (vendored source you own)
-bunx shadcn add @sapphire/button @sapphire/dialog @sapphire/data-table
+bunx shadcn add @sapphire/button @sapphire/dialog @sapphire/sidebar
 bunx shadcn add @sapphire/command @sapphire/combobox @sapphire/toaster
+bunx shadcn add @sapphire/data-table-column-header @sapphire/data-table-view-options
 ```
 
 Then import the token layer in your Tailwind entry CSS:

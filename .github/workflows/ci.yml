@@ -24,7 +24,10 @@ jobs:
         uses: actions/cache@v5
         with:
           path: ~/.bun/install/cache
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
+          # smoke-registry.ts is in the key so the packages only IT pulls
+          # (shadcn CLI, consumer scaffold deps) get saved into the cache —
+          # bun.lock alone wouldn't re-save when the smoke scaffold changes.
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock', 'scripts/smoke-registry.ts') }}
           restore-keys: |
             ${{ runner.os }}-bun-
 
@@ -45,6 +48,9 @@ jobs:
 
       - name: Registry consumer test (vendor + typecheck + build)
         run: bun run test:registry
+
+      - name: Registry smoke test (real shadcn add against local build)
+        run: bun run smoke:registry
 
   a11y:
     runs-on: ubuntu-latest
