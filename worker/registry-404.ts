@@ -20,16 +20,16 @@ export default {
     const response = await env.ASSETS.fetch(request);
     const type = response.headers.get('content-type') ?? '';
     if (type.includes('text/html')) {
-      return new Response(
-        JSON.stringify({ error: 'registry item not found' }),
-        {
-          status: 404,
-          headers: {
-            'content-type': 'application/json',
-            'access-control-allow-origin': '*',
-          },
+      // Plain text on purpose: the CLI parses a JSON 404 body as an explicit
+      // registry error ({"error": …}) and aborts; a plain 404 is treated as
+      // "item absent" and falls back gracefully.
+      return new Response('not found', {
+        status: 404,
+        headers: {
+          'content-type': 'text/plain',
+          'access-control-allow-origin': '*',
         },
-      );
+      });
     }
     return response;
   },
