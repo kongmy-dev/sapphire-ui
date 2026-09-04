@@ -128,7 +128,7 @@ const isTestPath = (p: string) => /\.(test|spec)\.tsx?$/.test(p) || /(^|\/)(test
  * `own` stops at each nested function boundary — it is the number a lint rule gates on, and
  * the one that moves when someone writes a hard function today.
  */
-function cognitiveComplexity(fn: ts.Node, sf: ts.SourceFile, stopAtNested = false): number {
+function cognitiveComplexity(fn: ts.Node, stopAtNested = false): number {
   let score = 0;
 
   const walk = (node: ts.Node, nesting: number): void => {
@@ -310,8 +310,8 @@ export function measureFile(root: string, rel: string): FileMetrics {
       functions.push({
         name: functionName(node, sf),
         line: start,
-        cognitive: cognitiveComplexity(node, sf),
-        ownCognitive: cognitiveComplexity(node, sf, true),
+        cognitive: cognitiveComplexity(node),
+        ownCognitive: cognitiveComplexity(node, true),
         codeLines: end - start + 1
       });
     }
