@@ -20,6 +20,23 @@ Sapphire UI is the official design system for **KONGMY Digital Solutions** (`kon
 
 ---
 
+## Size and shape
+
+**When a request is underspecified, decide out loud before you build.** List what the request
+leaves open — input shape, output shape, edge behaviour, anything you would otherwise settle
+silently while typing. Take the narrowest answer that satisfies it, and say what you are choosing
+*not* to build. Then implement that list and nothing beyond it. Measured over six runs on a
+sibling repo: 19% less code, 30% fewer exports, 32% lower complexity.
+
+**A new export needs a consumer in the same change.** An interface with one implementation, a
+factory that constructs one thing, or an options object read in one place is indirection nobody is
+paying for. Write the direct version; the seam appears on its own when a second caller arrives,
+and it lands somewhere other than you would have guessed.
+
+A size gate runs automatically after every edit and reports back — limits, and why they are what
+they are, in `tooling/quality-metrics/check.ts`. See `AI-CODE-QUALITY.md`.
+
+
 ## Commands
 
 ```bash

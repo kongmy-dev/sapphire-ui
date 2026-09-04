@@ -1,0 +1,980 @@
+{
+  "takenAt": "2026-09-04T05:54:10.615Z",
+  "commit": "f55db9be3f7717531cddcec937891001901e02fb",
+  "totals": {
+    "files": 131,
+    "srcFiles": 108,
+    "testFiles": 23,
+    "codeLines": 14042,
+    "testCodeLines": 1279,
+    "commentLines": 909,
+    "commentRatio": 0.065,
+    "testRatio": 0.091,
+    "exports": 185,
+    "unreferencedExports": 8,
+    "interfaces": 92,
+    "types": 25,
+    "abstractionsPerKloc": 8.3,
+    "worstCognitive": 56,
+    "worstOwnCognitive": 24,
+    "functionsOverOwnCognitive15": 5,
+    "functionsOver50Lines": 43,
+    "filesOver300CodeLines": 12,
+    "maxNesting": 8,
+    "cloneBlocks": 11
+  },
+  "files": {
+    "registry/blocks/calendar.tsx": {
+      "codeLines": 206,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "registry/blocks/combobox.tsx": {
+      "codeLines": 86,
+      "commentLines": 1,
+      "worstOwnCognitive": 1
+    },
+    "registry/blocks/command.tsx": {
+      "codeLines": 166,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "registry/blocks/data-table-column-header.tsx": {
+      "codeLines": 71,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "registry/blocks/data-table-view-options.tsx": {
+      "codeLines": 54,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "registry/blocks/sidebar.tsx": {
+      "codeLines": 674,
+      "commentLines": 12,
+      "worstOwnCognitive": 8
+    },
+    "registry/blocks/sonner.tsx": {
+      "codeLines": 18,
+      "commentLines": 6,
+      "worstOwnCognitive": 0
+    },
+    "registry/items.ts": {
+      "codeLines": 214,
+      "commentLines": 17,
+      "worstOwnCognitive": 0
+    },
+    "src/App.tsx": {
+      "codeLines": 296,
+      "commentLines": 3,
+      "worstOwnCognitive": 3
+    },
+    "src/components/Analytics.tsx": {
+      "codeLines": 24,
+      "commentLines": 1,
+      "worstOwnCognitive": 0
+    },
+    "src/components/AnalyticsElement.ts": {
+      "codeLines": 156,
+      "commentLines": 9,
+      "worstOwnCognitive": 13
+    },
+    "src/components/Banner.tsx": {
+      "codeLines": 64,
+      "commentLines": 18,
+      "worstOwnCognitive": 2
+    },
+    "src/components/BannerElement.ts": {
+      "codeLines": 79,
+      "commentLines": 12,
+      "worstOwnCognitive": 4
+    },
+    "src/components/CommandPalette.tsx": {
+      "codeLines": 168,
+      "commentLines": 15,
+      "worstOwnCognitive": 5
+    },
+    "src/components/CookieBanner.tsx": {
+      "codeLines": 30,
+      "commentLines": 2,
+      "worstOwnCognitive": 3
+    },
+    "src/components/CookieBannerElement.ts": {
+      "codeLines": 160,
+      "commentLines": 10,
+      "worstOwnCognitive": 12
+    },
+    "src/components/SiteFooterElement.ts": {
+      "codeLines": 161,
+      "commentLines": 24,
+      "worstOwnCognitive": 11
+    },
+    "src/components/SiteHeaderElement.ts": {
+      "codeLines": 133,
+      "commentLines": 28,
+      "worstOwnCognitive": 9
+    },
+    "src/components/ThemeProvider.tsx": {
+      "codeLines": 58,
+      "commentLines": 18,
+      "worstOwnCognitive": 1
+    },
+    "src/components/Toast.tsx": {
+      "codeLines": 27,
+      "commentLines": 10,
+      "worstOwnCognitive": 0
+    },
+    "src/components/ToastElement.ts": {
+      "codeLines": 68,
+      "commentLines": 21,
+      "worstOwnCognitive": 4
+    },
+    "src/components/ui/Accordion.tsx": {
+      "codeLines": 66,
+      "commentLines": 10,
+      "worstOwnCognitive": 0
+    },
+    "src/components/ui/AdminLayout.tsx": {
+      "codeLines": 312,
+      "commentLines": 27,
+      "worstOwnCognitive": 17
+    },
+    "src/components/ui/Alert.tsx": {
+      "codeLines": 76,
+      "commentLines": 6,
+      "worstOwnCognitive": 3
+    },
+    "src/components/ui/Avatar.tsx": {
+      "codeLines": 44,
+      "commentLines": 4,
+      "worstOwnCognitive": 0
+    },
+    "src/components/ui/AvatarGroup.tsx": {
+      "codeLines": 56,
+      "commentLines": 18,
+      "worstOwnCognitive": 4
+    },
+    "src/components/ui/Badge.tsx": {
+      "codeLines": 48,
+      "commentLines": 3,
+      "worstOwnCognitive": 1
+    },
+    "src/components/ui/BarChart.tsx": {
+      "codeLines": 47,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "src/components/ui/Breadcrumb.tsx": {
+      "codeLines": 69,
+      "commentLines": 8,
+      "worstOwnCognitive": 9
+    },
+    "src/components/ui/Button.tsx": {
+      "codeLines": 142,
+      "commentLines": 6,
+      "worstOwnCognitive": 11
+    },
+    "src/components/ui/Callout.tsx": {
+      "codeLines": 61,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "src/components/ui/Card.tsx": {
+      "codeLines": 95,
+      "commentLines": 7,
+      "worstOwnCognitive": 4
+    },
+    "src/components/ui/Checkbox.tsx": {
+      "codeLines": 77,
+      "commentLines": 12,
+      "worstOwnCognitive": 6
+    },
+    "src/components/ui/Chip.tsx": {
+      "codeLines": 83,
+      "commentLines": 12,
+      "worstOwnCognitive": 2
+    },
+    "src/components/ui/CodeBlock.tsx": {
+      "codeLines": 64,
+      "commentLines": 17,
+      "worstOwnCognitive": 7
+    },
+    "src/components/ui/Container.tsx": {
+      "codeLines": 31,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "src/components/ui/Dialog.tsx": {
+      "codeLines": 213,
+      "commentLines": 13,
+      "worstOwnCognitive": 1
+    },
+    "src/components/ui/DropdownMenu.tsx": {
+      "codeLines": 154,
+      "commentLines": 15,
+      "worstOwnCognitive": 1
+    },
+    "src/components/ui/Empty.tsx": {
+      "codeLines": 48,
+      "commentLines": 4,
+      "worstOwnCognitive": 3
+    },
+    "src/components/ui/FormField.tsx": {
+      "codeLines": 75,
+      "commentLines": 21,
+      "worstOwnCognitive": 14
+    },
+    "src/components/ui/HoverCard.tsx": {
+      "codeLines": 31,
+      "commentLines": 15,
+      "worstOwnCognitive": 0
+    },
+    "src/components/ui/Icon.tsx": {
+      "codeLines": 39,
+      "commentLines": 24,
+      "worstOwnCognitive": 2
+    },
+    "src/components/ui/IconMark.tsx": {
+      "codeLines": 51,
+      "commentLines": 5,
+      "worstOwnCognitive": 1
+    },
+    "src/components/ui/Input.tsx": {
+      "codeLines": 45,
+      "commentLines": 1,
+      "worstOwnCognitive": 0
+    },
+    "src/components/ui/Kbd.tsx": {
+      "codeLines": 25,
+      "commentLines": 8,
+      "worstOwnCognitive": 3
+    },
+    "src/components/ui/Label.tsx": {
+      "codeLines": 43,
+      "commentLines": 1,
+      "worstOwnCognitive": 1
+    },
+    "src/components/ui/Layout.tsx": {
+      "codeLines": 34,
+      "commentLines": 19,
+      "worstOwnCognitive": 1
+    },
+    "src/components/ui/MarginNote.tsx": {
+      "codeLines": 42,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "src/components/ui/MobileNav.tsx": {
+      "codeLines": 182,
+      "commentLines": 22,
+      "worstOwnCognitive": 9
+    },
+    "src/components/ui/NativeSelect.tsx": {
+      "codeLines": 66,
+      "commentLines": 8,
+      "worstOwnCognitive": 1
+    },
+    "src/components/ui/PageSection.tsx": {
+      "codeLines": 61,
+      "commentLines": 4,
+      "worstOwnCognitive": 5
+    },
+    "src/components/ui/Pagination.tsx": {
+      "codeLines": 128,
+      "commentLines": 18,
+      "worstOwnCognitive": 4
+    },
+    "src/components/ui/PassphraseGate.tsx": {
+      "codeLines": 50,
+      "commentLines": 0,
+      "worstOwnCognitive": 7
+    },
+    "src/components/ui/Popover.tsx": {
+      "codeLines": 33,
+      "commentLines": 9,
+      "worstOwnCognitive": 0
+    },
+    "src/components/ui/Progress.tsx": {
+      "codeLines": 60,
+      "commentLines": 3,
+      "worstOwnCognitive": 6
+    },
+    "src/components/ui/ProposalLayout.tsx": {
+      "codeLines": 99,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "src/components/ui/RadioGroup.tsx": {
+      "codeLines": 70,
+      "commentLines": 11,
+      "worstOwnCognitive": 6
+    },
+    "src/components/ui/RangeSlider.tsx": {
+      "codeLines": 79,
+      "commentLines": 20,
+      "worstOwnCognitive": 3
+    },
+    "src/components/ui/SEOHead.tsx": {
+      "codeLines": 340,
+      "commentLines": 58,
+      "worstOwnCognitive": 24
+    },
+    "src/components/ui/ScrollArea.tsx": {
+      "codeLines": 49,
+      "commentLines": 9,
+      "worstOwnCognitive": 2
+    },
+    "src/components/ui/SegmentedBar.tsx": {
+      "codeLines": 70,
+      "commentLines": 11,
+      "worstOwnCognitive": 3
+    },
+    "src/components/ui/Select.tsx": {
+      "codeLines": 152,
+      "commentLines": 14,
+      "worstOwnCognitive": 2
+    },
+    "src/components/ui/Separator.tsx": {
+      "codeLines": 26,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "src/components/ui/Sheet.tsx": {
+      "codeLines": 120,
+      "commentLines": 13,
+      "worstOwnCognitive": 1
+    },
+    "src/components/ui/SiteFooter.tsx": {
+      "codeLines": 94,
+      "commentLines": 8,
+      "worstOwnCognitive": 9
+    },
+    "src/components/ui/SiteHeader.tsx": {
+      "codeLines": 84,
+      "commentLines": 10,
+      "worstOwnCognitive": 5
+    },
+    "src/components/ui/Skeleton.tsx": {
+      "codeLines": 42,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "src/components/ui/Sparkline.tsx": {
+      "codeLines": 42,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "src/components/ui/Spinner.tsx": {
+      "codeLines": 46,
+      "commentLines": 1,
+      "worstOwnCognitive": 0
+    },
+    "src/components/ui/SplitLayout.tsx": {
+      "codeLines": 32,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "src/components/ui/Stat.tsx": {
+      "codeLines": 78,
+      "commentLines": 11,
+      "worstOwnCognitive": 11
+    },
+    "src/components/ui/StatGroup.tsx": {
+      "codeLines": 25,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "src/components/ui/Steps.tsx": {
+      "codeLines": 125,
+      "commentLines": 21,
+      "worstOwnCognitive": 14
+    },
+    "src/components/ui/Table.tsx": {
+      "codeLines": 83,
+      "commentLines": 5,
+      "worstOwnCognitive": 1
+    },
+    "src/components/ui/TableOfContents.tsx": {
+      "codeLines": 54,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "src/components/ui/Tabs.tsx": {
+      "codeLines": 75,
+      "commentLines": 4,
+      "worstOwnCognitive": 3
+    },
+    "src/components/ui/Textarea.tsx": {
+      "codeLines": 44,
+      "commentLines": 1,
+      "worstOwnCognitive": 0
+    },
+    "src/components/ui/ThemeToggle.tsx": {
+      "codeLines": 62,
+      "commentLines": 8,
+      "worstOwnCognitive": 7
+    },
+    "src/components/ui/Timeline.tsx": {
+      "codeLines": 105,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "src/components/ui/Toggle.tsx": {
+      "codeLines": 93,
+      "commentLines": 15,
+      "worstOwnCognitive": 2
+    },
+    "src/components/ui/ToggleSwitch.tsx": {
+      "codeLines": 44,
+      "commentLines": 10,
+      "worstOwnCognitive": 4
+    },
+    "src/components/ui/Tooltip.tsx": {
+      "codeLines": 57,
+      "commentLines": 20,
+      "worstOwnCognitive": 1
+    },
+    "src/components/ui/WizardLayout.tsx": {
+      "codeLines": 148,
+      "commentLines": 0,
+      "worstOwnCognitive": 8
+    },
+    "src/components/ui/__tests__/AdminLayout.test.tsx": {
+      "codeLines": 40,
+      "commentLines": 3,
+      "worstOwnCognitive": 0
+    },
+    "src/components/ui/__tests__/Alert.test.tsx": {
+      "codeLines": 19,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "src/components/ui/__tests__/Badge.test.tsx": {
+      "codeLines": 17,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "src/components/ui/__tests__/Button.test.tsx": {
+      "codeLines": 46,
+      "commentLines": 1,
+      "worstOwnCognitive": 0
+    },
+    "src/components/ui/__tests__/Card.test.tsx": {
+      "codeLines": 49,
+      "commentLines": 2,
+      "worstOwnCognitive": 0
+    },
+    "src/components/ui/__tests__/CodeBlock.test.tsx": {
+      "codeLines": 35,
+      "commentLines": 1,
+      "worstOwnCognitive": 0
+    },
+    "src/components/ui/__tests__/Coverage.test.tsx": {
+      "codeLines": 164,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "src/components/ui/__tests__/Dialog.test.tsx": {
+      "codeLines": 66,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "src/components/ui/__tests__/Icon.test.tsx": {
+      "codeLines": 50,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "src/components/ui/__tests__/Input.test.tsx": {
+      "codeLines": 32,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "src/components/ui/__tests__/Pagination.test.tsx": {
+      "codeLines": 89,
+      "commentLines": 1,
+      "worstOwnCognitive": 0
+    },
+    "src/elements.ts": {
+      "codeLines": 29,
+      "commentLines": 8,
+      "worstOwnCognitive": 0
+    },
+    "src/hooks/useCopyToClipboard.test.ts": {
+      "codeLines": 51,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "src/hooks/useCopyToClipboard.ts": {
+      "codeLines": 39,
+      "commentLines": 10,
+      "worstOwnCognitive": 4
+    },
+    "src/hooks/useDebounce.test.ts": {
+      "codeLines": 34,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "src/hooks/useDebounce.ts": {
+      "codeLines": 9,
+      "commentLines": 10,
+      "worstOwnCognitive": 0
+    },
+    "src/hooks/useIsomorphicLayoutEffect.test.ts": {
+      "codeLines": 14,
+      "commentLines": 1,
+      "worstOwnCognitive": 0
+    },
+    "src/hooks/useIsomorphicLayoutEffect.ts": {
+      "codeLines": 3,
+      "commentLines": 8,
+      "worstOwnCognitive": 0
+    },
+    "src/hooks/useLocalStorage.test.ts": {
+      "codeLines": 43,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "src/hooks/useLocalStorage.ts": {
+      "codeLines": 45,
+      "commentLines": 14,
+      "worstOwnCognitive": 3
+    },
+    "src/hooks/useMediaQuery.test.ts": {
+      "codeLines": 55,
+      "commentLines": 1,
+      "worstOwnCognitive": 0
+    },
+    "src/hooks/useMediaQuery.ts": {
+      "codeLines": 15,
+      "commentLines": 5,
+      "worstOwnCognitive": 1
+    },
+    "src/hooks/useOnClickOutside.test.tsx": {
+      "codeLines": 34,
+      "commentLines": 1,
+      "worstOwnCognitive": 0
+    },
+    "src/hooks/useOnClickOutside.ts": {
+      "codeLines": 24,
+      "commentLines": 11,
+      "worstOwnCognitive": 2
+    },
+    "src/index.ts": {
+      "codeLines": 84,
+      "commentLines": 11,
+      "worstOwnCognitive": 0
+    },
+    "src/lib/consent.test.ts": {
+      "codeLines": 131,
+      "commentLines": 3,
+      "worstOwnCognitive": 1
+    },
+    "src/lib/consent.ts": {
+      "codeLines": 114,
+      "commentLines": 9,
+      "worstOwnCognitive": 20
+    },
+    "src/lib/theme.test.ts": {
+      "codeLines": 115,
+      "commentLines": 1,
+      "worstOwnCognitive": 0
+    },
+    "src/lib/theme.ts": {
+      "codeLines": 51,
+      "commentLines": 32,
+      "worstOwnCognitive": 3
+    },
+    "src/lib/utils.test.ts": {
+      "codeLines": 28,
+      "commentLines": 5,
+      "worstOwnCognitive": 0
+    },
+    "src/lib/utils.ts": {
+      "codeLines": 5,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "src/main.tsx": {
+      "codeLines": 9,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "src/pages/ButtonsPage.tsx": {
+      "codeLines": 316,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "src/pages/CardsPage.tsx": {
+      "codeLines": 207,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "src/pages/ColorsPage.tsx": {
+      "codeLines": 140,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "src/pages/DataPage.tsx": {
+      "codeLines": 578,
+      "commentLines": 2,
+      "worstOwnCognitive": 3
+    },
+    "src/pages/ElementsPage.tsx": {
+      "codeLines": 474,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "src/pages/ExtendedPage.tsx": {
+      "codeLines": 522,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "src/pages/FeedbackPage.tsx": {
+      "codeLines": 274,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "src/pages/FormsPage.tsx": {
+      "codeLines": 342,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "src/pages/HooksPage.tsx": {
+      "codeLines": 414,
+      "commentLines": 10,
+      "worstOwnCognitive": 11
+    },
+    "src/pages/InteractivePage.tsx": {
+      "codeLines": 519,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "src/pages/LayoutsPage.tsx": {
+      "codeLines": 1400,
+      "commentLines": 2,
+      "worstOwnCognitive": 18
+    },
+    "src/pages/OverviewPage.tsx": {
+      "codeLines": 328,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "src/pages/TypographyPage.tsx": {
+      "codeLines": 199,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "src/pages/__tests__/Pages.test.tsx": {
+      "codeLines": 32,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tests/a11y-interactions.spec.ts": {
+      "codeLines": 87,
+      "commentLines": 7,
+      "worstOwnCognitive": 2
+    },
+    "tests/a11y.spec.ts": {
+      "codeLines": 48,
+      "commentLines": 10,
+      "worstOwnCognitive": 2
+    }
+  },
+  "offenders": {
+    "cognitive": [
+      {
+        "file": "src/components/ui/SEOHead.tsx",
+        "fn": "generateSEOTags",
+        "line": 270,
+        "score": 30,
+        "own": 24
+      },
+      {
+        "file": "src/components/ui/SEOHead.tsx",
+        "fn": "SEOHead",
+        "line": 126,
+        "score": 21,
+        "own": 21
+      },
+      {
+        "file": "src/lib/consent.ts",
+        "fn": "updateTrackers",
+        "line": 72,
+        "score": 40,
+        "own": 20
+      },
+      {
+        "file": "src/pages/LayoutsPage.tsx",
+        "fn": "LayoutsPage",
+        "line": 120,
+        "score": 56,
+        "own": 18
+      },
+      {
+        "file": "src/components/ui/AdminLayout.tsx",
+        "fn": "<anonymous@215>",
+        "line": 215,
+        "score": 17,
+        "own": 17
+      },
+      {
+        "file": "src/components/ui/FormField.tsx",
+        "fn": "<anonymous@46>",
+        "line": 46,
+        "score": 14,
+        "own": 14
+      },
+      {
+        "file": "src/components/ui/Steps.tsx",
+        "fn": "<anonymous@69>",
+        "line": 69,
+        "score": 14,
+        "own": 14
+      },
+      {
+        "file": "src/lib/consent.ts",
+        "fn": "syncWithZaraz",
+        "line": 105,
+        "score": 14,
+        "own": 14
+      },
+      {
+        "file": "src/components/AnalyticsElement.ts",
+        "fn": "connectedCallback",
+        "line": 16,
+        "score": 13,
+        "own": 13
+      },
+      {
+        "file": "src/components/CookieBannerElement.ts",
+        "fn": "attributeChangedCallback",
+        "line": 39,
+        "score": 12,
+        "own": 12
+      },
+      {
+        "file": "src/components/CookieBannerElement.ts",
+        "fn": "render",
+        "line": 119,
+        "score": 11,
+        "own": 11
+      },
+      {
+        "file": "src/components/SiteFooterElement.ts",
+        "fn": "renderInner",
+        "line": 143,
+        "score": 11,
+        "own": 11
+      },
+      {
+        "file": "src/components/ui/Button.tsx",
+        "fn": "<anonymous@93>",
+        "line": 93,
+        "score": 11,
+        "own": 11
+      },
+      {
+        "file": "src/components/ui/Stat.tsx",
+        "fn": "<anonymous@25>",
+        "line": 25,
+        "score": 11,
+        "own": 11
+      },
+      {
+        "file": "src/lib/consent.ts",
+        "fn": "getConsentStatus",
+        "line": 20,
+        "score": 11,
+        "own": 11
+      }
+    ],
+    "longFunctions": [
+      {
+        "file": "src/pages/LayoutsPage.tsx",
+        "fn": "LayoutsPage",
+        "line": 120,
+        "lines": 1313
+      },
+      {
+        "file": "src/pages/DataPage.tsx",
+        "fn": "DataPage",
+        "line": 38,
+        "lines": 559
+      },
+      {
+        "file": "src/pages/ExtendedPage.tsx",
+        "fn": "ExtendedPage",
+        "line": 39,
+        "lines": 504
+      },
+      {
+        "file": "src/pages/ElementsPage.tsx",
+        "fn": "ElementsPage",
+        "line": 3,
+        "lines": 482
+      },
+      {
+        "file": "src/pages/InteractivePage.tsx",
+        "fn": "InteractivePage",
+        "line": 57,
+        "lines": 477
+      },
+      {
+        "file": "src/pages/HooksPage.tsx",
+        "fn": "HooksPage",
+        "line": 20,
+        "lines": 425
+      },
+      {
+        "file": "src/pages/FormsPage.tsx",
+        "fn": "FormsPage",
+        "line": 22,
+        "lines": 333
+      },
+      {
+        "file": "src/pages/ButtonsPage.tsx",
+        "fn": "ButtonsPage",
+        "line": 29,
+        "lines": 298
+      },
+      {
+        "file": "src/pages/FeedbackPage.tsx",
+        "fn": "FeedbackPage",
+        "line": 10,
+        "lines": 275
+      },
+      {
+        "file": "src/pages/OverviewPage.tsx",
+        "fn": "OverviewPage",
+        "line": 101,
+        "lines": 239
+      },
+      {
+        "file": "src/App.tsx",
+        "fn": "AppShell",
+        "line": 94,
+        "lines": 212
+      },
+      {
+        "file": "src/pages/CardsPage.tsx",
+        "fn": "CardsPage",
+        "line": 5,
+        "lines": 209
+      },
+      {
+        "file": "src/components/ui/MobileNav.tsx",
+        "fn": "MobileNav",
+        "line": 39,
+        "lines": 182
+      },
+      {
+        "file": "registry/blocks/calendar.tsx",
+        "fn": "Calendar",
+        "line": 15,
+        "lines": 160
+      },
+      {
+        "file": "src/components/CommandPalette.tsx",
+        "fn": "CommandPalette",
+        "line": 35,
+        "lines": 157
+      }
+    ],
+    "bigFiles": [
+      {
+        "file": "src/pages/LayoutsPage.tsx",
+        "codeLines": 1400
+      },
+      {
+        "file": "registry/blocks/sidebar.tsx",
+        "codeLines": 674
+      },
+      {
+        "file": "src/pages/DataPage.tsx",
+        "codeLines": 578
+      },
+      {
+        "file": "src/pages/ExtendedPage.tsx",
+        "codeLines": 522
+      },
+      {
+        "file": "src/pages/InteractivePage.tsx",
+        "codeLines": 519
+      },
+      {
+        "file": "src/pages/ElementsPage.tsx",
+        "codeLines": 474
+      },
+      {
+        "file": "src/pages/HooksPage.tsx",
+        "codeLines": 414
+      },
+      {
+        "file": "src/pages/FormsPage.tsx",
+        "codeLines": 342
+      },
+      {
+        "file": "src/components/ui/SEOHead.tsx",
+        "codeLines": 340
+      },
+      {
+        "file": "src/pages/OverviewPage.tsx",
+        "codeLines": 328
+      },
+      {
+        "file": "src/pages/ButtonsPage.tsx",
+        "codeLines": 316
+      },
+      {
+        "file": "src/components/ui/AdminLayout.tsx",
+        "codeLines": 312
+      },
+      {
+        "file": "src/App.tsx",
+        "codeLines": 296
+      },
+      {
+        "file": "src/pages/FeedbackPage.tsx",
+        "codeLines": 274
+      },
+      {
+        "file": "registry/items.ts",
+        "codeLines": 214
+      }
+    ],
+    "unreferencedExports": [
+      {
+        "file": "registry/blocks/data-table-column-header.tsx",
+        "name": "DataTableColumnHeader"
+      },
+      {
+        "file": "registry/blocks/data-table-view-options.tsx",
+        "name": "DataTableViewOptions"
+      },
+      {
+        "file": "registry/items.ts",
+        "name": "productItems"
+      },
+      {
+        "file": "registry/items.ts",
+        "name": "productBlocks"
+      },
+      {
+        "file": "src/components/ui/DropdownMenu.tsx",
+        "name": "DropdownMenuPortal"
+      },
+      {
+        "file": "src/components/ui/DropdownMenu.tsx",
+        "name": "DropdownMenuSub"
+      },
+      {
+        "file": "src/components/ui/Popover.tsx",
+        "name": "PopoverAnchor"
+      },
+      {
+        "file": "src/components/ui/Popover.tsx",
+        "name": "PopoverClose"
+      }
+    ]
+  }
+}
