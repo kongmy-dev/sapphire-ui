@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.0.2 — 2026-10-12
+
+### Dependencies & Tooling
+
+- Adopt `react-day-picker` v10 (PR #8) with updated `month_grid` class mapping in `registry/blocks/calendar.tsx`.
+- Bump peerDependencies (`react`, `react-dom` to `^19.3.0`, `react-resizable-panels` to `^4.14.4`).
+- Bump devDependencies to latest stable (`@radix-ui/*`, `@testing-library/*`, `@types/*`, `lucide-react`, `tailwindcss`, `vite`, `vite-plugin-dts`, `wrangler`).
+- Defer breaking upgrades: `@tanstack/react-table` (held at `^8.21.3`), `typescript` (held at `6`), `vitest` (held at `^4.1.11`), and `jsdom` (held at `^29.1.1`).
+
 ## 3.0.1 — 2026-10-12
 
 ### Tooling
