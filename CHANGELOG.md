@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.1 — 2026-10-12
+
+### Tooling
+
+- Bumps `@testing-library/jest-dom` to `^7.0.0` (PR #9).
+
 ## 3.0.0 — 2026-07-13
 
 Architecture release: adds a second distribution lane (a shadcn-format **registry**
