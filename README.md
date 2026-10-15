@@ -45,7 +45,7 @@ This project is built using **Vite**, **TypeScript**, and **Tailwind CSS v4**, a
 | `bun install` | Clean, cached installation of dependencies. |
 | `bun run dev` | Runs the interactive specimen viewer locally at `http://localhost:5173/`. |
 | `bun run build` | Compiles type declarations, bundle outputs, and minified CSS variables to `dist/`. |
-| `bun run lint` | Triggers ESLint validation against workspace source files. |
+| `bun run lint` | Runs Biome check on workspace source files. |
 | `bun run preview` | Spins up a local web server to preview production builds. |
 
 ---

@@ -470,7 +470,7 @@
   "scripts": {
     "dev": "vite --config vite.docs.config.ts",
     "build": "tsc -b && vite build",
-    "prepare": "bun run build",
+    "prepare": "git config core.hooksPath .githooks || true",
     "lint": "biome check",
     "lint:fix": "biome check --write",
     "format": "biome check --write",
@@ -482,6 +482,14 @@
     "test": "vitest run",
     "test:registry": "bun scripts/verify-consumer.ts",
     "smoke:registry": "bun scripts/smoke-registry.ts",
+    "comment-check": "bun tooling/gates/comments.ts",
+    "size-check": "bun tooling/gates/changed.ts",
+    "token-check": "bun tooling/gates/tokens.ts",
+    "css-check": "bun tooling/gates/css-tokens.ts",
+    "dep-check": "bun tooling/gates/deps.ts",
+    "a11y-check": "bun tooling/gates/a11y-coverage.ts",
+    "externals-check": "bun tooling/gates/bundle-externals.ts",
+    "gate": "bun run lint && bun run comment-check && bun run token-check && bun run css-check && bun run dep-check && bun run a11y-check && bun run size-check && bun run test && bun run check:registry && bun run externals-check",
     "deploy:docs": "bun run build:docs && wrangler deploy"
   },
   "peerDependencies": {
@@ -504,9 +512,14 @@
     "@radix-ui/react-toggle": "^1.0.0",
     "@radix-ui/react-toggle-group": "^1.0.0",
     "@radix-ui/react-tooltip": "^1.0.0",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0",
-    "react-resizable-panels": "^4.14.4"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-resizable-panels": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react-resizable-panels": {
+      "optional": true
+    }
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",

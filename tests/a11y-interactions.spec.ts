@@ -82,6 +82,19 @@ test.describe('Interactive page interactions', () => {
     }
     if (strict) expect(results.violations).toEqual([]);
   });
+
+  test('a11y: Dialog (open)', async ({ page }) => {
+    await page.getByRole('button', { name: 'Open Dialog' }).click();
+    await page.waitForSelector('[role="dialog"]', { timeout: 2_000 });
+    const results = await runAxe(page);
+    if (results.violations.length > 0) {
+      console.warn(
+        '[a11y] dialog-open',
+        results.violations.map((v) => v.id),
+      );
+    }
+    if (strict) expect(results.violations).toEqual([]);
+  });
 });
 
 test.describe('App shell interactions', () => {

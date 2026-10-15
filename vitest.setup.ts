@@ -7,8 +7,7 @@ class ResizeObserverMock {
 }
 global.ResizeObserver = ResizeObserverMock;
 
-// jsdom 29 under vitest 4 does not expose Web Storage — polyfill localStorage
-// so theme prefs and the useLocalStorage hook have a real store under test.
+// vendor: https://github.com/jsdom/jsdom jsdom under vitest does not expose Web Storage
 class LocalStorageMock implements Storage {
   private store = new Map<string, string>();
   get length() {
@@ -18,7 +17,7 @@ class LocalStorageMock implements Storage {
     this.store.clear();
   }
   getItem(key: string) {
-    return this.store.has(key) ? this.store.get(key)! : null;
+    return this.store.get(key) ?? null;
   }
   setItem(key: string, value: string) {
     this.store.set(key, String(value));
@@ -41,8 +40,8 @@ Object.defineProperty(window, 'matchMedia', {
     matches: false,
     media: query,
     onchange: null,
-    addListener: () => {}, // Deprecated
-    removeListener: () => {}, // Deprecated
+    addListener: () => {},
+    removeListener: () => {},
     addEventListener: () => {},
     removeEventListener: () => {},
     dispatchEvent: () => false,

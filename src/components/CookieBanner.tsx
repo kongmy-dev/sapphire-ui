@@ -34,7 +34,5 @@ export function CookieBanner({ forceShow, onClose }: CookieBannerProps) {
     };
   }, [onClose]);
 
-  // Using React.createElement dynamically avoids needing JSX custom element declarations,
-  // completely bypassing the need for namespaces and ESLint rules.
   return React.createElement('cookie-banner', { ref });
 }

@@ -16,12 +16,30 @@ export interface StatProps extends HTMLAttributes<HTMLDivElement> {
   size?: 'sm' | 'default' | 'lg';
 }
 
+const LABEL_SIZES = {
+  sm: 'text-[10px]',
+  default: 'text-[12px]',
+  lg: 'text-sm',
+} as const;
+
+const VALUE_SIZES = {
+  sm: 'text-2xl',
+  default: 'text-[28px]',
+  lg: 'text-4xl',
+} as const;
+
+const CHANGE_DIRECTIONS = {
+  up: 'text-success',
+  down: 'text-error',
+  neutral: 'text-muted-foreground',
+} as const;
+
 /**
  * Single metric display. Compose multiple Stats in a grid for a dashboard
  * card row. Renders semantic <dl>/<dt>/<dd> so screen readers announce
  * the label–value pairing correctly.
  */
-const Stat = forwardRef<HTMLDivElement, StatProps>(
+export const Stat = forwardRef<HTMLDivElement, StatProps>(
   (
     {
       className,
@@ -47,9 +65,7 @@ const Stat = forwardRef<HTMLDivElement, StatProps>(
         <dt
           className={cn(
             'mb-1 flex items-center gap-1.5 font-semibold text-muted-foreground uppercase tracking-[0.06em]',
-            size === 'sm' && 'text-[10px]',
-            size === 'default' && 'text-[12px]',
-            size === 'lg' && 'text-sm',
+            LABEL_SIZES[size],
           )}
         >
           {label}
@@ -58,9 +74,7 @@ const Stat = forwardRef<HTMLDivElement, StatProps>(
           <span
             className={cn(
               'font-medium font-serif text-foreground tabular-nums leading-none tracking-[-0.01em]',
-              size === 'sm' && 'text-2xl',
-              size === 'default' && 'text-[28px]',
-              size === 'lg' && 'text-4xl',
+              VALUE_SIZES[size],
             )}
           >
             {value}
@@ -69,11 +83,7 @@ const Stat = forwardRef<HTMLDivElement, StatProps>(
             <span
               className={cn(
                 'mt-1 font-normal text-[12px] tabular-nums',
-                changeDirection === 'up'
-                  ? 'text-[#1f7a4d]'
-                  : changeDirection === 'down'
-                    ? 'text-[#b03a3a]'
-                    : 'text-muted-foreground',
+                CHANGE_DIRECTIONS[changeDirection],
               )}
             >
               {change}
@@ -88,5 +98,3 @@ const Stat = forwardRef<HTMLDivElement, StatProps>(
   ),
 );
 Stat.displayName = 'Stat';
-
-export { Stat };

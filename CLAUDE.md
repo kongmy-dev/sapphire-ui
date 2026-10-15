@@ -6,12 +6,22 @@ Sapphire UI is the official design system for **KONGMY Digital Solutions** (`kon
 
 | Lane | Distribution | Audience |
 |---|---|---|
-| **Editorial/brand** | npm package (unchanged) | kongmy.dev properties, blog, proposals |
-| **Product** | shadcn-format **registry** (vendored source, hosted on design.kongmy.dev) | product/client apps scaffolded from `~/Projects/kongmy-stack` |
+| **Editorial/brand** | npm package (unchanged) | Properties, blog, proposals |
+| **Product** | shadcn-format **registry** (vendored source, hosted on design.kongmy.dev) | product/client apps scaffolded from the internal stack template |
 
-Why: product apps must diverge (client theming, POS touch UIs) — vendored source makes divergence an edit, not a fork; a public registry also kills GitHub-Packages PAT friction. Only the **product subset** (~15 components + admin blocks imported from `~/Projects/references/shadcn-admin`, restyled onto tokens) gets registry-shaped; editorial components stay npm-only. Existing npm consumers are never broken.
+Why: product apps must diverge (client theming, POS touch UIs) — vendored source makes divergence an edit, not a fork; a public registry also kills PAT friction. Only the **product subset** (~15 components + admin blocks adapted from an upstream shadcn admin reference, restyled onto tokens) gets registry-shaped; editorial components stay npm-only. Existing npm consumers are never broken.
 
-**Plan + task list: `REGISTRY-PLAN.md`.** Hard boundary: sapphire stays backend-agnostic — never import from kongmy-stack, no contract/API types here; contract-aware blocks live in kongmy-stack, composed from sapphire primitives. Registry items must be self-contained (shadcn conventions) and read tokens only via CSS custom properties.
+**Plan + task list: `REGISTRY-PLAN.md`.** Hard boundary: sapphire stays backend-agnostic — sapphire never imports from consuming apps; contract-aware blocks live in the consuming template, composed from sapphire primitives. Registry items must be self-contained (shadcn conventions) and read tokens only via CSS custom properties.
+
+---
+
+## Size and shape
+
+**When a request is underspecified, decide out loud before you build.** List what the request leaves open — input shape, output shape, edge behaviour, anything you would otherwise settle silently while typing. Take the narrowest answer that satisfies it, and say what you are choosing *not* to build. Then implement that list and nothing beyond it. Measured over six runs on a sibling repo: 19% less code, 30% fewer exports, 32% lower complexity.
+
+**A new export needs a consumer in the same change.** An interface with one implementation, a factory that constructs one thing, or an options object read in one place is indirection nobody is paying for. Write the direct version; the seam appears on its own when a second caller arrives, and it lands somewhere other than you would have guessed.
+
+A size gate runs automatically after every edit and reports back — limits, and why they are what they are, in `tooling/quality-metrics/check.ts`. See `AI-CODE-QUALITY.md`.
 
 ---
 
@@ -39,7 +49,10 @@ bun run build        # tsc + vite build → dist/
 bun run lint         # Biome check (lint + format, TS/TSX + CSS)
 bun run lint:fix     # Biome check --write (auto-fix + format, incl. Tailwind class sort)
 bun run format       # Alias of lint:fix (Biome check --write)
+bun run test         # Unit test suite (vitest)
 bun run test:a11y    # Playwright a11y tests
+bun run comment-check # Comment gate on changed files
+bun run size-check   # Size gate on changed files
 bun run build:docs   # docs site → dist-docs/
 bun run deploy:docs  # deploy docs to Cloudflare Pages
 ```
@@ -53,11 +66,16 @@ design/
   colors_and_type.css   ← canonical design tokens (CSS custom properties)
   design.md             ← design spec (colors, type, do's/don'ts)
 
+docs/
+  coding/
+    principles.md       ← coding principles & gates register
+
 src/
-  index.css             ← Tailwind v4 @theme + full component styles
+  theme.css             ← Tailwind v4 @theme canonical token declarations
+  index.css             ← component styles and utility imports
   index.ts              ← main library entry (React)
   elements.ts           ← Web Components / custom elements entry
-  components/ui/        ← all primitive components (Button, Card, Badge…)
+  components/ui/        ← primitive components (Button, Card, Badge…)
   components/           ← composite / behaviour components (Toast, Banner…)
   hooks/                ← reusable React hooks
   lib/
@@ -72,8 +90,15 @@ src/
 
 | Task | Read first |
 |---|---|
-| Writing or editing CSS | `.claude/skills/css.md` |
-| Writing or editing React components | `.claude/skills/react.md` |
+| Coding principles & standards | `.claude/skills/coding-principles/SKILL.md` |
+| Writing or editing React components | `.claude/skills/sapphire-react/SKILL.md` |
+| Writing or editing CSS & tokens | `.claude/skills/sapphire-css/SKILL.md` |
+| Writing or running tests | `.claude/skills/sapphire-testing/SKILL.md` |
+| Downstream app integration | `.claude/skills/sapphire-consumer/SKILL.md` |
+| Reviewing code | `.claude/skills/review-code/SKILL.md` |
+| Refactoring & size gate fixes | `.claude/skills/refactor-code/SKILL.md` |
+| Running quality gates | `.claude/skills/gate/SKILL.md` |
+| Adding new rules or gates | `.claude/skills/add-rule/SKILL.md` |
 | Any UI work | `.claude/instructions/design-system.md` |
 
 ---
@@ -83,9 +108,10 @@ src/
 - **Bun only.** Never use `npm`, `npx`, or `yarn`.
 - **No new dependencies without justification.** This library ships to consumers; every dep has a size cost.
 - **Peer deps stay peer deps.** React and all Radix packages are peer deps — never move them to `dependencies`.
-- **Design tokens are in `src/theme.css` (`@theme {}`) — that is the single source.** `index.css` imports it; never re-declare tokens there. Never hard-code hex values; always reference CSS custom properties. `theme.css` ships RAW (uncompiled) to consumers as `@kongmy-dev/sapphire-ui/theme.css` so a Tailwind v4 app can `@import` it and generate utilities from Sapphire tokens without re-declaring them — do not run it through the Tailwind build (a copy plugin in `vite.config.ts` emits `dist/theme.css`).
+- **Design tokens are in `src/theme.css` (`@theme {}`) — that is the single source.** `index.css` imports it; never re-declare tokens there. Never hard-code hex values; always reference CSS custom properties. `theme.css` ships RAW (uncompiled) to consumers as `@kongmy-dev/sapphire-ui/theme.css` so a Tailwind v4 app can `@import` it and generate utilities from Sapphire tokens without re-declaring them — do not run it through the Tailwind build.
 - **No gradients in primary UI** except the `premium` button variant (intentional exception).
 - **`--color-accent` is decorative.** For text on light surfaces always use `--color-accent-text` (`#8a5a1f`) — it passes WCAG AA contrast; `--color-accent` does not.
-- **Token vocabulary is shadcn-canonical + a brand extension.** `theme.css` defines shadcn's semantic tokens (`--color-background`, `--color-foreground`, `--color-muted-foreground`, `--color-primary-foreground`, `--color-card`, `--color-sidebar-*`, `--color-chart-*`, …) as `var()` aliases onto the brand tokens. **Prefer the shadcn utility name** where an equivalent exists (`text-muted-foreground`, `bg-background`, `bg-card`, `text-primary-foreground`) so components read as idiomatic shadcn and mix with community items. Use the brand-only tokens for what shadcn lacks: `text-accent-text` (AA gold), `text-text-strong`, `bg-hover-overlay`, `rounded-btn`, the `on-dark` family. Aliases are value-identical, so either name renders the same.
+- **Token vocabulary is shadcn-canonical + a brand extension.** Prefer the shadcn utility name where an equivalent exists (`text-muted-foreground`, `bg-background`, `bg-card`, `text-primary-foreground`) so components read as idiomatic shadcn and mix with community items. Use the brand-only tokens for what shadcn lacks: `text-accent-text` (AA gold), `text-text-strong`, `bg-hover-overlay`, `rounded-btn`, the `on-dark` family.
 - **Exports are explicit.** Every new component gets its own named export in `package.json → exports`. Update `src/index.ts` and `package.json` together.
 - **a11y first.** Run `bun run test:a11y` before shipping any component change.
+- **No comments in code.** Names, types, structure and tests say what. JSDoc is permitted only directly above exported declarations and members of exported types. All other comments must follow one of the five fixed forms.

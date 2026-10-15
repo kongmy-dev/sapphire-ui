@@ -69,6 +69,7 @@ export default defineConfig({
         'clsx',
         'tailwind-merge',
         'class-variance-authority',
+        'react-resizable-panels',
         /^@radix-ui\//,
       ],
       output: {

@@ -1,6 +1,3 @@
-/* eslint-disable better-tailwindcss/no-conflicting-classes, better-tailwindcss/enforce-consistent-class-order --
-   This suite intentionally passes conflicting / unordered utility strings to
-   verify that cn() (clsx + tailwind-merge) resolves them correctly. */
 import { describe, expect, it } from 'vitest';
 import { cn } from './utils';
 
@@ -21,14 +18,12 @@ describe('cn', () => {
   });
 
   it('resolves conflicting Tailwind utilities — later class wins', () => {
-    // tailwind-merge collapses same-property utilities, keeping the last one.
     expect(cn('px-2', 'px-4')).toBe('px-4');
     expect(cn('p-4', 'px-2')).toBe('p-4 px-2');
     expect(cn('text-lg text-sm')).toBe('text-sm');
   });
 
   it('lets a consumer className override a base class', () => {
-    // The canonical merge behaviour the design system relies on for overrides.
     expect(cn('rounded-md bg-card p-4', 'p-2')).toBe('rounded-md bg-card p-2');
   });
 
