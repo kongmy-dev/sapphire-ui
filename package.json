@@ -2,7 +2,7 @@
   "name": "@kongmy-dev/sapphire-ui",
   "version": "3.0.2",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "access": "public"
   },
   "repository": {
     "type": "git",
