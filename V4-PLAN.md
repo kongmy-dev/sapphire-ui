@@ -19,6 +19,7 @@ and `REGISTRY-PLAN.md` and is deleted when 4.0.0 ships.
 | Consumers, from a scan of every local repository | 2 apps use the stylesheet's classes only; 2 import React components from npm (one is still on 2.x, one also vendors from the registry); 3 vendor from the registry, the app template among them. The company website and blog use none of it. No app uses the custom elements, Analytics, CookieBanner, SEOHead or the proposal React components; the CSS-only apps do use the document, financial-table, prose, page and admin-shell classes |
 | Vendored copies are reformatted by each app | every vendored `button`, `badge`, `dialog`, `select` and `table` differs from its source by 32–287 lines, mostly formatting, so re-pulling a fix through the registry is noisy |
 | The gate is red, and three gates pass on nothing | `bun run gate`: `test` and `externals-check` fail on a stale `dist/` that a test reads; the comment, size and token gates print "0 files" and exit 0 |
+| Releases have been stuck since 3.0.1, and the next passing build publishes whatever `master` holds | npm's newest version is 3.0.0 and the remote's newest tag is `v3.0.0`; the last four `publish.yml` runs failed in `tsc` because CI never installs the peer `react-resizable-panels` (`src/components/ui/SplitLayout.tsx`); `publish.yml` runs on every push to `master` and publishes any version that has no tag |
 | Comment and size debt | comment gate over `src/`: 328 stray comments, over `tooling/`: 26; size gate: 28 of 121 `src/` files fail |
 | Code lags React 19 and current shadcn | 54 files use `forwardRef` and `displayName`; no `data-slot`; per-package `@radix-ui/react-*` imports |
 | Docs sprawl | 2,391 lines of Markdown; two plans written as task history; files that name other projects: `design/colors_and_type.css`, `src/components/AnalyticsElement.ts`, `src/components/ui/Layout.tsx`, `AI-CODE-QUALITY.md`, `REGISTRY-PLAN.md`, `tooling/quality-metrics/` |
@@ -96,7 +97,11 @@ editorial React (30%).
   app moves.
 - **A `v3` branch** is cut from `f6720d3` (3.0.2) for fixes; `master` becomes v4.
 - **No comments** in TS, TSX or CSS, JSDoc included: names and unions carry the meaning, and the
-  shipped `.d.ts` shows the types. The one allowed form is `biome-ignore <rule>: <reason>`.
+  shipped `.d.ts` shows the types. Two forms are allowed. `biome-ignore <rule>: <reason>` silences
+  a `style` or `complexity` rule only; a correctness, suspicious, a11y or security finding is
+  fixed, never silenced. A workaround for a browser or vendor bug gets a test named for that bug,
+  so deleting the workaround fails; where no test can observe the bug, its URL sits alone above
+  the workaround.
 - **ESM only, one subpath per component** through a `./*` pattern export and no root barrel, so
   importing one component never loads Radix for another.
 - **No runtime dependency.** Data attributes replace CVA, `clsx` and tailwind-merge; consent uses
@@ -106,7 +111,16 @@ editorial React (30%).
 - **Publish to npm only,** public, with no token needed to install; GitHub Packages goes.
 - **TypeScript stays on 6.0.x:** 7 has no classic compiler API, which the metrics tool and knip
   need. Bun is pinned.
-- **Unit tests** run on `bun test` with happy-dom; a11y and visual specs on Playwright.
+- **Unit tests** run on `bun test` with happy-dom; a11y and visual specs on Playwright. A unit
+  test sees only what an app sees: it imports its component and that component's examples, finds
+  elements by role and name, and asserts no snapshot.
+- **The look is pinned in one environment.** Pins are rendered and compared only in the Playwright
+  container image that matches the pinned `@playwright/test`, one screenshot per example root, at
+  zero tolerance (Playwright's default allows 0.2 per pixel). Rendering differs by OS, so a pin
+  taken on a laptop never lands.
+- **Generated files are committed:** the export map, the stylesheet's import list,
+  `registry.json`, the site's navigation and the migration tables. The gate reruns every generator
+  and fails on any diff.
 
 ## 4. Not building
 
@@ -118,24 +132,48 @@ editorial React (30%).
 - Aliases for v3 class names or props: apps on 3.x stay pinned and migrate with a map.
 - `@tanstack/react-table` 9 (backlog).
 - A redesign: values stay as they are, except the changes this file names.
+- Progress checkboxes in this file: `bun run scorecard` reads progress from the tree, so parallel
+  sessions never edit one shared list.
+- General agent-workflow skills (planning, review panels, PR handling): the repository's skills
+  describe this code and nothing else.
 
 ## 5. Phases
 
 Each step is one commit and ends with `bun run gate` green. A move is pinned first, moved second and
 proved third.
 
-**P0 — Decide.** ADRs in `docs/adr/`, each under 1,000 words: rules ship with gates and code
-carries no comments; the CSS contract (D1); distribution and registry versions (D2); tokens and
-theming; primitives and icons (D3, D4). Delete both old plans; their vendor traps move to
-`docs/traps.md`.
+**P0 — Make `master` safe, settle the unknowns, decide.**
+
+1. Cut `v3` from `f6720d3`. On `v3`, add `react-resizable-panels` to devDeps and to the build's
+   externals, widen each peer range to include the version CI tests, and get CI green; the owner
+   pushes the `v3.0.2` tag. On both branches `publish.yml` runs only on a `v*` tag and only after
+   CI passes, so a push to `master` never publishes.
+2. Run the spikes in §9, each in a throwaway branch or scratch app, and paste each result with its
+   SHA. A result that contradicts this file stops the plan before P1.
+3. Write the ADRs in `docs/adr/`, each under 1,000 words, each opening with the consumer's code
+   (the HTML, the import, the `shadcn add`) before the decision: rules ship with gates and code
+   carries no comments; the CSS contract (D1); distribution and registry versions (D2); tokens and
+   theming; primitives and icons (D3, D4). Each says what it accepts in exchange for what, and
+   lists its weighted alternatives.
+4. Delete both old plans. Their vendor traps become assertions where they bite: the registry
+   smoke fails if the shadcn CLI sees `REGISTRY_URL`, and the production smoke checks the `/r/*`
+   headers.
 
 **P1 — A gate that can be trusted, and a pin.** Every gate prints what it checked and fails when
-that is nothing. Tests are hermetic: none reads the real `dist/`. Pin Bun (`.bun-version`,
-`packageManager`), devDeps exactly (`bunfig.toml`) and TypeScript 6.0.x. A strict shared
-`tsconfig.base.json`, with `typecheck` in the gate. Strict Biome with `--error-on-warnings`. knip.
-Unit tests move to `bun test` with happy-dom; a Radix dialog is the pilot, and if portals or pointer
-events fail there, that suite runs in Playwright instead of bringing jsdom back. **Pin the look:**
-Playwright screenshots of every component's demo, light and dark, committed.
+that is nothing. Each gate has a test that feeds it a real violation from this repository (a stray
+comment from `src/`, a hex literal from `src/index.css`, the `.btn` and `<Button>` padding drift)
+and expects it to fail, and each failure prints `file:line`, the rule ID and what to write
+instead. Until P9 the gates run on the new folders and any change under `src/` fails; v3 fixes go
+to the `v3` branch. Tests are hermetic: none reads the real `dist/`. Pin Bun (`.bun-version`,
+`packageManager`), devDeps exactly (`bunfig.toml`) and TypeScript 6.0.x; Dependabot moves to the
+`bun` ecosystem, which updates `bun.lock`. A strict shared `tsconfig.base.json` that covers every
+tracked `.ts` file, with `typecheck` in the gate. Strict Biome with `--error-on-warnings`. knip.
+Unit tests move to `bun test` with happy-dom, or to Playwright where the §9 spike says so; jsdom
+does not come back. `bun run scorecard [sha]` prints §10's numbers and each component's state
+(CSS, React, examples, pin, element, registry item) for any commit, measured the same way.
+**Pin the look:** Playwright screenshots of every component's demo, light and dark, rendered as §3
+says and committed. `bun run pin <example>…` is the only way to change a pin, and it refuses an
+empty list.
 
 **P2 — Tokens.** `css/tokens.css` and `css/tailwind.css`: light and dark through `color-scheme` and
 `light-dark()`, following `prefers-color-scheme` unless `[data-theme]` or `.dark` forces one. A test
@@ -148,8 +186,12 @@ financial table, key-value list, prose, page, masthead and section, stack, clust
 shell. `sapphire.css` declares the layer order Tailwind uses and is bundled and minified by
 `bun build`. Fonts: `woff2` from pinned `@fontsource-variable` packages, latin and latin-ext, copied
 into `dist/fonts/` and declared in `fonts.css`. Each component's plain-HTML specimen matches its P1
-pin, and every deliberate difference is listed in its commit. Budget: gzipped `sapphire.css` at its
-measured size plus 15%. Button, card and dialog go first and set the pattern; the rest fan out.
+pin; a deliberate difference goes through `bun run pin` and is listed in its commit. Budget:
+gzipped `sapphire.css` at its measured size plus 15%. Button, card and dialog go first and set the
+pattern. Then `sapphire-component` is written from those three: the steps, the checks a port must
+pass and the files a port must not touch. Every other component is one session that owns only its
+folder and does not edit that skill. Each rename lands in `tooling/migrate/map.ts` in the commit
+that makes it.
 
 **P4 — React components.** `components/<name>/<name>.tsx` for every component: React 19 (`ref` as
 a prop), `data-slot`, variants as `as const` tuples rendered as `data-*`, the `sp-*` class plus
@@ -159,11 +201,13 @@ behaviour; coverage is at least 95% of lines and functions, every file counted. 
 holds React and CSS together. Hooks and helpers move to `hooks/` and `lib/` with their tests.
 
 **P5 — Custom elements.** `elements/<name>.ts` renders the same classes as its React twin, defines
-itself only in a browser, and has its own a11y specimen.
+itself only in a browser, and has its own a11y specimen. An equivalence test renders each element
+and its React twin from the same example and compares their classes and data attributes.
 
 **P6 — The package.** `tsc` compiles `components/`, `elements/`, `hooks/` and `lib/` file for file
-(ESM and `.d.ts`); `bun build` bundles the CSS. A generated `./*` pattern export, optional peers,
-and `sideEffects` naming only the stylesheets and `elements/`. A committed API snapshot (exported
+(ESM and `.d.ts`); `bun build` bundles the CSS. A generated `./*` pattern export that reaches each
+folder's entry file and nothing else, so importing an internal fails; optional peers; and
+`sideEffects` naming only the stylesheets and `elements/`. A committed API snapshot (exported
 types, CSS selectors, token names) fails on any change that the version and `CHANGELOG.md` do not
 carry. Smoke: a temporary app installs the packed tarball and imports only the CSS with no peer
 installed; server-renders button, card, badge and alert with React and without `radix-ui`; builds a
@@ -174,8 +218,8 @@ checked by `shadcn registry validate`, from the same component folders plus `blo
 onto the new components and may use Tailwind utilities for layout. npm dependencies are versioned
 from `package.json`; a slim generator stays only if `shadcn build` cannot derive them. A
 `registry:base` item adds the npm package, the stylesheet import, the fonts and the consumer skill
-(`~/.claude/skills/sapphire/SKILL.md`); whether the CLI can add the `@import` is unverified, and
-the fallback is one documented line. Serve `/r/v4/`; freeze the current build at `/r/`. Smoke: the
+(`~/.claude/skills/sapphire/SKILL.md`); §9's spike settles whether the CLI can add the `@import`,
+and the fallback is one documented line. Serve `/r/v4/`; freeze the current build at `/r/`. Smoke: the
 pinned real CLI installs base, button, dialog and sidebar into a temporary Vite app, which must
 typecheck and build; the same run targets production after deploy.
 
@@ -193,53 +237,57 @@ size limits to the new tree's own p95, lowered only from then on, and rewrite
 **P10 — Docs.** Docs are written alongside each phase; this step adds the docs and skill-refs gates
 and sweeps what is left (§6).
 
-**P11 — Release 4.0.0.** `CHANGELOG.md` carries the migration maps (§8). CI runs `bun run gate` and
-the a11y, visual and smoke specs; `bun publish` runs only after CI passes; then deploy, the
-production smoke and the tag.
+**P11 — Release 4.0.0.** `CHANGELOG.md` carries the migration maps (§8), generated from
+`tooling/migrate/map.ts`, and `bun run migrate <app>` applies them. CI runs `bun run gate` and the
+a11y, visual and smoke specs. The owner pushes the `v4.0.0` tag; `publish.yml` publishes after CI
+passes; then deploy and the production smoke. `bun run scorecard` at `bc2e116` and at the release
+commit fills §10.
 
 ## 6. Docs after v4
 
 | Doc | Holds |
 |---|---|
 | `README.md` | what it is, the four ways to use it (classes, Tailwind, npm React, registry), the customisation ladder, links |
-| `CLAUDE.md` (`AGENTS.md` links to it) | the rules, one line each; commands; layout; hard rules; at most 120 lines |
+| `CLAUDE.md` (`AGENTS.md` links to it) | the rules with their gates, one line each, the only copy (skills cite rule IDs); the working rules; commands; layout; at most 120 lines |
 | `DESIGN.md` | brand, tokens (checked), component guidance, UX rules; shipped in the package |
 | `CHANGELOG.md` | release notes and migration maps |
 | `docs/adr/` | each decision and its critical why |
-| `docs/coding/principles.md` | each rule and its gate |
-| `docs/traps.md` | behaviour forced by a vendor: the shadcn CLI, Cloudflare, Tailwind, Radix, browsers |
 | `docs/backlog.md` | open work; never a `TODO` in code |
 | `SECURITY.md`, `LICENSE` | unchanged |
-| Skills | `coding-principles` (with the gate's shape and where knowledge goes), `sapphire-component` (add or change a component), `review-code`, `refactor-code`, `add-rule`; the consumer skill `skills/sapphire/SKILL.md`, shipped in the package and by the registry |
+| Skills | `coding-principles` (with the gate's shape and where knowledge goes), `sapphire-component` (add or change a component), `review-code` (the checks no gate makes: root cause or symptom, a second way to do one task, an internal another module can import, a file passing 1,000 lines, a simplification left on the table; run by a session that did not write the change), `refactor-code`, `add-rule`; the consumer skill `skills/sapphire/SKILL.md`, shipped in the package and by the registry |
 
 Deleted: `AI-CODE-QUALITY.md` (its size-gate reasoning moves to the `coding-principles`
-reference), both plans, `.claude/instructions/design-system.md` (into `DESIGN.md`), the
-`sapphire-react`, `sapphire-css`, `sapphire-testing` and `gate` skills (folded in),
-`.github/ISSUE_TEMPLATE/`.
+reference), both plans, `docs/coding/principles.md` (its table moves into `CLAUDE.md`),
+`.claude/instructions/design-system.md` (into `DESIGN.md`), the `sapphire-react`, `sapphire-css`,
+`sapphire-testing` and `gate` skills (folded in), `.github/ISSUE_TEMPLATE/`.
 
 ## 7. Rules and their gates
 
 | ID | Rule | Gate |
 |---|---|---|
-| P-1 | No comments in TS, TSX or CSS; `biome-ignore <rule>: <reason>` is the one form | comment gate on every tracked source file, and on each edit |
+| P-1 | No comments in TS, TSX or CSS. `biome-ignore` silences only a `style` or `complexity` rule, with a reason; a vendor bug's URL may sit alone above its workaround when no test can observe the bug | comment gate on every tracked source file, and on each edit |
 | P-2 | Dependencies point one way: `css/` imports only `css/`; a component imports React, `radix-ui`, `hooks/`, `lib/` and other components; an element imports only `lib/`; a block imports components and its declared packages; `site/` imports the rest; nothing imports `site/` or `tooling/`; every tracked file is reached | boundary gate |
 | P-3 | Types carry the rules: no `any`, no `!`, no `as` but `as const`, `type` over `interface`, variants as `as const` tuples with derived unions, no `enum` | `tsc` strict and Biome |
-| P-4 | One contract: every variant value has its selector, every selector its value, and every class a component or element renders exists | contract gate |
-| P-5 | Tokens only: no colour or length literal outside `tokens.css`, every `var()` resolves, `DESIGN.md` matches `tokens.css` | token gate |
+| P-4 | One contract: every variant value has its selector, every selector its value, every class a component or element renders exists, and an element renders what its React twin renders | contract gate; element equivalence test |
+| P-5 | Tokens only: no colour or length literal outside `tokens.css`, every `var()` resolves, every token has its Tailwind mapping, `DESIGN.md` matches `tokens.css` | token gate |
 | P-6 | Subtract before adding: a new export, file or dependency has its consumer in the same change | knip |
 | P-7 | Minimise reader load, at this tree's own p95, lowered only | size gate; Biome `noNestedTernary`, `noUselessElse`, `noParameterAssign` |
 | P-8 | Accessible in both schemes: every example passes axe in light and dark, and interactive ones have a keyboard spec | Playwright a11y, with coverage of every example |
-| P-9 | The look is pinned: every example matches its committed screenshot, and a deliberate change updates the pin in the same commit | Playwright visual |
-| P-10 | A test states a behaviour and can fail; at least 95% of lines and functions, every file counted | `bun test --coverage` and the coverage gate |
-| P-11 | Docs hold the current position: no history narrated, dates only in `CHANGELOG.md` and ADR status lines, ADRs under 1,000 words, `CLAUDE.md` at most 120 lines, every path a skill cites exists | docs gate and skill-refs gate |
+| P-9 | The look is pinned: every example matches its committed screenshot with zero differing pixels, rendered in the pinned Playwright container; a pin changes only through `bun run pin`, after the owner has seen the expected, actual and diff images | Playwright visual |
+| P-10 | A test states a behaviour and can fail: it reaches its component only through props and the DOM, finds elements by role, and asserts no snapshot; at least 95% of lines and functions, every file counted | `bun test --coverage`, the coverage gate, the boundary gate on test imports |
+| P-11 | Docs hold the current position: no history narrated, dates only in `CHANGELOG.md` and ADR status lines, ADRs under 1,000 words, `CLAUDE.md` at most 120 lines, every path a skill cites exists, none of the filler words the docs gate lists | docs gate and skill-refs gate |
 | P-12 | The toolchain is pinned and the package carries nothing: exact devDeps, `.bun-version`, TypeScript 6.0.x; no runtime dependency, every peer optional; registry items declare versioned dependencies | dependency gate |
 | P-13 | The stylesheet has a budget: gzipped `sapphire.css` at most its measured size plus 15% | budget gate |
-| P-14 | The public surface is semver: a removed or narrowed prop, class, data attribute or token is a major | API snapshot test |
+| P-14 | The public surface is semver: a removed or narrowed prop, class, data attribute or token is a major, and has its entry in `tooling/migrate/map.ts` | API snapshot test |
+| P-15 | A gate can fail: each gate's test feeds it a real past violation and expects it to fail; each failure names `file:line`, the rule and the fix | `bun test` over `tooling/gates/` |
+| P-16 | Generated files are fresh: rerunning every generator leaves the tree unchanged | generated-files gate |
 
-`CLAUDE.md` also carries the working rules: decide out loud before building; a number in a doc or
-commit is pasted from a command, with its commit; a claim about an outside system carries its
-evidence or says "unverified"; a decision is an ADR before it is code; a fix lands wherever its rule
-applies, in every component it touches.
+`CLAUDE.md` also carries the working rules: decide out loud before building; a question that an
+experiment can answer gets the experiment, not a question to the owner; a number in a doc or commit
+is pasted from a command, with its commit; every other claim says whether it was measured, inferred
+or is unverified; a decision is an ADR before it is code; a fix lands wherever its rule applies, in
+every component it touches; a correction made twice becomes a gate, and only a judgment call
+becomes prose.
 
 ## 8. Consumer migration
 
@@ -250,18 +298,34 @@ applies, in every component it touches.
 | npm React | the same subpaths, `@kongmy-dev/sapphire-ui/<name>`; the prop map in `CHANGELOG.md`, e.g. `icon="add"` → `<Plus />`; the stylesheet import becomes `sapphire.css`; root imports move to subpaths |
 | Registry | nothing until `components.json` points at `/r/v4/{name}.json`; then re-add each item |
 
-## 9. Stop and ask
+`bun run migrate <app>` applies the class and prop maps to an app's HTML, Astro and JSX, and lists
+with `file:line` every place it could not rewrite. In an app that installs the package and also
+vendors from the registry, each component comes from one place: once a component is vendored, its
+package imports go. The consumer skill says so.
 
-- A pin cannot match without a visual change this file does not name.
-- happy-dom cannot run a Radix suite.
-- A component without behaviour cannot render on a server without `radix-ui`.
-- `shadcn build` cannot express versioned or derived dependencies.
-- `registry:base` cannot set up the stylesheet import.
-- `light-dark()` lowering breaks a nested theme scope.
-- A strict compiler flag would narrow a public prop type.
+## 9. Spikes, and the owner's calls
+
+P0 answers every question that an experiment can settle. Each spike is throwaway; its result is
+pasted here with its SHA.
+
+| Question | Spike | Result |
+|---|---|---|
+| Do utilities and an app's unlayered CSS beat `sp-*`, whichever of `sapphire.css` and Tailwind is imported first? | a scratch Vite and Tailwind 4 app, both import orders | pending |
+| Does `light-dark()` survive `bun build` and flip inside a nested `[data-theme]` scope? | build `tokens.css`; screenshot a dark card inside a light page | pending |
+| Can `bun test` with happy-dom run a Radix dialog: portal, focus trap, Escape, outside click? | one dialog suite; where it fails, that suite runs in Playwright | pending |
+| Can `asChild` work without `radix-ui`, so that button, badge and card import no Radix? | a slot in `lib/` run against Radix Slot's cases: props, handlers, refs and `className` merged | pending |
+| Can `shadcn build` emit versioned dependencies, and can a `registry:base` item add the package, the stylesheet import and the fonts? | one base item and one component through `shadcn build`, `shadcn registry validate` and `shadcn add` into a scratch app | pending |
+| Do vendored files land at `@/components/ui/<name>` from the folder layout? | the same scratch app | pending |
+
+Stop and ask the owner when:
+
+- a spike's result contradicts this file;
+- a pin cannot match without a visual change this file does not name;
+- a strict compiler flag would narrow a public prop type.
 
 ## 10. Done means
 
-Measured at the end against `bc2e116`: runtime dependencies 4 → 0, required peers 22 → 0, export
-entries 88 → under 10, stray comments 354 → 0, size-gate failures 28 → 0, Markdown other than
-`CHANGELOG.md` at most half of today's 2,391 lines, gzipped stylesheet under 23.6 KB.
+Measured by `bun run scorecard` at `bc2e116` and at the release commit: runtime dependencies 4 → 0,
+required peers 22 → 0, export entries 88 → under 10, stray comments 354 → 0, size-gate failures
+28 → 0, Markdown other than `CHANGELOG.md` at most half of today's 2,391 lines, gzipped stylesheet
+under 23.6 KB.
