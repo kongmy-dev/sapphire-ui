@@ -19,7 +19,7 @@ and `REGISTRY-PLAN.md` and is deleted when 4.0.0 ships.
 | Consumers, from a scan of every local repository | 2 apps use the stylesheet's classes only; 2 import React components from npm (one is still on 2.x, one also vendors from the registry); 3 vendor from the registry, the app template among them. The company website and blog use none of it. No app uses the custom elements, Analytics, CookieBanner, SEOHead or the proposal React components; the CSS-only apps do use the document, financial-table, prose, page and admin-shell classes |
 | Vendored copies are reformatted by each app | every vendored `button`, `badge`, `dialog`, `select` and `table` differs from its source by 32–287 lines, mostly formatting, so re-pulling a fix through the registry is noisy |
 | The gate is red, and three gates pass on nothing | `bun run gate`: `test` and `externals-check` fail on a stale `dist/` that a test reads; the comment, size and token gates print "0 files" and exit 0 |
-| Releases have been stuck since 3.0.1, and the next passing build publishes whatever `master` holds | npm's newest version is 3.0.0 and the remote's newest tag is `v3.0.0`; the last four `publish.yml` runs failed in `tsc` because CI never installs the peer `react-resizable-panels` (`src/components/ui/SplitLayout.tsx`); `publish.yml` runs on every push to `master` and publishes any version that has no tag |
+| Releases have been stuck since 3.0.1, and a working publish step would ship whatever `master` holds | npm's newest version is 3.0.0 and the remote's newest tag is `v3.0.0`. Every npm publish since the 3.0.1 bump has failed with `404 Not Found - PUT`, even when the build passed: the token is no longer accepted (inferred; its expiry shows only in the npm account). The latest run failed earlier, in `tsc`, because CI never installs the peer `react-resizable-panels` (`src/components/ui/SplitLayout.tsx`). `publish.yml` runs on every push to `master` and publishes any version that has no tag |
 | Comment and size debt | comment gate over `src/`: 328 stray comments, over `tooling/`: 26; size gate: 28 of 121 `src/` files fail |
 | Code lags React 19 and current shadcn | 54 files use `forwardRef` and `displayName`; no `data-slot`; per-package `@radix-ui/react-*` imports |
 | Docs sprawl | 2,391 lines of Markdown; two plans written as task history; files that name other projects: `design/colors_and_type.css`, `src/components/AnalyticsElement.ts`, `src/components/ui/Layout.tsx`, `AI-CODE-QUALITY.md`, `REGISTRY-PLAN.md`, `tooling/quality-metrics/` |
@@ -108,7 +108,8 @@ editorial React (30%).
   `document.cookie` instead of `js-cookie`; the components' own glyphs (close, chevron, check) are
   inline SVG, so the package needs no icon dependency. Apps and blocks import `lucide-react`.
 - **One repository, no workspaces;** kebab-case files; class prefix `sp-`.
-- **Publish to npm only,** public, with no token needed to install; GitHub Packages goes.
+- **Publish to npm only,** public, through npm's trusted publishing from the tag workflow, so no
+  token is needed to install or to publish; GitHub Packages goes.
 - **TypeScript stays on 6.0.x:** 7 has no classic compiler API, which the metrics tool and knip
   need. Bun is pinned.
 - **Unit tests** run on `bun test` with happy-dom; a11y and visual specs on Playwright. A unit
@@ -134,8 +135,6 @@ editorial React (30%).
 - A redesign: values stay as they are, except the changes this file names.
 - Progress checkboxes in this file: `bun run scorecard` reads progress from the tree, so parallel
   sessions never edit one shared list.
-- General agent-workflow skills (planning, review panels, PR handling): the repository's skills
-  describe this code and nothing else.
 
 ## 5. Phases
 
@@ -145,9 +144,11 @@ proved third.
 **P0 — Make `master` safe, settle the unknowns, decide.**
 
 1. Cut `v3` from `f6720d3`. On `v3`, add `react-resizable-panels` to devDeps and to the build's
-   externals, widen each peer range to include the version CI tests, and get CI green; the owner
-   pushes the `v3.0.2` tag. On both branches `publish.yml` runs only on a `v*` tag and only after
-   CI passes, so a push to `master` never publishes.
+   externals, widen each peer range to include the version CI tests, and get CI green. On both
+   branches `publish.yml` runs only on a `v*` tag, only after CI passes, and publishes through
+   npm's trusted publishing (`id-token: write`, no `NPM_TOKEN`), so a push to `master` never
+   publishes and no token can expire. The owner adds the trusted publisher on npmjs.com, then
+   pushes the `v3.0.2` tag within two days, before the new configuration lapses.
 2. Run the spikes in §9, each in a throwaway branch or scratch app, and paste each result with its
    SHA. A result that contradicts this file stops the plan before P1.
 3. Write the ADRs in `docs/adr/`, each under 1,000 words, each opening with the consumer's code
