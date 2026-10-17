@@ -1,5 +1,33 @@
 # Changelog
 
+## 3.0.3 — 2026-10-17
+
+3.0.1 and 3.0.2 reached GitHub Packages only, so this is the first npm release since
+3.0.0 and carries their changes too. The API and exports are unchanged from 3.0.0.
+
+### Distribution
+
+- **npm only.** The package is no longer published to GitHub Packages. If your `.npmrc`
+  has `@kongmy-dev:registry=https://npm.pkg.github.com`, remove that line so the package
+  resolves from npm.
+- Releases are published from `v*` tags: CI runs the full suite, then npm trusted
+  publishing releases the package with no stored token.
+
+### Fixes
+
+- **`react-resizable-panels` is no longer bundled.** The build inlined it into
+  `dist/node_modules/react-resizable-panels/` (about 42 kB ESM and 32 kB CJS), so
+  `SplitLayout` ran a private copy. It now imports the copy your app installs. It is a
+  required peer dependency; install it yourself if your package manager does not add peers.
+- **Peer ranges include what is tested.** `react` and `react-dom` take `^19.2.0` and
+  `react-resizable-panels` takes `^4.11.2`, as in 3.0.0. The `^19.3.0` and `^4.14.4` of
+  3.0.2 excluded the React 19.2.7 and panels 4.12.2 the suite runs on.
+
+### Tooling
+
+- `react`, `react-dom` and `react-resizable-panels` are devDependencies, pinned to 19.2.7,
+  19.2.7 and 4.12.2, so CI installs the peers it declares.
+
 ## 3.0.2 — 2026-10-12
 
 ### Dependencies & Tooling
