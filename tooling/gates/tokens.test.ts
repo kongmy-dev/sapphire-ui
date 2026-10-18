@@ -4,7 +4,7 @@ import { tokenGate, tokenViolations } from './tokens';
 
 const css = (name: string, text: string) => ({ name, text });
 
-const problems = (name: string, text: string, others = [] as string[]) =>
+const problems = (name: string, text: string, others: string[] = []) =>
   tokenViolations([
     css(name, text),
     ...others.map((other, index) => css(`css/other-${index}.css`, other)),

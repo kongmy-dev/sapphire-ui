@@ -286,7 +286,7 @@ reference), both plans, `docs/coding/principles.md` (its table moves into `CLAUD
 |---|---|---|
 | P-1 | No comments in TS, TSX or CSS. `biome-ignore` silences only a `style` or `complexity` rule, with a reason; a vendor bug's URL may sit alone above its workaround when no test can observe the bug | comment gate on every tracked source file, and on each edit |
 | P-2 | Dependencies point one way: `css/` imports only `css/`; a component imports React, `radix-ui`, `hooks/`, `lib/` and other components; an element imports only `lib/`; a block imports components and its declared packages; `site/` imports the rest; nothing imports `site/` or `tooling/`; every tracked file is reached | boundary gate |
-| P-3 | Types carry the rules: no `any`, no `!`, no `as` but `as const`, `type` over `interface`, variants as `as const` tuples with derived unions, no `enum` | `tsc` strict and Biome |
+| P-3 | Types carry the rules: no `any`, no `!`, no `as` but `as const`, `type` over `interface`, variants as `as const` tuples with derived unions, no `enum` | `tsc` strict and Biome (the `as` ban is the `tooling/biome/no-cast.grit` plugin) |
 | P-4 | One contract: every variant value has its selector, every selector its value, every class a component or element renders exists, and an element renders what its React twin renders | contract gate; element equivalence test |
 | P-5 | Tokens only: no colour or length literal outside `tokens.css`, every `var()` resolves, every token has its Tailwind mapping, `DESIGN.md` matches `tokens.css` | token gate |
 | P-6 | Subtract before adding: a new export, file or dependency has its consumer in the same change | knip |

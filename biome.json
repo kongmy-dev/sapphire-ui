@@ -15,6 +15,17 @@
       "!tests/registry-consumer/dist"
     ]
   },
+  "plugins": [
+    {
+      "path": "./tooling/biome/no-cast.grit",
+      "includes": [
+        "**",
+        "!**/src/**",
+        "!**/registry/blocks/**",
+        "!**/tests/registry-consumer/app/**"
+      ]
+    }
+  ],
   "formatter": {
     "enabled": true,
     "indentStyle": "space",

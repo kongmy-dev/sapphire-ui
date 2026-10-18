@@ -25,9 +25,8 @@ export type FileMetrics = {
 const isTestPath = (p: string) =>
   /\.(test|spec)\.tsx?$/.test(p) || /(^|\/)(test|__tests__)\//.test(p);
 
-function functionName(node: ts.Node, sf: ts.SourceFile): string {
-  const named = node as ts.FunctionLikeDeclaration;
-  if (named.name && ts.isIdentifier(named.name)) return named.name.text;
+function functionName(node: FunctionNode, sf: ts.SourceFile): string {
+  if (node.name && ts.isIdentifier(node.name)) return node.name.text;
   if (
     ts.isVariableDeclaration(node.parent) &&
     ts.isIdentifier(node.parent.name)
@@ -136,9 +135,9 @@ const isNamedDeclaration = (node: ts.Node): node is NamedDeclaration =>
   ts.isEnumDeclaration(node);
 
 const isExported = (node: ts.Node) =>
-  !!(
-    ts.getCombinedModifierFlags(node as ts.Declaration) &
-    ts.ModifierFlags.Export
+  ts.canHaveModifiers(node) &&
+  (ts.getModifiers(node) ?? []).some(
+    (modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword,
   );
 
 function exportedNames(node: ts.Node): string[] {

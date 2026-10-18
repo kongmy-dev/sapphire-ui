@@ -1,0 +1,11 @@
+language js(typescript)
+
+or {
+  TsAsExpression(ty=$type) as $cast where {
+    not $type <: r"const",
+    register_diagnostic(span=$cast, message="P-3: no `as` cast but `as const`. Annotate the variable, narrow with a type guard, or use `satisfies`.")
+  },
+  TsTypeAssertionExpression() as $cast where {
+    register_diagnostic(span=$cast, message="P-3: no angle-bracket cast. Annotate the variable, narrow with a type guard, or use `satisfies`.")
+  }
+}
