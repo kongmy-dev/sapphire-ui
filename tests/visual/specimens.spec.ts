@@ -25,7 +25,8 @@ async function matchPinOffset(section: Locator) {
     const main = element.closest('main');
     if (main === null) throw new Error('the section is outside main');
     const top = element.getBoundingClientRect().top + window.scrollY;
-    const shift = (((wanted - top) % 1) + 1) % 1;
+    const gap = wanted - top;
+    const shift = gap >= 0 ? gap : ((gap % 1) + 1) % 1;
     main.style.paddingTop = `calc(${getComputedStyle(main).paddingTop} + ${shift}px)`;
   }, pinY);
 }
