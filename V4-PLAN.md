@@ -251,7 +251,8 @@ build, the hand-written exports map, the freeze gate,
 `.husky/`, `.lintstagedrc.json`, `design/` and the two unrelated skills under `.agents/`. Set the
 size limits to the new tree's own p95, lowered only from then on, and rewrite
 `.quality-baseline.json`. `bun publish --dry-run` lists only `dist/`, `README.md`, `DESIGN.md` and
-`LICENSE`.
+`LICENSE`. `tests/visual/dialog-parity.spec.ts` reads the v3 docs, so P9 replaces it with a pin of
+the open dialog.
 
 **P10 — Docs.** Docs are written alongside each phase; this step adds the docs and skill-refs gates
 and sweeps what is left (§6).
