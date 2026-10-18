@@ -3,11 +3,13 @@ import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import type { FileText } from '../gates/scope';
+import { isSpecimenFile } from '../visual/specimens';
 import {
   type ComponentRow,
   componentTable,
   REGISTRY_SOURCE,
   referencePinCount,
+  type Specimens,
 } from './components';
 import {
   firstErrorLine,
@@ -104,11 +106,22 @@ function loadPackage(tree: string): PackageFields {
   return pkg;
 }
 
-function componentRows(tree: string, paths: readonly string[]) {
+const readSpecimens = (tree: string, paths: readonly string[]): Specimens =>
+  new Map(
+    paths
+      .filter(isSpecimenFile)
+      .map((path): [string, string] => [path, readText(tree, path)]),
+  );
+
+function componentRows(
+  tree: string,
+  paths: readonly string[],
+  specimens: Specimens,
+) {
   const registryText = paths.includes(REGISTRY_SOURCE)
     ? readText(tree, REGISTRY_SOURCE)
     : null;
-  return componentTable(paths, registryText);
+  return componentTable(paths, registryText, specimens);
 }
 
 function scorecardFor(
@@ -121,7 +134,8 @@ function scorecardFor(
     .filter(isMeasuredFile)
     .map((name) => ({ name, text: readText(tree, name) }));
   const pkg = loadPackage(tree);
-  const rows: ComponentRow[] = componentRows(tree, paths);
+  const specimens = readSpecimens(tree, paths);
+  const rows: ComponentRow[] = componentRows(tree, paths, specimens);
   const installed = install(tree);
   return {
     commit,
@@ -130,7 +144,7 @@ function scorecardFor(
     measurement: measureTree(files, pkg),
     stylesheet: measureStylesheet(tree, pkg, installed),
     rows,
-    referencePins: referencePinCount(paths, rows),
+    referencePins: referencePinCount(paths, specimens),
   };
 }
 

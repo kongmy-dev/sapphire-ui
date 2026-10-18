@@ -8,6 +8,7 @@ const SPECIMEN_SUFFIX = '.examples.html';
 
 const BASE_SPECIMEN = 'css/base.examples.html';
 const COMPONENTS_DIR = 'components';
+const COMPONENT_SPECIMEN = /^components\/([^/]+)\/([^/]+)\.examples\.html$/;
 const PIN = /<section\b[^>]*\bdata-pin="([^"]+)"/g;
 
 export function specimenFiles(root: string): string[] {
@@ -24,6 +25,11 @@ export function specimenFiles(root: string): string[] {
     .filter((file) => existsSync(join(root, file)))
     .sort();
 }
+
+export const isSpecimenFile = (path: string): boolean => {
+  const [, folder, name] = COMPONENT_SPECIMEN.exec(path) ?? [];
+  return path === BASE_SPECIMEN || (folder !== undefined && folder === name);
+};
 
 export const pinsOf = (html: string): string[] =>
   [...html.matchAll(PIN)].map((match) => match[1] ?? '');

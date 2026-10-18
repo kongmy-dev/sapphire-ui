@@ -1,4 +1,5 @@
 import { isTest } from '../quality-metrics/check';
+import { pinsOf } from '../visual/specimens';
 
 export const REGISTRY_SOURCE = 'registry.json';
 export const PIN_DIR = 'tests/visual/pins';
@@ -15,7 +16,9 @@ export type ComponentRow = {
 
 const V3_FILE = /^src\/components\/(?:.*\/)?(?<base>[^/]+)\.tsx?$/;
 const V4_FOLDER = /^components\/(?<name>[^/]+)\//;
-const PIN_FILE = new RegExp(`^${PIN_DIR}/(?<group>[^/]+)/.+\\.png$`);
+const PIN_FILE = new RegExp(
+  `^${PIN_DIR}/(?<route>[^/]+)/(?<slug>.+)\\.(?:light|dark)\\.png$`,
+);
 
 const kebab = (name: string) =>
   name
@@ -66,22 +69,24 @@ function registryItemNames(sourceText: string | null): Set<string> {
   }
 }
 
-const pinGroups = (paths: readonly string[]): Set<string> =>
-  new Set(paths.flatMap((path) => PIN_FILE.exec(path)?.groups?.group ?? []));
+export type Specimens = ReadonlyMap<string, string>;
+
+const specimenPath = (name: string) =>
+  `components/${name}/${name}.examples.html`;
 
 export function componentTable(
   paths: readonly string[],
   registryText: string | null,
+  specimens: Specimens,
 ): ComponentRow[] {
   const present = new Set(paths);
-  const pinned = pinGroups(paths);
   const registered = registryItemNames(registryText);
   return componentNames(paths).map((name) => ({
     name,
     css: present.has(`components/${name}/${name}.css`),
     react: present.has(`components/${name}/${name}.tsx`),
     examples: present.has(`components/${name}/${name}.examples.tsx`),
-    pin: pinned.has(name),
+    pin: pinsOf(specimens.get(specimenPath(name)) ?? '').length > 0,
     element: present.has(`elements/${name}.ts`),
     registry: registered.has(name),
   }));
@@ -89,11 +94,13 @@ export function componentTable(
 
 export function referencePinCount(
   paths: readonly string[],
-  rows: readonly ComponentRow[],
+  specimens: Specimens,
 ): number {
-  const names = new Set(rows.map((row) => row.name));
+  const covered = new Set(
+    [...specimens.values()].flatMap((html) => pinsOf(html)),
+  );
   return paths.filter((path) => {
-    const group = PIN_FILE.exec(path)?.groups?.group;
-    return group !== undefined && !names.has(group);
+    const { route, slug } = PIN_FILE.exec(path)?.groups ?? {};
+    return route !== undefined && !covered.has(`${route}/${slug}`);
   }).length;
 }

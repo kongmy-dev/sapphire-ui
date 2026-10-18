@@ -20,6 +20,8 @@ const v3Tree = [
   'src/lib/theme.ts',
 ];
 
+const NO_SPECIMENS = new Map<string, string>();
+
 const v4Button = [
   'components/button/button.css',
   'components/button/button.tsx',
@@ -60,7 +62,7 @@ describe('scorecard component names', () => {
 
 describe('scorecard component table', () => {
   it('reads no for every v4 cell of a v3-only component', () => {
-    const [row] = componentTable(v3Tree, null);
+    const [row] = componentTable(v3Tree, null, NO_SPECIMENS);
     expect(row).toEqual({
       name: 'admin-layout',
       css: false,
@@ -73,7 +75,7 @@ describe('scorecard component table', () => {
   });
 
   it('reads yes for each file a v4 component has', () => {
-    const rows = componentTable(v4Button, null);
+    const rows = componentTable(v4Button, null, NO_SPECIMENS);
     expect(rows).toEqual([
       {
         name: 'button',
@@ -87,34 +89,69 @@ describe('scorecard component table', () => {
     ]);
   });
 
-  it('reads a pin from the folder named for the component', () => {
-    const paths = [...v4Button, `${PIN_DIR}/button/primary.light.png`];
-    expect(componentTable(paths, null)[0]?.pin).toBe(true);
+  it('reads a pin from a data-pin section in the component specimen', () => {
+    const specimen = 'components/button/button.examples.html';
+    const specimens = new Map([
+      [specimen, '<section data-pin="buttons/variants"></section>'],
+    ]);
+    const paths = [...v4Button, specimen];
+    expect(componentTable(paths, null, specimens)[0]?.pin).toBe(true);
+  });
+
+  it('reads no pin from a specimen without one or another folder', () => {
+    const specimens = new Map([
+      ['components/button/button.examples.html', '<section></section>'],
+      [
+        'components/card/card.examples.html',
+        '<section data-pin="cards/default-card"></section>',
+      ],
+    ]);
+    const paths = [...v4Button, `${PIN_DIR}/buttons/variants.light.png`];
+    expect(componentTable(paths, null, specimens)[0]?.pin).toBe(false);
   });
 
   it('reads a registry item from the names in the registry source', () => {
     const registry = JSON.stringify({
       items: [{ name: 'button' }, { name: 3 }],
     });
-    expect(componentTable(v4Button, registry)[0]?.registry).toBe(true);
+    expect(componentTable(v4Button, registry, NO_SPECIMENS)[0]?.registry).toBe(
+      true,
+    );
   });
 
   it('reads no from a registry source that is not valid', () => {
-    expect(componentTable(v4Button, 'not json')[0]?.registry).toBe(false);
-    expect(componentTable(v4Button, '{"items":{}}')[0]?.registry).toBe(false);
-    expect(componentTable(v4Button, '[]')[0]?.registry).toBe(false);
+    expect(
+      componentTable(v4Button, 'not json', NO_SPECIMENS)[0]?.registry,
+    ).toBe(false);
+    expect(
+      componentTable(v4Button, '{"items":{}}', NO_SPECIMENS)[0]?.registry,
+    ).toBe(false);
+    expect(componentTable(v4Button, '[]', NO_SPECIMENS)[0]?.registry).toBe(
+      false,
+    );
   });
 });
 
 describe('scorecard reference pins', () => {
-  it('counts pins that belong to no component row', () => {
-    const paths = [
-      ...v4Button,
-      `${PIN_DIR}/buttons/variants.light.png`,
-      `${PIN_DIR}/buttons/variants.dark.png`,
-      `${PIN_DIR}/button/primary.light.png`,
-      `${PIN_DIR}/buttons/notes.txt`,
-    ];
-    expect(referencePinCount(paths, componentTable(paths, null))).toBe(2);
+  const paths = [
+    `${PIN_DIR}/buttons/variants.light.png`,
+    `${PIN_DIR}/buttons/variants.dark.png`,
+    `${PIN_DIR}/buttons/sizes.light.png`,
+    `${PIN_DIR}/buttons/sizes.dark.png`,
+    `${PIN_DIR}/buttons/notes.txt`,
+  ];
+
+  it('counts every pin file when no specimen renders one', () => {
+    expect(referencePinCount(paths, NO_SPECIMENS)).toBe(4);
+  });
+
+  it('leaves out the pins a specimen renders', () => {
+    const specimens = new Map([
+      [
+        'components/button/button.examples.html',
+        '<section data-pin="buttons/variants"></section>',
+      ],
+    ]);
+    expect(referencePinCount(paths, specimens)).toBe(2);
   });
 });
