@@ -14,7 +14,7 @@
     --sp-steps-label-fg: var(--muted-foreground);
     --sp-steps-label-size: var(--text-xs);
     --sp-steps-label-line-height: var(--space-4);
-    --sp-steps-label-spacing: 0.05em;
+    --sp-steps-label-spacing: calc(var(--sp-steps-label-size) * 0.05);
     --sp-steps-text-gap: calc(var(--space-1) * 0.5);
     --sp-steps-description-fg: var(--muted-foreground);
     --sp-steps-description-size: calc(var(--text-base) * 0.6875);

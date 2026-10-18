@@ -14,7 +14,7 @@
     --sp-callout-title-fg: var(--foreground-strong);
     --sp-callout-title-size: var(--text-lg);
     --sp-callout-title-line-height: calc(var(--space-1) * 7);
-    --sp-callout-title-spacing: -0.025em;
+    --sp-callout-title-spacing: calc(var(--sp-callout-title-size) * -0.025);
     --sp-callout-body-fg: var(--muted-foreground);
     --sp-callout-body-size: var(--text-sm);
     --sp-callout-body-line-height: var(--leading-relaxed);

@@ -6,7 +6,7 @@
     --sp-toc-indent: var(--space-4);
     --sp-toc-title-gap: var(--space-4);
     --sp-toc-title-fg: var(--foreground-strong);
-    --sp-toc-title-spacing: 0.05em;
+    --sp-toc-title-spacing: calc(var(--sp-toc-font-size) * 0.05);
     --sp-toc-link-fg: var(--muted-foreground);
     --sp-toc-link-fg-hover: var(--foreground-strong);
     --sp-toc-link-fg-active: var(--foreground-strong);
