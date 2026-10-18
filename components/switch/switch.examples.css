@@ -1,0 +1,4 @@
+.docs-switch-note code {
+  font-family: var(--font-mono);
+  font-size: calc(var(--text-sm) * 0.875);
+}

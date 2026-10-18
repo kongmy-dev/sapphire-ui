@@ -1,0 +1,9 @@
+.docs-select-demo {
+  max-width: calc(var(--space-1) * 75);
+}
+
+.docs-select-popup {
+  --radix-select-trigger-width: calc(var(--space-1) * 75);
+
+  width: max-content;
+}

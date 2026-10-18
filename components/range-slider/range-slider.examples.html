@@ -1,0 +1,64 @@
+<header class="docs-page-header">
+  <h1>Forms</h1>
+  <p>Form controls with light and dark variants. All components support forwarded refs and standard HTML attributes.</p>
+</header>
+
+<section class="docs-section" data-pin="forms/range-slider" data-pin-y="1977.140625">
+  <h2 class="docs-section-title">Range Slider</h2>
+  <div class="docs-preview">
+    <div class="docs-range-slider-demo">
+      <label class="sp-label">Volume: 50</label>
+      <div class="sp-range-slider-field">
+        <span class="sp-range-slider" data-variant="light" dir="ltr" data-orientation="horizontal" aria-disabled="false" style="--radix-slider-thumb-transform: translateX(-50%)">
+          <span class="sp-range-slider-track" data-orientation="horizontal">
+            <span class="sp-range-slider-range" data-orientation="horizontal" style="left: 0%; right: 50%"></span>
+          </span>
+          <span style="transform: var(--radix-slider-thumb-transform); position: absolute; left: 50%">
+            <span class="sp-range-slider-thumb" role="slider" aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-orientation="horizontal" data-orientation="horizontal" tabindex="0"></span>
+          </span>
+        </span>
+        <span class="sp-range-slider-value">50</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Range Slider (on dark)</h2>
+  <div class="docs-preview docs-preview--dark">
+    <div class="docs-range-slider-demo">
+      <label class="sp-label" style="--sp-label-fg: var(--on-dark)">Brightness: 30</label>
+      <div class="sp-range-slider-field">
+        <span class="sp-range-slider" dir="ltr" data-orientation="horizontal" aria-disabled="false" style="--radix-slider-thumb-transform: translateX(-50%)">
+          <span class="sp-range-slider-track" data-orientation="horizontal">
+            <span class="sp-range-slider-range" data-orientation="horizontal" style="left: 0%; right: 70%"></span>
+          </span>
+          <span style="transform: var(--radix-slider-thumb-transform); position: absolute; left: 30%">
+            <span class="sp-range-slider-thumb" role="slider" aria-label="Brightness" aria-valuemin="0" aria-valuemax="100" aria-valuenow="30" aria-orientation="horizontal" data-orientation="horizontal" tabindex="0"></span>
+          </span>
+        </span>
+        <span class="sp-range-slider-value" style="--sp-range-slider-value-fg: var(--on-dark-muted)">30</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Range Slider (disabled)</h2>
+  <div class="docs-preview">
+    <div class="docs-range-slider-demo">
+      <label class="sp-label">Locked: 70</label>
+      <div class="sp-range-slider-field">
+        <span class="sp-range-slider" data-variant="light" data-disabled="" dir="ltr" data-orientation="horizontal" aria-disabled="true" style="--radix-slider-thumb-transform: translateX(-50%)">
+          <span class="sp-range-slider-track" data-orientation="horizontal" data-disabled="">
+            <span class="sp-range-slider-range" data-orientation="horizontal" data-disabled="" style="left: 0%; right: 30%"></span>
+          </span>
+          <span style="transform: var(--radix-slider-thumb-transform); position: absolute; left: 70%">
+            <span class="sp-range-slider-thumb" role="slider" aria-label="Locked" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70" aria-orientation="horizontal" data-orientation="horizontal" data-disabled="" tabindex="-1"></span>
+          </span>
+        </span>
+        <span class="sp-range-slider-value">70</span>
+      </div>
+    </div>
+  </div>
+</section>

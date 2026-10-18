@@ -1,0 +1,49 @@
+<header class="docs-page-header">
+  <h1>Forms</h1>
+  <p>Form controls with light and dark variants. All components support forwarded refs and standard HTML attributes.</p>
+</header>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Switch</h2>
+  <p class="docs-section-description docs-switch-note">Built on <code>@radix-ui/react-switch</code>. Use <code>checked</code> + <code>onCheckedChange</code> for controlled, or <code>defaultChecked</code> for uncontrolled. Override the active fill via the <code>--switch-active</code> CSS variable.</p>
+  <div class="docs-preview">
+    <div class="docs-stack">
+      <div class="sp-switch-field">
+        <button class="sp-switch" id="switch-analytics" type="button" role="switch" aria-checked="false" data-state="unchecked" value="on"><span class="sp-switch-thumb" data-state="unchecked"></span></button>
+        <label class="sp-label" for="switch-analytics">Enable analytics</label>
+      </div>
+      <div class="sp-switch-field">
+        <button class="sp-switch" id="switch-marketing" type="button" role="switch" aria-checked="true" data-state="checked" value="on"><span class="sp-switch-thumb" data-state="checked"></span></button>
+        <label class="sp-label" for="switch-marketing">Marketing emails</label>
+      </div>
+      <div class="sp-switch-field" data-disabled>
+        <button class="sp-switch" id="switch-disabled" type="button" role="switch" aria-checked="false" data-state="unchecked" data-disabled="" disabled value="on"><span class="sp-switch-thumb" data-state="unchecked" data-disabled=""></span></button>
+        <label class="sp-label" for="switch-disabled">Disabled</label>
+      </div>
+      <div class="sp-switch-field" data-disabled>
+        <button class="sp-switch" id="switch-disabled-on" type="button" role="switch" aria-checked="true" data-state="checked" data-disabled="" disabled value="on"><span class="sp-switch-thumb" data-state="checked" data-disabled=""></span></button>
+        <label class="sp-label" for="switch-disabled-on">Disabled · on</label>
+      </div>
+      <div class="sp-switch-field">
+        <button class="sp-switch" id="switch-compact" type="button" role="switch" aria-checked="true" data-state="checked" data-size="sm" value="on"><span class="sp-switch-thumb" data-state="checked"></span></button>
+        <label class="sp-label" for="switch-compact">Compact</label>
+      </div>
+      <div class="sp-switch-field">
+        <button class="sp-switch" id="switch-accent" type="button" role="switch" aria-checked="true" data-state="checked" style="--sp-switch-active: var(--success)" value="on"><span class="sp-switch-thumb" data-state="checked"></span></button>
+        <label class="sp-label" for="switch-accent">Custom accent</label>
+      </div>
+    </div>
+  </div>
+  <div class="docs-preview docs-preview--dark">
+    <div class="docs-stack">
+      <div class="sp-switch-field">
+        <button class="sp-switch" id="switch-on-dark" type="button" role="switch" aria-checked="true" data-state="checked" value="on"><span class="sp-switch-thumb" data-state="checked"></span></button>
+        <label class="sp-label" for="switch-on-dark" style="--sp-label-fg: var(--on-dark)">On dark surface</label>
+      </div>
+      <div class="sp-switch-field">
+        <button class="sp-switch" id="switch-off-dark" type="button" role="switch" aria-checked="false" data-state="unchecked" value="on"><span class="sp-switch-thumb" data-state="unchecked"></span></button>
+        <label class="sp-label" for="switch-off-dark" style="--sp-label-fg: var(--on-dark)">Off</label>
+      </div>
+    </div>
+  </div>
+</section>

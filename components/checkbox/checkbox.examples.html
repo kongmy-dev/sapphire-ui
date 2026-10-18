@@ -1,0 +1,66 @@
+<header class="docs-page-header">
+  <h1>Forms</h1>
+  <p>Form controls with light and dark variants. All components support forwarded refs and standard HTML attributes.</p>
+</header>
+
+<section class="docs-section" data-pin="forms/checkbox" data-pin-y="1159.359375">
+  <h2 class="docs-section-title">Checkbox</h2>
+  <div class="docs-preview">
+    <div class="docs-stack">
+      <div class="sp-checkbox-field">
+        <button class="sp-checkbox" id="checkbox-terms" type="button" role="checkbox" aria-checked="false" aria-describedby="checkbox-terms-description" data-state="unchecked" value="on"></button>
+        <div class="sp-checkbox-text">
+          <label class="sp-label" for="checkbox-terms">Accept terms and conditions</label>
+          <span class="sp-checkbox-description" id="checkbox-terms-description">You agree to our privacy policy.</span>
+        </div>
+      </div>
+      <div class="sp-checkbox-field">
+        <button class="sp-checkbox" id="checkbox-updates" type="button" role="checkbox" aria-checked="true" data-state="checked" value="on">
+          <span class="sp-checkbox-indicator" data-state="checked">
+            <svg class="sp-checkbox-check" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M1.5 5.5 4 8l4.5-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="sp-checkbox-dash"></span>
+          </span>
+        </button>
+        <div class="sp-checkbox-text">
+          <label class="sp-label" for="checkbox-updates">Send me updates</label>
+        </div>
+      </div>
+      <div class="sp-checkbox-field">
+        <button class="sp-checkbox" id="checkbox-mixed" type="button" role="checkbox" aria-checked="mixed" data-state="indeterminate" value="on">
+          <span class="sp-checkbox-indicator" data-state="indeterminate">
+            <svg class="sp-checkbox-check" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M1.5 5.5 4 8l4.5-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="sp-checkbox-dash"></span>
+          </span>
+        </button>
+        <div class="sp-checkbox-text">
+          <label class="sp-label" for="checkbox-mixed">Indeterminate</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Checkbox (disabled)</h2>
+  <div class="docs-preview">
+    <div class="docs-stack">
+      <div class="sp-checkbox-field">
+        <button class="sp-checkbox" id="checkbox-disabled" type="button" role="checkbox" aria-checked="false" data-state="unchecked" data-disabled="" disabled value="on"></button>
+        <div class="sp-checkbox-text">
+          <label class="sp-label" for="checkbox-disabled">Disabled</label>
+        </div>
+      </div>
+      <div class="sp-checkbox-field">
+        <button class="sp-checkbox" id="checkbox-disabled-on" type="button" role="checkbox" aria-checked="true" data-state="checked" data-disabled="" disabled value="on">
+          <span class="sp-checkbox-indicator" data-state="checked" data-disabled="">
+            <svg class="sp-checkbox-check" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M1.5 5.5 4 8l4.5-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="sp-checkbox-dash"></span>
+          </span>
+        </button>
+        <div class="sp-checkbox-text">
+          <label class="sp-label" for="checkbox-disabled-on">Disabled, checked</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

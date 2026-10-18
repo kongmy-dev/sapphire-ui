@@ -1,0 +1,88 @@
+<header class="docs-page-header">
+  <h1>Forms</h1>
+  <p>Form controls with light and dark variants. All components support forwarded refs and standard HTML attributes.</p>
+</header>
+
+<section class="docs-section" data-pin="forms/select-radix" data-pin-y="2409.921875">
+  <h2 class="docs-section-title">Select (Radix)</h2>
+  <div class="docs-preview">
+    <div class="docs-select-demo">
+      <label class="sp-label" for="region-select">Region</label>
+      <button class="sp-select-trigger" id="region-select" type="button" role="combobox" aria-expanded="false" aria-autocomplete="none" aria-label="Region" dir="ltr" data-state="closed" data-placeholder=""><span class="sp-select-value">Pick a region…</span><svg class="sp-select-icon" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Select (sizes and disabled)</h2>
+  <div class="docs-preview">
+    <div class="docs-select-demo docs-stack">
+      <button class="sp-select-trigger" id="select-sm" type="button" role="combobox" aria-expanded="false" aria-autocomplete="none" aria-label="Small" dir="ltr" data-state="closed" data-size="sm"><span class="sp-select-value">us-east-1 (Virginia)</span><svg class="sp-select-icon" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
+      <button class="sp-select-trigger" id="select-default" type="button" role="combobox" aria-expanded="false" aria-autocomplete="none" aria-label="Default" dir="ltr" data-state="closed"><span class="sp-select-value">us-east-1 (Virginia)</span><svg class="sp-select-icon" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
+      <button class="sp-select-trigger" id="select-lg" type="button" role="combobox" aria-expanded="false" aria-autocomplete="none" aria-label="Large" dir="ltr" data-state="closed" data-size="lg"><span class="sp-select-value">us-east-1 (Virginia)</span><svg class="sp-select-icon" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
+      <button class="sp-select-trigger" id="select-disabled" type="button" role="combobox" aria-expanded="false" aria-autocomplete="none" aria-label="Disabled" dir="ltr" data-state="closed" data-placeholder="" data-disabled="" disabled><span class="sp-select-value">Pick a region…</span><svg class="sp-select-icon" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Select (open)</h2>
+  <div class="docs-preview">
+    <div class="docs-select-demo">
+      <label class="sp-label" for="select-open">Region</label>
+      <button class="sp-select-trigger" id="select-open" type="button" role="combobox" aria-expanded="true" aria-controls="open-content" aria-autocomplete="none" aria-label="Region" dir="ltr" data-state="open" data-placeholder=""><span class="sp-select-value">Pick a region…</span><svg class="sp-select-icon" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
+    </div>
+    <div class="docs-select-popup">
+      <div class="sp-select-content" id="open-content" role="listbox" aria-label="Region" dir="ltr" data-state="open" data-side="bottom" data-align="start" tabindex="-1">
+        <div class="sp-select-viewport" role="presentation" data-radix-select-viewport="">
+          <div role="group" aria-labelledby="open-group-0">
+            <div class="sp-select-label" id="open-group-0">Americas</div>
+            <div class="sp-select-item" role="option" aria-labelledby="open-us-east-1" aria-selected="false" data-state="unchecked" data-highlighted="" tabindex="-1"><span class="sp-select-item-indicator"></span><span id="open-us-east-1">us-east-1 (Virginia)</span></div>
+            <div class="sp-select-item" role="option" aria-labelledby="open-us-west-2" aria-selected="false" data-state="unchecked" tabindex="-1"><span class="sp-select-item-indicator"></span><span id="open-us-west-2">us-west-2 (Oregon)</span></div>
+          </div>
+          <div class="sp-select-separator" aria-hidden="true"></div>
+          <div role="group" aria-labelledby="open-group-1">
+            <div class="sp-select-label" id="open-group-1">Europe</div>
+            <div class="sp-select-item" role="option" aria-labelledby="open-eu-west-1" aria-selected="false" data-state="unchecked" tabindex="-1"><span class="sp-select-item-indicator"></span><span id="open-eu-west-1">eu-west-1 (Ireland)</span></div>
+            <div class="sp-select-item" role="option" aria-labelledby="open-eu-central-1" aria-selected="false" data-state="unchecked" tabindex="-1"><span class="sp-select-item-indicator"></span><span id="open-eu-central-1">eu-central-1 (Frankfurt)</span></div>
+          </div>
+          <div class="sp-select-separator" aria-hidden="true"></div>
+          <div role="group" aria-labelledby="open-group-2">
+            <div class="sp-select-label" id="open-group-2">Asia Pacific</div>
+            <div class="sp-select-item" role="option" aria-labelledby="open-ap-southeast-1" aria-selected="false" data-state="unchecked" tabindex="-1"><span class="sp-select-item-indicator"></span><span id="open-ap-southeast-1">ap-southeast-1 (Singapore)</span></div>
+            <div class="sp-select-item" role="option" aria-labelledby="open-ap-southeast-2" aria-selected="false" data-state="unchecked" tabindex="-1"><span class="sp-select-item-indicator"></span><span id="open-ap-southeast-2">ap-southeast-2 (Sydney)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="docs-preview">
+    <div class="docs-select-demo">
+      <label class="sp-label" for="select-picked">Region</label>
+      <button class="sp-select-trigger" id="select-picked" type="button" role="combobox" aria-expanded="true" aria-controls="picked-content" aria-autocomplete="none" aria-label="Region" dir="ltr" data-state="open"><span class="sp-select-value">us-west-2 (Oregon)</span><svg class="sp-select-icon" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
+    </div>
+    <div class="docs-select-popup">
+      <div class="sp-select-content" id="picked-content" role="listbox" aria-label="Region" dir="ltr" data-state="open" data-side="bottom" data-align="start" tabindex="-1">
+        <div class="sp-select-viewport" role="presentation" data-radix-select-viewport="">
+          <div role="group" aria-labelledby="picked-group-0">
+            <div class="sp-select-label" id="picked-group-0">Americas</div>
+            <div class="sp-select-item" role="option" aria-labelledby="picked-us-east-1" aria-selected="false" data-state="unchecked" tabindex="-1"><span class="sp-select-item-indicator"></span><span id="picked-us-east-1">us-east-1 (Virginia)</span></div>
+            <div class="sp-select-item" role="option" aria-labelledby="picked-us-west-2" aria-selected="true" data-state="checked" data-highlighted="" tabindex="-1"><span class="sp-select-item-indicator"><span aria-hidden="true"><svg class="sp-select-check" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 6l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span></span><span id="picked-us-west-2">us-west-2 (Oregon)</span></div>
+          </div>
+          <div class="sp-select-separator" aria-hidden="true"></div>
+          <div role="group" aria-labelledby="picked-group-1">
+            <div class="sp-select-label" id="picked-group-1">Europe</div>
+            <div class="sp-select-item" role="option" aria-labelledby="picked-eu-west-1" aria-selected="false" data-state="unchecked" tabindex="-1"><span class="sp-select-item-indicator"></span><span id="picked-eu-west-1">eu-west-1 (Ireland)</span></div>
+            <div class="sp-select-item" role="option" aria-labelledby="picked-eu-central-1" aria-selected="false" data-state="unchecked" tabindex="-1"><span class="sp-select-item-indicator"></span><span id="picked-eu-central-1">eu-central-1 (Frankfurt)</span></div>
+          </div>
+          <div class="sp-select-separator" aria-hidden="true"></div>
+          <div role="group" aria-labelledby="picked-group-2">
+            <div class="sp-select-label" id="picked-group-2">Asia Pacific</div>
+            <div class="sp-select-item" role="option" aria-labelledby="picked-ap-southeast-1" aria-selected="false" data-state="unchecked" tabindex="-1"><span class="sp-select-item-indicator"></span><span id="picked-ap-southeast-1">ap-southeast-1 (Singapore)</span></div>
+            <div class="sp-select-item" role="option" aria-labelledby="picked-ap-southeast-2" aria-selected="false" data-state="unchecked" tabindex="-1"><span class="sp-select-item-indicator"></span><span id="picked-ap-southeast-2">ap-southeast-2 (Sydney)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

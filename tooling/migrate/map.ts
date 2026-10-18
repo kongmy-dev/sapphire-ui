@@ -125,6 +125,7 @@ export const newTokens = [
   '--warning-text',
   '--info-text',
   '--field-dark',
+  '--switch-off',
   '--border-width',
   '--border-width-strong',
   '--ring-width',
@@ -185,6 +186,17 @@ export const classRenames = {
   '.form-group': '.sp-form-field',
   '.help-text': '.sp-form-field-hint',
   '.help-text--error': '.sp-form-field-error',
+  '.k-input-dark': '.sp-input[data-variant=on-dark]',
+  '.k-checkbox': '.sp-checkbox',
+  '.k-checkbox-indicator': '.sp-checkbox-indicator',
+  '.k-switch': '.sp-switch',
+  '.k-switch--sm': '.sp-switch[data-size=sm]',
+  '.k-switch-thumb': '.sp-switch-thumb',
+  '.k-slider': '.sp-range-slider',
+  '.k-slider--light': '.sp-range-slider[data-variant=light]',
+  '.k-slider-track': '.sp-range-slider-track',
+  '.k-slider-range': '.sp-range-slider-range',
+  '.k-slider-thumb': '.sp-range-slider-thumb',
 } as const;
 
 export const unmappedClasses = {
