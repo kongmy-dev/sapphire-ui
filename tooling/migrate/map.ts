@@ -180,8 +180,11 @@ export const classRenames = {
   '.modal-footer': '.sp-dialog-footer',
   '.label': '.sp-label',
   '.input': '.sp-input',
+  '.input--mono': '.sp-input[data-variant=mono]',
+  '.input--dark': '.sp-input[data-variant=on-dark]',
   '.form-group': '.sp-form-field',
   '.help-text': '.sp-form-field-hint',
+  '.help-text--error': '.sp-form-field-error',
 } as const;
 
 export const unmappedClasses = {

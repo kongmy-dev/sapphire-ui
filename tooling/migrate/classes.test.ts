@@ -7,7 +7,7 @@ import { classRenames, propValueRenames, unmappedClasses } from './map';
 const ROOT = join(import.meta.dir, '../..');
 const read = (path: string) => readFileSync(join(ROOT, path), 'utf8');
 
-const CLASS = /\.([a-z][a-z0-9]*(?:-[a-z0-9]+)*)(?![\w-])/g;
+const CLASS = /\.([a-z][a-z0-9]*(?:--?[a-z0-9]+)*)(?![\w-])/g;
 const TARGET_CLASS = /^\.sp-[a-z0-9]+(?:-[a-z0-9]+)*/;
 const ATTRIBUTE = /\[(data-[a-z-]+)(?:=([\w-]+))?\]/g;
 const DECLARED_ATTRIBUTE = /\[(data-[a-z-]+)(?:="([\w-]+)")?\]/g;
@@ -64,7 +64,7 @@ describe('classesIn', () => {
     const css = [
       '.btn, .btn-primary:hover { color: red }',
       '.btn-primary { color: blue }',
-      '.card .btn-sm::before { color: red }',
+      '.card .btn-sm::before, .btn--wide { color: red }',
       'a { border-radius: var(--radius-btn); margin: 0.5rem }',
       '/* .btn-ghost */',
     ].join('\n');
@@ -73,6 +73,7 @@ describe('classesIn', () => {
       '.btn-primary',
       '.card',
       '.btn-sm',
+      '.btn--wide',
     ]);
   });
 });
