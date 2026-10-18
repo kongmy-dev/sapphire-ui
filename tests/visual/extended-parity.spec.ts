@@ -387,14 +387,19 @@ const scrollRows = (side: 0 | 1, wide: boolean) =>
 const v3ScrollBars = `<div data-orientation="vertical" data-state="visible" class="${V3_SCROLL_BAR} h-full w-2 border-l border-l-transparent p-px" style="position:absolute;top:0;right:0;bottom:var(--radix-scroll-area-corner-height);--radix-scroll-area-thumb-height:40%"><div data-state="visible" class="${V3_SCROLL_THUMB}" style="${THUMB_SIZE}"></div></div><div data-orientation="horizontal" data-state="visible" class="${V3_SCROLL_BAR} h-2 flex-col border-t border-t-transparent p-px" style="position:absolute;bottom:0;left:0;right:var(--radix-scroll-area-corner-width);--radix-scroll-area-thumb-width:50%"><div data-state="visible" class="${V3_SCROLL_THUMB}" style="${THUMB_SIZE}"></div></div><div style="width:8px;height:8px;position:absolute;right:0;bottom:0"></div>`;
 const v4ScrollBars = `<div class="sp-scroll-area-scrollbar" data-orientation="vertical" data-state="visible" style="--radix-scroll-area-thumb-height: 40%"><div class="sp-scroll-area-thumb" data-state="visible" style="${THUMB_SIZE}"></div></div><div class="sp-scroll-area-scrollbar" data-orientation="horizontal" data-state="visible" style="--radix-scroll-area-thumb-width: 50%"><div class="sp-scroll-area-thumb" data-state="visible" style="${THUMB_SIZE}"></div></div><div class="sp-scroll-area-corner" style="width: var(--space-2); height: var(--space-2)"></div>`;
 
-const scrollMarkup = (side: 0 | 1, bars: boolean) => {
-  const rows = scrollRows(side, bars);
-  if (side === 0)
-    return `${V3_SCROLL_HIDE}<div dir="ltr" class="relative overflow-hidden" style="position:relative;--radix-scroll-area-corner-width:${bars ? 8 : 0}px;--radix-scroll-area-corner-height:${bars ? 8 : 0}px;height:180px;width:100%;max-width:320px;border:1px solid var(--color-border);border-radius:var(--radius-sm)"><div data-radix-scroll-area-viewport="" tabindex="0" class="${V3_SCROLL_VIEWPORT}" style="overflow-x:${bars ? 'scroll' : 'hidden'};overflow-y:scroll"><div style="min-width:100%;display:table"><div style="padding:16px;font-family:var(--font-sans);font-size:14px">${rows}</div></div></div>${bars ? v3ScrollBars : ''}</div>`;
+const v3ScrollMarkup = (bars: boolean) => {
+  const corner = bars ? 8 : 0;
+  const overflowX = bars ? 'scroll' : 'hidden';
+  const scrollbars = bars ? v3ScrollBars : '';
+  return `${V3_SCROLL_HIDE}<div dir="ltr" class="relative overflow-hidden" style="position:relative;--radix-scroll-area-corner-width:${corner}px;--radix-scroll-area-corner-height:${corner}px;height:180px;width:100%;max-width:320px;border:1px solid var(--color-border);border-radius:var(--radius-sm)"><div data-radix-scroll-area-viewport="" tabindex="0" class="${V3_SCROLL_VIEWPORT}" style="overflow-x:${overflowX};overflow-y:scroll"><div style="min-width:100%;display:table"><div style="padding:16px;font-family:var(--font-sans);font-size:14px">${scrollRows(0, bars)}</div></div></div>${scrollbars}</div>`;
+};
+
+const v4ScrollMarkup = (bars: boolean) => {
   const corner = bars
     ? ' style="--radix-scroll-area-corner-width: var(--space-2); --radix-scroll-area-corner-height: var(--space-2)"'
     : '';
-  return `<div class="sp-scroll-area docs-scroll-area" dir="ltr"${corner}><div class="sp-scroll-area-viewport" tabindex="0"><div class="docs-scroll-fill"><div class="docs-scroll-list">${rows}</div></div></div>${bars ? v4ScrollBars : ''}</div>`;
+  const scrollbars = bars ? v4ScrollBars : '';
+  return `<div class="sp-scroll-area docs-scroll-area" dir="ltr"${corner}><div class="sp-scroll-area-viewport" role="region" aria-label="Scrollable list" tabindex="0"><div class="docs-scroll-fill"><div class="docs-scroll-list">${scrollRows(1, bars)}</div></div></div>${scrollbars}</div>`;
 };
 
 const scrollPair = (
@@ -403,8 +408,8 @@ const scrollPair = (
   act: Action | undefined,
 ): Pair => ({
   name,
-  v3: scrollMarkup(0, bars),
-  v4: scrollMarkup(1, bars),
+  v3: v3ScrollMarkup(bars),
+  v4: v4ScrollMarkup(bars),
   probes: {
     root: ['div[dir]', '.sp-scroll-area'],
     viewport: ['[data-radix-scroll-area-viewport]', '.sp-scroll-area-viewport'],
