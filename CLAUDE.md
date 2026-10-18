@@ -46,7 +46,9 @@ A size gate runs automatically after every edit and reports back — limits, and
 ```bash
 bun run dev          # specimen viewer at localhost:5173
 bun run build        # tsc + vite build → dist/
-bun run lint         # Biome check (lint + format, TS/TSX + CSS)
+bun run lint         # Biome check, warnings fail (lint + format, TS/TSX + CSS)
+bun run typecheck    # tsc -b over every tsconfig
+bun run knip         # unused files, exports and dependencies
 bun run lint:fix     # Biome check --write (auto-fix + format, incl. Tailwind class sort)
 bun run format       # Alias of lint:fix (Biome check --write)
 bun run test         # Unit test suite (bun test)

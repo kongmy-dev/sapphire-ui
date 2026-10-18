@@ -39,7 +39,13 @@ jobs:
         run: bun run lint
 
       - name: Type check
-        run: bun run build  # tsc -b is the first step of build
+        run: bun run typecheck
+
+      - name: Unused code and dependencies
+        run: bun run knip
+
+      - name: Build
+        run: bun run build
 
       - name: Unit tests
         run: bun run test
