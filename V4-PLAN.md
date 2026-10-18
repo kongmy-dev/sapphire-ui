@@ -47,7 +47,8 @@ css/tokens.css        shadcn variable names + brand extension; colours via color
 - **npm to use, registry to own.** npm ships the stylesheets, fonts, React components, custom
   elements and `DESIGN.md`, ESM only. The peers `react`, `react-dom` and `radix-ui` are all
   optional: a CSS-only app installs none of them, and a component without behaviour (button, card,
-  badge, alert…) imports no Radix, so it renders on a server without hydration. The registry serves
+  badge, alert…) imports no Radix, since its `asChild` uses the slot in `lib/`, so an app that uses
+  only those installs no `radix-ui`. The registry serves
   the same component source and the blocks, for an app that must change a component's structure.
 
 ```
@@ -205,7 +206,7 @@ a prop), `data-slot`, variants as `as const` tuples rendered as `data-*`, the `s
 `className`, `radix-ui` for behaviour. `<name>.examples.tsx` is the single source for the site, the
 a11y and visual specs and the HTML snippet (`renderToStaticMarkup`). `<name>.test.tsx` states
 behaviour; coverage is at least 95% of lines and functions, every file counted. The contract gate
-holds React and CSS together. Hooks and helpers move to `hooks/` and `lib/` with their tests.
+holds React and CSS together. Hooks and helpers move to `hooks/` and `lib/` with their tests. `lib/slot.tsx` replaces Radix's Slot; the admin sidebar link, its one `Slottable` use, composes its children with `cloneElement` instead.
 
 **P5 — Custom elements.** `elements/<name>.ts` renders the same classes as its React twin, defines
 itself only in a browser, and has its own a11y specimen. An equivalence test renders each element
@@ -222,7 +223,7 @@ page with a dialog.
 
 **P7 — Registry v4.** A source `registry.json` with `include`, built by a pinned `shadcn build` and
 checked by `shadcn registry validate`, from the same component folders plus `blocks/`, which move
-onto the new components and may use Tailwind utilities for layout. npm dependencies are versioned
+onto the new components and may use Tailwind utilities for layout. A block using `asChild` ships `lib/slot` as a registry file. npm dependencies are versioned
 from `package.json`; a slim generator stays only if `shadcn build` cannot derive them. A
 `registry:base` item adds the npm package, the stylesheet import, the fonts and the consumer skill
 (`~/.claude/skills/sapphire/SKILL.md`); §9's spike settles whether the CLI can add the `@import`,
@@ -321,7 +322,7 @@ pasted here with its SHA.
 | Do utilities and an app's unlayered CSS beat `sp-*`, whichever of `sapphire.css` and Tailwind is imported first? | a scratch Vite and Tailwind 4 app, both import orders | **Yes, when `sapphire.css` opens with `@layer theme, base, components, utilities;`.** 48 of 48 pass: four import orders, dev and build, Chromium, Firefox and WebKit; the line survives `bun build --minify`. Without it, importing `sapphire.css` before Tailwind lets preflight beat `sp-*` in every engine. Measured on stand-in CSS, not the real file. `6868ef2`, `spikes/css-layers/result.txt` |
 | Does `light-dark()` survive `bun build` and flip inside a nested `[data-theme]` scope? | build `tokens.css`; screenshot a dark card inside a light page | **Only if the tokens are re-declared per scope; contradicts §2 and P2 as written.** `light-dark()` in custom properties on `:root` alone flips in source CSS, 42 of 42 in Chromium, Firefox and WebKit, but the default `bun build` (same bytes as `--target=browser`) and Vite's default production target lower it to fixed values on `:root`, and nested scopes then fail, 9 of 42. Three forms pass 42 of 42 in all eight build forms: the same `light-dark()` tokens declared on `:root, [data-theme=light], [data-theme=dark], .dark`; `light-dark()` written inside each declaration; plain variables re-declared per scope. `light-dark()` takes only colours: radius, gap, weight and shadow arguments are invalid in all three engines. `588f790`, `spikes/light-dark/result.txt`. **Owner's call:** the first form, colours only (ADR-0004) |
 | Can `bun test` with happy-dom run a Radix dialog: portal, focus trap, Escape, outside click? | one dialog suite; where it fails, that suite runs in Playwright | **Yes.** The dialog's portal, name and description, focus entry, Tab wrap, Escape with focus return, overlay press, `aria-hidden` and scroll lock all pass, as do 17 primitives, with no polyfills (happy-dom 21.0.3). 23 tests run in a median 415 ms; `--rerun-each=20` passed 460 of 460. Register happy-dom in its own preload before Testing Library loads; an outside press targets the overlay; nothing has layout, so a position-based drag runs in Playwright. `1f47e8b`, `spikes/happy-dom-radix/result.txt` |
-| Can `asChild` work without `radix-ui`, so that button, badge and card import no Radix? | a slot in `lib/` run against Radix Slot's cases: props, handlers, refs and `className` merged | pending |
+| Can `asChild` work without `radix-ui`, so that button, badge and card import no Radix? | a slot in `lib/` run against Radix Slot's cases: props, handlers, refs and `className` merged | **Yes, with one rewrite.** A 132-line `lib/slot` matches Radix's Slot on all 20 of Radix's own slot tests that use no `Slottable` and on 45 added cases, and merges props identically over 57,600 prop pairs; 159 tests pass, 1,590 of 1,590 over `--rerun-each=10`. It has no `Slottable`; the one use, the admin sidebar link, is rewritten with `cloneElement` and renders identically. Minified with React external: 790 B gzipped against Radix's 1,470 B, and the bundle holds no Radix code. **Corrects §2's reason:** Radix's Slot carries no `"use client"`, so button and badge already render as server components; what `lib/slot` buys is no `radix-ui` install and the bytes. `deb0295`, `spikes/slot/result.txt` |
 | Can `shadcn build` emit versioned dependencies, and can a `registry:base` item add the package, the stylesheet import and the fonts? | one base item and one component through `shadcn build`, `shadcn registry validate` and `shadcn add` into a scratch app | pending |
 | Do vendored files land at `@/components/ui/<name>` from the folder layout? | the same scratch app | pending |
 
