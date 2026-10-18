@@ -169,8 +169,11 @@ proved third.
 that is nothing. Each gate has a test that feeds it a real violation from this repository (a stray
 comment from `src/`, a hex literal from `src/index.css`, the `.btn` and `<Button>` padding drift)
 and expects it to fail, and each failure prints `file:line`, the rule ID and what to write
-instead. Until P9 the gates run on the new folders and any change under `src/` fails; v3 fixes go
-to the `v3` branch. Tests are hermetic: none reads the real `dist/`. Pin Bun (`.bun-version`,
+instead. Until P9 the gates run on the new folders and any change under `src/` fails (P-17); v3
+fixes go to the `v3` branch. The gates that guard only `src/` (the old token, CSS-variable,
+a11y-coverage and bundle-externals gates) go, since the freeze covers it. A gate whose folders do
+not exist yet is built and tested now and joins `bun run gate` in the commit that creates them.
+Tests are hermetic: none reads the real `dist/`. Pin Bun (`.bun-version`,
 `packageManager`), devDeps exactly (`bunfig.toml`) and TypeScript 6.0.x; Dependabot moves to the
 `bun` ecosystem, which updates `bun.lock`. A strict shared `tsconfig.base.json` that covers every
 tracked `.ts` file outside `src/`, with `typecheck` in the gate; `src/` keeps its own non-strict
@@ -190,6 +193,7 @@ or `.dark` forces one. A test proves every v3 token maps to a v4 token of the sa
 Playwright spec builds `tokens.css` with the default `bun build` and with Vite's default target, and
 proves a dark scope inside a light page and the reverse flip, in Chromium, Firefox and WebKit. `DESIGN.md`, from `design/design.md`
 and `.claude/instructions/design-system.md`, with its token values checked against `tokens.css`.
+The token gate joins `bun run gate`.
 
 **P3 — The CSS contract.** `css/base.css` (elements, focus ring, type scale, `sp-prose`),
 `css/layout.css`, and `components/<name>/<name>.css` for every component and pattern: document,
@@ -209,7 +213,7 @@ a prop), `data-slot`, variants as `as const` tuples rendered as `data-*`, the `s
 `className`, `radix-ui` for behaviour. `<name>.examples.tsx` is the single source for the site, the
 a11y and visual specs and the HTML snippet (`renderToStaticMarkup`). `<name>.test.tsx` states
 behaviour; coverage is at least 95% of lines and functions, every file counted. The contract gate
-holds React and CSS together. Hooks and helpers move to `hooks/` and `lib/` with their tests. `lib/slot.tsx` replaces Radix's Slot; the admin sidebar link, its one `Slottable` use, composes its children with `cloneElement` instead.
+holds React and CSS together, and the a11y coverage gate holds every example to its spec. Hooks and helpers move to `hooks/` and `lib/` with their tests. `lib/slot.tsx` replaces Radix's Slot; the admin sidebar link, its one `Slottable` use, composes its children with `cloneElement` instead.
 
 **P5 — Custom elements.** `elements/<name>.ts` renders the same classes as its React twin, defines
 itself only in a browser, and has its own a11y specimen. An equivalence test renders each element
@@ -240,7 +244,7 @@ its npm import and its HTML snippet, plus pages for tokens, layout and prose. It
 `sapphire.css` alone, with no router or sitemap dependency. Deploy is unchanged.
 
 **P9 — Retire the old lane.** Delete `src/`, the library Vite config, `vite-plugin-dts`, the CJS
-build, the hand-written exports map, the gates that guarded only them (`deps`, `bundle-externals`),
+build, the hand-written exports map, the freeze gate,
 `.husky/`, `.lintstagedrc.json`, `design/` and the two unrelated skills under `.agents/`. Set the
 size limits to the new tree's own p95, lowered only from then on, and rewrite
 `.quality-baseline.json`. `bun publish --dry-run` lists only `dist/`, `README.md`, `DESIGN.md` and
@@ -294,6 +298,7 @@ reference), both plans, `docs/coding/principles.md` (its table moves into `CLAUD
 | P-14 | The public surface is semver: a removed or narrowed prop, class, data attribute or token is a major, and has its entry in `tooling/migrate/map.ts` | API snapshot test |
 | P-15 | A gate can fail: each gate's test feeds it a real past violation and expects it to fail; each failure names `file:line`, the rule and the fix | `bun test` over `tooling/gates/` |
 | P-16 | Generated files are fresh: rerunning every generator leaves the tree unchanged | generated-files gate |
+| P-17 | `src/` is frozen until P9 deletes it: a v3 fix goes to the `v3` branch, v4 work to the new folders | freeze gate |
 
 `CLAUDE.md` also carries the working rules: decide out loud before building; a question that an
 experiment can answer gets the experiment, not a question to the owner; a number in a doc or commit
