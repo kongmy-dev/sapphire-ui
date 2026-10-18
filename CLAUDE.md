@@ -21,7 +21,7 @@ Why: product apps must diverge (client theming, POS touch UIs) — vendored sour
 
 **A new export needs a consumer in the same change.** An interface with one implementation, a factory that constructs one thing, or an options object read in one place is indirection nobody is paying for. Write the direct version; the seam appears on its own when a second caller arrives, and it lands somewhere other than you would have guessed.
 
-A size gate runs automatically after every edit and reports back — limits, and why they are what they are, in `tooling/quality-metrics/check.ts`. See `AI-CODE-QUALITY.md`.
+A size gate runs automatically after every edit and reports back; `AI-CODE-QUALITY.md` gives its limits and why.
 
 ---
 

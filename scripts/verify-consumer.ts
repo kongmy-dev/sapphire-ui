@@ -13,15 +13,25 @@ import { dirname, join } from 'node:path';
 const FIXTURE = 'tests/registry-consumer';
 const APP = join(FIXTURE, 'app');
 
-type Item = {
-  name: string;
-  files: Array<{ target?: string; content: string }>;
-};
-
 type VendoredFile = { target: string; content: string };
 
-function hasTarget(file: Item['files'][number]): file is VendoredFile {
-  return typeof file.target === 'string' && file.target !== '';
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null;
+
+function isVendoredFile(value: unknown): value is VendoredFile {
+  return (
+    isRecord(value) &&
+    typeof value.target === 'string' &&
+    value.target !== '' &&
+    typeof value.content === 'string'
+  );
+}
+
+function vendoredFiles(item: unknown): VendoredFile[] {
+  if (!isRecord(item) || !Array.isArray(item.files)) {
+    throw new Error('registry build emitted a file that is not an item');
+  }
+  return item.files.filter(isVendoredFile);
 }
 
 function run(cmd: string[]): void {
@@ -58,8 +68,8 @@ function materialize(): void {
 
   const items = readdirSync(out)
     .filter((f) => f.endsWith('.json') && f !== 'registry.json')
-    .map((f) => JSON.parse(readFileSync(join(out, f), 'utf8')) as Item);
-  const files = items.flatMap((item) => item.files).filter(hasTarget);
+    .map((f): unknown => JSON.parse(readFileSync(join(out, f), 'utf8')));
+  const files = items.flatMap(vendoredFiles);
 
   for (const file of files) {
     const dest = join(APP, file.target);

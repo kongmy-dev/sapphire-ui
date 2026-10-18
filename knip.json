@@ -10,6 +10,5 @@
     "design/colors_and_type.css"
   ],
   "project": ["**/*.{ts,tsx,css}"],
-  "ignoreUnresolved": ["^@/components/ui/"],
-  "ignoreDependencies": ["date-fns"]
+  "ignoreUnresolved": ["^@/components/ui/"]
 }
