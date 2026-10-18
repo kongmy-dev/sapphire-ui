@@ -97,3 +97,12 @@ custom elements are its clients: they render those classes and add behaviour.
 
 - Spike 1, `6868ef2`, `spikes/css-layers/result.txt` on `spike/css`. Measured
   on stand-in CSS, not the real stylesheet.
+- Measured with Bun 1.4.3 while building the real stylesheet (`ae0d41e`,
+  `015053a`):
+  - Bun emits the entry file's own rules after its imports, so a layer
+    statement written in `sapphire.css` itself lands last. The statement lives
+    in `css/layers.css`, the first `@import` of the generated `sapphire.css`,
+    and a test holds it first in the source and in the minified build.
+  - Bun inlines a local `url()` asset up to about 64 KiB as base64, whatever
+    its asset options say. The build marks `*.woff2` external, copies the
+    files to `fonts/` next to the stylesheet and rewrites the URLs.

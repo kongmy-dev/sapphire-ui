@@ -56,6 +56,12 @@ jobs:
       - name: Token gate
         run: bun run token-check
 
+      - name: Budget gate
+        run: bun run budget-check
+
+      - name: Generated-files gate
+        run: bun run generated-check
+
       - name: Freeze gate
         run: bun run freeze-check
 

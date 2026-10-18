@@ -56,6 +56,15 @@ Utilities read the tokens: `bg-background`, `text-foreground`, `bg-card`, `text-
 - Families: `--font-serif` ('Newsreader', Georgia, serif) for headings; `--font-sans` ('Source Sans 3', system-ui) for body/UI; `--font-mono` ('JetBrains Mono') for code.
 - Fluid display sizes: `--text-display-xl` (`clamp(2.5rem, 6vw, 4.5rem)`), `--text-display-lg` (`clamp(2rem, 4vw, 3rem)`).
 
+## Lengths in components
+
+The token gate bans length literals outside `css/tokens.css`. In `components/<name>/<name>.css`:
+
+- A value on a token's scale uses the token: `var(--space-4)`, `var(--text-sm)`, `var(--radius-btn)`.
+- An off-scale geometry value is `calc(var(--space-1) * N)` (9 px is `calc(var(--space-1) * 2.25)`); an off-scale type size is `calc(var(--text-base) * N)` (13 px is `calc(var(--text-base) * 0.8125)`).
+- A value several components share becomes a token in `css/tokens.css`, with its `css/tailwind.css` mapping and `DESIGN.md` row.
+- A component's own knobs are `--sp-<name>-*` variables declared on its `.sp-<name>` rule; variants and sizes override them through `data-variant` and `data-size`, and the customisation ladder (ADR-0003) sets them from outside.
+
 ## Linting and Formatting
 
 Formatting and CSS linting are handled by Biome:

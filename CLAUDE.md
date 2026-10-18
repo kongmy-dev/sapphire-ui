@@ -59,6 +59,9 @@ bun run size-check   # Size gate (P-7): every in-scope TS file
 bun run dep-check    # Dependency gate (P-12)
 bun run freeze-check # Freeze gate (P-17): src/ is unchanged
 bun run token-check  # Token gate (P-5): css/, components/, blocks/, elements/, site/ and DESIGN.md
+bun run budget-check # Budget gate (P-13): gzipped sapphire.css, built into a temp dir, against its ceiling
+bun run generated-check # Generated-files gate (P-16): every generator rerun in memory, any diff fails
+bun run generate     # Write the generated files (sapphire.css); run it after adding a component folder
 bun run scorecard [sha] # v4 numbers and per-component state at a commit (default HEAD), measured in a temp checkout
 bun run test:visual   # compare every pin inside the linux/arm64 Playwright container (needs Docker)
 bun run pin <example>… # the only way to change a pin: compare, print expected/actual/diff paths, update those pins
@@ -73,11 +76,21 @@ bun run deploy:docs  # deploy docs to Cloudflare Pages
 ```
 DESIGN.md               ← v4 design spec: brand, token tables (checked against css/tokens.css), UX rules
 
+sapphire.css            ← GENERATED stylesheet entry: layer order, then fonts, tokens, base, every component (bun run generate)
+
 css/
+  layers.css            ← the @layer order line; first import so it stays first
+  fonts.css             ← @font-face from @fontsource-variable (latin, latin-ext, woff2)
   tokens.css            ← v4 tokens, the single source (ADR-0004)
+  base.css              ← element defaults, focus ring, type scale (@layer base)
+  base.examples.html    ← plain-HTML specimens of base (typography)
   tailwind.css          ← maps every v4 token to Tailwind utilities
 
-tooling/migrate/map.ts  ← v3 → v4 token and utility renames
+components/<name>/      ← <name>.css (@layer components, sp-* classes) and <name>.examples.html (specimens)
+
+site/specimen.css       ← docs chrome the specimens use; tooling/visual/specimen-server.ts serves them
+
+tooling/migrate/map.ts  ← v3 → v4 token, utility, class and prop-value renames
 
 design/
   colors_and_type.css   ← v3 design tokens (frozen lane)
