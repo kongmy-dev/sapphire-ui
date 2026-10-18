@@ -1,61 +1,28 @@
 ---
 name: sapphire-testing
-description: How to write and run unit tests and accessibility tests in Sapphire UI. Covers testing patterns for React components, a11y specs, and running verification suites.
+description: How to write and run unit tests and accessibility tests in Sapphire UI. Covers the test runners, the rules a test must meet, and running verification suites.
 ---
 
-# Skill: Testing Sapphire UI Components
+# Skill: Testing Sapphire UI
 
-How to write and run tests in the Sapphire UI repository. Read this before adding or modifying tests.
+Read this before adding or modifying tests.
 
 ## Stack
 
-- **Unit Tests:** Vitest + React Testing Library + `@testing-library/jest-dom` in `jsdom`.
-- **Accessibility Tests:** Playwright + `@axe-core/playwright` scanning against WCAG 2.1 AA rules.
+- **Unit tests:** `bun test`, importing from `bun:test`. Today they cover `tooling/gates/` and
+  `scripts/`. Component tests arrive with the v4 components, with happy-dom registered in its own
+  preload before Testing Library loads (`V4-PLAN.md` §9).
+- **Accessibility tests:** Playwright and `@axe-core/playwright` against WCAG 2.1 AA, in `tests/`.
 
-## Canonical Component Test Structure
+## Rules
 
-```tsx
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { describe, it, expect } from 'vitest';
-import { Button } from '../Button';
-
-describe('Button', () => {
-  it('renders without crashing and displays text', () => {
-    render(<Button>Click me</Button>);
-    expect(screen.getByRole('button', { name: 'Click me' })).toBeInTheDocument();
-  });
-
-  it('applies variant classes correctly', () => {
-    const { container } = render(<Button variant="outline">Test</Button>);
-    expect(container.firstChild).toHaveClass('border-[1.5px]');
-  });
-
-  it('forwards refs to the button element', () => {
-    const ref = { current: null as HTMLButtonElement | null };
-    render(<Button ref={ref}>Ref</Button>);
-    expect(ref.current).toBeInstanceOf(HTMLButtonElement);
-  });
-
-  it('merges custom className without dropping variant classes', () => {
-    const { container } = render(<Button className="my-class">Test</Button>);
-    expect(container.firstChild).toHaveClass('my-class');
-  });
-});
-```
-
-## What to Test Per Component
-
-1. **Smoke render:** Renders into DOM with correct semantic role.
-2. **Variant classes:** Each CVA variant applies expected classes.
-3. **Ref forwarding:** `ref.current` is attached to the DOM element.
-4. **`asChild` / Slot:** Child element receives merged classes and props when `asChild` is enabled.
-5. **Accessibility:** Proper `aria-*` attributes, tab stops, and focus states.
-6. **Interactivity:** User events (click, focus, keyboard triggers) call registered handlers.
+A test states a behaviour and can fail: it reaches a component only through props and the DOM,
+finds elements by role, and asserts no snapshot (`V4-PLAN.md` §7, P-10). The typescript skill's
+Q1–Q3 apply: revert the code under test and the test must fail, and a suite that ran nothing fails.
 
 ## Running Tests
 
 ```bash
-bun run test           # Vitest suite
+bun run test           # bun test
 bun run test:a11y      # Playwright a11y specs
 ```

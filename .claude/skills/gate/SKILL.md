@@ -20,7 +20,7 @@ The standard gate pipeline executes:
 1. **Linter & Formatter:** `bun run lint` (Biome check on types, formatting, syntax, and class ordering).
 2. **Comment Gate:** `bun run comment-check` (verifies no stray comments outside JSDoc and allowed fixed forms).
 3. **Size Gate:** `bun run size-check` (verifies cognitive complexity, function length, file length, and nesting limits on changed files).
-4. **Unit Tests:** `bun run test` (Vitest suites for components, hooks, and helpers).
+4. **Unit Tests:** `bun run test` (`bun test` over the gates and scripts).
 5. **Accessibility Suite:** `bun run test:a11y` (Playwright + axe-core accessibility checks).
 6. **Registry Boundaries:** `bun run check:registry` (verifies independence of registry blocks).
 
