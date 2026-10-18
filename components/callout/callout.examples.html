@@ -1,0 +1,99 @@
+<header class="docs-page-header">
+  <h1>Extended</h1>
+  <p>Phase 3 primitives — breadcrumb trails, keyboard hints, code blocks, toggles, scroll areas, and complex editorial layouts.</p>
+</header>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Editorial &amp; Complex Primitives</h2>
+  <div class="docs-editorial">
+    <div class="sp-card docs-editorial-card">
+      <h3 class="docs-editorial-title">Editorial Callout</h3>
+      <div class="sp-callout" data-variant="subtle">
+        <span class="sp-callout-icon" aria-hidden="true"></span>
+        <div class="sp-callout-content">
+          <div class="sp-callout-title">Key Takeaway</div>
+          <div class="sp-callout-body">
+            <ul>
+              <li>UI primitives should be highly cohesive and loosely coupled.</li>
+              <li>Design systems enforce consistency across micro-frontends.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sp-card docs-editorial-card">
+      <h3 class="docs-editorial-title">Margin Note (Sidenote)</h3>
+      <p class="docs-editorial-text">When writing highly technical blog posts, we often need to reference external sources or explain a tangential concept without interrupting the main prose. Here is an example of a <span class="sp-margin-note"><span class="sp-margin-note-anchor" aria-describedby="mn-1">Tufte-style margin note</span><span class="sp-margin-note-inline" id="mn-1">This note appears in the margin on desktop and reflows inline on mobile devices.</span><span class="sp-margin-note-aside" aria-hidden="true">This note appears in the margin on desktop and reflows inline on mobile devices.</span></span> in action.</p>
+    </div>
+
+    <div class="docs-editorial-grid">
+      <div class="sp-card docs-editorial-card">
+        <h3 class="docs-editorial-title">Revision Timeline</h3>
+        <div class="sp-timeline" data-orientation="vertical">
+          <div class="sp-timeline-item">
+            <div class="sp-timeline-indicator">
+              <div class="sp-timeline-marker"><span class="sp-avatar" data-size="xs"><span class="sp-avatar-fallback">KM</span></span></div>
+            </div>
+            <div class="sp-timeline-content">
+              <div class="docs-timeline-title">v1.2.0 - Core Update</div>
+              <div class="docs-timeline-note">Added timeline primitive.</div>
+            </div>
+          </div>
+          <div class="sp-timeline-item">
+            <div class="sp-timeline-indicator" data-last>
+              <div class="sp-timeline-marker"><span class="sp-avatar" data-size="xs"><span class="sp-avatar-fallback">KM</span></span></div>
+            </div>
+            <div class="sp-timeline-content">
+              <div class="docs-timeline-title">v1.1.0 - Layouts</div>
+              <div class="docs-timeline-note">Added admin sidebar layout.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sp-card docs-editorial-card">
+        <h3 class="docs-editorial-title">Table of Contents</h3>
+        <nav class="sp-toc" aria-label="Table of Contents">
+          <p class="sp-toc-title">On this page</p>
+          <ul class="sp-toc-list">
+            <li class="sp-toc-item"><a class="sp-toc-link" href="#sec1">Introduction to Web Architecture</a></li>
+            <li class="sp-toc-item"><a class="sp-toc-link" href="#sec2" aria-current="location">Component Reusability</a></li>
+            <li class="sp-toc-item" data-level="3"><a class="sp-toc-link" href="#sec2-1">Extracting Primitives</a></li>
+            <li class="sp-toc-item" data-level="3"><a class="sp-toc-link" href="#sec2-2">Styling with CSS Variables</a></li>
+            <li class="sp-toc-item"><a class="sp-toc-link" href="#sec3">Conclusion</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Callout</h2>
+  <div class="docs-preview">
+    <div class="sp-callout">
+      <span class="sp-callout-icon" aria-hidden="true"></span>
+      <div class="sp-callout-content">
+        <div class="sp-callout-title">Heads Up</div>
+        <div class="sp-callout-body">
+          <ul>
+            <li>The default variant draws a border and a surface fill.</li>
+            <li>The subtle variant drops the border and fades the fill.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Callout (body only)</h2>
+  <div class="docs-preview">
+    <div class="sp-callout" data-variant="subtle">
+      <div class="sp-callout-content">
+        <div class="sp-callout-body">A callout needs neither an icon nor a title.</div>
+      </div>
+    </div>
+  </div>
+</section>

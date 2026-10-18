@@ -1,0 +1,145 @@
+@layer components {
+  .sp-steps {
+    --sp-steps-step-gap: var(--space-2);
+    --sp-steps-indicator-size: calc(var(--space-1) * 7);
+    --sp-steps-indicator-font: var(--font-mono);
+    --sp-steps-indicator-font-size: var(--text-xs);
+    --sp-steps-indicator-line-height: var(--space-4);
+    --sp-steps-indicator-bg: var(--background);
+    --sp-steps-indicator-fg: var(--muted-foreground);
+    --sp-steps-indicator-border-width: var(--border-width);
+    --sp-steps-indicator-border-color: var(--border);
+    --sp-steps-indicator-shadow: none;
+    --sp-steps-icon-size: var(--space-4);
+    --sp-steps-label-fg: var(--muted-foreground);
+    --sp-steps-label-size: var(--text-xs);
+    --sp-steps-label-line-height: var(--space-4);
+    --sp-steps-label-spacing: 0.05em;
+    --sp-steps-text-gap: calc(var(--space-1) * 0.5);
+    --sp-steps-description-fg: var(--muted-foreground);
+    --sp-steps-description-size: calc(var(--text-base) * 0.6875);
+    --sp-steps-description-line-height: var(--leading-tight);
+    --sp-steps-connector-bg: var(--border);
+    --sp-steps-connector-height: calc(var(--space-1) * 0.5);
+    --sp-steps-connector-top: calc(var(--space-1) * 3.5);
+    --sp-steps-connector-inset: var(--space-4);
+
+    display: flex;
+    width: 100%;
+    font-family: var(--font-sans);
+  }
+
+  .sp-steps[data-variant="compact"] {
+    --sp-steps-step-gap: var(--space-1);
+  }
+
+  .sp-steps[data-variant="compact"] .sp-steps-description {
+    display: none;
+  }
+
+  .sp-steps-list {
+    display: flex;
+    gap: 0;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .sp-steps-step {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--sp-steps-step-gap);
+    align-items: center;
+    text-align: center;
+  }
+
+  .sp-steps-step[data-status="done"] {
+    --sp-steps-indicator-bg: var(--primary);
+    --sp-steps-indicator-fg: var(--on-dark);
+    --sp-steps-indicator-border-width: 0;
+    --sp-steps-label-fg: var(--foreground-strong);
+    --sp-steps-connector-bg: var(--foreground-strong);
+  }
+
+  .sp-steps-step[data-status="active"] {
+    --sp-steps-indicator-bg: var(--brand);
+    --sp-steps-indicator-fg: var(--primary);
+    --sp-steps-indicator-border-width: 0;
+    --sp-steps-indicator-shadow: 0 0 0 var(--space-1)
+      color-mix(in oklab, var(--brand) 18%, transparent);
+    --sp-steps-label-fg: var(--brand-text);
+  }
+
+  .sp-steps-step:not(:last-child)::after {
+    position: absolute;
+    top: var(--sp-steps-connector-top);
+    right: calc(-50% + var(--sp-steps-connector-inset));
+    left: calc(50% + var(--sp-steps-connector-inset));
+    height: var(--sp-steps-connector-height);
+    content: "";
+    background: var(--sp-steps-connector-bg);
+  }
+
+  .sp-steps-indicator {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--sp-steps-indicator-size);
+    height: var(--sp-steps-indicator-size);
+    font-family: var(--sp-steps-indicator-font);
+    font-size: var(--sp-steps-indicator-font-size);
+    font-weight: 600;
+    line-height: var(--sp-steps-indicator-line-height);
+    color: var(--sp-steps-indicator-fg);
+    background: var(--sp-steps-indicator-bg);
+    border: var(--sp-steps-indicator-border-width) solid
+      var(--sp-steps-indicator-border-color);
+    border-radius: var(--radius-pill);
+    box-shadow: var(--sp-steps-indicator-shadow);
+    transition:
+      color var(--transition-fast),
+      background-color var(--transition-fast),
+      border-color var(--transition-fast);
+  }
+
+  .sp-steps-icon {
+    display: block;
+    flex-shrink: 0;
+    width: var(--sp-steps-icon-size);
+    height: var(--sp-steps-icon-size);
+  }
+
+  .sp-steps-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-steps-text-gap);
+  }
+
+  .sp-steps-label {
+    font-size: var(--sp-steps-label-size);
+    font-weight: 600;
+    line-height: var(--sp-steps-label-line-height);
+    color: var(--sp-steps-label-fg);
+    text-transform: uppercase;
+    letter-spacing: var(--sp-steps-label-spacing);
+    transition: color var(--transition-fast);
+  }
+
+  .sp-steps-description {
+    font-size: var(--sp-steps-description-size);
+    line-height: var(--sp-steps-description-line-height);
+    color: var(--sp-steps-description-fg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sp-steps-indicator,
+    .sp-steps-label {
+      transition: none;
+    }
+  }
+}

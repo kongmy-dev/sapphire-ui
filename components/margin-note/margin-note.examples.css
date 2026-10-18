@@ -1,0 +1,7 @@
+.docs-margin-note-text {
+  max-width: calc(var(--space-1) * 150);
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--foreground);
+}

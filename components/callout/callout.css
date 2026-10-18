@@ -1,0 +1,82 @@
+@layer components {
+  .sp-callout {
+    --sp-callout-radius: var(--radius-md);
+    --sp-callout-padding: var(--space-5);
+    --sp-callout-gap: var(--space-4);
+    --sp-callout-border-width: var(--border-width);
+    --sp-callout-border-color: var(--border);
+    --sp-callout-bg: var(--background);
+    --sp-callout-fg: var(--foreground);
+    --sp-callout-icon-size: var(--space-6);
+    --sp-callout-icon-offset: calc(var(--space-1) * 0.5);
+    --sp-callout-icon-fg: var(--foreground-strong);
+    --sp-callout-content-gap: var(--space-2);
+    --sp-callout-title-fg: var(--foreground-strong);
+    --sp-callout-title-size: var(--text-lg);
+    --sp-callout-title-line-height: calc(var(--space-1) * 7);
+    --sp-callout-title-spacing: -0.025em;
+    --sp-callout-body-fg: var(--muted-foreground);
+    --sp-callout-body-size: var(--text-sm);
+    --sp-callout-body-line-height: var(--leading-relaxed);
+    --sp-callout-list-indent: var(--space-4);
+    --sp-callout-list-gap: var(--space-1);
+
+    position: relative;
+    display: flex;
+    gap: var(--sp-callout-gap);
+    padding: var(--sp-callout-padding);
+    font-family: var(--font-sans);
+    color: var(--sp-callout-fg);
+    background: var(--sp-callout-bg);
+    border: var(--sp-callout-border-width) solid var(--sp-callout-border-color);
+    border-radius: var(--sp-callout-radius);
+  }
+
+  .sp-callout[data-variant="subtle"] {
+    --sp-callout-border-color: transparent;
+    --sp-callout-bg: color-mix(in oklab, var(--background) 30%, transparent);
+  }
+
+  .sp-callout-icon {
+    display: flex;
+    flex-shrink: 0;
+    align-items: flex-start;
+    width: var(--sp-callout-icon-size);
+    height: var(--sp-callout-icon-size);
+    margin-top: var(--sp-callout-icon-offset);
+    color: var(--sp-callout-icon-fg);
+  }
+
+  .sp-callout-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--sp-callout-content-gap);
+    min-width: 0;
+  }
+
+  .sp-callout-title {
+    font-family: var(--font-serif);
+    font-size: var(--sp-callout-title-size);
+    font-weight: 600;
+    line-height: var(--sp-callout-title-line-height);
+    color: var(--sp-callout-title-fg);
+    letter-spacing: var(--sp-callout-title-spacing);
+  }
+
+  .sp-callout-body {
+    font-size: var(--sp-callout-body-size);
+    line-height: var(--sp-callout-body-line-height);
+    color: var(--sp-callout-body-fg);
+  }
+
+  .sp-callout-body > ul {
+    padding: 0;
+    margin: 0 0 0 var(--sp-callout-list-indent);
+    list-style: disc;
+  }
+
+  .sp-callout-body > ul > li:not(:last-child) {
+    margin-bottom: var(--sp-callout-list-gap);
+  }
+}

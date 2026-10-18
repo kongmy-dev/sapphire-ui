@@ -1,0 +1,11 @@
+.docs-timeline-title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: calc(var(--space-1) * 5);
+}
+
+.docs-timeline-note {
+  font-size: var(--text-xs);
+  line-height: var(--space-4);
+  color: var(--muted-foreground);
+}

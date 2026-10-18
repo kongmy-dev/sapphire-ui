@@ -1,0 +1,90 @@
+@layer components {
+  .sp-margin-note {
+    --sp-margin-note-anchor-border-width: var(--border-width);
+    --sp-margin-note-anchor-border-color: color-mix(
+      in oklab,
+      var(--brand) 50%,
+      transparent
+    );
+    --sp-margin-note-anchor-border-color-hover: var(--brand);
+    --sp-margin-note-anchor-bg-hover: color-mix(
+      in oklab,
+      var(--brand) 10%,
+      transparent
+    );
+    --sp-margin-note-font-size: var(--text-sm);
+    --sp-margin-note-line-height: calc(var(--space-1) * 5);
+    --sp-margin-note-fg: var(--muted-foreground);
+    --sp-margin-note-fg-hover: var(--foreground);
+    --sp-margin-note-inline-gap: var(--space-2);
+    --sp-margin-note-inline-padding: var(--space-3);
+    --sp-margin-note-inline-radius: var(--radius-sm);
+    --sp-margin-note-inline-bg: var(--background);
+    --sp-margin-note-aside-width: calc(var(--space-1) * 60);
+    --sp-margin-note-aside-offset: var(--space-8);
+
+    position: relative;
+    display: inline;
+  }
+
+  .sp-margin-note-anchor {
+    cursor: help;
+    border-bottom: var(--sp-margin-note-anchor-border-width) dashed
+      var(--sp-margin-note-anchor-border-color);
+    transition:
+      color var(--transition-fast),
+      background-color var(--transition-fast),
+      border-color var(--transition-fast);
+  }
+
+  .sp-margin-note-inline {
+    display: block;
+    padding: var(--sp-margin-note-inline-padding);
+    margin-top: var(--sp-margin-note-inline-gap);
+    font-size: var(--sp-margin-note-font-size);
+    line-height: var(--sp-margin-note-line-height);
+    color: var(--sp-margin-note-fg);
+    background: var(--sp-margin-note-inline-bg);
+    border-radius: var(--sp-margin-note-inline-radius);
+  }
+
+  .sp-margin-note-aside {
+    position: absolute;
+    top: 0;
+    left: calc(100% + var(--sp-margin-note-aside-offset));
+    display: none;
+    width: var(--sp-margin-note-aside-width);
+    font-size: var(--sp-margin-note-font-size);
+    line-height: var(--sp-margin-note-line-height);
+    color: var(--sp-margin-note-fg);
+    transition: color var(--transition-fast);
+  }
+
+  @media (min-width: 64rem) {
+    .sp-margin-note-inline {
+      display: none;
+    }
+
+    .sp-margin-note-aside {
+      display: block;
+    }
+  }
+
+  @media (hover: hover) {
+    .sp-margin-note-anchor:hover {
+      background: var(--sp-margin-note-anchor-bg-hover);
+      border-bottom-color: var(--sp-margin-note-anchor-border-color-hover);
+    }
+
+    .sp-margin-note:hover .sp-margin-note-aside {
+      color: var(--sp-margin-note-fg-hover);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sp-margin-note-anchor,
+    .sp-margin-note-aside {
+      transition: none;
+    }
+  }
+}

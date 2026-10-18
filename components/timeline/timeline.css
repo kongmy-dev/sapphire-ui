@@ -1,0 +1,116 @@
+@layer components {
+  .sp-timeline {
+    --sp-timeline-direction: column;
+    --sp-timeline-item-direction: row;
+    --sp-timeline-item-gap: var(--space-4);
+    --sp-timeline-item-grow: 0;
+    --sp-timeline-item-basis: auto;
+    --sp-timeline-indicator-direction: column;
+    --sp-timeline-indicator-justify: flex-start;
+    --sp-timeline-indicator-width: var(--sp-timeline-marker-size);
+    --sp-timeline-indicator-height: auto;
+    --sp-timeline-marker-size: var(--space-6);
+    --sp-timeline-marker-bg: var(--background);
+    --sp-timeline-marker-fg: var(--muted-foreground);
+    --sp-timeline-marker-border-width: calc(var(--border-width) * 2);
+    --sp-timeline-marker-border-color: var(--border);
+    --sp-timeline-dot-size: var(--space-2);
+    --sp-timeline-dot-bg: color-mix(in oklab, var(--primary) 40%, transparent);
+    --sp-timeline-connector-bg: var(--border);
+    --sp-timeline-connector-thickness: calc(var(--space-1) * 0.5);
+    --sp-timeline-connector-top: var(--sp-timeline-marker-size);
+    --sp-timeline-connector-right: auto;
+    --sp-timeline-connector-bottom: calc(var(--space-4) * -1);
+    --sp-timeline-connector-left: 50%;
+    --sp-timeline-connector-width: var(--sp-timeline-connector-thickness);
+    --sp-timeline-connector-height: auto;
+    --sp-timeline-connector-shift: -50% 0;
+    --sp-timeline-content-gap: var(--space-1);
+    --sp-timeline-content-padding: calc(var(--space-1) * 0.5) 0 var(--space-8);
+
+    display: flex;
+    flex-direction: var(--sp-timeline-direction);
+    font-family: var(--font-sans);
+  }
+
+  .sp-timeline[data-orientation="horizontal"] {
+    --sp-timeline-direction: row;
+    --sp-timeline-item-direction: column;
+    --sp-timeline-item-gap: var(--space-3);
+    --sp-timeline-item-grow: 1;
+    --sp-timeline-item-basis: 0%;
+    --sp-timeline-indicator-direction: row;
+    --sp-timeline-indicator-justify: center;
+    --sp-timeline-indicator-width: auto;
+    --sp-timeline-indicator-height: var(--sp-timeline-marker-size);
+    --sp-timeline-connector-top: 50%;
+    --sp-timeline-connector-right: calc(var(--space-3) * -1);
+    --sp-timeline-connector-bottom: auto;
+    --sp-timeline-connector-left: var(--sp-timeline-marker-size);
+    --sp-timeline-connector-width: auto;
+    --sp-timeline-connector-height: var(--sp-timeline-connector-thickness);
+    --sp-timeline-connector-shift: 0 -50%;
+    --sp-timeline-content-padding: 0 var(--space-8) 0 0;
+  }
+
+  .sp-timeline-item {
+    position: relative;
+    display: flex;
+    flex-direction: var(--sp-timeline-item-direction);
+    flex-grow: var(--sp-timeline-item-grow);
+    flex-basis: var(--sp-timeline-item-basis);
+    gap: var(--sp-timeline-item-gap);
+  }
+
+  .sp-timeline-indicator {
+    position: relative;
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: var(--sp-timeline-indicator-direction);
+    align-items: center;
+    justify-content: var(--sp-timeline-indicator-justify);
+    width: var(--sp-timeline-indicator-width);
+    height: var(--sp-timeline-indicator-height);
+  }
+
+  .sp-timeline-indicator:not([data-last])::after {
+    position: absolute;
+    inset: var(--sp-timeline-connector-top) var(--sp-timeline-connector-right)
+      var(--sp-timeline-connector-bottom) var(--sp-timeline-connector-left);
+    width: var(--sp-timeline-connector-width);
+    height: var(--sp-timeline-connector-height);
+    content: "";
+    background: var(--sp-timeline-connector-bg);
+    translate: var(--sp-timeline-connector-shift);
+  }
+
+  .sp-timeline-marker {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: var(--sp-timeline-marker-size);
+    height: var(--sp-timeline-marker-size);
+    color: var(--sp-timeline-marker-fg);
+    background: var(--sp-timeline-marker-bg);
+    border: var(--sp-timeline-marker-border-width) solid
+      var(--sp-timeline-marker-border-color);
+    border-radius: var(--radius-pill);
+  }
+
+  .sp-timeline-dot {
+    width: var(--sp-timeline-dot-size);
+    height: var(--sp-timeline-dot-size);
+    background: var(--sp-timeline-dot-bg);
+    border-radius: var(--radius-pill);
+  }
+
+  .sp-timeline-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-timeline-content-gap);
+    padding: var(--sp-timeline-content-padding);
+  }
+}
