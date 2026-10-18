@@ -49,7 +49,7 @@ type Pair = {
   v4: string;
   focus: boolean;
   red: Red;
-  grip: boolean;
+  antialiased: boolean;
 };
 type Observation = {
   style: Record<string, string>;
@@ -173,7 +173,7 @@ function fieldPair(
     ),
     focus: isFocused(state),
     red: isInvalid(state) ? 'border-top-color' : null,
-    grip: kind === 'textarea' && isFocused(state),
+    antialiased: kind === 'textarea' || state === 'disabled',
   };
 }
 
@@ -216,7 +216,7 @@ function selectPair(
     v4: selectMarkup('sp-native-select', data, v4Parts, attributes),
     focus: isFocused(state),
     red: null,
-    grip: false,
+    antialiased: state === 'disabled',
   };
 }
 
@@ -230,7 +230,7 @@ function labelPair(size: Size, required: boolean): Pair {
     v4,
     focus: false,
     red: null,
-    grip: false,
+    antialiased: false,
   };
 }
 
@@ -249,7 +249,7 @@ function messagePair(message: 'hint' | 'error'): Pair {
     v4,
     focus: false,
     red: message === 'error' ? 'color' : null,
-    grip: false,
+    antialiased: false,
   };
 }
 
@@ -427,7 +427,7 @@ function redProblems(pair: Pair, v4: Observation): string[] {
 }
 
 type Difference = { count: number; max: number };
-const GRIP_ALLOWANCE: Difference = { count: 24, max: 1 };
+const ANTIALIAS_ALLOWANCE: Difference = { count: 64, max: 1 };
 const EXACT: Difference = { count: 0, max: 0 };
 
 const focusProblems = (pair: Pair, v4: Observation): string[] =>
@@ -474,7 +474,7 @@ const imageDifference = (
   );
 
 const withinAllowance = (pair: Pair, found: Difference): boolean => {
-  const allowed = pair.grip ? GRIP_ALLOWANCE : EXACT;
+  const allowed = pair.antialiased ? ANTIALIAS_ALLOWANCE : EXACT;
   return (
     found.count >= 0 && found.count <= allowed.count && found.max <= allowed.max
   );

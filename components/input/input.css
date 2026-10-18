@@ -26,6 +26,8 @@
     background: var(--sp-input-bg);
     border: var(--sp-input-border-width) solid var(--sp-input-border-color);
     border-radius: var(--sp-input-radius);
+    outline: var(--ring-width) solid transparent;
+    outline-offset: var(--ring-offset);
     box-shadow: var(--sp-input-focus);
     transition: all var(--transition-base);
   }
@@ -40,8 +42,6 @@
       var(--sp-input-ring-color);
 
     border-color: var(--sp-input-border-color-focus);
-    outline: var(--ring-width) solid transparent;
-    outline-offset: var(--ring-offset);
   }
 
   .sp-input:disabled {

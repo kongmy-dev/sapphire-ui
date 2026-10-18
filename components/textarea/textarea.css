@@ -39,6 +39,8 @@
       var(--sp-textarea-border-color);
     border-radius: var(--sp-textarea-radius);
     resize: var(--sp-textarea-resize);
+    outline: var(--ring-width) solid transparent;
+    outline-offset: var(--ring-offset);
     box-shadow: var(--sp-textarea-focus);
     transition: all var(--transition-base);
   }
@@ -53,8 +55,6 @@
       var(--sp-textarea-ring-color);
 
     border-color: var(--sp-textarea-border-color-focus);
-    outline: var(--ring-width) solid transparent;
-    outline-offset: var(--ring-offset);
   }
 
   .sp-textarea:disabled {

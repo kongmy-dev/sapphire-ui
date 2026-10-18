@@ -41,6 +41,8 @@
     border: var(--sp-native-select-border-width) solid
       var(--sp-native-select-border-color);
     border-radius: var(--sp-native-select-radius);
+    outline: var(--ring-width) solid transparent;
+    outline-offset: var(--ring-offset);
     box-shadow: var(--sp-native-select-focus);
     transition: all var(--transition-base);
   }
@@ -50,8 +52,6 @@
       var(--sp-native-select-ring-color);
 
     border-color: var(--sp-native-select-border-color-focus);
-    outline: var(--ring-width) solid transparent;
-    outline-offset: var(--ring-offset);
   }
 
   .sp-native-select:disabled {
