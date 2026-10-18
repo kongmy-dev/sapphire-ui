@@ -149,13 +149,12 @@ proved third.
 
 **P0 — Make `master` safe, settle the unknowns, decide.**
 
-1. Cut `v3` from `f6720d3`. On `v3`, add `react-resizable-panels` to devDeps and to the build's
-   externals, widen each peer range to include the version CI tests, and get CI green. On both
+1. Cut `v3` from `f6720d3` for 3.x fixes. On `v3`, add `react-resizable-panels` to devDeps and to
+   the build's externals, and widen each peer range to include the version CI tests. On both
    branches `publish.yml` runs only on a `v*` tag, only after CI passes, and publishes through
    npm's trusted publishing (`id-token: write`, no `NPM_TOKEN`), so a push to `master` never
-   publishes and no token can expire. GitHub Packages already holds other bytes as 3.0.1 and
-   3.0.2, so `v3` releases as 3.0.3. The owner adds the trusted publisher on npmjs.com, then
-   pushes the `v3.0.3` tag within two days, before the new configuration lapses.
+   publishes and no token can expire. No 3.x release is cut: v4 stays local until P11 releases
+   4.0.0 (the owner's call).
 2. Run the spikes in §9, each in a throwaway branch or scratch app, and paste each result with its
    SHA. A result that contradicts this file stops the plan before P1.
 3. Write the ADRs in `docs/adr/`, each under 1,000 words, each opening with the consumer's code
@@ -257,9 +256,11 @@ and sweeps what is left (§6).
 
 **P11 — Release 4.0.0.** `CHANGELOG.md` carries the migration maps (§8), generated from
 `tooling/migrate/map.ts`, and `bun run migrate <app>` applies them. CI runs `bun run gate` and the
-a11y, visual and smoke specs. `v3`'s `publish.yml` first gains `--tag v3`, so a 3.x fix never
-takes `latest`. The owner pushes the `v4.0.0` tag; `publish.yml` publishes after CI
-passes; then deploy and the production smoke. `bun run scorecard` at `bc2e116` and at the release
+a11y, visual and smoke specs. Nothing is pushed before this step, so the first push runs CI over
+all of v4 at once: budget a shake-out (the arm64 visual job, the pin image, the three-engine a11y
+run) before the tag. `v3`'s `publish.yml` first gains `--tag v3`, so a 3.x fix never takes
+`latest`. The owner adds the trusted publisher on npmjs.com, pushes `master`, then the `v4.0.0`
+tag; `publish.yml` publishes after CI passes; then deploy and the production smoke. `bun run scorecard` at `bc2e116` and at the release
 commit fills §10.
 
 ## 6. Docs after v4
