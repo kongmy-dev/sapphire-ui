@@ -1,0 +1,56 @@
+<header class="docs-page-header">
+  <h1>Extended</h1>
+  <p>Phase 3 primitives — breadcrumb trails, keyboard hints, code blocks, toggles, scroll areas, and complex editorial layouts.</p>
+</header>
+
+<section class="docs-section" data-pin="extended/toggle" data-pin-y="1048.453125">
+  <h2 class="docs-section-title">Toggle</h2>
+  <div class="docs-preview">
+    <div class="docs-stack">
+      <div class="docs-flex docs-toggle-row">
+        <button class="sp-toggle" type="button" aria-pressed="false" data-state="off">Off</button>
+        <button class="sp-toggle" type="button" data-variant="outline" aria-pressed="true" data-state="on">Outline</button>
+        <button class="sp-toggle" type="button" data-variant="ghost" aria-pressed="false" data-state="off">Ghost</button>
+      </div>
+      <div>
+        <div class="docs-toggle-label">Single-select (text alignment)</div>
+        <div class="sp-toggle-group" role="radiogroup" aria-label="Text alignment">
+          <button class="sp-toggle" type="button" data-variant="outline" role="radio" aria-checked="true" data-state="on">Left</button>
+          <button class="sp-toggle" type="button" data-variant="outline" role="radio" aria-checked="false" data-state="off">Center</button>
+          <button class="sp-toggle" type="button" data-variant="outline" role="radio" aria-checked="false" data-state="off">Right</button>
+        </div>
+      </div>
+      <div>
+        <div class="docs-toggle-label">Multi-select (text formatting)</div>
+        <div class="sp-toggle-group" role="toolbar" aria-label="Text formatting">
+          <button class="sp-toggle" type="button" aria-pressed="true" data-state="on"><strong>B</strong></button>
+          <button class="sp-toggle" type="button" aria-pressed="false" data-state="off"><em>I</em></button>
+          <button class="sp-toggle" type="button" aria-pressed="false" data-state="off"><u>U</u></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Toggle (sizes and states)</h2>
+  <div class="docs-preview">
+    <div class="docs-stack">
+      <div class="docs-flex docs-toggle-row">
+        <button class="sp-toggle" type="button" data-size="sm" aria-pressed="false" data-state="off">Small</button>
+        <button class="sp-toggle" type="button" data-size="sm" aria-pressed="true" data-state="on">Small</button>
+        <button class="sp-toggle" type="button" aria-pressed="false" data-state="off">Default</button>
+        <button class="sp-toggle" type="button" aria-pressed="true" data-state="on">Default</button>
+        <button class="sp-toggle" type="button" data-size="lg" aria-pressed="false" data-state="off">Large</button>
+        <button class="sp-toggle" type="button" data-size="lg" aria-pressed="true" data-state="on">Large</button>
+      </div>
+      <div class="docs-flex docs-toggle-row">
+        <button class="sp-toggle" type="button" data-variant="ghost" aria-pressed="true" data-state="on">Ghost on</button>
+        <button class="sp-toggle" type="button" data-variant="outline" aria-pressed="false" data-state="off">Outline off</button>
+        <button class="sp-toggle" type="button" data-variant="outline" aria-pressed="true" data-on>Outline data-on</button>
+        <button class="sp-toggle" type="button" aria-pressed="false" data-state="off" disabled>Disabled</button>
+        <button class="sp-toggle" type="button" aria-pressed="true" data-state="on" disabled>Disabled on</button>
+      </div>
+    </div>
+  </div>
+</section>

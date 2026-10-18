@@ -1,0 +1,76 @@
+<header class="docs-page-header">
+  <h1>Extended</h1>
+  <p>Phase 3 primitives — breadcrumb trails, keyboard hints, code blocks, toggles, scroll areas, and complex editorial layouts.</p>
+</header>
+
+<section class="docs-section" data-pin="extended/scroll-area" data-pin-y="1384.21875">
+  <h2 class="docs-section-title">Scroll Area</h2>
+  <div class="docs-preview">
+    <div class="sp-scroll-area docs-scroll-area" dir="ltr">
+      <!-- biome-ignore lint/a11y/noNoninteractiveTabindex: a scrollable region must take keyboard focus -->
+      <div class="sp-scroll-area-viewport" tabindex="0">
+        <div class="docs-scroll-fill">
+          <div class="docs-scroll-list">
+            <div class="docs-scroll-row">Item 1 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 2 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 3 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 4 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 5 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 6 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 7 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 8 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 9 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 10 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 11 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 12 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 13 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 14 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 15 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 16 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 17 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 18 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 19 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 20 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 21 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 22 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 23 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 24 — scroll to see more</div>
+            <div class="docs-scroll-row">Item 25 — scroll to see more</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Scroll Area (scrollbars)</h2>
+  <div class="docs-preview">
+    <div class="sp-scroll-area docs-scroll-area" dir="ltr" style="--radix-scroll-area-corner-width: var(--space-2); --radix-scroll-area-corner-height: var(--space-2)">
+      <!-- biome-ignore lint/a11y/noNoninteractiveTabindex: a scrollable region must take keyboard focus -->
+      <div class="sp-scroll-area-viewport" tabindex="0">
+        <div class="docs-scroll-fill">
+          <div class="docs-scroll-list">
+            <div class="docs-scroll-row docs-scroll-wide">Item 1 — a long row that overflows the viewport horizontally</div>
+            <div class="docs-scroll-row docs-scroll-wide">Item 2 — a long row that overflows the viewport horizontally</div>
+            <div class="docs-scroll-row docs-scroll-wide">Item 3 — a long row that overflows the viewport horizontally</div>
+            <div class="docs-scroll-row docs-scroll-wide">Item 4 — a long row that overflows the viewport horizontally</div>
+            <div class="docs-scroll-row docs-scroll-wide">Item 5 — a long row that overflows the viewport horizontally</div>
+            <div class="docs-scroll-row docs-scroll-wide">Item 6 — a long row that overflows the viewport horizontally</div>
+            <div class="docs-scroll-row docs-scroll-wide">Item 7 — a long row that overflows the viewport horizontally</div>
+            <div class="docs-scroll-row docs-scroll-wide">Item 8 — a long row that overflows the viewport horizontally</div>
+            <div class="docs-scroll-row docs-scroll-wide">Item 9 — a long row that overflows the viewport horizontally</div>
+            <div class="docs-scroll-row docs-scroll-wide">Item 10 — a long row that overflows the viewport horizontally</div>
+          </div>
+        </div>
+      </div>
+      <div class="sp-scroll-area-scrollbar" data-orientation="vertical" data-state="visible" style="--radix-scroll-area-thumb-height: 40%">
+        <div class="sp-scroll-area-thumb" data-state="visible" style="width: var(--radix-scroll-area-thumb-width); height: var(--radix-scroll-area-thumb-height); transform: translate3d(0, 0, 0)"></div>
+      </div>
+      <div class="sp-scroll-area-scrollbar" data-orientation="horizontal" data-state="visible" style="--radix-scroll-area-thumb-width: 50%">
+        <div class="sp-scroll-area-thumb" data-state="visible" style="width: var(--radix-scroll-area-thumb-width); height: var(--radix-scroll-area-thumb-height); transform: translate3d(0, 0, 0)"></div>
+      </div>
+      <div class="sp-scroll-area-corner" style="width: var(--space-2); height: var(--space-2)"></div>
+    </div>
+  </div>
+</section>

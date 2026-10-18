@@ -1,0 +1,132 @@
+@layer components {
+  .sp-code-block {
+    --sp-code-block-radius: var(--radius-sm);
+    --sp-code-block-padding: var(--space-4);
+    --sp-code-block-font-size: calc(var(--text-base) * 0.8125);
+    --sp-code-block-line-height: var(--leading-relaxed);
+    --sp-code-block-bg: var(--background);
+    --sp-code-block-fg: var(--foreground);
+    --sp-code-block-muted: var(--muted-foreground);
+    --sp-code-block-border-width: var(--border-width);
+    --sp-code-block-border-color: var(--border);
+    --sp-code-block-copy-inset: var(--space-2);
+    --sp-code-block-copy-gap: var(--space-1);
+    --sp-code-block-copy-padding: var(--space-1) var(--space-2);
+    --sp-code-block-copy-radius: var(--radius-sm);
+    --sp-code-block-copy-border-width: var(--border-width);
+    --sp-code-block-copy-border-color: var(--border);
+    --sp-code-block-copy-bg: var(--card);
+    --sp-code-block-copy-fg: var(--muted-foreground);
+    --sp-code-block-copy-bg-hover: var(--background);
+    --sp-code-block-ring: var(--ring);
+    --sp-code-block-focus: 0 0 transparent;
+
+    position: relative;
+  }
+
+  .sp-code-block[data-variant="dark"] {
+    --sp-code-block-bg: var(--primary);
+    --sp-code-block-fg: var(--on-dark);
+    --sp-code-block-muted: var(--on-dark-muted);
+    --sp-code-block-border-width: 0;
+    --sp-code-block-copy-border-width: 0;
+    --sp-code-block-copy-bg: color-mix(in oklab, var(--white) 10%, transparent);
+    --sp-code-block-copy-fg: var(--on-dark);
+    --sp-code-block-copy-bg-hover: color-mix(
+      in oklab,
+      var(--white) 20%,
+      transparent
+    );
+  }
+
+  .sp-code-block-pre {
+    padding: var(--sp-code-block-padding);
+    margin: 0;
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: var(--sp-code-block-font-size);
+    line-height: var(--sp-code-block-line-height);
+    color: var(--sp-code-block-fg);
+    background: var(--sp-code-block-bg);
+    border: var(--sp-code-block-border-width) solid
+      var(--sp-code-block-border-color);
+    border-radius: var(--sp-code-block-radius);
+  }
+
+  .sp-code-block-pre code {
+    font-family: inherit;
+    font-size: calc(var(--sp-code-block-font-size) * 0.875);
+  }
+
+  .sp-code-block-header {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-2) var(--sp-code-block-padding);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    line-height: var(--space-4);
+    color: var(--sp-code-block-muted);
+    background: var(--sp-code-block-bg);
+    border: var(--sp-code-block-border-width) solid
+      var(--sp-code-block-border-color);
+    border-bottom: 0;
+    border-radius: var(--sp-code-block-radius) var(--sp-code-block-radius) 0 0;
+  }
+
+  .sp-code-block-header + .sp-code-block-pre {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  .sp-code-block-copy {
+    position: absolute;
+    top: var(--sp-code-block-copy-inset);
+    right: var(--sp-code-block-copy-inset);
+    display: inline-flex;
+    gap: var(--sp-code-block-copy-gap);
+    align-items: center;
+    padding: var(--sp-code-block-copy-padding);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    line-height: var(--space-4);
+    color: var(--sp-code-block-copy-fg);
+    cursor: pointer;
+    background: var(--sp-code-block-copy-bg);
+    border: var(--sp-code-block-copy-border-width) solid
+      var(--sp-code-block-copy-border-color);
+    border-radius: var(--sp-code-block-copy-radius);
+    outline: var(--ring-width) solid transparent;
+    box-shadow: var(--sp-code-block-focus);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+  }
+
+  .sp-code-block-header .sp-code-block-copy {
+    position: static;
+    opacity: 1;
+  }
+
+  .sp-code-block-copy:focus-visible {
+    --sp-code-block-focus: 0 0 0 var(--ring-width) var(--sp-code-block-ring);
+
+    opacity: 1;
+  }
+
+  @media (hover: hover) {
+    .sp-code-block:hover .sp-code-block-copy {
+      opacity: 1;
+    }
+
+    .sp-code-block-copy:hover {
+      background: var(--sp-code-block-copy-bg-hover);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sp-code-block-copy {
+      transition: none;
+    }
+  }
+}

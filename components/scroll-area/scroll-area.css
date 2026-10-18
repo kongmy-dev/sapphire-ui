@@ -1,0 +1,88 @@
+@layer components {
+  .sp-scroll-area {
+    --sp-scroll-area-bar-size: var(--space-2);
+    --sp-scroll-area-bar-padding: calc(var(--space-1) * 0.25);
+    --sp-scroll-area-bar-edge: calc(var(--space-1) * 0.25);
+    --sp-scroll-area-thumb-bg: var(--border);
+    --sp-scroll-area-thumb-bg-hover: var(--muted-foreground);
+    --sp-scroll-area-ring: var(--ring);
+    --sp-scroll-area-focus: 0 0 transparent;
+
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sp-scroll-area-viewport {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    border-radius: inherit;
+    outline: var(--ring-width) solid transparent;
+    box-shadow: var(--sp-scroll-area-focus);
+    scrollbar-width: none;
+  }
+
+  .sp-scroll-area-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sp-scroll-area-viewport:focus-visible {
+    --sp-scroll-area-focus:
+      0 0 0 calc(var(--ring-offset) * 0.5) var(--white),
+      0 0 0 calc(var(--ring-offset) * 0.5 + var(--ring-width))
+      var(--sp-scroll-area-ring);
+  }
+
+  .sp-scroll-area-scrollbar {
+    position: absolute;
+    display: flex;
+    padding: var(--sp-scroll-area-bar-padding);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+  }
+
+  .sp-scroll-area-scrollbar[data-orientation="vertical"] {
+    top: 0;
+    right: 0;
+    bottom: var(--radix-scroll-area-corner-height, 0);
+    width: var(--sp-scroll-area-bar-size);
+    height: 100%;
+    border-left: var(--sp-scroll-area-bar-edge) solid transparent;
+  }
+
+  .sp-scroll-area-scrollbar[data-orientation="horizontal"] {
+    right: var(--radix-scroll-area-corner-width, 0);
+    bottom: 0;
+    left: 0;
+    flex-direction: column;
+    height: var(--sp-scroll-area-bar-size);
+    border-top: var(--sp-scroll-area-bar-edge) solid transparent;
+  }
+
+  .sp-scroll-area-thumb {
+    position: relative;
+    flex: 1;
+    background: var(--sp-scroll-area-thumb-bg);
+    border-radius: var(--radius-pill);
+    transition: background-color var(--transition-fast);
+  }
+
+  .sp-scroll-area-corner {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+
+  @media (hover: hover) {
+    .sp-scroll-area-thumb:hover {
+      background: var(--sp-scroll-area-thumb-bg-hover);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sp-scroll-area-thumb {
+      transition: none;
+    }
+  }
+}

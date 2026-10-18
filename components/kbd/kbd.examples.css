@@ -1,0 +1,18 @@
+.docs-kbd-stack {
+  gap: var(--space-3);
+}
+
+.docs-kbd-text {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+}
+
+.docs-kbd-sizes {
+  gap: var(--space-3);
+}
+
+.docs-kbd-label {
+  font-family: var(--font-sans);
+  font-size: calc(var(--text-base) * 0.8125);
+}

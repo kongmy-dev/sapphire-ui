@@ -1,0 +1,56 @@
+<header class="docs-page-header">
+  <h1>Extended</h1>
+  <p>Phase 3 primitives — breadcrumb trails, keyboard hints, code blocks, toggles, scroll areas, and complex editorial layouts.</p>
+</header>
+
+<section class="docs-section" data-pin="extended/accordion" data-pin-y="2131.1875">
+  <h2 class="docs-section-title">Accordion</h2>
+  <div class="docs-preview">
+    <div class="sp-accordion docs-accordion" data-orientation="vertical">
+      <div class="sp-accordion-item" data-orientation="vertical" data-state="closed">
+        <h3 class="sp-accordion-header" data-orientation="vertical" data-state="closed">
+          <button class="sp-accordion-trigger" type="button" id="accordion-trigger-1" aria-controls="accordion-content-1" aria-expanded="false" data-orientation="vertical" data-state="closed">What is Sapphire UI?<svg class="sp-accordion-chevron" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
+        </h3>
+        <div class="sp-accordion-content" id="accordion-content-1" role="region" aria-labelledby="accordion-trigger-1" data-orientation="vertical" data-state="closed" hidden><div class="sp-accordion-body">An editorial-focused design system for KONGMY Digital Solutions. Built on Radix UI primitives with Web Component escape hatches for framework-agnostic usage in Astro, vanilla HTML, and other non-React contexts.</div></div>
+      </div>
+      <div class="sp-accordion-item" data-orientation="vertical" data-state="closed">
+        <h3 class="sp-accordion-header" data-orientation="vertical" data-state="closed">
+          <button class="sp-accordion-trigger" type="button" id="accordion-trigger-2" aria-controls="accordion-content-2" aria-expanded="false" data-orientation="vertical" data-state="closed">Does it work outside React?<svg class="sp-accordion-chevron" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
+        </h3>
+        <div class="sp-accordion-content" id="accordion-content-2" role="region" aria-labelledby="accordion-trigger-2" data-orientation="vertical" data-state="closed" hidden><div class="sp-accordion-body">Yes — the dual-export architecture ships a vanilla <code>./elements</code> entry that registers the custom elements (Toast, CookieBanner, Banner, Analytics, SiteHeader, SiteFooter) without pulling React. Astro-static consumers can drop them in via plain HTML — see the Interactive page for usage.</div></div>
+      </div>
+      <div class="sp-accordion-item" data-orientation="vertical" data-state="closed">
+        <h3 class="sp-accordion-header" data-orientation="vertical" data-state="closed">
+          <button class="sp-accordion-trigger" type="button" id="accordion-trigger-3" aria-controls="accordion-content-3" aria-expanded="false" data-orientation="vertical" data-state="closed">What's the bundle size?<svg class="sp-accordion-chevron" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
+        </h3>
+        <div class="sp-accordion-content" id="accordion-content-3" role="region" aria-labelledby="accordion-trigger-3" data-orientation="vertical" data-state="closed" hidden><div class="sp-accordion-body">~20 KB gzip for the full React bundle, with peer-dep externalization so consumers only pay for what they import. The vanilla entry is ~4 KB gzip.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Accordion (open)</h2>
+  <div class="docs-preview">
+    <div class="sp-accordion docs-accordion" data-orientation="vertical">
+      <div class="sp-accordion-item" data-orientation="vertical" data-state="open">
+        <h3 class="sp-accordion-header" data-orientation="vertical" data-state="open">
+          <button class="sp-accordion-trigger" type="button" id="accordion-trigger-4" aria-controls="accordion-content-4" aria-expanded="true" data-orientation="vertical" data-state="open">What is Sapphire UI?<svg class="sp-accordion-chevron" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
+        </h3>
+        <div class="sp-accordion-content" id="accordion-content-4" role="region" aria-labelledby="accordion-trigger-4" data-orientation="vertical" data-state="open"><div class="sp-accordion-body">An editorial-focused design system for KONGMY Digital Solutions. Built on Radix UI primitives with Web Component escape hatches for framework-agnostic usage in Astro, vanilla HTML, and other non-React contexts.</div></div>
+      </div>
+      <div class="sp-accordion-item" data-orientation="vertical" data-open>
+        <h3 class="sp-accordion-header" data-orientation="vertical" data-open>
+          <button class="sp-accordion-trigger" type="button" id="accordion-trigger-5" aria-controls="accordion-content-5" aria-expanded="true" data-orientation="vertical" data-open>Open through data-open<svg class="sp-accordion-chevron" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
+        </h3>
+        <div class="sp-accordion-content" id="accordion-content-5" role="region" aria-labelledby="accordion-trigger-5" data-orientation="vertical" data-open><div class="sp-accordion-body">~20 KB gzip for the full React bundle, with peer-dep externalization so consumers only pay for what they import. The vanilla entry is ~4 KB gzip.</div></div>
+      </div>
+      <div class="sp-accordion-item" data-orientation="vertical" data-state="closed">
+        <h3 class="sp-accordion-header" data-orientation="vertical" data-state="closed">
+          <button class="sp-accordion-trigger" type="button" id="accordion-trigger-6" aria-controls="accordion-content-6" aria-expanded="false" data-orientation="vertical" data-state="closed">What's the bundle size?<svg class="sp-accordion-chevron" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
+        </h3>
+        <div class="sp-accordion-content" id="accordion-content-6" role="region" aria-labelledby="accordion-trigger-6" data-orientation="vertical" data-state="closed" hidden><div class="sp-accordion-body">~20 KB gzip for the full React bundle, with peer-dep externalization so consumers only pay for what they import. The vanilla entry is ~4 KB gzip.</div></div>
+      </div>
+    </div>
+  </div>
+</section>

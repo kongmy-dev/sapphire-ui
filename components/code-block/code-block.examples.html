@@ -1,0 +1,68 @@
+<header class="docs-page-header">
+  <h1>Extended</h1>
+  <p>Phase 3 primitives — breadcrumb trails, keyboard hints, code blocks, toggles, scroll areas, and complex editorial layouts.</p>
+</header>
+
+<section class="docs-section" data-pin="extended/code-block" data-pin-y="546.0625">
+  <h2 class="docs-section-title">Code Block</h2>
+  <div class="docs-preview">
+    <div class="docs-stack">
+      <div class="sp-code-block">
+        <pre class="sp-code-block-pre" data-lang="tsx"><code>import { Button, Card } from '@kongmy-dev/sapphire-ui';
+import '@kongmy-dev/sapphire-ui/style.css';
+
+export function Hero() {
+  return (
+    &lt;Card variant="feature" hoverable&gt;
+      &lt;h1&gt;Welcome to Sapphire UI&lt;/h1&gt;
+      &lt;Button variant="accent"&gt;Get started&lt;/Button&gt;
+    &lt;/Card&gt;
+  );
+}</code></pre>
+        <button class="sp-code-block-copy" type="button" aria-label="Copy code to clipboard">Copy</button>
+      </div>
+      <div class="sp-code-block">
+        <pre class="sp-code-block-pre" data-lang="shell"><code>$ bun add @kongmy-dev/sapphire-ui</code></pre>
+        <button class="sp-code-block-copy" type="button" aria-label="Copy code to clipboard">Copy</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Code Block (dark)</h2>
+  <div class="docs-preview">
+    <div class="docs-stack">
+      <div class="sp-code-block" data-variant="dark">
+        <pre class="sp-code-block-pre" data-lang="shell"><code>$ bun add @kongmy-dev/sapphire-ui</code></pre>
+        <button class="sp-code-block-copy" type="button" aria-label="Copy code to clipboard">Copy</button>
+      </div>
+      <div class="sp-code-block" data-variant="dark">
+        <pre class="sp-code-block-pre" data-lang="shell"><code>$ bun run build</code></pre>
+        <button class="sp-code-block-copy" type="button" aria-label="Copied">Copied!</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Code Block (header)</h2>
+  <div class="docs-preview">
+    <div class="docs-stack">
+      <div class="sp-code-block">
+        <div class="sp-code-block-header">
+          <span class="sp-code-block-language">tsx</span>
+          <button class="sp-code-block-copy" type="button" aria-label="Copy code to clipboard">Copy</button>
+        </div>
+        <pre class="sp-code-block-pre" data-lang="tsx"><code>export const answer = 42;</code></pre>
+      </div>
+      <div class="sp-code-block" data-variant="dark">
+        <div class="sp-code-block-header">
+          <span class="sp-code-block-language">shell</span>
+          <button class="sp-code-block-copy" type="button" aria-label="Copied">Copied!</button>
+        </div>
+        <pre class="sp-code-block-pre" data-lang="shell"><code>$ bun test</code></pre>
+      </div>
+    </div>
+  </div>
+</section>

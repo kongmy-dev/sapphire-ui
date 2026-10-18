@@ -1,0 +1,3 @@
+.docs-accordion {
+  max-width: calc(var(--space-1) * 150);
+}

@@ -1,0 +1,27 @@
+.docs-scroll-area {
+  width: 100%;
+  max-width: calc(var(--space-1) * 80);
+  height: calc(var(--space-1) * 45);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.docs-scroll-fill {
+  display: table;
+  min-width: 100%;
+}
+
+.docs-scroll-list {
+  padding: var(--space-4);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+}
+
+.docs-scroll-row {
+  padding: calc(var(--space-1) * 1.5) 0;
+  border-bottom: var(--border-width) solid var(--border);
+}
+
+.docs-scroll-wide {
+  white-space: nowrap;
+}
