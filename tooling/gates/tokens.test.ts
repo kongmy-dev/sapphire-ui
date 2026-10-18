@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'bun:test';
 import { findHexColors } from './tokens';
 
 describe('token gate: hardcoded hex detection', () => {

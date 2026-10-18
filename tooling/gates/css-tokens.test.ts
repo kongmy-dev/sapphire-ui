@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'bun:test';
 import { checkComponentCssVariables, getDeclaredCssVariables } from './css-tokens';
 
 describe('css tokens gate', () => {

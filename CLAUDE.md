@@ -49,7 +49,7 @@ bun run build        # tsc + vite build → dist/
 bun run lint         # Biome check (lint + format, TS/TSX + CSS)
 bun run lint:fix     # Biome check --write (auto-fix + format, incl. Tailwind class sort)
 bun run format       # Alias of lint:fix (Biome check --write)
-bun run test         # Unit test suite (vitest)
+bun run test         # Unit test suite (bun test)
 bun run test:a11y    # Playwright a11y tests
 bun run comment-check # Comment gate on changed files
 bun run size-check   # Size gate on changed files

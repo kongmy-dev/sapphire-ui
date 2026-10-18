@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'bun:test';
 import { checkA11yCoverage } from './a11y-coverage';
 
 describe('a11y coverage gate', () => {
