@@ -197,11 +197,31 @@ export const classRenames = {
   '.k-slider-track': '.sp-range-slider-track',
   '.k-slider-range': '.sp-range-slider-range',
   '.k-slider-thumb': '.sp-range-slider-thumb',
+  '.skeleton': '.sp-skeleton',
+  '.skeleton-line--sm': '.sp-skeleton[data-size=sm]',
+  '.skeleton-line--md': '.sp-skeleton',
+  '.skeleton-line--lg': '.sp-skeleton[data-size=lg]',
+  '.skeleton-card': '.sp-skeleton[data-variant=card]',
+  '.spinner': '.sp-spinner',
+  '.spinner--sm': '.sp-spinner[data-size=sm]',
+  '.spinner--lg': '.sp-spinner[data-size=lg]',
+  '.alert': '.sp-alert',
+  '.alert--info': '.sp-alert',
+  '.alert--success': '.sp-alert[data-variant=success]',
+  '.alert--warning': '.sp-alert[data-variant=warning]',
+  '.alert--error': '.sp-alert[data-variant=error]',
+  '.alert--accent': '.sp-alert[data-variant=brand]',
+  '.empty-state': '.sp-empty',
+  '.sapphire-toast-container': '.sp-toast-viewport',
+  '.sapphire-toast': '.sp-toast',
+  '.sapphire-toast-icon': '.sp-toast-icon',
+  '.sapphire-toast-message': '.sp-toast-message',
 } as const;
 
 export const variableRenames = {
   '--switch-active': '--sp-switch-active',
   '--switch-inactive': '--sp-switch-inactive',
+  '--toast-accent': '--sp-toast-accent',
 } as const;
 
 export const unmappedClasses = {
@@ -209,6 +229,12 @@ export const unmappedClasses = {
     'the proposal shell modal, mapped when the proposal shell ports',
   '.modal-head':
     'the proposal shell modal, mapped when the proposal shell ports',
+  '.sapphire-banner': 'the banner, mapped when the extended family ports',
+  '.sapphire-banner-dismiss':
+    'the banner, mapped when the extended family ports',
+  '.sapphire-table': 'the table, mapped when the data views family ports',
+  '.is-visible':
+    'a toast opens with [data-state=open] or [data-open] on .sp-toast, an attribute no class stands for',
 } as const;
 
 export const propValueRenames = {
@@ -229,5 +255,11 @@ export const propValueRenames = {
   },
   NativeSelect: {
     variant: { dark: 'on-dark' },
+  },
+  Alert: {
+    variant: { accent: 'brand' },
+  },
+  Spinner: {
+    tone: { accent: 'brand' },
   },
 } as const;
