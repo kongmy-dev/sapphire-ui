@@ -14,7 +14,7 @@ const FROZEN_LANE = [
 export const isInScope = (name: string) =>
   !FROZEN_LANE.some((prefix) => name.startsWith(prefix));
 
-const hasExtension = (name: string, extensions: readonly string[]) =>
+export const hasExtension = (name: string, extensions: readonly string[]) =>
   extensions.some((extension) => name.endsWith(extension));
 
 const trackedFiles = (root: string) =>

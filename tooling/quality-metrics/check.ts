@@ -23,7 +23,7 @@ const TEST_LIMITS: Limits = {
   nesting: 6,
 };
 
-const isTest = (p: string) =>
+export const isTest = (p: string) =>
   /\.(test|spec)\.tsx?$/.test(p) || /(^|\/)(test|__tests__)\//.test(p);
 
 function fileFindings(m: FileMetrics, limits: Limits): Finding[] {
