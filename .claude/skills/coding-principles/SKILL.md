@@ -9,33 +9,28 @@ This is the standard for any code written in Sapphire UI. The full rules and cur
 
 ## The Principles
 
-- **P-1 No comments in code.** Names, types, structure and tests say *what*. The *why* lives in an ADR, docs, a test name or the commit message. JSDoc (`/** */`) is kept only directly above exported declarations and members of exported types (so it ships in `.d.ts` as IDE docs for consumers). All other comments must follow one of the fixed forms:
-  - `// vendor: <link> <fact>` — forced by browser or upstream library behavior.
-  - `// ADR-NNNN` — architectural decision reference.
-  - `// biome-ignore <rule>: <reason>` — required linter ignore with reason.
-  - `// @ts-expect-error <issue link>` — upstream type bug reference.
-  - `// a11y: <WCAG ref>` — explicit accessibility requirement.
-  - `/* SPDX-License-Identifier: ... */` — license header.
-  Gate: `tooling/gates/comments.ts` run on edited files.
+Rule IDs are those of `V4-PLAN.md` §7. A failing gate prints `file:line`, the ID and what to write instead.
+
+- **P-1 No comments in TS, TSX or CSS.** Names, types, structure and tests say *what*; the *why* lives in an ADR, a test name or the commit message. The two allowed forms are in `docs/adr/0001-rules-ship-with-gates.md`. Gate: `bun run comment-check`, and `.claude/hooks/check-edit.sh` on each edit.
 - **P-2 Strict boundary separation.** `src/` never imports `registry/`, `scripts/`, or `tests/`. `registry/blocks/` never imports `src/` (registry items must be self-contained). Gate: `bun run check:registry`.
-- **P-3 Strict types, no escape hatches.** No `any`, no `!`, and no type assertion outside tests except `as const`. Narrow with type guards or `satisfies`. Gate: Biome (`noExplicitAny`, `noNonNullAssertion`, `noUnsafeTypeAssertion`).
-- **P-4 Make illegal states unrepresentable.** Component variants are defined through CVA unions. Use discriminated unions instead of boolean flags coupled with optional fields. Match exhaustively. Gate: `tsc` strict.
-- **P-5 Minimise reader load.** Collapse single-caller wrappers and single-implementation interfaces. Thresholds: cognitive complexity ≤ 7, function lines ≤ 89, file lines ≤ 474, nesting ≤ 5. Gate: `tooling/quality-metrics/check.ts`.
-- **P-6 Subtract before you add; explicit exports.** Every new export needs a consumer in the same change. Every exported component is mapped in `src/index.ts` and `package.json -> exports`. Gate: Size gate export check.
-- **P-7 A value with meaning is declared once.** Use an `as const` object map plus its derived union, never TypeScript `enum`. Gate: Biome `noEnum` and tsc `erasableSyntaxOnly`.
-- **P-8 Tokens only, no hardcoded colors.** Components never contain hardcoded hex or rgb strings. Always reference design tokens via Tailwind theme utilities or CSS variables (`var(--...)`). `--color-accent` is decorative; text on light surfaces must use `--color-accent-text`. Gate: Token review & CSS check.
-- **P-9 Accessibility (a11y) first.** Interactive components must support keyboard navigation, correct ARIA roles, focus rings, and pass axe automated scans without violations. Gate: `bun run test:a11y`.
-- **P-10 Peer dependencies stay peers.** React and Radix UI packages stay in `peerDependencies` so consumers never bundle multiple instances. Dev dependencies are pinned exactly. Gate: `package.json` validation.
+- **P-3 Types carry the rules.** No `any`, no `!`, no `as` but `as const`, `type` over `interface`, variants as `as const` tuples with derived unions, no `enum`; discriminated unions over boolean flags paired with optional fields. Gate: `tsc` strict and Biome (`noExplicitAny`, `noNonNullAssertion`, `noEnum`).
+- **P-5 Tokens only.** No colour or length literal outside `css/tokens.css`, and every `var()` resolves. `--color-accent` is decorative; text on light surfaces uses `--color-accent-text`. Gate: `bun run token-check`; it joins `bun run gate` in P2.
+- **P-6 Subtract before you add.** Every new export, file or dependency needs a consumer in the same change; every exported component is mapped in `src/index.ts` and `package.json -> exports`. Gate: knip.
+- **P-7 Minimise reader load.** Collapse single-caller wrappers and single-implementation interfaces. Limits: cognitive complexity 7, function lines 89, file lines 474, nesting 5. Gate: `bun run size-check`, and Biome `noNestedTernary`, `noUselessElse`, `noParameterAssign`.
+- **P-8 Accessibility first.** Interactive components support keyboard navigation, correct ARIA roles and focus rings, and pass axe. Gate: `bun run test:a11y`.
+- **P-12 Pinned toolchain, peers stay peers.** Exact devDependencies, `.bun-version`, TypeScript 6.0.x; React and Radix stay in `peerDependencies`. Gate: `bun run dep-check`.
+- **P-15 A gate can fail.** A gate's test feeds it a real past violation and expects it to fail.
+- **P-17 `src/` is frozen until P9.** A v3 fix goes to the `v3` branch; v4 work goes in the new folders. Gate: `bun run freeze-check`.
 
 ## Before You Write
 
 1. **Decide out loud:** List what the request leaves open, choose the narrowest satisfying answer, and declare what you are choosing *not* to build.
-2. **Consult tokens:** Verify CSS variable and token names in `src/theme.css` before writing styling.
+2. **Consult tokens:** Verify CSS variable and token names in `css/tokens.css` (`src/theme.css` while `src/` stands) before writing styling.
 3. **Check for existing primitives:** Reuse Radix primitives and existing UI components before writing custom implementations.
 
 ## After You Write
 
-1. Ensure no comments exist outside the allowed JSDoc and fixed forms.
+1. Ensure no comment exists outside the forms ADR-0001 allows.
 2. Confirm new components have matching entries in `src/index.ts` and `package.json`.
-3. Verify that the size gate and comment gate pass without errors.
+3. Verify that `bun run gate` passes.
 4. Run `bun run test` and `bun run test:a11y`.

@@ -21,7 +21,7 @@ Why: product apps must diverge (client theming, POS touch UIs) — vendored sour
 
 **A new export needs a consumer in the same change.** An interface with one implementation, a factory that constructs one thing, or an options object read in one place is indirection nobody is paying for. Write the direct version; the seam appears on its own when a second caller arrives, and it lands somewhere other than you would have guessed.
 
-A size gate runs automatically after every edit and reports back; `AI-CODE-QUALITY.md` gives its limits and why.
+The gates run on every tracked file outside the frozen lane (`src/`, `registry/blocks/`, `tests/registry-consumer/app/`, `design/`) and, after every edit, through `.claude/hooks/check-edit.sh`; `AI-CODE-QUALITY.md` gives the size limits and why. `src/` is frozen until P9 (P-17): a v3 fix goes to the `v3` branch.
 
 ---
 
@@ -53,8 +53,12 @@ bun run lint:fix     # Biome check --write (auto-fix + format, incl. Tailwind cl
 bun run format       # Alias of lint:fix (Biome check --write)
 bun run test         # Unit test suite (bun test)
 bun run test:a11y    # Playwright a11y tests
-bun run comment-check # Comment gate on changed files
-bun run size-check   # Size gate on changed files
+bun run gate         # lint, typecheck, knip, then the gates below, test, check:registry
+bun run comment-check # Comment gate (P-1): every in-scope file
+bun run size-check   # Size gate (P-7): every in-scope TS file
+bun run dep-check    # Dependency gate (P-12)
+bun run freeze-check # Freeze gate (P-17): src/ is unchanged
+bun run token-check  # Token gate (P-5): css/, components/, blocks/, elements/, site/; joins gate in P2
 bun run build:docs   # docs site → dist-docs/
 bun run deploy:docs  # deploy docs to Cloudflare Pages
 ```
@@ -117,4 +121,4 @@ src/
 - **Token vocabulary is shadcn-canonical + a brand extension.** Prefer the shadcn utility name where an equivalent exists (`text-muted-foreground`, `bg-background`, `bg-card`, `text-primary-foreground`) so components read as idiomatic shadcn and mix with community items. Use the brand-only tokens for what shadcn lacks: `text-accent-text` (AA gold), `text-text-strong`, `bg-hover-overlay`, `rounded-btn`, the `on-dark` family.
 - **Exports are explicit.** Every new component gets its own named export in `package.json → exports`. Update `src/index.ts` and `package.json` together.
 - **a11y first.** Run `bun run test:a11y` before shipping any component change.
-- **No comments in code.** Names, types, structure and tests say what. JSDoc is permitted only directly above exported declarations and members of exported types. All other comments must follow one of the five fixed forms.
+- **No comments in TS, TSX or CSS (P-1, ADR-0001).** The comment gate fails any comment outside the two forms the ADR lists.

@@ -9,13 +9,13 @@ context for deciding what is worth doing.
 | File | What it does |
 |---|---|
 | `tooling/quality-metrics/metrics.ts` | Measures the source over the TypeScript AST: code lines (comments never counted as code), cognitive complexity to the Sonar spec, exports with no consumer, clone blocks. |
-| `tooling/quality-metrics/check.ts` | The gate. Runs on named files, prints findings that name the fix. |
-| `.claude/hooks/size-gate.sh` + `.claude/settings.json` | Runs the gate after every edit and returns findings to whoever made the edit. |
+| `tooling/quality-metrics/check.ts` | The limits and the findings that name the fix. `tooling/gates/size.ts` runs them. |
+| `.claude/hooks/check-edit.sh` + `.claude/settings.json` | Runs the gates after every edit and returns findings to whoever made the edit. |
 | `.quality-baseline.json` | Reference snapshot. Without it no before/after claim is checkable. |
 
 ```bash
 bun tooling/quality-metrics/metrics.ts          # measure; print the distribution
-bun tooling/quality-metrics/check.ts <files>    # the gate, on files you touched
+bun run size-check                              # the gate, on every in-scope TS file
 ```
 
 ## Your numbers
@@ -24,8 +24,7 @@ Thresholds are **this repo's own 95th percentile**: `7 / 89 / 474 / 5` (cognitiv
 lines / nesting). They were measured here, not copied — a sibling's set applied to another repo
 failed 41% of its files for reasons unrelated to quality.
 
-**31 of 108 (29%) existing files fail the gate.** That is expected and is not a backlog. The gate runs only
-on files you touch, so legacy stays quiet until you are already in there. **Do not retrofit** —
+**31 of 108 (29%) existing files failed the gate when it was installed.** The gate now skips the frozen lane (`src/`, `registry/blocks/`, `tests/registry-consumer/app/`, `design/`), and `src/` is frozen until P9, so none of those failures is a backlog. **Do not retrofit** —
 that is what killed an earlier attempt at this on a sibling repo, where a blanket run got every
 finding waived on day one and the gate was deleted.
 

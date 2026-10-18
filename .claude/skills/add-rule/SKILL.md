@@ -16,13 +16,15 @@ A rule in Sapphire UI is never established as unenforced prose. A rule lands tog
 ### 2. Implement the Gate
 - Place automated checks under `tooling/gates/<rule-name>.ts`.
 - Prefer TypeScript AST parsing (`tooling/source/parse.ts`) over regex where structural syntax is checked.
-- Ensure the gate takes target files as arguments and defaults to checking changed files.
+- Ensure the gate takes target files as arguments and defaults to every in-scope file from `tooling/gates/scope.ts`.
+- Expose a pure function over file names and text, report through `tooling/gates/report.ts`, and let only `main()` touch git or the file system. A gate that checked nothing fails.
 - Ensure the error message clearly states the remediation action.
 
 ### 3. Plant a Violation Test
 - Create `tooling/gates/<rule-name>.test.ts`.
-- Plant at least one valid example and assert that the gate passes.
-- Plant a violation and assert that the gate reports the exact failure and exits with code 1.
+- Assert that a valid example passes and that an empty file list fails.
+- Feed the pure function a real violation copied from this repository or its history, and assert the file, line and rule ID it reports.
+- Revert the check and confirm the test fails.
 
 ### 4. Wire the Gate
 - Add the gate to `package.json` scripts.
