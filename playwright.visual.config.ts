@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import { SPECIMEN_URL } from './tooling/visual/specimens';
 
 const PIN_CONTAINER_VARIABLE = 'SAPPHIRE_PIN_CONTAINER';
 const PORT = 4174;
@@ -41,12 +42,20 @@ export default defineConfig({
     ...devices['Desktop Chrome'],
     deviceScaleFactor: 1,
   },
-  webServer: {
-    command: buildThenPreviewDocs,
-    url: BASE_URL,
-    reuseExistingServer: false,
-    timeout: 240_000,
-  },
+  webServer: [
+    {
+      command: buildThenPreviewDocs,
+      url: BASE_URL,
+      reuseExistingServer: false,
+      timeout: 240_000,
+    },
+    {
+      command: 'bun tooling/visual/specimen-server.ts',
+      url: SPECIMEN_URL,
+      reuseExistingServer: false,
+      timeout: 60_000,
+    },
+  ],
   projects: [
     { name: 'light', use: { colorScheme: 'light' } },
     { name: 'dark', use: { colorScheme: 'dark' } },

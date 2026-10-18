@@ -1,8 +1,12 @@
-import type { Locator, Page } from '@playwright/test';
+import { join } from 'node:path';
+import type { Page } from '@playwright/test';
 import { ROUTES, slugOf } from '../../tooling/visual/examples';
+import { coveredPins } from '../../tooling/visual/specimens';
 import { expect, test } from './fixtures';
+import { fitViewportToPage } from './viewport';
 
 const SECTION = 'section.docs-section';
+const SPECIMEN_PINS = new Set(coveredPins(join(import.meta.dirname, '../..')));
 
 const sectionSlugs = async (page: Page): Promise<string[]> => {
   const headings = await page.$$eval(SECTION, (sections) =>
@@ -13,22 +17,6 @@ const sectionSlugs = async (page: Page): Promise<string[]> => {
   );
   return headings.map(slugOf);
 };
-
-const sectionHeight = (section: Locator) =>
-  section.evaluate((element) => element.getBoundingClientRect().height);
-
-async function fitViewportToPage(page: Page, section: Locator) {
-  const standard = page.viewportSize();
-  if (standard === null) throw new Error('the page has no viewport');
-  const before = await sectionHeight(section);
-  const height = await page.evaluate(
-    () => document.documentElement.scrollHeight,
-  );
-  await page.setViewportSize({ width: standard.width, height });
-  await page.evaluate(() => new Promise(requestAnimationFrame));
-  if ((await sectionHeight(section)) !== before)
-    await page.setViewportSize(standard);
-}
 
 async function openRoute(page: Page, path: string, scheme: string) {
   await page.goto(path);
@@ -46,6 +34,7 @@ for (const route of ROUTES) {
   });
 
   for (const slug of route.pinned) {
+    if (SPECIMEN_PINS.has(`${route.name}/${slug}`)) continue;
     test(`${route.name}/${slug}`, async ({ page }, testInfo) => {
       const scheme = testInfo.project.name;
       await openRoute(page, route.path, scheme);

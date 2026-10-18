@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import { SPECIMEN_URL } from './tooling/visual/specimens';
 
 const buildThenPreviewDocs =
   'bun run build:docs && vite preview --config vite.docs.config.ts --port 4173';
@@ -14,12 +15,20 @@ export default defineConfig({
     baseURL: 'http://localhost:4173',
     trace: 'on-first-retry',
   },
-  webServer: {
-    command: buildThenPreviewDocs,
-    url: 'http://localhost:4173',
-    reuseExistingServer: !process.env.CI,
-    timeout: 180_000,
-  },
+  webServer: [
+    {
+      command: buildThenPreviewDocs,
+      url: 'http://localhost:4173',
+      reuseExistingServer: !process.env.CI,
+      timeout: 180_000,
+    },
+    {
+      command: 'bun tooling/visual/specimen-server.ts',
+      url: SPECIMEN_URL,
+      reuseExistingServer: false,
+      timeout: 60_000,
+    },
+  ],
   projects: [
     {
       name: 'chromium',
