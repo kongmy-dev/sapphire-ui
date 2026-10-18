@@ -158,6 +158,10 @@ Line heights are `--leading-tight` 1.2, `--leading-snug` 1.375, `--leading-norma
 | `--radius-xl` | `16px` | Feature surfaces |
 | `--radius-btn` | `6px` | Buttons, a little tighter than cards |
 | `--radius-pill` | `9999px` | Tags and badges |
+| `--border-width` | `1px` | Hairline border |
+| `--border-width-strong` | `1.5px` | Outline buttons and other emphasised edges |
+| `--ring-width` | `2px` | Focus ring thickness |
+| `--ring-offset` | `2px` | Gap between a control and its focus ring |
 | `--shadow-sm` | `0 1px 3px rgb(10, 25, 47, 0.06), 0 1px 2px rgb(10, 25, 47, 0.04)` | Small lift |
 | `--shadow-md` | `0 4px 16px rgb(10, 25, 47, 0.08), 0 2px 6px rgb(10, 25, 47, 0.05)` | Raised panels |
 | `--shadow-lg` | `0 8px 32px rgb(10, 25, 47, 0.12), 0 4px 12px rgb(10, 25, 47, 0.07)` | Overlays |

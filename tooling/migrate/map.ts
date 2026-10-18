@@ -118,7 +118,13 @@ export const tokenRenames = {
   '--interactive-focus': '--ring',
 } as const;
 
-export const newTokens = ['--accent-foreground'] as const;
+export const newTokens = [
+  '--accent-foreground',
+  '--border-width',
+  '--border-width-strong',
+  '--ring-width',
+  '--ring-offset',
+] as const;
 
 export const utilityRenames = {
   color: {

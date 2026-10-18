@@ -1,0 +1,89 @@
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    color: var(--foreground);
+    background: var(--background);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0 0 var(--space-4);
+    font-family: var(--font-serif);
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: var(--leading-tight);
+    color: var(--foreground);
+  }
+
+  h1 {
+    font-size: var(--text-display-xl);
+    font-weight: 600;
+  }
+
+  h2 {
+    font-size: var(--text-display);
+    font-weight: 600;
+  }
+
+  h3 {
+    font-size: var(--text-heading);
+    font-weight: 500;
+  }
+
+  h4 {
+    font-size: var(--text-subheading);
+    font-weight: 500;
+  }
+
+  p {
+    margin: 0 0 var(--space-4);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    color: var(--foreground);
+  }
+
+  a {
+    color: var(--brand-text);
+    text-decoration: none;
+    transition:
+      color var(--transition-base),
+      opacity var(--transition-base);
+  }
+
+  a:hover {
+    color: var(--brand-hover);
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+  }
+
+  :focus-visible {
+    outline: var(--ring-width) solid var(--ring);
+    outline-offset: var(--ring-offset);
+  }
+}

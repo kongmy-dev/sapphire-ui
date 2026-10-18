@@ -99,6 +99,10 @@
   --radius-xl: var(--radius-xl);
   --radius-btn: var(--radius-btn);
   --radius-pill: var(--radius-pill);
+  --border-width: var(--border-width);
+  --border-width-strong: var(--border-width-strong);
+  --ring-width: var(--ring-width);
+  --ring-offset: var(--ring-offset);
   --shadow-sm: var(--shadow-sm);
   --shadow-md: var(--shadow-md);
   --shadow-lg: var(--shadow-lg);
