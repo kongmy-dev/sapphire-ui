@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/knip/schema.json",
+  "entry": [
+    "src/index.ts",
+    "src/elements.ts",
+    "registry/blocks/*.tsx",
+    "tests/registry-consumer/vite.config.ts",
+    "tests/registry-consumer/app/**/*.{ts,tsx}",
+    "tooling/quality-metrics/metrics.ts",
+    "design/colors_and_type.css"
+  ],
+  "project": ["**/*.{ts,tsx,css}"],
+  "ignoreUnresolved": ["^@/components/ui/"],
+  "ignoreDependencies": ["date-fns"]
+}
