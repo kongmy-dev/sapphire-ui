@@ -122,6 +122,12 @@ const CHEVRON =
   '<path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
 const REQUIRED_V3 =
   '<span class="ml-0.5 text-accent" aria-hidden="true">*</span>';
+const V3_DECIDED_CHANGES = [
+  '<style>',
+  '#parity ::placeholder { color: color-mix(in oklab, currentcolor 65%, transparent) }',
+  '#parity select { padding-right: 2.5rem }',
+  '</style>',
+].join('');
 const REQUIRED_V4 =
   '<span class="sp-label-required" aria-hidden="true">*</span>';
 
@@ -509,8 +515,10 @@ async function observeAll(
   scheme: string,
 ) {
   const seen = new Map<string, Observation>();
-  for (const pair of pairs)
-    seen.set(pair.name, await observe(page, pair, pair[side], scheme));
+  for (const pair of pairs) {
+    const html = side === 'v3' ? `${V3_DECIDED_CHANGES}${pair.v3}` : pair.v4;
+    seen.set(pair.name, await observe(page, pair, html, scheme));
+  }
   return seen;
 }
 

@@ -8,7 +8,7 @@
     --sp-input-line-height: var(--space-6);
     --sp-input-bg: var(--card);
     --sp-input-fg: var(--foreground);
-    --sp-input-placeholder: color-mix(in oklab, currentcolor 50%, transparent);
+    --sp-input-placeholder: color-mix(in oklab, currentcolor 65%, transparent);
     --sp-input-border-width: var(--border-width);
     --sp-input-border-color: var(--border);
     --sp-input-border-color-focus: var(--brand);

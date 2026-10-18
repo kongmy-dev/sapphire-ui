@@ -101,6 +101,11 @@ editorial React (30%).
   destructive-outline button, the badges and the dialog's danger trigger.
 - **`--shadow-lg` mixes its colour with `color-mix()`,** within 6/255 per channel of v3's
   `rgba()`, an invisible difference; the dialog's parity check compares shadow geometry only.
+- **Field placeholders are 65% of the text colour,** not v3's 50%, which measured 3.05:1 on
+  light; 65% measures 4.56–7.54:1 across the input variants and both schemes. The native select
+  keeps `--space-10` clear at its inline end so a long value never runs under the chevron (v3's
+  `pr-10` lost to its size padding) and takes the input's `aria-invalid` look, which v3 never
+  drew. The forms parity check applies both changes to the v3 side.
 - **Where the two implementations disagree, the React look wins:** more apps see it.
 - **Registry v4 is served at `/r/v4/{name}.json`;** `/r/{name}.json` stays the v3 build until each
   app moves.

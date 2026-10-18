@@ -11,7 +11,7 @@
     --sp-textarea-fg: var(--foreground);
     --sp-textarea-placeholder: color-mix(
       in oklab,
-      currentcolor 50%,
+      currentcolor 65%,
       transparent
     );
     --sp-textarea-border-width: var(--border-width);
