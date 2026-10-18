@@ -258,7 +258,7 @@ commit fills §10.
 | `docs/adr/` | each decision and its critical why |
 | `docs/backlog.md` | open work; never a `TODO` in code |
 | `SECURITY.md`, `LICENSE` | unchanged |
-| Skills | `coding-principles` (with the gate's shape and where knowledge goes), `sapphire-component` (add or change a component), `review-code` (the checks no gate makes: root cause or symptom, a second way to do one task, an internal another module can import, a file passing 1,000 lines, a simplification left on the table; run by a session that did not write the change), `refactor-code`, `add-rule`; the consumer skill `skills/sapphire/SKILL.md`, shipped in the package and by the registry |
+| Skills | `coding-principles` (with the gate's shape and where knowledge goes), `typescript` (toolchain, compiler, types, edges and tests, under the rules here), `sapphire-component` (add or change a component), `review-code` (the checks no gate makes: root cause or symptom, a second way to do one task, an internal another module can import, a file passing 1,000 lines, a simplification left on the table; run by a session that did not write the change), `refactor-code`, `add-rule`; the consumer skill `skills/sapphire/SKILL.md`, shipped in the package and by the registry |
 
 Deleted: `AI-CODE-QUALITY.md` (its size-gate reasoning moves to the `coding-principles`
 reference), both plans, `docs/coding/principles.md` (its table moves into `CLAUDE.md`),

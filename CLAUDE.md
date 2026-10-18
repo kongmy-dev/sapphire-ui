@@ -91,6 +91,7 @@ src/
 | Task | Read first |
 |---|---|
 | Coding principles & standards | `.claude/skills/coding-principles/SKILL.md` |
+| Writing, typing or reviewing any `.ts`/`.tsx` | `.claude/skills/typescript/SKILL.md` |
 | Writing or editing React components | `.claude/skills/sapphire-react/SKILL.md` |
 | Writing or editing CSS & tokens | `.claude/skills/sapphire-css/SKILL.md` |
 | Writing or running tests | `.claude/skills/sapphire-testing/SKILL.md` |
