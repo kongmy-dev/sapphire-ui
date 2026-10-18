@@ -145,3 +145,22 @@ export const utilityRenames = {
     'card-dark-bg': 'card-dark',
   },
 } as const;
+
+export const classRenames = {
+  '.btn': '.sp-button',
+  '.btn-primary': '.sp-button',
+  '.btn-outline': '.sp-button[data-variant=outline]',
+  '.btn-ghost': '.sp-button[data-variant=ghost]',
+  '.btn-accent': '.sp-button[data-variant=brand]',
+  '.btn-destructive': '.sp-button[data-variant=destructive]',
+  '.btn-xs': '.sp-button[data-size=xs]',
+  '.btn-sm': '.sp-button[data-size=sm]',
+  '.btn-lg': '.sp-button[data-size=lg]',
+  '.btn-block': '.sp-button[data-full-width]',
+} as const;
+
+export const propValueRenames = {
+  Button: {
+    variant: { accent: 'brand' },
+  },
+} as const;
