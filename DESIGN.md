@@ -188,7 +188,7 @@ Depth comes from background contrast, not shadow. A light card has a 1px `--bord
 | Button, destructive | Only for an irreversible delete or remove |
 | Card | `--card`, `--radius-md`, 1px `--border`; a navy card features a hero item |
 | Tag and badge | Always a pill. Default is the muted surface with muted text; a gold tint for emphasis; a navy-surface variant |
-| Input | Standard and textarea with a distinct focus ring; `--error` border for invalid |
+| Input | Standard and textarea with a distinct focus ring; `--error-text` border for invalid |
 | Overlays | Dialog centred, sheet edge-anchored; menus, popovers, hover cards and tooltips share `--popover` |
 | Feedback | Alert and callout in the four status colours; toasts do not block |
 | Navigation | Breadcrumb, pagination, tabs and steps; the admin shell uses the `--sidebar-*` tokens |
