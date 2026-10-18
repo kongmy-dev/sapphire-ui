@@ -14,7 +14,12 @@ const TOKEN_FOLDERS = [
   'site/',
 ] as const;
 const TOKEN_EXTENSIONS = ['.css', '.ts', '.tsx'] as const;
-const GATE_EXTENSIONS = [...TOKEN_EXTENSIONS, '.md'] as const;
+const SPECIMEN_EXTENSION = '.examples.html';
+const GATE_EXTENSIONS = [
+  ...TOKEN_EXTENSIONS,
+  SPECIMEN_EXTENSION,
+  '.md',
+] as const;
 const RUNTIME_VARIABLE_PREFIXES = ['--radix-'] as const;
 const ANCHOR_ATTRIBUTES = ['href', 'to'] as const;
 
@@ -26,6 +31,7 @@ const LENGTH =
 const VARIABLE_USE = /var\(\s*(--[\w-]+)/g;
 const ARBITRARY_VALUE = /\[([^\]]*)\]/g;
 const URL_CALL = /url\([^)]*\)/gi;
+const STYLE_ATTRIBUTE = /\sstyle\s*=\s*(?:"([^"]*)"|'([^']*)')/gi;
 
 type Hit = { index: number; value: string };
 type RegionKind = 'css-value' | 'class-string';
@@ -188,8 +194,30 @@ function analyseScript(file: FileText): Analysis {
   };
 }
 
-const analyse = (file: FileText) =>
-  file.name.endsWith('.css') ? analyseCss(file) : analyseScript(file);
+function analyseSpecimen(file: FileText): Analysis {
+  const regions = [...file.text.matchAll(STYLE_ATTRIBUTE)].map(
+    (match): Region => {
+      const value = match[1] ?? match[2] ?? '';
+      return {
+        start: match.index + match[0].length - value.length - 1,
+        text: value,
+        kind: 'css-value',
+      };
+    },
+  );
+  return {
+    file,
+    regions,
+    declared: [],
+    uses: regions.flatMap((region) => variableUses(region.text, region.start)),
+  };
+}
+
+function analyse(file: FileText): Analysis {
+  if (file.name.endsWith('.css')) return analyseCss(file);
+  if (file.name.endsWith(SPECIMEN_EXTENSION)) return analyseSpecimen(file);
+  return analyseScript(file);
+}
 
 function regionHits(region: Region) {
   if (region.kind === 'css-value') {

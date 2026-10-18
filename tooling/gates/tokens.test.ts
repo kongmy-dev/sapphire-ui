@@ -240,6 +240,43 @@ describe('token gate: variables that resolve', () => {
   });
 });
 
+describe('token gate: specimen style attributes', () => {
+  const specimen = 'components/card/card.examples.html';
+
+  it('flags a length and a colour literal in a style attribute, with the line', () => {
+    const text = [
+      '<section class="docs-section">',
+      '  <div class="sp-card" style="max-width: 400px">Card</div>',
+      "  <p style='color: #0a192f'>Note</p>",
+      '</section>',
+      '',
+    ].join('\n');
+    expect(problems(specimen, text)).toEqual([
+      '2 length literal 400px',
+      '3 colour literal #0a192f',
+    ]);
+  });
+
+  it('allows a component variable set to a token', () => {
+    const text =
+      '<button class="sp-button" style="--sp-button-fg: var(--error)">Danger</button>\n';
+    expect(problems(specimen, text, [':root { --error: red; }'])).toEqual([]);
+  });
+
+  it('flags a var() in a style attribute that no CSS file declares', () => {
+    const text =
+      '<button style="--sp-button-fg: var(--color-missing)">Danger</button>\n';
+    expect(problems(specimen, text)).toEqual([
+      '1 var(--color-missing) is declared in no CSS file under css/, components/, blocks/, elements/, site/',
+    ]);
+  });
+
+  it('leaves literals outside a style attribute alone', () => {
+    const text = '<p class="note" data-width="400px">Width 400px</p>\n';
+    expect(problems(specimen, text)).toEqual([]);
+  });
+});
+
 describe('token gate: a gate that checked nothing fails', () => {
   it('fails with no files', () => {
     expect(renderReport(tokenGate([]))).toEqual({
