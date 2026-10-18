@@ -37,30 +37,35 @@ function listing(files: readonly string[]): string {
   return `<!doctype html><title>specimens</title><ul>${links}</ul>`;
 }
 
-function respond(request: Request): Response {
-  const url = new URL(request.url);
-  const files = specimenFiles(root);
-  const path = decodeURIComponent(url.pathname);
-  const file = path.slice(1);
-  if (path === '/') return html(listing(files));
-  if (path === '/sapphire.css')
-    return new Response(Bun.file(join(out, 'sapphire.css')));
-  if (path === '/specimen.css')
-    return new Response(Bun.file(join(root, 'site/specimen.css')));
-  const isDemoStylesheet = files.some(
-    (specimen) => demoStylesheetOf(specimen) === file,
-  );
-  if (isDemoStylesheet && existsSync(join(root, file)))
-    return new Response(Bun.file(join(root, file)));
+function staticFile(path: string, files: readonly string[]): string | null {
+  if (path === '/sapphire.css') return join(out, 'sapphire.css');
+  if (path === '/specimen.css') return join(root, 'site/specimen.css');
   const font = FONT_FILE.exec(path)?.[1];
-  if (font !== undefined)
-    return new Response(Bun.file(join(out, FONT_DIR, font)));
-  if (!files.includes(file)) return html('not found', 404);
+  if (font !== undefined) return join(out, FONT_DIR, font);
+  const isDemoStylesheet = files.some(
+    (specimen) => `/${demoStylesheetOf(specimen)}` === path,
+  );
+  return isDemoStylesheet ? join(root, path.slice(1)) : null;
+}
+
+function specimenResponse(url: URL, file: string): Response {
   const scheme = url.searchParams.get('scheme') ?? 'light';
   if (!isScheme(scheme)) return html('scheme must be light or dark', 400);
   const fragment = readFileSync(join(root, file), 'utf8');
   const hasDemoStylesheet = existsSync(join(root, demoStylesheetOf(file)));
   return html(specimenPage({ file, fragment, scheme, hasDemoStylesheet }));
+}
+
+function respond(request: Request): Response {
+  const url = new URL(request.url);
+  const files = specimenFiles(root);
+  const path = decodeURIComponent(url.pathname);
+  if (path === '/') return html(listing(files));
+  const asset = staticFile(path, files);
+  if (asset !== null && existsSync(asset)) return new Response(Bun.file(asset));
+  const file = path.slice(1);
+  if (!files.includes(file)) return html('not found', 404);
+  return specimenResponse(url, file);
 }
 
 Bun.serve({ port: SPECIMEN_PORT, fetch: respond });
