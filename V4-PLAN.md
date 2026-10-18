@@ -106,6 +106,12 @@ editorial React (30%).
   keeps `--space-10` clear at its inline end so a long value never runs under the chevron (v3's
   `pr-10` lost to its size padding) and takes the input's `aria-invalid` look, which v3 never
   drew. The forms parity check applies both changes to the v3 side.
+- **The switch's custom-accent demo reads `--success`,** not v3's literal `#16a34a`, which no
+  token holds; `--switch-off` holds v3's off track. v3's `--switch-active` and `--switch-inactive`
+  become `--sp-switch-*` through the map's variable table, and v3's double-hyphen modifiers
+  (`.input--dark`, `.k-switch--sm`) map like any other class.
+- **A pinned specimen section renders at its v3 page y** (`data-pin-y`), not only at its
+  fraction: Chromium antialiased the same radio differently at y 100 and at y 2619.
 - **Where the two implementations disagree, the React look wins:** more apps see it.
 - **Registry v4 is served at `/r/v4/{name}.json`;** `/r/{name}.json` stays the v3 build until each
   app moves.
