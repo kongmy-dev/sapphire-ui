@@ -20,6 +20,21 @@ A test states a behaviour and can fail: it reaches a component only through prop
 finds elements by role, and asserts no snapshot (`V4-PLAN.md` §7, P-10). The typescript skill's
 Q1–Q3 apply: revert the code under test and the test must fail, and a suite that ran nothing fails.
 
+## Specimens and pins
+
+A specimen is plain HTML that renders one v3 docs section from `sapphire.css` alone:
+`components/<name>/<name>.examples.html` (and `css/base.examples.html`), a list of
+`<section class="docs-section" data-pin="<route>/<slug>">` fragments. `bun run test:visual` screenshots each
+against the pin of the same name at zero tolerance; `pins.spec.ts` skips a pin a specimen covers, and
+`tests/specimens.a11y.spec.ts` runs axe on every specimen page in both schemes. You never run `bun run pin`
+to make a specimen pass: a pin that cannot match goes to the owner with expected, actual and diff.
+
+- The specimen page keeps the v3 page geometry (the 240 px sidebar column, the page header): a gradient's
+  dither and a box's snapped edges change with the section's offset.
+- A section whose preceding sections are not all in the specimen declares `data-pin-y="<y in the v3 page>"`;
+  the spec moves the page by the missing sub-pixel fraction before it screenshots.
+- Whitespace between inline elements in hand-written HTML renders as a space; JSX had none.
+
 ## Running Tests
 
 ```bash
