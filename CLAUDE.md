@@ -60,6 +60,8 @@ bun run dep-check    # Dependency gate (P-12)
 bun run freeze-check # Freeze gate (P-17): src/ is unchanged
 bun run token-check  # Token gate (P-5): css/, components/, blocks/, elements/, site/; joins gate in P2
 bun run scorecard [sha] # v4 numbers and per-component state at a commit (default HEAD), measured in a temp checkout
+bun run test:visual   # compare every pin inside the linux/arm64 Playwright container (needs Docker)
+bun run pin <example>… # the only way to change a pin: compare, print expected/actual/diff paths, update those pins
 bun run build:docs   # docs site → dist-docs/
 bun run deploy:docs  # deploy docs to Cloudflare Pages
 ```

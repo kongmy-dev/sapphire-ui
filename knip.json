@@ -7,8 +7,11 @@
     "tests/registry-consumer/vite.config.ts",
     "tests/registry-consumer/app/**/*.{ts,tsx}",
     "tooling/quality-metrics/metrics.ts",
-    "design/colors_and_type.css"
+    "design/colors_and_type.css",
+    "playwright.visual.config.ts",
+    "tests/visual/*.spec.ts"
   ],
   "project": ["**/*.{ts,tsx,css}"],
-  "ignoreUnresolved": ["^@/components/ui/"]
+  "ignoreUnresolved": ["^@/components/ui/"],
+  "ignoreDependencies": ["^@fontsource-variable/"]
 }
