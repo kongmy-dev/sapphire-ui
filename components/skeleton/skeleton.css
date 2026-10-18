@@ -1,0 +1,63 @@
+@layer components {
+  .sp-skeleton {
+    --sp-skeleton-width: 80%;
+    --sp-skeleton-height: var(--space-5);
+    --sp-skeleton-radius: var(--radius-sm);
+    --sp-skeleton-from: var(--background);
+    --sp-skeleton-via: var(--border);
+    --sp-skeleton-to: var(--background);
+    --sp-skeleton-duration: 1.5s;
+
+    display: block;
+    width: var(--sp-skeleton-width);
+    height: var(--sp-skeleton-height);
+    background: linear-gradient(
+      to right in oklab,
+      var(--sp-skeleton-from),
+      var(--sp-skeleton-via),
+      var(--sp-skeleton-to)
+    );
+    background-size: 200% 100%;
+    border-radius: var(--sp-skeleton-radius);
+    animation: sp-skeleton-shimmer var(--sp-skeleton-duration) ease-in-out
+      infinite;
+  }
+
+  .sp-skeleton[data-size="sm"] {
+    --sp-skeleton-width: 40%;
+    --sp-skeleton-height: calc(var(--space-1) * 3.5);
+  }
+
+  .sp-skeleton[data-size="lg"] {
+    --sp-skeleton-width: 60%;
+    --sp-skeleton-height: var(--space-8);
+  }
+
+  .sp-skeleton[data-variant="card"] {
+    --sp-skeleton-width: 100%;
+    --sp-skeleton-height: calc(var(--space-1) * 48);
+    --sp-skeleton-radius: var(--radius-md);
+  }
+
+  .sp-skeleton[data-variant="circle"] {
+    --sp-skeleton-width: var(--space-10);
+    --sp-skeleton-height: var(--space-10);
+    --sp-skeleton-radius: var(--radius-pill);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sp-skeleton {
+      animation: none;
+    }
+  }
+
+  @keyframes sp-skeleton-shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+
+    100% {
+      background-position: -200% 0;
+    }
+  }
+}

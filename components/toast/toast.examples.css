@@ -1,0 +1,5 @@
+.docs-toast-stage {
+  position: static;
+  flex-direction: column;
+  align-items: flex-start;
+}

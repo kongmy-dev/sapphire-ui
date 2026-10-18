@@ -1,0 +1,28 @@
+.docs-progress-stack {
+  max-width: calc(var(--space-1) * 100);
+}
+
+.docs-progress-bars {
+  gap: var(--space-6);
+  width: 100%;
+  max-width: calc(var(--space-1) * 100);
+}
+
+.docs-progress-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+  font-size: var(--text-xs);
+  line-height: calc(var(--space-1) * 4);
+}
+
+.docs-progress-name {
+  font-weight: 500;
+  color: var(--foreground-strong);
+}
+
+.docs-progress-percent {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--foreground-strong);
+}

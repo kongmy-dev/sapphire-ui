@@ -1,0 +1,75 @@
+@layer components {
+  .sp-alert {
+    --sp-alert-radius: var(--radius-md);
+    --sp-alert-padding: var(--space-5);
+    --sp-alert-gap: var(--space-3);
+    --sp-alert-border-width: var(--border-width-strong);
+    --sp-alert-border-color: var(--info-border);
+    --sp-alert-bg: var(--info-bg);
+    --sp-alert-fg: var(--foreground);
+    --sp-alert-accent: var(--info-text);
+    --sp-alert-icon-size: calc(var(--space-1) * 5);
+
+    display: flex;
+    gap: var(--sp-alert-gap);
+    align-items: flex-start;
+    padding: var(--sp-alert-padding);
+    font-family: var(--font-sans);
+    color: var(--sp-alert-fg);
+    background: var(--sp-alert-bg);
+    border: var(--sp-alert-border-width) solid var(--sp-alert-border-color);
+    border-radius: var(--sp-alert-radius);
+  }
+
+  .sp-alert[data-variant="success"] {
+    --sp-alert-border-color: var(--success-border);
+    --sp-alert-bg: var(--success-bg);
+    --sp-alert-accent: var(--success-text);
+  }
+
+  .sp-alert[data-variant="warning"] {
+    --sp-alert-border-color: var(--warning-border);
+    --sp-alert-bg: var(--warning-bg);
+    --sp-alert-accent: var(--warning-text);
+  }
+
+  .sp-alert[data-variant="error"] {
+    --sp-alert-border-color: var(--error-border);
+    --sp-alert-bg: var(--error-bg);
+    --sp-alert-accent: var(--error-text);
+  }
+
+  .sp-alert[data-variant="brand"] {
+    --sp-alert-border-color: color-mix(in oklab, var(--brand) 38%, transparent);
+    --sp-alert-bg: color-mix(in oklab, var(--brand) 7%, transparent);
+    --sp-alert-accent: var(--brand-text);
+  }
+
+  .sp-alert-icon {
+    flex-shrink: 0;
+    width: var(--sp-alert-icon-size);
+    height: var(--sp-alert-icon-size);
+    margin-top: calc(var(--space-1) * 0.5);
+    font-size: var(--sp-alert-icon-size);
+    line-height: 1;
+    color: var(--sp-alert-accent);
+  }
+
+  .sp-alert-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sp-alert-title {
+    margin-bottom: var(--space-1);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    line-height: calc(var(--space-1) * 5);
+    color: var(--sp-alert-accent);
+  }
+
+  .sp-alert-body {
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+  }
+}

@@ -1,0 +1,36 @@
+<header class="docs-page-header">
+  <h1>Feedback</h1>
+  <p>Loading states, progress indicators, alerts, and empty states.</p>
+</header>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Segmented Bar</h2>
+  <div class="docs-preview">
+    <div class="docs-stack docs-segmented-bar-stack">
+      <div>
+        <div class="docs-caption">Budget allocation (compute / storage / network / other)</div>
+        <div class="sp-segmented-bar" role="group" aria-label="Budget allocation">
+          <div class="sp-segmented-bar-segment" style="--sp-segmented-bar-segment-share: 45%; --sp-segmented-bar-segment-color: var(--brand)"></div>
+          <div class="sp-segmented-bar-segment" style="--sp-segmented-bar-segment-share: 30%; --sp-segmented-bar-segment-color: var(--success)"></div>
+          <div class="sp-segmented-bar-segment" style="--sp-segmented-bar-segment-share: 15%; --sp-segmented-bar-segment-color: var(--warning)"></div>
+          <div class="sp-segmented-bar-segment" style="--sp-segmented-bar-segment-share: 10%; --sp-segmented-bar-segment-color: var(--error)"></div>
+        </div>
+      </div>
+      <div>
+        <div class="docs-caption">Small — with target marker at 50 %</div>
+        <div class="sp-segmented-bar" data-size="sm" role="group" aria-label="Usage with target">
+          <div class="sp-segmented-bar-marker" style="--sp-segmented-bar-marker-position: 50%; --sp-segmented-bar-marker-color: var(--muted-foreground)"></div>
+          <div class="sp-segmented-bar-segment" style="--sp-segmented-bar-segment-share: 62%; --sp-segmented-bar-segment-color: var(--brand)"></div>
+          <div class="sp-segmented-bar-segment" style="--sp-segmented-bar-segment-share: 38%; --sp-segmented-bar-segment-color: color-mix(in oklab, var(--white) 6%, transparent)"></div>
+        </div>
+      </div>
+      <div>
+        <div class="docs-caption">Large — single fill</div>
+        <div class="sp-segmented-bar" data-size="lg" role="group" aria-label="Storage used">
+          <div class="sp-segmented-bar-segment" style="--sp-segmented-bar-segment-share: 75%; --sp-segmented-bar-segment-color: var(--success)"></div>
+          <div class="sp-segmented-bar-segment" style="--sp-segmented-bar-segment-share: 25%; --sp-segmented-bar-segment-color: var(--border)"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,61 @@
+@layer components {
+  .sp-progress {
+    --sp-progress-value: 0%;
+    --sp-progress-height: calc(var(--space-1) * 2.5);
+    --sp-progress-gap: var(--space-3);
+    --sp-progress-track-bg: var(--background);
+    --sp-progress-track-border-width: var(--border-width);
+    --sp-progress-track-border-color: var(--border);
+    --sp-progress-indicator-bg: var(--brand);
+    --sp-progress-transition: 500ms ease-out;
+    --sp-progress-label-fg: var(--muted-foreground);
+    --sp-progress-label-font-size: var(--text-xs);
+
+    display: flex;
+    gap: var(--sp-progress-gap);
+    align-items: center;
+    width: 100%;
+  }
+
+  .sp-progress[data-size="sm"] {
+    --sp-progress-height: calc(var(--space-1) * 1.5);
+  }
+
+  .sp-progress[data-size="lg"] {
+    --sp-progress-height: var(--space-4);
+  }
+
+  .sp-progress-track {
+    position: relative;
+    width: 100%;
+    height: var(--sp-progress-height);
+    overflow: hidden;
+    background: var(--sp-progress-track-bg);
+    border: var(--sp-progress-track-border-width) solid
+      var(--sp-progress-track-border-color);
+    border-radius: var(--radius-pill);
+  }
+
+  .sp-progress-indicator {
+    height: 100%;
+    background: var(--sp-progress-indicator-bg);
+    border-radius: var(--radius-pill);
+    transition: transform var(--sp-progress-transition);
+    transform: translateX(calc(var(--sp-progress-value) - 100%));
+  }
+
+  .sp-progress-value {
+    min-width: calc(var(--sp-progress-label-font-size) * 1.75);
+    font-family: var(--font-mono);
+    font-size: var(--sp-progress-label-font-size);
+    line-height: calc(var(--space-1) * 4);
+    color: var(--sp-progress-label-fg);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sp-progress-indicator {
+      transition: none;
+    }
+  }
+}
