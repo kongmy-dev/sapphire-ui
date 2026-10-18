@@ -39,10 +39,12 @@ function failureOf(example: string, test: unknown): Failure[] {
   return [{ example, scheme: test.projectName, images: imagesOf(attachments) }];
 }
 
-const failuresOfSpec = (spec: unknown): Failure[] =>
-  isRecord(spec) && typeof spec.title === 'string'
-    ? listOf(spec.tests).flatMap((test) => failureOf(spec.title, test))
-    : [];
+function failuresOfSpec(spec: unknown): Failure[] {
+  if (!isRecord(spec)) return [];
+  const { title, tests } = spec;
+  if (typeof title !== 'string') return [];
+  return listOf(tests).flatMap((test) => failureOf(title, test));
+}
 
 const specsOf = (suite: unknown): unknown[] =>
   isRecord(suite)
