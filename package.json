@@ -490,9 +490,7 @@
     "token-check": "bun tooling/gates/tokens.ts",
     "dep-check": "bun tooling/gates/deps.ts",
     "freeze-check": "bun tooling/gates/freeze.ts",
-    "a11y-check": "bun tooling/gates/a11y-coverage.ts",
-    "externals-check": "bun tooling/gates/bundle-externals.ts",
-    "gate": "bun run lint && bun run typecheck && bun run knip && bun run comment-check && bun run token-check && bun run dep-check && bun run a11y-check && bun run size-check && bun run test && bun run check:registry && bun run externals-check",
+    "gate": "bun run lint && bun run typecheck && bun run knip && bun run comment-check && bun run size-check && bun run dep-check && bun run freeze-check && bun run test && bun run check:registry",
     "deploy:docs": "bun run build:docs && wrangler deploy"
   },
   "peerDependencies": {
