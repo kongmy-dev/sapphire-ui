@@ -217,6 +217,8 @@ export const classRenames = {
   '.sapphire-toast-icon': '.sp-toast-icon',
   '.sapphire-toast-message': '.sp-toast-message',
   '.sapphire-table': '.sp-table',
+  '.sapphire-banner': '.sp-banner',
+  '.sapphire-banner-dismiss': '.sp-banner-dismiss',
 } as const;
 
 export const variableRenames = {
@@ -230,9 +232,6 @@ export const unmappedClasses = {
     'the proposal shell modal, mapped when the proposal shell ports',
   '.modal-head':
     'the proposal shell modal, mapped when the proposal shell ports',
-  '.sapphire-banner': 'the banner, mapped when the extended family ports',
-  '.sapphire-banner-dismiss':
-    'the banner, mapped when the extended family ports',
   '.is-visible':
     'a toast opens with [data-state=open] or [data-open] on .sp-toast, an attribute no class stands for',
 } as const;
@@ -261,5 +260,8 @@ export const propValueRenames = {
   },
   Spinner: {
     tone: { accent: 'brand' },
+  },
+  Banner: {
+    variant: { accent: 'brand' },
   },
 } as const;

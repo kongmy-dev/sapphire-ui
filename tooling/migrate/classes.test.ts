@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { componentStylesheets } from '../css/stylesheet';
 import {
@@ -11,6 +11,16 @@ import {
 
 const ROOT = join(import.meta.dir, '../..');
 const read = (path: string) => readFileSync(join(ROOT, path), 'utf8');
+
+const v3Source = (component: string): string =>
+  [
+    `src/components/ui/${component}.tsx`,
+    `src/components/${component}.tsx`,
+    `src/components/${component}Element.ts`,
+  ]
+    .filter((path) => existsSync(join(ROOT, path)))
+    .map(read)
+    .join('\n');
 
 const CLASS = /\.([a-z][a-z0-9]*(?:--?[a-z0-9]+)*)(?![\w-])/g;
 const TARGET_CLASS = /^\.sp-[a-z0-9]+(?:-[a-z0-9]+)*/;
@@ -139,10 +149,10 @@ describe('the prop value renames', () => {
       Object.entries(props).flatMap(([prop, values]) =>
         Object.entries(values).flatMap(([from, to]) => {
           const name = component.replace(/(?<!^)([A-Z])/g, '-$1').toLowerCase();
-          const v3Source = read(`src/components/ui/${component}.tsx`);
+          const source = v3Source(component);
           const declared = declaredAttributes(sheets[name] ?? '');
           return [
-            ...(new RegExp(`\\b${from}:\\s*\\n?\\s*'`).test(v3Source)
+            ...(new RegExp(`\\b${from}:\\s*\\n?\\s*'|'${from}'`).test(source)
               ? []
               : [`v3 ${component} has no ${prop} ${from}`]),
             ...(declared.has(`data-${prop}=${to}`)
