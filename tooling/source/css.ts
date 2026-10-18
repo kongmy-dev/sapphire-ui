@@ -1,4 +1,4 @@
-export type Span = { pos: number; end: number };
+type Span = { pos: number; end: number };
 
 type Region = { blank: Span; next: number; isComment: boolean };
 

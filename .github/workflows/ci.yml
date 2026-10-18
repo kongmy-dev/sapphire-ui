@@ -44,6 +44,18 @@ jobs:
       - name: Unused code and dependencies
         run: bun run knip
 
+      - name: Comment gate
+        run: bun run comment-check
+
+      - name: Size gate
+        run: bun run size-check
+
+      - name: Dependency gate
+        run: bun run dep-check
+
+      - name: Freeze gate
+        run: bun run freeze-check
+
       - name: Build
         run: bun run build
 

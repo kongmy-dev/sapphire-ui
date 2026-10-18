@@ -1,34 +1,46 @@
 #!/bin/sh
 #
-# Runs the comment gate and size gate on the file that was just written, and hands
-# the result back to the agent that wrote it.
+# Runs the gates that apply to the file that was just written and hands the result
+# back to the agent that wrote it. Exit 2 puts stderr in front of the model as
+# feedback on work it can still fix in the same turn.
 #
-# Exit 2 puts stderr in front of the model as feedback on work it can still fix in
-# the same turn.
+# A file under src/ runs the freeze gate (P-17). Any other TS, TSX, JS or CSS file
+# outside the frozen lane runs the comment gate (P-1), and TS and TSX also the
+# size gate (P-7).
 
 file=$(sed -n 's/.*"file_path"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -1)
 
 case "$file" in
-  *.ts|*.tsx|*.js|*.jsx) ;;
+  *.ts|*.tsx|*.js|*.jsx|*.mjs|*.cjs|*.mts|*.cts|*.css) ;;
   *) exit 0 ;;
-esac
-case "$file" in
-  */tooling/quality-metrics/*|*/tooling/gates/*) exit 0 ;;
 esac
 
 cd "${CLAUDE_PROJECT_DIR:-.}" || exit 0
 [ -f "$file" ] || exit 0
+rel=${file#"$(pwd -P)"/}
 
-comment_out=$(bun tooling/gates/comments.ts "$file" 2>&1)
-comment_status=$?
+case "$rel" in
+  src/*)
+    out=$(bun tooling/gates/freeze.ts 2>&1) && exit 0
+    printf '%s\n' "$out" >&2
+    exit 2
+    ;;
+  registry/blocks/*|tests/registry-consumer/app/*|design/*) exit 0 ;;
+esac
 
-size_out=$(bun tooling/quality-metrics/check.ts "$file" 2>&1)
-size_status=$?
+status=0
+out=$(bun tooling/gates/comments.ts "$rel" 2>&1) || {
+  printf '%s\n' "$out" >&2
+  status=2
+}
 
-if [ $comment_status -ne 0 ] || [ $size_status -ne 0 ]; then
-  [ $comment_status -ne 0 ] && printf '%s\n' "$comment_out" >&2
-  [ $size_status -ne 0 ] && printf '%s\n' "$size_out" >&2
-  exit 2
-fi
+case "$rel" in
+  *.ts|*.tsx)
+    out=$(bun tooling/gates/size.ts "$rel" 2>&1) || {
+      printf '%s\n' "$out" >&2
+      status=2
+    }
+    ;;
+esac
 
-exit 0
+exit $status
