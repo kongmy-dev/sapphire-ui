@@ -91,9 +91,11 @@ Measured by spike 2 (`588f790`), in Chromium, Firefox and WebKit:
 
 - **An override must use the same selector list.** A value set on `:root`
   alone does not reach an element inside a nested `[data-theme]` scope, since
-  Sapphire's declaration on that element wins over the inherited one
-  (inferred, not measured). `DESIGN.md` and the consumer skill show the
-  selector list; the P2 spec measures it.
+  Sapphire's declaration on that element wins over the inherited one. It does
+  apply when the scope sits on `<html>`, where the two selectors weigh the
+  same and the later rule wins. `tests/tokens.spec.ts` measures both through
+  the source, `bun build`, Vite and Tailwind forms, in Chromium, Firefox and
+  WebKit. `DESIGN.md` and the consumer skill show the selector list.
 - **Four selectors on every colour block,** where one would do in a browser
   that never sees lowered CSS.
 - **Pipelines other than `bun build` and Vite are unverified:** the Tailwind

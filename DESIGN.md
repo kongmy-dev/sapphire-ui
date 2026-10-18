@@ -30,6 +30,8 @@ An app changes a colour on the full scope list, written as `light-dark(<light>, 
 }
 ```
 
+An override on `:root` alone does not reach a section that sets `data-theme` or `.dark`: that section keeps Sapphire's own value, because Sapphire declares the token on the section itself. It does apply when the scope sits on `<html>`, since the two selectors weigh the same and the later rule wins. `tests/tokens.spec.ts` measures both in Chromium, Firefox and WebKit, through the source, `bun build`, Vite and Tailwind forms.
+
 A Tailwind app maps every token to utilities that read the same variables:
 
 ```css
