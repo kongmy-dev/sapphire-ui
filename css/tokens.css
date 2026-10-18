@@ -51,6 +51,7 @@
   );
   --border-strong: light-dark(#cbd5e1, rgb(255, 255, 255, 0.28));
   --border-dark: light-dark(rgb(255, 255, 255, 0.12), rgb(255, 255, 255, 0.12));
+  --field-dark: light-dark(rgb(0, 0, 0, 0.2), rgb(0, 0, 0, 0.2));
   --white: light-dark(#fff, #fff);
   --card-dark: var(--primary);
 

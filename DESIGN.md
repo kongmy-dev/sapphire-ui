@@ -84,6 +84,7 @@ Each row gives the resolved colour per scheme.
 | `--on-dark-muted` | `rgb(241, 245, 249, 0.65)` | `rgb(241, 245, 249, 0.65)` | Secondary text on navy |
 | `--border-strong` | `#cbd5e1` | `rgb(255, 255, 255, 0.28)` | Heavier border for form controls |
 | `--border-dark` | `rgb(255, 255, 255, 0.12)` | `rgb(255, 255, 255, 0.12)` | Hairline on navy surfaces |
+| `--field-dark` | `rgb(0, 0, 0, 0.2)` | `rgb(0, 0, 0, 0.2)` | Recessed fill of an input, textarea or select on navy surfaces |
 | `--white` | `#fff` | `#fff` | White in both schemes |
 | `--card-dark` | `#0a192f` | `#0a192f` | Featured dark card; alias of `--primary` |
 

@@ -124,6 +124,7 @@ export const newTokens = [
   '--success-text',
   '--warning-text',
   '--info-text',
+  '--field-dark',
   '--border-width',
   '--border-width-strong',
   '--ring-width',
