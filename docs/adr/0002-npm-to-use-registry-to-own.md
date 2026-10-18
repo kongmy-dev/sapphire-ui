@@ -65,7 +65,7 @@ structure vendors it and owns the copy from then on.
 - Built by a pinned `shadcn build` and checked by `shadcn registry validate`.
   Each item declares its npm dependencies with versions from `package.json`.
 - A `registry:base` item adds the npm package, the stylesheet import, the fonts
-  and the consumer skill.
+  and the consumer skill, at the app's `.claude/skills/sapphire/`.
 - The blocks (sidebar, command, combobox, calendar, toaster, data table) are
   registry-only and may use Tailwind utilities for layout.
 
