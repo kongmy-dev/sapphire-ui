@@ -201,7 +201,10 @@ financial table, key-value list, prose, page, masthead and section, stack, clust
 shell. `sapphire.css` declares the layer order Tailwind uses and is bundled and minified by
 `bun build`. Fonts: `woff2` from pinned `@fontsource-variable` packages, latin and latin-ext, copied
 into `dist/fonts/` and declared in `fonts.css`. Each component's plain-HTML specimen matches its P1
-pin; a deliberate difference goes through `bun run pin` and is listed in its commit. Budget:
+pin; a deliberate difference goes through `bun run pin` and is listed in its commit. A specimen is
+`<name>.examples.html` beside its CSS, one `<section data-pin="<route>/<slug>">` per pin it takes
+over from the v3 docs; each pin has one renderer, and a section that renders an icon glyph stays on
+its v3 pin until the Lucide port. Budget:
 gzipped `sapphire.css` at its measured size plus 15%. Button, card and dialog go first and set the
 pattern. Then `sapphire-component` is written from those three: the steps, the checks a port must
 pass and the files a port must not touch. Every other component is one session that owns only its
