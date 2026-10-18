@@ -97,3 +97,16 @@ jobs:
 
       - name: Accessibility tests
         run: bun run test:a11y
+
+  visual:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+
+      - name: Visual pins
+        run: bun run test:visual
