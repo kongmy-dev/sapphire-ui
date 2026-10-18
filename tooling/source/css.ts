@@ -50,13 +50,15 @@ const regionAt = (text: string, start: number): Region | null =>
   stringRegion(text, start) ??
   urlRegion(text, start);
 
+function blankSpan(chars: string[], { pos, end }: Span): void {
+  for (let index = pos; index < end; index++) {
+    if (chars[index] !== '\n') chars[index] = ' ';
+  }
+}
+
 function blanked(text: string, spans: readonly Span[]): string {
   const chars = text.split('');
-  for (const { pos, end } of spans) {
-    for (let index = pos; index < end; index++) {
-      if (chars[index] !== '\n') chars[index] = ' ';
-    }
-  }
+  for (const span of spans) blankSpan(chars, span);
   return chars.join('');
 }
 

@@ -486,7 +486,7 @@
     "test:registry": "bun scripts/verify-consumer.ts",
     "smoke:registry": "bun scripts/smoke-registry.ts",
     "comment-check": "bun tooling/gates/comments.ts",
-    "size-check": "bun tooling/gates/changed.ts",
+    "size-check": "bun tooling/gates/size.ts",
     "token-check": "bun tooling/gates/tokens.ts",
     "dep-check": "bun tooling/gates/deps.ts",
     "a11y-check": "bun tooling/gates/a11y-coverage.ts",

@@ -179,8 +179,10 @@ const nestsDepth = (node: ts.Node) =>
   ts.isSwitchStatement(node) ||
   ts.isTryStatement(node);
 
-export function measureFile(root: string, rel: string): FileMetrics {
-  const text = readFileSync(resolve(root, rel), 'utf8');
+export const measureFile = (root: string, rel: string): FileMetrics =>
+  measureText(rel, readFileSync(resolve(root, rel), 'utf8'));
+
+export function measureText(rel: string, text: string): FileMetrics {
   const sf = ts.createSourceFile(
     rel,
     text,
