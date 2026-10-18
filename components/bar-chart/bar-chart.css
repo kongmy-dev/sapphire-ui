@@ -1,0 +1,107 @@
+@layer components {
+  .sp-bar-chart {
+    --sp-bar-chart-height: calc(var(--space-1) * 48);
+    --sp-bar-chart-gap: var(--space-3);
+    --sp-bar-chart-padding-top: var(--space-4);
+    --sp-bar-chart-border-width: var(--border-width);
+    --sp-bar-chart-border-color: var(--border);
+    --sp-bar-chart-color: var(--brand);
+    --sp-bar-chart-bar-mix: 30%;
+    --sp-bar-chart-bar-mix-hover: 50%;
+    --sp-bar-chart-bar-radius: var(--radius-sm);
+    --sp-bar-chart-column-gap: var(--space-2);
+    --sp-bar-chart-label-fg: var(--muted-foreground);
+    --sp-bar-chart-label-font-size: calc(var(--text-base) * 0.625);
+    --sp-bar-chart-label-margin-top: var(--space-1);
+    --sp-bar-chart-value-bg: var(--foreground-strong);
+    --sp-bar-chart-value-fg: var(--background);
+    --sp-bar-chart-value-font-size: calc(var(--text-base) * 0.625);
+    --sp-bar-chart-value-padding-block: calc(var(--space-1) * 0.5);
+    --sp-bar-chart-value-padding-inline: calc(var(--space-1) * 1.5);
+    --sp-bar-chart-value-radius: var(--radius-sm);
+    --sp-bar-chart-value-offset: calc(var(--space-1) * -7);
+    --sp-bar-chart-value-shadow: var(--shadow-sm);
+    --sp-bar-chart-value-z-index: 10;
+
+    display: flex;
+    gap: var(--sp-bar-chart-gap);
+    align-items: flex-end;
+    height: var(--sp-bar-chart-height);
+    padding-top: var(--sp-bar-chart-padding-top);
+    border-bottom: var(--sp-bar-chart-border-width) solid
+      var(--sp-bar-chart-border-color);
+  }
+
+  .sp-bar-chart-column {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--sp-bar-chart-column-gap);
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+  }
+
+  .sp-bar-chart-bar {
+    --sp-bar-chart-share: 0%;
+
+    position: relative;
+    width: 100%;
+    height: var(--sp-bar-chart-share);
+    background: color-mix(
+      in oklab,
+      var(--sp-bar-chart-color) var(--sp-bar-chart-bar-mix),
+      transparent
+    );
+    border-radius: var(--sp-bar-chart-bar-radius) var(--sp-bar-chart-bar-radius)
+      0 0;
+    transition: background-color var(--transition-fast);
+  }
+
+  .sp-bar-chart-value {
+    position: absolute;
+    top: var(--sp-bar-chart-value-offset);
+    left: 50%;
+    z-index: var(--sp-bar-chart-value-z-index);
+    padding: var(--sp-bar-chart-value-padding-block)
+      var(--sp-bar-chart-value-padding-inline);
+    font-family: var(--font-mono);
+    font-size: var(--sp-bar-chart-value-font-size);
+    color: var(--sp-bar-chart-value-fg);
+    white-space: nowrap;
+    background: var(--sp-bar-chart-value-bg);
+    border-radius: var(--sp-bar-chart-value-radius);
+    box-shadow: var(--sp-bar-chart-value-shadow);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    translate: -50% 0;
+  }
+
+  .sp-bar-chart-label {
+    margin-top: var(--sp-bar-chart-label-margin-top);
+    font-family: var(--font-mono);
+    font-size: var(--sp-bar-chart-label-font-size);
+    color: var(--sp-bar-chart-label-fg);
+  }
+
+  @media (hover: hover) {
+    .sp-bar-chart-column:hover .sp-bar-chart-bar {
+      background: color-mix(
+        in oklab,
+        var(--sp-bar-chart-color) var(--sp-bar-chart-bar-mix-hover),
+        transparent
+      );
+    }
+
+    .sp-bar-chart-column:hover .sp-bar-chart-value {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sp-bar-chart-bar,
+    .sp-bar-chart-value {
+      transition: none;
+    }
+  }
+}

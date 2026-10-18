@@ -1,0 +1,68 @@
+<header class="docs-page-header">
+  <h1>Data Display</h1>
+  <p>Components for presenting data: tables, tabs, badges, avatars, and separators.</p>
+</header>
+
+<section class="docs-section" data-pin="data/tabs" data-pin-y="1676.6875">
+  <h2 class="docs-section-title">Tabs</h2>
+  <div class="docs-preview">
+    <div class="sp-tabs" dir="ltr" data-orientation="horizontal">
+      <div class="sp-tabs-list" role="tablist" aria-orientation="horizontal" data-variant="underline" data-orientation="horizontal">
+        <button class="sp-tabs-trigger" type="button" role="tab" aria-selected="true" aria-controls="underline-content-overview" id="underline-trigger-overview" data-state="active" data-orientation="horizontal" tabindex="0">Overview</button>
+        <button class="sp-tabs-trigger" type="button" role="tab" aria-selected="false" aria-controls="underline-content-accounts" id="underline-trigger-accounts" data-state="inactive" data-orientation="horizontal" tabindex="-1">Accounts</button>
+        <button class="sp-tabs-trigger" type="button" role="tab" aria-selected="false" aria-controls="underline-content-settings" id="underline-trigger-settings" data-state="inactive" data-orientation="horizontal" tabindex="-1">Settings</button>
+      </div>
+      <div class="sp-tabs-content" role="tabpanel" aria-labelledby="underline-trigger-overview" id="underline-content-overview" data-state="active" data-orientation="horizontal"><p class="docs-tabs-note">Overview content — summary dashboard with key metrics and recent activity.</p></div>
+      <div class="sp-tabs-content" role="tabpanel" aria-labelledby="underline-trigger-accounts" id="underline-content-accounts" data-state="inactive" data-orientation="horizontal" hidden></div>
+      <div class="sp-tabs-content" role="tabpanel" aria-labelledby="underline-trigger-settings" id="underline-content-settings" data-state="inactive" data-orientation="horizontal" hidden></div>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Tabs (pills)</h2>
+  <div class="docs-preview">
+    <div class="sp-tabs" dir="ltr" data-orientation="horizontal">
+      <div class="sp-tabs-list" role="tablist" aria-orientation="horizontal" data-variant="pills" data-orientation="horizontal">
+        <button class="sp-tabs-trigger" type="button" role="tab" aria-selected="false" aria-controls="pills-content-overview" id="pills-trigger-overview" data-state="inactive" data-orientation="horizontal" tabindex="-1">Overview</button>
+        <button class="sp-tabs-trigger" type="button" role="tab" aria-selected="true" aria-controls="pills-content-accounts" id="pills-trigger-accounts" data-state="active" data-orientation="horizontal" tabindex="0">Accounts</button>
+        <button class="sp-tabs-trigger" type="button" role="tab" aria-selected="false" aria-controls="pills-content-settings" id="pills-trigger-settings" data-state="inactive" data-orientation="horizontal" tabindex="-1" disabled data-disabled="">Settings</button>
+      </div>
+      <div class="sp-tabs-content" role="tabpanel" aria-labelledby="pills-trigger-overview" id="pills-content-overview" data-state="inactive" data-orientation="horizontal" hidden></div>
+      <div class="sp-tabs-content" role="tabpanel" aria-labelledby="pills-trigger-accounts" id="pills-content-accounts" data-state="active" data-orientation="horizontal"><p class="docs-tabs-note">Manage connected cloud provider accounts and API credentials.</p></div>
+      <div class="sp-tabs-content" role="tabpanel" aria-labelledby="pills-trigger-settings" id="pills-content-settings" data-state="inactive" data-orientation="horizontal" hidden></div>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Tabs (dashboard)</h2>
+  <div class="docs-preview">
+    <div class="sp-tabs" dir="ltr" data-orientation="horizontal">
+      <div class="sp-tabs-list" role="tablist" aria-orientation="horizontal" data-variant="dashboard" data-orientation="horizontal">
+        <button class="sp-tabs-trigger" type="button" role="tab" aria-selected="true" aria-controls="dashboard-content-overview" id="dashboard-trigger-overview" data-state="active" data-orientation="horizontal" tabindex="0">Overview</button>
+        <button class="sp-tabs-trigger" type="button" role="tab" aria-selected="false" aria-controls="dashboard-content-accounts" id="dashboard-trigger-accounts" data-state="inactive" data-orientation="horizontal" tabindex="-1">Accounts</button>
+        <button class="sp-tabs-trigger" type="button" role="tab" aria-selected="false" aria-controls="dashboard-content-settings" id="dashboard-trigger-settings" data-state="inactive" data-orientation="horizontal" tabindex="-1" disabled data-disabled="">Settings</button>
+      </div>
+      <div class="sp-tabs-content" role="tabpanel" aria-labelledby="dashboard-trigger-overview" id="dashboard-content-overview" data-state="active" data-orientation="horizontal"><p class="docs-tabs-note">Overview content — summary dashboard with key metrics and recent activity.</p></div>
+      <div class="sp-tabs-content" role="tabpanel" aria-labelledby="dashboard-trigger-accounts" id="dashboard-content-accounts" data-state="inactive" data-orientation="horizontal" hidden></div>
+      <div class="sp-tabs-content" role="tabpanel" aria-labelledby="dashboard-trigger-settings" id="dashboard-content-settings" data-state="inactive" data-orientation="horizontal" hidden></div>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Tabs (vertical)</h2>
+  <div class="docs-preview">
+    <div class="sp-tabs docs-tabs-vertical" dir="ltr" data-orientation="vertical">
+      <div class="sp-tabs-list" role="tablist" aria-orientation="vertical" data-variant="underline" data-orientation="vertical">
+        <button class="sp-tabs-trigger" type="button" role="tab" aria-selected="true" aria-controls="vertical-content-overview" id="vertical-trigger-overview" data-state="active" data-orientation="vertical" tabindex="0">Overview</button>
+        <button class="sp-tabs-trigger" type="button" role="tab" aria-selected="false" aria-controls="vertical-content-accounts" id="vertical-trigger-accounts" data-state="inactive" data-orientation="vertical" tabindex="-1">Accounts</button>
+        <button class="sp-tabs-trigger" type="button" role="tab" aria-selected="false" aria-controls="vertical-content-settings" id="vertical-trigger-settings" data-state="inactive" data-orientation="vertical" tabindex="-1">Settings</button>
+      </div>
+      <div class="sp-tabs-content" role="tabpanel" aria-labelledby="vertical-trigger-overview" id="vertical-content-overview" data-state="active" data-orientation="vertical"><p class="docs-tabs-note">Overview content — summary dashboard with key metrics and recent activity.</p></div>
+      <div class="sp-tabs-content" role="tabpanel" aria-labelledby="vertical-trigger-accounts" id="vertical-content-accounts" data-state="inactive" data-orientation="vertical" hidden></div>
+      <div class="sp-tabs-content" role="tabpanel" aria-labelledby="vertical-trigger-settings" id="vertical-content-settings" data-state="inactive" data-orientation="vertical" hidden></div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,48 @@
+@layer components {
+  .sp-sparkline {
+    --sp-sparkline-height: var(--space-8);
+    --sp-sparkline-gap: calc(var(--space-1) * 1.5);
+    --sp-sparkline-bar-radius: calc(var(--space-1) * 0.5);
+    --sp-sparkline-bar-bg: var(--success);
+    --sp-sparkline-bar-opacity: 0.6;
+    --sp-sparkline-bar-opacity-hover: 1;
+
+    display: flex;
+    gap: var(--sp-sparkline-gap);
+    width: 100%;
+    height: var(--sp-sparkline-height);
+  }
+
+  .sp-sparkline-bar {
+    flex: 1;
+    cursor: help;
+    background-color: var(--sp-sparkline-bar-bg);
+    border-radius: var(--sp-sparkline-bar-radius);
+    opacity: var(--sp-sparkline-bar-opacity);
+    transition: background-color var(--transition-fast);
+  }
+
+  .sp-sparkline-bar[data-status="warning"] {
+    --sp-sparkline-bar-bg: var(--warning);
+  }
+
+  .sp-sparkline-bar[data-status="error"] {
+    --sp-sparkline-bar-bg: var(--error);
+  }
+
+  .sp-sparkline-bar[data-status="neutral"] {
+    --sp-sparkline-bar-bg: var(--border);
+  }
+
+  @media (hover: hover) {
+    .sp-sparkline-bar:hover {
+      opacity: var(--sp-sparkline-bar-opacity-hover);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sp-sparkline-bar {
+      transition: none;
+    }
+  }
+}

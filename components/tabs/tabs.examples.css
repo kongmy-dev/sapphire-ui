@@ -1,0 +1,21 @@
+.docs-tabs-note {
+  padding: var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--muted-foreground);
+}
+
+.docs-tabs-vertical {
+  display: flex;
+  min-height: calc(var(--space-1) * 37.5);
+}
+
+.docs-tabs-vertical .sp-tabs-list {
+  flex-shrink: 0;
+  width: calc(var(--space-1) * 48);
+}
+
+.docs-tabs-vertical .sp-tabs-content {
+  flex: 1;
+  margin-top: 0;
+}

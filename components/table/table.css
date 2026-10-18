@@ -1,0 +1,78 @@
+@layer components {
+  .sp-table-container {
+    width: 100%;
+    overflow: auto;
+  }
+
+  .sp-table {
+    --sp-table-font-size: var(--text-sm);
+    --sp-table-border-width: var(--border-width);
+    --sp-table-border-color: var(--border);
+    --sp-table-head-fg: var(--muted-foreground);
+    --sp-table-head-font-size: calc(var(--text-base) * 0.6875);
+    --sp-table-head-font-weight: 600;
+    --sp-table-head-tracking: 0.08;
+    --sp-table-head-padding-block: var(--space-3);
+    --sp-table-head-padding-inline: var(--space-4);
+    --sp-table-cell-padding: var(--space-4);
+    --sp-table-row-bg-hover: color-mix(in oklab, var(--brand) 5%, transparent);
+    --sp-table-sticky-bg: var(--card);
+    --sp-table-sticky-z-index: 10;
+
+    width: 100%;
+    font-family: var(--font-sans);
+    font-size: var(--sp-table-font-size);
+    border-collapse: collapse;
+  }
+
+  .sp-table-header[data-sticky] {
+    position: sticky;
+    top: 0;
+    z-index: var(--sp-table-sticky-z-index);
+    background: var(--sp-table-sticky-bg);
+    box-shadow: 0 var(--sp-table-border-width) 0 0 var(--sp-table-border-color);
+  }
+
+  .sp-table-row {
+    border-bottom: var(--sp-table-border-width) solid
+      var(--sp-table-border-color);
+    transition:
+      color var(--transition-fast),
+      background-color var(--transition-fast),
+      border-color var(--transition-fast);
+  }
+
+  .sp-table-head {
+    padding: var(--sp-table-head-padding-block)
+      var(--sp-table-head-padding-inline);
+    font-family: var(--font-sans);
+    font-size: var(--sp-table-head-font-size);
+    font-weight: var(--sp-table-head-font-weight);
+    color: var(--sp-table-head-fg);
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: calc(
+      var(--sp-table-head-font-size) *
+      var(--sp-table-head-tracking)
+    );
+    white-space: nowrap;
+    border-bottom: var(--sp-table-border-width) solid
+      var(--sp-table-border-color);
+  }
+
+  .sp-table-cell {
+    padding: var(--sp-table-cell-padding);
+  }
+
+  @media (hover: hover) {
+    .sp-table-row:hover {
+      background-color: var(--sp-table-row-bg-hover);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sp-table-row {
+      transition: none;
+    }
+  }
+}

@@ -216,6 +216,7 @@ export const classRenames = {
   '.sapphire-toast': '.sp-toast',
   '.sapphire-toast-icon': '.sp-toast-icon',
   '.sapphire-toast-message': '.sp-toast-message',
+  '.sapphire-table': '.sp-table',
 } as const;
 
 export const variableRenames = {
@@ -232,7 +233,6 @@ export const unmappedClasses = {
   '.sapphire-banner': 'the banner, mapped when the extended family ports',
   '.sapphire-banner-dismiss':
     'the banner, mapped when the extended family ports',
-  '.sapphire-table': 'the table, mapped when the data views family ports',
   '.is-visible':
     'a toast opens with [data-state=open] or [data-open] on .sp-toast, an attribute no class stands for',
 } as const;
