@@ -98,7 +98,9 @@ editorial React (30%).
   and outlines take `--error-text`, `--success-text`, `--warning-text` and `--info-text` (the
   400 shades in dark), AA on the dark surfaces where the base colours measured 2.06–2.70:1; a
   filled status colour keeps its base token. This changes the dark pins of the
-  destructive-outline button, the badges and the dialog's danger trigger.
+  destructive-outline button, the badges, the dialog's danger trigger and the stat's change
+  figures; the alert's title and icon and the toast's stripe and icon take them too, replacing
+  v3's toast literals no token held. v3's `--toast-accent` becomes `--sp-toast-accent`.
 - **`--shadow-lg` mixes its colour with `color-mix()`,** within 6/255 per channel of v3's
   `rgba()`, an invisible difference; the dialog's parity check compares shadow geometry only.
 - **Field placeholders are 65% of the text colour,** not v3's 50%, which measured 3.05:1 on
@@ -112,6 +114,10 @@ editorial React (30%).
   (`.input--dark`, `.k-switch--sm`) map like any other class.
 - **A pinned specimen section renders at its v3 page y** (`data-pin-y`), not only at its
   fraction: Chromium antialiased the same radio differently at y 100 and at y 2619.
+- **v3's `rgba()` demo literals become `color-mix()` on a token,** even where the result lands
+  one level off (the segmented bar's dark remainder, re-pinned). An avatar group stacks earlier
+  avatars on top through `:nth-child` for its first eight; pagination never tints a disabled or
+  current link on hover, which v3 did for a disabled one.
 - **Where the two implementations disagree, the React look wins:** more apps see it.
 - **Registry v4 is served at `/r/v4/{name}.json`;** `/r/{name}.json` stays the v3 build until each
   app moves.
@@ -238,7 +244,9 @@ layout, masthead and section, site header and footer, mobile nav, theme toggle);
 shell, split, wizard, vertical tabs, proposal, passphrase gate); then cookie banner and icon mark.
 Analytics, SEO head and the theme provider draw nothing and get no CSS. Then the icon port:
 `sp-icon`, the components' own glyphs as inline SVG, and Lucide in the specimens, so every section
-left on its v3 pin for a glyph moves to its specimen through `bun run pin`.
+left on its v3 pin for a glyph moves to its specimen through `bun run pin`. The port settles the
+button glyph's size: v3's draws at 24px, because the global Material Symbols rule beats the
+button's 20px utility.
 
 **P4 — React components.** `components/<name>/<name>.tsx` for every component: React 19 (`ref` as
 a prop), `data-slot`, variants as `as const` tuples rendered as `data-*`, the `sp-*` class plus
