@@ -146,6 +146,14 @@
       }
     },
     {
+      "includes": ["components/**/*.examples.html"],
+      "linter": {
+        "rules": {
+          "a11y": { "noNoninteractiveTabindex": "off" }
+        }
+      }
+    },
+    {
       "includes": ["scripts/**", "tooling/**", "tests/**"],
       "linter": {
         "rules": {

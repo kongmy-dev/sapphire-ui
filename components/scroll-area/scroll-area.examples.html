@@ -7,8 +7,7 @@
   <h2 class="docs-section-title">Scroll Area</h2>
   <div class="docs-preview">
     <div class="sp-scroll-area docs-scroll-area" dir="ltr">
-      <!-- biome-ignore lint/a11y/noNoninteractiveTabindex: a scrollable region must take keyboard focus -->
-      <div class="sp-scroll-area-viewport" tabindex="0">
+      <div class="sp-scroll-area-viewport" role="region" aria-label="Scrollable list" tabindex="0">
         <div class="docs-scroll-fill">
           <div class="docs-scroll-list">
             <div class="docs-scroll-row">Item 1 — scroll to see more</div>
@@ -47,8 +46,7 @@
   <h2 class="docs-section-title">Scroll Area (scrollbars)</h2>
   <div class="docs-preview">
     <div class="sp-scroll-area docs-scroll-area" dir="ltr" style="--radix-scroll-area-corner-width: var(--space-2); --radix-scroll-area-corner-height: var(--space-2)">
-      <!-- biome-ignore lint/a11y/noNoninteractiveTabindex: a scrollable region must take keyboard focus -->
-      <div class="sp-scroll-area-viewport" tabindex="0">
+      <div class="sp-scroll-area-viewport" role="region" aria-label="Scrollable grid" tabindex="0">
         <div class="docs-scroll-fill">
           <div class="docs-scroll-list">
             <div class="docs-scroll-row docs-scroll-wide">Item 1 — a long row that overflows the viewport horizontally</div>
