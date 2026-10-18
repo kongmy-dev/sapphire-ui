@@ -34,9 +34,11 @@ describe('token sheet', () => {
     ]);
   });
 
-  it('treats every @theme option as one scope', () => {
+  it('reads a @theme block as the base scope and keeps its options', () => {
     const found = tokenSheet('@theme reference {\n  --a: var(--b);\n}\n');
-    expect(found.map((d) => d.selectors)).toEqual([['@theme']]);
+    expect(found.map((d) => d.selectors)).toEqual([
+      ['@theme', '@theme:reference'],
+    ]);
   });
 
   it('applies the dark scope over :root in dark only', () => {

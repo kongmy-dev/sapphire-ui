@@ -74,7 +74,10 @@ const normaliseSelector = (selector: string) =>
 
 function selectorsOf(prelude: string): string[] {
   const text = prelude.trim();
-  if (text.startsWith('@theme')) return ['@theme'];
+  if (text.startsWith('@theme')) {
+    const options = text.split(/\s+/).slice(1);
+    return ['@theme', ...options.map((option) => `@theme:${option}`)];
+  }
   if (text.startsWith('@')) return [];
   return text.split(',').map(normaliseSelector);
 }
@@ -154,6 +157,19 @@ function closingParen(text: string, open: number): number {
     if (depth === 0) return index;
   }
   return text.length;
+}
+
+export function lightDarkArguments(value: string): string[][] {
+  const calls: string[][] = [];
+  let start = value.indexOf('light-dark(');
+  while (start >= 0) {
+    const open = start + 'light-dark'.length;
+    const close = closingParen(value, open);
+    const args = splitTopLevel(value.slice(open + 1, close), ',');
+    calls.push(args.map((arg) => arg.trim()));
+    start = value.indexOf('light-dark(', close);
+  }
+  return calls;
 }
 
 function pickLightDark(value: string, scheme: Scheme): string {

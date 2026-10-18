@@ -53,6 +53,9 @@ jobs:
       - name: Dependency gate
         run: bun run dep-check
 
+      - name: Token gate
+        run: bun run token-check
+
       - name: Freeze gate
         run: bun run freeze-check
 

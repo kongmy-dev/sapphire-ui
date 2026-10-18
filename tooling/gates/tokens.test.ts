@@ -248,3 +248,35 @@ describe('token gate: a gate that checked nothing fails', () => {
     });
   });
 });
+
+describe('token gate: the printed failure', () => {
+  it('names file:line, the rule, the problem and the fix for each rule, and reads DESIGN.md as a table', () => {
+    const tokens = [
+      ':root,',
+      '[data-theme="light"],',
+      '[data-theme="dark"],',
+      '.dark {',
+      '  --card: light-dark(#fff, #112240);',
+      '}',
+      '',
+    ].join('\n');
+    const design = '| Token | Light | Dark |\n| `--card` | `#fff` | `#000` |\n';
+    const report = renderReport(
+      tokenGate([
+        css('css/tokens.css', tokens),
+        css('css/tailwind.css', '@theme inline {\n}\n'),
+        css('DESIGN.md', design),
+      ]),
+    );
+    expect(report.text).toBe(
+      [
+        'token gate: 3 files checked',
+        '  css/tokens.css:5  P-5  --card has no mapping in css/tailwind.css',
+        '    Map it in an @theme inline or @theme reference block of css/tailwind.css, such as --color-card: var(--card).',
+        '  DESIGN.md:2  P-5  --card is "#000" in dark here and "#112240" in css/tokens.css',
+        '    Write #112240 in the dark column, or change css/tokens.css.',
+        'token gate: FAIL',
+      ].join('\n'),
+    );
+  });
+});

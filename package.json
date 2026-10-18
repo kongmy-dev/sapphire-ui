@@ -493,7 +493,7 @@
     "scorecard": "bun tooling/scorecard/run.ts",
     "test:visual": "bun tooling/visual/test.ts",
     "pin": "bun tooling/visual/pin.ts",
-    "gate": "bun run lint && bun run typecheck && bun run knip && bun run comment-check && bun run size-check && bun run dep-check && bun run freeze-check && bun run test && bun run check:registry",
+    "gate": "bun run lint && bun run typecheck && bun run knip && bun run comment-check && bun run size-check && bun run dep-check && bun run token-check && bun run freeze-check && bun run test && bun run check:registry",
     "deploy:docs": "bun run build:docs && wrangler deploy"
   },
   "peerDependencies": {

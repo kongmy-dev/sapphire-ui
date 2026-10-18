@@ -3,6 +3,8 @@ import { locate, scanCss } from '../source/css';
 import { parseSource } from '../source/parse';
 import { finish, type GateResult, type Violation } from './report';
 import { type FileText, loadFiles } from './scope';
+import { TOKENS_FILE, tokenFileViolations } from './tokens-css';
+import { DESIGN_FILE, designViolations } from './tokens-design';
 
 const TOKEN_FOLDERS = [
   'css/',
@@ -12,7 +14,7 @@ const TOKEN_FOLDERS = [
   'site/',
 ] as const;
 const TOKEN_EXTENSIONS = ['.css', '.ts', '.tsx'] as const;
-const TOKENS_FILE = 'css/tokens.css';
+const GATE_EXTENSIONS = [...TOKEN_EXTENSIONS, '.md'] as const;
 const RUNTIME_VARIABLE_PREFIXES = ['--radix-'] as const;
 const ANCHOR_ATTRIBUTES = ['href', 'to'] as const;
 
@@ -252,15 +254,27 @@ export function tokenViolations(files: readonly FileText[]): Violation[] {
   ]);
 }
 
+function designTableViolations(files: readonly FileText[]): Violation[] {
+  const tokens = files.find((file) => file.name === TOKENS_FILE);
+  const design = files.find((file) => file.name === DESIGN_FILE);
+  return tokens ? designViolations(tokens, design) : [];
+}
+
 export const tokenGate = (files: readonly FileText[]): GateResult => ({
   name: 'token',
   files: files.length,
-  violations: tokenViolations(files),
+  violations: [
+    ...tokenViolations(files.filter((file) => file.name !== DESIGN_FILE)),
+    ...tokenFileViolations(files),
+    ...designTableViolations(files),
+  ],
 });
 
 if (import.meta.main) {
-  const files = loadFiles(process.cwd(), [], TOKEN_EXTENSIONS).filter((file) =>
-    TOKEN_FOLDERS.some((folder) => file.name.startsWith(folder)),
+  const files = loadFiles(process.cwd(), [], GATE_EXTENSIONS).filter(
+    (file) =>
+      file.name === DESIGN_FILE ||
+      TOKEN_FOLDERS.some((folder) => file.name.startsWith(folder)),
   );
   finish(tokenGate(files));
 }
