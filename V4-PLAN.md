@@ -123,6 +123,14 @@ editorial React (30%).
   bars, not SVG, and stays one, its colour per bar through `data-status`. Two v3 gaps carry, to
   revisit in P4: the tab panel takes focus without a ring, and the bar chart shows its values on
   pointer hover only.
+- **The banner's base is neutral** (`--background`, `--foreground`, `--border`); each status
+  variant reads its `-bg`, `-border` and `-text` tokens. v3's `accent` variant is `brand`, a 10%
+  and 35% tint of `--brand` with `--brand-text`, and the dismiss hover is a 25% mix of
+  `--field-dark`. The code block is light by default and dark through `data-variant=dark`.
+- **Disabled toggles take no hover,** which v3 gave them. The accordion opens and closes with a
+  height animation that reduced motion drops; v3's docs had none. The breadcrumb gains an
+  ellipsis part and its links take the base focus ring. The scroll area's viewport is a labelled
+  `role=region` with `tabindex=0`, and the specimens' lint allows that tabindex.
 - **Where the two implementations disagree, the React look wins:** more apps see it.
 - **Registry v4 is served at `/r/v4/{name}.json`;** `/r/{name}.json` stays the v3 build until each
   app moves.
