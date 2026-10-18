@@ -2,6 +2,8 @@
 @import "./css/fonts.css";
 @import "./css/tokens.css";
 @import "./css/base.css";
+@import "./components/avatar/avatar.css";
+@import "./components/avatar-group/avatar-group.css";
 @import "./components/badge/badge.css";
 @import "./components/button/button.css";
 @import "./components/card/card.css";
@@ -14,5 +16,6 @@
 @import "./components/radio-group/radio-group.css";
 @import "./components/range-slider/range-slider.css";
 @import "./components/select/select.css";
+@import "./components/separator/separator.css";
 @import "./components/switch/switch.css";
 @import "./components/textarea/textarea.css";

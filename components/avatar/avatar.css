@@ -1,0 +1,61 @@
+@layer components {
+  .sp-avatar {
+    --sp-avatar-size: var(--space-8);
+    --sp-avatar-font-size: var(--text-xs);
+    --sp-avatar-line-height: var(--space-4);
+    --sp-avatar-font-weight: 600;
+    --sp-avatar-bg: var(--background);
+    --sp-avatar-fg: var(--foreground-strong);
+    --sp-avatar-border-width: var(--border-width);
+    --sp-avatar-border-color: var(--border);
+
+    position: relative;
+    display: flex;
+    flex-shrink: 0;
+    width: var(--sp-avatar-size);
+    height: var(--sp-avatar-size);
+    overflow: hidden;
+    font-family: var(--font-sans);
+    font-size: var(--sp-avatar-font-size);
+    line-height: var(--sp-avatar-line-height);
+    border: var(--sp-avatar-border-width) solid var(--sp-avatar-border-color);
+    border-radius: var(--radius-pill);
+  }
+
+  .sp-avatar[data-size="xs"] {
+    --sp-avatar-size: calc(var(--space-1) * 4.5);
+    --sp-avatar-font-size: calc(var(--text-base) * 0.5);
+    --sp-avatar-line-height: var(--leading-normal);
+  }
+
+  .sp-avatar[data-size="sm"] {
+    --sp-avatar-size: var(--space-6);
+    --sp-avatar-font-size: calc(var(--text-base) * 0.625);
+    --sp-avatar-line-height: var(--leading-normal);
+  }
+
+  .sp-avatar[data-size="lg"] {
+    --sp-avatar-size: var(--space-12);
+    --sp-avatar-font-size: var(--text-sm);
+    --sp-avatar-line-height: var(--space-5);
+  }
+
+  .sp-avatar-image {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  .sp-avatar-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-weight: var(--sp-avatar-font-weight);
+    color: var(--sp-avatar-fg);
+    text-transform: uppercase;
+    background: var(--sp-avatar-bg);
+  }
+}

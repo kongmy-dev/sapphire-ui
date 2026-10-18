@@ -1,0 +1,19 @@
+.docs-separator-demo {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--foreground);
+}
+
+.docs-separator {
+  margin: var(--space-4) 0;
+}
+
+.docs-separator-row {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  height: var(--space-5);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--foreground);
+}

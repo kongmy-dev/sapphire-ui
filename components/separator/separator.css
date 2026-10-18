@@ -1,0 +1,18 @@
+@layer components {
+  .sp-separator {
+    --sp-separator-color: var(--border);
+    --sp-separator-thickness: var(--border-width);
+
+    flex-shrink: 0;
+    width: 100%;
+    height: var(--sp-separator-thickness);
+    margin: 0;
+    background: var(--sp-separator-color);
+    border: 0;
+  }
+
+  .sp-separator[data-orientation="vertical"] {
+    width: var(--sp-separator-thickness);
+    height: 100%;
+  }
+}
