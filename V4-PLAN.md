@@ -1,8 +1,7 @@
 # Sapphire UI v4 — plan
 
 **Status:** decided. D1: the CSS contract comes first. D2: npm to use, registry to own. D3: Lucide.
-D4: every component is ported. Numbers measured at `bc2e116`. This file replaces `MIGRATION-PLAN.md`
-and `REGISTRY-PLAN.md` and is deleted when 4.0.0 ships.
+D4: every component is ported. Numbers measured at `bc2e116`. This file is deleted when 4.0.0 ships.
 
 ## 1. Where it stands
 

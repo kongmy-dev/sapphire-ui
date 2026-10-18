@@ -5,7 +5,7 @@
 // only metadata here.
 //
 // Editorial-only components (MarginNote, ProposalLayout, SEOHead, …) are NOT
-// listed: they stay npm-only. See REGISTRY-PLAN.md.
+// listed: they stay npm-only.
 
 export interface RegistryItemConfig {
   /** kebab-case registry name (also the served file: /r/<name>.json). */

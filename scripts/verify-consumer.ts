@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 /**
- * Standing consumer test (REGISTRY-PLAN B.3). Materializes the built registry
+ * Standing consumer test. Materializes the built registry
  * into tests/registry-consumer/app (the `@/` root) exactly as `shadcn add`
  * would, then proves the vendored output is CONSUMABLE:
  *

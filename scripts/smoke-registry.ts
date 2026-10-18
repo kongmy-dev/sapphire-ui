@@ -1,28 +1,4 @@
 #!/usr/bin/env bun
-/**
- * True-CLI registry smoke test (REGISTRY-PLAN R.4 / acceptance criterion 1).
- *
- * Unlike verify-consumer.ts (which materializes item files itself), this drives
- * the REAL `shadcn` CLI end-to-end in a scratch app — the only test that
- * exercises the CLI's registry + dependency resolution. It exists because bare
- * registryDependency names passed every local gate while breaking every real
- * `shadcn add` (the CLI resolves bare names against ui.shadcn.com).
- *
- * Modes:
- *   default — builds the registry to a temp dir, serves it on localhost, and
- *             adds from there (pre-deploy gate, CI).
- *   SAPPHIRE_REGISTRY_URL=<url> — adds from a deployed registry instead, e.g.
- *             SAPPHIRE_REGISTRY_URL='https://design.kongmy.dev/r/{name}.json'
- *             (post-deploy verification).
- *
- * NOT named REGISTRY_URL: the shadcn CLI reads that env var as its DEFAULT
- * registry base (replacing ui.shadcn.com), which reroutes internal fetches
- * like colors/<baseColor>.json to our registry and fails the add. It is also
- * scrubbed from the CLI's env below for the same reason.
- *
- * Adds theme + button + sidebar (the deepest registryDependencies chain) and
- * asserts every expected file, including transitive deps, was vendored.
- */
 import {
   existsSync,
   mkdirSync,
@@ -32,16 +8,37 @@ import {
 } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import {
+  registryItemHeaderProblems,
+  shadcnCliEnv,
+} from './registry-smoke-checks';
+
+type Registry = {
+  readonly urlTemplate: string;
+  readonly base: string;
+  readonly isDeployed: boolean;
+  readonly stop: () => void;
+};
+
+const cliTimeoutMs = 180_000;
+const itemsToAdd = ['@sapphire/theme', '@sapphire/button', '@sapphire/sidebar'];
+const expectedVendoredFiles = [
+  'src/styles/sapphire-theme.css',
+  'src/components/ui/button.tsx',
+  'src/components/ui/sidebar.tsx',
+  'src/components/ui/input.tsx',
+  'src/components/ui/separator.tsx',
+  'src/components/ui/sheet.tsx',
+  'src/components/ui/skeleton.tsx',
+  'src/components/ui/tooltip.tsx',
+];
 
 function fail(msg: string): never {
   console.error(`smoke: FAIL — ${msg}`);
   process.exit(1);
 }
 
-// The server must be a SEPARATE process: this script drives the shadcn CLI via
-// Bun.spawnSync, which blocks the event loop — an in-process Bun.serve could
-// never answer the CLI's registry fetches (parent and child would deadlock).
-const SERVER_SOURCE = `
+const childProcessServerSource = `
 const dir = process.argv[2];
 const server = Bun.serve({
   port: Number(process.argv[3]),
@@ -59,12 +56,23 @@ const server = Bun.serve({
 console.log('ready on ' + server.port);
 `;
 
-/** Build the registry to a temp dir and serve it at http://127.0.0.1:<port>/r/. */
-async function serveLocalRegistry(): Promise<{
-  urlTemplate: string;
-  base: string;
-  stop: () => void;
-}> {
+async function isServing(base: string): Promise<boolean> {
+  try {
+    return (await fetch(`${base}/r/registry.json`)).ok;
+  } catch {
+    return false;
+  }
+}
+
+async function waitUntilServing(base: string): Promise<boolean> {
+  for (let attempt = 0; attempt < 50; attempt++) {
+    if (await isServing(base)) return true;
+    await Bun.sleep(100);
+  }
+  return false;
+}
+
+async function serveLocalRegistry(): Promise<Registry> {
   const out = mkdtempSync(join(tmpdir(), 'sapphire-smoke-registry-'));
   const port = 40000 + Math.floor(Math.random() * 20000);
   const base = `http://127.0.0.1:${port}`;
@@ -80,21 +88,12 @@ async function serveLocalRegistry(): Promise<{
   }
 
   const serverFile = join(out, '_serve.ts');
-  writeFileSync(serverFile, SERVER_SOURCE);
+  writeFileSync(serverFile, childProcessServerSource);
   const server = Bun.spawn(['bun', serverFile, out, String(port)], {
     stdout: 'ignore',
     stderr: 'ignore',
   });
-  // wait until the child answers before handing the URL to the CLI
-  let ready = false;
-  for (let i = 0; i < 50 && !ready; i++) {
-    try {
-      ready = (await fetch(`${base}/r/registry.json`)).ok;
-    } catch {
-      await Bun.sleep(100);
-    }
-  }
-  if (!ready) {
+  if (!(await waitUntilServing(base))) {
     server.kill();
     fail(`local registry server did not become ready on ${base}`);
   }
@@ -102,26 +101,27 @@ async function serveLocalRegistry(): Promise<{
   return {
     urlTemplate: `${base}/r/{name}.json`,
     base,
+    isDeployed: false,
     stop: () => server.kill(),
   };
 }
 
-/** Minimal Tailwind v4 + TS app, set up exactly as the README instructs. */
-function scaffoldConsumer(urlTemplate: string): string {
-  const app = mkdtempSync(join(tmpdir(), 'sapphire-smoke-app-'));
-  mkdirSync(join(app, 'src'));
-  // Synchronous on purpose: Bun.write is async, and the spawnSync calls below
-  // block the event loop — an unawaited write may not be on disk when the
-  // shadcn CLI reads it (no components.json → interactive init → silent no-op).
-  const write = (name: string, data: unknown) =>
+function deployedRegistry(urlTemplate: string): Registry {
+  return {
+    urlTemplate,
+    base: urlTemplate.replace(/\/r\/\{name\}\.json$/, ''),
+    isDeployed: true,
+    stop: () => {},
+  };
+}
+
+function writeConsumerFiles(app: string, urlTemplate: string): void {
+  const writeBeforeSpawn = (name: string, data: unknown) =>
     writeFileSync(
       join(app, name),
       typeof data === 'string' ? data : `${JSON.stringify(data, null, 2)}\n`,
     );
-  // A real Tailwind v4 + Vite app (the README's stated requirement): without
-  // Tailwind/a framework present, the shadcn CLI's preflight prompts — which
-  // hangs or no-ops the add instead of vendoring files.
-  write('package.json', {
+  writeBeforeSpawn('package.json', {
     name: 'sapphire-smoke-consumer',
     private: true,
     type: 'module',
@@ -138,7 +138,7 @@ function scaffoldConsumer(urlTemplate: string): string {
       '@types/react-dom': '^19.2.0',
     },
   });
-  write(
+  writeBeforeSpawn(
     'vite.config.ts',
     [
       "import tailwindcss from '@tailwindcss/vite';",
@@ -147,7 +147,7 @@ function scaffoldConsumer(urlTemplate: string): string {
       '',
     ].join('\n'),
   );
-  write('tsconfig.json', {
+  writeBeforeSpawn('tsconfig.json', {
     compilerOptions: {
       target: 'ES2022',
       module: 'ESNext',
@@ -161,8 +161,8 @@ function scaffoldConsumer(urlTemplate: string): string {
     },
     include: ['src'],
   });
-  write('src/index.css', "@import 'tailwindcss';\n");
-  write('components.json', {
+  writeBeforeSpawn('src/index.css', "@import 'tailwindcss';\n");
+  writeBeforeSpawn('components.json', {
     $schema: 'https://ui.shadcn.com/schema.json',
     style: 'new-york',
     rsc: false,
@@ -182,6 +182,12 @@ function scaffoldConsumer(urlTemplate: string): string {
     },
     registries: { '@sapphire': urlTemplate },
   });
+}
+
+function scaffoldTailwindViteConsumer(urlTemplate: string): string {
+  const app = mkdtempSync(join(tmpdir(), 'sapphire-smoke-app-'));
+  mkdirSync(join(app, 'src'));
+  writeConsumerFiles(app, urlTemplate);
   const install = Bun.spawnSync(['bun', 'install', '--silent'], {
     cwd: app,
     stdout: 'pipe',
@@ -194,57 +200,43 @@ function scaffoldConsumer(urlTemplate: string): string {
   return app;
 }
 
-async function main() {
-  const { urlTemplate, base, stop } = process.env.SAPPHIRE_REGISTRY_URL
-    ? {
-        urlTemplate: process.env.SAPPHIRE_REGISTRY_URL,
-        base: process.env.SAPPHIRE_REGISTRY_URL.replace(
-          /\/r\/\{name\}\.json$/,
-          '',
-        ),
-        stop: () => {},
-      }
-    : await serveLocalRegistry();
-
-  const app = scaffoldConsumer(urlTemplate);
-  const items = ['@sapphire/theme', '@sapphire/button', '@sapphire/sidebar'];
-  console.log(`smoke: bunx shadcn add ${items.join(' ')}`);
-  // stdin ignored + hard timeout: an unexpected CLI prompt must fail loudly
-  // (with captured output), never hang the gate.
-  const cliEnv = { ...process.env };
-  delete cliEnv.REGISTRY_URL; // shadcn's own default-registry override
+function addItems(app: string): string {
+  console.log(`smoke: bunx shadcn add ${itemsToAdd.join(' ')}`);
   const add = Bun.spawnSync(
-    ['bunx', '--bun', 'shadcn@latest', 'add', ...items, '--yes', '--overwrite'],
+    [
+      'bunx',
+      '--bun',
+      'shadcn@latest',
+      'add',
+      ...itemsToAdd,
+      '--yes',
+      '--overwrite',
+    ],
     {
       cwd: app,
-      env: cliEnv,
+      env: shadcnCliEnv(process.env),
       stdin: 'ignore',
       stdout: 'pipe',
       stderr: 'pipe',
-      timeout: 180_000,
+      timeout: cliTimeoutMs,
     },
   );
+  const output = `${add.stdout.toString()}\n${add.stderr.toString()}`;
   if (add.exitCode !== 0) {
-    console.error(add.stdout.toString());
-    console.error(add.stderr.toString());
-    fail('shadcn add failed (or timed out after 180s)');
+    console.error(output);
+    fail(
+      `shadcn add failed, timed out after ${cliTimeoutMs} ms, or stopped at a prompt it could not answer`,
+    );
   }
+  return output;
+}
 
-  // theme + button + sidebar, plus sidebar's transitive registryDependencies.
-  const expected = [
-    'src/styles/sapphire-theme.css',
-    'src/components/ui/button.tsx',
-    'src/components/ui/sidebar.tsx',
-    'src/components/ui/input.tsx',
-    'src/components/ui/separator.tsx',
-    'src/components/ui/sheet.tsx',
-    'src/components/ui/skeleton.tsx',
-    'src/components/ui/tooltip.tsx',
-  ];
-  const missing = expected.filter((f) => !existsSync(join(app, f)));
+function assertVendored(app: string, cliOutput: string): void {
+  const missing = expectedVendoredFiles.filter(
+    (f) => !existsSync(join(app, f)),
+  );
   if (missing.length > 0) {
-    console.error(add.stdout.toString());
-    console.error(add.stderr.toString());
+    console.error(cliOutput);
     const tree = Bun.spawnSync(
       ['find', app, '-type', 'f', '-not', '-path', '*/node_modules/*'],
       { stdout: 'pipe' },
@@ -252,8 +244,6 @@ async function main() {
     console.error(`app tree:\n${tree.stdout.toString()}`);
     fail(`missing vendored files: ${missing.join(', ')}`);
   }
-
-  // Vendored source must be Sapphire's, not a same-named shadcn item's.
   const button = readFileSync(
     join(app, 'src/components/ui/button.tsx'),
     'utf8',
@@ -261,22 +251,37 @@ async function main() {
   if (!button.includes('rounded-btn')) {
     fail('vendored button.tsx is not the Sapphire item (no rounded-btn)');
   }
+}
 
-  // Missing /r/* paths must 404, never 200 as HTML: the CLI probes
-  // speculative URLs (e.g. {registry}/colors/<baseColor>.json) on every fresh
-  // install and dies on HTML with "Failed to parse JSON" — an SPA fallback
-  // here breaks `shadcn add` for every new consumer app. Served by
-  // worker/registry-404.ts in production.
-  const bogus = await fetch(`${base}/r/definitely-not-an-item.json`);
-  if (bogus.ok && (bogus.headers.get('content-type') ?? '').includes('html')) {
+async function assertRegistryResponses(registry: Registry): Promise<void> {
+  const missing = await fetch(`${registry.base}/r/definitely-not-an-item.json`);
+  if (missing.status !== 404) {
     fail(
-      'missing /r/* items return the SPA index.html instead of 404 — this breaks shadcn add in fresh apps (registry-404 worker not active?)',
+      `a missing /r/* item answered ${missing.status} instead of 404: the shadcn CLI probes speculative URLs such as colors/<baseColor>.json and dies parsing an HTML fallback (is worker/registry-404.ts active?)`,
     );
   }
-  stop();
+  if (!registry.isDeployed) return;
+  const item = await fetch(`${registry.base}/r/button.json`);
+  const problems = registryItemHeaderProblems(item.headers);
+  if (problems.length > 0) {
+    fail(`/r/button.json headers:\n  ${problems.join('\n  ')}`);
+  }
+}
+
+async function main() {
+  const deployedUrl = process.env.SAPPHIRE_REGISTRY_URL;
+  const registry = deployedUrl
+    ? deployedRegistry(deployedUrl)
+    : await serveLocalRegistry();
+
+  const app = scaffoldTailwindViteConsumer(registry.urlTemplate);
+  const cliOutput = addItems(app);
+  assertVendored(app, cliOutput);
+  await assertRegistryResponses(registry);
+  registry.stop();
 
   console.log(
-    `smoke: OK — real shadcn add vendored ${expected.length} files (incl. transitive deps) from ${base}`,
+    `smoke: OK — real shadcn add vendored ${expectedVendoredFiles.length} files (incl. transitive deps) from ${registry.base}`,
   );
   process.exit(0);
 }

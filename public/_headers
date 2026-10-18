@@ -39,12 +39,7 @@
 /*.json
   Cache-Control: public, max-age=3600
 
-# Registry items (consumed by `shadcn add`) — permissive CORS + short cache so
-# vendored components pick up updates. Must be the LAST Cache-Control rule:
-# matching rules COMBINE headers (`/*` and `/*.json` also match /r/*.json), so
-# detach the earlier values first. Missing /r/* paths 404 via
-# worker/registry-404.ts (the SPA fallback breaks the shadcn CLI); verified by
-# `bun run smoke:registry`.
+# Registry items, checked by `bun run smoke:registry`
 /r/*
   Access-Control-Allow-Origin: *
   ! Cache-Control

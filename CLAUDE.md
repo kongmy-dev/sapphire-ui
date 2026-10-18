@@ -11,7 +11,7 @@ Sapphire UI is the official design system for **KONGMY Digital Solutions** (`kon
 
 Why: product apps must diverge (client theming, POS touch UIs) — vendored source makes divergence an edit, not a fork; a public registry also kills PAT friction. Only the **product subset** (~15 components + admin blocks adapted from an upstream shadcn admin reference, restyled onto tokens) gets registry-shaped; editorial components stay npm-only. Existing npm consumers are never broken.
 
-**Plan + task list: `REGISTRY-PLAN.md`.** Hard boundary: sapphire stays backend-agnostic — sapphire never imports from consuming apps; contract-aware blocks live in the consuming template, composed from sapphire primitives. Registry items must be self-contained (shadcn conventions) and read tokens only via CSS custom properties.
+**Plan: `V4-PLAN.md`.** Hard boundary: sapphire stays backend-agnostic — sapphire never imports from consuming apps; contract-aware blocks live in the consuming template, composed from sapphire primitives. Registry items must be self-contained (shadcn conventions) and read tokens only via CSS custom properties.
 
 ---
 
