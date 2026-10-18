@@ -62,4 +62,10 @@
       color: var(--sp-toc-link-fg-hover);
     }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sp-toc-link {
+      transition: none;
+    }
+  }
 }
