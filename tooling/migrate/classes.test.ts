@@ -2,7 +2,12 @@ import { describe, expect, it } from 'bun:test';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { componentStylesheets } from '../css/stylesheet';
-import { classRenames, propValueRenames, unmappedClasses } from './map';
+import {
+  classRenames,
+  propValueRenames,
+  unmappedClasses,
+  variableRenames,
+} from './map';
 
 const ROOT = join(import.meta.dir, '../..');
 const read = (path: string) => readFileSync(join(ROOT, path), 'utf8');
@@ -147,6 +152,18 @@ describe('the prop value renames', () => {
         }),
       ),
     );
+    expect(problems).toEqual([]);
+  });
+});
+
+describe('the variable renames', () => {
+  it('rename a variable v3 reads to one a component declares', () => {
+    const problems = Object.entries(variableRenames).flatMap(([from, to]) => [
+      ...(v3Css.includes(`var(${from}`) ? [] : [`v3 never reads ${from}`]),
+      ...(Object.values(sheets).some((sheet) => sheet.includes(`${to}:`))
+        ? []
+        : [`no component declares ${to}`]),
+    ]);
     expect(problems).toEqual([]);
   });
 });

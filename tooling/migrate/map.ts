@@ -199,6 +199,11 @@ export const classRenames = {
   '.k-slider-thumb': '.sp-range-slider-thumb',
 } as const;
 
+export const variableRenames = {
+  '--switch-active': '--sp-switch-active',
+  '--switch-inactive': '--sp-switch-inactive',
+} as const;
+
 export const unmappedClasses = {
   '.modal-mask':
     'the proposal shell modal, mapped when the proposal shell ports',
