@@ -1,0 +1,42 @@
+<header class="docs-page-header">
+  <h1>Interactive Overlays</h1>
+  <p>Modal dialogs, toast notifications, sheets, tooltips, and popovers.</p>
+</header>
+
+<section class="docs-section" data-pin="interactive/dialog">
+  <h2 class="docs-section-title">Dialog</h2>
+  <p class="docs-section-description">Accessible modal built on Radix Dialog. Includes focus trap, Escape close, and overlay click dismiss. Use the compound sub-components for custom layouts, or <code>ConfirmDialog</code> for quick confirmations.</p>
+  <div class="docs-preview">
+    <div class="docs-flex">
+      <button class="sp-button" type="button">Open Dialog</button>
+      <button class="sp-button" type="button" data-variant="outline">Confirm Dialog</button>
+      <button class="sp-button" type="button" data-variant="outline" style="--sp-button-fg: var(--error)">Danger Dialog</button>
+    </div>
+    <dialog class="sp-dialog" id="confirm-dialog" aria-labelledby="confirm-dialog-title" style="--sp-dialog-max-width: calc(var(--space-1) * 105)">
+      <div class="sp-dialog-header">
+        <h2 class="sp-dialog-title" id="confirm-dialog-title">Confirm Action</h2>
+      </div>
+      <div class="sp-dialog-body">
+        <p class="sp-dialog-message">Are you sure you want to sync all cloud accounts? This may take a few minutes.</p>
+      </div>
+      <div class="sp-dialog-footer">
+        <button class="sp-dialog-action" type="button">Cancel</button>
+        <button class="sp-dialog-action" type="button" data-variant="primary">Sync Now</button>
+      </div>
+      <button class="sp-dialog-close" type="button" aria-label="Close"></button>
+    </dialog>
+    <dialog class="sp-dialog" id="danger-dialog" aria-labelledby="danger-dialog-title" style="--sp-dialog-max-width: calc(var(--space-1) * 105)">
+      <div class="sp-dialog-header">
+        <h2 class="sp-dialog-title" id="danger-dialog-title">Delete Account</h2>
+      </div>
+      <div class="sp-dialog-body">
+        <p class="sp-dialog-message">This action is permanent and cannot be undone. All data will be lost.</p>
+      </div>
+      <div class="sp-dialog-footer">
+        <button class="sp-dialog-action" type="button">Cancel</button>
+        <button class="sp-dialog-action" type="button" data-variant="destructive">Delete</button>
+      </div>
+      <button class="sp-dialog-close" type="button" aria-label="Close"></button>
+    </dialog>
+  </div>
+</section>

@@ -1,0 +1,281 @@
+@layer components {
+  .sp-dialog,
+  .sp-dialog-overlay {
+    --sp-dialog-overlay-bg: color-mix(
+      in oklab,
+      var(--primary) 85%,
+      transparent
+    );
+    --sp-dialog-overlay-blur: var(--space-1);
+  }
+
+  .sp-dialog-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: var(--sp-dialog-overlay-bg);
+    backdrop-filter: blur(var(--sp-dialog-overlay-blur));
+  }
+
+  .sp-dialog {
+    --sp-dialog-width: calc(100vw - var(--space-8));
+    --sp-dialog-max-width: calc(var(--space-1) * 200);
+    --sp-dialog-max-height: 85vh;
+    --sp-dialog-radius: var(--radius-md);
+    --sp-dialog-bg: var(--card);
+    --sp-dialog-fg: var(--foreground);
+    --sp-dialog-shadow: var(--shadow-lg);
+    --sp-dialog-padding-inline: var(--space-6);
+
+    position: fixed;
+    inset: 50% auto auto 50%;
+    z-index: 1001;
+    flex-direction: column;
+    width: var(--sp-dialog-width);
+    max-width: var(--sp-dialog-max-width);
+    height: fit-content;
+    max-height: var(--sp-dialog-max-height);
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    color: var(--sp-dialog-fg);
+    background: var(--sp-dialog-bg);
+    border: 0;
+    border-radius: var(--sp-dialog-radius);
+    outline: none;
+    box-shadow: var(--sp-dialog-shadow);
+    translate: -50% -50%;
+  }
+
+  .sp-dialog:not(dialog:not([open])) {
+    display: flex;
+  }
+
+  dialog.sp-dialog {
+    transition:
+      display var(--transition-fast) allow-discrete,
+      overlay var(--transition-fast) allow-discrete;
+    animation: sp-dialog-out var(--transition-fast);
+  }
+
+  dialog.sp-dialog[open] {
+    animation: sp-dialog-in var(--transition-base);
+  }
+
+  dialog.sp-dialog::backdrop {
+    background: var(--sp-dialog-overlay-bg);
+    backdrop-filter: blur(var(--sp-dialog-overlay-blur));
+    animation: sp-dialog-fade-out var(--transition-fast);
+  }
+
+  dialog.sp-dialog[open]::backdrop {
+    animation: sp-dialog-fade-in var(--transition-base);
+  }
+
+  .sp-dialog[data-state="open"] {
+    animation: sp-dialog-in var(--transition-base);
+  }
+
+  .sp-dialog[data-state="closed"] {
+    animation: sp-dialog-out var(--transition-fast);
+  }
+
+  .sp-dialog-overlay[data-state="open"] {
+    animation: sp-dialog-fade-in var(--transition-base);
+  }
+
+  .sp-dialog-overlay[data-state="closed"] {
+    animation: sp-dialog-fade-out var(--transition-fast);
+  }
+
+  .sp-dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4) var(--sp-dialog-padding-inline);
+    border-bottom: var(--border-width) solid var(--border);
+  }
+
+  .sp-dialog-title {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    line-height: calc(var(--space-1) * 7);
+    color: var(--foreground-strong);
+  }
+
+  .sp-dialog-description {
+    margin: var(--space-1) 0 var(--space-4);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    line-height: calc(var(--space-1) * 5);
+    color: var(--muted-foreground);
+  }
+
+  .sp-dialog-message {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--muted-foreground);
+  }
+
+  .sp-dialog-body {
+    flex: 1;
+    padding: var(--space-5) var(--sp-dialog-padding-inline);
+    overflow-y: auto;
+  }
+
+  .sp-dialog-footer {
+    display: flex;
+    gap: var(--space-3);
+    justify-content: flex-end;
+    padding: var(--space-4) var(--sp-dialog-padding-inline);
+    border-top: var(--border-width) solid var(--border);
+  }
+
+  .sp-dialog-close {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(var(--space-1) * 9);
+    height: calc(var(--space-1) * 9);
+    padding: 0;
+    color: var(--muted-foreground);
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    border-radius: var(--radius-sm);
+    outline: none;
+    transition:
+      color var(--transition-fast),
+      background-color var(--transition-fast);
+  }
+
+  .sp-dialog-close:focus-visible {
+    box-shadow: 0 0 0 var(--ring-width) var(--ring);
+  }
+
+  .sp-dialog-action {
+    --sp-dialog-action-bg: var(--background);
+    --sp-dialog-action-fg: var(--foreground-strong);
+    --sp-dialog-action-border-width: var(--border-width);
+    --sp-dialog-action-bg-hover: var(--border);
+    --sp-dialog-action-ring: var(--ring);
+    --sp-dialog-action-focus: none;
+
+    padding: calc(var(--space-1) * 2.5) var(--space-5);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    line-height: calc(var(--space-1) * 5);
+    color: var(--sp-dialog-action-fg);
+    cursor: pointer;
+    background: var(--sp-dialog-action-bg);
+    border: var(--sp-dialog-action-border-width) solid var(--border);
+    border-radius: var(--radius-btn);
+    outline: none;
+    box-shadow: var(--sp-dialog-action-focus);
+    transition:
+      color var(--transition-fast),
+      background-color var(--transition-fast);
+  }
+
+  .sp-dialog-action[data-variant="primary"] {
+    --sp-dialog-action-bg: var(--primary);
+    --sp-dialog-action-fg: var(--primary-foreground);
+    --sp-dialog-action-border-width: 0;
+    --sp-dialog-action-bg-hover: var(--primary-hover);
+  }
+
+  .sp-dialog-action[data-variant="destructive"] {
+    --sp-dialog-action-bg: var(--error);
+    --sp-dialog-action-fg: var(--primary-foreground);
+    --sp-dialog-action-border-width: 0;
+    --sp-dialog-action-bg-hover: var(--error-hover);
+    --sp-dialog-action-ring: var(--error-ring);
+  }
+
+  .sp-dialog-action:focus-visible {
+    --sp-dialog-action-focus:
+      0 0 0 var(--ring-offset) var(--white),
+      0 0 0 calc(var(--ring-offset) + var(--ring-width))
+      var(--sp-dialog-action-ring);
+  }
+
+  @media (min-width: 40rem) {
+    .sp-dialog {
+      --sp-dialog-width: 90%;
+    }
+  }
+
+  @media (hover: hover) {
+    .sp-dialog-close:hover {
+      color: var(--foreground-strong);
+      background: var(--background);
+    }
+
+    .sp-dialog-action:hover {
+      background: var(--sp-dialog-action-bg-hover);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sp-dialog,
+    .sp-dialog::backdrop,
+    .sp-dialog-overlay,
+    .sp-dialog-close,
+    .sp-dialog-action {
+      transition: none;
+      animation: none;
+    }
+  }
+
+  @keyframes sp-dialog-in {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes sp-dialog-out {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    to {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  }
+
+  @keyframes sp-dialog-fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes sp-dialog-fade-out {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+}
