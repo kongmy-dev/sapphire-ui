@@ -41,7 +41,7 @@ function failureOf(example: string, test: unknown): Failure[] {
 
 const failuresOfSpec = (spec: unknown): Failure[] =>
   isRecord(spec) && typeof spec.title === 'string'
-    ? listOf(spec.tests).flatMap((test) => failureOf(`${spec.title}`, test))
+    ? listOf(spec.tests).flatMap((test) => failureOf(spec.title, test))
     : [];
 
 const specsOf = (suite: unknown): unknown[] =>
