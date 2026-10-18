@@ -49,6 +49,8 @@ describe('dependency gate: peer & dependency validation', () => {
       },
     };
     const violations = validateDependencies(pkgWithoutMeta);
-    expect(violations.some((v) => v.pkg === 'react-resizable-panels')).toBe(true);
+    expect(violations.some((v) => v.pkg === 'react-resizable-panels')).toBe(
+      true,
+    );
   });
 });

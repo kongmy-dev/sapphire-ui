@@ -10,7 +10,6 @@
       "!coverage",
       "!design",
       "!public",
-      "!tooling",
       "!tests/registry-consumer/app/components",
       "!tests/registry-consumer/app/styles",
       "!tests/registry-consumer/dist"
@@ -57,13 +56,26 @@
         "noDangerouslySetInnerHtml": "off"
       },
       "suspicious": {
-        "noArrayIndexKey": "off"
+        "noArrayIndexKey": "off",
+        "noExplicitAny": "error",
+        "noConsole": "error",
+        "noFocusedTests": "error",
+        "noSkippedTests": "error"
       },
       "complexity": {
         "noImportantStyles": "off"
       },
       "style": {
-        "noDescendingSpecificity": "off"
+        "noDescendingSpecificity": "off",
+        "noNonNullAssertion": "error",
+        "noEnum": "error",
+        "useConsistentTypeDefinitions": {
+          "level": "error",
+          "options": { "style": "type" }
+        },
+        "noNestedTernary": "error",
+        "noUselessElse": "error",
+        "noParameterAssign": "error"
       }
     }
   },
@@ -119,6 +131,50 @@
         "rules": {
           "suspicious": { "noExplicitAny": "off" },
           "correctness": { "noUnusedVariables": "off" }
+        }
+      }
+    },
+    {
+      "includes": ["scripts/**", "tooling/**", "tests/**"],
+      "linter": {
+        "rules": {
+          "suspicious": { "noConsole": "off" }
+        }
+      }
+    },
+    {
+      "includes": ["src/**", "registry/blocks/**"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noExplicitAny": "off",
+            "noConsole": "off",
+            "noFocusedTests": "off",
+            "noSkippedTests": "off",
+            "noDocumentCookie": "info"
+          },
+          "style": {
+            "noNonNullAssertion": "off",
+            "noEnum": "off",
+            "useConsistentTypeDefinitions": "off",
+            "noNestedTernary": "off",
+            "noUselessElse": "off",
+            "noParameterAssign": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/**"],
+      "linter": {
+        "rules": {
+          "style": { "useTemplate": "info" },
+          "complexity": {
+            "useOptionalChain": "info",
+            "noBannedTypes": "info",
+            "noUselessConstructor": "info"
+          },
+          "nursery": { "useSortedClasses": "info" }
         }
       }
     }

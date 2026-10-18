@@ -1,13 +1,4 @@
-// Source of truth for the Sapphire UI product registry lane.
-// Each entry maps a library component (PascalCase source in src/components/ui)
-// to a shadcn-format registry item. npm `dependencies` and `registryDependencies`
-// are DERIVED from each file's imports by scripts/build-registry.ts — declare
-// only metadata here.
-//
-// Editorial-only components (MarginNote, ProposalLayout, SEOHead, …) are NOT
-// listed: they stay npm-only.
-
-export interface RegistryItemConfig {
+export type RegistryItemConfig = {
   /** kebab-case registry name (also the served file: /r/<name>.json). */
   name: string;
   /** PascalCase source file in src/components/ui (without extension). */
@@ -15,8 +6,14 @@ export interface RegistryItemConfig {
   /** Human title surfaced by the shadcn CLI. */
   title: string;
   description: string;
-}
+};
 
+/**
+ * Product-lane components. Each maps a library component to a shadcn-format
+ * registry item; npm and registry dependencies are derived from the file's
+ * imports by scripts/build-registry.ts. Editorial-only components are not
+ * listed: they stay npm-only.
+ */
 export const productItems: RegistryItemConfig[] = [
   {
     name: 'button',
@@ -176,19 +173,21 @@ export const productItems: RegistryItemConfig[] = [
   },
 ];
 
-export interface RegistryBlockConfig {
+export type RegistryBlockConfig = {
   /** kebab-case registry name (served at /r/<name>.json). */
   name: string;
   /** Source file in registry/blocks (with extension). */
   file: string;
   title: string;
   description: string;
-}
+};
 
-// Admin blocks (Phase C) — restyled from an external shadcn admin template onto
-// Sapphire tokens. They compose Sapphire primitives via `@/` and bring their own
-// npm deps (sonner/cmdk/lucide), which stay devDeps here + land in the consumer
-// on `shadcn add`. Sources live outside src/ so the npm lane never bundles them.
+/**
+ * Admin blocks restyled onto Sapphire tokens. They compose Sapphire primitives
+ * through `@/` and bring their own npm dependencies, which stay devDependencies
+ * here and land in the consumer on `shadcn add`. Their sources live outside
+ * src/ so the npm lane never bundles them.
+ */
 export const productBlocks: RegistryBlockConfig[] = [
   {
     name: 'toaster',

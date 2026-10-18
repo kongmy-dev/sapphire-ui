@@ -1,6 +1,6 @@
+import { execSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { relative, resolve } from 'node:path';
-import { execSync } from 'node:child_process';
 import { commentRanges, isExportJsDoc, parseSource } from '../source/parse';
 
 export type StrayComment = { file: string; line: number; text: string };
@@ -14,7 +14,10 @@ const FIXED_FORMS = [
   /^\/\* SPDX-License-Identifier: \S+ \*\/$/,
 ];
 
-export const isFixedForm = (comment: string) => FIXED_FORMS.some((form) => form.test(comment));
+const SOURCE_FILE = /\.(ts|tsx|js|jsx|mjs|cjs)$/;
+
+export const isFixedForm = (comment: string) =>
+  FIXED_FORMS.some((form) => form.test(comment));
 
 export function strayComments(file: string, text: string): StrayComment[] {
   const source = parseSource(file, text);
@@ -42,7 +45,7 @@ export function getChangedSourceFiles(root: string): string[] {
     return stdout
       .split('\n')
       .map((f) => f.trim())
-      .filter((f) => f.length > 0 && /\.(ts|tsx|js|jsx|mjs|cjs)$/.test(f))
+      .filter((f) => f.length > 0 && SOURCE_FILE.test(f))
       .filter((f) => f.startsWith('src/') || f.startsWith('registry/'))
       .filter((f) => existsSync(resolve(root, f)));
   } catch {
@@ -50,41 +53,50 @@ export function getChangedSourceFiles(root: string): string[] {
   }
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
-  const root = process.cwd();
-  let args = process.argv.slice(2).filter((f) => /\.(ts|tsx|js|jsx|mjs|cjs)$/.test(f));
-
-  if (!args.length) {
-    args = getChangedSourceFiles(root);
+function exitWithoutFiles(hadArguments: boolean): never {
+  if (hadArguments) {
+    console.error(
+      'Comment gate: no source file to check. A gate that checked nothing fails.',
+    );
+    process.exit(1);
   }
+  console.log('Comment gate: 0 changed source files to check.');
+  process.exit(0);
+}
 
-  const files = args
+function main() {
+  const root = process.cwd();
+  const given = process.argv.slice(2);
+  const named = given.filter((f) => SOURCE_FILE.test(f));
+  const files = (named.length ? named : getChangedSourceFiles(root))
     .map((f) => relative(root, resolve(root, f)))
     .filter((f) => !f.startsWith('..') && existsSync(resolve(root, f)));
 
-  if (!files.length) {
-    // When run explicitly on 0 files with arguments provided, fail; if no changed files, pass.
-    if (process.argv.slice(2).length > 0) {
-      console.error('Comment gate: no source file to check. A gate that checked nothing fails.');
-      process.exit(1);
-    }
-    console.log('Comment gate: 0 changed source files to check.');
-    process.exit(0);
-  }
+  if (!files.length) exitWithoutFiles(given.length > 0);
 
-  const stray = files.flatMap((file) => strayComments(file, readFileSync(resolve(root, file), 'utf8')));
+  const stray = files.flatMap((file) =>
+    strayComments(file, readFileSync(resolve(root, file), 'utf8')),
+  );
 
   if (!stray.length) {
-    console.log(`Comment gate: ${files.length} file(s), no comment outside allowed forms.`);
+    console.log(
+      `Comment gate: ${files.length} file(s), no comment outside allowed forms.`,
+    );
     process.exit(0);
   }
 
-  console.error(`\nComment gate — ${stray.length} comment(s) outside allowed forms (P-1).\n`);
+  console.error(
+    `\nComment gate — ${stray.length} comment(s) outside allowed forms (P-1).\n`,
+  );
   for (const comment of stray) {
-    console.error(`  ${comment.file}:${comment.line}  ${preview(comment.text)}`);
+    console.error(
+      `  ${comment.file}:${comment.line}  ${preview(comment.text)}`,
+    );
   }
   console.error(
-    '\nMove what each comment knows into a name, a type, a test, JSDoc on an export, or docs/, then delete it.\n'
+    '\nMove what each comment knows into a name, a type, a test, JSDoc on an export, or docs/, then delete it.\n',
   );
   process.exit(1);
 }
+
+if (import.meta.main) main();

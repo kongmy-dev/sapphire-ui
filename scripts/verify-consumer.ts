@@ -13,10 +13,10 @@ import { dirname, join } from 'node:path';
 const FIXTURE = 'tests/registry-consumer';
 const APP = join(FIXTURE, 'app');
 
-interface Item {
+type Item = {
   name: string;
   files: Array<{ target?: string; content: string }>;
-}
+};
 
 type VendoredFile = { target: string; content: string };
 

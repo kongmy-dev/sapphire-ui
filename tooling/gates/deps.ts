@@ -7,59 +7,111 @@ export type DepViolation = {
   issue: string;
 };
 
-export function validateDependencies(packageJson: Record<string, any>): DepViolation[] {
-  const violations: DepViolation[] = [];
-  const deps = packageJson.dependencies ?? {};
-  const peers = packageJson.peerDependencies ?? {};
-  const peerMeta = packageJson.peerDependenciesMeta ?? {};
+type PackageShape = {
+  dependencies?: Record<string, string>;
+  peerDependencies?: Record<string, string>;
+  peerDependenciesMeta?: Record<string, { optional?: boolean }>;
+};
 
-  // 1. Peer dependencies must never leak into runtime dependencies
-  for (const pkg of Object.keys(deps)) {
-    if (pkg.startsWith('@radix-ui/') || pkg === 'react' || pkg === 'react-dom' || pkg === 'react-resizable-panels') {
-      violations.push({
-        field: 'dependencies',
-        pkg,
-        issue: 'Must remain in peerDependencies; never add runtime peer to dependencies.',
-      });
-    }
-  }
+const RUNTIME_PEERS = ['react', 'react-dom', 'react-resizable-panels'];
 
-  // 2. React must be in peerDependencies
-  if (!peers.react || !peers['react-dom']) {
-    violations.push({
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null;
+
+const isRecordOf = (
+  value: unknown,
+  isEntry: (entry: unknown) => boolean,
+): boolean =>
+  value === undefined ||
+  (isRecord(value) && Object.values(value).every(isEntry));
+
+const isOptionalFlag = (entry: unknown) =>
+  isRecord(entry) &&
+  (entry.optional === undefined || typeof entry.optional === 'boolean');
+
+function isPackageShape(value: unknown): value is PackageShape {
+  return (
+    isRecord(value) &&
+    isRecordOf(value.dependencies, (entry) => typeof entry === 'string') &&
+    isRecordOf(value.peerDependencies, (entry) => typeof entry === 'string') &&
+    isRecordOf(value.peerDependenciesMeta, isOptionalFlag)
+  );
+}
+
+function runtimePeerViolations(deps: Record<string, string>): DepViolation[] {
+  return Object.keys(deps)
+    .filter(
+      (pkg) => pkg.startsWith('@radix-ui/') || RUNTIME_PEERS.includes(pkg),
+    )
+    .map((pkg) => ({
+      field: 'dependencies',
+      pkg,
+      issue:
+        'Must remain in peerDependencies; never add runtime peer to dependencies.',
+    }));
+}
+
+function reactPeerViolations(peers: Record<string, string>): DepViolation[] {
+  if (peers.react && peers['react-dom']) return [];
+  return [
+    {
       field: 'peerDependencies',
       pkg: 'react/react-dom',
       issue: 'react and react-dom must be declared in peerDependencies.',
-    });
-  }
-
-  // 3. Optional peers must be declared in peerDependenciesMeta
-  if (peers['react-resizable-panels'] && (!peerMeta['react-resizable-panels'] || !peerMeta['react-resizable-panels'].optional)) {
-    violations.push({
-      field: 'peerDependenciesMeta',
-      pkg: 'react-resizable-panels',
-      issue: 'react-resizable-panels must be marked optional in peerDependenciesMeta.',
-    });
-  }
-
-  return violations;
+    },
+  ];
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
-  const root = process.cwd();
-  const pkgPath = resolve(root, 'package.json');
-  const pkg = JSON.parse(readFileSync(pkgPath, 'utf8'));
+function optionalPeerViolations(
+  peers: Record<string, string>,
+  peerMeta: Record<string, { optional?: boolean }>,
+): DepViolation[] {
+  const isDeclaredOptional = peerMeta['react-resizable-panels']?.optional;
+  if (!peers['react-resizable-panels'] || isDeclaredOptional) return [];
+  return [
+    {
+      field: 'peerDependenciesMeta',
+      pkg: 'react-resizable-panels',
+      issue:
+        'react-resizable-panels must be marked optional in peerDependenciesMeta.',
+    },
+  ];
+}
 
-  const violations = validateDependencies(pkg);
+export function validateDependencies(
+  packageJson: PackageShape,
+): DepViolation[] {
+  const peers = packageJson.peerDependencies ?? {};
+  return [
+    ...runtimePeerViolations(packageJson.dependencies ?? {}),
+    ...reactPeerViolations(peers),
+    ...optionalPeerViolations(peers, packageJson.peerDependenciesMeta ?? {}),
+  ];
+}
+
+function main() {
+  const parsed: unknown = JSON.parse(
+    readFileSync(resolve(process.cwd(), 'package.json'), 'utf8'),
+  );
+  if (!isPackageShape(parsed))
+    throw new Error('package.json has an unexpected shape');
+
+  const violations = validateDependencies(parsed);
 
   if (!violations.length) {
-    console.log('Dependency gate: OK — peer dependencies and dependency policies satisfied.');
+    console.log(
+      'Dependency gate: OK — peer dependencies and dependency policies satisfied.',
+    );
     process.exit(0);
   }
 
-  console.error(`\nDependency gate — ${violations.length} violation(s) found (P-10):\n`);
+  console.error(
+    `\nDependency gate — ${violations.length} violation(s) found (P-10):\n`,
+  );
   for (const v of violations) {
     console.error(`  [${v.field}] ${v.pkg}: ${v.issue}`);
   }
   process.exit(1);
 }
+
+if (import.meta.main) main();

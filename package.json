@@ -473,7 +473,7 @@
     "build": "tsc -b && vite build",
     "typecheck": "tsc -b",
     "prepare": "git config core.hooksPath .githooks || true",
-    "lint": "biome check",
+    "lint": "biome check --error-on-warnings",
     "lint:fix": "biome check --write",
     "format": "biome check --write",
     "build:docs": "vite build --config vite.docs.config.ts --outDir dist-docs && bun run build:registry",

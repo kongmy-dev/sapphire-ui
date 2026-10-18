@@ -18,11 +18,12 @@ export const parseSource = (path: string, text: string): ts.SourceFile =>
     text,
     ts.ScriptTarget.Latest,
     true,
-    SCRIPT_KINDS[extname(path)] ?? ts.ScriptKind.TSX
+    SCRIPT_KINDS[extname(path)] ?? ts.ScriptKind.TSX,
   );
 
 const isJsDoc = (node: ts.Node) =>
-  node.kind >= ts.SyntaxKind.FirstJSDocNode && node.kind <= ts.SyntaxKind.LastJSDocNode;
+  node.kind >= ts.SyntaxKind.FirstJSDocNode &&
+  node.kind <= ts.SyntaxKind.LastJSDocNode;
 
 const startsInside = (range: ts.TextRange, spans: ts.TextRange[]) =>
   spans.some((span) => range.pos >= span.pos && range.pos < span.end);
@@ -50,43 +51,43 @@ export function commentRanges(source: ts.SourceFile): ts.CommentRange[] {
     .sort((a, b) => a.pos - b.pos);
 }
 
-/**
- * Checks whether a comment range is a JSDoc block directly attached to an exported
- * declaration or a member of an exported interface/type.
- */
-export function isExportJsDoc(source: ts.SourceFile, range: ts.CommentRange, text: string): boolean {
-  const commentText = text.slice(range.pos, range.end);
-  if (!commentText.startsWith('/**')) return false;
+const isExportedTypeDeclaration = (node: ts.Node) =>
+  (ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node)) &&
+  (node.modifiers?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword) ??
+    false);
 
-  // Check the character immediate after range.end plus any whitespace
-  const afterComment = text.slice(range.end).trimStart();
-
-  // Allowed if directly precedes export keyword or modifiers
-  if (/^export\b/.test(afterComment)) return true;
-
-  // Or if it is a property/method signature inside an exported type/interface
-  // Find AST node whose pos matches or immediately follows range.end
-  let attachedNode: ts.Node | null = null;
-  const findNode = (node: ts.Node) => {
-    if (node.getStart(source) >= range.end && (!attachedNode || node.getStart(source) < attachedNode.getStart(source))) {
-      attachedNode = node;
-    }
-    node.forEachChild(findNode);
+function firstNodeStartingAfter(
+  source: ts.SourceFile,
+  position: number,
+): ts.Node | undefined {
+  const candidates: ts.Node[] = [];
+  const collect = (node: ts.Node) => {
+    if (node.getStart(source) >= position) candidates.push(node);
+    node.forEachChild(collect);
   };
-  findNode(source);
+  collect(source);
+  return candidates.reduce<ts.Node | undefined>(
+    (first, node) =>
+      first === undefined || node.getStart(source) < first.getStart(source)
+        ? node
+        : first,
+    undefined,
+  );
+}
 
-  if (attachedNode) {
-    let parent: ts.Node | undefined = (attachedNode as ts.Node).parent;
-    while (parent) {
-      if (
-        (ts.isInterfaceDeclaration(parent) || ts.isTypeAliasDeclaration(parent)) &&
-        parent.modifiers?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword)
-      ) {
-        return true;
-      }
-      parent = parent.parent;
-    }
+function hasExportedTypeAncestor(node: ts.Node | undefined): boolean {
+  for (let parent = node?.parent; parent; parent = parent.parent) {
+    if (isExportedTypeDeclaration(parent)) return true;
   }
-
   return false;
+}
+
+export function isExportJsDoc(
+  source: ts.SourceFile,
+  range: ts.CommentRange,
+  text: string,
+): boolean {
+  if (!text.slice(range.pos, range.end).startsWith('/**')) return false;
+  if (/^export\b/.test(text.slice(range.end).trimStart())) return true;
+  return hasExportedTypeAncestor(firstNodeStartingAfter(source, range.end));
 }

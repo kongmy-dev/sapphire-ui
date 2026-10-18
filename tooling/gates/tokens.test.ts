@@ -5,7 +5,9 @@ describe('token gate: hardcoded hex detection', () => {
   it('detects 6-digit hex color in className string', () => {
     const code = `export const C = () => <div className="bg-[#0a192f]" />;`;
     const violations = findHexColors('Component.tsx', code);
-    expect(violations).toEqual([{ file: 'Component.tsx', line: 1, hex: '#0a192f' }]);
+    expect(violations).toEqual([
+      { file: 'Component.tsx', line: 1, hex: '#0a192f' },
+    ]);
   });
 
   it('detects 3-digit hex color', () => {

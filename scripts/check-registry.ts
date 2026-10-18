@@ -55,7 +55,8 @@ function buildToTemp(): string {
 
 function readItem(dir: string, file: string): RegistryItem {
   const parsed: unknown = JSON.parse(readFileSync(join(dir, file), 'utf8'));
-  if (!isRegistryItem(parsed)) throw new Error(`${file} is not a registry item`);
+  if (!isRegistryItem(parsed))
+    throw new Error(`${file} is not a registry item`);
   return parsed;
 }
 
@@ -126,7 +127,9 @@ function main() {
   const items = readItems(buildToTemp());
   const names = new Set(items.map((item) => item.name));
   const definedVars = themeVariables(items);
-  const errors = items.flatMap((item) => itemProblems(item, names, definedVars));
+  const errors = items.flatMap((item) =>
+    itemProblems(item, names, definedVars),
+  );
 
   if (errors.length > 0) {
     console.error(

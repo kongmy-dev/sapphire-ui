@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 export type CoverageViolation = {
@@ -19,9 +19,10 @@ export function checkA11yCoverage(root: string): CoverageViolation[] {
     return violations;
   }
 
-  const specContent = readFileSync(a11ySpecPath, 'utf8') + readFileSync(a11yInteractionsPath, 'utf8');
+  const specContent =
+    readFileSync(a11ySpecPath, 'utf8') +
+    readFileSync(a11yInteractionsPath, 'utf8');
 
-  // Interactive core primitives that must be covered in accessibility interaction tests
   const REQUIRED_INTERACTIVE_PRIMITIVES = [
     'Accordion',
     'Popover',
@@ -47,11 +48,15 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const violations = checkA11yCoverage(root);
 
   if (!violations.length) {
-    console.log('A11y coverage gate: OK — all required interactive primitives covered in a11y suites.');
+    console.log(
+      'A11y coverage gate: OK — all required interactive primitives covered in a11y suites.',
+    );
     process.exit(0);
   }
 
-  console.error(`\nA11y coverage gate — ${violations.length} finding(s) (P-9):\n`);
+  console.error(
+    `\nA11y coverage gate — ${violations.length} finding(s) (P-9):\n`,
+  );
   for (const v of violations) {
     console.error(`  ${v.routeOrComponent}: ${v.issue}`);
   }

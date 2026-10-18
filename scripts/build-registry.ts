@@ -36,7 +36,9 @@ function pascalToKebab(name: string): string {
 
 function packageName(specifier: string): string {
   const segments = specifier.split('/');
-  return (specifier.startsWith('@') ? segments.slice(0, 2) : segments.slice(0, 1)).join('/');
+  return (
+    specifier.startsWith('@') ? segments.slice(0, 2) : segments.slice(0, 1)
+  ).join('/');
 }
 
 function capturedGroups(content: string, pattern: RegExp): string[] {
@@ -60,10 +62,16 @@ function processSource(fullPath: string) {
     ...new Set(capturedGroups(content, REGISTRY_ITEM_IMPORT)),
   ].sort();
   const packages = capturedGroups(content, IMPORT_SPECIFIER)
-    .filter((specifier) => !specifier.startsWith('.') && !specifier.startsWith('@/'))
+    .filter(
+      (specifier) => !specifier.startsWith('.') && !specifier.startsWith('@/'),
+    )
     .map(packageName)
     .filter((name) => !CONSUMER_PROVIDED_PACKAGES.has(name));
-  return { content, dependencies: [...new Set(packages)].sort(), registryDependencies };
+  return {
+    content,
+    dependencies: [...new Set(packages)].sort(),
+    registryDependencies,
+  };
 }
 
 function buildThemeItem() {
@@ -90,20 +98,28 @@ function buildThemeItem() {
 }
 
 function buildItem(spec: ItemSpec) {
-  const { content, dependencies, registryDependencies } = processSource(spec.sourcePath);
+  const { content, dependencies, registryDependencies } = processSource(
+    spec.sourcePath,
+  );
   const summary = {
     name: spec.name,
     type: spec.type,
     title: spec.title,
     description: spec.description,
     dependencies,
-    registryDependencies: ['theme', ...registryDependencies].map(registryDependencyUrl),
+    registryDependencies: ['theme', ...registryDependencies].map(
+      registryDependencyUrl,
+    ),
   };
   const target = `components/ui/${spec.name}.tsx`;
   const path = `ui/${spec.name}.tsx`;
   return {
     name: spec.name,
-    item: { $schema: ITEM_SCHEMA, ...summary, files: [{ path, content, type: spec.type, target }] },
+    item: {
+      $schema: ITEM_SCHEMA,
+      ...summary,
+      files: [{ path, content, type: spec.type, target }],
+    },
     indexEntry: { ...summary, files: [{ path, type: spec.type, target }] },
   };
 }
@@ -135,7 +151,8 @@ function main() {
       }),
     ),
   ];
-  for (const { name, item } of built) writeJson(join(OUT_DIR, `${name}.json`), item);
+  for (const { name, item } of built)
+    writeJson(join(OUT_DIR, `${name}.json`), item);
   writeJson(join(OUT_DIR, 'registry.json'), {
     $schema: REGISTRY_SCHEMA,
     name: REGISTRY_NAME,

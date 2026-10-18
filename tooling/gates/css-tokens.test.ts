@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'bun:test';
-import { checkComponentCssVariables, getDeclaredCssVariables } from './css-tokens';
+import {
+  checkComponentCssVariables,
+  getDeclaredCssVariables,
+} from './css-tokens';
 
 describe('css tokens gate', () => {
   it('extracts theme tokens successfully', () => {

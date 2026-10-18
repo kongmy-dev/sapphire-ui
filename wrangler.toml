@@ -8,7 +8,7 @@ directory = "dist-docs"
 binding = "ASSETS"
 not_found_handling = "single-page-application"
 # Missing /r/* paths must be a real 404, not the SPA index.html — the shadcn
-# CLI probes speculative registry URLs and dies on HTML (see worker file).
+# CLI probes speculative registry URLs and dies on HTML.
 run_worker_first = ["/r/*"]
 
 [observability]

@@ -12,7 +12,9 @@ describe('comments gate: stray comment detection', () => {
   });
 
   it('reports trailing line comment after code', () => {
-    expect(strayIn('const a = 1; // explains a\n')).toEqual([{ line: 1, text: '// explains a' }]);
+    expect(strayIn('const a = 1; // explains a\n')).toEqual([
+      { line: 1, text: '// explains a' },
+    ]);
   });
 
   it('reports block comments without exports', () => {
@@ -36,7 +38,10 @@ export interface Props {
   });
 
   it('reports comments inside JSX braces', () => {
-    const found = strayIn('export const V = () => <div>{/* note */}</div>;\n', 'view.tsx');
+    const found = strayIn(
+      'export const V = () => <div>{/* note */}</div>;\n',
+      'view.tsx',
+    );
     expect(found.map((c) => c.text)).toEqual(['/* note */']);
   });
 
@@ -66,6 +71,8 @@ describe('comments gate: allowed fixed forms', () => {
       '// biome-ignore missing reason',
       '// a11y: ',
     ];
-    expect(strayIn(`${malformed.join('\nconst x = 1;\n')}\n`)).toHaveLength(malformed.length);
+    expect(strayIn(`${malformed.join('\nconst x = 1;\n')}\n`)).toHaveLength(
+      malformed.length,
+    );
   });
 });
