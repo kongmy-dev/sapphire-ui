@@ -28,7 +28,7 @@ D4: every component is ported. Numbers measured at `bc2e116`. This file is delet
 The CSS contract is the design system. React components and custom elements are its clients.
 
 ```
-css/tokens.css        shadcn variable names + brand extension; light and dark via color-scheme + light-dark()
+css/tokens.css        shadcn variable names + brand extension; colours via color-scheme + light-dark(), per scope
   ├─ css/tailwind.css     @theme inline mapping: Tailwind apps get utilities on the same tokens
   └─ sapphire.css         base + layout + every components/<name>/<name>.css:
        │                  sp-* classes, data-* modifiers, in @layer base and @layer components
@@ -88,7 +88,10 @@ editorial React (30%).
   `[data-state=open]` and `[data-open]`, so a later move to Base UI touches components only.
   Revisit when a primitive or fix we need ships only in Base UI, or Radix ships nothing for six
   months.
-- **Tokens take shadcn's raw names** in `:root`, mapped by `@theme inline`. `--accent` takes
+- **Tokens take shadcn's raw names,** mapped by `@theme inline`. Colour tokens are
+  `light-dark()` values declared on `:root, [data-theme=light], [data-theme=dark], .dark`, so a
+  consumer's build that lowers `light-dark()` cannot pin them at `:root`; every other token is
+  declared once on `:root` and does not change with the scheme (ADR-0004). `--accent` takes
   shadcn's meaning, the quiet interactive surface (the gold tint); brand gold becomes `--brand`,
   with `--brand-text` for AA text on light. Reviewed on screenshots in P2.
 - **Where the two implementations disagree, the React look wins:** more apps see it.
@@ -178,8 +181,10 @@ says and committed. `bun run pin <example>…` is the only way to change a pin, 
 empty list.
 
 **P2 — Tokens.** `css/tokens.css` and `css/tailwind.css`: light and dark through `color-scheme` and
-`light-dark()`, following `prefers-color-scheme` unless `[data-theme]` or `.dark` forces one. A test
-proves every v3 token maps to a v4 token of the same value. `DESIGN.md`, from `design/design.md`
+`light-dark()` on the per-scope selector list, following `prefers-color-scheme` unless `[data-theme]`
+or `.dark` forces one. A test proves every v3 token maps to a v4 token of the same value. A
+Playwright spec builds `tokens.css` with the default `bun build` and with Vite's default target, and
+proves a dark scope inside a light page and the reverse flip, in Chromium, Firefox and WebKit. `DESIGN.md`, from `design/design.md`
 and `.claude/instructions/design-system.md`, with its token values checked against `tokens.css`.
 
 **P3 — The CSS contract.** `css/base.css` (elements, focus ring, type scale, `sp-prose`),
@@ -314,7 +319,7 @@ pasted here with its SHA.
 | Question | Spike | Result |
 |---|---|---|
 | Do utilities and an app's unlayered CSS beat `sp-*`, whichever of `sapphire.css` and Tailwind is imported first? | a scratch Vite and Tailwind 4 app, both import orders | **Yes, when `sapphire.css` opens with `@layer theme, base, components, utilities;`.** 48 of 48 pass: four import orders, dev and build, Chromium, Firefox and WebKit; the line survives `bun build --minify`. Without it, importing `sapphire.css` before Tailwind lets preflight beat `sp-*` in every engine. Measured on stand-in CSS, not the real file. `6868ef2`, `spikes/css-layers/result.txt` |
-| Does `light-dark()` survive `bun build` and flip inside a nested `[data-theme]` scope? | build `tokens.css`; screenshot a dark card inside a light page | **Only if the tokens are re-declared per scope; contradicts §2 and P2 as written.** `light-dark()` in custom properties on `:root` alone flips in source CSS, 42 of 42 in Chromium, Firefox and WebKit, but the default `bun build` (same bytes as `--target=browser`) and Vite's default production target lower it to fixed values on `:root`, and nested scopes then fail, 9 of 42. Three forms pass 42 of 42 in all eight build forms: the same `light-dark()` tokens declared on `:root, [data-theme=light], [data-theme=dark], .dark`; `light-dark()` written inside each declaration; plain variables re-declared per scope. `light-dark()` takes only colours: radius, gap, weight and shadow arguments are invalid in all three engines. `588f790`, `spikes/light-dark/result.txt` |
+| Does `light-dark()` survive `bun build` and flip inside a nested `[data-theme]` scope? | build `tokens.css`; screenshot a dark card inside a light page | **Only if the tokens are re-declared per scope; contradicts §2 and P2 as written.** `light-dark()` in custom properties on `:root` alone flips in source CSS, 42 of 42 in Chromium, Firefox and WebKit, but the default `bun build` (same bytes as `--target=browser`) and Vite's default production target lower it to fixed values on `:root`, and nested scopes then fail, 9 of 42. Three forms pass 42 of 42 in all eight build forms: the same `light-dark()` tokens declared on `:root, [data-theme=light], [data-theme=dark], .dark`; `light-dark()` written inside each declaration; plain variables re-declared per scope. `light-dark()` takes only colours: radius, gap, weight and shadow arguments are invalid in all three engines. `588f790`, `spikes/light-dark/result.txt`. **Owner's call:** the first form, colours only (ADR-0004) |
 | Can `bun test` with happy-dom run a Radix dialog: portal, focus trap, Escape, outside click? | one dialog suite; where it fails, that suite runs in Playwright | **Yes.** The dialog's portal, name and description, focus entry, Tab wrap, Escape with focus return, overlay press, `aria-hidden` and scroll lock all pass, as do 17 primitives, with no polyfills (happy-dom 21.0.3). 23 tests run in a median 415 ms; `--rerun-each=20` passed 460 of 460. Register happy-dom in its own preload before Testing Library loads; an outside press targets the overlay; nothing has layout, so a position-based drag runs in Playwright. `1f47e8b`, `spikes/happy-dom-radix/result.txt` |
 | Can `asChild` work without `radix-ui`, so that button, badge and card import no Radix? | a slot in `lib/` run against Radix Slot's cases: props, handlers, refs and `className` merged | pending |
 | Can `shadcn build` emit versioned dependencies, and can a `registry:base` item add the package, the stylesheet import and the fonts? | one base item and one component through `shadcn build`, `shadcn registry validate` and `shadcn add` into a scratch app | pending |
