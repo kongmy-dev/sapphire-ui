@@ -204,4 +204,7 @@ export const propValueRenames = {
   Textarea: {
     variant: { dark: 'on-dark' },
   },
+  NativeSelect: {
+    variant: { dark: 'on-dark' },
+  },
 } as const;

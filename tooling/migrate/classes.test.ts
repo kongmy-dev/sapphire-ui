@@ -132,7 +132,7 @@ describe('the prop value renames', () => {
     const problems = Object.entries(propRenames).flatMap(([component, props]) =>
       Object.entries(props).flatMap(([prop, values]) =>
         Object.entries(values).flatMap(([from, to]) => {
-          const name = component.toLowerCase();
+          const name = component.replace(/(?<!^)([A-Z])/g, '-$1').toLowerCase();
           const v3Source = read(`src/components/ui/${component}.tsx`);
           const declared = declaredAttributes(sheets[name] ?? '');
           return [
