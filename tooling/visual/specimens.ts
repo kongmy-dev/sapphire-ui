@@ -5,6 +5,7 @@ import type { Scheme } from '../source/token-values';
 export const SPECIMEN_PORT = 4175;
 export const SPECIMEN_URL = `http://localhost:${SPECIMEN_PORT}`;
 const SPECIMEN_SUFFIX = '.examples.html';
+const DEMO_STYLESHEET_SUFFIX = '.examples.css';
 
 const BASE_SPECIMEN = 'css/base.examples.html';
 const COMPONENTS_DIR = 'components';
@@ -60,14 +61,25 @@ export function pinProblems(
   );
 }
 
+export const demoStylesheetOf = (specimen: string): string =>
+  `${specimen.slice(0, -SPECIMEN_SUFFIX.length)}${DEMO_STYLESHEET_SUFFIX}`;
+
 export const specimenUrl = (file: string, scheme: Scheme): string =>
   `${SPECIMEN_URL}/${file}?scheme=${scheme}`;
 
-export const specimenPage = (
-  file: string,
-  fragment: string,
-  scheme: Scheme,
-): string =>
+export type SpecimenPage = {
+  file: string;
+  fragment: string;
+  scheme: Scheme;
+  hasDemoStylesheet: boolean;
+};
+
+export const specimenPage = ({
+  file,
+  fragment,
+  scheme,
+  hasDemoStylesheet,
+}: SpecimenPage): string =>
   [
     '<!doctype html>',
     `<html lang="en" data-theme="${scheme}">`,
@@ -77,6 +89,9 @@ export const specimenPage = (
     `<title>${file}</title>`,
     '<link rel="stylesheet" href="/sapphire.css">',
     '<link rel="stylesheet" href="/specimen.css">',
+    ...(hasDemoStylesheet
+      ? [`<link rel="stylesheet" href="/${demoStylesheetOf(file)}">`]
+      : []),
     '</head>',
     '<body>',
     '<div class="docs-layout">',

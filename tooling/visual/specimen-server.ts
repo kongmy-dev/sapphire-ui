@@ -1,9 +1,14 @@
-import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { buildStylesheet, FONT_DIR } from '../css/build';
 import { SCHEMES, type Scheme } from '../source/token-values';
-import { SPECIMEN_PORT, specimenFiles, specimenPage } from './specimens';
+import {
+  demoStylesheetOf,
+  SPECIMEN_PORT,
+  specimenFiles,
+  specimenPage,
+} from './specimens';
 
 const root = process.cwd();
 const out = mkdtempSync(join(tmpdir(), 'sapphire-specimens-'));
@@ -42,6 +47,11 @@ function respond(request: Request): Response {
     return new Response(Bun.file(join(out, 'sapphire.css')));
   if (path === '/specimen.css')
     return new Response(Bun.file(join(root, 'site/specimen.css')));
+  const isDemoStylesheet = files.some(
+    (specimen) => demoStylesheetOf(specimen) === file,
+  );
+  if (isDemoStylesheet && existsSync(join(root, file)))
+    return new Response(Bun.file(join(root, file)));
   const font = FONT_FILE.exec(path)?.[1];
   if (font !== undefined)
     return new Response(Bun.file(join(out, FONT_DIR, font)));
@@ -49,7 +59,8 @@ function respond(request: Request): Response {
   const scheme = url.searchParams.get('scheme') ?? 'light';
   if (!isScheme(scheme)) return html('scheme must be light or dark', 400);
   const fragment = readFileSync(join(root, file), 'utf8');
-  return html(specimenPage(file, fragment, scheme));
+  const hasDemoStylesheet = existsSync(join(root, demoStylesheetOf(file)));
+  return html(specimenPage({ file, fragment, scheme, hasDemoStylesheet }));
 }
 
 Bun.serve({ port: SPECIMEN_PORT, fetch: respond });

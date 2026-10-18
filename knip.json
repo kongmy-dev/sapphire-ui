@@ -11,6 +11,8 @@
     "css/tailwind.css",
     "sapphire.css",
     "site/specimen.css",
+    "css/*.examples.css",
+    "components/*/*.examples.css",
     "playwright.visual.config.ts",
     "tests/visual/*.spec.ts"
   ],

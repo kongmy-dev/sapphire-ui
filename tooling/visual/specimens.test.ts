@@ -5,6 +5,7 @@ import { join } from 'node:path';
 import { exampleNames } from './examples';
 import {
   coveredPins,
+  demoStylesheetOf,
   pinProblems,
   pinsOf,
   readSpecimens,
@@ -115,12 +116,41 @@ describe('the repository specimens', () => {
 });
 
 describe('the specimen page', () => {
+  const base = {
+    file: 'css/base.examples.html',
+    fragment: '<p>hello</p>',
+    scheme: 'dark',
+    hasDemoStylesheet: false,
+  } as const;
+
   it('sets the theme and loads both stylesheets around the fragment', () => {
-    const page = specimenPage('css/base.examples.html', '<p>hello</p>', 'dark');
+    const page = specimenPage(base);
     expect(page).toContain('<html lang="en" data-theme="dark">');
     expect(page).toContain('href="/sapphire.css"');
     expect(page).toContain('href="/specimen.css"');
+    expect(page).not.toContain('examples.css');
     expect(page).toContain('<main class="docs-main">\n<p>hello</p>\n</main>');
+  });
+
+  it('links the demo stylesheet beside the specimen after the shared one', () => {
+    const page = specimenPage({
+      ...base,
+      file: 'components/card/card.examples.html',
+      hasDemoStylesheet: true,
+    });
+    const shared = page.indexOf('href="/specimen.css"');
+    const demo = page.indexOf('href="/components/card/card.examples.css"');
+    expect(shared).toBeGreaterThan(-1);
+    expect(demo).toBeGreaterThan(shared);
+  });
+
+  it('names the demo stylesheet by swapping the specimen suffix', () => {
+    expect(demoStylesheetOf('css/base.examples.html')).toBe(
+      'css/base.examples.css',
+    );
+    expect(demoStylesheetOf('components/card/card.examples.html')).toBe(
+      'components/card/card.examples.css',
+    );
   });
 
   it('builds the url with the scheme', () => {
