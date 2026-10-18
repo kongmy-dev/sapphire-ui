@@ -218,7 +218,7 @@ Playwright spec builds `tokens.css` with the default `bun build` and with Vite's
 proves a dark scope inside a light page and the reverse flip, in Chromium, Firefox and WebKit. `DESIGN.md`, from `design/design.md`, with its token values checked against `tokens.css`.
 The token gate joins `bun run gate`.
 
-**P3 — The CSS contract.** `css/base.css` (elements, focus ring, type scale, `sp-prose`),
+**P3 — The CSS contract.** `css/base.css` (elements, focus ring, type scale),
 `css/layout.css`, and `components/<name>/<name>.css` for every component and pattern: document,
 financial table, key-value list, prose, page, masthead and section, stack, cluster, columns, admin
 shell. `sapphire.css` declares the layer order Tailwind uses and is bundled and minified by
@@ -354,7 +354,7 @@ becomes prose.
 
 | App kind | Step to v4 |
 |---|---|
-| Stylesheet classes (pinned to 3.x) | the class map in `CHANGELOG.md`, e.g. `.btn.btn-primary` → `.sp-button`, `.alert.alert--info` → `.sp-alert[data-tone=info]`, `.fin-table` → `.sp-table[data-variant=financial]` |
+| Stylesheet classes (pinned to 3.x) | the class map in `CHANGELOG.md`, e.g. `.btn.btn-primary` → `.sp-button`, `.alert.alert--success` → `.sp-alert[data-variant=success]`, `.fin-table` → `.sp-table[data-variant=financial]` |
 | Tailwind theme | `@import "@kongmy-dev/sapphire-ui/tailwind.css"`; utility renames, e.g. `text-accent-text` → `text-brand-text` |
 | npm React | the same subpaths, `@kongmy-dev/sapphire-ui/<name>`; the prop map in `CHANGELOG.md`, e.g. `icon="add"` → `<Plus />`; the stylesheet import becomes `sapphire.css`; root imports move to subpaths |
 | Registry | nothing until `components.json` points at `/r/v4/{name}.json`; then re-add each item |
