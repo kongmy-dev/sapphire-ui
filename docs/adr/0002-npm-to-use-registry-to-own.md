@@ -52,8 +52,8 @@ React source and examples. Both channels build from it.
   export, and no root barrel, so importing one component never loads Radix for
   another.
 - No runtime dependency. `react`, `react-dom` and `radix-ui` are optional
-  peers; a component without behaviour imports no Radix and renders on a
-  server without hydration.
+  peers; a component without behaviour imports no Radix (ADR-0005), so an
+  app that uses only those installs no `radix-ui`.
 - The package ships the stylesheets, fonts, React components, custom elements
   and `DESIGN.md`.
 
