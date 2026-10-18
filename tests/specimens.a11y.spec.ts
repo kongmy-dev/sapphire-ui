@@ -19,7 +19,7 @@ for (const { file } of readSpecimens(ROOT)) {
   for (const scheme of SCHEMES) {
     test(`a11y specimen: ${file} (${scheme})`, async ({ page }) => {
       await page.goto(specimenUrl(file, scheme));
-      await page.locator('section[data-pin]').first().waitFor();
+      await page.locator('section.docs-section').first().waitFor();
       await page.evaluate(() => document.fonts.ready);
 
       const results = await new AxeBuilder({ page })
