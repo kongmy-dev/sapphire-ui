@@ -1,0 +1,186 @@
+@layer components {
+  .sp-prose {
+    --sp-prose-font-family: var(--font-serif);
+    --sp-prose-font-size: var(--text-base);
+    --sp-prose-line-height: 1.7;
+    --sp-prose-fg: var(--foreground);
+    --sp-prose-max-width: calc(var(--unit-ch) * 70);
+    --sp-prose-flow: calc(var(--unit-em) * 1.25);
+    --sp-prose-heading-font-family: var(--font-sans);
+    --sp-prose-heading-font-weight: 600;
+    --sp-prose-heading-line-height: 1.25;
+    --sp-prose-heading-fg: var(--foreground);
+    --sp-prose-heading-margin: calc(var(--unit-em) * 2)
+      calc(var(--unit-em) * 0.5);
+    --sp-prose-h1-font-size: calc(var(--text-base) * 2.25);
+    --sp-prose-h2-font-size: calc(var(--text-base) * 1.75);
+    --sp-prose-h3-font-size: calc(var(--text-base) * 1.375);
+    --sp-prose-h4-font-size: var(--text-lg);
+    --sp-prose-link-fg: var(--brand-text);
+    --sp-prose-link-underline-offset: calc(var(--space-1) * 0.75);
+    --sp-prose-link-underline-width: var(--border-width);
+    --sp-prose-link-underline-width-hover: calc(var(--border-width) * 2);
+    --sp-prose-strong-font-weight: 600;
+    --sp-prose-list-indent: calc(var(--unit-em) * 1.5);
+    --sp-prose-list-item-gap: calc(var(--unit-em) * 0.25);
+    --sp-prose-marker-fg: var(--muted-foreground);
+    --sp-prose-quote-fg: var(--muted-foreground);
+    --sp-prose-quote-indent: calc(var(--unit-em) * 1.25);
+    --sp-prose-quote-rule-width: calc(var(--space-1) * 0.75);
+    --sp-prose-quote-rule-color: var(--brand);
+    --sp-prose-code-bg: var(--background);
+    --sp-prose-code-border-width: var(--border-width);
+    --sp-prose-code-border-color: var(--border);
+    --sp-prose-code-radius: var(--radius-sm);
+    --sp-prose-code-padding: calc(var(--unit-em) * 0.1)
+      calc(var(--unit-em) * 0.35);
+    --sp-prose-code-font-size: calc(var(--unit-em) * 0.875);
+    --sp-prose-pre-radius: var(--radius-md);
+    --sp-prose-pre-padding: var(--space-4) var(--space-5);
+    --sp-prose-pre-font-size: var(--text-sm);
+    --sp-prose-pre-line-height: var(--leading-normal);
+    --sp-prose-rule-margin: calc(var(--unit-em) * 2.5);
+    --sp-prose-image-radius: var(--radius-md);
+
+    max-width: var(--sp-prose-max-width);
+    font-family: var(--sp-prose-font-family);
+    font-size: var(--sp-prose-font-size);
+    line-height: var(--sp-prose-line-height);
+    color: var(--sp-prose-fg);
+  }
+
+  .sp-prose[data-size="sm"] {
+    --sp-prose-font-size: calc(var(--text-base) * 0.9375);
+    --sp-prose-line-height: 1.65;
+  }
+
+  .sp-prose[data-size="lg"] {
+    --sp-prose-font-size: var(--text-lg);
+    --sp-prose-line-height: var(--leading-relaxed);
+  }
+
+  .sp-prose :where(pre, hr, img) {
+    margin: 0;
+  }
+
+  .sp-prose > * + * {
+    margin-block-start: var(--sp-prose-flow);
+  }
+
+  .sp-prose :is(h1, h2, h3, h4) {
+    margin-block: var(--sp-prose-heading-margin);
+    font-family: var(--sp-prose-heading-font-family);
+    font-weight: var(--sp-prose-heading-font-weight);
+    line-height: var(--sp-prose-heading-line-height);
+    color: var(--sp-prose-heading-fg);
+  }
+
+  .sp-prose h1 {
+    font-size: var(--sp-prose-h1-font-size);
+    letter-spacing: calc(var(--unit-em) * -0.02);
+  }
+
+  .sp-prose h2 {
+    font-size: var(--sp-prose-h2-font-size);
+    letter-spacing: calc(var(--unit-em) * -0.015);
+  }
+
+  .sp-prose h3 {
+    font-size: var(--sp-prose-h3-font-size);
+  }
+
+  .sp-prose h4 {
+    font-size: var(--sp-prose-h4-font-size);
+  }
+
+  .sp-prose p {
+    margin: 0;
+  }
+
+  .sp-prose a {
+    color: var(--sp-prose-link-fg);
+    text-decoration: underline;
+    text-decoration-thickness: var(--sp-prose-link-underline-width);
+    text-underline-offset: var(--sp-prose-link-underline-offset);
+  }
+
+  .sp-prose strong {
+    font-weight: var(--sp-prose-strong-font-weight);
+    color: var(--sp-prose-fg);
+  }
+
+  .sp-prose :is(ul, ol) {
+    padding-inline-start: var(--sp-prose-list-indent);
+    margin: 0;
+    list-style: none;
+  }
+
+  .sp-prose li {
+    margin-block: var(--sp-prose-list-item-gap);
+  }
+
+  .sp-prose li::marker {
+    color: var(--sp-prose-marker-fg);
+  }
+
+  .sp-prose blockquote {
+    padding-inline-start: var(--sp-prose-quote-indent);
+    margin: 0;
+    font-style: italic;
+    color: var(--sp-prose-quote-fg);
+    border-inline-start: var(--sp-prose-quote-rule-width) solid
+      var(--sp-prose-quote-rule-color);
+  }
+
+  .sp-prose code {
+    padding: var(--sp-prose-code-padding);
+    font-family: var(--font-mono);
+    font-size: var(--sp-prose-code-font-size);
+    color: var(--sp-prose-fg);
+    background: var(--sp-prose-code-bg);
+    border: var(--sp-prose-code-border-width) solid
+      var(--sp-prose-code-border-color);
+    border-radius: var(--sp-prose-code-radius);
+  }
+
+  .sp-prose pre {
+    padding: var(--sp-prose-pre-padding);
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: var(--sp-prose-pre-font-size);
+    line-height: var(--sp-prose-pre-line-height);
+    background: var(--sp-prose-code-bg);
+    border: var(--sp-prose-code-border-width) solid
+      var(--sp-prose-code-border-color);
+    border-radius: var(--sp-prose-pre-radius);
+  }
+
+  .sp-prose pre code {
+    padding: 0;
+    font-size: inherit;
+    background: transparent;
+    border: 0;
+  }
+
+  .sp-prose hr {
+    margin-block: var(--sp-prose-rule-margin);
+    color: inherit;
+    border: 0;
+    border-top: var(--sp-prose-code-border-width) solid
+      var(--sp-prose-code-border-color);
+  }
+
+  .sp-prose img {
+    display: block;
+    max-width: 100%;
+    vertical-align: middle;
+    height: auto;
+    border-radius: var(--sp-prose-image-radius);
+  }
+
+  @media (hover: hover) {
+    .sp-prose a:hover {
+      text-decoration-thickness: var(--sp-prose-link-underline-width-hover);
+    }
+  }
+}

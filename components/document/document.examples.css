@@ -1,0 +1,17 @@
+.docs-document-preview {
+  padding: 0;
+  overflow: hidden;
+  background: var(--background);
+}
+
+.docs-document-scroll {
+  max-height: calc(var(--space-1) * 60);
+  overflow: auto;
+}
+
+.docs-document-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+  padding: var(--space-8);
+}

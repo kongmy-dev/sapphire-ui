@@ -219,6 +219,34 @@ export const classRenames = {
   '.sapphire-table': '.sp-table',
   '.sapphire-banner': '.sp-banner',
   '.sapphire-banner-dismiss': '.sp-banner-dismiss',
+  '.prose': '.sp-prose',
+  '.prose-sm': '.sp-prose[data-size=sm]',
+  '.prose-lg': '.sp-prose[data-size=lg]',
+  '.doc-shell': '.sp-document-shell',
+  '.doc-bar': '.sp-document-bar',
+  '.wm': '.sp-document-wordmark',
+  '.crumb': '.sp-document-crumb',
+  '.doc-meta': '.sp-document-bar-meta',
+  '.doc-hero': '.sp-document-hero',
+  '.eyebrow': '.sp-document-eyebrow',
+  '.lede': '.sp-document-lede',
+  '.meta-row': '.sp-document-hero-meta',
+  '.doc-section': '.sp-document-section',
+  '.sec-no': '.sp-document-section-number',
+  '.doc-card': '.sp-document-card',
+  '.dark': '.sp-document-card[data-variant=on-dark]',
+  '.ic': '.sp-document-card-icon',
+  '.doc-foot': '.sp-document-foot',
+  '.muted': '.sp-document-muted',
+  '.rule': '.sp-document-rule',
+  '.num-pos': '.sp-document-figure[data-tone=positive]',
+  '.num-neg': '.sp-document-figure[data-tone=negative]',
+  '.tab-num': '.sp-document-figure[data-tabular]',
+  '.fin-table': '.sp-table[data-variant=financial]',
+  '.section': '.sp-table-row[data-row=section]',
+  '.subtotal': '.sp-table-row[data-row=subtotal]',
+  '.total': '.sp-table-row[data-row=total]',
+  '.kvs': '.sp-key-value-list',
 } as const;
 
 export const variableRenames = {
@@ -234,6 +262,33 @@ export const unmappedClasses = {
     'the proposal shell modal, mapped when the proposal shell ports',
   '.is-visible':
     'a toast opens with [data-state=open] or [data-open] on .sp-toast, an attribute no class stands for',
+  '.cols-2':
+    'a page layout column row, mapped when the page layout family ports the columns',
+  '.cols-3':
+    'a page layout column row, mapped when the page layout family ports the columns',
+  '.gate': 'the passphrase gate, mapped when the app layout ports it',
+  '.gate-card': 'the passphrase gate, mapped when the app layout ports it',
+  '.gate-brand': 'the passphrase gate, mapped when the app layout ports it',
+  '.gate-doc': 'the passphrase gate, mapped when the app layout ports it',
+  '.gate-field': 'the passphrase gate, mapped when the app layout ports it',
+  '.gate-submit': 'the passphrase gate, mapped when the app layout ports it',
+  '.gate-foot': 'the passphrase gate, mapped when the app layout ports it',
+  '.gate-err': 'the passphrase gate, mapped when the app layout ports it',
+  '.gate-toggle': 'the passphrase gate, mapped when the app layout ports it',
+  '.pass-locked-pill':
+    'the passphrase gate, mapped when the app layout ports it',
+  '.doc-title':
+    'the admin shell document table title, mapped when the admin shell ports',
+  '.locked':
+    'a modifier of the admin shell .sf-pill; inside .doc-bar the pair is .sp-document-pill, a compound the class map cannot express',
+  '.bar-row':
+    'a horizontal share bar with a label, a track and a value; the bar chart draws vertical columns, so no part of it fits',
+  '.bar': 'the track of .bar-row, which has no v4 home (see .bar-row)',
+  '.lbl':
+    'the label of .bar-row and of the admin stat, mapped when the admin shell ports',
+  '.v': 'the value of .bar-row and of the admin stat, mapped when the admin shell ports',
+  '.accent':
+    'the gold fill of a .bar-row track, which has no v4 home (see .bar-row)',
 } as const;
 
 export const propValueRenames = {
