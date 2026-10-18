@@ -4,10 +4,6 @@ import path from 'path';
 import { defineConfig } from 'vite';
 import Sitemap from 'vite-plugin-sitemap';
 
-/**
- * Vite config for the documentation site (design.kongmy.dev).
- * Separate from the library build config.
- */
 export default defineConfig({
   plugins: [
     react(),

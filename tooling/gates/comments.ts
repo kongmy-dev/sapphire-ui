@@ -1,102 +1,94 @@
-import { execSync } from 'node:child_process';
-import { existsSync, readFileSync } from 'node:fs';
-import { relative, resolve } from 'node:path';
-import { commentRanges, isExportJsDoc, parseSource } from '../source/parse';
+import type { CommentRange } from 'typescript';
+import { locate, scanCss } from '../source/css';
+import { commentRanges, parseSource } from '../source/parse';
+import { finish, type GateResult, type Violation } from './report';
+import { type FileText, loadFiles } from './scope';
 
-export type StrayComment = { file: string; line: number; text: string };
+export const COMMENT_EXTENSIONS = [
+  '.ts',
+  '.tsx',
+  '.js',
+  '.jsx',
+  '.mjs',
+  '.cjs',
+  '.mts',
+  '.cts',
+  '.css',
+] as const;
 
-const FIXED_FORMS = [
-  /^\/\/ vendor: https?:\/\/\S+ \S/,
-  /^\/\/ ADR-\d{4}$/,
-  /^\/\/ biome-ignore \S+: \S/,
-  /^\/\/ @ts-expect-error https?:\/\/\S+/,
-  /^\/\/ a11y: \S+/,
-  /^\/\* SPDX-License-Identifier: \S+ \*\/$/,
-];
+type Comment = { line: number; text: string; startsLine: boolean };
 
-const SOURCE_FILE = /\.(ts|tsx|js|jsx|mjs|cjs)$/;
+const BIOME_IGNORE = /^biome-ignore lint\/(?:style|complexity)\/\w+: \S/;
+const URL_ALONE = /^https?:\/\/\S+$/;
 
-export const isFixedForm = (comment: string) =>
-  FIXED_FORMS.some((form) => form.test(comment));
+const bodyOf = (text: string) =>
+  text
+    .replace(/^\/\/|^\/\*+/, '')
+    .replace(/\*+\/$/, '')
+    .trim();
 
-export function strayComments(file: string, text: string): StrayComment[] {
+function textComments(file: string, text: string): Comment[] {
   const source = parseSource(file, text);
-  return commentRanges(source)
-    .filter((range) => !isExportJsDoc(source, range, text))
-    .map((range) => ({
-      file,
-      line: source.getLineAndCharacterOfPosition(range.pos).line + 1,
+  return commentRanges(source).map((range: CommentRange) => {
+    const { line, character } = source.getLineAndCharacterOfPosition(range.pos);
+    const lineStart = range.pos - character;
+    return {
+      line: line + 1,
       text: text.slice(range.pos, range.end),
-    }))
-    .filter((comment) => !isFixedForm(comment.text));
+      startsLine: text.slice(lineStart, range.pos).trim() === '',
+    };
+  });
 }
 
-const preview = (comment: string) => {
-  const firstLine = comment.split('\n')[0] ?? '';
-  return firstLine.length > 80 ? `${firstLine.slice(0, 77)}...` : firstLine;
-};
-
-export function getChangedSourceFiles(root: string): string[] {
-  try {
-    const stdout = execSync('git diff --name-only --diff-filter=ACMR HEAD', {
-      cwd: root,
-      encoding: 'utf8',
-    });
-    return stdout
-      .split('\n')
-      .map((f) => f.trim())
-      .filter((f) => f.length > 0 && SOURCE_FILE.test(f))
-      .filter((f) => f.startsWith('src/') || f.startsWith('registry/'))
-      .filter((f) => existsSync(resolve(root, f)));
-  } catch {
-    return [];
-  }
+function cssComments(text: string): Comment[] {
+  return scanCss(text).comments.map(({ pos, end }) => {
+    const { line, column } = locate(text, pos);
+    return {
+      line,
+      text: text.slice(pos, end),
+      startsLine: text.slice(pos - column, pos).trim() === '',
+    };
+  });
 }
 
-function exitWithoutFiles(hadArguments: boolean): never {
-  if (hadArguments) {
-    console.error(
-      'Comment gate: no source file to check. A gate that checked nothing fails.',
-    );
-    process.exit(1);
-  }
-  console.log('Comment gate: 0 changed source files to check.');
-  process.exit(0);
+const commentsOf = (file: FileText): Comment[] =>
+  file.name.endsWith('.css')
+    ? cssComments(file.text)
+    : textComments(file.name, file.text);
+
+const isUrlAboveWorkaround = (comment: Comment, lines: readonly string[]) =>
+  comment.startsLine &&
+  !comment.text.includes('\n') &&
+  URL_ALONE.test(bodyOf(comment.text)) &&
+  (lines[comment.line] ?? '').trim() !== '';
+
+const isAllowed = (comment: Comment, lines: readonly string[]) =>
+  BIOME_IGNORE.test(bodyOf(comment.text)) ||
+  isUrlAboveWorkaround(comment, lines);
+
+export function commentViolations(file: FileText): Violation[] {
+  const lines = file.text.split('\n');
+  return commentsOf(file)
+    .filter((comment) => !isAllowed(comment, lines))
+    .map((comment) => ({
+      file: file.name,
+      line: comment.line,
+      rule: 'P-1',
+      problem: 'comment outside the allowed forms',
+      fix: 'Move what it knows into a name, a type, a test name or an ADR, then delete it.',
+    }));
 }
 
-function main() {
-  const root = process.cwd();
-  const given = process.argv.slice(2);
-  const named = given.filter((f) => SOURCE_FILE.test(f));
-  const files = (named.length ? named : getChangedSourceFiles(root))
-    .map((f) => relative(root, resolve(root, f)))
-    .filter((f) => !f.startsWith('..') && existsSync(resolve(root, f)));
+export const commentGate = (files: readonly FileText[]): GateResult => ({
+  name: 'comment',
+  files: files.length,
+  violations: files.flatMap(commentViolations),
+});
 
-  if (!files.length) exitWithoutFiles(given.length > 0);
-
-  const stray = files.flatMap((file) =>
-    strayComments(file, readFileSync(resolve(root, file), 'utf8')),
+if (import.meta.main) {
+  finish(
+    commentGate(
+      loadFiles(process.cwd(), process.argv.slice(2), COMMENT_EXTENSIONS),
+    ),
   );
-
-  if (!stray.length) {
-    console.log(
-      `Comment gate: ${files.length} file(s), no comment outside allowed forms.`,
-    );
-    process.exit(0);
-  }
-
-  console.error(
-    `\nComment gate — ${stray.length} comment(s) outside allowed forms (P-1).\n`,
-  );
-  for (const comment of stray) {
-    console.error(
-      `  ${comment.file}:${comment.line}  ${preview(comment.text)}`,
-    );
-  }
-  console.error(
-    '\nMove what each comment knows into a name, a type, a test, JSDoc on an export, or docs/, then delete it.\n',
-  );
-  process.exit(1);
 }
-
-if (import.meta.main) main();

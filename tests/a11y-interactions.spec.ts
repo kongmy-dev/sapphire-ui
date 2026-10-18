@@ -1,14 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
-// Initial-render a11y is covered in a11y.spec.ts. This suite exercises the
-// *open* state of portaled primitives — focus traps, role wiring, contrast
-// in popover / sheet / menu bodies — which axe can only see while the
-// component is mounted.
-//
-// Mode mirrors a11y.spec.ts: default reports violations, STRICT_A11Y=1
-// hard-fails.
-
 const strict = process.env.STRICT_A11Y === '1';
 
 async function runAxe(page: import('@playwright/test').Page) {

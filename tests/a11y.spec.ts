@@ -1,16 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
-// Each route in the docs SPA is exercised. The smoke goal is zero
-// WCAG 2.1 A/AA violations on initial render. Per-component interactive
-// state (open dialogs, expanded accordions) is covered by component-specific
-// tests added as Phase 2 work lands.
-//
-// Mode:
-//   default          → reports violations, passes (captures baseline without
-//                      blocking CI on pre-existing debt).
-//   STRICT_A11Y=1    → hard-fails on any violation. Flip this on once the
-//                      known violations are fixed (Phase 2 quality pass).
 const ROUTES = [
   { path: '/', name: 'overview' },
   { path: '/colors', name: 'colors' },

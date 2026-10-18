@@ -1,8 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
-// A11y smoke harness for the docs SPA.
-// Spawns `vite build --config vite.docs.config.ts` in preview mode and runs
-// axe-core against every demo route.
+const buildThenPreviewDocs =
+  'bun run build:docs && vite preview --config vite.docs.config.ts --port 4173';
+
 export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
@@ -14,9 +14,7 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
   webServer: {
-    // Use preview (built docs) rather than dev to catch production-only issues.
-    command:
-      'bun run build:docs && vite preview --config vite.docs.config.ts --port 4173',
+    command: buildThenPreviewDocs,
     url: 'http://localhost:4173',
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,
