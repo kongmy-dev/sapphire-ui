@@ -215,7 +215,19 @@ gzipped `sapphire.css` at its measured size plus 15%. Button, card and dialog go
 pattern. Then `sapphire-component` is written from those three: the steps, the checks a port must
 pass and the files a port must not touch. Every other component is one session that owns only its
 folder and does not edit that skill. Each rename lands in `tooling/migrate/map.ts` in the commit
-that makes it.
+that makes it. The rest go by family, one session each, in this order: forms (input, textarea,
+label, native select, form field); forms with state (checkbox, switch, radio group, range slider,
+select); feedback (skeleton, spinner, progress, segmented bar, alert, toast, empty); data (avatar,
+avatar group, stat, stat group, chip, separator, pagination); data views (tabs, table, bar chart,
+sparkline); extended (breadcrumb, kbd, code block, toggle, scroll area, banner, accordion);
+editorial (callout, margin note, table of contents, steps, timeline, prose, document, financial
+table, key-value list); overlays (popover, tooltip, hover card, dropdown menu, sheet, command
+palette); page layout (`css/layout.css` with stack, cluster and columns, container, page section,
+layout, masthead and section, site header and footer, mobile nav, theme toggle); app layout (admin
+shell, split, wizard, vertical tabs, proposal, passphrase gate); then cookie banner and icon mark.
+Analytics, SEO head and the theme provider draw nothing and get no CSS. Then the icon port:
+`sp-icon`, the components' own glyphs as inline SVG, and Lucide in the specimens, so every section
+left on its v3 pin for a glyph moves to its specimen through `bun run pin`.
 
 **P4 — React components.** `components/<name>/<name>.tsx` for every component: React 19 (`ref` as
 a prop), `data-slot`, variants as `as const` tuples rendered as `data-*`, the `sp-*` class plus
