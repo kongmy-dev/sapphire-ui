@@ -1,0 +1,255 @@
+@layer components {
+  .sp-button {
+    --sp-button-radius: var(--radius-btn);
+    --sp-button-gap: var(--space-2);
+    --sp-button-padding-block: calc(var(--space-1) * 2.25);
+    --sp-button-padding-inline: var(--space-4);
+    --sp-button-font-size: var(--text-sm);
+    --sp-button-font-weight: 600;
+    --sp-button-line-height: var(--leading-normal);
+    --sp-button-spinner-size: calc(var(--space-1) * 4);
+    --sp-button-bg: var(--primary);
+    --sp-button-fg: var(--primary-foreground);
+    --sp-button-border-width: 0;
+    --sp-button-border-color: transparent;
+    --sp-button-bg-hover: var(--primary-hover);
+    --sp-button-fg-hover: var(--sp-button-fg);
+    --sp-button-border-color-hover: var(--sp-button-border-color);
+    --sp-button-ring: var(--ring);
+    --sp-button-shadow: 0 0 transparent;
+    --sp-button-shadow-hover: var(--sp-button-shadow);
+    --sp-button-lift: 0;
+    --sp-button-focus: 0 0 transparent;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-button-gap);
+    padding: var(--sp-button-padding-block) var(--sp-button-padding-inline);
+    font-family: var(--font-sans);
+    font-size: var(--sp-button-font-size);
+    font-weight: var(--sp-button-font-weight);
+    line-height: var(--sp-button-line-height);
+    color: var(--sp-button-fg);
+    text-decoration: none;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    background: var(--sp-button-bg);
+    border: var(--sp-button-border-width) solid var(--sp-button-border-color);
+    border-radius: var(--sp-button-radius);
+    outline: var(--ring-width) solid transparent;
+    outline-offset: var(--ring-offset);
+    box-shadow: var(--sp-button-focus), var(--sp-button-shadow);
+    transition: all var(--transition-fast);
+  }
+
+  .sp-button:focus-visible {
+    --sp-button-focus:
+      0 0 0 var(--ring-offset) var(--white),
+      0 0 0 calc(var(--ring-offset) + var(--ring-width)) var(--sp-button-ring);
+  }
+
+  .sp-button:disabled,
+  .sp-button[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .sp-button[aria-busy="true"]::before {
+    box-sizing: border-box;
+    display: inline-block;
+    width: var(--sp-button-spinner-size);
+    height: var(--sp-button-spinner-size);
+    content: "";
+    border: calc(var(--space-1) * 0.5) solid currentcolor;
+    border-top-color: transparent;
+    border-radius: var(--radius-pill);
+    animation: sp-button-spin 1s linear infinite;
+  }
+
+  .sp-button[data-full-width] {
+    width: 100%;
+  }
+
+  .sp-button[data-variant="outline"] {
+    --sp-button-bg: transparent;
+    --sp-button-fg: var(--foreground-strong);
+    --sp-button-border-width: var(--border-width-strong);
+    --sp-button-border-color: var(--foreground-strong);
+    --sp-button-bg-hover: var(--foreground-strong);
+    --sp-button-fg-hover: var(--card);
+  }
+
+  .sp-button[data-variant="ghost"] {
+    --sp-button-bg: transparent;
+    --sp-button-fg: var(--brand-text);
+    --sp-button-bg-hover: var(--accent);
+  }
+
+  .sp-button[data-variant="brand"] {
+    --sp-button-bg: var(--brand);
+    --sp-button-fg: var(--brand-foreground);
+    --sp-button-bg-hover: var(--brand-hover);
+  }
+
+  .sp-button[data-variant="on-dark-primary"] {
+    --sp-button-bg: var(--brand);
+    --sp-button-fg: var(--brand-foreground);
+    --sp-button-font-weight: 700;
+    --sp-button-bg-hover: var(--brand-hover);
+  }
+
+  .sp-button[data-variant="on-dark-outline"] {
+    --sp-button-bg: transparent;
+    --sp-button-border-width: var(--border-width-strong);
+    --sp-button-border-color: color-mix(
+      in oklab,
+      var(--white) 30%,
+      transparent
+    );
+    --sp-button-bg-hover: transparent;
+    --sp-button-border-color-hover: var(--white);
+  }
+
+  .sp-button[data-variant="link"] {
+    --sp-button-radius: 0;
+    --sp-button-bg: transparent;
+    --sp-button-fg: var(--brand-text);
+    --sp-button-bg-hover: transparent;
+    --sp-button-fg-hover: var(--foreground-strong);
+
+    text-underline-offset: var(--space-1);
+  }
+
+  .sp-button[data-variant="premium"] {
+    --sp-button-bg: linear-gradient(
+      to bottom right in oklab,
+      var(--brand),
+      var(--brand-hover)
+    );
+    --sp-button-bg-hover: var(--sp-button-bg);
+    --sp-button-shadow: 0 var(--space-1) calc(var(--space-1) * 3.5)
+      color-mix(in oklab, var(--brand) 30%, transparent);
+    --sp-button-shadow-hover: 0 calc(var(--space-1) * 1.5) var(--space-5)
+      color-mix(in oklab, var(--brand) 40%, transparent);
+    --sp-button-lift: calc(var(--space-1) * -0.5);
+  }
+
+  .sp-button[data-variant="destructive"] {
+    --sp-button-bg: var(--error);
+    --sp-button-bg-hover: var(--error-hover);
+    --sp-button-ring: var(--error-ring);
+  }
+
+  .sp-button[data-variant="destructive-outline"] {
+    --sp-button-bg: transparent;
+    --sp-button-fg: var(--error);
+    --sp-button-border-width: var(--border-width-strong);
+    --sp-button-border-color: var(--error);
+    --sp-button-bg-hover: var(--error);
+    --sp-button-fg-hover: var(--primary-foreground);
+    --sp-button-ring: var(--error-ring);
+  }
+
+  .sp-button[data-variant="destructive-ghost"] {
+    --sp-button-bg: transparent;
+    --sp-button-fg: var(--error);
+    --sp-button-bg-hover: var(--accent);
+    --sp-button-ring: var(--error-ring);
+  }
+
+  .sp-button[data-size="xs"] {
+    --sp-button-gap: calc(var(--space-1) * 1.5);
+    --sp-button-padding-block: var(--space-1);
+    --sp-button-padding-inline: calc(var(--space-1) * 2.5);
+    --sp-button-font-size: var(--text-xs);
+    --sp-button-line-height: var(--space-4);
+    --sp-button-spinner-size: calc(var(--space-1) * 3);
+  }
+
+  .sp-button[data-size="sm"] {
+    --sp-button-padding-block: calc(var(--space-1) * 1.5);
+    --sp-button-padding-inline: var(--space-3);
+    --sp-button-font-size: calc(var(--text-base) * 0.8125);
+    --sp-button-spinner-size: calc(var(--space-1) * 3.5);
+  }
+
+  .sp-button[data-size="lg"] {
+    --sp-button-padding-block: var(--space-4);
+    --sp-button-padding-inline: var(--space-8);
+    --sp-button-font-size: var(--text-lg);
+    --sp-button-line-height: calc(var(--space-1) * 7);
+    --sp-button-spinner-size: calc(var(--space-1) * 5);
+  }
+
+  .sp-button[data-size="xl"] {
+    --sp-button-gap: calc(var(--space-1) * 2.5);
+    --sp-button-padding-block: var(--space-5);
+    --sp-button-padding-inline: var(--space-10);
+    --sp-button-font-size: calc(var(--text-base) * 1.25);
+    --sp-button-line-height: calc(var(--space-1) * 7);
+    --sp-button-spinner-size: calc(var(--space-1) * 5);
+  }
+
+  .sp-button[data-size="icon-sm"] {
+    --sp-button-padding-block: calc(var(--space-1) * 1.5);
+    --sp-button-padding-inline: calc(var(--space-1) * 1.5);
+    --sp-button-font-size: var(--text-base);
+    --sp-button-spinner-size: calc(var(--space-1) * 3.5);
+  }
+
+  .sp-button[data-size="icon"] {
+    --sp-button-padding-block: calc(var(--space-1) * 2.5);
+    --sp-button-padding-inline: calc(var(--space-1) * 2.5);
+    --sp-button-font-size: var(--text-base);
+  }
+
+  .sp-button[data-size="icon-lg"] {
+    --sp-button-padding-block: calc(var(--space-1) * 3.5);
+    --sp-button-padding-inline: calc(var(--space-1) * 3.5);
+    --sp-button-font-size: var(--text-base);
+    --sp-button-spinner-size: calc(var(--space-1) * 5);
+  }
+
+  @media (hover: hover) {
+    .sp-button:hover:not(:disabled, [aria-disabled="true"]) {
+      color: var(--sp-button-fg-hover);
+      background: var(--sp-button-bg-hover);
+      border-color: var(--sp-button-border-color-hover);
+      box-shadow: var(--sp-button-focus), var(--sp-button-shadow-hover);
+      translate: 0 var(--sp-button-lift);
+    }
+
+    .sp-button[data-variant="link"]:hover:not(
+        :disabled,
+        [aria-disabled="true"]
+      ) {
+      text-decoration: underline;
+    }
+  }
+
+  .sp-button:active:not(:disabled, [aria-disabled="true"]) {
+    scale: 0.98;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sp-button {
+      transition: none;
+    }
+
+    .sp-button:active:not(:disabled, [aria-disabled="true"]) {
+      scale: none;
+    }
+
+    .sp-button[aria-busy="true"]::before {
+      animation: none;
+    }
+  }
+
+  @keyframes sp-button-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}

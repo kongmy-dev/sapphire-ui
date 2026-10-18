@@ -10,6 +10,7 @@
     "design/colors_and_type.css",
     "css/tailwind.css",
     "sapphire.css",
+    "site/specimen.css",
     "playwright.visual.config.ts",
     "tests/visual/*.spec.ts"
   ],

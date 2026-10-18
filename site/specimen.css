@@ -4,6 +4,11 @@
   background: var(--background);
 }
 
+.docs-sidebar {
+  flex-shrink: 0;
+  width: calc(var(--space-1) * 60);
+}
+
 .docs-main {
   flex: 1;
   min-width: 0;

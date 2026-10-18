@@ -4,7 +4,7 @@ import type { Scheme } from '../source/token-values';
 
 export const SPECIMEN_PORT = 4175;
 export const SPECIMEN_URL = `http://localhost:${SPECIMEN_PORT}`;
-export const SPECIMEN_SUFFIX = '.examples.html';
+const SPECIMEN_SUFFIX = '.examples.html';
 
 const BASE_SPECIMEN = 'css/base.examples.html';
 const COMPONENTS_DIR = 'components';
@@ -74,6 +74,7 @@ export const specimenPage = (
     '</head>',
     '<body>',
     '<div class="docs-layout">',
+    '<div class="docs-sidebar"></div>',
     '<main class="docs-main">',
     fragment,
     '</main>',
