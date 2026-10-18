@@ -84,9 +84,10 @@ css/
   tokens.css            ← v4 tokens, the single source (ADR-0004)
   base.css              ← element defaults, focus ring, type scale (@layer base)
   base.examples.html    ← plain-HTML specimens of base (typography)
+  base.examples.css     ← demo styles for those specimens
   tailwind.css          ← maps every v4 token to Tailwind utilities
 
-components/<name>/      ← <name>.css (@layer components, sp-* classes) and <name>.examples.html (specimens)
+components/<name>/      ← <name>.css (@layer components, sp-* classes), <name>.examples.html (specimens) and <name>.examples.css (demo styles)
 
 site/specimen.css       ← docs chrome the specimens use; tooling/visual/specimen-server.ts serves them
 
@@ -124,6 +125,7 @@ src/
 | Writing, typing or reviewing any `.ts`/`.tsx` | `.claude/skills/typescript/SKILL.md` |
 | Writing or editing React components | `.claude/skills/sapphire-react/SKILL.md` |
 | Writing or editing CSS & tokens | `.claude/skills/sapphire-css/SKILL.md` |
+| Porting one v3 component to v4 CSS | `.claude/skills/sapphire-component/SKILL.md` |
 | Writing or running tests | `.claude/skills/sapphire-testing/SKILL.md` |
 | Downstream app integration | `.claude/skills/sapphire-consumer/SKILL.md` |
 | Reviewing code | `.claude/skills/review-code/SKILL.md` |
