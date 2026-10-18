@@ -1,0 +1,12 @@
+.docs-stat-demo {
+  display: grid;
+  grid-template-columns: repeat(
+      auto-fit,
+      minmax(calc(var(--space-1) * 40), 1fr)
+    );
+  gap: var(--space-6);
+}
+
+.docs-stat-large {
+  max-width: calc(var(--space-1) * 70);
+}

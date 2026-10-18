@@ -1,0 +1,107 @@
+@layer components {
+  .sp-chip {
+    --sp-chip-radius: var(--radius-pill);
+    --sp-chip-gap: calc(var(--space-1) * 1.5);
+    --sp-chip-padding-block: var(--space-1);
+    --sp-chip-padding-inline: calc(var(--space-1) * 2.5);
+    --sp-chip-font-size: var(--text-sm);
+    --sp-chip-font-weight: 500;
+    --sp-chip-line-height: var(--space-5);
+    --sp-chip-bg: var(--background);
+    --sp-chip-fg: var(--foreground);
+    --sp-chip-border-width: var(--border-width);
+    --sp-chip-border-color: var(--border);
+    --sp-chip-dismiss-size: var(--space-6);
+    --sp-chip-dismiss-bg-hover: color-mix(
+      in oklab,
+      var(--field-dark) 50%,
+      transparent
+    );
+    --sp-chip-ring: var(--ring);
+
+    display: inline-flex;
+    gap: var(--sp-chip-gap);
+    align-items: center;
+    padding: var(--sp-chip-padding-block) var(--sp-chip-padding-inline);
+    font-family: var(--font-sans);
+    font-size: var(--sp-chip-font-size);
+    font-weight: var(--sp-chip-font-weight);
+    line-height: var(--sp-chip-line-height);
+    color: var(--sp-chip-fg);
+    background: var(--sp-chip-bg);
+    border: var(--sp-chip-border-width) solid var(--sp-chip-border-color);
+    border-radius: var(--sp-chip-radius);
+    transition:
+      color var(--transition-fast),
+      background-color var(--transition-fast),
+      border-color var(--transition-fast);
+  }
+
+  .sp-chip[data-variant="brand"] {
+    --sp-chip-bg: color-mix(in oklab, var(--brand) 12%, transparent);
+    --sp-chip-fg: var(--brand-text);
+    --sp-chip-border-color: color-mix(in oklab, var(--brand) 30%, transparent);
+  }
+
+  .sp-chip[data-variant="outline"] {
+    --sp-chip-bg: transparent;
+  }
+
+  .sp-chip[data-size="sm"] {
+    --sp-chip-padding-block: calc(var(--space-1) * 0.5);
+    --sp-chip-padding-inline: var(--space-2);
+    --sp-chip-font-size: var(--text-xs);
+    --sp-chip-line-height: var(--space-4);
+  }
+
+  .sp-chip[data-size="lg"] {
+    --sp-chip-padding-block: calc(var(--space-1) * 1.5);
+    --sp-chip-padding-inline: var(--space-3);
+  }
+
+  .sp-chip-leading {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+  }
+
+  .sp-chip-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .sp-chip-dismiss {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: var(--sp-chip-dismiss-size);
+    height: var(--sp-chip-dismiss-size);
+    padding: 0;
+    margin-block: calc(var(--space-1) * -1);
+    margin-inline-start: calc(var(--space-1) * 0.5);
+    color: inherit;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    border-radius: var(--radius-pill);
+    outline: var(--ring-width) solid transparent;
+  }
+
+  .sp-chip-dismiss:focus-visible {
+    box-shadow: 0 0 0 var(--ring-width) var(--sp-chip-ring);
+  }
+
+  @media (hover: hover) {
+    .sp-chip-dismiss:hover {
+      background: var(--sp-chip-dismiss-bg-hover);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sp-chip {
+      transition: none;
+    }
+  }
+}

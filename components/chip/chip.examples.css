@@ -1,0 +1,7 @@
+.docs-chip-dot {
+  display: inline-block;
+  width: var(--space-2);
+  height: var(--space-2);
+  background: currentcolor;
+  border-radius: var(--radius-pill);
+}

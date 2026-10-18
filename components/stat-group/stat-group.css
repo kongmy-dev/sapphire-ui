@@ -1,0 +1,39 @@
+@layer components {
+  .sp-stat-group {
+    --sp-stat-group-radius: var(--radius-md);
+    --sp-stat-group-gap: var(--space-6);
+    --sp-stat-group-padding: var(--space-6);
+    --sp-stat-group-border-width: var(--border-width);
+    --sp-stat-group-border-color: var(--border);
+    --sp-stat-group-columns: 1;
+
+    display: grid;
+    grid-template-columns: repeat(var(--sp-stat-group-columns), minmax(0, 1fr));
+    gap: var(--sp-stat-group-gap);
+    padding: var(--sp-stat-group-padding);
+    border: var(--sp-stat-group-border-width) solid
+      var(--sp-stat-group-border-color);
+    border-radius: var(--sp-stat-group-radius);
+  }
+
+  @media (min-width: 40rem) {
+    .sp-stat-group {
+      --sp-stat-group-columns: 3;
+    }
+
+    .sp-stat-group[data-cols="1"] {
+      --sp-stat-group-columns: 1;
+    }
+
+    .sp-stat-group[data-cols="2"],
+    .sp-stat-group[data-cols="4"] {
+      --sp-stat-group-columns: 2;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .sp-stat-group[data-cols="4"] {
+      --sp-stat-group-columns: 4;
+    }
+  }
+}

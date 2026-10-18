@@ -218,6 +218,9 @@ export const propValueRenames = {
   Badge: {
     variant: { accent: 'brand', dark: 'on-dark' },
   },
+  Chip: {
+    variant: { accent: 'brand' },
+  },
   Input: {
     variant: { dark: 'on-dark' },
   },
