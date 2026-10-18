@@ -58,7 +58,7 @@ bun run comment-check # Comment gate (P-1): every in-scope file
 bun run size-check   # Size gate (P-7): every in-scope TS file
 bun run dep-check    # Dependency gate (P-12)
 bun run freeze-check # Freeze gate (P-17): src/ is unchanged
-bun run token-check  # Token gate (P-5): css/, components/, blocks/, elements/, site/; joins gate in P2
+bun run token-check  # Token gate (P-5): css/, components/, blocks/, elements/, site/ and DESIGN.md
 bun run scorecard [sha] # v4 numbers and per-component state at a commit (default HEAD), measured in a temp checkout
 bun run test:visual   # compare every pin inside the linux/arm64 Playwright container (needs Docker)
 bun run pin <example>… # the only way to change a pin: compare, print expected/actual/diff paths, update those pins
@@ -71,16 +71,24 @@ bun run deploy:docs  # deploy docs to Cloudflare Pages
 ## Key Paths
 
 ```
+DESIGN.md               ← v4 design spec: brand, token tables (checked against css/tokens.css), UX rules
+
+css/
+  tokens.css            ← v4 tokens, the single source (ADR-0004)
+  tailwind.css          ← maps every v4 token to Tailwind utilities
+
+tooling/migrate/map.ts  ← v3 → v4 token and utility renames
+
 design/
-  colors_and_type.css   ← canonical design tokens (CSS custom properties)
-  design.md             ← design spec (colors, type, do's/don'ts)
+  colors_and_type.css   ← v3 design tokens (frozen lane)
+  design.md             ← v3 design spec (frozen lane)
 
 docs/
   coding/
     principles.md       ← coding principles & gates register
 
 src/
-  theme.css             ← Tailwind v4 @theme canonical token declarations
+  theme.css             ← v3 Tailwind @theme tokens (frozen until P9)
   index.css             ← component styles and utility imports
   index.ts              ← main library entry (React)
   elements.ts           ← Web Components / custom elements entry
@@ -109,7 +117,7 @@ src/
 | Refactoring & size gate fixes | `.claude/skills/refactor-code/SKILL.md` |
 | Running quality gates | `.claude/skills/gate/SKILL.md` |
 | Adding new rules or gates | `.claude/skills/add-rule/SKILL.md` |
-| Any UI work | `.claude/instructions/design-system.md` |
+| Any UI work | `DESIGN.md` |
 
 ---
 
@@ -118,7 +126,7 @@ src/
 - **Bun only.** Never use `npm`, `npx`, or `yarn`.
 - **No new dependencies without justification.** This library ships to consumers; every dep has a size cost.
 - **Peer deps stay peer deps.** React and all Radix packages are peer deps — never move them to `dependencies`.
-- **Design tokens are in `src/theme.css` (`@theme {}`) — that is the single source.** `index.css` imports it; never re-declare tokens there. Never hard-code hex values; always reference CSS custom properties. `theme.css` ships RAW (uncompiled) to consumers as `@kongmy-dev/sapphire-ui/theme.css` so a Tailwind v4 app can `@import` it and generate utilities from Sapphire tokens without re-declaring them — do not run it through the Tailwind build.
+- **v4 design tokens are in `css/tokens.css` (ADR-0004) — that is the single source.** Colours are `light-dark(<light>, <dark>)`, declared once, only in the block `:root, [data-theme=light], [data-theme=dark], .dark`; every other token is declared once on `:root`. `css/tailwind.css` maps each token to utilities, and the token gate (P-5) fails on an unmapped token, a misplaced colour or a `DESIGN.md` table that disagrees. Never hard-code hex values; reference CSS custom properties. `src/theme.css` is the v3 token file, frozen with `src/` until P9; a v3 fix goes to the `v3` branch.
 - **No gradients in primary UI** except the `premium` button variant (intentional exception).
 - **`--color-accent` is decorative.** For text on light surfaces always use `--color-accent-text` (`#8a5a1f`) — it passes WCAG AA contrast; `--color-accent` does not.
 - **Token vocabulary is shadcn-canonical + a brand extension.** Prefer the shadcn utility name where an equivalent exists (`text-muted-foreground`, `bg-background`, `bg-card`, `text-primary-foreground`) so components read as idiomatic shadcn and mix with community items. Use the brand-only tokens for what shadcn lacks: `text-accent-text` (AA gold), `text-text-strong`, `bg-hover-overlay`, `rounded-btn`, the `on-dark` family.

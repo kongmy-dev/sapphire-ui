@@ -1,6 +1,6 @@
 ---
 name: sapphire-css
-description: How to write CSS that fits the Sapphire design system. Covers the design token system, Tailwind v4 @theme integration, color tokens, contrast rules, and formatting. Read before modifying any stylesheet or CSS utility.
+description: How to write CSS that fits the Sapphire design system. Covers the v4 token system (css/tokens.css), Tailwind mapping, color tokens, contrast rules, and formatting. Read before modifying any stylesheet or CSS utility.
 ---
 
 # Skill: Sapphire UI CSS
@@ -9,42 +9,47 @@ How to write CSS that fits the Sapphire design system. Read this before touching
 
 ## Token System
 
-All tokens are CSS custom properties. The **single source of truth** is:
-- `src/theme.css`: Canonical tokens (`@theme {}` + `:root`) exported directly and imported by `src/index.css`.
-- `design/colors_and_type.css`: Legacy reference catalog.
+v4 tokens are CSS custom properties with shadcn's names plus a brand extension. The **single source of truth** is `css/tokens.css` (ADR-0004); `DESIGN.md` lists every token and the token gate (P-5) fails when its tables disagree.
+
+- A colour is `light-dark(<light>, <dark>)`, declared once, only in the block `:root, [data-theme=light], [data-theme=dark], .dark`. An alias (`--card-foreground: var(--foreground)`) goes in the same block, since an alias on `:root` alone would not flip inside a nested scope.
+- `light-dark()` takes only colours. Every other token (fonts, sizes, spacing, radius, shadow, transition) is declared once on `:root`; a shadow reads its colour from `--primary`.
+- `color-scheme` is `light dark` on `:root`, `light` on `[data-theme=light]` and `dark` on `[data-theme=dark], .dark`.
+- `css/tailwind.css` maps every token for Tailwind (`@theme inline` for colours and spacing, `@theme reference` for same-name pass-throughs). A new token needs a mapping there and a row in `DESIGN.md`.
+- `tooling/migrate/map.ts` maps each v3 name to its v4 name. `src/theme.css` is the v3 file, frozen until P9.
 
 **Never hard-code hex values.** Always reference tokens:
 ```css
 /* correct */
-color: var(--color-text-main);
-background: var(--color-primary);
+color: var(--foreground);
+background: var(--primary);
 
 /* wrong */
 color: #1e293b;
 background: #0a192f;
 ```
 
-## Tailwind v4 Integration
-
-Sapphire uses Tailwind v4's `@theme {}` block in `src/theme.css`. Tokens declared there are available as both CSS variables and Tailwind class suffixes:
-```html
-<div class="bg-primary text-surface font-serif">
-<div style="background: var(--color-primary)">
+An app overrides a colour on the full selector list, never on `:root` alone:
+```css
+:root, [data-theme="light"], [data-theme="dark"], .dark {
+  --primary: light-dark(#1d4ed8, #93c5fd);
+}
 ```
 
-When writing Tailwind inside component class strings, use bracket notation for tokens not directly mapped:
-```tsx
-className="text-[var(--color-text-muted)] border-[var(--color-border-dark)]"
+## Tailwind v4 Integration
+
+Utilities read the tokens: `bg-background`, `text-foreground`, `bg-card`, `text-muted-foreground`, `text-brand-text`, `font-serif`, `rounded-btn`.
+```html
+<div class="bg-primary text-primary-foreground font-serif">
 ```
 
 ## Color Tokens & Contrast
 
-- Brand fills: `--color-primary` (`#0a192f`), `--color-accent` (`#c5a065`), `--color-accent-dark` (`#b8904f`).
-- Text: `--color-text-main` (`#1e293b`), `--color-text-muted` (`#475569`), `--color-text-on-dark` (`#f1f5f9`), `--color-accent-text` (`#8a5a1f`).
-- Surfaces: `--color-surface` (`#f4f6f8`), `--color-card-bg` (`#ffffff`), `--color-card-dark-bg` (`#0a192f`).
-- Borders: `--color-border` (`#e2e8f0`), `--color-border-dark` (`rgba(255,255,255,0.12)`).
+- Brand: `--primary` (`#0a192f`), `--brand` (`#c5a065`), `--brand-hover` (`#b8904f`), `--brand-text` (`#8a5a1f`, gold text on a light surface), `--brand-on-fill`.
+- Text: `--foreground`, `--foreground-strong`, `--muted-foreground`, `--on-dark`, `--on-dark-muted`.
+- Surfaces: `--background`, `--card`, `--card-dark`, `--popover`; `--accent` is the quiet gold-tint surface for hover and selected rows.
+- Borders and focus: `--border`, `--border-strong`, `--input`, `--ring`.
 
-**Contrast Rule:** `--color-accent` (`#c5a065`) fails WCAG AA contrast as text on light surfaces. Always use `--color-accent-text` (`#8a5a1f`, 4.6:1 contrast ratio) for gold text on light surfaces.
+**Contrast Rule:** `--brand` (`#c5a065`) fails WCAG AA as text on light surfaces. Use `--brand-text` (`#8a5a1f`, 4.6:1) for gold text there.
 
 ## Typography Tokens
 

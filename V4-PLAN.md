@@ -192,8 +192,7 @@ empty list.
 `light-dark()` on the per-scope selector list, following `prefers-color-scheme` unless `[data-theme]`
 or `.dark` forces one. A test proves every v3 token maps to a v4 token of the same value. A
 Playwright spec builds `tokens.css` with the default `bun build` and with Vite's default target, and
-proves a dark scope inside a light page and the reverse flip, in Chromium, Firefox and WebKit. `DESIGN.md`, from `design/design.md`
-and `.claude/instructions/design-system.md`, with its token values checked against `tokens.css`.
+proves a dark scope inside a light page and the reverse flip, in Chromium, Firefox and WebKit. `DESIGN.md`, from `design/design.md`, with its token values checked against `tokens.css`.
 The token gate joins `bun run gate`.
 
 **P3 — The CSS contract.** `css/base.css` (elements, focus ring, type scale, `sp-prose`),
