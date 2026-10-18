@@ -92,6 +92,7 @@ Each row gives the resolved colour per scheme.
 | Token | Light | Dark | Use |
 | --- | --- | --- | --- |
 | `--success` | `#15803d` | `#15803d` | Confirmations, passed states |
+| `--success-text` | `#15803d` | `#4ade80` | Green text and outlines on any surface; AA on light and dark |
 | `--success-bg` | `rgb(34, 197, 94, 0.1)` | `rgb(34, 197, 94, 0.1)` | Tinted success background |
 | `--success-border` | `rgb(34, 197, 94, 0.2)` | `rgb(34, 197, 94, 0.2)` | Tinted success border |
 | `--success-foreground` | `#fff` | `#fff` | Text on a solid success fill |
@@ -102,10 +103,12 @@ Each row gives the resolved colour per scheme.
 | `--error-bg` | `rgb(239, 68, 68, 0.1)` | `rgb(239, 68, 68, 0.1)` | Tinted error background |
 | `--error-border` | `rgb(239, 68, 68, 0.2)` | `rgb(239, 68, 68, 0.2)` | Tinted error border |
 | `--warning` | `#b45309` | `#b45309` | Caution, pending states |
+| `--warning-text` | `#b45309` | `#fbbf24` | Amber text and outlines on any surface; AA on light and dark |
 | `--warning-bg` | `rgb(245, 158, 11, 0.1)` | `rgb(245, 158, 11, 0.1)` | Tinted warning background |
 | `--warning-border` | `rgb(245, 158, 11, 0.2)` | `rgb(245, 158, 11, 0.2)` | Tinted warning border |
 | `--warning-foreground` | `#fff` | `#fff` | Text on a solid warning fill |
 | `--info` | `#1d4ed8` | `#1d4ed8` | Tips, informational callouts |
+| `--info-text` | `#1d4ed8` | `#60a5fa` | Blue text and outlines on any surface; AA on light and dark |
 | `--info-bg` | `rgb(59, 130, 246, 0.1)` | `rgb(59, 130, 246, 0.1)` | Tinted info background |
 | `--info-border` | `rgb(59, 130, 246, 0.2)` | `rgb(59, 130, 246, 0.2)` | Tinted info border |
 | `--info-foreground` | `#fff` | `#fff` | Text on a solid info fill |

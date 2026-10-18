@@ -6,26 +6,14 @@ import { readSpecimens, specimenUrl } from '../tooling/visual/specimens';
 
 const ROOT = join(import.meta.dirname, '..');
 
-const KNOWN_VIOLATIONS = [
-  {
-    file: 'components/badge/badge.examples.html',
-    scheme: 'dark',
-    found: 'color-contrast span[data-variant="success"]',
-    reason: '#15803d on #133243 is 2.67:1; the pin keeps the v3 look',
-  },
-  {
-    file: 'components/badge/badge.examples.html',
-    scheme: 'dark',
-    found: 'color-contrast span[data-variant="warning"]',
-    reason: '#b45309 on #282e3b is 2.70:1; the pin keeps the v3 look',
-  },
-  {
-    file: 'components/badge/badge.examples.html',
-    scheme: 'dark',
-    found: 'color-contrast span[data-variant="info"]',
-    reason: '#1d4ed8 on #152c52 is 2.06:1; the pin keeps the v3 look',
-  },
-] as const;
+type KnownViolation = {
+  file: string;
+  scheme: (typeof SCHEMES)[number];
+  found: string;
+  reason: string;
+};
+
+const KNOWN_VIOLATIONS: readonly KnownViolation[] = [];
 
 for (const { file } of readSpecimens(ROOT)) {
   for (const scheme of SCHEMES) {
@@ -43,7 +31,7 @@ for (const { file } of readSpecimens(ROOT)) {
           (node) => `${violation.id} ${node.target.join(' ')}`,
         ),
       );
-      const known: string[] = KNOWN_VIOLATIONS.filter(
+      const known = KNOWN_VIOLATIONS.filter(
         (entry) => entry.file === file && entry.scheme === scheme,
       ).map((entry) => entry.found);
       expect(found.filter((entry) => !known.includes(entry))).toEqual([]);

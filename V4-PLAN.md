@@ -94,10 +94,13 @@ editorial React (30%).
   consumer's build that lowers `light-dark()` cannot pin them at `:root`; every other token is
   declared once on `:root` and does not change with the scheme (ADR-0004). `--accent` takes
   shadcn's meaning, the quiet interactive surface (the gold tint); brand gold becomes `--brand`,
-  with `--brand-text` for AA text on light. Reviewed on screenshots in P2. Red text and red
-  outlines take `--error-text` (`#f87171` in dark), AA on the dark surfaces where `--error` is
-  2.27–2.44:1; a filled red keeps `--error`. The owner's call: it changes the dark pins of the
-  destructive-outline button, the error badge and the dialog's danger trigger.
+  with `--brand-text` for AA text on light. Reviewed on screenshots in P2. Status-coloured text
+  and outlines take `--error-text`, `--success-text`, `--warning-text` and `--info-text` (the
+  400 shades in dark), AA on the dark surfaces where the base colours measured 2.06–2.70:1; a
+  filled status colour keeps its base token. This changes the dark pins of the
+  destructive-outline button, the badges and the dialog's danger trigger.
+- **`--shadow-lg` mixes its colour with `color-mix()`,** within 6/255 per channel of v3's
+  `rgba()`, an invisible difference; the dialog's parity check compares shadow geometry only.
 - **Where the two implementations disagree, the React look wins:** more apps see it.
 - **Registry v4 is served at `/r/v4/{name}.json`;** `/r/{name}.json` stays the v3 build until each
   app moves.

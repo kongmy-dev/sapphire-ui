@@ -44,7 +44,7 @@
 
   .sp-badge[data-variant="success"] {
     --sp-badge-bg: var(--success-bg);
-    --sp-badge-fg: var(--success);
+    --sp-badge-fg: var(--success-text);
     --sp-badge-border-color: var(--success-border);
   }
 
@@ -56,13 +56,13 @@
 
   .sp-badge[data-variant="warning"] {
     --sp-badge-bg: var(--warning-bg);
-    --sp-badge-fg: var(--warning);
+    --sp-badge-fg: var(--warning-text);
     --sp-badge-border-color: var(--warning-border);
   }
 
   .sp-badge[data-variant="info"] {
     --sp-badge-bg: var(--info-bg);
-    --sp-badge-fg: var(--info);
+    --sp-badge-fg: var(--info-text);
     --sp-badge-border-color: var(--info-border);
   }
 

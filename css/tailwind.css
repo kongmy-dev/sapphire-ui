@@ -47,6 +47,7 @@
   --color-white: var(--white);
   --color-card-dark: var(--card-dark);
   --color-success: var(--success);
+  --color-success-text: var(--success-text);
   --color-success-bg: var(--success-bg);
   --color-success-border: var(--success-border);
   --color-success-foreground: var(--success-foreground);
@@ -57,10 +58,12 @@
   --color-error-bg: var(--error-bg);
   --color-error-border: var(--error-border);
   --color-warning: var(--warning);
+  --color-warning-text: var(--warning-text);
   --color-warning-bg: var(--warning-bg);
   --color-warning-border: var(--warning-border);
   --color-warning-foreground: var(--warning-foreground);
   --color-info: var(--info);
+  --color-info-text: var(--info-text);
   --color-info-bg: var(--info-bg);
   --color-info-border: var(--info-border);
   --color-info-foreground: var(--info-foreground);

@@ -121,6 +121,9 @@ export const tokenRenames = {
 export const newTokens = [
   '--accent-foreground',
   '--error-text',
+  '--success-text',
+  '--warning-text',
+  '--info-text',
   '--border-width',
   '--border-width-strong',
   '--ring-width',
