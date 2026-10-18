@@ -98,9 +98,9 @@ editorial React (30%).
   and outlines take `--error-text`, `--success-text`, `--warning-text` and `--info-text` (the
   400 shades in dark), AA on the dark surfaces where the base colours measured 2.06–2.70:1; a
   filled status colour keeps its base token. This changes the dark pins of the
-  destructive-outline button, the badges, the dialog's danger trigger and the stat's change
-  figures; the alert's title and icon and the toast's stripe and icon take them too, replacing
-  v3's toast literals no token held. v3's `--toast-accent` becomes `--sp-toast-accent`.
+  destructive-outline button, the badges (the table's too), the dialog's danger trigger and the
+  stat's change figures; the alert's title and icon and the toast's stripe and icon take them
+  too, replacing v3's toast literals no token held. v3's `--toast-accent` becomes `--sp-toast-accent`.
 - **`--shadow-lg` mixes its colour with `color-mix()`,** within 6/255 per channel of v3's
   `rgba()`, an invisible difference; the dialog's parity check compares shadow geometry only.
 - **Field placeholders are 65% of the text colour,** not v3's 50%, which measured 3.05:1 on
@@ -118,6 +118,11 @@ editorial React (30%).
   one level off (the segmented bar's dark remainder, re-pinned). An avatar group stacks earlier
   avatars on top through `:nth-child` for its first eight; pagination never tints a disabled or
   current link on hover, which v3 did for a disabled one.
+- **A disabled tab dims to 50% and takes no hover;** v3 drew none. The table's sticky header is
+  `data-sticky` on `.sp-table-header`, and its body needs no class. v3's sparkline is a row of
+  bars, not SVG, and stays one, its colour per bar through `data-status`. Two v3 gaps carry, to
+  revisit in P4: the tab panel takes focus without a ring, and the bar chart shows its values on
+  pointer hover only.
 - **Where the two implementations disagree, the React look wins:** more apps see it.
 - **Registry v4 is served at `/r/v4/{name}.json`;** `/r/{name}.json` stays the v3 build until each
   app moves.
