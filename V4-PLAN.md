@@ -174,9 +174,10 @@ to the `v3` branch. Tests are hermetic: none reads the real `dist/`. Pin Bun (`.
 `packageManager`), devDeps exactly (`bunfig.toml`) and TypeScript 6.0.x; Dependabot moves to the
 `bun` ecosystem, which updates `bun.lock`. A strict shared `tsconfig.base.json` that covers every
 tracked `.ts` file outside `src/`, with `typecheck` in the gate; `src/` keeps its own non-strict
-tsconfig until P9. Strict Biome with `--error-on-warnings`. knip. Unit tests move to `bun test`
-with happy-dom registered in its own preload, or to Playwright where the §9 spike says so; vitest
-and jsdom go and do not come back. The 21 vitest files under `src/` are deleted: `src/` is frozen,
+tsconfig until P9, and the v3 registry blocks keep the consumer typecheck until P7 replaces them.
+Strict Biome with `--error-on-warnings`. knip. Unit tests move to `bun test`, or to Playwright
+where the §9 spike says so; happy-dom, registered in its own preload, arrives with the first test
+that needs a DOM. vitest and jsdom go and do not come back. The 21 vitest files under `src/` are deleted: `src/` is frozen,
 and `v3` keeps them. `bun run scorecard [sha]` prints §10's numbers and each component's state
 (CSS, React, examples, pin, element, registry item) for any commit, measured the same way.
 **Pin the look:** Playwright screenshots of every component's demo, light and dark, rendered as §3
