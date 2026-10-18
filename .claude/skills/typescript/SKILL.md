@@ -81,7 +81,7 @@ Older files break rules this skill sets. Copy the rule, not the neighbouring cod
 
 ## Types — `references/patterns.md`
 
-- **T1 · Illegal states unrepresentable** (P-4). A discriminated union with one
+- **T1 · Illegal states unrepresentable** (P-3). A discriminated union with one
   literal tag, never a boolean beside an optional field. Exhaustive `switch`
   whose `default` assigns to `never`, or a `Record<Union, X>` table. *Caught
   by:* types.
@@ -99,7 +99,7 @@ Older files break rules this skill sets. Copy the rule, not the neighbouring cod
 - **T4 · Derive, never re-declare.** `ComponentProps<'button'>`, `Pick`/`Omit`,
   `(typeof X)[number]`, `ReturnType`. A second declaration of a shape drifts.
   *Caught by:* review.
-- **T5 · A value with meaning is declared once** (P-7): a variant list, data
+- **T5 · A value with meaning is declared once** (P-3): a variant list, data
   attribute value, storage key, event name or cookie name is an `as const`
   tuple or object with its derived union. *Caught by:* lint, review.
 - **T6 · Data is readonly.** `readonly` fields and `readonly T[]` parameters;
