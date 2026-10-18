@@ -488,12 +488,15 @@
     "comment-check": "bun tooling/gates/comments.ts",
     "size-check": "bun tooling/gates/size.ts",
     "token-check": "bun tooling/gates/tokens.ts",
+    "budget-check": "bun tooling/gates/budget.ts",
+    "generated-check": "bun tooling/gates/generated.ts",
+    "generate": "bun tooling/generate.ts",
     "dep-check": "bun tooling/gates/deps.ts",
     "freeze-check": "bun tooling/gates/freeze.ts",
     "scorecard": "bun tooling/scorecard/run.ts",
     "test:visual": "bun tooling/visual/test.ts",
     "pin": "bun tooling/visual/pin.ts",
-    "gate": "bun run lint && bun run typecheck && bun run knip && bun run comment-check && bun run size-check && bun run dep-check && bun run token-check && bun run freeze-check && bun run test && bun run check:registry",
+    "gate": "bun run lint && bun run typecheck && bun run knip && bun run comment-check && bun run size-check && bun run dep-check && bun run token-check && bun run budget-check && bun run generated-check && bun run freeze-check && bun run test && bun run check:registry",
     "deploy:docs": "bun run build:docs && wrangler deploy"
   },
   "peerDependencies": {

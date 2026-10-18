@@ -9,6 +9,7 @@
     "tooling/quality-metrics/metrics.ts",
     "design/colors_and_type.css",
     "css/tailwind.css",
+    "sapphire.css",
     "playwright.visual.config.ts",
     "tests/visual/*.spec.ts"
   ],
