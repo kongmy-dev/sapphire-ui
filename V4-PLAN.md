@@ -131,6 +131,13 @@ editorial React (30%).
   height animation that reduced motion drops; v3's docs had none. The breadcrumb gains an
   ellipsis part and its links take the base focus ring. The scroll area's viewport is a labelled
   `role=region` with `tabindex=0`, and the specimens' lint allows that tabindex.
+- **Steps and timeline draw their connectors as `::after`.** A step's status is `data-status`
+  (done, active, upcoming) with `aria-current="step"` on the active one, and compact steps hide
+  the description. The timeline's last item is `data-last` on its indicator, as v3's `isLast`.
+  The toc's active link is `aria-current="location"` and its links take the base focus ring,
+  where v3 drew the browser's. Three v3 gaps carry, to revisit in P4: the margin note's anchor
+  takes no focus, its wide-screen note overlaps the anchor text, and the toc's two-line clamp
+  never truncates.
 - **Where the two implementations disagree, the React look wins:** more apps see it.
 - **Registry v4 is served at `/r/v4/{name}.json`;** `/r/{name}.json` stays the v3 build until each
   app moves.
