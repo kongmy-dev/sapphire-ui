@@ -50,7 +50,7 @@
 
   .sp-badge[data-variant="error"] {
     --sp-badge-bg: var(--error-bg);
-    --sp-badge-fg: var(--error);
+    --sp-badge-fg: var(--error-text);
     --sp-badge-border-color: var(--error-border);
   }
 

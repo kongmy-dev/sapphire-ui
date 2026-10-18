@@ -144,17 +144,18 @@
 
   .sp-button[data-variant="destructive-outline"] {
     --sp-button-bg: transparent;
-    --sp-button-fg: var(--error);
+    --sp-button-fg: var(--error-text);
     --sp-button-border-width: var(--border-width-strong);
-    --sp-button-border-color: var(--error);
+    --sp-button-border-color: var(--error-text);
     --sp-button-bg-hover: var(--error);
+    --sp-button-border-color-hover: var(--error);
     --sp-button-fg-hover: var(--primary-foreground);
     --sp-button-ring: var(--error-ring);
   }
 
   .sp-button[data-variant="destructive-ghost"] {
     --sp-button-bg: transparent;
-    --sp-button-fg: var(--error);
+    --sp-button-fg: var(--error-text);
     --sp-button-bg-hover: var(--accent);
     --sp-button-ring: var(--error-ring);
   }

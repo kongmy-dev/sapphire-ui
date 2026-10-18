@@ -51,6 +51,7 @@
   --color-success-border: var(--success-border);
   --color-success-foreground: var(--success-foreground);
   --color-error: var(--error);
+  --color-error-text: var(--error-text);
   --color-error-hover: var(--error-hover);
   --color-error-ring: var(--error-ring);
   --color-error-bg: var(--error-bg);

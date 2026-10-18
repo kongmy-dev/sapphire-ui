@@ -96,6 +96,7 @@ Each row gives the resolved colour per scheme.
 | `--success-border` | `rgb(34, 197, 94, 0.2)` | `rgb(34, 197, 94, 0.2)` | Tinted success border |
 | `--success-foreground` | `#fff` | `#fff` | Text on a solid success fill |
 | `--error` | `#b91c1c` | `#b91c1c` | Validation errors |
+| `--error-text` | `#b91c1c` | `#f87171` | Red text and outlines on any surface; AA on light and dark |
 | `--error-hover` | `#991b1b` | `#991b1b` | Error hover fill |
 | `--error-ring` | `#dc2626` | `#dc2626` | Error focus ring |
 | `--error-bg` | `rgb(239, 68, 68, 0.1)` | `rgb(239, 68, 68, 0.1)` | Tinted error background |
