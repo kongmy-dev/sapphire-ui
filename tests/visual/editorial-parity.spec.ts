@@ -99,7 +99,8 @@ const COLOURS = [
   'outline-color',
 ] as const;
 
-type Side = 'v3' | 'v4';
+const SIDES = ['v3', 'v4'] as const;
+type Side = (typeof SIDES)[number];
 type Case = {
   name: string;
   interaction: Interaction;
@@ -494,38 +495,46 @@ const readProbes = (root: Locator, probes: ReturnType<typeof resolved>) =>
           .map((value) => value.toFixed(3))
           .join(' ');
       };
-      return Object.fromEntries(
-        spec.probes.map((probe) => {
-          const element = rootElement.querySelector(probe.selector);
-          if (element === null) throw new Error(`no ${probe.selector}`);
-          const hidden = getComputedStyle(element).display === 'none';
-          const box = probe.noBox || hidden ? 'none' : boxOf(element);
-          if (probe.rectOnly) return [probe.name, { box }];
-          const style = getComputedStyle(element, probe.pseudo || null);
-          const shadows = style.boxShadow
-            .replace(new RegExp(spec.source, 'g'), rgba)
-            .split(', ')
-            .filter((part) => !/^\d+\|\d+\|\d+\|0 /.test(part));
-          const entries = [
-            ...spec.properties.map((name): [string, string] => [
-              name,
-              drawn(style, name) ? radius(element, style, name) : 'none',
-            ]),
-            ...spec.colours.map((name): [string, string] => [
-              name,
-              drawn(style, name) ? rgba(style.getPropertyValue(name)) : 'none',
-            ]),
-          ].filter(([name]) => !probe.skip.includes(name));
-          return [
-            probe.name,
-            {
-              ...Object.fromEntries(entries),
-              'box-shadow': shadows.join(', '),
-              box,
-            },
-          ];
-        }),
-      );
+      const entriesOf = (
+        element: Element,
+        style: CSSStyleDeclaration,
+        skip: readonly string[],
+      ) =>
+        [
+          ...spec.properties.map((name): [string, string] => [
+            name,
+            drawn(style, name) ? radius(element, style, name) : 'none',
+          ]),
+          ...spec.colours.map((name): [string, string] => [
+            name,
+            drawn(style, name) ? rgba(style.getPropertyValue(name)) : 'none',
+          ]),
+        ].filter(([name]) => !skip.includes(name));
+      const shadowOf = (style: CSSStyleDeclaration) =>
+        style.boxShadow
+          .replace(new RegExp(spec.source, 'g'), rgba)
+          .split(', ')
+          .filter((part) => !/^\d+\|\d+\|\d+\|0 /.test(part))
+          .join(', ');
+      const describe = (
+        probe: (typeof spec.probes)[number],
+      ): [string, Record<string, string>] => {
+        const element = rootElement.querySelector(probe.selector);
+        if (element === null) throw new Error(`no ${probe.selector}`);
+        const hidden = getComputedStyle(element).display === 'none';
+        const box = probe.noBox || hidden ? 'none' : boxOf(element);
+        if (probe.rectOnly) return [probe.name, { box }];
+        const style = getComputedStyle(element, probe.pseudo || null);
+        return [
+          probe.name,
+          {
+            ...Object.fromEntries(entriesOf(element, style, probe.skip)),
+            'box-shadow': shadowOf(style),
+            box,
+          },
+        ];
+      };
+      return Object.fromEntries(spec.probes.map(describe));
     },
     {
       probes,
@@ -673,6 +682,32 @@ const lookup = (seen: Map<string, Observation>, name: string): Observation => {
   return found;
 };
 
+const reachProblems = (item: Case, seen: Record<Side, Observation>) =>
+  SIDES.filter((side) => !seen[side].reached).map(
+    (side) => `${item.name}: ${side} never reached ${item.interaction}`,
+  );
+
+async function problemsOf(
+  page: Page,
+  testInfo: TestInfo,
+  group: Group,
+  observed: Record<Side, Map<string, Observation>>,
+): Promise<string[]> {
+  const problems: string[] = [];
+  for (const item of group.cases) {
+    const seen = {
+      v3: lookup(observed.v3, item.name),
+      v4: lookup(observed.v4, item.name),
+    };
+    problems.push(
+      ...styleProblems(item, seen.v3, seen.v4),
+      ...reachProblems(item, seen),
+      ...(await pixelProblems(page, testInfo, item, seen.v3, seen.v4)),
+    );
+  }
+  return problems;
+}
+
 for (const group of GROUPS) {
   test(`editorial parity: ${group.name}`, async ({ page }, testInfo) => {
     const scheme = schemeOf(testInfo);
@@ -680,19 +715,6 @@ for (const group of GROUPS) {
     const v4 = await observeAll(page, group, 'v4');
     await open(page, group.v3Path, scheme, group.width, V3_DECIDED_CHANGES);
     const v3 = await observeAll(page, group, 'v3');
-    const problems: string[] = [];
-    for (const item of group.cases) {
-      const seen = { v3: lookup(v3, item.name), v4: lookup(v4, item.name) };
-      problems.push(...styleProblems(item, seen.v3, seen.v4));
-      for (const side of ['v3', 'v4'] as const)
-        if (!seen[side].reached)
-          problems.push(
-            `${item.name}: ${side} never reached ${item.interaction}`,
-          );
-      problems.push(
-        ...(await pixelProblems(page, testInfo, item, seen.v3, seen.v4)),
-      );
-    }
-    expect(problems).toEqual([]);
+    expect(await problemsOf(page, testInfo, group, { v3, v4 })).toEqual([]);
   });
 }
