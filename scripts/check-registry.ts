@@ -1,30 +1,43 @@
 #!/usr/bin/env bun
-/**
- * CI guard for the Sapphire product registry. Builds the registry to a temp dir
- * and asserts three invariants that keep registry items self-contained and
- * consumable:
- *
- *   1. Closed graph      — every registryDependency is a full design.kongmy.dev
- *                           URL resolving to a known item. Bare names are an
- *                           error: the shadcn CLI resolves them against its own
- *                           default registry, not ours (breaks `shadcn add`).
- *   2. No leaked imports  — emitted files carry no library-relative imports
- *                           (`../…` / `./…`); everything is on the `@/` alias.
- *   3. Token coverage     — every Sapphire CSS var a component references
- *                           (`--color-*`, `--radius-*`, …) is defined by the
- *                           `theme` item consumers install. A miss = a silently
- *                           unstyled utility in a fresh app.
- *
- * Exits non-zero with a report on any violation.
- */
 import { mkdtempSync, readdirSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 const SAPPHIRE_VAR =
   /--(?:color|radius|font|text|leading|space|shadow|transition)-[a-z0-9-]+/g;
-
 const DEP_URL = /^https:\/\/design\.kongmy\.dev\/r\/([a-z0-9-]+)\.json$/;
+const RELATIVE_IMPORT = /from\s+['"](\.[^'"]*)['"]/g;
+const CUSTOM_CLASS = /[\s'"`](k-[a-z][a-z-]*)/g;
+const DECLARED_VAR = /(--[a-z0-9-]+)\s*:/g;
+const CONSUMER_ITEM_TYPES = ['registry:ui', 'registry:block'];
+
+type RegistryItem = {
+  name: string;
+  type: string;
+  registryDependencies?: string[];
+  files: { content: string }[];
+};
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null;
+
+const isStringArray = (value: unknown): value is string[] =>
+  Array.isArray(value) && value.every((entry) => typeof entry === 'string');
+
+const isFileWithContent = (value: unknown): value is { content: string } =>
+  isRecord(value) && typeof value.content === 'string';
+
+function isRegistryItem(value: unknown): value is RegistryItem {
+  return (
+    isRecord(value) &&
+    typeof value.name === 'string' &&
+    typeof value.type === 'string' &&
+    (value.registryDependencies === undefined ||
+      isStringArray(value.registryDependencies)) &&
+    Array.isArray(value.files) &&
+    value.files.every(isFileWithContent)
+  );
+}
 
 function buildToTemp(): string {
   const out = mkdtempSync(join(tmpdir(), 'sapphire-registry-'));
@@ -40,71 +53,80 @@ function buildToTemp(): string {
   return out;
 }
 
-interface Item {
-  name: string;
-  type: string;
-  registryDependencies?: string[];
-  files: Array<{ target?: string; content: string }>;
+function readItem(dir: string, file: string): RegistryItem {
+  const parsed: unknown = JSON.parse(readFileSync(join(dir, file), 'utf8'));
+  if (!isRegistryItem(parsed)) throw new Error(`${file} is not a registry item`);
+  return parsed;
 }
 
-function readItems(dir: string): Item[] {
+function readItems(dir: string): RegistryItem[] {
   return readdirSync(dir)
-    .filter((f) => f.endsWith('.json') && f !== 'registry.json')
-    .map((f) => JSON.parse(readFileSync(join(dir, f), 'utf8')) as Item);
+    .filter((file) => file.endsWith('.json') && file !== 'registry.json')
+    .map((file) => readItem(dir, file));
+}
+
+function capturedGroups(content: string, pattern: RegExp): string[] {
+  return [...content.matchAll(pattern)].flatMap((match) => match[1] ?? []);
+}
+
+function themeVariables(items: RegistryItem[]): Set<string> {
+  const theme = items.find((item) => item.name === 'theme');
+  if (!theme) throw new Error('no theme item generated');
+  const themeCss = theme.files.map((file) => file.content).join('\n');
+  return new Set(capturedGroups(themeCss, DECLARED_VAR));
+}
+
+function dependencyProblems(item: RegistryItem, names: Set<string>): string[] {
+  return (item.registryDependencies ?? []).flatMap((dep) => {
+    const name = dep.match(DEP_URL)?.[1];
+    if (name === undefined) {
+      return [
+        `${item.name}: registryDependency "${dep}" must be a full https://design.kongmy.dev/r/<name>.json URL (bare names resolve against shadcn's default registry)`,
+      ];
+    }
+    if (names.has(name)) return [];
+    return [`${item.name}: registryDependency "${dep}" is not a registry item`];
+  });
+}
+
+function contentProblems(
+  itemName: string,
+  content: string,
+  definedVars: Set<string>,
+): string[] {
+  const leakedImports = capturedGroups(content, RELATIVE_IMPORT).map(
+    (specifier) => `${itemName}: leaked relative import "${specifier}"`,
+  );
+  const undefinedTokens = (content.match(SAPPHIRE_VAR) ?? [])
+    .filter((ref) => !definedVars.has(ref))
+    .map((ref) => `${itemName}: references undefined token "${ref}"`);
+  const customClasses = capturedGroups(content, CUSTOM_CLASS).map(
+    (cls) =>
+      `${itemName}: references custom class "${cls}" (not tailwind/shadcn — inline it)`,
+  );
+  return [...leakedImports, ...undefinedTokens, ...customClasses];
+}
+
+function itemProblems(
+  item: RegistryItem,
+  names: Set<string>,
+  definedVars: Set<string>,
+): string[] {
+  const problems = dependencyProblems(item, names);
+  if (!CONSUMER_ITEM_TYPES.includes(item.type)) return problems;
+  return [
+    ...problems,
+    ...item.files.flatMap((file) =>
+      contentProblems(item.name, file.content, definedVars),
+    ),
+  ];
 }
 
 function main() {
-  const dir = buildToTemp();
-  const items = readItems(dir);
-  const names = new Set(items.map((i) => i.name));
-  const errors: string[] = [];
-
-  // Token set = every var declared by the theme item's shipped CSS.
-  const theme = items.find((i) => i.name === 'theme');
-  if (!theme) throw new Error('no theme item generated');
-  const themeCss = theme.files.map((f) => f.content).join('\n');
-  const definedVars = new Set(
-    [...themeCss.matchAll(/(--[a-z0-9-]+)\s*:/g)].map((m) => m[1]),
-  );
-
-  for (const item of items) {
-    // 1. closed graph, URL form only
-    for (const dep of item.registryDependencies ?? []) {
-      const m = dep.match(DEP_URL);
-      if (!m) {
-        errors.push(
-          `${item.name}: registryDependency "${dep}" must be a full https://design.kongmy.dev/r/<name>.json URL (bare names resolve against shadcn's default registry)`,
-        );
-      } else if (!names.has(m[1])) {
-        errors.push(
-          `${item.name}: registryDependency "${dep}" is not a registry item`,
-        );
-      }
-    }
-    // Checks 2–4 apply to component + block items — they consume tokens; the
-    // theme item defines them.
-    if (item.type !== 'registry:ui' && item.type !== 'registry:block') continue;
-    for (const file of item.files) {
-      // 2. no leaked relative imports
-      for (const m of file.content.matchAll(/from\s+['"](\.[^'"]*)['"]/g)) {
-        errors.push(`${item.name}: leaked relative import "${m[1]}"`);
-      }
-      // 3. token coverage
-      for (const ref of file.content.match(SAPPHIRE_VAR) ?? []) {
-        if (!definedVars.has(ref)) {
-          errors.push(`${item.name}: references undefined token "${ref}"`);
-        }
-      }
-      // 4. no custom index.css semantic classes — registry items must be
-      // self-contained tailwind/shadcn; a `k-*` class lives only in the
-      // library's index.css and would render unstyled in a consumer.
-      for (const m of file.content.matchAll(/[\s'"`](k-[a-z][a-z-]*)/g)) {
-        errors.push(
-          `${item.name}: references custom class "${m[1]}" (not tailwind/shadcn — inline it)`,
-        );
-      }
-    }
-  }
+  const items = readItems(buildToTemp());
+  const names = new Set(items.map((item) => item.name));
+  const definedVars = themeVariables(items);
+  const errors = items.flatMap((item) => itemProblems(item, names, definedVars));
 
   if (errors.length > 0) {
     console.error(

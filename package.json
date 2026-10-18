@@ -471,6 +471,7 @@
   "scripts": {
     "dev": "vite --config vite.docs.config.ts",
     "build": "tsc -b && vite build",
+    "typecheck": "tsc -b",
     "prepare": "git config core.hooksPath .githooks || true",
     "lint": "biome check",
     "lint:fix": "biome check --write",
@@ -554,6 +555,7 @@
     "@radix-ui/react-tooltip": "1.4.0",
     "@tailwindcss/vite": "4.3.3",
     "@tanstack/react-table": "8.21.3",
+    "@types/bun": "1.4.3",
     "@types/js-cookie": "3.0.6",
     "@types/node": "26.6.5",
     "@types/react": "19.3.0",

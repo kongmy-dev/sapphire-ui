@@ -1,26 +1,10 @@
 #!/usr/bin/env bun
-/**
- * Build the Sapphire UI product registry (shadcn format).
- *
- * For each item in registry/items.ts:
- *   1. read the library source (src/components/ui/<Source>.tsx),
- *   2. rewrite the library's relative imports to the shadcn `@/` alias,
- *   3. derive npm `dependencies` + `registryDependencies` from the imports,
- *   4. emit a self-contained registry-item JSON to <outDir>/<name>.json.
- *
- * Also emits <outDir>/registry.json (the index). Output dir defaults to
- * dist-docs/r (served at design.kongmy.dev/r/<name>.json); override with
- * REGISTRY_OUT. The library's own npm build is untouched — this only reads.
- */
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { productBlocks, productItems } from '../registry/items.ts';
 
 const BLOCKS_DIR = 'registry/blocks';
-
 const REGISTRY_NAME = 'sapphire-ui';
-// REGISTRY_HOMEPAGE override exists for the smoke test, which serves the build
-// from localhost and needs registryDependency URLs to resolve there.
 const HOMEPAGE = process.env.REGISTRY_HOMEPAGE ?? 'https://design.kongmy.dev';
 const SRC_UI = 'src/components/ui';
 const THEME_SRC = 'src/theme.css';
@@ -29,18 +13,19 @@ const OUT_DIR = process.env.REGISTRY_OUT ?? 'dist-docs/r';
 const ITEM_SCHEMA = 'https://ui.shadcn.com/schema/registry-item.json';
 const REGISTRY_SCHEMA = 'https://ui.shadcn.com/schema/registry.json';
 
-/**
- * registryDependencies must be full URLs: the shadcn CLI resolves bare names
- * against ITS default registry (ui.shadcn.com), not the registry an item was
- * fetched from. URL form also works regardless of what namespace the consumer
- * picks in components.json.
- */
-function registryUrl(name: string): string {
-  return `${HOMEPAGE}/r/${name}.json`;
-}
+const CONSUMER_PROVIDED_PACKAGES = new Set(['react', 'react-dom']);
+const IMPORT_SPECIFIER = /from\s+['"]([^'"]+)['"]/g;
+const REGISTRY_ITEM_IMPORT = /@\/components\/ui\/([a-z][a-z0-9-]*)/g;
 
-// react/react-dom are peer deps every consumer already has; shadcn omits them.
-const PEER_DEPS = new Set(['react', 'react-dom']);
+type ItemSpec = {
+  name: string;
+  type: 'registry:ui' | 'registry:block';
+  title: string;
+  description: string;
+  sourcePath: string;
+};
+
+const registryDependencyUrl = (name: string) => `${HOMEPAGE}/r/${name}.json`;
 
 function pascalToKebab(name: string): string {
   return name
@@ -49,74 +34,46 @@ function pascalToKebab(name: string): string {
     .toLowerCase();
 }
 
-/** Bare package name from a specifier: '@radix-ui/react-slot' -> '@radix-ui/react-slot', 'clsx/x' -> 'clsx'. */
-function packageBase(spec: string): string {
-  if (spec.startsWith('@')) return spec.split('/').slice(0, 2).join('/');
-  return spec.split('/')[0];
+function packageName(specifier: string): string {
+  const segments = specifier.split('/');
+  return (specifier.startsWith('@') ? segments.slice(0, 2) : segments.slice(0, 1)).join('/');
 }
 
-interface Processed {
-  content: string;
-  dependencies: string[];
-  registryDependencies: string[];
+function capturedGroups(content: string, pattern: RegExp): string[] {
+  return [...content.matchAll(pattern)].flatMap((match) => match[1] ?? []);
 }
 
-function processSource(fullPath: string): Processed {
-  let content = readFileSync(fullPath, 'utf8');
-
-  // Rewrite library-relative imports to the shadcn `@/` alias (product items in
-  // src/ use relative paths; blocks in registry/blocks/ are already aliased).
-  content = content.replace(/(['"])\.\.\/\.\.\/lib\/utils\1/g, "'@/lib/utils'");
-  content = content.replace(
-    /(['"])\.\.\/\.\.\/hooks\/([A-Za-z0-9]+)\1/g,
-    "'@/hooks/$2'",
-  );
-  content = content.replace(
-    /(['"])\.\/([A-Z][A-Za-z0-9]*)\1/g,
-    (_match, _quote, comp: string) =>
-      `'@/components/ui/${pascalToKebab(comp)}'`,
-  );
-
-  // registryDependencies: any `@/components/ui/<name>` import — unified across
-  // rewritten product refs and blocks that compose primitives directly.
-  const registryDependencies = new Set<string>();
-  for (const match of content.matchAll(
-    /@\/components\/ui\/([a-z][a-z0-9-]*)/g,
-  )) {
-    registryDependencies.add(match[1]);
-  }
-
-  // npm deps from bare (non-relative, non-alias) imports
-  const dependencies = new Set<string>();
-  for (const match of content.matchAll(/from\s+['"]([^'"]+)['"]/g)) {
-    const spec = match[1];
-    if (spec.startsWith('.') || spec.startsWith('@/')) continue;
-    const base = packageBase(spec);
-    if (!PEER_DEPS.has(base)) dependencies.add(base);
-  }
-
-  return {
-    content,
-    dependencies: [...dependencies].sort(),
-    registryDependencies: [...registryDependencies].sort(),
-  };
+function rewriteLibraryImports(source: string): string {
+  return source
+    .replace(/(['"])\.\.\/\.\.\/lib\/utils\1/g, "'@/lib/utils'")
+    .replace(/(['"])\.\.\/\.\.\/hooks\/([A-Za-z0-9]+)\1/g, "'@/hooks/$2'")
+    .replace(
+      /(['"])\.\/([A-Z][A-Za-z0-9]*)\1/g,
+      (_match: string, _quote: string, component: string) =>
+        `'@/components/ui/${pascalToKebab(component)}'`,
+    );
 }
 
-/**
- * The `theme` item ships Sapphire's `theme.css` verbatim — the single source,
- * which already carries the brand tokens, the shadcn semantic-token layer, and
- * the dark-mode block. `shadcn add theme` bootstraps a project's tokens with no
- * npm package. Every utility the product items use must resolve from these
- * tokens (enforced by scripts/check-registry.ts).
- */
+function processSource(fullPath: string) {
+  const content = rewriteLibraryImports(readFileSync(fullPath, 'utf8'));
+  const registryDependencies = [
+    ...new Set(capturedGroups(content, REGISTRY_ITEM_IMPORT)),
+  ].sort();
+  const packages = capturedGroups(content, IMPORT_SPECIFIER)
+    .filter((specifier) => !specifier.startsWith('.') && !specifier.startsWith('@/'))
+    .map(packageName)
+    .filter((name) => !CONSUMER_PROVIDED_PACKAGES.has(name));
+  return { content, dependencies: [...new Set(packages)].sort(), registryDependencies };
+}
+
 function buildThemeItem() {
-  const content = readFileSync(THEME_SRC, 'utf8');
   const file = {
     path: 'sapphire-theme.css',
-    content,
+    content: readFileSync(THEME_SRC, 'utf8'),
     type: 'registry:file',
     target: 'styles/sapphire-theme.css',
   };
+  const noRegistryItems: string[] = [];
   const item = {
     $schema: ITEM_SCHEMA,
     name: 'theme',
@@ -124,115 +81,67 @@ function buildThemeItem() {
     title: 'Sapphire Theme',
     description:
       'Sapphire design tokens (Tailwind v4 @theme) + shadcn-var aliases. Import once per app; required by every Sapphire component.',
-    dependencies: [] as string[],
-    registryDependencies: [] as string[],
+    dependencies: noRegistryItems,
+    registryDependencies: noRegistryItems,
     files: [file],
   };
-  return {
-    item,
-    indexEntry: {
-      ...item,
-      files: [{ path: file.path, type: file.type, target: file.target }],
-    },
+  const indexFile = { path: file.path, type: file.type, target: file.target };
+  return { name: item.name, item, indexEntry: { ...item, files: [indexFile] } };
+}
+
+function buildItem(spec: ItemSpec) {
+  const { content, dependencies, registryDependencies } = processSource(spec.sourcePath);
+  const summary = {
+    name: spec.name,
+    type: spec.type,
+    title: spec.title,
+    description: spec.description,
+    dependencies,
+    registryDependencies: ['theme', ...registryDependencies].map(registryDependencyUrl),
   };
+  const target = `components/ui/${spec.name}.tsx`;
+  const path = `ui/${spec.name}.tsx`;
+  return {
+    name: spec.name,
+    item: { $schema: ITEM_SCHEMA, ...summary, files: [{ path, content, type: spec.type, target }] },
+    indexEntry: { ...summary, files: [{ path, type: spec.type, target }] },
+  };
+}
+
+function writeJson(path: string, value: unknown) {
+  writeFileSync(path, `${JSON.stringify(value, null, 2)}\n`);
 }
 
 function main() {
   mkdirSync(OUT_DIR, { recursive: true });
-  const indexItems: Array<Record<string, unknown>> = [];
-
-  const theme = buildThemeItem();
-  writeFileSync(
-    join(OUT_DIR, 'theme.json'),
-    `${JSON.stringify(theme.item, null, 2)}\n`,
-  );
-  indexItems.push(theme.indexEntry);
-
-  for (const item of productItems) {
-    const { content, dependencies, registryDependencies } = processSource(
-      join(SRC_UI, `${item.source}.tsx`),
-    );
-    // Every component requires the token layer — make `theme` an explicit dep
-    // so `shadcn add <component>` also pulls the tokens it renders against.
-    const allRegistryDeps = ['theme', ...registryDependencies].map(registryUrl);
-    const file = {
-      path: `ui/${item.name}.tsx`,
-      content,
-      type: 'registry:ui',
-      target: `components/ui/${item.name}.tsx`,
-    };
-    const registryItem = {
-      $schema: ITEM_SCHEMA,
-      name: item.name,
-      type: 'registry:ui',
-      title: item.title,
-      description: item.description,
-      dependencies,
-      registryDependencies: allRegistryDeps,
-      files: [file],
-    };
-    writeFileSync(
-      join(OUT_DIR, `${item.name}.json`),
-      `${JSON.stringify(registryItem, null, 2)}\n`,
-    );
-    indexItems.push({
-      name: item.name,
-      type: 'registry:ui',
-      title: item.title,
-      description: item.description,
-      dependencies,
-      registryDependencies: allRegistryDeps,
-      files: [{ path: file.path, type: file.type, target: file.target }],
-    });
-  }
-
-  for (const block of productBlocks) {
-    const { content, dependencies, registryDependencies } = processSource(
-      join(BLOCKS_DIR, block.file),
-    );
-    const allRegistryDeps = ['theme', ...registryDependencies].map(registryUrl);
-    const file = {
-      path: `ui/${block.name}.tsx`,
-      content,
-      type: 'registry:block',
-      target: `components/ui/${block.name}.tsx`,
-    };
-    const registryItem = {
-      $schema: ITEM_SCHEMA,
-      name: block.name,
-      type: 'registry:block',
-      title: block.title,
-      description: block.description,
-      dependencies,
-      registryDependencies: allRegistryDeps,
-      files: [file],
-    };
-    writeFileSync(
-      join(OUT_DIR, `${block.name}.json`),
-      `${JSON.stringify(registryItem, null, 2)}\n`,
-    );
-    indexItems.push({
-      name: block.name,
-      type: 'registry:block',
-      title: block.title,
-      description: block.description,
-      dependencies,
-      registryDependencies: allRegistryDeps,
-      files: [{ path: file.path, type: file.type, target: file.target }],
-    });
-  }
-
-  const registry = {
+  const built = [
+    buildThemeItem(),
+    ...productItems.map(({ name, source, title, description }) =>
+      buildItem({
+        name,
+        type: 'registry:ui',
+        title,
+        description,
+        sourcePath: join(SRC_UI, `${source}.tsx`),
+      }),
+    ),
+    ...productBlocks.map(({ name, file, title, description }) =>
+      buildItem({
+        name,
+        type: 'registry:block',
+        title,
+        description,
+        sourcePath: join(BLOCKS_DIR, file),
+      }),
+    ),
+  ];
+  for (const { name, item } of built) writeJson(join(OUT_DIR, `${name}.json`), item);
+  writeJson(join(OUT_DIR, 'registry.json'), {
     $schema: REGISTRY_SCHEMA,
     name: REGISTRY_NAME,
     homepage: HOMEPAGE,
-    items: indexItems,
-  };
-  writeFileSync(
-    join(OUT_DIR, 'registry.json'),
-    `${JSON.stringify(registry, null, 2)}\n`,
-  );
-
+    items: built.map(({ indexEntry }) => indexEntry),
+  });
   console.log(
     `registry: wrote theme + ${productItems.length} items + ${productBlocks.length} blocks + registry.json to ${OUT_DIR}`,
   );
