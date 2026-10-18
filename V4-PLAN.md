@@ -120,7 +120,9 @@ editorial React (30%).
   test sees only what an app sees: it imports its component and that component's examples, finds
   elements by role and name, and asserts no snapshot.
 - **The look is pinned in one environment.** Pins are rendered and compared only in the Playwright
-  container image that matches the pinned `@playwright/test`, one screenshot per example root, at
+  container image that matches the pinned `@playwright/test`, on `linux/arm64`: native on an Apple
+  Silicon Mac and on CI's `ubuntu-24.04-arm` runner, free for public repositories. Under amd64
+  emulation the image's Chromium crashes on launch. One screenshot per example root, at
   zero tolerance (Playwright's default allows 0.2 per pixel). Rendering differs by OS, so a pin
   taken on a laptop never lands.
 - **Generated files are committed:** the export map, the stylesheet's import list,
@@ -343,7 +345,8 @@ Stop and ask the owner when:
 
 ## 10. Done means
 
-Measured by `bun run scorecard` at `bc2e116` and at the release commit: runtime dependencies 4 → 0,
-required peers 22 → 0, export entries 88 → under 10, stray comments 354 → 0, size-gate failures
-28 → 0, Markdown other than `CHANGELOG.md` at most half of today's 2,391 lines, gzipped stylesheet
-under 23.6 KB.
+Measured by `bun run scorecard` at `bc2e116` and at the release commit, over the whole tree:
+runtime dependencies 4 → 0, required peers 21 → 0, export entries 88 → under 10, stray comments
+929 → 0, size-gate findings 75 in 40 files → 0, Markdown other than `CHANGELOG.md` 5,303 → at most
+2,651 lines, gzipped stylesheet under 23,765 bytes (measured at `dcdcf1e`, since `bc2e116`'s build
+fails).
