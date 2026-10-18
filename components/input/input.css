@@ -1,0 +1,96 @@
+@layer components {
+  .sp-input {
+    --sp-input-radius: var(--radius-btn);
+    --sp-input-padding-block: var(--space-3);
+    --sp-input-padding-inline: var(--space-4);
+    --sp-input-font-family: var(--font-sans);
+    --sp-input-font-size: var(--text-base);
+    --sp-input-line-height: var(--space-6);
+    --sp-input-bg: var(--card);
+    --sp-input-fg: var(--foreground);
+    --sp-input-placeholder: color-mix(in oklab, currentcolor 50%, transparent);
+    --sp-input-border-width: var(--border-width);
+    --sp-input-border-color: var(--border);
+    --sp-input-border-color-focus: var(--brand);
+    --sp-input-ring-width: calc(var(--space-1) * 0.75);
+    --sp-input-ring-color: color-mix(in oklab, var(--brand) 12%, transparent);
+    --sp-input-disabled-opacity: 0.5;
+    --sp-input-focus: 0 0 transparent;
+
+    width: 100%;
+    padding: var(--sp-input-padding-block) var(--sp-input-padding-inline);
+    font-family: var(--sp-input-font-family);
+    font-size: var(--sp-input-font-size);
+    line-height: var(--sp-input-line-height);
+    color: var(--sp-input-fg);
+    background: var(--sp-input-bg);
+    border: var(--sp-input-border-width) solid var(--sp-input-border-color);
+    border-radius: var(--sp-input-radius);
+    box-shadow: var(--sp-input-focus);
+    transition: all var(--transition-base);
+  }
+
+  .sp-input::placeholder {
+    color: var(--sp-input-placeholder);
+    opacity: 1;
+  }
+
+  .sp-input:focus-visible {
+    --sp-input-focus: 0 0 0 var(--sp-input-ring-width)
+      var(--sp-input-ring-color);
+
+    border-color: var(--sp-input-border-color-focus);
+    outline: var(--ring-width) solid transparent;
+    outline-offset: var(--ring-offset);
+  }
+
+  .sp-input:disabled {
+    cursor: not-allowed;
+    opacity: var(--sp-input-disabled-opacity);
+  }
+
+  .sp-input[data-variant="mono"] {
+    --sp-input-font-family: var(--font-mono);
+    --sp-input-bg: var(--background);
+  }
+
+  .sp-input[data-variant="on-dark"] {
+    --sp-input-radius: var(--radius-sm);
+    --sp-input-padding-block: calc(var(--space-1) * 2.5);
+    --sp-input-padding-inline: var(--space-3);
+    --sp-input-bg: var(--field-dark);
+    --sp-input-fg: var(--on-dark);
+    --sp-input-border-color: var(--border-dark);
+    --sp-input-ring-width: 0;
+  }
+
+  .sp-input[data-size="sm"] {
+    --sp-input-padding-block: var(--space-2);
+    --sp-input-padding-inline: var(--space-3);
+    --sp-input-font-size: var(--text-sm);
+    --sp-input-line-height: var(--space-5);
+  }
+
+  .sp-input[data-size="lg"] {
+    --sp-input-padding-block: var(--space-4);
+    --sp-input-padding-inline: var(--space-5);
+    --sp-input-font-size: var(--text-lg);
+    --sp-input-line-height: calc(var(--space-1) * 7);
+  }
+
+  .sp-input[aria-invalid="true"] {
+    --sp-input-border-color: var(--error-text);
+    --sp-input-border-color-focus: var(--error-text);
+    --sp-input-ring-color: color-mix(
+      in oklab,
+      var(--error-text) 12%,
+      transparent
+    );
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sp-input {
+      transition: none;
+    }
+  }
+}

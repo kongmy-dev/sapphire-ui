@@ -1,0 +1,24 @@
+@layer components {
+  .sp-form-field {
+    --sp-form-field-gap: calc(var(--space-1) * 1.5);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-form-field-gap);
+  }
+
+  .sp-form-field-hint,
+  .sp-form-field-error {
+    --sp-form-field-message-fg: var(--muted-foreground);
+
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    line-height: var(--space-4);
+    color: var(--sp-form-field-message-fg);
+  }
+
+  .sp-form-field-error {
+    --sp-form-field-message-fg: var(--error-text);
+  }
+}

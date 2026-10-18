@@ -1,0 +1,111 @@
+@layer components {
+  .sp-textarea {
+    --sp-textarea-radius: var(--radius-btn);
+    --sp-textarea-min-height: calc(var(--space-1) * 30);
+    --sp-textarea-padding-block: var(--space-3);
+    --sp-textarea-padding-inline: var(--space-4);
+    --sp-textarea-font-family: var(--font-sans);
+    --sp-textarea-font-size: var(--text-base);
+    --sp-textarea-line-height: var(--space-6);
+    --sp-textarea-bg: var(--card);
+    --sp-textarea-fg: var(--foreground);
+    --sp-textarea-placeholder: color-mix(
+      in oklab,
+      currentcolor 50%,
+      transparent
+    );
+    --sp-textarea-border-width: var(--border-width);
+    --sp-textarea-border-color: var(--border);
+    --sp-textarea-border-color-focus: var(--brand);
+    --sp-textarea-ring-width: calc(var(--space-1) * 0.75);
+    --sp-textarea-ring-color: color-mix(
+      in oklab,
+      var(--brand) 12%,
+      transparent
+    );
+    --sp-textarea-disabled-opacity: 0.5;
+    --sp-textarea-focus: 0 0 transparent;
+    --sp-textarea-resize: vertical;
+
+    width: 100%;
+    min-height: var(--sp-textarea-min-height);
+    padding: var(--sp-textarea-padding-block) var(--sp-textarea-padding-inline);
+    font-family: var(--sp-textarea-font-family);
+    font-size: var(--sp-textarea-font-size);
+    line-height: var(--sp-textarea-line-height);
+    color: var(--sp-textarea-fg);
+    background: var(--sp-textarea-bg);
+    border: var(--sp-textarea-border-width) solid
+      var(--sp-textarea-border-color);
+    border-radius: var(--sp-textarea-radius);
+    resize: var(--sp-textarea-resize);
+    box-shadow: var(--sp-textarea-focus);
+    transition: all var(--transition-base);
+  }
+
+  .sp-textarea::placeholder {
+    color: var(--sp-textarea-placeholder);
+    opacity: 1;
+  }
+
+  .sp-textarea:focus-visible {
+    --sp-textarea-focus: 0 0 0 var(--sp-textarea-ring-width)
+      var(--sp-textarea-ring-color);
+
+    border-color: var(--sp-textarea-border-color-focus);
+    outline: var(--ring-width) solid transparent;
+    outline-offset: var(--ring-offset);
+  }
+
+  .sp-textarea:disabled {
+    cursor: not-allowed;
+    opacity: var(--sp-textarea-disabled-opacity);
+  }
+
+  .sp-textarea[data-variant="mono"] {
+    --sp-textarea-font-family: var(--font-mono);
+    --sp-textarea-bg: var(--background);
+  }
+
+  .sp-textarea[data-variant="on-dark"] {
+    --sp-textarea-radius: var(--radius-sm);
+    --sp-textarea-padding-block: calc(var(--space-1) * 2.5);
+    --sp-textarea-padding-inline: var(--space-3);
+    --sp-textarea-bg: var(--field-dark);
+    --sp-textarea-fg: var(--on-dark);
+    --sp-textarea-border-color: var(--border-dark);
+    --sp-textarea-ring-width: 0;
+  }
+
+  .sp-textarea[data-size="sm"] {
+    --sp-textarea-min-height: calc(var(--space-1) * 20);
+    --sp-textarea-padding-block: var(--space-2);
+    --sp-textarea-padding-inline: var(--space-3);
+    --sp-textarea-font-size: var(--text-sm);
+    --sp-textarea-line-height: var(--space-5);
+  }
+
+  .sp-textarea[data-size="lg"] {
+    --sp-textarea-min-height: calc(var(--space-1) * 40);
+    --sp-textarea-padding-block: var(--space-4);
+    --sp-textarea-padding-inline: var(--space-5);
+    --sp-textarea-font-size: var(--text-lg);
+    --sp-textarea-line-height: calc(var(--space-1) * 7);
+  }
+
+  .sp-textarea[aria-invalid="true"] {
+    --sp-textarea-border-color: var(--error-text);
+    --sp-textarea-border-color-focus: var(--error-text);
+    --sp-textarea-ring-color: color-mix(
+      in oklab,
+      var(--error-text) 12%,
+      transparent
+    );
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sp-textarea {
+      transition: none;
+    }
+  }
+}

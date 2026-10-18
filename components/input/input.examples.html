@@ -1,0 +1,33 @@
+<header class="docs-page-header">
+  <h1>Forms</h1>
+  <p>Form controls with light and dark variants. All components support forwarded refs and standard HTML attributes.</p>
+</header>
+
+<section class="docs-section" data-pin="forms/input">
+  <h2 class="docs-section-title">Input</h2>
+  <div class="docs-preview">
+    <div class="docs-stack docs-input-demo">
+      <div>
+        <label class="sp-label" for="input-default">Email<span class="sp-label-required" aria-hidden="true">*</span></label>
+        <input class="sp-input" id="input-default" type="text" placeholder="you@example.com">
+      </div>
+      <div>
+        <label class="sp-label" for="input-mono">API Key</label>
+        <input class="sp-input" id="input-mono" type="text" data-variant="mono" placeholder="sk-...">
+      </div>
+    </div>
+  </div>
+  <div class="docs-preview docs-preview--stacked">
+    <div class="docs-stack docs-input-demo">
+      <input class="sp-input" type="text" data-size="sm" placeholder="Small" aria-label="Small input">
+      <input class="sp-input" type="text" placeholder="Default" aria-label="Default input">
+      <input class="sp-input" type="text" data-size="lg" placeholder="Large" aria-label="Large input">
+    </div>
+  </div>
+  <div class="docs-preview docs-preview--dark">
+    <div class="docs-input-demo">
+      <label class="sp-label" for="input-dark" style="--sp-label-fg: var(--on-dark)">Search</label>
+      <input class="sp-input" id="input-dark" type="text" data-variant="on-dark" placeholder="Search...">
+    </div>
+  </div>
+</section>

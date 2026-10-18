@@ -178,6 +178,10 @@ export const classRenames = {
   '.modal-header': '.sp-dialog-header',
   '.modal-body': '.sp-dialog-body',
   '.modal-footer': '.sp-dialog-footer',
+  '.label': '.sp-label',
+  '.input': '.sp-input',
+  '.form-group': '.sp-form-field',
+  '.help-text': '.sp-form-field-hint',
 } as const;
 
 export const unmappedClasses = {
@@ -193,5 +197,11 @@ export const propValueRenames = {
   },
   Badge: {
     variant: { accent: 'brand', dark: 'on-dark' },
+  },
+  Input: {
+    variant: { dark: 'on-dark' },
+  },
+  Textarea: {
+    variant: { dark: 'on-dark' },
   },
 } as const;

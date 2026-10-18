@@ -1,0 +1,3 @@
+.docs-input-demo {
+  max-width: calc(var(--space-1) * 100);
+}

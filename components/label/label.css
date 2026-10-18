@@ -1,0 +1,35 @@
+@layer components {
+  .sp-label {
+    --sp-label-gap: var(--space-1);
+    --sp-label-font-size: var(--text-sm);
+    --sp-label-line-height: var(--space-5);
+    --sp-label-font-weight: 600;
+    --sp-label-fg: var(--foreground-strong);
+
+    display: block;
+    margin-bottom: var(--sp-label-gap);
+    font-family: var(--font-sans);
+    font-size: var(--sp-label-font-size);
+    font-weight: var(--sp-label-font-weight);
+    line-height: var(--sp-label-line-height);
+    color: var(--sp-label-fg);
+  }
+
+  .sp-label[data-size="sm"] {
+    --sp-label-font-size: var(--text-xs);
+    --sp-label-line-height: var(--space-4);
+  }
+
+  .sp-label[data-size="lg"] {
+    --sp-label-font-size: var(--text-base);
+    --sp-label-line-height: var(--space-6);
+  }
+
+  .sp-label-required {
+    --sp-label-required-gap: calc(var(--space-1) * 0.5);
+    --sp-label-required-fg: var(--brand);
+
+    margin-left: var(--sp-label-required-gap);
+    color: var(--sp-label-required-fg);
+  }
+}
