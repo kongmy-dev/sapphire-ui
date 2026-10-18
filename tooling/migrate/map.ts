@@ -157,10 +157,36 @@ export const classRenames = {
   '.btn-sm': '.sp-button[data-size=sm]',
   '.btn-lg': '.sp-button[data-size=lg]',
   '.btn-block': '.sp-button[data-full-width]',
+  '.badge': '.sp-badge',
+  '.badge-accent': '.sp-badge[data-variant=brand]',
+  '.badge-dark': '.sp-badge[data-variant=on-dark]',
+  '.badge-success': '.sp-badge[data-variant=success]',
+  '.badge-error': '.sp-badge[data-variant=error]',
+  '.badge-warning': '.sp-badge[data-variant=warning]',
+  '.badge-info': '.sp-badge[data-variant=info]',
+  '.card': '.sp-card[data-hoverable]',
+  '.card-dark': '.sp-card[data-variant=dark]',
+  '.card-compact': '.sp-card[data-padding=compact]',
+  '.card-static': '.sp-card',
+  '.modal': '.sp-dialog',
+  '.modal-overlay': '.sp-dialog-overlay',
+  '.modal-header': '.sp-dialog-header',
+  '.modal-body': '.sp-dialog-body',
+  '.modal-footer': '.sp-dialog-footer',
+} as const;
+
+export const unmappedClasses = {
+  '.modal-mask':
+    'the proposal shell modal, mapped when the proposal shell ports',
+  '.modal-head':
+    'the proposal shell modal, mapped when the proposal shell ports',
 } as const;
 
 export const propValueRenames = {
   Button: {
     variant: { accent: 'brand' },
+  },
+  Badge: {
+    variant: { accent: 'brand', dark: 'on-dark' },
   },
 } as const;
