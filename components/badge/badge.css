@@ -1,14 +1,11 @@
 @layer components {
   .sp-badge {
-    --sp-badge-radius: var(--radius-pill);
     --sp-badge-gap: calc(var(--space-1) * 1.5);
     --sp-badge-padding-block: calc(var(--space-1) * 0.75);
     --sp-badge-padding-inline: calc(var(--space-1) * 2.5);
     --sp-badge-font-size: calc(var(--text-base) * 0.6875);
-    --sp-badge-font-weight: 600;
     --sp-badge-bg: var(--background);
     --sp-badge-fg: var(--muted-foreground);
-    --sp-badge-border-width: var(--border-width);
     --sp-badge-border-color: var(--border);
 
     display: inline-flex;
@@ -17,13 +14,13 @@
     padding: var(--sp-badge-padding-block) var(--sp-badge-padding-inline);
     font-family: var(--font-sans);
     font-size: var(--sp-badge-font-size);
-    font-weight: var(--sp-badge-font-weight);
+    font-weight: 600;
     color: var(--sp-badge-fg);
     text-transform: uppercase;
     letter-spacing: calc(var(--sp-badge-font-size) * 0.04);
     background: var(--sp-badge-bg);
-    border: var(--sp-badge-border-width) solid var(--sp-badge-border-color);
-    border-radius: var(--sp-badge-radius);
+    border: var(--border-width) solid var(--sp-badge-border-color);
+    border-radius: var(--radius-pill);
     transition:
       color var(--transition-fast),
       background-color var(--transition-fast),

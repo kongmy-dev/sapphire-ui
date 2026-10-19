@@ -8,13 +8,10 @@
     --sp-input-line-height: var(--space-6);
     --sp-input-bg: var(--card);
     --sp-input-fg: var(--foreground);
-    --sp-input-placeholder: color-mix(in oklab, currentcolor 65%, transparent);
-    --sp-input-border-width: var(--border-width);
     --sp-input-border-color: var(--border);
     --sp-input-border-color-focus: var(--brand);
     --sp-input-ring-width: calc(var(--space-1) * 0.75);
     --sp-input-ring-color: color-mix(in oklab, var(--brand) 12%, transparent);
-    --sp-input-disabled-opacity: 0.5;
     --sp-input-focus: 0 0 transparent;
 
     width: 100%;
@@ -24,7 +21,7 @@
     line-height: var(--sp-input-line-height);
     color: var(--sp-input-fg);
     background: var(--sp-input-bg);
-    border: var(--sp-input-border-width) solid var(--sp-input-border-color);
+    border: var(--border-width) solid var(--sp-input-border-color);
     border-radius: var(--sp-input-radius);
     outline: var(--ring-width) solid transparent;
     outline-offset: var(--ring-offset);
@@ -33,7 +30,7 @@
   }
 
   .sp-input::placeholder {
-    color: var(--sp-input-placeholder);
+    color: color-mix(in oklab, currentcolor 65%, transparent);
     opacity: 1;
   }
 
@@ -46,7 +43,7 @@
 
   .sp-input:disabled {
     cursor: not-allowed;
-    opacity: var(--sp-input-disabled-opacity);
+    opacity: 0.5;
   }
 
   .sp-input[data-variant="mono"] {

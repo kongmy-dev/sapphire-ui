@@ -1,11 +1,7 @@
 @layer components {
   .sp-scroll-area {
     --sp-scroll-area-bar-size: var(--space-2);
-    --sp-scroll-area-bar-padding: calc(var(--space-1) * 0.25);
     --sp-scroll-area-bar-edge: calc(var(--space-1) * 0.25);
-    --sp-scroll-area-thumb-bg: var(--border);
-    --sp-scroll-area-thumb-bg-hover: var(--muted-foreground);
-    --sp-scroll-area-ring: var(--ring);
     --sp-scroll-area-focus: 0 0 transparent;
 
     position: relative;
@@ -29,14 +25,13 @@
   .sp-scroll-area-viewport:focus-visible {
     --sp-scroll-area-focus:
       0 0 0 calc(var(--ring-offset) * 0.5) var(--white),
-      0 0 0 calc(var(--ring-offset) * 0.5 + var(--ring-width))
-      var(--sp-scroll-area-ring);
+      0 0 0 calc(var(--ring-offset) * 0.5 + var(--ring-width)) var(--ring);
   }
 
   .sp-scroll-area-scrollbar {
     position: absolute;
     display: flex;
-    padding: var(--sp-scroll-area-bar-padding);
+    padding: calc(var(--space-1) * 0.25);
     user-select: none;
     -webkit-user-select: none;
     touch-action: none;
@@ -63,7 +58,7 @@
   .sp-scroll-area-thumb {
     position: relative;
     flex: 1;
-    background: var(--sp-scroll-area-thumb-bg);
+    background: var(--border);
     border-radius: var(--radius-pill);
     transition: background-color var(--transition-fast);
   }
@@ -76,7 +71,7 @@
 
   @media (hover: hover) {
     .sp-scroll-area-thumb:hover {
-      background: var(--sp-scroll-area-thumb-bg-hover);
+      background: var(--muted-foreground);
     }
   }
 

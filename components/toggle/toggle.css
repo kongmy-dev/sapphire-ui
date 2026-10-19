@@ -1,39 +1,33 @@
 @layer components {
   .sp-toggle {
     --sp-toggle-height: calc(var(--space-1) * 9);
-    --sp-toggle-radius: var(--radius-btn);
-    --sp-toggle-gap: calc(var(--space-1) * 1.5);
     --sp-toggle-padding-inline: var(--space-3);
     --sp-toggle-font-size: var(--text-sm);
-    --sp-toggle-font-weight: 500;
     --sp-toggle-line-height: calc(var(--space-1) * 5);
-    --sp-toggle-bg: transparent;
     --sp-toggle-fg: var(--foreground);
     --sp-toggle-border-width: var(--border-width);
-    --sp-toggle-border-color: var(--border);
     --sp-toggle-bg-hover: var(--background);
     --sp-toggle-fg-hover: var(--sp-toggle-fg);
     --sp-toggle-bg-on: var(--primary);
     --sp-toggle-fg-on: var(--on-dark);
     --sp-toggle-border-color-on: var(--primary);
-    --sp-toggle-ring: var(--ring);
     --sp-toggle-focus: 0 0 transparent;
 
     display: inline-flex;
-    gap: var(--sp-toggle-gap);
+    gap: calc(var(--space-1) * 1.5);
     align-items: center;
     justify-content: center;
     height: var(--sp-toggle-height);
     padding: 0 var(--sp-toggle-padding-inline);
     font-family: var(--font-sans);
     font-size: var(--sp-toggle-font-size);
-    font-weight: var(--sp-toggle-font-weight);
+    font-weight: 500;
     line-height: var(--sp-toggle-line-height);
     color: var(--sp-toggle-fg);
     cursor: pointer;
-    background: var(--sp-toggle-bg);
-    border: var(--sp-toggle-border-width) solid var(--sp-toggle-border-color);
-    border-radius: var(--sp-toggle-radius);
+    background: transparent;
+    border: var(--sp-toggle-border-width) solid var(--border);
+    border-radius: var(--radius-btn);
     outline: var(--ring-width) solid transparent;
     box-shadow: var(--sp-toggle-focus);
     transition:
@@ -75,8 +69,7 @@
   .sp-toggle:focus-visible {
     --sp-toggle-focus:
       0 0 0 calc(var(--ring-offset) * 0.5) var(--white),
-      0 0 0 calc(var(--ring-offset) * 0.5 + var(--ring-width))
-      var(--sp-toggle-ring);
+      0 0 0 calc(var(--ring-offset) * 0.5 + var(--ring-width)) var(--ring);
   }
 
   .sp-toggle:disabled,

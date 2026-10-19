@@ -1,16 +1,12 @@
 @layer components {
   .sp-radio-group {
-    --sp-radio-group-gap: calc(var(--space-1) * 2.5);
-
     display: grid;
-    gap: var(--sp-radio-group-gap);
+    gap: calc(var(--space-1) * 2.5);
   }
 
   .sp-radio-group-option {
-    --sp-radio-group-option-gap: calc(var(--space-1) * 2.5);
-
     display: flex;
-    gap: var(--sp-radio-group-option-gap);
+    gap: calc(var(--space-1) * 2.5);
     align-items: flex-start;
   }
 
@@ -26,25 +22,20 @@
 
   .sp-radio-group-item {
     --sp-radio-group-item-size: calc(var(--space-1) * 4.5);
-    --sp-radio-group-item-offset: calc(var(--space-1) * 0.5);
-    --sp-radio-group-item-bg: var(--card);
-    --sp-radio-group-item-border-width: var(--border-width-strong);
     --sp-radio-group-item-border-color: var(--border-strong);
     --sp-radio-group-item-checked: var(--brand);
-    --sp-radio-group-item-ring: var(--ring);
     --sp-radio-group-item-ring-offset: calc(var(--space-1) * 0.25);
-    --sp-radio-group-item-disabled-opacity: 0.5;
     --sp-radio-group-item-focus: 0 0 transparent;
 
     flex-shrink: 0;
     width: var(--sp-radio-group-item-size);
     height: var(--sp-radio-group-item-size);
     padding: 0;
-    margin: var(--sp-radio-group-item-offset) 0 0;
+    margin: calc(var(--space-1) * 0.5) 0 0;
     cursor: pointer;
     appearance: none;
-    background: var(--sp-radio-group-item-bg);
-    border: var(--sp-radio-group-item-border-width) solid
+    background: var(--card);
+    border: var(--border-width-strong) solid
       var(--sp-radio-group-item-border-color);
     border-radius: var(--radius-pill);
     outline: var(--ring-width) solid transparent;
@@ -61,13 +52,13 @@
     --sp-radio-group-item-focus:
       0 0 0 var(--sp-radio-group-item-ring-offset) var(--white),
       0 0 0 calc(var(--sp-radio-group-item-ring-offset) + var(--ring-width))
-      var(--sp-radio-group-item-ring);
+      var(--ring);
   }
 
   .sp-radio-group-item:disabled,
   .sp-radio-group-item[data-disabled] {
     cursor: not-allowed;
-    opacity: var(--sp-radio-group-item-disabled-opacity);
+    opacity: 0.5;
   }
 
   .sp-radio-group-indicator {

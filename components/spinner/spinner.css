@@ -1,17 +1,15 @@
 @layer components {
   .sp-spinner {
     --sp-spinner-size: calc(var(--space-1) * 4.5);
-    --sp-spinner-border-width: calc(var(--space-1) * 0.5);
     --sp-spinner-color: currentcolor;
-    --sp-spinner-duration: 1s;
 
     display: inline-block;
     width: var(--sp-spinner-size);
     height: var(--sp-spinner-size);
-    border: var(--sp-spinner-border-width) solid var(--sp-spinner-color);
+    border: calc(var(--space-1) * 0.5) solid var(--sp-spinner-color);
     border-top-color: transparent;
     border-radius: var(--radius-pill);
-    animation: sp-spinner-spin var(--sp-spinner-duration) linear infinite;
+    animation: sp-spinner-spin 1s linear infinite;
   }
 
   .sp-spinner[data-size="sm"] {

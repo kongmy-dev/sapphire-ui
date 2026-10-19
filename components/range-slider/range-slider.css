@@ -1,36 +1,26 @@
 @layer components {
   .sp-range-slider-field {
-    --sp-range-slider-field-gap: var(--space-3);
-
     display: flex;
-    gap: var(--sp-range-slider-field-gap);
+    gap: var(--space-3);
     align-items: center;
     width: 100%;
   }
 
   .sp-range-slider {
-    --sp-range-slider-height: calc(var(--space-1) * 5);
-    --sp-range-slider-margin: var(--space-3);
-    --sp-range-slider-track-height: var(--space-1);
     --sp-range-slider-track-bg: color-mix(
       in oklab,
       var(--white) 10%,
       transparent
     );
-    --sp-range-slider-range-bg: var(--brand);
     --sp-range-slider-thumb-size: var(--space-4);
-    --sp-range-slider-thumb-bg: var(--brand);
-    --sp-range-slider-thumb-border-width: calc(var(--space-1) * 0.5);
     --sp-range-slider-thumb-border-color: var(--primary);
-    --sp-range-slider-ring: var(--ring);
-    --sp-range-slider-disabled-opacity: 0.5;
 
     position: relative;
     display: flex;
     align-items: center;
     width: 100%;
-    height: var(--sp-range-slider-height);
-    margin: var(--sp-range-slider-margin) 0;
+    height: calc(var(--space-1) * 5);
+    margin: var(--space-3) 0;
     touch-action: none;
     user-select: none;
     -webkit-user-select: none;
@@ -42,13 +32,13 @@
   }
 
   .sp-range-slider[data-disabled] {
-    opacity: var(--sp-range-slider-disabled-opacity);
+    opacity: 0.5;
   }
 
   .sp-range-slider-track {
     position: relative;
     flex-grow: 1;
-    height: var(--sp-range-slider-track-height);
+    height: var(--space-1);
     background: var(--sp-range-slider-track-bg);
     border-radius: calc(var(--space-1) * 0.5);
   }
@@ -56,7 +46,7 @@
   .sp-range-slider-range {
     position: absolute;
     height: 100%;
-    background: var(--sp-range-slider-range-bg);
+    background: var(--brand);
     border-radius: calc(var(--space-1) * 0.5);
   }
 
@@ -65,8 +55,8 @@
     width: var(--sp-range-slider-thumb-size);
     height: var(--sp-range-slider-thumb-size);
     cursor: pointer;
-    background: var(--sp-range-slider-thumb-bg);
-    border: var(--sp-range-slider-thumb-border-width) solid
+    background: var(--brand);
+    border: calc(var(--space-1) * 0.5) solid
       var(--sp-range-slider-thumb-border-color);
     border-radius: 50%;
     outline: var(--ring-width) solid transparent;
@@ -75,7 +65,7 @@
   }
 
   .sp-range-slider-thumb:focus-visible {
-    outline-color: var(--sp-range-slider-ring);
+    outline-color: var(--ring);
   }
 
   .sp-range-slider-value {

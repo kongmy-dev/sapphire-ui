@@ -1,13 +1,10 @@
 @layer components {
   .sp-sheet-overlay {
-    --sp-sheet-overlay-bg: color-mix(in oklab, var(--primary) 50%, transparent);
-    --sp-sheet-overlay-blur: var(--space-2);
-
     position: fixed;
     inset: 0;
     z-index: 50;
-    background: var(--sp-sheet-overlay-bg);
-    backdrop-filter: blur(var(--sp-sheet-overlay-blur));
+    background: color-mix(in oklab, var(--primary) 50%, transparent);
+    backdrop-filter: blur(var(--space-2));
   }
 
   .sp-sheet-overlay:is([data-state="open"], [data-open]) {
@@ -19,32 +16,24 @@
   }
 
   .sp-sheet {
-    --sp-sheet-width: 75%;
-    --sp-sheet-max-width: calc(var(--space-1) * 96);
     --sp-sheet-padding: var(--space-6);
-    --sp-sheet-bg: var(--card);
-    --sp-sheet-fg: var(--foreground);
     --sp-sheet-border-width: var(--border-width);
-    --sp-sheet-border-color: var(--border);
-    --sp-sheet-shadow: var(--shadow-lg);
-    --sp-sheet-open-duration: 500ms;
-    --sp-sheet-close-duration: 300ms;
     --sp-sheet-easing: ease-in-out;
     --sp-sheet-offscreen: translate(100%, 0);
 
     position: fixed;
     inset: 0 0 0 auto;
     z-index: 50;
-    width: var(--sp-sheet-width);
-    max-width: var(--sp-sheet-max-width);
+    width: 75%;
+    max-width: calc(var(--space-1) * 96);
     height: 100%;
     padding: var(--sp-sheet-padding);
     font-family: var(--font-sans);
-    color: var(--sp-sheet-fg);
-    background: var(--sp-sheet-bg);
-    border: 0 solid var(--sp-sheet-border-color);
+    color: var(--foreground);
+    background: var(--card);
+    border: 0 solid var(--border);
     border-left-width: var(--sp-sheet-border-width);
-    box-shadow: var(--sp-sheet-shadow);
+    box-shadow: var(--shadow-lg);
   }
 
   .sp-sheet[data-side="left"] {
@@ -78,12 +67,11 @@
   }
 
   .sp-sheet:is([data-state="open"], [data-open]) {
-    animation: sp-sheet-in var(--sp-sheet-open-duration) var(--sp-sheet-easing);
+    animation: sp-sheet-in 500ms var(--sp-sheet-easing);
   }
 
   .sp-sheet:is([data-state="closed"], [data-closed]) {
-    animation: sp-sheet-out var(--sp-sheet-close-duration)
-      var(--sp-sheet-easing);
+    animation: sp-sheet-out 300ms var(--sp-sheet-easing);
   }
 
   .sp-sheet-header {

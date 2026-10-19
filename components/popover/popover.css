@@ -1,31 +1,21 @@
 @layer components {
   .sp-popover {
-    --sp-popover-width: calc(var(--space-1) * 72);
-    --sp-popover-padding: var(--space-4);
-    --sp-popover-radius: var(--radius-md);
-    --sp-popover-bg: var(--card);
-    --sp-popover-fg: var(--foreground);
-    --sp-popover-border-width: var(--border-width);
-    --sp-popover-border-color: var(--border);
-    --sp-popover-font-size: var(--text-sm);
     --sp-popover-line-height: calc(1.25 / 0.875);
-    --sp-popover-shadow: var(--shadow-lg);
-    --sp-popover-z-index: 50;
     --sp-popover-enter-x: 0;
     --sp-popover-enter-y: 0;
 
-    width: var(--sp-popover-width);
-    padding: var(--sp-popover-padding);
+    width: calc(var(--space-1) * 72);
+    padding: var(--space-4);
     font-family: var(--font-sans);
-    font-size: var(--sp-popover-font-size);
+    font-size: var(--text-sm);
     line-height: var(--sp-popover-line-height);
-    color: var(--sp-popover-fg);
-    background: var(--sp-popover-bg);
-    border: var(--sp-popover-border-width) solid var(--sp-popover-border-color);
-    border-radius: var(--sp-popover-radius);
+    color: var(--foreground);
+    background: var(--card);
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--radius-md);
     outline: none;
-    box-shadow: var(--sp-popover-shadow);
-    z-index: var(--sp-popover-z-index);
+    box-shadow: var(--shadow-lg);
+    z-index: 50;
     transform-origin: var(--radix-popover-content-transform-origin, 50% 50%);
   }
 

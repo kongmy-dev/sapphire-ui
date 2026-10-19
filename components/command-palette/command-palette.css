@@ -8,13 +8,6 @@
 
   .sp-command-palette {
     --sp-command-palette-max-height: 80vh;
-    --sp-command-palette-list-reserve: calc(var(--space-1) * 20);
-    --sp-command-palette-item-padding-block: var(--space-2);
-    --sp-command-palette-item-padding-inline: var(--space-3);
-    --sp-command-palette-item-gap: var(--space-3);
-    --sp-command-palette-item-radius: var(--radius-md);
-    --sp-command-palette-item-fg: var(--foreground);
-    --sp-command-palette-item-bg-active: var(--background);
     --sp-command-palette-muted: var(--muted-foreground);
   }
 
@@ -38,7 +31,7 @@
   .sp-command-palette-body {
     max-height: calc(
       var(--sp-command-palette-max-height) -
-      var(--sp-command-palette-list-reserve)
+      calc(var(--space-1) * 20)
     );
     overflow-y: auto;
   }
@@ -51,22 +44,21 @@
 
   .sp-command-palette-item {
     display: flex;
-    gap: var(--sp-command-palette-item-gap);
+    gap: var(--space-3);
     align-items: center;
-    padding: var(--sp-command-palette-item-padding-block)
-      var(--sp-command-palette-item-padding-inline);
+    padding: var(--space-2) var(--space-3);
     font-family: var(--font-sans);
     font-size: var(--text-sm);
     line-height: var(--space-5);
-    color: var(--sp-command-palette-item-fg);
+    color: var(--foreground);
     cursor: pointer;
     background: transparent;
-    border-radius: var(--sp-command-palette-item-radius);
+    border-radius: var(--radius-md);
   }
 
   .sp-command-palette-item[aria-selected="true"],
   .sp-command-palette-item[data-active] {
-    background: var(--sp-command-palette-item-bg-active);
+    background: var(--background);
   }
 
   .sp-command-palette-icon {

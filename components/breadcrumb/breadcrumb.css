@@ -1,24 +1,17 @@
 @layer components {
   .sp-breadcrumb {
-    --sp-breadcrumb-gap: calc(var(--space-1) * 1.5);
-    --sp-breadcrumb-font-size: var(--text-sm);
-    --sp-breadcrumb-line-height: calc(var(--space-1) * 5);
     --sp-breadcrumb-fg: var(--muted-foreground);
-    --sp-breadcrumb-fg-hover: var(--brand-text);
-    --sp-breadcrumb-page-fg: var(--foreground);
-    --sp-breadcrumb-page-weight: 500;
-    --sp-breadcrumb-separator-fg: var(--muted-foreground);
 
     font-family: var(--font-sans);
-    font-size: var(--sp-breadcrumb-font-size);
-    line-height: var(--sp-breadcrumb-line-height);
+    font-size: var(--text-sm);
+    line-height: calc(var(--space-1) * 5);
     color: var(--sp-breadcrumb-fg);
   }
 
   .sp-breadcrumb-list {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--sp-breadcrumb-gap);
+    gap: calc(var(--space-1) * 1.5);
     align-items: center;
     padding: 0;
     margin: 0;
@@ -37,14 +30,14 @@
   }
 
   .sp-breadcrumb-page {
-    font-weight: var(--sp-breadcrumb-page-weight);
-    color: var(--sp-breadcrumb-page-fg);
+    font-weight: 500;
+    color: var(--foreground);
   }
 
   .sp-breadcrumb-separator {
     display: inline-flex;
     align-items: center;
-    color: var(--sp-breadcrumb-separator-fg);
+    color: var(--muted-foreground);
     user-select: none;
     -webkit-user-select: none;
   }
@@ -57,7 +50,7 @@
 
   @media (hover: hover) {
     .sp-breadcrumb-link:hover {
-      color: var(--sp-breadcrumb-fg-hover);
+      color: var(--brand-text);
     }
   }
 

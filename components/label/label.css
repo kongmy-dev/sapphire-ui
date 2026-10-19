@@ -26,10 +26,7 @@
   }
 
   .sp-label-required {
-    --sp-label-required-gap: calc(var(--space-1) * 0.5);
-    --sp-label-required-fg: var(--brand);
-
-    margin-left: var(--sp-label-required-gap);
-    color: var(--sp-label-required-fg);
+    margin-left: calc(var(--space-1) * 0.5);
+    color: var(--brand);
   }
 }

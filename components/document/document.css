@@ -1,55 +1,45 @@
 @layer components {
   .sp-document-shell {
-    --sp-document-shell-max-width: calc(var(--space-1) * 230);
-    --sp-document-shell-padding-inline: var(--space-8);
-
-    max-width: var(--sp-document-shell-max-width);
-    padding: 0 var(--sp-document-shell-padding-inline);
+    max-width: calc(var(--space-1) * 230);
+    padding: 0 var(--space-8);
     margin: 0 auto;
   }
 
   .sp-document-bar {
-    --sp-document-bar-bg: var(--primary);
     --sp-document-bar-fg: var(--on-dark);
     --sp-document-bar-muted-fg: var(--on-dark-muted);
     --sp-document-bar-accent: var(--brand);
-    --sp-document-bar-padding: var(--space-3) var(--space-8);
-    --sp-document-bar-gap: var(--space-4);
-    --sp-document-bar-font-size: calc(var(--text-base) * 0.8125);
-    --sp-document-bar-z-index: 10;
 
     display: flex;
-    gap: var(--sp-document-bar-gap);
+    gap: var(--space-4);
     align-items: center;
-    padding: var(--sp-document-bar-padding);
-    font-size: var(--sp-document-bar-font-size);
+    padding: var(--space-3) var(--space-8);
+    font-size: calc(var(--text-base) * 0.8125);
     color: var(--sp-document-bar-fg);
-    background: var(--sp-document-bar-bg);
+    background: var(--primary);
   }
 
   .sp-document-bar[data-sticky] {
     position: sticky;
     top: 0;
-    z-index: var(--sp-document-bar-z-index);
+    z-index: 10;
   }
 
   .sp-document-mark {
     --sp-document-mark-size: calc(var(--space-1) * 6.5);
     --sp-document-mark-bg: var(--brand);
     --sp-document-mark-fg: var(--primary);
-    --sp-document-mark-radius: var(--radius-btn);
-    --sp-document-mark-font-size: var(--text-sm);
 
     display: grid;
     place-items: center;
     width: var(--sp-document-mark-size);
     height: var(--sp-document-mark-size);
     font-family: var(--font-serif);
-    font-size: var(--sp-document-mark-font-size);
+    font-size: var(--text-sm);
     font-weight: 700;
     color: var(--sp-document-mark-fg);
     background: var(--sp-document-mark-bg);
-    border-radius: var(--sp-document-mark-radius);
+    border-radius: var(--radius-btn);
   }
 
   .sp-document-mark[data-variant="primary"] {
@@ -59,8 +49,6 @@
   }
 
   .sp-document-wordmark {
-    --sp-document-wordmark-accent: var(--brand);
-
     font-family: var(--font-serif);
     font-size: calc(var(--text-base) * 0.9375);
     font-weight: 600;
@@ -68,7 +56,7 @@
 
   .sp-document-wordmark small {
     font-size: 80%;
-    color: var(--sp-document-wordmark-accent);
+    color: var(--brand);
   }
 
   .sp-document-bar-separator {
@@ -101,14 +89,6 @@
   }
 
   .sp-document-pill {
-    --sp-document-pill-fg: var(--brand);
-    --sp-document-pill-bg: color-mix(in srgb, var(--brand) 15%, transparent);
-    --sp-document-pill-border-color: color-mix(
-      in srgb,
-      var(--brand) 40%,
-      transparent
-    );
-
     display: inline-flex;
     gap: calc(var(--space-1) * 1.25);
     align-items: center;
@@ -116,16 +96,16 @@
     font-size: calc(var(--text-base) * 0.6875);
     font-weight: 700;
     line-height: 1;
-    color: var(--sp-document-pill-fg);
+    color: var(--brand);
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    background: var(--sp-document-pill-bg);
-    border: var(--border-width) solid var(--sp-document-pill-border-color);
+    background: color-mix(in srgb, var(--brand) 15%, transparent);
+    border: var(--border-width) solid
+      color-mix(in srgb, var(--brand) 40%, transparent);
     border-radius: var(--radius-pill);
   }
 
   .sp-document-eyebrow {
-    --sp-document-eyebrow-fg: var(--brand-text);
     --sp-document-eyebrow-font-size: calc(var(--text-base) * 0.6875);
     --sp-document-eyebrow-tracking: 0.14em;
     --sp-document-eyebrow-margin-bottom: 0;
@@ -134,27 +114,16 @@
     font-family: var(--font-sans);
     font-size: var(--sp-document-eyebrow-font-size);
     font-weight: 600;
-    color: var(--sp-document-eyebrow-fg);
+    color: var(--brand-text);
     text-transform: uppercase;
     letter-spacing: var(--sp-document-eyebrow-tracking);
   }
 
   .sp-document-hero {
-    --sp-document-hero-padding: calc(var(--space-1) * 20) 0
-      calc(var(--space-1) * 14);
     --sp-document-hero-border-width: var(--border-width);
     --sp-document-hero-border-color: var(--border);
-    --sp-document-hero-title-font-size: clamp(
-      calc(var(--text-base) * 2.5),
-      5.4vw,
-      calc(var(--text-base) * 3.75)
-    );
-    --sp-document-hero-title-max-width: 18ch;
-    --sp-document-hero-lede-font-size: calc(var(--text-base) * 1.3125);
-    --sp-document-hero-lede-max-width: 56ch;
-    --sp-document-hero-meta-gap: var(--space-10);
 
-    padding: var(--sp-document-hero-padding);
+    padding: calc(var(--space-1) * 20) 0 calc(var(--space-1) * 14);
     border-bottom: var(--sp-document-hero-border-width) solid
       var(--sp-document-hero-border-color);
   }
@@ -166,19 +135,23 @@
   }
 
   .sp-document-hero h1 {
-    max-width: var(--sp-document-hero-title-max-width);
+    max-width: 18ch;
     margin: 0 0 var(--space-5);
     font-family: var(--font-serif);
-    font-size: var(--sp-document-hero-title-font-size);
+    font-size: clamp(
+      calc(var(--text-base) * 2.5),
+      5.4vw,
+      calc(var(--text-base) * 3.75)
+    );
     font-weight: 500;
     line-height: 1.05;
     letter-spacing: -0.02em;
   }
 
   .sp-document-hero .sp-document-lede {
-    max-width: var(--sp-document-hero-lede-max-width);
+    max-width: 56ch;
     font-family: var(--font-serif);
-    font-size: var(--sp-document-hero-lede-font-size);
+    font-size: calc(var(--text-base) * 1.3125);
     font-style: italic;
     font-weight: 400;
     line-height: 1.45;
@@ -188,7 +161,7 @@
   .sp-document-hero-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--sp-document-hero-meta-gap);
+    gap: var(--space-10);
     padding-top: calc(var(--space-1) * 7);
     margin: calc(var(--space-1) * 9) 0 0;
     border-top: var(--sp-document-hero-border-width) dashed
@@ -213,17 +186,9 @@
   }
 
   .sp-document-section {
-    --sp-document-section-padding: calc(var(--space-1) * 14) 0;
-    --sp-document-section-border-width: var(--border-width);
-    --sp-document-section-border-color: var(--border);
-    --sp-document-section-scroll-margin: calc(var(--space-1) * 20);
-    --sp-document-section-text-max-width: 64ch;
-    --sp-document-section-lede-max-width: 60ch;
-
-    padding: var(--sp-document-section-padding);
-    scroll-margin-top: var(--sp-document-section-scroll-margin);
-    border-bottom: var(--sp-document-section-border-width) solid
-      var(--sp-document-section-border-color);
+    padding: calc(var(--space-1) * 14) 0;
+    scroll-margin-top: calc(var(--space-1) * 20);
+    border-bottom: var(--border-width) solid var(--border);
   }
 
   .sp-document-section:last-of-type {
@@ -247,7 +212,7 @@
   }
 
   .sp-document-section > h2 + .sp-document-lede {
-    max-width: var(--sp-document-section-lede-max-width);
+    max-width: 60ch;
     margin: calc(var(--space-1) * -4) 0 var(--space-8);
     font-family: var(--font-serif);
     font-size: var(--text-lg);
@@ -257,7 +222,7 @@
   }
 
   .sp-document-section p {
-    max-width: var(--sp-document-section-text-max-width);
+    max-width: 64ch;
     font-size: var(--text-base);
     line-height: 1.7;
     color: var(--foreground);
@@ -283,9 +248,6 @@
   .sp-document-card {
     --sp-document-card-bg: var(--card);
     --sp-document-card-fg: currentcolor;
-    --sp-document-card-padding: var(--space-6);
-    --sp-document-card-radius: var(--radius-md);
-    --sp-document-card-border-width: var(--border-width);
     --sp-document-card-border-color: var(--border);
     --sp-document-card-heading-fg: currentcolor;
     --sp-document-card-icon-size: calc(var(--space-1) * 9);
@@ -296,12 +258,11 @@
       transparent
     );
 
-    padding: var(--sp-document-card-padding);
+    padding: var(--space-6);
     color: var(--sp-document-card-fg);
     background: var(--sp-document-card-bg);
-    border: var(--sp-document-card-border-width) solid
-      var(--sp-document-card-border-color);
-    border-radius: var(--sp-document-card-radius);
+    border: var(--border-width) solid var(--sp-document-card-border-color);
+    border-radius: var(--radius-md);
   }
 
   .sp-document-card[data-variant="on-dark"] {
@@ -333,17 +294,12 @@
   }
 
   .sp-document-foot {
-    --sp-document-foot-padding: calc(var(--space-1) * 12) 0
-      calc(var(--space-1) * 20);
-    --sp-document-foot-gap: var(--space-6);
-    --sp-document-foot-fg: var(--muted-foreground);
-
     display: flex;
-    gap: var(--sp-document-foot-gap);
+    gap: var(--space-6);
     align-items: center;
-    padding: var(--sp-document-foot-padding);
+    padding: calc(var(--space-1) * 12) 0 calc(var(--space-1) * 20);
     font-size: calc(var(--text-base) * 0.8125);
-    color: var(--sp-document-foot-fg);
+    color: var(--muted-foreground);
     border-top: var(--border-width) solid var(--border);
   }
 
@@ -359,20 +315,15 @@
     border-top: var(--border-width) solid var(--border);
   }
 
-  .sp-document-figure {
-    --sp-document-figure-positive: var(--success-text);
-    --sp-document-figure-negative: var(--error-text);
-  }
-
   .sp-document-figure[data-tabular] {
     font-variant-numeric: tabular-nums;
   }
 
   .sp-document-figure[data-tone="positive"] {
-    color: var(--sp-document-figure-positive);
+    color: var(--success-text);
   }
 
   .sp-document-figure[data-tone="negative"] {
-    color: var(--sp-document-figure-negative);
+    color: var(--error-text);
   }
 }

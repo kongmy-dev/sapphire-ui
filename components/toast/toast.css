@@ -1,7 +1,6 @@
 @layer components {
   .sp-toast-viewport {
     --sp-toast-viewport-inset: var(--space-6);
-    --sp-toast-viewport-gap: var(--space-2);
 
     position: fixed;
     right: var(--sp-toast-viewport-inset);
@@ -9,39 +8,31 @@
     z-index: 2000;
     display: flex;
     flex-direction: column-reverse;
-    gap: var(--sp-toast-viewport-gap);
+    gap: var(--space-2);
     pointer-events: none;
   }
 
   .sp-toast {
-    --sp-toast-radius: var(--radius-md);
-    --sp-toast-gap: calc(var(--space-1) * 2.5);
-    --sp-toast-padding-block: var(--space-3);
-    --sp-toast-padding-inline: calc(var(--space-1) * 4.5);
     --sp-toast-max-width: calc(var(--space-1) * 95);
-    --sp-toast-bg: var(--card);
-    --sp-toast-fg: var(--foreground);
-    --sp-toast-border-color: var(--border);
     --sp-toast-accent: var(--success-text);
     --sp-toast-accent-width: var(--space-1);
-    --sp-toast-shadow: 0 var(--space-2) var(--space-8)
-      color-mix(in srgb, var(--primary) 14%, transparent);
     --sp-toast-transition: 300ms ease;
 
     display: flex;
-    gap: var(--sp-toast-gap);
+    gap: calc(var(--space-1) * 2.5);
     align-items: center;
     max-width: var(--sp-toast-max-width);
-    padding: var(--sp-toast-padding-block) var(--sp-toast-padding-inline);
+    padding: var(--space-3) calc(var(--space-1) * 4.5);
     font-family: var(--font-sans);
     font-size: var(--text-sm);
-    color: var(--sp-toast-fg);
+    color: var(--foreground);
     pointer-events: auto;
-    background: var(--sp-toast-bg);
-    border: var(--border-width) solid var(--sp-toast-border-color);
+    background: var(--card);
+    border: var(--border-width) solid var(--border);
     border-left: var(--sp-toast-accent-width) solid var(--sp-toast-accent);
-    border-radius: var(--sp-toast-radius);
-    box-shadow: var(--sp-toast-shadow);
+    border-radius: var(--radius-md);
+    box-shadow: 0 var(--space-2) var(--space-8)
+      color-mix(in srgb, var(--primary) 14%, transparent);
     opacity: 0;
     transition:
       transform var(--sp-toast-transition),

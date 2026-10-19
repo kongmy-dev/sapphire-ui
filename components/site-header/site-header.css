@@ -1,13 +1,8 @@
 @layer components {
   .sp-site-header {
-    --sp-site-header-max-width: var(--page-width);
-    --sp-site-header-height: var(--space-16);
-    --sp-site-header-padding-inline: var(--space-6);
-    --sp-site-header-gap: var(--space-6);
     --sp-site-header-bg: var(--primary);
     --sp-site-header-fg: var(--on-dark);
     --sp-site-header-border-color: var(--border-dark);
-    --sp-site-header-link-radius: var(--radius-btn);
     --sp-site-header-link-fg: var(--on-dark-muted);
     --sp-site-header-link-fg-hover: var(--on-dark);
     --sp-site-header-link-bg-hover: color-mix(
@@ -47,12 +42,12 @@
 
   .sp-site-header-inner {
     display: flex;
-    gap: var(--sp-site-header-gap);
+    gap: var(--space-6);
     align-items: center;
     justify-content: space-between;
-    max-width: var(--sp-site-header-max-width);
-    height: var(--sp-site-header-height);
-    padding-inline: var(--sp-site-header-padding-inline);
+    max-width: var(--page-width);
+    height: var(--space-16);
+    padding-inline: var(--space-6);
     margin-inline: auto;
   }
 
@@ -79,7 +74,7 @@
     line-height: calc(var(--space-1) * 5);
     color: var(--sp-site-header-link-fg);
     text-decoration: none;
-    border-radius: var(--sp-site-header-link-radius);
+    border-radius: var(--radius-btn);
     transition:
       color var(--transition-fast),
       background-color var(--transition-fast);

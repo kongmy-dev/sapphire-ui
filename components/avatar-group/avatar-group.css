@@ -1,9 +1,5 @@
 @layer components {
   .sp-avatar-group {
-    --sp-avatar-group-overlap: var(--space-2);
-    --sp-avatar-group-ring-width: calc(var(--space-1) * 0.5);
-    --sp-avatar-group-ring-color: var(--card);
-
     display: inline-flex;
     align-items: center;
   }
@@ -11,12 +7,11 @@
   .sp-avatar-group > .sp-avatar {
     position: relative;
     z-index: 0;
-    box-shadow: 0 0 0 var(--sp-avatar-group-ring-width)
-      var(--sp-avatar-group-ring-color);
+    box-shadow: 0 0 0 calc(var(--space-1) * 0.5) var(--card);
   }
 
   .sp-avatar-group > .sp-avatar + .sp-avatar {
-    margin-inline-start: calc(var(--sp-avatar-group-overlap) * -1);
+    margin-inline-start: calc(var(--space-2) * -1);
   }
 
   .sp-avatar-group > .sp-avatar:nth-child(1) {

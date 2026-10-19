@@ -1,35 +1,23 @@
 @layer components {
   .sp-banner {
     --sp-banner-radius: var(--radius-sm);
-    --sp-banner-padding-block: calc(var(--space-1) * 2.5);
-    --sp-banner-padding-inline: var(--space-4);
-    --sp-banner-gap: var(--space-3);
-    --sp-banner-font-size: var(--text-sm);
     --sp-banner-line-height: 1.4;
-    --sp-banner-border-width: var(--border-width);
     --sp-banner-bg: var(--background);
     --sp-banner-fg: var(--foreground);
     --sp-banner-border-color: var(--border);
     --sp-banner-dismiss-size: calc(var(--space-1) * 5.5);
-    --sp-banner-dismiss-opacity: 0.7;
-    --sp-banner-dismiss-bg-hover: color-mix(
-      in oklab,
-      var(--field-dark) 25%,
-      transparent
-    );
-    --sp-banner-ring: var(--ring);
 
     display: flex;
-    gap: var(--sp-banner-gap);
+    gap: var(--space-3);
     align-items: center;
     justify-content: space-between;
-    padding: var(--sp-banner-padding-block) var(--sp-banner-padding-inline);
+    padding: calc(var(--space-1) * 2.5) var(--space-4);
     font-family: var(--font-sans);
-    font-size: var(--sp-banner-font-size);
+    font-size: var(--text-sm);
     line-height: var(--sp-banner-line-height);
     color: var(--sp-banner-fg);
     background: var(--sp-banner-bg);
-    border: var(--sp-banner-border-width) solid var(--sp-banner-border-color);
+    border: var(--border-width) solid var(--sp-banner-border-color);
     border-radius: var(--sp-banner-radius);
   }
 
@@ -84,20 +72,20 @@
     background: transparent;
     border: 0;
     border-radius: var(--sp-banner-radius);
-    opacity: var(--sp-banner-dismiss-opacity);
+    opacity: 0.7;
     transition:
       opacity var(--transition-fast),
       background-color var(--transition-fast);
   }
 
   .sp-banner-dismiss:focus-visible {
-    outline: var(--ring-width) solid var(--sp-banner-ring);
+    outline: var(--ring-width) solid var(--ring);
     outline-offset: calc(var(--space-1) * 0.25);
   }
 
   @media (hover: hover) {
     .sp-banner-dismiss:hover {
-      background: var(--sp-banner-dismiss-bg-hover);
+      background: color-mix(in oklab, var(--field-dark) 25%, transparent);
       opacity: 1;
     }
   }

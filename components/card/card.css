@@ -1,13 +1,11 @@
 @layer components {
   .sp-card {
-    --sp-card-radius: var(--radius-md);
     --sp-card-padding: var(--space-8);
     --sp-card-bg: var(--card);
     --sp-card-fg: currentcolor;
     --sp-card-border-width: var(--border-width);
     --sp-card-border-style: solid;
     --sp-card-border-color: var(--border);
-    --sp-card-accent-width: calc(var(--space-1) * 1.5);
     --sp-card-accent-color: var(--brand);
     --sp-card-cursor: auto;
     --sp-card-fg-hover: var(--sp-card-fg);
@@ -21,7 +19,7 @@
     background: var(--sp-card-bg);
     border: var(--sp-card-border-width) var(--sp-card-border-style)
       var(--sp-card-border-color);
-    border-radius: var(--sp-card-radius);
+    border-radius: var(--radius-md);
     transition: all var(--transition-base);
   }
 
@@ -68,7 +66,7 @@
 
   .sp-card[data-bordered] {
     border-left-color: var(--sp-card-accent-color);
-    border-left-width: var(--sp-card-accent-width);
+    border-left-width: calc(var(--space-1) * 1.5);
   }
 
   .sp-card-header {

@@ -151,8 +151,8 @@ editorial React (30%).
   for parity and P4 fixes them: prose lists have no markers, prose paragraphs have no gap, the
   financial table's first header is lighter than the rest, and the dark card's paragraphs are
   dark text on navy.
-- **Overlays stack at `z-index: 50`,** a `--sp-<name>-z-index` on the popover, tooltip, hover card
-  and dropdown menu, fixed on the sheet and its overlay. The sheet's scrim is a 50% mix of
+- **Overlays stack at `z-index: 50`:** the popover, tooltip, hover card, dropdown menu, sheet and
+  its overlay. The sheet's scrim is a 50% mix of
   `--primary` blurred by `--space-2`; it opens in 500ms and closes in 300ms, ease-in-out, and its
   title and description take v3's docs values. A destructive menu item is
   `data-variant=destructive` in `--error-text`. The command palette is `.sp-sheet` with
@@ -168,6 +168,13 @@ editorial React (30%).
   the footer group title (`--brand` on dark). Re-pinned: css-utilities (the owl margins), page
   section and light header (the AA gold), and layout (anti-aliasing, one level). The light
   header's hover parity skips pixels: 6 differ by one level.
+- **A component variable exists only where something reassigns it or several rules read it.**
+  Page layout took the stylesheet to 25,075 bytes gzipped, over the 23,765 ceiling, and the
+  `--sp-*` declarations were a third of it. 484 were declared once, read once and never
+  reassigned; inlining them measured 21,056 bytes with every pin unchanged. An app overrides such
+  a value on the property itself, which its unlayered CSS wins anyway. A number-only `calc()`
+  stays in a variable: the minifier folds it to five decimals, 1/64 px off v3. Weighed: inline
+  (55%), raise the ceiling past v3's size (30%), split the stylesheet into opt-in entries (15%).
 - **Where the two implementations disagree, the React look wins:** more apps see it.
 - **Registry v4 is served at `/r/v4/{name}.json`;** `/r/{name}.json` stays the v3 build until each
   app moves.

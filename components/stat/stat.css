@@ -1,33 +1,21 @@
 @layer components {
   .sp-stat {
-    --sp-stat-radius: var(--radius-md);
     --sp-stat-gap: var(--space-1);
-    --sp-stat-padding-block: calc(var(--space-1) * 4.5);
-    --sp-stat-padding-inline: var(--space-5);
-    --sp-stat-bg: var(--card);
-    --sp-stat-fg: var(--foreground);
-    --sp-stat-border-width: var(--border-width);
-    --sp-stat-border-color: var(--border);
     --sp-stat-label-size: var(--text-xs);
     --sp-stat-label-line-height: var(--leading-normal);
-    --sp-stat-label-gap: calc(var(--space-1) * 1.5);
-    --sp-stat-label-fg: var(--muted-foreground);
     --sp-stat-value-size: calc(var(--text-base) * 1.75);
     --sp-stat-value-line-height: var(--leading-normal);
-    --sp-stat-value-fg: var(--foreground);
-    --sp-stat-change-size: var(--text-xs);
     --sp-stat-change-fg: var(--muted-foreground);
-    --sp-stat-description-fg: var(--muted-foreground);
 
     display: flex;
     flex-direction: column;
     gap: var(--sp-stat-gap);
-    padding: var(--sp-stat-padding-block) var(--sp-stat-padding-inline);
+    padding: calc(var(--space-1) * 4.5) var(--space-5);
     font-family: var(--font-sans);
-    color: var(--sp-stat-fg);
-    background: var(--sp-stat-bg);
-    border: var(--sp-stat-border-width) solid var(--sp-stat-border-color);
-    border-radius: var(--sp-stat-radius);
+    color: var(--foreground);
+    background: var(--card);
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--radius-md);
   }
 
   .sp-stat[data-size="sm"] {
@@ -52,13 +40,13 @@
 
   .sp-stat-label {
     display: flex;
-    gap: var(--sp-stat-label-gap);
+    gap: calc(var(--space-1) * 1.5);
     align-items: center;
     margin-bottom: var(--space-1);
     font-size: var(--sp-stat-label-size);
     font-weight: 600;
     line-height: var(--sp-stat-label-line-height);
-    color: var(--sp-stat-label-fg);
+    color: var(--muted-foreground);
     text-transform: uppercase;
     letter-spacing: calc(var(--sp-stat-label-size) * 0.06);
   }
@@ -76,14 +64,14 @@
     font-size: var(--sp-stat-value-size);
     font-weight: 500;
     line-height: var(--sp-stat-value-line-height);
-    color: var(--sp-stat-value-fg);
+    color: var(--foreground);
     letter-spacing: calc(var(--sp-stat-value-size) * -0.01);
     font-variant-numeric: tabular-nums;
   }
 
   .sp-stat-change {
     margin-top: var(--space-1);
-    font-size: var(--sp-stat-change-size);
+    font-size: var(--text-xs);
     font-weight: 400;
     line-height: var(--leading-normal);
     color: var(--sp-stat-change-fg);
@@ -102,6 +90,6 @@
     margin: 0;
     font-size: var(--text-sm);
     line-height: var(--space-5);
-    color: var(--sp-stat-description-fg);
+    color: var(--muted-foreground);
   }
 }

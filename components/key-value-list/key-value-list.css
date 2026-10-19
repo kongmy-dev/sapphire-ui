@@ -1,24 +1,18 @@
 @layer components {
   .sp-key-value-list {
-    --sp-key-value-list-row-gap: calc(var(--space-1) * 1.5);
-    --sp-key-value-list-column-gap: calc(var(--space-1) * 7);
-    --sp-key-value-list-term-fg: var(--muted-foreground);
-    --sp-key-value-list-term-font-size: calc(var(--text-base) * 0.8125);
-    --sp-key-value-list-description-font-size: var(--text-sm);
-
     display: grid;
     grid-template-columns: max-content 1fr;
-    gap: var(--sp-key-value-list-row-gap) var(--sp-key-value-list-column-gap);
+    gap: calc(var(--space-1) * 1.5) calc(var(--space-1) * 7);
     margin: 0;
   }
 
   .sp-key-value-list dt {
-    font-size: var(--sp-key-value-list-term-font-size);
-    color: var(--sp-key-value-list-term-fg);
+    font-size: calc(var(--text-base) * 0.8125);
+    color: var(--muted-foreground);
   }
 
   .sp-key-value-list dd {
     margin: 0;
-    font-size: var(--sp-key-value-list-description-font-size);
+    font-size: var(--text-sm);
   }
 }

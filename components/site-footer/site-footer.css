@@ -1,8 +1,6 @@
 @layer components {
   .sp-site-footer {
-    --sp-site-footer-max-width: var(--page-width);
     --sp-site-footer-padding-block: var(--space-12);
-    --sp-site-footer-padding-inline: var(--space-6);
     --sp-site-footer-gap: var(--space-10);
     --sp-site-footer-bg: var(--primary);
     --sp-site-footer-fg: var(--on-dark);
@@ -31,9 +29,8 @@
   }
 
   .sp-site-footer-inner {
-    max-width: var(--sp-site-footer-max-width);
-    padding: var(--sp-site-footer-padding-block)
-      var(--sp-site-footer-padding-inline);
+    max-width: var(--page-width);
+    padding: var(--sp-site-footer-padding-block) var(--space-6);
     margin-inline: auto;
   }
 

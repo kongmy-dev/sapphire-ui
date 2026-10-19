@@ -9,12 +9,6 @@
     --sp-textarea-line-height: var(--space-6);
     --sp-textarea-bg: var(--card);
     --sp-textarea-fg: var(--foreground);
-    --sp-textarea-placeholder: color-mix(
-      in oklab,
-      currentcolor 65%,
-      transparent
-    );
-    --sp-textarea-border-width: var(--border-width);
     --sp-textarea-border-color: var(--border);
     --sp-textarea-border-color-focus: var(--brand);
     --sp-textarea-ring-width: calc(var(--space-1) * 0.75);
@@ -23,9 +17,7 @@
       var(--brand) 12%,
       transparent
     );
-    --sp-textarea-disabled-opacity: 0.5;
     --sp-textarea-focus: 0 0 transparent;
-    --sp-textarea-resize: vertical;
 
     width: 100%;
     min-height: var(--sp-textarea-min-height);
@@ -35,10 +27,9 @@
     line-height: var(--sp-textarea-line-height);
     color: var(--sp-textarea-fg);
     background: var(--sp-textarea-bg);
-    border: var(--sp-textarea-border-width) solid
-      var(--sp-textarea-border-color);
+    border: var(--border-width) solid var(--sp-textarea-border-color);
     border-radius: var(--sp-textarea-radius);
-    resize: var(--sp-textarea-resize);
+    resize: vertical;
     outline: var(--ring-width) solid transparent;
     outline-offset: var(--ring-offset);
     box-shadow: var(--sp-textarea-focus);
@@ -46,7 +37,7 @@
   }
 
   .sp-textarea::placeholder {
-    color: var(--sp-textarea-placeholder);
+    color: color-mix(in oklab, currentcolor 65%, transparent);
     opacity: 1;
   }
 
@@ -59,7 +50,7 @@
 
   .sp-textarea:disabled {
     cursor: not-allowed;
-    opacity: var(--sp-textarea-disabled-opacity);
+    opacity: 0.5;
   }
 
   .sp-textarea[data-variant="mono"] {

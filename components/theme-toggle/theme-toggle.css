@@ -1,28 +1,22 @@
 @layer components {
   .sp-theme-toggle {
-    --sp-theme-toggle-padding: calc(var(--space-1) * 2.5);
-    --sp-theme-toggle-radius: var(--radius-btn);
     --sp-theme-toggle-icon-size: calc(var(--space-1) * 6);
-    --sp-theme-toggle-fg: var(--brand-text);
-    --sp-theme-toggle-bg: transparent;
-    --sp-theme-toggle-bg-hover: var(--accent);
-    --sp-theme-toggle-ring: var(--ring);
     --sp-theme-toggle-focus: 0 0 transparent;
 
     display: inline-flex;
     gap: var(--space-2);
     align-items: center;
     justify-content: center;
-    padding: var(--sp-theme-toggle-padding);
+    padding: calc(var(--space-1) * 2.5);
     font-family: var(--font-sans);
     font-weight: 600;
-    color: var(--sp-theme-toggle-fg);
+    color: var(--brand-text);
     cursor: pointer;
     user-select: none;
     -webkit-user-select: none;
-    background: var(--sp-theme-toggle-bg);
+    background: transparent;
     border: 0;
-    border-radius: var(--sp-theme-toggle-radius);
+    border-radius: var(--radius-btn);
     outline: var(--ring-width) solid transparent;
     outline-offset: var(--ring-offset);
     box-shadow: var(--sp-theme-toggle-focus);
@@ -32,8 +26,7 @@
   .sp-theme-toggle:focus-visible {
     --sp-theme-toggle-focus:
       0 0 0 var(--ring-offset) var(--white),
-      0 0 0 calc(var(--ring-offset) + var(--ring-width))
-      var(--sp-theme-toggle-ring);
+      0 0 0 calc(var(--ring-offset) + var(--ring-width)) var(--ring);
   }
 
   .sp-theme-toggle:disabled,
@@ -52,7 +45,7 @@
 
   @media (hover: hover) {
     .sp-theme-toggle:hover:not(:disabled, [aria-disabled="true"]) {
-      background: var(--sp-theme-toggle-bg-hover);
+      background: var(--accent);
     }
   }
 

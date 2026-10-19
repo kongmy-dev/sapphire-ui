@@ -3,11 +3,6 @@
     --sp-avatar-size: var(--space-8);
     --sp-avatar-font-size: var(--text-xs);
     --sp-avatar-line-height: var(--space-4);
-    --sp-avatar-font-weight: 600;
-    --sp-avatar-bg: var(--background);
-    --sp-avatar-fg: var(--foreground-strong);
-    --sp-avatar-border-width: var(--border-width);
-    --sp-avatar-border-color: var(--border);
 
     position: relative;
     display: flex;
@@ -18,7 +13,7 @@
     font-family: var(--font-sans);
     font-size: var(--sp-avatar-font-size);
     line-height: var(--sp-avatar-line-height);
-    border: var(--sp-avatar-border-width) solid var(--sp-avatar-border-color);
+    border: var(--border-width) solid var(--border);
     border-radius: var(--radius-pill);
   }
 
@@ -53,9 +48,9 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-    font-weight: var(--sp-avatar-font-weight);
-    color: var(--sp-avatar-fg);
+    font-weight: 600;
+    color: var(--foreground-strong);
     text-transform: uppercase;
-    background: var(--sp-avatar-bg);
+    background: var(--background);
   }
 }

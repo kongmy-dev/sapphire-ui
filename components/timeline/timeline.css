@@ -10,13 +10,7 @@
     --sp-timeline-indicator-width: var(--sp-timeline-marker-size);
     --sp-timeline-indicator-height: auto;
     --sp-timeline-marker-size: var(--space-6);
-    --sp-timeline-marker-bg: var(--background);
-    --sp-timeline-marker-fg: var(--muted-foreground);
-    --sp-timeline-marker-border-width: calc(var(--border-width) * 2);
-    --sp-timeline-marker-border-color: var(--border);
     --sp-timeline-dot-size: var(--space-2);
-    --sp-timeline-dot-bg: color-mix(in oklab, var(--primary) 40%, transparent);
-    --sp-timeline-connector-bg: var(--border);
     --sp-timeline-connector-thickness: calc(var(--space-1) * 0.5);
     --sp-timeline-connector-top: var(--sp-timeline-marker-size);
     --sp-timeline-connector-right: auto;
@@ -25,7 +19,6 @@
     --sp-timeline-connector-width: var(--sp-timeline-connector-thickness);
     --sp-timeline-connector-height: auto;
     --sp-timeline-connector-shift: -50% 0;
-    --sp-timeline-content-gap: var(--space-1);
     --sp-timeline-content-padding: calc(var(--space-1) * 0.5) 0 var(--space-8);
 
     display: flex;
@@ -80,7 +73,7 @@
     width: var(--sp-timeline-connector-width);
     height: var(--sp-timeline-connector-height);
     content: "";
-    background: var(--sp-timeline-connector-bg);
+    background: var(--border);
     translate: var(--sp-timeline-connector-shift);
   }
 
@@ -93,24 +86,23 @@
     justify-content: center;
     width: var(--sp-timeline-marker-size);
     height: var(--sp-timeline-marker-size);
-    color: var(--sp-timeline-marker-fg);
-    background: var(--sp-timeline-marker-bg);
-    border: var(--sp-timeline-marker-border-width) solid
-      var(--sp-timeline-marker-border-color);
+    color: var(--muted-foreground);
+    background: var(--background);
+    border: calc(var(--border-width) * 2) solid var(--border);
     border-radius: var(--radius-pill);
   }
 
   .sp-timeline-dot {
     width: var(--sp-timeline-dot-size);
     height: var(--sp-timeline-dot-size);
-    background: var(--sp-timeline-dot-bg);
+    background: color-mix(in oklab, var(--primary) 40%, transparent);
     border-radius: var(--radius-pill);
   }
 
   .sp-timeline-content {
     display: flex;
     flex-direction: column;
-    gap: var(--sp-timeline-content-gap);
+    gap: var(--space-1);
     padding: var(--sp-timeline-content-padding);
   }
 }

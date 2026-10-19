@@ -1,18 +1,12 @@
 @layer components {
   .sp-empty {
-    --sp-empty-padding-block: var(--space-16);
-    --sp-empty-padding-inline: var(--space-6);
     --sp-empty-icon-size: calc(var(--space-1) * 14);
-    --sp-empty-icon-fg: var(--muted-foreground);
-    --sp-empty-title-fg: var(--foreground-strong);
-    --sp-empty-description-fg: var(--muted-foreground);
-    --sp-empty-description-max-width: calc(var(--space-1) * 96);
 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: var(--sp-empty-padding-block) var(--sp-empty-padding-inline);
+    padding: var(--space-16) var(--space-6);
     text-align: center;
   }
 
@@ -22,7 +16,7 @@
     margin-bottom: var(--space-4);
     font-size: var(--sp-empty-icon-size);
     line-height: 1;
-    color: var(--sp-empty-icon-fg);
+    color: var(--muted-foreground);
   }
 
   .sp-empty-title {
@@ -31,16 +25,16 @@
     font-size: var(--text-lg);
     font-weight: 500;
     line-height: calc(var(--space-1) * 7);
-    color: var(--sp-empty-title-fg);
+    color: var(--foreground-strong);
   }
 
   .sp-empty-description {
-    max-width: var(--sp-empty-description-max-width);
+    max-width: calc(var(--space-1) * 96);
     margin: 0 0 var(--space-6);
     font-family: var(--font-sans);
     font-size: var(--text-sm);
     line-height: calc(var(--space-1) * 5);
-    color: var(--sp-empty-description-fg);
+    color: var(--muted-foreground);
   }
 
   .sp-empty-action {

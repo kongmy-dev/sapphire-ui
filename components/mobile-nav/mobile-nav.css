@@ -1,6 +1,5 @@
 @layer components {
   .sp-mobile-nav {
-    --sp-mobile-nav-bar-height: var(--space-16);
     --sp-mobile-nav-bg: var(--primary);
     --sp-mobile-nav-fg: var(--on-dark);
     --sp-mobile-nav-border-color: color-mix(
@@ -8,49 +7,16 @@
       var(--white) 10%,
       transparent
     );
-    --sp-mobile-nav-divider-color: color-mix(
-      in oklab,
-      var(--white) 5%,
-      transparent
-    );
     --sp-mobile-nav-radius: var(--radius-md);
     --sp-mobile-nav-accent: var(--brand);
-    --sp-mobile-nav-ring: var(--brand);
     --sp-mobile-nav-hover-bg: color-mix(in oklab, var(--white) 5%, transparent);
-    --sp-mobile-nav-link-fg: color-mix(
-      in oklab,
-      var(--on-dark) 70%,
-      transparent
-    );
-    --sp-mobile-nav-link-fg-hover: var(--on-dark);
-    --sp-mobile-nav-link-bg-active: color-mix(
-      in oklab,
-      var(--brand) 10%,
-      transparent
-    );
-    --sp-mobile-nav-bar-version-fg: color-mix(
-      in oklab,
-      var(--on-dark) 50%,
-      transparent
-    );
     --sp-mobile-nav-dim-fg: color-mix(
       in oklab,
       var(--on-dark) 40%,
       transparent
     );
-    --sp-mobile-nav-scrim-bg: color-mix(
-      in oklab,
-      var(--primary) 60%,
-      transparent
-    );
-    --sp-mobile-nav-scrim-blur: var(--space-2);
-    --sp-mobile-nav-drawer-width: min(calc(var(--space-1) * 70), 85vw);
     --sp-mobile-nav-duration: 300ms;
     --sp-mobile-nav-easing: cubic-bezier(0.4, 0, 0.2, 1);
-    --sp-mobile-nav-bar-shadow: var(--shadow-md);
-    --sp-mobile-nav-drawer-shadow: 0 calc(var(--space-1) * 6.25)
-      calc(var(--space-1) * 12.5) calc(var(--space-1) * -3)
-      color-mix(in oklab, var(--primary) 25%, transparent);
   }
 
   .sp-mobile-nav-bar {
@@ -61,12 +27,12 @@
     gap: var(--space-1);
     align-items: center;
     justify-content: flex-start;
-    height: var(--sp-mobile-nav-bar-height);
+    height: var(--space-16);
     padding-inline: var(--space-4);
     color: var(--sp-mobile-nav-fg);
     background: var(--sp-mobile-nav-bg);
     border-bottom: var(--border-width) solid var(--sp-mobile-nav-border-color);
-    box-shadow: var(--sp-mobile-nav-bar-shadow);
+    box-shadow: var(--shadow-md);
   }
 
   .sp-mobile-nav-toggle,
@@ -84,7 +50,7 @@
 
   .sp-mobile-nav-toggle:focus-visible,
   .sp-mobile-nav-close:focus-visible {
-    outline: var(--ring-width) solid var(--sp-mobile-nav-ring);
+    outline: var(--ring-width) solid var(--brand);
     outline-offset: 0;
   }
 
@@ -135,7 +101,7 @@
     margin-left: calc(var(--space-1) * 1.5);
     font-family: var(--font-mono);
     font-size: calc(var(--text-base) * 0.625);
-    color: var(--sp-mobile-nav-bar-version-fg);
+    color: color-mix(in oklab, var(--on-dark) 50%, transparent);
   }
 
   .sp-mobile-nav-scrim {
@@ -143,8 +109,8 @@
     inset: 0;
     z-index: 40;
     pointer-events: none;
-    background: var(--sp-mobile-nav-scrim-bg);
-    backdrop-filter: blur(var(--sp-mobile-nav-scrim-blur));
+    background: color-mix(in oklab, var(--primary) 60%, transparent);
+    backdrop-filter: blur(var(--space-2));
     opacity: 0;
     transition: opacity var(--sp-mobile-nav-duration)
       var(--sp-mobile-nav-easing);
@@ -156,13 +122,15 @@
     z-index: 50;
     display: flex;
     flex-direction: column;
-    width: var(--sp-mobile-nav-drawer-width);
+    width: min(calc(var(--space-1) * 70), 85vw);
     padding: var(--space-6);
     color: var(--sp-mobile-nav-fg);
     visibility: hidden;
     background: var(--sp-mobile-nav-bg);
     border-right: var(--border-width) solid var(--sp-mobile-nav-border-color);
-    box-shadow: var(--sp-mobile-nav-drawer-shadow);
+    box-shadow: 0 calc(var(--space-1) * 6.25) calc(var(--space-1) * 12.5)
+      calc(var(--space-1) * -3)
+      color-mix(in oklab, var(--primary) 25%, transparent);
     translate: -100% 0;
     transition:
       translate var(--sp-mobile-nav-duration) var(--sp-mobile-nav-easing),
@@ -221,7 +189,7 @@
     font-size: var(--text-sm);
     font-weight: 500;
     line-height: calc(var(--space-1) * 5);
-    color: var(--sp-mobile-nav-link-fg);
+    color: color-mix(in oklab, var(--on-dark) 70%, transparent);
     text-align: left;
     text-decoration: none;
     cursor: pointer;
@@ -235,7 +203,7 @@
 
   .sp-mobile-nav-link[aria-current="page"] {
     color: var(--sp-mobile-nav-accent);
-    background: var(--sp-mobile-nav-link-bg-active);
+    background: color-mix(in oklab, var(--brand) 10%, transparent);
   }
 
   .sp-mobile-nav-extras {
@@ -244,7 +212,8 @@
     gap: var(--space-1);
     padding-top: var(--space-2);
     margin-top: var(--space-2);
-    border-top: var(--border-width) solid var(--sp-mobile-nav-divider-color);
+    border-top: var(--border-width) solid
+      color-mix(in oklab, var(--white) 5%, transparent);
   }
 
   .sp-mobile-nav-footer {
@@ -271,7 +240,7 @@
     }
 
     .sp-mobile-nav-link:hover:not([aria-current="page"]) {
-      color: var(--sp-mobile-nav-link-fg-hover);
+      color: var(--on-dark);
       background: var(--sp-mobile-nav-hover-bg);
     }
 

@@ -1,24 +1,19 @@
 @layer components {
   .sp-alert {
-    --sp-alert-radius: var(--radius-md);
-    --sp-alert-padding: var(--space-5);
-    --sp-alert-gap: var(--space-3);
-    --sp-alert-border-width: var(--border-width-strong);
     --sp-alert-border-color: var(--info-border);
     --sp-alert-bg: var(--info-bg);
-    --sp-alert-fg: var(--foreground);
     --sp-alert-accent: var(--info-text);
     --sp-alert-icon-size: calc(var(--space-1) * 5);
 
     display: flex;
-    gap: var(--sp-alert-gap);
+    gap: var(--space-3);
     align-items: flex-start;
-    padding: var(--sp-alert-padding);
+    padding: var(--space-5);
     font-family: var(--font-sans);
-    color: var(--sp-alert-fg);
+    color: var(--foreground);
     background: var(--sp-alert-bg);
-    border: var(--sp-alert-border-width) solid var(--sp-alert-border-color);
-    border-radius: var(--sp-alert-radius);
+    border: var(--border-width-strong) solid var(--sp-alert-border-color);
+    border-radius: var(--radius-md);
   }
 
   .sp-alert[data-variant="success"] {

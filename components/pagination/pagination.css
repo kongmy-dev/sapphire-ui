@@ -1,23 +1,9 @@
 @layer components {
   .sp-pagination {
-    --sp-pagination-gap: var(--space-1);
     --sp-pagination-size: var(--space-8);
-    --sp-pagination-padding-inline: var(--space-2);
-    --sp-pagination-radius: var(--radius-btn);
-    --sp-pagination-font-size: var(--text-sm);
-    --sp-pagination-font-weight: 500;
-    --sp-pagination-line-height: var(--space-5);
     --sp-pagination-bg: transparent;
     --sp-pagination-fg: var(--foreground);
-    --sp-pagination-border-width: var(--border-width);
     --sp-pagination-border-color: var(--border);
-    --sp-pagination-bg-hover: var(--background);
-    --sp-pagination-current-bg: var(--primary);
-    --sp-pagination-current-fg: var(--primary-foreground);
-    --sp-pagination-current-border-color: var(--primary);
-    --sp-pagination-disabled-opacity: 0.4;
-    --sp-pagination-ellipsis-fg: var(--muted-foreground);
-    --sp-pagination-ring: var(--ring);
     --sp-pagination-ring-offset: calc(var(--space-1) * 0.25);
 
     display: inline-flex;
@@ -26,7 +12,7 @@
 
   .sp-pagination-list {
     display: flex;
-    gap: var(--sp-pagination-gap);
+    gap: var(--space-1);
     align-items: center;
     padding: 0;
     margin: 0;
@@ -43,18 +29,17 @@
     justify-content: center;
     min-width: var(--sp-pagination-size);
     height: var(--sp-pagination-size);
-    padding: 0 var(--sp-pagination-padding-inline);
+    padding: 0 var(--space-2);
     font-family: var(--font-sans);
-    font-size: var(--sp-pagination-font-size);
-    font-weight: var(--sp-pagination-font-weight);
-    line-height: var(--sp-pagination-line-height);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    line-height: var(--space-5);
     color: var(--sp-pagination-fg);
     text-decoration: none;
     cursor: pointer;
     background: var(--sp-pagination-bg);
-    border: var(--sp-pagination-border-width) solid
-      var(--sp-pagination-border-color);
-    border-radius: var(--sp-pagination-radius);
+    border: var(--border-width) solid var(--sp-pagination-border-color);
+    border-radius: var(--radius-btn);
     outline: var(--ring-width) solid transparent;
     transition:
       color var(--transition-fast),
@@ -66,19 +51,19 @@
     box-shadow:
       0 0 0 var(--sp-pagination-ring-offset) var(--white),
       0 0 0 calc(var(--sp-pagination-ring-offset) + var(--ring-width))
-      var(--sp-pagination-ring);
+      var(--ring);
   }
 
   .sp-pagination-link[aria-current="page"] {
-    --sp-pagination-bg: var(--sp-pagination-current-bg);
-    --sp-pagination-fg: var(--sp-pagination-current-fg);
-    --sp-pagination-border-color: var(--sp-pagination-current-border-color);
+    --sp-pagination-bg: var(--primary);
+    --sp-pagination-fg: var(--primary-foreground);
+    --sp-pagination-border-color: var(--primary);
   }
 
   .sp-pagination-link:disabled,
   .sp-pagination-link[aria-disabled="true"] {
     cursor: not-allowed;
-    opacity: var(--sp-pagination-disabled-opacity);
+    opacity: 0.4;
   }
 
   .sp-pagination-ellipsis {
@@ -87,7 +72,7 @@
     justify-content: center;
     width: var(--sp-pagination-size);
     height: var(--sp-pagination-size);
-    color: var(--sp-pagination-ellipsis-fg);
+    color: var(--muted-foreground);
     user-select: none;
     -webkit-user-select: none;
   }
@@ -98,7 +83,7 @@
         :disabled,
         [aria-disabled="true"]
       ):hover {
-      background: var(--sp-pagination-bg-hover);
+      background: var(--background);
     }
   }
 

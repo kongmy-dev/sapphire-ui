@@ -2,17 +2,11 @@
   .sp-progress {
     --sp-progress-value: 0%;
     --sp-progress-height: calc(var(--space-1) * 2.5);
-    --sp-progress-gap: var(--space-3);
-    --sp-progress-track-bg: var(--background);
-    --sp-progress-track-border-width: var(--border-width);
-    --sp-progress-track-border-color: var(--border);
     --sp-progress-indicator-bg: var(--brand);
-    --sp-progress-transition: 500ms ease-out;
-    --sp-progress-label-fg: var(--muted-foreground);
     --sp-progress-label-font-size: var(--text-xs);
 
     display: flex;
-    gap: var(--sp-progress-gap);
+    gap: var(--space-3);
     align-items: center;
     width: 100%;
   }
@@ -30,9 +24,8 @@
     width: 100%;
     height: var(--sp-progress-height);
     overflow: hidden;
-    background: var(--sp-progress-track-bg);
-    border: var(--sp-progress-track-border-width) solid
-      var(--sp-progress-track-border-color);
+    background: var(--background);
+    border: var(--border-width) solid var(--border);
     border-radius: var(--radius-pill);
   }
 
@@ -40,7 +33,7 @@
     height: 100%;
     background: var(--sp-progress-indicator-bg);
     border-radius: var(--radius-pill);
-    transition: transform var(--sp-progress-transition);
+    transition: transform 500ms ease-out;
     transform: translateX(calc(var(--sp-progress-value) - 100%));
   }
 
@@ -49,7 +42,7 @@
     font-family: var(--font-mono);
     font-size: var(--sp-progress-label-font-size);
     line-height: calc(var(--space-1) * 4);
-    color: var(--sp-progress-label-fg);
+    color: var(--muted-foreground);
     font-variant-numeric: tabular-nums;
   }
 

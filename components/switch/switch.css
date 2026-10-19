@@ -1,15 +1,12 @@
 @layer components {
   .sp-switch-field {
-    --sp-switch-field-gap: var(--space-3);
-    --sp-switch-field-disabled-opacity: 0.5;
-
     display: flex;
-    gap: var(--sp-switch-field-gap);
+    gap: var(--space-3);
     align-items: center;
   }
 
   .sp-switch-field[data-disabled] {
-    opacity: var(--sp-switch-field-disabled-opacity);
+    opacity: 0.5;
   }
 
   .sp-switch-field .sp-label {
@@ -26,15 +23,9 @@
     --sp-switch-width: calc(var(--space-1) * 10);
     --sp-switch-height: calc(var(--space-1) * 5.5);
     --sp-switch-thumb-size: var(--space-4);
-    --sp-switch-thumb-start: calc(var(--space-1) * 0.5);
     --sp-switch-thumb-end: var(--space-5);
-    --sp-switch-thumb-bg: var(--white);
-    --sp-switch-thumb-shadow: 0 calc(var(--space-1) * 0.25)
-      calc(var(--space-1) * 0.75) color-mix(in oklab, black 15%, transparent);
     --sp-switch-inactive: var(--switch-off);
     --sp-switch-active: var(--brand);
-    --sp-switch-ring: var(--ring);
-    --sp-switch-disabled-opacity: 0.5;
 
     position: relative;
     flex-shrink: 0;
@@ -60,13 +51,13 @@
   }
 
   .sp-switch:focus-visible {
-    outline-color: var(--sp-switch-ring);
+    outline-color: var(--ring);
   }
 
   .sp-switch:disabled,
   .sp-switch[data-disabled] {
     cursor: not-allowed;
-    opacity: var(--sp-switch-disabled-opacity);
+    opacity: 0.5;
   }
 
   .sp-switch[data-size="sm"] {
@@ -80,11 +71,12 @@
     display: block;
     width: var(--sp-switch-thumb-size);
     height: var(--sp-switch-thumb-size);
-    background-color: var(--sp-switch-thumb-bg);
+    background-color: var(--white);
     border-radius: 50%;
-    box-shadow: var(--sp-switch-thumb-shadow);
+    box-shadow: 0 calc(var(--space-1) * 0.25) calc(var(--space-1) * 0.75)
+      color-mix(in oklab, black 15%, transparent);
     transition: transform var(--transition-base);
-    transform: translateX(var(--sp-switch-thumb-start));
+    transform: translateX(calc(var(--space-1) * 0.5));
     will-change: transform;
   }
 

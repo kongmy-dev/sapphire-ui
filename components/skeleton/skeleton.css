@@ -3,24 +3,19 @@
     --sp-skeleton-width: 80%;
     --sp-skeleton-height: var(--space-5);
     --sp-skeleton-radius: var(--radius-sm);
-    --sp-skeleton-from: var(--background);
-    --sp-skeleton-via: var(--border);
-    --sp-skeleton-to: var(--background);
-    --sp-skeleton-duration: 1.5s;
 
     display: block;
     width: var(--sp-skeleton-width);
     height: var(--sp-skeleton-height);
     background: linear-gradient(
       to right in oklab,
-      var(--sp-skeleton-from),
-      var(--sp-skeleton-via),
-      var(--sp-skeleton-to)
+      var(--background),
+      var(--border),
+      var(--background)
     );
     background-size: 200% 100%;
     border-radius: var(--sp-skeleton-radius);
-    animation: sp-skeleton-shimmer var(--sp-skeleton-duration) ease-in-out
-      infinite;
+    animation: sp-skeleton-shimmer 1.5s ease-in-out infinite;
   }
 
   .sp-skeleton[data-size="sm"] {

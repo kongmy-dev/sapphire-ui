@@ -1,19 +1,13 @@
 @layer components {
   .sp-stat-group {
-    --sp-stat-group-radius: var(--radius-md);
-    --sp-stat-group-gap: var(--space-6);
-    --sp-stat-group-padding: var(--space-6);
-    --sp-stat-group-border-width: var(--border-width);
-    --sp-stat-group-border-color: var(--border);
     --sp-stat-group-columns: 1;
 
     display: grid;
     grid-template-columns: repeat(var(--sp-stat-group-columns), minmax(0, 1fr));
-    gap: var(--sp-stat-group-gap);
-    padding: var(--sp-stat-group-padding);
-    border: var(--sp-stat-group-border-width) solid
-      var(--sp-stat-group-border-color);
-    border-radius: var(--sp-stat-group-radius);
+    gap: var(--space-6);
+    padding: var(--space-6);
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--radius-md);
   }
 
   @media (min-width: 40rem) {

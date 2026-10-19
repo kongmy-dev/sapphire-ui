@@ -1,31 +1,16 @@
 @layer components {
   .sp-accordion {
-    --sp-accordion-border-width: var(--border-width);
-    --sp-accordion-border-color: var(--border);
-    --sp-accordion-header-gap: var(--space-4);
-    --sp-accordion-trigger-padding: var(--space-4) 0;
-    --sp-accordion-trigger-font-size: var(--text-sm);
-    --sp-accordion-trigger-font-weight: 500;
-    --sp-accordion-trigger-line-height: calc(var(--space-1) * 5);
-    --sp-accordion-trigger-fg: var(--foreground);
     --sp-accordion-chevron-size: calc(var(--space-1) * 3.5);
-    --sp-accordion-chevron-fg: var(--muted-foreground);
-    --sp-accordion-content-font-size: var(--text-sm);
-    --sp-accordion-content-line-height: calc(var(--space-1) * 5);
-    --sp-accordion-content-fg: var(--muted-foreground);
-    --sp-accordion-content-padding-bottom: var(--space-4);
-    --sp-accordion-ring: var(--ring);
     --sp-accordion-focus: 0 0 transparent;
   }
 
   .sp-accordion-item {
-    border-bottom: var(--sp-accordion-border-width) solid
-      var(--sp-accordion-border-color);
+    border-bottom: var(--border-width) solid var(--border);
   }
 
   .sp-accordion-header {
     display: flex;
-    margin: 0 0 var(--sp-accordion-header-gap);
+    margin: 0 0 var(--space-4);
   }
 
   .sp-accordion-trigger {
@@ -33,12 +18,12 @@
     flex: 1;
     align-items: center;
     justify-content: space-between;
-    padding: var(--sp-accordion-trigger-padding);
+    padding: var(--space-4) 0;
     font-family: var(--font-sans);
-    font-size: var(--sp-accordion-trigger-font-size);
-    font-weight: var(--sp-accordion-trigger-font-weight);
-    line-height: var(--sp-accordion-trigger-line-height);
-    color: var(--sp-accordion-trigger-fg);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    line-height: calc(var(--space-1) * 5);
+    color: var(--foreground);
     text-align: start;
     text-underline-offset: var(--space-1);
     cursor: pointer;
@@ -52,8 +37,7 @@
   .sp-accordion-trigger:focus-visible {
     --sp-accordion-focus:
       0 0 0 calc(var(--ring-offset) * 0.5) var(--white),
-      0 0 0 calc(var(--ring-offset) * 0.5 + var(--ring-width))
-      var(--sp-accordion-ring);
+      0 0 0 calc(var(--ring-offset) * 0.5 + var(--ring-width)) var(--ring);
 
     border-radius: var(--radius-sm);
   }
@@ -62,7 +46,7 @@
     flex-shrink: 0;
     width: var(--sp-accordion-chevron-size);
     height: var(--sp-accordion-chevron-size);
-    color: var(--sp-accordion-chevron-fg);
+    color: var(--muted-foreground);
     transition: transform var(--transition-base);
   }
 
@@ -74,9 +58,9 @@
   .sp-accordion-content {
     overflow: hidden;
     font-family: var(--font-sans);
-    font-size: var(--sp-accordion-content-font-size);
-    line-height: var(--sp-accordion-content-line-height);
-    color: var(--sp-accordion-content-fg);
+    font-size: var(--text-sm);
+    line-height: calc(var(--space-1) * 5);
+    color: var(--muted-foreground);
   }
 
   .sp-accordion-content[data-state="open"],
@@ -89,7 +73,7 @@
   }
 
   .sp-accordion-body {
-    padding: 0 0 var(--sp-accordion-content-padding-bottom);
+    padding: 0 0 var(--space-4);
   }
 
   @keyframes sp-accordion-down {

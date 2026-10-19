@@ -1,42 +1,21 @@
 @layer components {
   .sp-bar-chart {
-    --sp-bar-chart-height: calc(var(--space-1) * 48);
-    --sp-bar-chart-gap: var(--space-3);
-    --sp-bar-chart-padding-top: var(--space-4);
-    --sp-bar-chart-border-width: var(--border-width);
-    --sp-bar-chart-border-color: var(--border);
     --sp-bar-chart-color: var(--brand);
-    --sp-bar-chart-bar-mix: 30%;
-    --sp-bar-chart-bar-mix-hover: 50%;
     --sp-bar-chart-bar-radius: var(--radius-sm);
-    --sp-bar-chart-column-gap: var(--space-2);
-    --sp-bar-chart-label-fg: var(--muted-foreground);
-    --sp-bar-chart-label-font-size: calc(var(--text-base) * 0.625);
-    --sp-bar-chart-label-margin-top: var(--space-1);
-    --sp-bar-chart-value-bg: var(--foreground-strong);
-    --sp-bar-chart-value-fg: var(--background);
-    --sp-bar-chart-value-font-size: calc(var(--text-base) * 0.625);
-    --sp-bar-chart-value-padding-block: calc(var(--space-1) * 0.5);
-    --sp-bar-chart-value-padding-inline: calc(var(--space-1) * 1.5);
-    --sp-bar-chart-value-radius: var(--radius-sm);
-    --sp-bar-chart-value-offset: calc(var(--space-1) * -7);
-    --sp-bar-chart-value-shadow: var(--shadow-sm);
-    --sp-bar-chart-value-z-index: 10;
 
     display: flex;
-    gap: var(--sp-bar-chart-gap);
+    gap: var(--space-3);
     align-items: flex-end;
-    height: var(--sp-bar-chart-height);
-    padding-top: var(--sp-bar-chart-padding-top);
-    border-bottom: var(--sp-bar-chart-border-width) solid
-      var(--sp-bar-chart-border-color);
+    height: calc(var(--space-1) * 48);
+    padding-top: var(--space-4);
+    border-bottom: var(--border-width) solid var(--border);
   }
 
   .sp-bar-chart-column {
     display: flex;
     flex: 1;
     flex-direction: column;
-    gap: var(--sp-bar-chart-column-gap);
+    gap: var(--space-2);
     align-items: center;
     justify-content: flex-end;
     height: 100%;
@@ -48,11 +27,7 @@
     position: relative;
     width: 100%;
     height: var(--sp-bar-chart-share);
-    background: color-mix(
-      in oklab,
-      var(--sp-bar-chart-color) var(--sp-bar-chart-bar-mix),
-      transparent
-    );
+    background: color-mix(in oklab, var(--sp-bar-chart-color) 30%, transparent);
     border-radius: var(--sp-bar-chart-bar-radius) var(--sp-bar-chart-bar-radius)
       0 0;
     transition: background-color var(--transition-fast);
@@ -60,35 +35,34 @@
 
   .sp-bar-chart-value {
     position: absolute;
-    top: var(--sp-bar-chart-value-offset);
+    top: calc(var(--space-1) * -7);
     left: 50%;
-    z-index: var(--sp-bar-chart-value-z-index);
-    padding: var(--sp-bar-chart-value-padding-block)
-      var(--sp-bar-chart-value-padding-inline);
+    z-index: 10;
+    padding: calc(var(--space-1) * 0.5) calc(var(--space-1) * 1.5);
     font-family: var(--font-mono);
-    font-size: var(--sp-bar-chart-value-font-size);
-    color: var(--sp-bar-chart-value-fg);
+    font-size: calc(var(--text-base) * 0.625);
+    color: var(--background);
     white-space: nowrap;
-    background: var(--sp-bar-chart-value-bg);
-    border-radius: var(--sp-bar-chart-value-radius);
-    box-shadow: var(--sp-bar-chart-value-shadow);
+    background: var(--foreground-strong);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
     opacity: 0;
     transition: opacity var(--transition-fast);
     translate: -50% 0;
   }
 
   .sp-bar-chart-label {
-    margin-top: var(--sp-bar-chart-label-margin-top);
+    margin-top: var(--space-1);
     font-family: var(--font-mono);
-    font-size: var(--sp-bar-chart-label-font-size);
-    color: var(--sp-bar-chart-label-fg);
+    font-size: calc(var(--text-base) * 0.625);
+    color: var(--muted-foreground);
   }
 
   @media (hover: hover) {
     .sp-bar-chart-column:hover .sp-bar-chart-bar {
       background: color-mix(
         in oklab,
-        var(--sp-bar-chart-color) var(--sp-bar-chart-bar-mix-hover),
+        var(--sp-bar-chart-color) 50%,
         transparent
       );
     }

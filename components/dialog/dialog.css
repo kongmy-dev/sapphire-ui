@@ -20,11 +20,6 @@
   .sp-dialog {
     --sp-dialog-width: calc(100vw - var(--space-8));
     --sp-dialog-max-width: calc(var(--space-1) * 200);
-    --sp-dialog-max-height: 85vh;
-    --sp-dialog-radius: var(--radius-md);
-    --sp-dialog-bg: var(--card);
-    --sp-dialog-fg: var(--foreground);
-    --sp-dialog-shadow: var(--shadow-lg);
     --sp-dialog-padding-inline: var(--space-6);
 
     position: fixed;
@@ -34,16 +29,16 @@
     width: var(--sp-dialog-width);
     max-width: var(--sp-dialog-max-width);
     height: fit-content;
-    max-height: var(--sp-dialog-max-height);
+    max-height: 85vh;
     padding: 0;
     margin: 0;
     overflow: visible;
-    color: var(--sp-dialog-fg);
-    background: var(--sp-dialog-bg);
+    color: var(--foreground);
+    background: var(--card);
     border: 0;
-    border-radius: var(--sp-dialog-radius);
+    border-radius: var(--radius-md);
     outline: none;
-    box-shadow: var(--sp-dialog-shadow);
+    box-shadow: var(--shadow-lg);
     translate: -50% -50%;
   }
 

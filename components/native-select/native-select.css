@@ -7,12 +7,10 @@
     --sp-native-select-radius: var(--radius-btn);
     --sp-native-select-padding-block: var(--space-3);
     --sp-native-select-padding-inline: var(--space-4);
-    --sp-native-select-padding-inline-end: var(--space-10);
     --sp-native-select-font-size: var(--text-base);
     --sp-native-select-line-height: var(--space-6);
     --sp-native-select-bg: var(--card);
     --sp-native-select-fg: var(--foreground);
-    --sp-native-select-border-width: var(--border-width);
     --sp-native-select-border-color: var(--border);
     --sp-native-select-border-color-focus: var(--brand);
     --sp-native-select-ring-width: calc(var(--space-1) * 0.75);
@@ -21,12 +19,10 @@
       var(--brand) 12%,
       transparent
     );
-    --sp-native-select-disabled-opacity: 0.5;
     --sp-native-select-focus: 0 0 transparent;
 
     width: 100%;
-    padding: var(--sp-native-select-padding-block)
-      var(--sp-native-select-padding-inline-end)
+    padding: var(--sp-native-select-padding-block) var(--space-10)
       var(--sp-native-select-padding-block)
       var(--sp-native-select-padding-inline);
     font-family: var(--font-sans);
@@ -36,8 +32,7 @@
     cursor: pointer;
     appearance: none;
     background: var(--sp-native-select-bg);
-    border: var(--sp-native-select-border-width) solid
-      var(--sp-native-select-border-color);
+    border: var(--border-width) solid var(--sp-native-select-border-color);
     border-radius: var(--sp-native-select-radius);
     outline: var(--ring-width) solid transparent;
     outline-offset: var(--ring-offset);
@@ -54,7 +49,7 @@
 
   .sp-native-select:disabled {
     cursor: not-allowed;
-    opacity: var(--sp-native-select-disabled-opacity);
+    opacity: 0.5;
   }
 
   .sp-native-select[aria-invalid="true"] {
@@ -71,15 +66,13 @@
     --sp-native-select-radius: var(--radius-sm);
     --sp-native-select-bg: var(--field-dark);
     --sp-native-select-fg: var(--on-dark);
-    --sp-native-select-option-bg: var(--primary);
-    --sp-native-select-option-fg: var(--on-dark);
     --sp-native-select-border-color: var(--border-dark);
     --sp-native-select-ring-width: 0;
   }
 
   .sp-native-select[data-variant="on-dark"] > option {
-    color: var(--sp-native-select-option-fg);
-    background-color: var(--sp-native-select-option-bg);
+    color: var(--on-dark);
+    background-color: var(--primary);
   }
 
   .sp-native-select[data-size="sm"] {
@@ -98,12 +91,11 @@
 
   .sp-native-select-icon {
     --sp-native-select-icon-size: var(--space-5);
-    --sp-native-select-icon-inset: var(--space-3);
     --sp-native-select-icon-color: var(--muted-foreground);
 
     position: absolute;
     top: 50%;
-    right: var(--sp-native-select-icon-inset);
+    right: var(--space-3);
     width: var(--sp-native-select-icon-size);
     height: var(--sp-native-select-icon-size);
     color: var(--sp-native-select-icon-color);
