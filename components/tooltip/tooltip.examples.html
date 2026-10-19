@@ -1,0 +1,35 @@
+<header class="docs-page-header">
+  <h1>Interactive Overlays</h1>
+  <p>Modal dialogs, toast notifications, sheets, tooltips, and popovers.</p>
+</header>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Tooltip</h2>
+  <div class="docs-preview">
+    <div class="docs-flex">
+      <button class="sp-button" type="button" data-variant="outline" data-size="sm" data-state="closed">Hover me</button>
+      <button class="sp-button" type="button" data-variant="ghost" data-size="icon" aria-label="Settings" data-state="closed"><span aria-hidden="true"></span></button>
+      <button class="sp-button" type="button" data-variant="ghost" data-size="icon" aria-label="Help" data-state="closed">?</button>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Tooltip (open)</h2>
+  <div class="docs-preview">
+    <div class="docs-flex docs-tooltip-row">
+      <div class="docs-tooltip-stage">
+        <div class="sp-tooltip" id="tooltip-top" role="tooltip" data-state="delayed-open" data-side="top" data-align="center">Quick info shown on hover</div>
+        <button class="sp-button" type="button" data-variant="outline" data-size="sm" aria-describedby="tooltip-top" data-state="delayed-open">Hover me</button>
+      </div>
+      <div class="docs-tooltip-stage">
+        <button class="sp-button" type="button" data-variant="ghost" data-size="icon" aria-label="Settings" aria-describedby="tooltip-bottom" data-state="delayed-open"><span aria-hidden="true"></span></button>
+        <div class="sp-tooltip" id="tooltip-bottom" role="tooltip" data-state="delayed-open" data-side="bottom" data-align="center">Settings</div>
+      </div>
+      <div class="docs-tooltip-stage docs-tooltip-beside">
+        <button class="sp-button" type="button" data-variant="ghost" data-size="icon" aria-label="Help" aria-describedby="tooltip-right" data-state="delayed-open">?</button>
+        <div class="sp-tooltip" id="tooltip-right" role="tooltip" data-state="delayed-open" data-side="right" data-align="center">Documentation</div>
+      </div>
+    </div>
+  </div>
+</section>

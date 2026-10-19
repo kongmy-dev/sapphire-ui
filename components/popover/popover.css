@@ -1,0 +1,88 @@
+@layer components {
+  .sp-popover {
+    --sp-popover-width: calc(var(--space-1) * 72);
+    --sp-popover-padding: var(--space-4);
+    --sp-popover-radius: var(--radius-md);
+    --sp-popover-bg: var(--card);
+    --sp-popover-fg: var(--foreground);
+    --sp-popover-border-width: var(--border-width);
+    --sp-popover-border-color: var(--border);
+    --sp-popover-font-size: var(--text-sm);
+    --sp-popover-line-height: calc(1.25 / 0.875);
+    --sp-popover-shadow: var(--shadow-lg);
+    --sp-popover-z-index: 50;
+    --sp-popover-enter-x: 0;
+    --sp-popover-enter-y: 0;
+
+    width: var(--sp-popover-width);
+    padding: var(--sp-popover-padding);
+    font-family: var(--font-sans);
+    font-size: var(--sp-popover-font-size);
+    line-height: var(--sp-popover-line-height);
+    color: var(--sp-popover-fg);
+    background: var(--sp-popover-bg);
+    border: var(--sp-popover-border-width) solid var(--sp-popover-border-color);
+    border-radius: var(--sp-popover-radius);
+    outline: none;
+    box-shadow: var(--sp-popover-shadow);
+    z-index: var(--sp-popover-z-index);
+    transform-origin: var(--radix-popover-content-transform-origin, 50% 50%);
+  }
+
+  .sp-popover[data-side="bottom"] {
+    --sp-popover-enter-y: calc(var(--space-2) * -1);
+  }
+
+  .sp-popover[data-side="top"] {
+    --sp-popover-enter-y: var(--space-2);
+  }
+
+  .sp-popover[data-side="left"] {
+    --sp-popover-enter-x: var(--space-2);
+  }
+
+  .sp-popover[data-side="right"] {
+    --sp-popover-enter-x: calc(var(--space-2) * -1);
+  }
+
+  .sp-popover:is([data-state="open"], [data-open]) {
+    animation: sp-popover-in var(--transition-fast);
+  }
+
+  .sp-popover:is([data-state="closed"], [data-closed]) {
+    animation: sp-popover-out var(--transition-fast);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sp-popover,
+    .sp-popover:is([data-state="open"], [data-open]),
+    .sp-popover:is([data-state="closed"], [data-closed]) {
+      animation: none;
+    }
+  }
+
+  @keyframes sp-popover-in {
+    from {
+      opacity: 0;
+      transform: translate(var(--sp-popover-enter-x), var(--sp-popover-enter-y))
+        scale(0.95);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate(0, 0) scale(1);
+    }
+  }
+
+  @keyframes sp-popover-out {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    to {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+  }
+}

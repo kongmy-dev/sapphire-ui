@@ -1,0 +1,33 @@
+<header class="docs-page-header">
+  <h1>Interactive Overlays</h1>
+  <p>Modal dialogs, toast notifications, sheets, tooltips, and popovers.</p>
+</header>
+
+<section class="docs-section" data-pin="interactive/popover" data-pin-y="821.734375">
+  <h2 class="docs-section-title">Popover</h2>
+  <div class="docs-preview">
+    <button class="sp-button" type="button" data-variant="outline" aria-haspopup="dialog" aria-expanded="false" data-state="closed">Edit profile</button>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Popover (open)</h2>
+  <div class="docs-preview">
+    <div class="docs-popover-stage">
+      <button class="sp-button" type="button" data-variant="outline" aria-haspopup="dialog" aria-expanded="true" aria-controls="popover-open" data-state="open">Edit profile</button>
+      <div class="sp-popover" id="popover-open" role="dialog" aria-labelledby="popover-open-title" data-state="open" data-side="bottom" data-align="center" tabindex="-1">
+        <div class="docs-stack docs-popover-form">
+          <div class="docs-popover-title" id="popover-open-title">Profile</div>
+          <div class="docs-stack docs-popover-field">
+            <label class="sp-label" for="popover-name">Name</label>
+            <input class="sp-input" id="popover-name" type="text" value="Kong My">
+          </div>
+          <div class="docs-stack docs-popover-field">
+            <label class="sp-label" for="popover-handle">Handle</label>
+            <input class="sp-input" id="popover-handle" type="text" value="@kongmy">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

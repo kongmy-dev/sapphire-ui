@@ -1,0 +1,92 @@
+@layer components {
+  .sp-hover-card {
+    --sp-hover-card-width: calc(var(--space-1) * 64);
+    --sp-hover-card-padding: var(--space-4);
+    --sp-hover-card-radius: var(--radius-md);
+    --sp-hover-card-bg: var(--card);
+    --sp-hover-card-fg: var(--foreground);
+    --sp-hover-card-border-width: var(--border-width);
+    --sp-hover-card-border-color: var(--border);
+    --sp-hover-card-font-size: var(--text-sm);
+    --sp-hover-card-line-height: calc(1.25 / 0.875);
+    --sp-hover-card-shadow: var(--shadow-lg);
+    --sp-hover-card-z-index: 50;
+    --sp-hover-card-enter-x: 0;
+    --sp-hover-card-enter-y: 0;
+
+    width: var(--sp-hover-card-width);
+    padding: var(--sp-hover-card-padding);
+    font-family: var(--font-sans);
+    font-size: var(--sp-hover-card-font-size);
+    line-height: var(--sp-hover-card-line-height);
+    color: var(--sp-hover-card-fg);
+    background: var(--sp-hover-card-bg);
+    border: var(--sp-hover-card-border-width) solid
+      var(--sp-hover-card-border-color);
+    border-radius: var(--sp-hover-card-radius);
+    outline: none;
+    box-shadow: var(--sp-hover-card-shadow);
+    z-index: var(--sp-hover-card-z-index);
+    transform-origin: var(--radix-hover-card-content-transform-origin, 50% 50%);
+  }
+
+  .sp-hover-card[data-side="bottom"] {
+    --sp-hover-card-enter-y: calc(var(--space-2) * -1);
+  }
+
+  .sp-hover-card[data-side="top"] {
+    --sp-hover-card-enter-y: var(--space-2);
+  }
+
+  .sp-hover-card[data-side="left"] {
+    --sp-hover-card-enter-x: var(--space-2);
+  }
+
+  .sp-hover-card[data-side="right"] {
+    --sp-hover-card-enter-x: calc(var(--space-2) * -1);
+  }
+
+  .sp-hover-card:is([data-state="open"], [data-open]) {
+    animation: sp-hover-card-in var(--transition-fast);
+  }
+
+  .sp-hover-card:is([data-state="closed"], [data-closed]) {
+    animation: sp-hover-card-out var(--transition-fast);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sp-hover-card,
+    .sp-hover-card:is([data-state="open"], [data-open]),
+    .sp-hover-card:is([data-state="closed"], [data-closed]) {
+      animation: none;
+    }
+  }
+
+  @keyframes sp-hover-card-in {
+    from {
+      opacity: 0;
+      transform: translate(
+          var(--sp-hover-card-enter-x),
+          var(--sp-hover-card-enter-y)
+        )
+        scale(0.95);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate(0, 0) scale(1);
+    }
+  }
+
+  @keyframes sp-hover-card-out {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    to {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+  }
+}
