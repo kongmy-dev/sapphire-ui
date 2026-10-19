@@ -58,10 +58,11 @@ Utilities read the tokens: `bg-background`, `text-foreground`, `bg-card`, `text-
 
 ## Lengths in components
 
-The token gate bans length literals outside `css/tokens.css`. In `components/<name>/<name>.css`:
+The token gate bans length literals outside `css/tokens.css`, except the font-relative `em` and `ch`. In `components/<name>/<name>.css`:
 
 - A value on a token's scale uses the token: `var(--space-4)`, `var(--text-sm)`, `var(--radius-btn)`.
 - An off-scale geometry value is `calc(var(--space-1) * N)` (9 px is `calc(var(--space-1) * 2.25)`); an off-scale type size is `calc(var(--text-base) * N)` (13 px is `calc(var(--text-base) * 0.8125)`).
+- A length that follows the element's own font size is an `em` literal (`letter-spacing: 0.04em`, a prose flow of `1.25em`); a line measure is a `ch` literal (`max-width: 70ch`). Declared in a `--sp-<name>-*` variable, the unit resolves where the variable is used.
 - A value several components share becomes a token in `css/tokens.css`, with its `css/tailwind.css` mapping and `DESIGN.md` row.
 - A component's own knobs are `--sp-<name>-*` variables declared on its `.sp-<name>` rule; variants and sizes override them through `data-variant` and `data-size`, and the customisation ladder (ADR-0003) sets them from outside.
 

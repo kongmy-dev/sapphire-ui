@@ -110,7 +110,7 @@ describe('token gate: length literals', () => {
     ]);
   });
 
-  it('flags absolute and font-relative lengths in a stylesheet declaration', () => {
+  it('flags absolute lengths in a stylesheet declaration and allows em', () => {
     const text = [
       '.badge {',
       '  display: inline-flex;',
@@ -133,7 +133,6 @@ describe('token gate: length literals', () => {
       '5 length literal 3px',
       '5 length literal 10px',
       '7 length literal 11px',
-      '9 length literal 0.04em',
     ]);
     expect(
       problems('css/tokens.css', text, [':root { --font-sans: x; }']),
@@ -148,13 +147,15 @@ describe('token gate: length literals', () => {
     ]);
   });
 
-  it('allows zero, percentages, fr, viewport units and unitless numbers', () => {
+  it('allows zero, percentages, fr, viewport units, em, ch and unitless numbers', () => {
     const text = [
       '.a {',
       '  margin: 0 0px 0.0em 0;',
       '  width: 100%;',
       '  grid-template-columns: 1fr 2fr;',
       '  min-height: 100vh;',
+      '  max-width: 70ch;',
+      '  letter-spacing: -0.02em;',
       '  line-height: 1.5;',
       '  transition: opacity 150ms ease;',
       '  transform: rotate(45deg);',
