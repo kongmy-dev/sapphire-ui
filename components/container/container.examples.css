@@ -1,0 +1,28 @@
+.docs-main {
+  max-width: none;
+}
+
+.docs-container-frame {
+  overflow: hidden;
+  background: color-mix(in oklab, var(--background) 50%, transparent);
+  border: var(--border-width) dashed
+    color-mix(in oklab, var(--brand) 50%, transparent);
+  border-radius: var(--radius-md);
+}
+
+.docs-container-frame--stacked {
+  margin-top: var(--space-4);
+}
+
+.docs-container-demo {
+  text-align: center;
+  background: var(--background);
+  outline: var(--border-width) dashed var(--border);
+}
+
+.docs-container-text {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: calc(var(--space-1) * 5);
+  color: var(--muted-foreground);
+}
