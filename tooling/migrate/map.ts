@@ -130,6 +130,7 @@ export const newTokens = [
   '--border-width-strong',
   '--ring-width',
   '--ring-offset',
+  '--page-width',
 ] as const;
 
 export const utilityRenames = {
@@ -247,12 +248,49 @@ export const classRenames = {
   '.subtotal': '.sp-table-row[data-row=subtotal]',
   '.total': '.sp-table-row[data-row=total]',
   '.kvs': '.sp-key-value-list',
+  '.stack': '.sp-stack',
+  '.stack-sm': '.sp-stack[data-size=sm]',
+  '.stack-lg': '.sp-stack[data-size=lg]',
+  '.stack-xl': '.sp-stack[data-size=xl]',
+  '.cluster': '.sp-cluster',
+  '.cq': '.sp-cq',
+  '.cq-inline': '.sp-cq',
+  '.cols-2': '.sp-columns[data-columns=2]',
+  '.cols-3': '.sp-columns[data-columns=3]',
+  '.page': '.sp-page',
+  '.masthead': '.sp-masthead',
+  '.visually-hidden': '.sp-sr-only',
+  '.sr-only': '.sp-sr-only',
+  '.visually-hidden-focusable': '.sp-sr-only-focusable',
+  '.layout-root': '.sp-layout',
+  '.sidebar': '.sp-layout-sidebar',
+  '.main-content': '.sp-layout-main',
+  '.site-header': '.sp-site-header',
+  '.site-header--sticky': '.sp-site-header[data-sticky]',
+  '.site-header--light': '.sp-site-header[data-variant=light]',
+  '.site-header-inner': '.sp-site-header-inner',
+  '.site-header-brand': '.sp-site-header-brand',
+  '.site-header-nav': '.sp-site-header-nav',
+  '.site-header-actions': '.sp-site-header-actions',
+  '.site-header-link': '.sp-site-header-link',
+  '.site-header-link--active': '.sp-site-header-link[aria-current=page]',
+  '.site-footer': '.sp-site-footer',
+  '.site-footer--light': '.sp-site-footer[data-variant=light]',
+  '.site-footer-inner': '.sp-site-footer-inner',
+  '.site-footer-grid': '.sp-site-footer-grid',
+  '.site-footer-group': '.sp-site-footer-group',
+  '.site-footer-group-title': '.sp-site-footer-group-title',
+  '.site-footer-link': '.sp-site-footer-link',
+  '.site-footer-bottom': '.sp-site-footer-bottom',
 } as const;
 
 export const variableRenames = {
   '--switch-active': '--sp-switch-active',
   '--switch-inactive': '--sp-switch-inactive',
   '--toast-accent': '--sp-toast-accent',
+  '--stack-gap': '--sp-stack-gap',
+  '--cluster-gap': '--sp-cluster-gap',
+  '--cluster-justify': '--sp-cluster-justify',
 } as const;
 
 export const unmappedClasses = {
@@ -262,10 +300,12 @@ export const unmappedClasses = {
     'the proposal shell modal, mapped when the proposal shell ports',
   '.is-visible':
     'a toast opens with [data-state=open] or [data-open] on .sp-toast, an attribute no class stands for',
-  '.cols-2':
-    'a page layout column row, mapped when the page layout family ports the columns',
-  '.cols-3':
-    'a page layout column row, mapped when the page layout family ports the columns',
+  '.cq-sm':
+    'a container query helper that applies one utility from a width up; Tailwind apps use its @container variants and plain HTML uses .sp-columns[data-from]',
+  '.cq-md':
+    'a container query helper that applies one utility from a width up; Tailwind apps use its @container variants and plain HTML uses .sp-columns[data-from]',
+  '.cq-lg':
+    'a container query helper that applies one utility from a width up; Tailwind apps use its @container variants and plain HTML uses .sp-columns[data-from]',
   '.gate': 'the passphrase gate, mapped when the app layout ports it',
   '.gate-card': 'the passphrase gate, mapped when the app layout ports it',
   '.gate-brand': 'the passphrase gate, mapped when the app layout ports it',

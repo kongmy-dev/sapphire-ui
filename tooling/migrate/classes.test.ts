@@ -56,13 +56,17 @@ const declaredAttributes = (css: string): Set<string> =>
 const declares = (css: string, selectorClass: string): boolean =>
   new RegExp(`${selectorClass.replace('.', '\\.')}(?![\\w-])`).test(css);
 
-const componentCss = (): Record<string, string> =>
-  Object.fromEntries(
+const FOUNDATION_SHEET = 'css/layout.css';
+
+const componentCss = (): Record<string, string> => ({
+  ...Object.fromEntries(
     componentStylesheets(ROOT).map((path) => [
       path.split('/')[1] ?? '',
       read(path),
     ]),
-  );
+  ),
+  [FOUNDATION_SHEET]: read(FOUNDATION_SHEET),
+});
 
 const v3Css = read('src/index.css');
 const v3Classes = classesIn(v3Css);
