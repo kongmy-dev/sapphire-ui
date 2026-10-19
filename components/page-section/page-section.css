@@ -10,7 +10,7 @@
     --sp-page-section-title-size: clamp(var(--space-6), 3vw, var(--space-10));
     --sp-page-section-description-fg: var(--muted-foreground);
     --sp-page-section-description-size: var(--text-base);
-    --sp-page-section-description-line-height: calc(var(--text-base) * 1.625);
+    --sp-page-section-description-line-height: var(--leading-relaxed);
     --sp-page-section-description-gap: var(--space-3);
     --sp-page-section-description-max-width: calc(var(--space-1) * 160);
 
