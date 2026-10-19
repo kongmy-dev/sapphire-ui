@@ -8,6 +8,7 @@ const FOUNDATION = [
   'css/fonts.css',
   'css/tokens.css',
   'css/base.css',
+  'css/layout.css',
 ] as const;
 const COMPONENTS_DIR = 'components';
 

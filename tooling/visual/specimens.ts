@@ -7,7 +7,10 @@ export const SPECIMEN_URL = `http://localhost:${SPECIMEN_PORT}`;
 const SPECIMEN_SUFFIX = '.examples.html';
 const DEMO_STYLESHEET_SUFFIX = '.examples.css';
 
-const BASE_SPECIMEN = 'css/base.examples.html';
+const FOUNDATION_SPECIMENS = [
+  'css/base.examples.html',
+  'css/layout.examples.html',
+] as const;
 const COMPONENTS_DIR = 'components';
 const COMPONENT_SPECIMEN = /^components\/([^/]+)\/([^/]+)\.examples\.html$/;
 const PIN = /<section\b[^>]*\bdata-pin="([^"]+)"/g;
@@ -22,14 +25,15 @@ export function specimenFiles(root: string): string[] {
             `${COMPONENTS_DIR}/${entry.name}/${entry.name}${SPECIMEN_SUFFIX}`,
         )
     : [];
-  return [BASE_SPECIMEN, ...components]
+  return [...FOUNDATION_SPECIMENS, ...components]
     .filter((file) => existsSync(join(root, file)))
     .sort();
 }
 
 export const isSpecimenFile = (path: string): boolean => {
   const [, folder, name] = COMPONENT_SPECIMEN.exec(path) ?? [];
-  return path === BASE_SPECIMEN || (folder !== undefined && folder === name);
+  const isFoundation = FOUNDATION_SPECIMENS.some((file) => file === path);
+  return isFoundation || (folder !== undefined && folder === name);
 };
 
 export const pinsOf = (html: string): string[] =>

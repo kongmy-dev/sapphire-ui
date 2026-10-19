@@ -1,0 +1,168 @@
+<header class="docs-page-header">
+  <h1>Hooks &amp; Utilities</h1>
+  <p>Six headless React hooks for everyday DX, plus a small set of framework-agnostic CSS utilities that ship in <code>style.css</code>.</p>
+</header>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">CSS utilities</h2>
+  <p class="docs-hooks-note">These class APIs ship in <code>style.css</code> and need no React import — usable from plain HTML, Astro, Vue, or any consumer that can include the stylesheet.</p>
+
+  <h3 class="docs-hooks-heading">.stack — vertical rhythm</h3>
+  <div class="docs-preview">
+    <div class="sp-stack docs-stack-width">
+      <div class="sp-card">First item</div>
+      <div class="sp-card">Second item</div>
+      <div class="sp-card">Third item — each gap is `--stack-gap`</div>
+    </div>
+  </div>
+
+  <h3 class="docs-hooks-heading">.cluster — wrapping horizontal group</h3>
+  <div class="docs-preview">
+    <div class="sp-cluster">
+      <span class="sp-badge">React</span>
+      <span class="sp-badge" data-variant="brand">Astro</span>
+      <span class="sp-badge" data-variant="success">Vue</span>
+      <span class="sp-badge" data-variant="warning">Svelte</span>
+      <span class="sp-badge" data-variant="info">Solid</span>
+      <span class="sp-badge">Vanilla</span>
+    </div>
+  </div>
+
+  <h3 class="docs-hooks-heading">.visually-hidden — accessible-only text</h3>
+  <div class="docs-preview">
+    <button class="sp-button" type="button"><span aria-hidden="true">✕</span><span class="sp-sr-only">Close dialog</span></button>
+    <p class="docs-hooks-caption">Screen readers announce &quot;Close dialog&quot;; sighted users see only the icon.</p>
+  </div>
+
+  <h3 class="docs-hooks-heading">.prose — long-form content</h3>
+  <div class="docs-preview">
+    <article class="sp-prose">
+      <h2>Editorial content</h2>
+      <p>Drop <code>.prose</code> on a wrapper around CMS or markdown output and headings, paragraphs, lists, code, blockquotes, and links pick up Sapphire tokens automatically.</p>
+      <blockquote>Typography should feel inevitable — never decorative.</blockquote>
+      <ul>
+        <li>Serif body, sans headings</li>
+        <li>Accent-coloured links with offset underlines</li>
+        <li>Token-driven, so dark mode flows through</li>
+      </ul>
+    </article>
+  </div>
+
+  <h3 class="docs-hooks-heading">.cq — container queries</h3>
+  <p class="docs-hooks-note">Add <code>.cq</code> on a parent, then use modifiers like<code> .cq-md:cols-3</code> on descendants. Resize the panel below to watch the grid reflow without touching the viewport width.</p>
+  <div class="docs-preview">
+    <div class="sp-cq docs-cq-demo">
+      <div class="sp-columns" data-columns="3" data-from="md" style="--sp-columns-gap: var(--space-3)">
+        <div class="sp-card">One</div>
+        <div class="sp-card">Two</div>
+        <div class="sp-card">Three</div>
+      </div>
+      <p class="docs-hooks-caption">Drag the bottom-right corner. Cards switch to 3-up at ≥ 48rem container width.</p>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Stack sizes</h2>
+  <div class="docs-preview">
+    <div class="sp-cluster docs-demo-row">
+      <div class="sp-stack docs-demo-cell" data-size="sm">
+        <div class="docs-demo-block">Small</div>
+        <div class="docs-demo-block">Small</div>
+        <div class="docs-demo-block">Small</div>
+      </div>
+      <div class="sp-stack docs-demo-cell">
+        <div class="docs-demo-block">Default</div>
+        <div class="docs-demo-block">Default</div>
+        <div class="docs-demo-block">Default</div>
+      </div>
+      <div class="sp-stack docs-demo-cell" data-size="lg">
+        <div class="docs-demo-block">Large</div>
+        <div class="docs-demo-block">Large</div>
+        <div class="docs-demo-block">Large</div>
+      </div>
+      <div class="sp-stack docs-demo-cell" data-size="xl">
+        <div class="docs-demo-block">Extra large</div>
+        <div class="docs-demo-block">Extra large</div>
+        <div class="docs-demo-block">Extra large</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Cluster alignment</h2>
+  <div class="docs-preview">
+    <div class="sp-cluster docs-cluster-end">
+      <span class="sp-badge">One</span>
+      <span class="sp-badge" data-variant="brand">Two</span>
+      <span class="sp-badge" data-variant="success">Three</span>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Columns</h2>
+  <div class="docs-preview">
+    <div class="sp-columns" data-columns="2">
+      <div class="docs-demo-block">One of two</div>
+      <div class="docs-demo-block">Two of two</div>
+    </div>
+  </div>
+  <div class="docs-preview docs-preview--stacked">
+    <div class="sp-columns" data-columns="3">
+      <div class="docs-demo-block">One of three</div>
+      <div class="docs-demo-block">Two of three</div>
+      <div class="docs-demo-block">Three of three</div>
+    </div>
+  </div>
+  <div class="docs-preview docs-preview--stacked">
+    <div class="sp-columns" data-columns="4">
+      <div class="docs-demo-block">One</div>
+      <div class="docs-demo-block">Two</div>
+      <div class="docs-demo-block">Three</div>
+      <div class="docs-demo-block">Four</div>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Columns from a container width</h2>
+  <div class="docs-preview">
+    <div class="sp-cq docs-container-narrow">
+      <div class="sp-columns" data-columns="2" data-from="md">
+        <div class="docs-demo-block">Narrow container, one column</div>
+        <div class="docs-demo-block">Second row</div>
+      </div>
+    </div>
+  </div>
+  <div class="docs-preview docs-preview--stacked">
+    <div class="sp-cq docs-container-wide">
+      <div class="sp-columns" data-columns="2" data-from="md" style="--sp-columns-gap: var(--space-8)">
+        <div class="docs-demo-block">Wide container, two columns</div>
+        <div class="docs-demo-block">Second column</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Page and masthead</h2>
+  <div class="docs-preview">
+    <div class="sp-page docs-page-demo">
+      <div class="sp-masthead">
+        <h2 class="docs-masthead-title">Quarterly review</h2>
+        <p class="docs-masthead-text">The masthead is a navy block that opens a page.</p>
+      </div>
+      <p class="docs-hooks-caption">The page pads its content and stops at its own measure.</p>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Screen-reader only, focusable</h2>
+  <div class="docs-preview">
+    <a class="sp-sr-only-focusable docs-skip-link" href="#content">Skip to content</a>
+    <p class="docs-hooks-caption">Tab to this section to reveal the skip link; it stays hidden until it has focus.</p>
+  </div>
+</section>

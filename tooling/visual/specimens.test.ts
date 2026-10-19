@@ -6,6 +6,7 @@ import { exampleNames } from './examples';
 import {
   coveredPins,
   demoStylesheetOf,
+  isSpecimenFile,
   pinProblems,
   pinsOf,
   readSpecimens,
@@ -60,6 +61,28 @@ describe('specimen files', () => {
     });
   });
 
+  it('serves the layout specimen of css/ beside the base one', () => {
+    const tree = {
+      'css/base.examples.html': '',
+      'css/layout.examples.html': '',
+      'css/tokens.examples.html': '',
+    };
+    withTree(tree, (root) => {
+      expect(specimenFiles(root)).toEqual([
+        'css/base.examples.html',
+        'css/layout.examples.html',
+      ]);
+    });
+  });
+
+  it('counts the two css/ specimens and a component specimen, and no other file', () => {
+    expect(isSpecimenFile('css/base.examples.html')).toBe(true);
+    expect(isSpecimenFile('css/layout.examples.html')).toBe(true);
+    expect(isSpecimenFile('components/card/card.examples.html')).toBe(true);
+    expect(isSpecimenFile('css/tokens.examples.html')).toBe(false);
+    expect(isSpecimenFile('components/card/other.examples.html')).toBe(false);
+  });
+
   it('reads the pins of each file', () => {
     const tree = {
       'components/button/button.examples.html':
@@ -112,6 +135,10 @@ describe('the repository specimens', () => {
   it('cover the two typography pins', () => {
     expect(coveredPins(REPO)).toContain('typography/font-families');
     expect(coveredPins(REPO)).toContain('typography/type-scale');
+  });
+
+  it('serve the layout specimen of css/', () => {
+    expect(specimenFiles(REPO)).toContain('css/layout.examples.html');
   });
 });
 

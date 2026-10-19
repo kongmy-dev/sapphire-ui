@@ -26,6 +26,7 @@ describe('stylesheet source', () => {
         '@import "./css/fonts.css";',
         '@import "./css/tokens.css";',
         '@import "./css/base.css";',
+        '@import "./css/layout.css";',
         '@import "./components/alpha/alpha.css";',
         '@import "./components/zeta/zeta.css";',
         '',
@@ -87,6 +88,15 @@ describe('built stylesheet', () => {
     expect(built.fonts.every((font) => /-latin(-ext)?-wght-/.test(font))).toBe(
       true,
     );
+  });
+
+  it('carries the layout foundation in a build that has no component', async () => {
+    tree = makeTree({});
+    const built = await buildStylesheet(tree.root, tree.out, { minify: true });
+    const css = readFileSync(built.stylesheet, 'utf8');
+    for (const name of ['sp-stack', 'sp-columns', 'sp-sr-only']) {
+      expect(css).toContain(`.${name}`);
+    }
   });
 
   it('puts a new component folder into the build with no edit to a shared file', async () => {

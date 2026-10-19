@@ -36,7 +36,7 @@ describe('generated gate: every committed generated file is fresh', () => {
     const report = renderReport(generatedGate(tree.root));
     expect(report.ok).toBe(false);
     expect(report.text.split('\n').slice(1, 3)).toEqual([
-      '  sapphire.css:6  P-16  sapphire.css differs from what its generator writes',
+      '  sapphire.css:7  P-16  sapphire.css differs from what its generator writes',
       '    Run bun run generate and commit the result.',
     ]);
   });
