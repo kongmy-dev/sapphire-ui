@@ -22,6 +22,10 @@
   color: var(--brand);
 }
 
+.sp-site-header[data-variant="light"] .docs-brand-suffix {
+  color: var(--brand-text);
+}
+
 .docs-sticky-scroll {
   max-height: calc(var(--space-1) * 50);
   overflow: auto;
