@@ -1,0 +1,84 @@
+<header class="docs-page-header">
+  <h1>Interactive Overlays</h1>
+  <p>Modal dialogs, toast notifications, sheets, tooltips, and popovers.</p>
+</header>
+
+<section class="docs-section" data-pin="interactive/sheet-side-drawer" data-pin-y="641.546875">
+  <h2 class="docs-section-title">Sheet (Side Drawer)</h2>
+  <div class="docs-preview">
+    <div class="docs-flex docs-sheet-triggers">
+      <button class="sp-button" type="button" data-variant="outline" data-size="sm" aria-haspopup="dialog" aria-expanded="false" data-state="closed">top</button>
+      <button class="sp-button" type="button" data-variant="outline" data-size="sm" aria-haspopup="dialog" aria-expanded="false" data-state="closed">right</button>
+      <button class="sp-button" type="button" data-variant="outline" data-size="sm" aria-haspopup="dialog" aria-expanded="false" data-state="closed">bottom</button>
+      <button class="sp-button" type="button" data-variant="outline" data-size="sm" aria-haspopup="dialog" aria-expanded="false" data-state="closed">left</button>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Sheet (open)</h2>
+  <div class="docs-preview">
+    <div class="docs-sheet-grid">
+      <div class="docs-sheet-stage">
+        <div class="sp-sheet-overlay" data-state="open"></div>
+        <div class="sp-sheet" role="dialog" aria-labelledby="sheet-top-title" aria-describedby="sheet-top-description" data-state="open" data-side="top" tabindex="-1">
+          <div class="sp-sheet-header">
+            <h2 class="sp-sheet-title" id="sheet-top-title">Sheet from top</h2>
+            <p class="sp-sheet-description" id="sheet-top-description">Anything can go inside a Sheet — forms, content, configuration panels.</p>
+          </div>
+          <div class="docs-sheet-slot">Slot content here.</div>
+          <div class="sp-sheet-footer">
+            <button class="sp-button" type="button" data-variant="outline" data-size="sm">Cancel</button>
+            <button class="sp-button" type="button" data-size="sm">Save</button>
+          </div>
+          <button class="sp-sheet-close" type="button" aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="docs-sheet-stage">
+        <div class="sp-sheet-overlay" data-state="open"></div>
+        <div class="sp-sheet" role="dialog" aria-labelledby="sheet-right-title" aria-describedby="sheet-right-description" data-state="open" data-side="right" tabindex="-1">
+          <div class="sp-sheet-header">
+            <h2 class="sp-sheet-title" id="sheet-right-title">Sheet from right</h2>
+            <p class="sp-sheet-description" id="sheet-right-description">Anything can go inside a Sheet — forms, content, configuration panels.</p>
+          </div>
+          <div class="docs-sheet-slot">Slot content here.</div>
+          <div class="sp-sheet-footer">
+            <button class="sp-button" type="button" data-variant="outline" data-size="sm">Cancel</button>
+            <button class="sp-button" type="button" data-size="sm">Save</button>
+          </div>
+          <button class="sp-sheet-close" type="button" aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="docs-sheet-stage">
+        <div class="sp-sheet-overlay" data-state="open"></div>
+        <div class="sp-sheet" role="dialog" aria-labelledby="sheet-bottom-title" aria-describedby="sheet-bottom-description" data-state="open" data-side="bottom" tabindex="-1">
+          <div class="sp-sheet-header">
+            <h2 class="sp-sheet-title" id="sheet-bottom-title">Sheet from bottom</h2>
+            <p class="sp-sheet-description" id="sheet-bottom-description">Anything can go inside a Sheet — forms, content, configuration panels.</p>
+          </div>
+          <div class="docs-sheet-slot">Slot content here.</div>
+          <div class="sp-sheet-footer">
+            <button class="sp-button" type="button" data-variant="outline" data-size="sm">Cancel</button>
+            <button class="sp-button" type="button" data-size="sm">Save</button>
+          </div>
+          <button class="sp-sheet-close" type="button" aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="docs-sheet-stage">
+        <div class="sp-sheet-overlay" data-state="open"></div>
+        <div class="sp-sheet" role="dialog" aria-labelledby="sheet-left-title" aria-describedby="sheet-left-description" data-state="open" data-side="left" tabindex="-1">
+          <div class="sp-sheet-header">
+            <h2 class="sp-sheet-title" id="sheet-left-title">Sheet from left</h2>
+            <p class="sp-sheet-description" id="sheet-left-description">Anything can go inside a Sheet — forms, content, configuration panels.</p>
+          </div>
+          <div class="docs-sheet-slot">Slot content here.</div>
+          <div class="sp-sheet-footer">
+            <button class="sp-button" type="button" data-variant="outline" data-size="sm">Cancel</button>
+            <button class="sp-button" type="button" data-size="sm">Save</button>
+          </div>
+          <button class="sp-sheet-close" type="button" aria-label="Close"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,28 @@
+.docs-sheet-triggers {
+  gap: var(--space-2);
+}
+
+.docs-sheet-grid {
+  display: grid;
+  grid-template-columns: repeat(
+      auto-fill,
+      minmax(calc(var(--space-1) * 90), 1fr)
+    );
+  gap: var(--space-4);
+}
+
+.docs-sheet-stage {
+  position: relative;
+  height: calc(var(--space-1) * 90);
+  overflow: hidden;
+  contain: layout paint;
+  background: var(--background);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.docs-sheet-slot {
+  margin-top: var(--space-4);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+}
