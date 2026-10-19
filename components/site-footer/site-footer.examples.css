@@ -34,6 +34,10 @@
   color: var(--brand);
 }
 
+.docs-footer-brand-suffix--light {
+  color: var(--brand-text);
+}
+
 .docs-footer-brand-text {
   margin: 0;
   font-family: var(--font-sans);
