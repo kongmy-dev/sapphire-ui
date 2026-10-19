@@ -159,6 +159,15 @@ editorial React (30%).
   `.sp-command-palette`, its active item `aria-selected=true` or `data-active`. Open specimens
   skip the entry animation, and the palette's empty state has no `aria-controls`. The tooltip
   stays on its v3 pin for its glyph; the palette has parity only.
+- **Page layout primitives live in `css/layout.css`** (stack, cluster, columns, container query,
+  page, masthead, sr-only), and the page width is the `--page-width` token. `.sp-columns` drops
+  v3's owl margins, so its cells align; `.sp-sr-only` drops `!important`. The layout is a column,
+  as the React one is. The mobile nav's drawer sits at `inset: 0 auto 0 0` and is
+  `visibility: hidden` when closed; its scrim and shadow mix `--primary`, not black. Gold text on
+  a light surface is `--brand-text`: the page section label, the light header's brand suffix and
+  the footer group title (`--brand` on dark). Re-pinned: css-utilities (the owl margins), page
+  section and light header (the AA gold), and layout (anti-aliasing, one level). The light
+  header's hover parity skips pixels: 6 differ by one level.
 - **Where the two implementations disagree, the React look wins:** more apps see it.
 - **Registry v4 is served at `/r/v4/{name}.json`;** `/r/{name}.json` stays the v3 build until each
   app moves.

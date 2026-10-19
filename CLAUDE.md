@@ -85,6 +85,9 @@ css/
   base.css              ← element defaults, focus ring, type scale (@layer base)
   base.examples.html    ← plain-HTML specimens of base (typography)
   base.examples.css     ← demo styles for those specimens
+  layout.css            ← page layout primitives: stack, cluster, columns, page, masthead, sr-only
+  layout.examples.html  ← plain-HTML specimens of those primitives
+  layout.examples.css   ← demo styles for those specimens
   tailwind.css          ← maps every v4 token to Tailwind utilities
 
 components/<name>/      ← <name>.css (@layer components, sp-* classes), <name>.examples.html (specimens) and <name>.examples.css (demo styles)
