@@ -55,6 +55,15 @@ describe('scorecard component names', () => {
     ]);
   });
 
+  it('names a v3 file after the v4 folder its subpath moved to', () => {
+    expect(
+      componentNames([
+        'src/components/ui/ToggleSwitch.tsx',
+        'components/switch/switch.css',
+      ]),
+    ).toEqual(['switch']);
+  });
+
   it('finds nothing in a tree without components', () => {
     expect(componentNames(['README.md', 'tooling/gates/size.ts'])).toEqual([]);
   });

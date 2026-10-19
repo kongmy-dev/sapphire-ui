@@ -360,3 +360,7 @@ export const propValueRenames = {
     variant: { accent: 'brand' },
   },
 } as const;
+
+export const subpathRenames = {
+  'toggle-switch': 'switch',
+} as const;

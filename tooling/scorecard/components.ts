@@ -1,3 +1,4 @@
+import { subpathRenames } from '../migrate/map';
 import { isTest } from '../quality-metrics/check';
 import { pinsOf } from '../visual/specimens';
 
@@ -29,10 +30,14 @@ const kebab = (name: string) =>
 const isIndexOrTypes = (path: string) =>
   /(^|\/)index\.tsx?$/.test(path) || path.endsWith('.d.ts');
 
+const v4FolderOf: Readonly<Record<string, string>> = subpathRenames;
+
 function v3Name(path: string): string | null {
   if (isTest(path) || isIndexOrTypes(path)) return null;
   const base = V3_FILE.exec(path)?.groups?.base;
-  return base === undefined ? null : kebab(base.replace(/Element$/, ''));
+  if (base === undefined) return null;
+  const name = kebab(base.replace(/Element$/, ''));
+  return v4FolderOf[name] ?? name;
 }
 
 const v4Name = (path: string): string | null =>
