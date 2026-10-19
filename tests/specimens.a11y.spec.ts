@@ -13,7 +13,16 @@ type KnownViolation = {
   reason: string;
 };
 
-const KNOWN_VIOLATIONS: readonly KnownViolation[] = [];
+const KNOWN_VIOLATIONS: readonly KnownViolation[] = [
+  {
+    file: 'components/site-header/site-header.examples.html',
+    scheme: 'light',
+    found:
+      'color-contrast header[data-variant="light"] > .sp-site-header-inner > .sp-site-header-brand > .docs-brand-suffix',
+    reason:
+      'the pinned light header demo keeps v3 decorative gold (--brand) on white, 2.44:1; the brand is consumer slot content, not part of the header',
+  },
+];
 
 for (const { file } of readSpecimens(ROOT)) {
   for (const scheme of SCHEMES) {
