@@ -299,6 +299,8 @@ table, key-value list); overlays (popover, tooltip, hover card, dropdown menu, s
 palette); page layout (`css/layout.css` with stack, cluster and columns, container, page section,
 layout, masthead and section, site header and footer, mobile nav, theme toggle); app layout (admin
 shell, split, wizard, vertical tabs, proposal, passphrase gate); then cookie banner and icon mark.
+Then the class sweep: the class-map test checks every class `src/index.css` declares, not only
+those of a family the map renames, so each is renamed or listed unmapped with its reason.
 Analytics, SEO head and the theme provider draw nothing and get no CSS. Then the icon port:
 `sp-icon`, the components' own glyphs as inline SVG, and Lucide in the specimens, so every section
 left on its v3 pin for a glyph moves to its specimen through `bun run pin`. The port settles the
@@ -345,8 +347,9 @@ build, the hand-written exports map, the freeze gate,
 `.husky/`, `.lintstagedrc.json`, `design/` and the two unrelated skills under `.agents/`. Set the
 size limits to the new tree's own p95, lowered only from then on, and rewrite
 `.quality-baseline.json`. `bun publish --dry-run` lists only `dist/`, `README.md`, `DESIGN.md` and
-`LICENSE`. `tests/visual/dialog-parity.spec.ts` reads the v3 docs, so P9 replaces it with a pin of
-the open dialog.
+`LICENSE`. Every `tests/visual/*-parity.spec.ts` reads the v3 docs, so before deleting `src/` P9
+gives each state they compare a pin of its own through `bun run pin` (the open dialog and overlays,
+hover and focus, and each component no v3 pin covered), then deletes them.
 
 **P10 — Docs.** Docs are written alongside each phase; this step adds the docs and skill-refs gates
 and sweeps what is left (§6).
