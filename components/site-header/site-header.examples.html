@@ -1,0 +1,83 @@
+<header class="docs-page-header">
+  <h1>Layouts</h1>
+  <p>Structural page components for building applications, dashboards, and websites.</p>
+</header>
+
+<section class="docs-section" data-pin="layouts/siteheader" data-pin-y="5160.5625">
+  <h2 class="docs-section-title">SiteHeader</h2>
+  <p class="docs-section-description">Composable sticky header with brand, nav, and actions slots.</p>
+  <div class="docs-preview docs-flush">
+    <header class="sp-site-header">
+      <div class="sp-site-header-inner">
+        <div class="sp-site-header-brand">
+          <span class="docs-brand-name">KONGMY</span>
+          <span class="docs-brand-suffix">dev</span>
+        </div>
+        <nav class="sp-site-header-nav" aria-label="Primary">
+          <a class="sp-site-header-link" href="#" aria-current="page">Home</a>
+          <a class="sp-site-header-link" href="#">Services</a>
+          <a class="sp-site-header-link" href="#">Blog</a>
+          <a class="sp-site-header-link" href="#">Contact</a>
+        </nav>
+        <div class="sp-site-header-actions">
+          <button class="sp-button" type="button" data-variant="on-dark-primary" data-size="sm">Get Started</button>
+        </div>
+      </div>
+    </header>
+  </div>
+  <div class="docs-preview docs-flush docs-preview--stacked">
+    <header class="sp-site-header" data-variant="light">
+      <div class="sp-site-header-inner">
+        <div class="sp-site-header-brand">
+          <span class="docs-brand-name">Cloud</span>
+          <span class="docs-brand-suffix">Cost</span>
+        </div>
+        <nav class="sp-site-header-nav" aria-label="Secondary">
+          <a class="sp-site-header-link" href="#" aria-current="page">Dashboard</a>
+          <a class="sp-site-header-link" href="#">Projects</a>
+          <a class="sp-site-header-link" href="#">Settings</a>
+        </nav>
+        <div class="sp-site-header-actions">
+          <button class="sp-button" type="button" data-size="sm">Sync</button>
+        </div>
+      </div>
+    </header>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">SiteHeader (sticky)</h2>
+  <div class="docs-preview docs-flush">
+    <div class="docs-sticky-scroll" role="region" aria-label="Scrollable page preview" tabindex="0">
+      <header class="sp-site-header" data-sticky>
+        <div class="sp-site-header-inner">
+          <div class="sp-site-header-brand">
+            <span class="docs-brand-name">KONGMY</span>
+            <span class="docs-brand-suffix">dev</span>
+          </div>
+          <nav class="sp-site-header-nav" aria-label="Tertiary">
+            <a class="sp-site-header-link" href="#" aria-current="page">Home</a>
+            <a class="sp-site-header-link" href="#">Services</a>
+          </nav>
+        </div>
+      </header>
+      <div class="docs-sticky-fill">
+        <p class="docs-sticky-text">Scroll this panel: the header stays at its top edge.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">SiteHeader (brand only)</h2>
+  <div class="docs-preview docs-flush">
+    <header class="sp-site-header">
+      <div class="sp-site-header-inner">
+        <div class="sp-site-header-brand">
+          <span class="docs-brand-name">KONGMY</span>
+          <span class="docs-brand-suffix">dev</span>
+        </div>
+      </div>
+    </header>
+  </div>
+</section>

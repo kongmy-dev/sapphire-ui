@@ -1,0 +1,39 @@
+.docs-main {
+  max-width: none;
+}
+
+.docs-flush {
+  padding: 0;
+  overflow: hidden;
+}
+
+.docs-brand-name {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  line-height: calc(var(--space-1) * 7);
+}
+
+.docs-brand-suffix {
+  font-family: var(--font-sans);
+  font-size: var(--text-lg);
+  font-weight: 300;
+  line-height: calc(var(--space-1) * 7);
+  color: var(--brand);
+}
+
+.docs-sticky-scroll {
+  max-height: calc(var(--space-1) * 50);
+  overflow: auto;
+}
+
+.docs-sticky-fill {
+  height: calc(var(--space-1) * 100);
+  padding: var(--space-6);
+}
+
+.docs-sticky-text {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--muted-foreground);
+}
