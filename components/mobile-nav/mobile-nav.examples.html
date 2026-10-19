@@ -1,0 +1,47 @@
+<header class="docs-page-header">
+  <h1>Mobile navigation</h1>
+  <p>A fixed top bar and a sliding drawer for viewports below 48rem. Narrow the window to see it.</p>
+</header>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Mobile navigation</h2>
+  <p class="docs-section-description">The root hides itself from 48rem up. Set <code>data-state="open"</code> on it to slide the drawer in.</p>
+  <div class="sp-mobile-nav" data-state="closed">
+    <header class="sp-mobile-nav-bar">
+      <button class="sp-mobile-nav-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-nav-drawer">
+        <span class="sp-mobile-nav-icon" aria-hidden="true"></span>
+      </button>
+      <div class="sp-mobile-nav-brand">
+        <span class="sp-mobile-nav-brand-name">Sapphire</span>
+        <span class="sp-mobile-nav-brand-suffix">UI</span>
+        <span class="sp-mobile-nav-version">v4.0.0</span>
+      </div>
+    </header>
+    <div class="sp-mobile-nav-scrim"></div>
+    <aside class="sp-mobile-nav-drawer" id="mobile-nav-drawer" aria-label="Navigation menu">
+      <div class="sp-mobile-nav-drawer-header">
+        <div class="sp-mobile-nav-brand">
+          <span class="sp-mobile-nav-brand-name">Sapphire</span>
+          <span class="sp-mobile-nav-brand-suffix">UI</span>
+        </div>
+        <button class="sp-mobile-nav-close" type="button" aria-label="Close navigation menu">
+          <span class="sp-mobile-nav-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="sp-mobile-nav-drawer-version">v4.0.0</div>
+      <nav class="sp-mobile-nav-links" aria-label="Pages">
+        <a class="sp-mobile-nav-link" href="#overview" aria-current="page"><span class="sp-mobile-nav-icon" aria-hidden="true"></span>Overview</a>
+        <a class="sp-mobile-nav-link" href="#colors"><span class="sp-mobile-nav-icon" aria-hidden="true"></span>Colors</a>
+        <a class="sp-mobile-nav-link" href="#typography"><span class="sp-mobile-nav-icon" aria-hidden="true"></span>Typography</a>
+        <a class="sp-mobile-nav-link" href="#buttons"><span class="sp-mobile-nav-icon" aria-hidden="true"></span>Buttons</a>
+        <div class="sp-mobile-nav-extras">
+          <button class="sp-mobile-nav-link" type="button" aria-label="Switch to dark theme"><span class="sp-mobile-nav-icon" aria-hidden="true"></span>Theme: light</button>
+          <button class="sp-mobile-nav-link" type="button"><span class="sp-mobile-nav-icon" aria-hidden="true"></span>Cookie Settings</button>
+        </div>
+      </nav>
+      <div class="sp-mobile-nav-footer">
+        <a class="sp-mobile-nav-footer-link" href="https://kongmy.dev/" target="_blank" rel="noopener noreferrer">kongmy.dev</a>
+      </div>
+    </aside>
+  </div>
+</section>

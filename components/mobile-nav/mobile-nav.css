@@ -1,0 +1,302 @@
+@layer components {
+  .sp-mobile-nav {
+    --sp-mobile-nav-bar-height: var(--space-16);
+    --sp-mobile-nav-bg: var(--primary);
+    --sp-mobile-nav-fg: var(--on-dark);
+    --sp-mobile-nav-border-color: color-mix(
+      in oklab,
+      var(--white) 10%,
+      transparent
+    );
+    --sp-mobile-nav-divider-color: color-mix(
+      in oklab,
+      var(--white) 5%,
+      transparent
+    );
+    --sp-mobile-nav-radius: var(--radius-md);
+    --sp-mobile-nav-accent: var(--brand);
+    --sp-mobile-nav-ring: var(--brand);
+    --sp-mobile-nav-hover-bg: color-mix(in oklab, var(--white) 5%, transparent);
+    --sp-mobile-nav-link-fg: color-mix(
+      in oklab,
+      var(--on-dark) 70%,
+      transparent
+    );
+    --sp-mobile-nav-link-fg-hover: var(--on-dark);
+    --sp-mobile-nav-link-bg-active: color-mix(
+      in oklab,
+      var(--brand) 10%,
+      transparent
+    );
+    --sp-mobile-nav-bar-version-fg: color-mix(
+      in oklab,
+      var(--on-dark) 50%,
+      transparent
+    );
+    --sp-mobile-nav-dim-fg: color-mix(
+      in oklab,
+      var(--on-dark) 40%,
+      transparent
+    );
+    --sp-mobile-nav-scrim-bg: color-mix(
+      in oklab,
+      var(--primary) 60%,
+      transparent
+    );
+    --sp-mobile-nav-scrim-blur: var(--space-2);
+    --sp-mobile-nav-drawer-width: min(calc(var(--space-1) * 70), 85vw);
+    --sp-mobile-nav-duration: 300ms;
+    --sp-mobile-nav-easing: cubic-bezier(0.4, 0, 0.2, 1);
+    --sp-mobile-nav-bar-shadow:
+      0 var(--space-1) calc(var(--space-1) * 1.5) calc(var(--space-1) * -0.25)
+      color-mix(in oklab, var(--primary) 10%, transparent),
+      0 calc(var(--space-1) * 0.5) var(--space-1) calc(var(--space-1) * -0.5)
+      color-mix(in oklab, var(--primary) 10%, transparent);
+    --sp-mobile-nav-drawer-shadow: 0 calc(var(--space-1) * 6.25)
+      calc(var(--space-1) * 12.5) calc(var(--space-1) * -3)
+      color-mix(in oklab, var(--primary) 25%, transparent);
+  }
+
+  .sp-mobile-nav-bar {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 40;
+    display: flex;
+    gap: var(--space-1);
+    align-items: center;
+    justify-content: flex-start;
+    height: var(--sp-mobile-nav-bar-height);
+    padding-inline: var(--space-4);
+    color: var(--sp-mobile-nav-fg);
+    background: var(--sp-mobile-nav-bg);
+    border-bottom: var(--border-width) solid var(--sp-mobile-nav-border-color);
+    box-shadow: var(--sp-mobile-nav-bar-shadow);
+  }
+
+  .sp-mobile-nav-toggle,
+  .sp-mobile-nav-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-2);
+    color: var(--sp-mobile-nav-fg);
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    border-radius: var(--sp-mobile-nav-radius);
+  }
+
+  .sp-mobile-nav-toggle:focus-visible,
+  .sp-mobile-nav-close:focus-visible {
+    outline: var(--ring-width) solid var(--sp-mobile-nav-ring);
+    outline-offset: 0;
+  }
+
+  .sp-mobile-nav-toggle {
+    --sp-mobile-nav-icon-size: calc(var(--space-1) * 6);
+  }
+
+  .sp-mobile-nav-close {
+    --sp-mobile-nav-icon-size: calc(var(--space-1) * 5);
+  }
+
+  .sp-mobile-nav-icon {
+    flex-shrink: 0;
+    width: var(--sp-mobile-nav-icon-size, calc(var(--space-1) * 4.5));
+    height: var(--sp-mobile-nav-icon-size, calc(var(--space-1) * 4.5));
+    font-size: var(--sp-mobile-nav-icon-size, calc(var(--space-1) * 4.5));
+    line-height: 1;
+  }
+
+  .sp-mobile-nav-brand {
+    --sp-mobile-nav-brand-size: var(--text-lg);
+
+    display: flex;
+    gap: calc(var(--space-1) * 1.5);
+    align-items: center;
+    margin-left: var(--space-1);
+  }
+
+  .sp-mobile-nav-brand-name {
+    font-family: var(--font-serif);
+    font-size: var(--sp-mobile-nav-brand-size);
+    font-weight: 700;
+    line-height: calc(var(--space-1) * 7);
+    color: var(--sp-mobile-nav-fg);
+  }
+
+  .sp-mobile-nav-brand-suffix {
+    font-family: var(--font-sans);
+    font-size: var(--sp-mobile-nav-brand-size);
+    font-weight: 300;
+    line-height: calc(var(--space-1) * 7);
+    color: var(--sp-mobile-nav-accent);
+  }
+
+  .sp-mobile-nav-version {
+    align-self: flex-end;
+    margin-bottom: calc(var(--space-1) * 0.5);
+    margin-left: calc(var(--space-1) * 1.5);
+    font-family: var(--font-mono);
+    font-size: calc(var(--text-base) * 0.625);
+    color: var(--sp-mobile-nav-bar-version-fg);
+  }
+
+  .sp-mobile-nav-scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    pointer-events: none;
+    background: var(--sp-mobile-nav-scrim-bg);
+    backdrop-filter: blur(var(--sp-mobile-nav-scrim-blur));
+    opacity: 0;
+    transition: opacity var(--sp-mobile-nav-duration)
+      var(--sp-mobile-nav-easing);
+  }
+
+  .sp-mobile-nav-drawer {
+    position: fixed;
+    inset: 0 auto;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    width: var(--sp-mobile-nav-drawer-width);
+    padding: var(--space-6);
+    color: var(--sp-mobile-nav-fg);
+    visibility: hidden;
+    background: var(--sp-mobile-nav-bg);
+    border-right: var(--border-width) solid var(--sp-mobile-nav-border-color);
+    box-shadow: var(--sp-mobile-nav-drawer-shadow);
+    translate: -100% 0;
+    transition:
+      translate var(--sp-mobile-nav-duration) var(--sp-mobile-nav-easing),
+      visibility 0s linear var(--sp-mobile-nav-duration);
+  }
+
+  .sp-mobile-nav:is([data-state="open"], [data-open]) .sp-mobile-nav-scrim {
+    pointer-events: auto;
+    opacity: 1;
+  }
+
+  .sp-mobile-nav:is([data-state="open"], [data-open]) .sp-mobile-nav-drawer {
+    visibility: visible;
+    translate: 0 0;
+    transition:
+      translate var(--sp-mobile-nav-duration) var(--sp-mobile-nav-easing),
+      visibility 0s linear 0s;
+  }
+
+  .sp-mobile-nav-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-2);
+  }
+
+  .sp-mobile-nav-drawer .sp-mobile-nav-brand {
+    --sp-mobile-nav-brand-size: var(--text-xl);
+
+    margin-left: 0;
+  }
+
+  .sp-mobile-nav-drawer-version {
+    padding-inline: var(--space-1);
+    margin-bottom: var(--space-6);
+    font-family: var(--font-mono);
+    font-size: calc(var(--text-base) * 0.625);
+    color: var(--sp-mobile-nav-dim-fg);
+  }
+
+  .sp-mobile-nav-links {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding-right: var(--space-1);
+    overflow-y: auto;
+  }
+
+  .sp-mobile-nav-link {
+    display: flex;
+    gap: var(--space-3);
+    align-items: center;
+    padding: calc(var(--space-1) * 2.5) var(--space-4);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    line-height: calc(var(--space-1) * 5);
+    color: var(--sp-mobile-nav-link-fg);
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    border-radius: var(--sp-mobile-nav-radius);
+    transition:
+      color var(--transition-fast),
+      background-color var(--transition-fast);
+  }
+
+  .sp-mobile-nav-link[aria-current="page"] {
+    color: var(--sp-mobile-nav-accent);
+    background: var(--sp-mobile-nav-link-bg-active);
+  }
+
+  .sp-mobile-nav-extras {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding-top: var(--space-2);
+    margin-top: var(--space-2);
+    border-top: var(--border-width) solid var(--sp-mobile-nav-divider-color);
+  }
+
+  .sp-mobile-nav-footer {
+    padding-top: var(--space-4);
+    margin-top: auto;
+    border-top: var(--border-width) solid var(--sp-mobile-nav-border-color);
+  }
+
+  .sp-mobile-nav-footer-link {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: calc(var(--text-base) * 0.5625);
+    color: var(--sp-mobile-nav-dim-fg);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: color var(--transition-fast);
+  }
+
+  @media (hover: hover) {
+    .sp-mobile-nav-toggle:hover,
+    .sp-mobile-nav-close:hover {
+      background: var(--sp-mobile-nav-hover-bg);
+    }
+
+    .sp-mobile-nav-link:hover:not([aria-current="page"]) {
+      color: var(--sp-mobile-nav-link-fg-hover);
+      background: var(--sp-mobile-nav-hover-bg);
+    }
+
+    .sp-mobile-nav-footer-link:hover {
+      color: var(--sp-mobile-nav-fg);
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .sp-mobile-nav {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sp-mobile-nav-scrim,
+    .sp-mobile-nav-drawer,
+    .sp-mobile-nav:is([data-state="open"], [data-open]) .sp-mobile-nav-drawer,
+    .sp-mobile-nav-link,
+    .sp-mobile-nav-footer-link {
+      transition: none;
+    }
+  }
+}
