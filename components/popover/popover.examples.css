@@ -16,3 +16,7 @@
 .docs-popover-title {
   font-weight: 600;
 }
+
+.docs-popover-stage .sp-popover {
+  animation-duration: 0s;
+}

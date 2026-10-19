@@ -13,3 +13,7 @@
 .docs-tooltip-beside {
   flex-direction: row;
 }
+
+.docs-tooltip-stage .sp-tooltip {
+  animation-duration: 0s;
+}

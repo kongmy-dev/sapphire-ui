@@ -7,3 +7,7 @@
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-md);
 }
+
+.docs-palette-stage :is(.sp-sheet, .sp-sheet-overlay) {
+  animation-duration: 0s;
+}

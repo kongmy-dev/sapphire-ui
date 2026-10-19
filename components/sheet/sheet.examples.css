@@ -26,3 +26,7 @@
   font-family: var(--font-sans);
   font-size: var(--text-sm);
 }
+
+.docs-sheet-stage :is(.sp-sheet, .sp-sheet-overlay) {
+  animation-duration: 0s;
+}
