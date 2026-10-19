@@ -1,0 +1,8 @@
+@layer components {
+  .sp-proposal-layout {
+    min-height: 100vh;
+    font-family: var(--font-sans);
+    color: var(--primary);
+    background: var(--background);
+  }
+}

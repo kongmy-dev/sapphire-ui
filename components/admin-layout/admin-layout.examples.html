@@ -1,0 +1,228 @@
+<header class="docs-page-header">
+  <h1>Layouts</h1>
+  <p>Structural page components for building applications, dashboards, and websites.</p>
+</header>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Admin Layout</h2>
+  <p class="docs-section-description">A comprehensive administrative workbench layout system using full whitespace. The glyphs arrive with the icon port; their slots keep the size.</p>
+  <div class="docs-admin-demo">
+    <div class="sp-admin-layout docs-admin-shell">
+      <aside class="sp-admin-layout-sidebar" aria-label="Admin">
+        <div class="sp-admin-layout-sidebar-header">
+          <div class="sp-admin-layout-brand">
+            <div class="docs-admin-brand">
+              <span class="docs-admin-mark">K</span>
+              <span class="docs-admin-brand-name">KONGMY</span>
+              <span class="docs-admin-brand-suffix">Console</span>
+            </div>
+          </div>
+          <button class="sp-admin-layout-toggle" type="button" aria-label="Collapse sidebar" aria-expanded="true"><span class="sp-admin-layout-icon" aria-hidden="true"></span></button>
+        </div>
+        <div class="sp-admin-layout-nav">
+          <div>
+            <h3 class="sp-admin-layout-section-title" id="admin-operations">Operations</h3>
+            <nav class="sp-admin-layout-links" aria-labelledby="admin-operations">
+              <a class="sp-admin-layout-link" href="#dashboard" aria-current="page"><span class="sp-admin-layout-icon" aria-hidden="true"></span><span class="sp-admin-layout-label">My Dashboard</span></a>
+              <a class="sp-admin-layout-link" href="#services"><span class="sp-admin-layout-icon" aria-hidden="true"></span><span class="sp-admin-layout-label">Consulting Services</span><span class="sp-admin-layout-badge">3</span></a>
+              <a class="sp-admin-layout-link" href="#billing"><span class="sp-admin-layout-icon" aria-hidden="true"></span><span class="sp-admin-layout-label">Contracts &amp; Invoices</span></a>
+            </nav>
+          </div>
+          <div>
+            <h3 class="sp-admin-layout-section-title" id="admin-insights">Insights</h3>
+            <nav class="sp-admin-layout-links" aria-labelledby="admin-insights">
+              <a class="sp-admin-layout-link" href="#metrics"><span class="sp-admin-layout-icon" aria-hidden="true"></span><span class="sp-admin-layout-label">Metrics &amp; Analytics</span></a>
+              <a class="sp-admin-layout-link" href="#status"><span class="sp-admin-layout-icon" aria-hidden="true"></span><span class="sp-admin-layout-label">Status Monitor</span></a>
+            </nav>
+          </div>
+        </div>
+        <div class="sp-admin-layout-sidebar-footer">
+          <span class="sp-avatar" data-size="sm"><span class="sp-avatar-fallback">KM</span></span>
+          <div class="docs-admin-user">
+            <div class="docs-admin-user-name">Kong My</div>
+            <div class="docs-admin-user-role">Consultant</div>
+          </div>
+        </div>
+      </aside>
+      <div class="sp-admin-layout-main">
+        <header class="sp-admin-layout-header">
+          <div class="sp-admin-layout-header-start">
+            <div class="sp-admin-layout-breadcrumbs">
+              <nav class="sp-breadcrumb" aria-label="Breadcrumb">
+                <ol class="sp-breadcrumb-list">
+                  <li class="sp-breadcrumb-item"><a class="sp-breadcrumb-link" href="#admin">Admin</a></li>
+                  <li class="sp-breadcrumb-separator" aria-hidden="true">/</li>
+                  <li class="sp-breadcrumb-item"><span>Consulting</span></li>
+                  <li class="sp-breadcrumb-separator" aria-hidden="true">/</li>
+                  <li class="sp-breadcrumb-item"><span class="sp-breadcrumb-page" aria-current="page">Overview</span></li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+          <div class="sp-admin-layout-header-end">
+            <div class="docs-admin-actions">
+              <button class="sp-theme-toggle" type="button" aria-label="Switch to dark theme"><span class="sp-theme-toggle-icon" aria-hidden="true"></span></button>
+              <button class="docs-admin-avatar-button" type="button" aria-label="My Console" aria-haspopup="menu" aria-expanded="false"><span class="sp-avatar" data-size="xs"><span class="sp-avatar-fallback">KM</span></span></button>
+            </div>
+          </div>
+        </header>
+        <div class="sp-admin-layout-content">
+          <div class="docs-admin-banner">
+            <div class="sp-banner" data-variant="brand">I am currently serving 3 active clients under advisory SLA. Weekly timesheets close every Friday at 18:00 UTC.<button class="sp-banner-dismiss" type="button" aria-label="Dismiss"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg></button></div>
+          </div>
+          <div class="docs-admin-stats">
+            <div class="sp-stat-group" data-cols="4">
+              <div class="sp-card" style="--sp-card-padding: var(--space-5)">
+                <div class="sp-stat">
+                  <dl class="sp-stat-body">
+                    <dt class="sp-stat-label">My Billable Hours</dt>
+                    <dd class="sp-stat-figure"><span class="sp-stat-value">142.5h</span><span class="sp-stat-change" data-direction="up">+8.3%</span></dd>
+                  </dl>
+                  <p class="sp-stat-description">this fiscal month</p>
+                </div>
+              </div>
+              <div class="sp-card" style="--sp-card-padding: var(--space-5)">
+                <div class="sp-stat">
+                  <dl class="sp-stat-body">
+                    <dt class="sp-stat-label">Active Contracts</dt>
+                    <dd class="sp-stat-figure"><span class="sp-stat-value">3 Engaged</span><span class="sp-stat-change" data-direction="up">+1 client</span></dd>
+                  </dl>
+                  <p class="sp-stat-description">2 pending sign-off</p>
+                </div>
+              </div>
+              <div class="sp-card" style="--sp-card-padding: var(--space-5)">
+                <div class="sp-stat">
+                  <dl class="sp-stat-body">
+                    <dt class="sp-stat-label">Consulting Revenue YTD</dt>
+                    <dd class="sp-stat-figure"><span class="sp-stat-value">RM 248.5k</span><span class="sp-stat-change" data-direction="up">+14.2%</span></dd>
+                  </dl>
+                  <p class="sp-stat-description">RM 32k invoiced today</p>
+                </div>
+              </div>
+              <div class="sp-card" style="--sp-card-padding: var(--space-5)">
+                <div class="sp-stat">
+                  <dl class="sp-stat-body">
+                    <dt class="sp-stat-label">System API Gateway</dt>
+                    <dd class="sp-stat-figure"><span class="sp-stat-value">99.98%</span><span class="sp-stat-change">Healthy</span></dd>
+                  </dl>
+                  <p class="sp-stat-description">uptime last 30 days</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="sp-card" style="--sp-card-padding: var(--space-6)">
+            <div class="docs-admin-card-head">
+              <div>
+                <h3 class="docs-admin-card-title">Current Consulting Engagements</h3>
+                <p class="docs-admin-card-text">I record client contracts, project scope categories, and active hourly metrics in real-time.</p>
+              </div>
+              <div class="docs-admin-card-actions">
+                <button class="sp-button" type="button" data-variant="outline" data-size="sm">Reset Data</button>
+                <button class="sp-button" type="button" data-size="sm">New Contract</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Admin Layout (collapsed)</h2>
+  <p class="docs-section-description">Set <code>data-collapsed</code> on the sidebar to narrow it to its icons. The labels stay available to assistive technology.</p>
+  <div class="docs-admin-demo" data-short>
+    <div class="sp-admin-layout docs-admin-shell">
+      <aside class="sp-admin-layout-sidebar" aria-label="Admin (collapsed)" data-collapsed>
+        <div class="sp-admin-layout-sidebar-header">
+          <div class="sp-admin-layout-brand">
+            <div class="docs-admin-brand">
+              <span class="docs-admin-mark">K</span>
+              <span class="docs-admin-brand-name">KONGMY</span>
+              <span class="docs-admin-brand-suffix">Console</span>
+            </div>
+          </div>
+          <button class="sp-admin-layout-toggle" type="button" aria-label="Expand sidebar" aria-expanded="false"><span class="sp-admin-layout-icon" aria-hidden="true"></span></button>
+        </div>
+        <div class="sp-admin-layout-nav">
+          <div>
+            <h3 class="sp-admin-layout-section-title" id="admin-collapsed-operations">Operations</h3>
+            <nav class="sp-admin-layout-links" aria-labelledby="admin-collapsed-operations">
+              <a class="sp-admin-layout-link" href="#dashboard" aria-current="page"><span class="sp-admin-layout-icon" aria-hidden="true"></span><span class="sp-admin-layout-label">My Dashboard</span></a>
+              <a class="sp-admin-layout-link" href="#services"><span class="sp-admin-layout-icon" aria-hidden="true"></span><span class="sp-admin-layout-label">Consulting Services</span><span class="sp-admin-layout-badge">3</span></a>
+              <a class="sp-admin-layout-link" href="#billing"><span class="sp-admin-layout-icon" aria-hidden="true"></span><span class="sp-admin-layout-label">Contracts &amp; Invoices</span></a>
+            </nav>
+          </div>
+        </div>
+        <div class="sp-admin-layout-sidebar-footer">
+          <span class="sp-avatar" data-size="sm"><span class="sp-avatar-fallback">KM</span></span>
+        </div>
+      </aside>
+      <div class="sp-admin-layout-main">
+        <header class="sp-admin-layout-header">
+          <div class="sp-admin-layout-header-start"></div>
+          <div class="sp-admin-layout-header-end">
+            <button class="sp-theme-toggle" type="button" aria-label="Switch to dark theme"><span class="sp-theme-toggle-icon" aria-hidden="true"></span></button>
+          </div>
+        </header>
+        <div class="sp-admin-layout-content">
+          <p>The content column takes the rest of the row.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Admin Layout (page parts)</h2>
+  <p class="docs-section-description">The parts a dashboard page puts in the content column: the page head, the filter row, a document title, row actions and a passphrase chip. Their glyphs arrive with the icon port; the slots keep the size.</p>
+  <div class="docs-admin-parts">
+    <div class="sp-admin-layout-page-head">
+      <div>
+        <h1>Documents</h1>
+        <div class="sp-admin-layout-page-sub">Plans and proposals in one place.</div>
+      </div>
+      <div class="sp-admin-layout-page-actions">
+        <button class="sp-button" type="button" data-variant="outline" data-size="sm">Export</button>
+        <button class="sp-button" type="button" data-size="sm">New proposal</button>
+      </div>
+    </div>
+    <div class="sp-admin-layout-filters">
+      <div class="sp-admin-layout-search">
+        <span class="docs-admin-glyph" aria-hidden="true"></span>
+        <input type="search" placeholder="Search documents" aria-label="Search documents">
+      </div>
+      <button class="sp-admin-layout-icon-button" type="button" aria-label="More filters"><span class="docs-admin-glyph" data-size="xl" aria-hidden="true"></span></button>
+    </div>
+    <div class="docs-admin-parts-row">
+      <div class="sp-admin-layout-doc-title">
+        <div class="sp-admin-layout-doc-icon" data-kind="proposal"><span class="docs-admin-glyph" data-size="lg" aria-hidden="true"></span></div>
+        <div>
+          <b>Cloud migration</b>
+          <small>Acme Holdings</small>
+        </div>
+      </div>
+      <div class="sp-admin-layout-doc-title">
+        <div class="sp-admin-layout-doc-icon" data-kind="plan"><span class="docs-admin-glyph" data-size="lg" aria-hidden="true"></span></div>
+        <div>
+          <b>Support plan</b>
+          <small>Northwind Traders</small>
+        </div>
+      </div>
+      <div class="sp-admin-layout-doc-title">
+        <div class="sp-admin-layout-doc-icon"><span class="docs-admin-glyph" data-size="lg" aria-hidden="true"></span></div>
+        <div>
+          <b>Audit notes</b>
+          <small>Internal</small>
+        </div>
+      </div>
+    </div>
+    <div class="docs-admin-parts-row">
+      <span class="sp-admin-layout-pass">Passphrase <span class="sp-admin-layout-pass-dots">&bull;&bull;&bull;&bull;&bull;&bull;</span><button type="button" aria-label="Copy passphrase"><span class="docs-admin-glyph" data-size="sm" aria-hidden="true"></span></button></span>
+      <div class="sp-admin-layout-row-actions">
+        <button type="button" aria-label="Edit"><span class="docs-admin-glyph" aria-hidden="true"></span></button>
+        <button type="button" aria-label="Archive"><span class="docs-admin-glyph" aria-hidden="true"></span></button>
+      </div>
+    </div>
+  </div>
+</section>

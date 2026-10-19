@@ -180,6 +180,8 @@ export const classRenames = {
   '.modal-header': '.sp-dialog-header',
   '.modal-body': '.sp-dialog-body',
   '.modal-footer': '.sp-dialog-footer',
+  '.modal-mask': '.sp-dialog-overlay',
+  '.modal-head': '.sp-dialog-header',
   '.label': '.sp-label',
   '.input': '.sp-input',
   '.input--mono': '.sp-input[data-variant=mono]',
@@ -282,6 +284,45 @@ export const classRenames = {
   '.site-footer-group-title': '.sp-site-footer-group-title',
   '.site-footer-link': '.sp-site-footer-link',
   '.site-footer-bottom': '.sp-site-footer-bottom',
+  '.sf-shell': '.sp-admin-layout',
+  '.sf-admin-shell': '.sp-admin-layout',
+  '.sf-side': '.sp-admin-layout-sidebar',
+  '.sf-admin-sidebar': '.sp-admin-layout-sidebar',
+  '.sf-main': '.sp-admin-layout-main',
+  '.sf-admin-main': '.sp-admin-layout-main',
+  '.sf-topbar': '.sp-admin-layout-header',
+  '.sf-admin-header': '.sp-admin-layout-header',
+  '.sf-page': '.sp-admin-layout-content',
+  '.sf-admin-content': '.sp-admin-layout-content',
+  '.sf-brand': '.sp-admin-layout-brand',
+  '.sf-nav': '.sp-admin-layout-nav',
+  '.sf-count': '.sp-admin-layout-badge',
+  '.sf-side-foot': '.sp-admin-layout-sidebar-footer',
+  '.sf-avatar': '.sp-avatar[data-size=sm]',
+  '.sf-search': '.sp-admin-layout-search',
+  '.sf-kbd': '.sp-kbd',
+  '.sf-icon-btn': '.sp-admin-layout-icon-button',
+  '.sf-page-head': '.sp-admin-layout-page-head',
+  '.sf-sub': '.sp-admin-layout-page-sub',
+  '.sf-actions': '.sp-admin-layout-page-actions',
+  '.sf-btn': '.sp-button',
+  '.sf-btn-primary': '.sp-button',
+  '.sf-btn-accent': '.sp-button[data-variant=brand]',
+  '.sf-btn-ghost': '.sp-button[data-variant=outline]',
+  '.sf-btn-quiet': '.sp-button[data-variant=ghost]',
+  '.sf-btn-sm': '.sp-button[data-size=sm]',
+  '.sf-stats': '.sp-stat-group[data-cols=4]',
+  '.sf-filters': '.sp-admin-layout-filters',
+  '.sf-tabs': '.sp-tabs-list[data-variant=pills]',
+  '.sf-tab': '.sp-tabs-trigger',
+  '.sf-table-wrap': '.sp-table-container',
+  '.sf-table': '.sp-table',
+  '.doc-title': '.sp-admin-layout-doc-title',
+  '.dot': '.sp-admin-layout-doc-icon',
+  '.sf-pill': '.sp-badge',
+  '.sf-pass': '.sp-admin-layout-pass',
+  '.dots': '.sp-admin-layout-pass-dots',
+  '.sf-row-actions': '.sp-admin-layout-row-actions',
 } as const;
 
 export const variableRenames = {
@@ -294,10 +335,6 @@ export const variableRenames = {
 } as const;
 
 export const unmappedClasses = {
-  '.modal-mask':
-    'the proposal shell modal, mapped when the proposal shell ports',
-  '.modal-head':
-    'the proposal shell modal, mapped when the proposal shell ports',
   '.is-visible':
     'a toast opens with [data-state=open] or [data-open] on .sp-toast, an attribute no class stands for',
   '.cq-sm':
@@ -317,18 +354,28 @@ export const unmappedClasses = {
   '.gate-toggle': 'the passphrase gate, mapped when the app layout ports it',
   '.pass-locked-pill':
     'the passphrase gate, mapped when the app layout ports it',
-  '.doc-title':
-    'the admin shell document table title, mapped when the admin shell ports',
   '.locked':
     'a modifier of the admin shell .sf-pill; inside .doc-bar the pair is .sp-document-pill, a compound the class map cannot express',
   '.bar-row':
     'a horizontal share bar with a label, a track and a value; the bar chart draws vertical columns, so no part of it fits',
   '.bar': 'the track of .bar-row, which has no v4 home (see .bar-row)',
   '.lbl':
-    'the label of .bar-row and of the admin stat, mapped when the admin shell ports',
-  '.v': 'the value of .bar-row and of the admin stat, mapped when the admin shell ports',
+    'the label of .bar-row and of .sf-stat, neither of which one v4 class replaces (see .bar-row and .sf-stat)',
+  '.v': 'the value of .bar-row and of .sf-stat, neither of which one v4 class replaces (see .bar-row and .sf-stat)',
   '.accent':
     'the gold fill of a .bar-row track, which has no v4 home (see .bar-row)',
+  '.sf-mark':
+    'the brand mark tile; it is .sp-document-mark in the document bar, foot and proposal layout and .sp-passphrase-gate-mark in the gate, so the class map cannot pick one',
+  '.sf-wm':
+    'the admin brand wordmark; .sp-admin-layout-brand takes any content and has no wordmark part',
+  '.sf-tag':
+    'the version tag in the admin brand; .sp-admin-layout-brand has no tag part',
+  '.sf-spacer':
+    'a flex spacer in the top bar; .sp-admin-layout-header spaces its start and end itself',
+  '.sf-stat':
+    'a stat in a bordered card; v4 puts .sp-stat inside .sp-card, two elements the class map cannot express',
+  '.sf-type-tag':
+    'the document type tag in the admin table; the admin layout shows the type with .sp-admin-layout-doc-icon[data-kind] and has no tag part',
 } as const;
 
 export const propValueRenames = {

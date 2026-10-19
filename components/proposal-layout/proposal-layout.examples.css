@@ -1,0 +1,6 @@
+.docs-proposal-demo {
+  height: calc(var(--space-1) * 120);
+  margin-bottom: var(--space-12);
+  overflow: auto;
+  border: var(--border-width) solid var(--border);
+}

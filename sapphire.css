@@ -4,6 +4,7 @@
 @import "./css/base.css";
 @import "./css/layout.css";
 @import "./components/accordion/accordion.css";
+@import "./components/admin-layout/admin-layout.css";
 @import "./components/alert/alert.css";
 @import "./components/avatar/avatar.css";
 @import "./components/avatar-group/avatar-group.css";
@@ -37,6 +38,7 @@
 @import "./components/pagination/pagination.css";
 @import "./components/popover/popover.css";
 @import "./components/progress/progress.css";
+@import "./components/proposal-layout/proposal-layout.css";
 @import "./components/prose/prose.css";
 @import "./components/radio-group/radio-group.css";
 @import "./components/range-slider/range-slider.css";
