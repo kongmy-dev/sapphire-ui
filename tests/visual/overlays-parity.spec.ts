@@ -148,7 +148,7 @@ const mount = (panel: Locator, kind: Kind) =>
       const holder = document.createElement('div');
       holder.id = spec.holder;
       holder.style.cssText =
-        'position:fixed;top:24px;left:24px;width:max-content;z-index:50';
+        'position:fixed;top:24px;left:24px;width:max-content;z-index:50;will-change:transform';
       const copy = element.cloneNode(true);
       if (!(copy instanceof Element)) throw new Error('cannot clone');
       copy.setAttribute(spec.mark, '');
