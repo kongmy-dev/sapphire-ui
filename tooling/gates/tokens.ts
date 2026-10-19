@@ -26,8 +26,7 @@ const ANCHOR_ATTRIBUTES = ['href', 'to'] as const;
 const HEX_COLOUR = /(?<![&\w])#(?:[0-9a-f]{8}|[0-9a-f]{6}|[0-9a-f]{3,4})\b/gi;
 const COLOUR_FUNCTION =
   /(?<![\w-])(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color)\([^)]*\)?/gi;
-const LENGTH =
-  /(?<![\w.#-])[+-]?\d*\.?\d+(?:px|rem|pt|pc|cm|mm|in|q|ex)\b/gi;
+const LENGTH = /(?<![\w.#-])[+-]?\d*\.?\d+(?:px|rem|pt|pc|cm|mm|in|q|ex)\b/gi;
 const VARIABLE_USE = /var\(\s*(--[\w-]+)/g;
 const ARBITRARY_VALUE = /\[([^\]]*)\]/g;
 const URL_CALL = /url\([^)]*\)/gi;
