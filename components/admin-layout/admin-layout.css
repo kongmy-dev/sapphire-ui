@@ -170,8 +170,8 @@
 
   .sp-admin-layout-sidebar[data-collapsed] .sp-admin-layout-label {
     position: absolute;
-    width: 1px;
-    height: 1px;
+    width: calc(var(--space-1) * 0.25);
+    height: calc(var(--space-1) * 0.25);
     clip-path: inset(50%);
   }
 
