@@ -138,6 +138,19 @@ editorial React (30%).
   where v3 drew the browser's. Three v3 gaps carry, to revisit in P4: the margin note's anchor
   takes no focus, its wide-screen note overlaps the anchor text, and the toc's two-line clamp
   never truncates.
+- **The token gate allows the font-relative `em` and `ch`.** A unit token (`--unit-em: 1em`)
+  would pass the gate while constraining nothing, and a font-size variable times a factor cannot
+  express a `70ch` measure or `code` at `0.875em` that scales with its heading. px, rem and the
+  other absolute units stay banned.
+- **Document gold text is `--brand-text`,** where v3 drew `#b8904f` (2.71:1, now 5.44:1); the
+  figure's `data-tone=positive|negative` reads `--success-text` and `--error-text`. The document
+  bar is sticky only with `data-sticky`. Prose and the document style flow content through
+  element selectors and state the preflight resets they rely on. The financial table is
+  `data-variant=financial` on the table, with `data-row=section|subtotal|total` and a border on
+  every cell. v3's `.bar-row` stays unmapped: a share bar, not the bar chart. Four v3 bugs carry
+  for parity and P4 fixes them: prose lists have no markers, prose paragraphs have no gap, the
+  financial table's first header is lighter than the rest, and the dark card's paragraphs are
+  dark text on navy.
 - **Where the two implementations disagree, the React look wins:** more apps see it.
 - **Registry v4 is served at `/r/v4/{name}.json`;** `/r/{name}.json` stays the v3 build until each
   app moves.
