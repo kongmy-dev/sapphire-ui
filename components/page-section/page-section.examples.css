@@ -1,0 +1,38 @@
+.docs-main {
+  max-width: none;
+}
+
+.docs-flush {
+  padding: 0;
+  overflow: hidden;
+}
+
+.docs-page-section-demo {
+  padding: var(--space-8) var(--space-6);
+  background: var(--background);
+}
+
+.docs-tiles {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+}
+
+.docs-tile {
+  padding: var(--space-6);
+  background: var(--card);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.docs-tile-label {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--foreground-strong);
+}
+
+@media (min-width: 48rem) {
+  .docs-tiles {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
