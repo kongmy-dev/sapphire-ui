@@ -118,7 +118,7 @@
     line-height: 1;
     color: var(--sp-document-pill-fg);
     text-transform: uppercase;
-    letter-spacing: calc(var(--unit-em) * 0.04);
+    letter-spacing: 0.04em;
     background: var(--sp-document-pill-bg);
     border: var(--border-width) solid var(--sp-document-pill-border-color);
     border-radius: var(--radius-pill);
@@ -127,7 +127,7 @@
   .sp-document-eyebrow {
     --sp-document-eyebrow-fg: var(--brand-text);
     --sp-document-eyebrow-font-size: calc(var(--text-base) * 0.6875);
-    --sp-document-eyebrow-tracking: calc(var(--unit-em) * 0.14);
+    --sp-document-eyebrow-tracking: 0.14em;
     --sp-document-eyebrow-margin-bottom: 0;
 
     margin-bottom: var(--sp-document-eyebrow-margin-bottom);
@@ -149,9 +149,9 @@
       5.4vw,
       calc(var(--text-base) * 3.75)
     );
-    --sp-document-hero-title-max-width: calc(var(--unit-ch) * 18);
+    --sp-document-hero-title-max-width: 18ch;
     --sp-document-hero-lede-font-size: calc(var(--text-base) * 1.3125);
-    --sp-document-hero-lede-max-width: calc(var(--unit-ch) * 56);
+    --sp-document-hero-lede-max-width: 56ch;
     --sp-document-hero-meta-gap: var(--space-10);
 
     padding: var(--sp-document-hero-padding);
@@ -161,7 +161,7 @@
 
   .sp-document-hero .sp-document-eyebrow {
     --sp-document-eyebrow-font-size: var(--text-xs);
-    --sp-document-eyebrow-tracking: calc(var(--unit-em) * 0.16);
+    --sp-document-eyebrow-tracking: 0.16em;
     --sp-document-eyebrow-margin-bottom: calc(var(--space-1) * 4.5);
   }
 
@@ -172,7 +172,7 @@
     font-size: var(--sp-document-hero-title-font-size);
     font-weight: 500;
     line-height: 1.05;
-    letter-spacing: calc(var(--unit-em) * -0.02);
+    letter-spacing: -0.02em;
   }
 
   .sp-document-hero .sp-document-lede {
@@ -202,7 +202,7 @@
     font-weight: 600;
     color: var(--muted-foreground);
     text-transform: uppercase;
-    letter-spacing: calc(var(--unit-em) * 0.1);
+    letter-spacing: 0.1em;
   }
 
   .sp-document-hero-meta dd {
@@ -217,8 +217,8 @@
     --sp-document-section-border-width: var(--border-width);
     --sp-document-section-border-color: var(--border);
     --sp-document-section-scroll-margin: calc(var(--space-1) * 20);
-    --sp-document-section-text-max-width: calc(var(--unit-ch) * 64);
-    --sp-document-section-lede-max-width: calc(var(--unit-ch) * 60);
+    --sp-document-section-text-max-width: 64ch;
+    --sp-document-section-lede-max-width: 60ch;
 
     padding: var(--sp-document-section-padding);
     scroll-margin-top: var(--sp-document-section-scroll-margin);
@@ -234,7 +234,7 @@
     font-family: var(--font-mono);
     font-size: var(--text-xs);
     color: var(--brand-text);
-    letter-spacing: calc(var(--unit-em) * 0.08);
+    letter-spacing: 0.08em;
   }
 
   .sp-document-section > h2 {
@@ -243,7 +243,7 @@
     font-size: calc(var(--text-base) * 2.25);
     font-weight: 500;
     line-height: 1.1;
-    letter-spacing: calc(var(--unit-em) * -0.015);
+    letter-spacing: -0.015em;
   }
 
   .sp-document-section > h2 + .sp-document-lede {
@@ -277,7 +277,7 @@
     font-weight: 700;
     color: var(--muted-foreground);
     text-transform: uppercase;
-    letter-spacing: calc(var(--unit-em) * 0.1);
+    letter-spacing: 0.1em;
   }
 
   .sp-document-card {
