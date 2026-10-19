@@ -1,0 +1,72 @@
+<header class="docs-page-header">
+  <h1>Layouts</h1>
+  <p>Structural page components for building applications, dashboards, and websites.</p>
+</header>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Layout</h2>
+  <p class="docs-section-description">Canonical page shell — composes SiteHeader, SiteFooter, and an optional sidebar slot.</p>
+  <div class="docs-preview docs-flush">
+    <div class="sp-layout docs-layout-demo">
+      <header class="sp-site-header">
+        <div class="sp-site-header-inner">
+          <div class="sp-site-header-brand">
+            <span class="docs-brand-name">KONGMY</span>
+            <span class="docs-brand-suffix">dev</span>
+          </div>
+          <nav class="sp-site-header-nav" aria-label="Primary">
+            <a class="sp-site-header-link" href="#" aria-current="page">Home</a>
+            <a class="sp-site-header-link" href="#">Docs</a>
+          </nav>
+        </div>
+      </header>
+      <div class="sp-layout-body">
+        <div class="sp-layout-main">
+          <div class="docs-layout-content">
+            <h3 class="docs-layout-title">Main content area</h3>
+            <p class="docs-layout-text">Pages, routes, or any children render here between the header and footer slots.</p>
+          </div>
+        </div>
+      </div>
+      <footer class="sp-site-footer">
+        <div class="sp-site-footer-inner">
+          <div class="sp-site-footer-grid">
+            <div class="sp-site-footer-brand">
+              <span class="docs-footer-copy">© KONGMY Digital Solutions</span>
+            </div>
+          </div>
+          <div class="sp-site-footer-bottom">
+            <span>Built with Sapphire UI</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Layout with a sidebar</h2>
+  <div class="docs-preview docs-flush">
+    <div class="sp-layout docs-layout-demo">
+      <header class="sp-site-header">
+        <div class="sp-site-header-inner">
+          <div class="sp-site-header-brand">
+            <span class="docs-brand-name">KONGMY</span>
+            <span class="docs-brand-suffix">dev</span>
+          </div>
+        </div>
+      </header>
+      <div class="sp-layout-body" data-sidebar>
+        <aside class="sp-layout-sidebar docs-layout-sidebar">
+          <span class="docs-layout-sidebar-label">Sidebar</span>
+        </aside>
+        <div class="sp-layout-main">
+          <div class="docs-layout-content">
+            <h3 class="docs-layout-title">Main content area</h3>
+            <p class="docs-layout-text">The sidebar sits beside the main column and the main column takes the rest of the row.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

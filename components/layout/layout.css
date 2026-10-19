@@ -1,0 +1,44 @@
+@layer components {
+  .sp-layout {
+    --sp-layout-min-height: 100vh;
+    --sp-layout-bg: var(--background);
+
+    display: flex;
+    flex-direction: column;
+    min-height: var(--sp-layout-min-height);
+    background: var(--sp-layout-bg);
+  }
+
+  .sp-layout-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .sp-layout-body[data-sidebar] {
+    flex-direction: row;
+  }
+
+  .sp-layout-sidebar {
+    --sp-layout-sidebar-width: calc(var(--space-1) * 60);
+    --sp-layout-sidebar-height: 100vh;
+    --sp-layout-sidebar-bg: var(--primary);
+    --sp-layout-sidebar-fg: var(--on-dark);
+
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    width: var(--sp-layout-sidebar-width);
+    height: var(--sp-layout-sidebar-height);
+    color: var(--sp-layout-sidebar-fg);
+    background: var(--sp-layout-sidebar-bg);
+  }
+
+  .sp-layout-main {
+    flex: 1;
+    min-width: 0;
+  }
+}

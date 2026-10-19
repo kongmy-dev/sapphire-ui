@@ -1,0 +1,69 @@
+.docs-main {
+  max-width: none;
+}
+
+.docs-flush {
+  padding: 0;
+  overflow: hidden;
+}
+
+.docs-layout-demo {
+  --sp-layout-min-height: calc(var(--space-1) * 90);
+}
+
+.docs-brand-name {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  line-height: calc(var(--space-1) * 7);
+}
+
+.docs-brand-suffix {
+  font-family: var(--font-sans);
+  font-size: var(--text-lg);
+  font-weight: 300;
+  line-height: calc(var(--space-1) * 7);
+  color: var(--brand);
+}
+
+.docs-layout-content {
+  padding: var(--space-8) var(--space-6);
+}
+
+.docs-layout-title {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-serif);
+  font-size: var(--text-subheading);
+  font-weight: 600;
+  line-height: calc(var(--space-1) * 7);
+  color: var(--foreground-strong);
+}
+
+.docs-layout-text {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: calc(var(--space-1) * 5);
+  color: var(--muted-foreground);
+}
+
+.docs-footer-copy {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: calc(var(--space-1) * 5);
+  color: var(--on-dark-muted);
+}
+
+.docs-layout-sidebar {
+  --sp-layout-sidebar-height: auto;
+  --sp-layout-sidebar-width: calc(var(--space-1) * 40);
+
+  align-items: center;
+  justify-content: center;
+}
+
+.docs-layout-sidebar-label {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
