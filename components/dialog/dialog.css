@@ -225,9 +225,12 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .sp-dialog,
-    .sp-dialog::backdrop,
-    .sp-dialog-overlay,
+    dialog.sp-dialog,
+    dialog.sp-dialog[open],
+    dialog.sp-dialog::backdrop,
+    dialog.sp-dialog[open]::backdrop,
+    .sp-dialog[data-state],
+    .sp-dialog-overlay[data-state],
     .sp-dialog-close,
     .sp-dialog-action {
       transition: none;
