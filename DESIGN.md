@@ -164,6 +164,7 @@ Line heights are `--leading-tight` 1.2, `--leading-snug` 1.375, `--leading-norma
 | `--radius-xl` | `16px` | Feature surfaces |
 | `--radius-btn` | `6px` | Buttons, a little tighter than cards |
 | `--radius-pill` | `9999px` | Tags and badges |
+| `--page-width` | `80rem` | Widest page content measure: the site header and footer, the container and the page section stop here |
 | `--border-width` | `1px` | Hairline border |
 | `--border-width-strong` | `1.5px` | Outline buttons and other emphasised edges |
 | `--ring-width` | `2px` | Focus ring thickness |

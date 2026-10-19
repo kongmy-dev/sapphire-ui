@@ -100,6 +100,7 @@
   --leading-snug: var(--leading-snug);
   --leading-normal: var(--leading-normal);
   --leading-relaxed: var(--leading-relaxed);
+  --page-width: var(--page-width);
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-xl: var(--radius-xl);
