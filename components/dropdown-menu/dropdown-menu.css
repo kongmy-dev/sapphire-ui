@@ -1,0 +1,196 @@
+@layer components {
+  .sp-dropdown-menu {
+    --sp-dropdown-menu-min-width: var(--space-32);
+    --sp-dropdown-menu-padding: var(--space-1);
+    --sp-dropdown-menu-radius: var(--radius-md);
+    --sp-dropdown-menu-bg: var(--card);
+    --sp-dropdown-menu-fg: var(--foreground);
+    --sp-dropdown-menu-border-width: var(--border-width);
+    --sp-dropdown-menu-border-color: var(--border);
+    --sp-dropdown-menu-shadow: var(--shadow-md);
+    --sp-dropdown-menu-z-index: 50;
+    --sp-dropdown-menu-enter-y: 0;
+
+    min-width: var(--sp-dropdown-menu-min-width);
+    padding: var(--sp-dropdown-menu-padding);
+    overflow: hidden;
+    font-family: var(--font-sans);
+    color: var(--sp-dropdown-menu-fg);
+    background: var(--sp-dropdown-menu-bg);
+    border: var(--sp-dropdown-menu-border-width) solid
+      var(--sp-dropdown-menu-border-color);
+    border-radius: var(--sp-dropdown-menu-radius);
+    outline: none;
+    box-shadow: var(--sp-dropdown-menu-shadow);
+    z-index: var(--sp-dropdown-menu-z-index);
+    transform-origin: var(
+      --radix-dropdown-menu-content-transform-origin,
+      50% 50%
+    );
+  }
+
+  .sp-dropdown-menu[data-side="bottom"] {
+    --sp-dropdown-menu-enter-y: calc(var(--space-2) * -1);
+  }
+
+  .sp-dropdown-menu[data-side="top"] {
+    --sp-dropdown-menu-enter-y: var(--space-2);
+  }
+
+  .sp-dropdown-menu:is([data-state="open"], [data-open]) {
+    animation: sp-dropdown-menu-in var(--transition-fast);
+  }
+
+  .sp-dropdown-menu:is([data-state="closed"], [data-closed]) {
+    animation: sp-dropdown-menu-out var(--transition-fast);
+  }
+
+  .sp-dropdown-menu-item,
+  .sp-dropdown-menu-checkbox-item,
+  .sp-dropdown-menu-radio-item {
+    --sp-dropdown-menu-item-padding-block: calc(var(--space-1) * 1.5);
+    --sp-dropdown-menu-item-padding-end: var(--space-2);
+    --sp-dropdown-menu-item-padding-start: var(--space-2);
+    --sp-dropdown-menu-item-gap: var(--space-2);
+    --sp-dropdown-menu-item-radius: var(--radius-sm);
+    --sp-dropdown-menu-item-font-size: var(--text-sm);
+    --sp-dropdown-menu-item-line-height: var(--space-5);
+    --sp-dropdown-menu-item-fg: currentcolor;
+    --sp-dropdown-menu-item-bg-highlighted: var(--background);
+    --sp-dropdown-menu-item-fg-highlighted: var(--foreground);
+    --sp-dropdown-menu-item-disabled-opacity: 0.5;
+
+    position: relative;
+    display: flex;
+    gap: var(--sp-dropdown-menu-item-gap);
+    align-items: center;
+    padding: var(--sp-dropdown-menu-item-padding-block)
+      var(--sp-dropdown-menu-item-padding-end)
+      var(--sp-dropdown-menu-item-padding-block)
+      var(--sp-dropdown-menu-item-padding-start);
+    font-size: var(--sp-dropdown-menu-item-font-size);
+    line-height: var(--sp-dropdown-menu-item-line-height);
+    color: var(--sp-dropdown-menu-item-fg);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    border-radius: var(--sp-dropdown-menu-item-radius);
+    outline: none;
+  }
+
+  .sp-dropdown-menu-checkbox-item,
+  .sp-dropdown-menu-radio-item {
+    --sp-dropdown-menu-item-padding-start: var(--space-8);
+    --sp-dropdown-menu-item-gap: normal;
+  }
+
+  .sp-dropdown-menu-item[data-inset] {
+    --sp-dropdown-menu-item-padding-start: var(--space-8);
+  }
+
+  .sp-dropdown-menu-item:focus,
+  .sp-dropdown-menu-item[data-highlighted],
+  .sp-dropdown-menu-checkbox-item:focus,
+  .sp-dropdown-menu-checkbox-item[data-highlighted],
+  .sp-dropdown-menu-radio-item:focus,
+  .sp-dropdown-menu-radio-item[data-highlighted] {
+    color: var(--sp-dropdown-menu-item-fg-highlighted);
+    background: var(--sp-dropdown-menu-item-bg-highlighted);
+  }
+
+  .sp-dropdown-menu-item[data-variant="destructive"] {
+    --sp-dropdown-menu-item-fg: var(--error-text);
+    --sp-dropdown-menu-item-fg-highlighted: var(--error-text);
+  }
+
+  .sp-dropdown-menu-item[data-disabled],
+  .sp-dropdown-menu-checkbox-item[data-disabled],
+  .sp-dropdown-menu-radio-item[data-disabled] {
+    pointer-events: none;
+    opacity: var(--sp-dropdown-menu-item-disabled-opacity);
+  }
+
+  .sp-dropdown-menu-item-indicator {
+    position: absolute;
+    left: var(--space-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(var(--space-1) * 3.5);
+    height: calc(var(--space-1) * 3.5);
+  }
+
+  .sp-dropdown-menu-radio-dot {
+    display: block;
+    width: calc(var(--space-1) * 1.5);
+    height: calc(var(--space-1) * 1.5);
+    background: currentcolor;
+    border-radius: var(--radius-pill);
+  }
+
+  .sp-dropdown-menu-label {
+    --sp-dropdown-menu-label-padding-start: var(--space-2);
+    --sp-dropdown-menu-label-font-size: var(--text-xs);
+
+    padding: calc(var(--space-1) * 1.5) var(--space-2)
+      calc(var(--space-1) * 1.5) var(--sp-dropdown-menu-label-padding-start);
+    font-size: var(--sp-dropdown-menu-label-font-size);
+    font-weight: 600;
+    line-height: var(--space-4);
+    color: var(--muted-foreground);
+    text-transform: uppercase;
+    letter-spacing: calc(var(--sp-dropdown-menu-label-font-size) * 0.05);
+  }
+
+  .sp-dropdown-menu-label[data-inset] {
+    --sp-dropdown-menu-label-padding-start: var(--space-8);
+  }
+
+  .sp-dropdown-menu-separator {
+    height: var(--border-width);
+    margin: var(--space-1) calc(var(--space-1) * -1);
+    background: var(--border);
+  }
+
+  .sp-dropdown-menu-shortcut {
+    --sp-dropdown-menu-shortcut-font-size: var(--text-xs);
+
+    margin-left: auto;
+    font-size: var(--sp-dropdown-menu-shortcut-font-size);
+    line-height: var(--space-4);
+    color: var(--muted-foreground);
+    letter-spacing: calc(var(--sp-dropdown-menu-shortcut-font-size) * 0.1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sp-dropdown-menu,
+    .sp-dropdown-menu:is([data-state="open"], [data-open]),
+    .sp-dropdown-menu:is([data-state="closed"], [data-closed]) {
+      animation: none;
+    }
+  }
+
+  @keyframes sp-dropdown-menu-in {
+    from {
+      opacity: 0;
+      transform: translate(0, var(--sp-dropdown-menu-enter-y)) scale(0.95);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate(0, 0) scale(1);
+    }
+  }
+
+  @keyframes sp-dropdown-menu-out {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    to {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+  }
+}
