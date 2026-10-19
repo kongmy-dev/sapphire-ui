@@ -1,0 +1,117 @@
+@layer components {
+  .sp-sheet.sp-command-palette {
+    --sp-sheet-padding: 0;
+
+    max-height: var(--sp-command-palette-max-height);
+    overflow: hidden;
+  }
+
+  .sp-command-palette {
+    --sp-command-palette-max-height: 80vh;
+    --sp-command-palette-list-reserve: calc(var(--space-1) * 20);
+    --sp-command-palette-item-padding-block: var(--space-2);
+    --sp-command-palette-item-padding-inline: var(--space-3);
+    --sp-command-palette-item-gap: var(--space-3);
+    --sp-command-palette-item-radius: var(--radius-md);
+    --sp-command-palette-item-fg: var(--foreground);
+    --sp-command-palette-item-bg-active: var(--background);
+    --sp-command-palette-muted: var(--muted-foreground);
+  }
+
+  .sp-command-palette-header {
+    padding: var(--space-4) var(--space-4) var(--space-2);
+    border-bottom: var(--border-width) solid var(--border);
+  }
+
+  .sp-command-palette-title {
+    position: absolute;
+    width: var(--border-width);
+    height: var(--border-width);
+    padding: 0;
+    margin: calc(var(--border-width) * -1);
+    overflow: hidden;
+    white-space: nowrap;
+    border-width: 0;
+    clip: rect(0, 0, 0, 0);
+  }
+
+  .sp-command-palette-body {
+    max-height: calc(
+      var(--sp-command-palette-max-height) -
+      var(--sp-command-palette-list-reserve)
+    );
+    overflow-y: auto;
+  }
+
+  .sp-command-palette-list {
+    padding: var(--space-2);
+    margin: 0;
+    list-style: none;
+  }
+
+  .sp-command-palette-item {
+    display: flex;
+    gap: var(--sp-command-palette-item-gap);
+    align-items: center;
+    padding: var(--sp-command-palette-item-padding-block)
+      var(--sp-command-palette-item-padding-inline);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    line-height: var(--space-5);
+    color: var(--sp-command-palette-item-fg);
+    cursor: pointer;
+    background: transparent;
+    border-radius: var(--sp-command-palette-item-radius);
+  }
+
+  .sp-command-palette-item[aria-selected="true"],
+  .sp-command-palette-item[data-active] {
+    background: var(--sp-command-palette-item-bg-active);
+  }
+
+  .sp-command-palette-icon {
+    flex-shrink: 0;
+    width: calc(var(--space-1) * 4.5);
+    height: calc(var(--space-1) * 4.5);
+    color: var(--sp-command-palette-muted);
+  }
+
+  .sp-command-palette-label {
+    flex: 1;
+  }
+
+  .sp-command-palette-hint {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    line-height: var(--space-4);
+    color: var(--sp-command-palette-muted);
+  }
+
+  .sp-command-palette-empty {
+    padding: var(--space-8) var(--space-4);
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    line-height: var(--space-5);
+    color: var(--sp-command-palette-muted);
+    text-align: center;
+  }
+
+  .sp-command-palette-footer {
+    display: flex;
+    gap: var(--space-3);
+    align-items: center;
+    padding: var(--space-2) var(--space-4);
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    line-height: var(--space-4);
+    color: var(--sp-command-palette-muted);
+    border-top: var(--border-width) solid var(--border);
+  }
+
+  .sp-command-palette-shortcut {
+    display: flex;
+    gap: var(--space-1);
+    align-items: center;
+  }
+}

@@ -1,0 +1,9 @@
+.docs-palette-stage {
+  position: relative;
+  height: 80vh;
+  overflow: hidden;
+  contain: layout paint;
+  background: var(--background);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-md);
+}

@@ -1,0 +1,122 @@
+<header class="docs-page-header">
+  <h1>Interactive Overlays</h1>
+  <p>Modal dialogs, toast notifications, sheets, tooltips, and popovers.</p>
+</header>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Command Palette</h2>
+  <div class="docs-preview">
+      <div class="docs-palette-stage">
+        <div class="sp-sheet-overlay" data-state="open"></div>
+        <div class="sp-sheet sp-command-palette" id="palette" role="dialog" aria-labelledby="palette-title" data-state="open" data-side="top" tabindex="-1">
+          <div class="sp-sheet-header sp-command-palette-header">
+            <h2 class="sp-command-palette-title" id="palette-title">Command palette</h2>
+            <div>
+              <input class="sp-input" type="text" placeholder="Jump to a section…" aria-label="Search commands" aria-controls="palette-list" aria-activedescendant="cmd-home" value="">
+            </div>
+          </div>
+          <div class="sp-command-palette-body">
+            <ul class="sp-command-palette-list" id="palette-list" role="listbox" aria-label="Command results">
+              <li class="sp-command-palette-item" id="cmd-home" role="option" aria-selected="true">
+                <span class="sp-command-palette-icon" aria-hidden="true"></span>
+                <span class="sp-command-palette-label">Overview</span>
+                <span class="sp-command-palette-hint">/</span>
+              </li>
+              <li class="sp-command-palette-item" id="cmd-colors" role="option" aria-selected="false">
+                <span class="sp-command-palette-icon" aria-hidden="true"></span>
+                <span class="sp-command-palette-label">Colors</span>
+                <span class="sp-command-palette-hint">/colors</span>
+              </li>
+              <li class="sp-command-palette-item" id="cmd-typography" role="option" aria-selected="false">
+                <span class="sp-command-palette-icon" aria-hidden="true"></span>
+                <span class="sp-command-palette-label">Typography</span>
+                <span class="sp-command-palette-hint">/typography</span>
+              </li>
+              <li class="sp-command-palette-item" id="cmd-buttons" role="option" aria-selected="false">
+                <span class="sp-command-palette-icon" aria-hidden="true"></span>
+                <span class="sp-command-palette-label">Buttons</span>
+                <span class="sp-command-palette-hint">/buttons</span>
+              </li>
+              <li class="sp-command-palette-item" id="cmd-cards" role="option" aria-selected="false">
+                <span class="sp-command-palette-icon" aria-hidden="true"></span>
+                <span class="sp-command-palette-label">Cards</span>
+                <span class="sp-command-palette-hint">/cards</span>
+              </li>
+              <li class="sp-command-palette-item" id="cmd-forms" role="option" aria-selected="false">
+                <span class="sp-command-palette-icon" aria-hidden="true"></span>
+                <span class="sp-command-palette-label">Forms</span>
+                <span class="sp-command-palette-hint">/forms</span>
+              </li>
+              <li class="sp-command-palette-item" id="cmd-feedback" role="option" aria-selected="false">
+                <span class="sp-command-palette-icon" aria-hidden="true"></span>
+                <span class="sp-command-palette-label">Feedback</span>
+                <span class="sp-command-palette-hint">/feedback</span>
+              </li>
+              <li class="sp-command-palette-item" id="cmd-data" role="option" aria-selected="false">
+                <span class="sp-command-palette-icon" aria-hidden="true"></span>
+                <span class="sp-command-palette-label">Data Display</span>
+                <span class="sp-command-palette-hint">/data</span>
+              </li>
+              <li class="sp-command-palette-item" id="cmd-interactive" role="option" aria-selected="false">
+                <span class="sp-command-palette-icon" aria-hidden="true"></span>
+                <span class="sp-command-palette-label">Interactive</span>
+                <span class="sp-command-palette-hint">/interactive</span>
+              </li>
+              <li class="sp-command-palette-item" id="cmd-extended" role="option" aria-selected="false">
+                <span class="sp-command-palette-icon" aria-hidden="true"></span>
+                <span class="sp-command-palette-label">Extended</span>
+                <span class="sp-command-palette-hint">/extended</span>
+              </li>
+              <li class="sp-command-palette-item" id="cmd-layouts" role="option" aria-selected="false">
+                <span class="sp-command-palette-icon" aria-hidden="true"></span>
+                <span class="sp-command-palette-label">Layouts</span>
+                <span class="sp-command-palette-hint">/layouts</span>
+              </li>
+              <li class="sp-command-palette-item" id="cmd-elements" role="option" aria-selected="false">
+                <span class="sp-command-palette-icon" aria-hidden="true"></span>
+                <span class="sp-command-palette-label">Web Components</span>
+                <span class="sp-command-palette-hint">/elements</span>
+              </li>
+              <li class="sp-command-palette-item" id="cmd-hooks" role="option" aria-selected="false">
+                <span class="sp-command-palette-icon" aria-hidden="true"></span>
+                <span class="sp-command-palette-label">Hooks &amp; Utils</span>
+                <span class="sp-command-palette-hint">/hooks</span>
+              </li>
+            </ul>
+          </div>
+          <footer class="sp-command-palette-footer">
+            <span class="sp-command-palette-shortcut"><kbd class="sp-kbd" data-size="sm">↑</kbd><kbd class="sp-kbd" data-size="sm">↓</kbd>navigate</span>
+            <span class="sp-command-palette-shortcut"><kbd class="sp-kbd" data-size="sm">↵</kbd> select</span>
+            <span class="sp-command-palette-shortcut"><kbd class="sp-kbd" data-size="sm">Esc</kbd> close</span>
+          </footer>
+          <button class="sp-sheet-close" type="button" aria-label="Close"></button>
+        </div>
+      </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Command Palette (no matches)</h2>
+  <div class="docs-preview">
+      <div class="docs-palette-stage">
+        <div class="sp-sheet-overlay" data-state="open"></div>
+        <div class="sp-sheet sp-command-palette" id="palette-empty" role="dialog" aria-labelledby="palette-empty-title" data-state="open" data-side="top" tabindex="-1">
+          <div class="sp-sheet-header sp-command-palette-header">
+            <h2 class="sp-command-palette-title" id="palette-empty-title">Command palette</h2>
+            <div>
+              <input class="sp-input" type="text" placeholder="Jump to a section…" aria-label="Search commands" aria-controls="palette-empty-list" value="zzzz">
+            </div>
+          </div>
+          <div class="sp-command-palette-body">
+            <p class="sp-command-palette-empty">No matches for "zzzz".</p>
+          </div>
+          <footer class="sp-command-palette-footer">
+            <span class="sp-command-palette-shortcut"><kbd class="sp-kbd" data-size="sm">↑</kbd><kbd class="sp-kbd" data-size="sm">↓</kbd>navigate</span>
+            <span class="sp-command-palette-shortcut"><kbd class="sp-kbd" data-size="sm">↵</kbd> select</span>
+            <span class="sp-command-palette-shortcut"><kbd class="sp-kbd" data-size="sm">Esc</kbd> close</span>
+          </footer>
+          <button class="sp-sheet-close" type="button" aria-label="Close"></button>
+        </div>
+      </div>
+  </div>
+</section>
