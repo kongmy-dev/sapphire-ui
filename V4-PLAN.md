@@ -175,6 +175,18 @@ editorial React (30%).
   a value on the property itself, which its unlayered CSS wins anyway. A number-only `calc()`
   stays in a variable: the minifier folds it to five decimals, 1/64 px off v3. Weighed: inline
   (55%), raise the ceiling past v3's size (30%), split the stylesheet into opt-in entries (15%).
+- **App layout is one admin layout, a proposal layout and four app shells.** `.sp-admin-layout`
+  holds the sidebar, header and content, plus the page parts a dashboard puts in the content
+  column (page head, filters, search, document title with `data-kind`, passphrase chip, row
+  actions). The class map renames both generations of v3's admin shell, `.sf-shell` and
+  `.sf-admin-shell` alike, onto it. `.sf-btn-ghost` is the outline button and `.sf-btn-quiet`
+  the ghost. `.sf-tabs` are pills tabs, and `.modal-mask` and `.modal-head` are the dialog
+  overlay and header. Left unmapped, with reasons: `.sf-stat` (v4 nests a stat in a card),
+  `.sf-mark` (the document mark or the gate mark, by place), the brand's wordmark and tag, the
+  type tag and the top bar spacer. The proposal layout paints no background: v3's `bg-page`
+  utility never existed, so its shell is transparent over the page. The passphrase gate hides
+  with `data-hidden`; the wizard's mode is `data-mode`. The admin glyphs wait for the icon port.
+  The stylesheet measures 23,497 bytes after the two ports, 268 under the ceiling.
 - **Where the two implementations disagree, the React look wins:** more apps see it.
 - **Registry v4 is served at `/r/v4/{name}.json`;** `/r/{name}.json` stays the v3 build until each
   app moves.
