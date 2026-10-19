@@ -151,6 +151,14 @@ editorial React (30%).
   for parity and P4 fixes them: prose lists have no markers, prose paragraphs have no gap, the
   financial table's first header is lighter than the rest, and the dark card's paragraphs are
   dark text on navy.
+- **Overlays stack at `z-index: 50`,** a `--sp-<name>-z-index` on the popover, tooltip, hover card
+  and dropdown menu, fixed on the sheet and its overlay. The sheet's scrim is a 50% mix of
+  `--primary` blurred by `--space-2`; it opens in 500ms and closes in 300ms, ease-in-out, and its
+  title and description take v3's docs values. A destructive menu item is
+  `data-variant=destructive` in `--error-text`. The command palette is `.sp-sheet` with
+  `.sp-command-palette`, its active item `aria-selected=true` or `data-active`. Open specimens
+  skip the entry animation, and the palette's empty state has no `aria-controls`. The tooltip
+  stays on its v3 pin for its glyph; the palette has parity only.
 - **Where the two implementations disagree, the React look wins:** more apps see it.
 - **Registry v4 is served at `/r/v4/{name}.json`;** `/r/{name}.json` stays the v3 build until each
   app moves.
