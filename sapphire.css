@@ -16,10 +16,13 @@
 @import "./components/checkbox/checkbox.css";
 @import "./components/chip/chip.css";
 @import "./components/code-block/code-block.css";
+@import "./components/command-palette/command-palette.css";
 @import "./components/dialog/dialog.css";
 @import "./components/document/document.css";
+@import "./components/dropdown-menu/dropdown-menu.css";
 @import "./components/empty/empty.css";
 @import "./components/form-field/form-field.css";
+@import "./components/hover-card/hover-card.css";
 @import "./components/input/input.css";
 @import "./components/kbd/kbd.css";
 @import "./components/key-value-list/key-value-list.css";
@@ -27,6 +30,7 @@
 @import "./components/margin-note/margin-note.css";
 @import "./components/native-select/native-select.css";
 @import "./components/pagination/pagination.css";
+@import "./components/popover/popover.css";
 @import "./components/progress/progress.css";
 @import "./components/prose/prose.css";
 @import "./components/radio-group/radio-group.css";
@@ -35,6 +39,7 @@
 @import "./components/segmented-bar/segmented-bar.css";
 @import "./components/select/select.css";
 @import "./components/separator/separator.css";
+@import "./components/sheet/sheet.css";
 @import "./components/skeleton/skeleton.css";
 @import "./components/sparkline/sparkline.css";
 @import "./components/spinner/spinner.css";
@@ -49,3 +54,4 @@
 @import "./components/timeline/timeline.css";
 @import "./components/toast/toast.css";
 @import "./components/toggle/toggle.css";
+@import "./components/tooltip/tooltip.css";
