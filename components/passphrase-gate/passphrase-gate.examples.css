@@ -1,0 +1,20 @@
+.docs-main {
+  max-width: none;
+}
+
+.docs-gate-frame {
+  position: relative;
+  height: calc(var(--space-1) * 150);
+  overflow: hidden;
+  contain: layout;
+  border-radius: var(--radius-md);
+}
+
+.docs-gate-frame--short {
+  height: calc(var(--space-1) * 24);
+  background: var(--background);
+}
+
+.docs-gate-row {
+  margin: var(--space-4) 0 0;
+}

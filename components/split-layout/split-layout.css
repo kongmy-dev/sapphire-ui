@@ -1,0 +1,57 @@
+@layer components {
+  .sp-split-layout {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .sp-split-layout-panel {
+    --sp-split-layout-size: 1;
+
+    flex: var(--sp-split-layout-size) 1 0;
+    min-width: 0;
+    max-width: 100%;
+    overflow: auto;
+  }
+
+  .sp-split-layout-handle {
+    position: relative;
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: var(--border-width);
+    background: var(--border);
+    outline: none;
+  }
+
+  .sp-split-layout-handle::after {
+    position: absolute;
+    inset: 0 auto;
+    left: 50%;
+    width: var(--space-1);
+    content: "";
+    translate: -50% 0;
+  }
+
+  .sp-split-layout-handle:focus-visible {
+    box-shadow:
+      0 0 0 var(--border-width) var(--white),
+      0 0 0 calc(var(--border-width) * 2) var(--ring);
+  }
+
+  .sp-split-layout-grip {
+    z-index: 10;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: var(--space-3);
+    height: var(--space-4);
+    color: var(--muted-foreground);
+    background: var(--background);
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+}

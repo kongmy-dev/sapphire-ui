@@ -36,6 +36,7 @@
 @import "./components/native-select/native-select.css";
 @import "./components/page-section/page-section.css";
 @import "./components/pagination/pagination.css";
+@import "./components/passphrase-gate/passphrase-gate.css";
 @import "./components/popover/popover.css";
 @import "./components/progress/progress.css";
 @import "./components/proposal-layout/proposal-layout.css";
@@ -52,6 +53,7 @@
 @import "./components/skeleton/skeleton.css";
 @import "./components/sparkline/sparkline.css";
 @import "./components/spinner/spinner.css";
+@import "./components/split-layout/split-layout.css";
 @import "./components/stat/stat.css";
 @import "./components/stat-group/stat-group.css";
 @import "./components/steps/steps.css";
@@ -65,3 +67,5 @@
 @import "./components/toast/toast.css";
 @import "./components/toggle/toggle.css";
 @import "./components/tooltip/tooltip.css";
+@import "./components/vertical-tabs-layout/vertical-tabs-layout.css";
+@import "./components/wizard-layout/wizard-layout.css";

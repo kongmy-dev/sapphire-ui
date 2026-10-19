@@ -323,6 +323,16 @@ export const classRenames = {
   '.sf-pass': '.sp-admin-layout-pass',
   '.dots': '.sp-admin-layout-pass-dots',
   '.sf-row-actions': '.sp-admin-layout-row-actions',
+  '.gate': '.sp-passphrase-gate',
+  '.gate-card': '.sp-passphrase-gate-card',
+  '.gate-brand': '.sp-passphrase-gate-brand',
+  '.gate-doc': '.sp-passphrase-gate-document',
+  '.gate-field': '.sp-passphrase-gate-field',
+  '.gate-submit': '.sp-passphrase-gate-submit',
+  '.gate-foot': '.sp-passphrase-gate-foot',
+  '.gate-err': '.sp-passphrase-gate-error',
+  '.gate-toggle': '.sp-passphrase-gate-toggle',
+  '.pass-locked-pill': '.sp-passphrase-gate-pill',
 } as const;
 
 export const variableRenames = {
@@ -335,6 +345,8 @@ export const variableRenames = {
 } as const;
 
 export const unmappedClasses = {
+  '.is-hidden':
+    'a modifier of .gate alone; the passphrase gate hides with data-hidden, an attribute no class stands for',
   '.is-visible':
     'a toast opens with [data-state=open] or [data-open] on .sp-toast, an attribute no class stands for',
   '.cq-sm':
@@ -343,17 +355,6 @@ export const unmappedClasses = {
     'a container query helper that applies one utility from a width up; Tailwind apps use its @container variants and plain HTML uses .sp-columns[data-from]',
   '.cq-lg':
     'a container query helper that applies one utility from a width up; Tailwind apps use its @container variants and plain HTML uses .sp-columns[data-from]',
-  '.gate': 'the passphrase gate, mapped when the app layout ports it',
-  '.gate-card': 'the passphrase gate, mapped when the app layout ports it',
-  '.gate-brand': 'the passphrase gate, mapped when the app layout ports it',
-  '.gate-doc': 'the passphrase gate, mapped when the app layout ports it',
-  '.gate-field': 'the passphrase gate, mapped when the app layout ports it',
-  '.gate-submit': 'the passphrase gate, mapped when the app layout ports it',
-  '.gate-foot': 'the passphrase gate, mapped when the app layout ports it',
-  '.gate-err': 'the passphrase gate, mapped when the app layout ports it',
-  '.gate-toggle': 'the passphrase gate, mapped when the app layout ports it',
-  '.pass-locked-pill':
-    'the passphrase gate, mapped when the app layout ports it',
   '.locked':
     'a modifier of the admin shell .sf-pill; inside .doc-bar the pair is .sp-document-pill, a compound the class map cannot express',
   '.bar-row':

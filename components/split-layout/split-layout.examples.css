@@ -1,0 +1,33 @@
+.docs-main {
+  max-width: none;
+}
+
+.docs-split-frame {
+  height: calc(var(--space-1) * 62.5);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.docs-split-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: var(--space-6);
+}
+
+.docs-split-cell--side {
+  background: var(--background);
+}
+
+.docs-split-text {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  line-height: calc(var(--space-1) * 5);
+  color: var(--muted-foreground);
+}
+
+.docs-split-text--main {
+  color: var(--foreground);
+}

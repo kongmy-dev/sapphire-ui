@@ -1,0 +1,89 @@
+@layer components {
+  .sp-wizard-layout:not([data-mode="modal"]) {
+    display: flex;
+  }
+
+  .sp-wizard-layout {
+    flex-direction: column;
+    min-height: calc(var(--space-1) * 125);
+    overflow: hidden;
+    font-family: var(--font-sans);
+    background: var(--background);
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--radius-md);
+  }
+
+  .sp-wizard-layout[data-mode="fullscreen"] {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    min-height: 0;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .sp-wizard-layout[data-mode="modal"] {
+    max-height: 90vh;
+    min-height: 0;
+    border: 0;
+  }
+
+  .sp-wizard-layout-header {
+    flex-shrink: 0;
+    padding: var(--space-6);
+    background: var(--background);
+    border-bottom: var(--border-width) solid var(--border);
+  }
+
+  .sp-wizard-layout-header-inner {
+    width: 100%;
+    max-width: calc(var(--space-1) * 192);
+    margin-inline: auto;
+  }
+
+  .sp-wizard-layout-title {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-serif);
+    font-size: var(--text-subheading);
+    font-weight: 600;
+    line-height: calc(var(--space-1) * 7);
+    letter-spacing: -0.025em;
+  }
+
+  .sp-wizard-layout-description {
+    margin: 0 0 var(--space-8);
+    font-size: var(--text-sm);
+    line-height: calc(var(--space-1) * 5);
+    color: var(--muted-foreground);
+  }
+
+  .sp-wizard-layout-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--background);
+  }
+
+  .sp-wizard-layout-body {
+    flex: 1;
+    padding: var(--space-6);
+    overflow-y: auto;
+  }
+
+  .sp-wizard-layout-footer {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4) var(--space-6);
+    background: color-mix(in oklab, var(--background) 50%, transparent);
+    border-top: var(--border-width) solid var(--border);
+  }
+
+  @media (width < 40rem) {
+    .sp-wizard-layout[data-mode="modal"] {
+      --sp-dialog-width: 95vw;
+    }
+  }
+}

@@ -1,0 +1,35 @@
+.docs-main {
+  max-width: none;
+}
+
+.docs-wizard-intro {
+  margin: 0 0 var(--space-4);
+  font-size: var(--text-sm);
+  line-height: calc(var(--space-1) * 5);
+  color: var(--muted-foreground);
+}
+
+.docs-wizard-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: var(--space-8);
+  border: calc(var(--border-width) * 2) dashed var(--border);
+  border-radius: var(--radius-md);
+}
+
+.docs-wizard-step-title {
+  margin: 0 0 var(--space-4);
+  font-size: var(--text-lg);
+  font-weight: 500;
+  line-height: calc(var(--space-1) * 7);
+}
+
+.docs-wizard-step-note {
+  margin: var(--space-2) 0 var(--space-4);
+  font-size: var(--text-sm);
+  line-height: calc(var(--space-1) * 5);
+  color: var(--muted-foreground);
+}

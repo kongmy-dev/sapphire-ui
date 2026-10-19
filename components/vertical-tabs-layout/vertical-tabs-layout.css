@@ -1,0 +1,33 @@
+@layer components {
+  .sp-vertical-tabs-layout {
+    --sp-vertical-tabs-layout-list-width: calc(var(--space-1) * 24);
+    --sp-vertical-tabs-layout-content-padding: var(--space-4);
+
+    display: flex;
+    min-height: calc(var(--space-1) * 37.5);
+  }
+
+  .sp-vertical-tabs-layout .sp-tabs-list {
+    flex-shrink: 0;
+    width: var(--sp-vertical-tabs-layout-list-width);
+  }
+
+  .sp-vertical-tabs-layout .sp-tabs-content {
+    flex: 1;
+    padding-inline: var(--sp-vertical-tabs-layout-content-padding);
+    margin-top: 0;
+  }
+
+  @media (min-width: 40rem) {
+    .sp-vertical-tabs-layout {
+      --sp-vertical-tabs-layout-list-width: calc(var(--space-1) * 32);
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .sp-vertical-tabs-layout {
+      --sp-vertical-tabs-layout-list-width: calc(var(--space-1) * 48);
+      --sp-vertical-tabs-layout-content-padding: var(--space-6);
+    }
+  }
+}

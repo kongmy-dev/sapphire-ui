@@ -1,0 +1,113 @@
+<header class="docs-page-header">
+  <h1>Layouts</h1>
+  <p>Structural page components for building applications, dashboards, and websites.</p>
+</header>
+
+<section class="docs-section" data-pin="layouts/wizard-layout" data-pin-y="6263.328125">
+  <h2 class="docs-section-title">Wizard Layout</h2>
+  <p class="docs-wizard-intro">A standardized multi-step flow supporting inline, fullscreen, and modal modes.</p>
+  <div class="docs-preview">
+    <button class="sp-button" type="button">Launch Modal Wizard</button>
+    <dialog class="sp-dialog sp-wizard-layout" id="wizard-dialog" data-mode="modal" aria-labelledby="wizard-dialog-title" aria-describedby="wizard-dialog-description">
+      <div class="sp-sr-only">
+        <h2 id="wizard-dialog-title">Cloud Infrastructure Provisioning</h2>
+        <p id="wizard-dialog-description">Configure the networking and compute resources.</p>
+      </div>
+      <div class="sp-wizard-layout-header">
+        <div class="sp-wizard-layout-header-inner">
+          <h2 class="sp-wizard-layout-title">Cloud Infrastructure Provisioning</h2>
+          <p class="sp-wizard-layout-description">Configure the networking and compute resources.</p>
+          <nav class="sp-steps" aria-label="Progress">
+            <ol class="sp-steps-list">
+              <li class="sp-steps-step" data-status="active" aria-current="step">
+                <div class="sp-steps-indicator">1</div>
+                <div class="sp-steps-text">
+                  <span class="sp-steps-label">Region</span>
+                  <span class="sp-steps-description">Select datacenter</span>
+                </div>
+              </li>
+              <li class="sp-steps-step" data-status="upcoming">
+                <div class="sp-steps-indicator">2</div>
+                <div class="sp-steps-text">
+                  <span class="sp-steps-label">Compute</span>
+                  <span class="sp-steps-description">Instance sizing</span>
+                </div>
+              </li>
+              <li class="sp-steps-step" data-status="upcoming">
+                <div class="sp-steps-indicator">3</div>
+                <div class="sp-steps-text">
+                  <span class="sp-steps-label">Review</span>
+                  <span class="sp-steps-description">Confirm costs</span>
+                </div>
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+      <div class="sp-wizard-layout-content">
+        <div class="sp-wizard-layout-body">
+          <div class="docs-wizard-step">
+            <p class="docs-wizard-step-title">Content for Step 1</p>
+            <p class="docs-wizard-step-note">Interactive configuration forms would go here.</p>
+          </div>
+        </div>
+        <div class="sp-wizard-layout-footer">
+          <button class="sp-button" type="button" data-variant="outline" disabled>Back</button>
+          <button class="sp-button" type="button">Next</button>
+        </div>
+      </div>
+      <button class="sp-dialog-close" type="button" aria-label="Close"></button>
+    </dialog>
+  </div>
+</section>
+
+<section class="docs-section">
+  <h2 class="docs-section-title">Wizard Layout (inline)</h2>
+  <div class="docs-preview">
+    <div class="sp-wizard-layout" data-mode="inline">
+      <div class="sp-wizard-layout-header">
+        <div class="sp-wizard-layout-header-inner">
+          <h3 class="sp-wizard-layout-title">Cloud Infrastructure Provisioning</h3>
+          <p class="sp-wizard-layout-description">Configure the networking and compute resources.</p>
+          <nav class="sp-steps" aria-label="Wizard progress">
+            <ol class="sp-steps-list">
+              <li class="sp-steps-step" data-status="active" aria-current="step">
+                <div class="sp-steps-indicator">1</div>
+                <div class="sp-steps-text">
+                  <span class="sp-steps-label">Region</span>
+                  <span class="sp-steps-description">Select datacenter</span>
+                </div>
+              </li>
+              <li class="sp-steps-step" data-status="upcoming">
+                <div class="sp-steps-indicator">2</div>
+                <div class="sp-steps-text">
+                  <span class="sp-steps-label">Compute</span>
+                  <span class="sp-steps-description">Instance sizing</span>
+                </div>
+              </li>
+              <li class="sp-steps-step" data-status="upcoming">
+                <div class="sp-steps-indicator">3</div>
+                <div class="sp-steps-text">
+                  <span class="sp-steps-label">Review</span>
+                  <span class="sp-steps-description">Confirm costs</span>
+                </div>
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+      <div class="sp-wizard-layout-content">
+        <div class="sp-wizard-layout-body">
+          <div class="docs-wizard-step">
+            <p class="docs-wizard-step-title">Content for Step 1</p>
+            <p class="docs-wizard-step-note">Interactive configuration forms would go here.</p>
+          </div>
+        </div>
+        <div class="sp-wizard-layout-footer">
+          <button class="sp-button" type="button" data-variant="outline" disabled>Back</button>
+          <button class="sp-button" type="button">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
