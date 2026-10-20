@@ -56,6 +56,12 @@ React source and examples. Both channels build from it.
   app that uses only those installs no `radix-ui`.
 - The package ships the stylesheets, fonts, React components, custom elements
   and `DESIGN.md`.
+- Styles have one owner per component. The all-in-one `sapphire.css` remains
+  available for standard consumers. Mixed npm/registry apps import shared
+  foundations (fonts, tokens, base and layout), then individual component CSS.
+  A vendored component supplies its own CSS; its package CSS and JavaScript
+  imports are removed. The full stylesheet is not supported in a mixed app.
+  Foundation and component entries preserve the same cascade layer order.
 
 **The registry is for owning.** An app that must change a component's
 structure vendors it and owns the copy from then on.
@@ -64,13 +70,18 @@ structure vendors it and owns the copy from then on.
   until each app moves.
 - Built by a pinned `shadcn build` and checked by `shadcn registry validate`.
   Each item declares its npm dependencies with versions from `package.json`.
-- A `registry:base` item adds the npm package, the stylesheet import, the fonts
+- A `registry:base` item adds the npm package, the foundations import, the fonts
   and the consumer skill, at the app's `.claude/skills/sapphire/`.
 - The blocks (sidebar, command, combobox, calendar, toaster, data table) are
   registry-only and may use Tailwind utilities for layout.
 
 **One component, one place.** In an app that installs the package and also
-vendors, a vendored component's package imports go. The consumer skill says so.
+vendors, a vendored component's package imports go, including its CSS. Registry
+items include their transitive component styles and declare compatibility with
+the shared foundations. The smoke test covers customized local CSS beside an
+npm component, both import orders and a compatible package update. The consumer
+skill states these rules. The stylesheet budget measures the full convenience
+entry so splitting delivery does not hide its cost.
 
 **Publishing is a tag, not a push.** `publish.yml` runs only on a `v*` tag,
 only after CI passes, to npm only, through npm's trusted publishing

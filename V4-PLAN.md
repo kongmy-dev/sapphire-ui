@@ -129,12 +129,17 @@ editorial React (30%).
 - **Fix defects as each component is touched.** The known defects below are work to close in the
   affected port, not requirements to reproduce a broken result. Shared CSS fixes reach HTML,
   React and custom elements. Behaviour fixes live in the relevant client and its tests.
-- **One component, one style owner.** Before P7 emits mixed npm/registry installations, settle
-  how a vendored component's CSS coexists with the package's full stylesheet. Removing its npm
-  JavaScript import alone is insufficient: both stylesheets can contain the same selectors.
-  Specify precedence, version compatibility and the effect of a package update on local styling.
-  P7's smoke must cover a customized vendored component beside an npm component, both import
-  orders and a package update. The delivery mechanism is still open; do not silently pick one.
+- **One component, one style owner: shared foundations plus per-component CSS.** The owner
+  selected shared fonts, tokens, base and layout, with each component's styles coming from its
+  package or its vendored copy, never both. Keep `sapphire.css` as the all-in-one convenience
+  entry. Mixed apps import a foundations entry and individual component stylesheets; a vendored
+  component brings its own CSS and removes that component's package CSS and JavaScript imports.
+  Importing the full stylesheet in a mixed app is unsupported because it restores duplicate
+  ownership. The registry base installs foundations; each item declares its transitive component
+  CSS requirements. All entries preserve the same layer order. Keep foundations compatible within
+  the v4 contract and declare the supported package range in registry metadata. P7's smoke covers
+  a customized vendored component beside an npm component, both import orders and a compatible
+  foundations/package update. The CSS budget still measures the full all-in-one entry.
 - **Custom-element parity includes behaviour.** P5 covers the six existing elements: analytics,
   banner, cookie banner, toast, site header and site footer. Test browser registration, safe
   server import, connection/disconnection/reconnection, supported attribute updates and public
@@ -437,7 +442,9 @@ and its React twin from the same example and compares their classes and data att
 six-element behaviour inventory and lifecycle, event and consent checks in §3 are required too;
 a markup match does not establish functional parity.
 
-**P6 — The package.** `tsc` compiles `components/`, `elements/`, `hooks/` and `lib/` file for file
+**P6 — The package.** Ship the all-in-one stylesheet, a shared foundations entry and individual
+component CSS entries from the same sources (§3); no component CSS is bundled into foundations.
+`tsc` compiles `components/`, `elements/`, `hooks/` and `lib/` file for file
 (ESM and `.d.ts`); `bun build` bundles the CSS. A generated `./*` pattern export that reaches each
 folder's entry file and nothing else, so importing an internal fails; enumerate every reachable
 subpath from the packed files and test that internals cannot be imported, including nested wildcard
@@ -454,10 +461,10 @@ onto the new components and may use Tailwind utilities for layout. A block using
 `lib/slot` as a registry file. `shadcn build` leaves a bare dependency name bare, so the generator
 writes each item's npm dependencies with versions from `package.json`. A `registry:base` item, with
 `"extends": "none"` and no `@sapphire/…` dependency, adds the npm package and the font at exact
-versions, both `@import` lines, and the consumer skill at `<app>/.claude/skills/sapphire/SKILL.md`.
+versions, the foundations stylesheet import, and the consumer skill at `<app>/.claude/skills/sapphire/SKILL.md`.
 Serve `/r/v4/`; freeze the current build at `/r/`. Smoke: the pinned real CLI runs `init` with the
 base, maps `@sapphire` in `components.json`, and installs button, dialog and sidebar into a
-temporary Vite app, which must typecheck and build. Resolve the style ownership decision in §3 and
+temporary Vite app, which must typecheck and build. Apply the style ownership decision in §3 and
 exercise a customized vendored component beside an npm component, both stylesheet import orders
 and a package update. The same install smoke targets production after deploy.
 
