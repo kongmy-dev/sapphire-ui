@@ -4,7 +4,7 @@
     "tooling/quality-metrics/metrics.ts",
     "css/tailwind.css",
     "sapphire.css",
-    "site/specimen.css",
+    "site/*.css",
     "css/*.examples.css",
     "components/*/*.examples.css",
     "playwright.visual.config.ts",

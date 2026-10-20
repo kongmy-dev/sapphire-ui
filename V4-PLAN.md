@@ -1,7 +1,8 @@
 # Sapphire UI v4 — plan
 
 **Status:** Implementation authorized through P11, with at most two GPT-6.1 Sol subagents.
-P0–P10 are complete. P11 migration tooling is complete; remote release validation is next.
+P8 is reopened: the owner rejected the deployed documentation layout after its left navigation was removed.
+P11 is held pending review of the restored navigation; migration tooling is complete.
 The v4-only visual suite passes 748 zero-tolerance cases; all 1,578 final browser checks pass
 with 161 discovered examples after retirement. The first push and automated documentation deployment
 are complete; remote browser/visual verification, the v4 tag and publication remain.
@@ -9,6 +10,16 @@ D5 retains button widths while reducing height and applies the approved targeted
 Delete this file when 4.0.0 ships.
 
 ### Current execution checkpoint
+
+- The deployed P8 rewrite incorrectly replaced the left sidebar with a flat catalogue and top links.
+  Restore a persistent navy sidebar with grouped component links, active-page indication, search,
+  theme switching and a keyboard-accessible mobile drawer. Keep the approved component polish.
+  Show the corrected local preview before another deployment; do not tag or publish while this
+  review is pending. Route and accessibility passes did not establish visual acceptance.
+  The corrected local candidate passes the integrated gate (915 tests) and all 36 site browser
+  checks across Chromium, Firefox and WebKit, including open-drawer accessibility. Desktop
+  light/dark and mobile visuals were inspected. Review: `http://localhost:4177/sidebar-review.html`;
+  interactive preview: `http://localhost:4179/components/button/`.
 
 - The owner approved a narrow Bun-only exception for CI `npm publish` so releases can use
   tokenless trusted publishing and provenance. All installs, builds, tests and other tooling
@@ -92,7 +103,7 @@ remain the acceptance criteria; retained v3 code does not count as a v4 implemen
 | P5 — elements | Complete: six native elements with passing lifecycle, SSR, equivalence, keyboard, accessibility and visual coverage |
 | P6 — package | Integrated: 156 generated exact exports, ESM/declarations, zero runtime dependencies, four optional peers and passing packed consumer smoke |
 | P7 — registry | Integrated: 33 v4 items, seven ported blocks, frozen legacy URLs and passing real CLI/mixed ownership smoke. Integrated gate and production build pass; deployed smoke remains P11 |
-| P8 — site | Source-generated pages and foundations guides pass route, accessibility, mobile overflow and token-build checks. Clean production build and deployment dry run pass; deployed smoke remains P11 |
+| P8 — site | Reopened after owner rejected missing left navigation. Sidebar restoration is under local browser and visual review; deployment is held pending the corrected preview decision |
 | P9 — retirement | Complete: v3 runtime/build removed, historical migration facts and legacy registry retained, interaction inventory preserved. Current size limits retained by owner approval; measured p95 is 4/34/211/5. Package dry run lists only allowed files, then stops for missing local publish credentials; packed consumer checks pass |
 | P10 — docs | Complete: CLAUDE is 84 lines, consumer skill 40 lines; consolidated guidance, docs and skill-reference gates pass. Release migration notes remain P11 |
 | P11 — release | Migration tooling, generated release maps, local gates and consumer smoke complete. Trusted publisher confirmed by owner. First push and automated Cloudflare deployment pass; remote browser/visual jobs, v4 tag, publication and published-package smoke remain |

@@ -97,13 +97,16 @@ test('desktop documentation keeps a persistent sidebar beside the active page', 
   if (!columns) throw new Error('Documentation columns must exist');
   expect(columns.sidebarRight).toBeLessThanOrEqual(columns.mainLeft);
   await expect(main).toBeVisible();
+  await page.getByRole('link', { name: 'Skip to content' }).focus();
+  const focusedSidebar = await sidebar.boundingBox();
+  expect(focusedSidebar?.x).toBe(0);
   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
   await expect(sidebar).toBeInViewport();
   const after = await sidebar.boundingBox();
   expect(after).not.toBeNull();
   if (!after)
     throw new Error('Sidebar must remain visible after content scroll');
-  expect(after.y).toBeGreaterThanOrEqual(0);
+  expect(Math.abs(after.y)).toBeLessThan(1);
   expect(after.x + after.width).toBe(columns.sidebarRight);
 });
 
@@ -193,6 +196,13 @@ test('mobile navigation supports keyboard dismissal and page navigation without 
   });
   await expect(close).toHaveAttribute('aria-expanded', 'true');
   await expect(sidebar).toBeInViewport();
+  expect(
+    (
+      await new AxeBuilder({ page })
+        .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+        .analyze()
+    ).violations,
+  ).toEqual([]);
   const search = page.getByLabel('Find a component', { exact: true });
   await search.focus();
   await page.keyboard.press('Escape');
