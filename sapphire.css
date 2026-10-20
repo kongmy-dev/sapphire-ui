@@ -20,6 +20,7 @@
 @import "./components/code-block/code-block.css";
 @import "./components/command-palette/command-palette.css";
 @import "./components/container/container.css";
+@import "./components/cookie-banner/cookie-banner.css";
 @import "./components/dialog/dialog.css";
 @import "./components/document/document.css";
 @import "./components/dropdown-menu/dropdown-menu.css";
@@ -27,6 +28,7 @@
 @import "./components/form-field/form-field.css";
 @import "./components/hover-card/hover-card.css";
 @import "./components/icon/icon.css";
+@import "./components/icon-mark/icon-mark.css";
 @import "./components/input/input.css";
 @import "./components/kbd/kbd.css";
 @import "./components/key-value-list/key-value-list.css";

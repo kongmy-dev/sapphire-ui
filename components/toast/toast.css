@@ -15,7 +15,6 @@
   .sp-toast {
     --sp-toast-max-width: calc(var(--space-1) * 95);
     --sp-toast-accent: var(--success-text);
-    --sp-toast-accent-width: var(--space-1);
     --sp-toast-transition: 300ms ease;
 
     display: flex;
@@ -29,7 +28,7 @@
     pointer-events: auto;
     background: var(--card);
     border: var(--border-width) solid var(--border);
-    border-left: var(--sp-toast-accent-width) solid var(--sp-toast-accent);
+    border-left: var(--space-1) solid var(--sp-toast-accent);
     border-radius: var(--radius-md);
     box-shadow: 0 var(--space-2) var(--space-8)
       color-mix(in srgb, var(--primary) 14%, transparent);

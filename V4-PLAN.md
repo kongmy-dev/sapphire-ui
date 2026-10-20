@@ -1,8 +1,25 @@
 # Sapphire UI v4 — plan
 
-**Status:** P3 in progress at `2e88221`; P0–P2 foundations are in place locally. No v4 React,
-custom-element or registry port has landed. D1: the CSS contract comes first. D2: npm to use,
-registry to own. D3: Lucide. D4: every component is ported. This file is deleted when 4.0.0 ships.
+**Status:** Implementation authorized through P11, phase by phase, with at most two GPT-6.1 Sol
+subagents. P0–P2 are in place. P3 ports and class/icon sweep have landed; integrated visual
+validation is running. P4–P11 remain pending. D1: CSS contract first. D2: npm to use, registry to
+own. D3: Lucide. D4: every component. D5: Tidy everywhere. Delete this file when 4.0.0 ships.
+
+### Current execution checkpoint
+
+- Shared foundations plus per-component stylesheet ownership is recorded in ADR-0002.
+- Active working rules now match v4: CSS classes/data attributes, generated subpaths, optional
+  behaviour peers and the preserved theme with tighter proportions.
+- Cookie-banner and icon-mark CSS, SVG specimen icons and exhaustive legacy-class coverage have
+  landed. Only the three `elements/*` documentation sections still use the reference renderer;
+  their takeover belongs to P5/P8. The v3 parity renderer remains until P9.
+- Integrated CSS measures **23,762 / 23,765 gzip bytes**. Removed unconsumed single-use toast and
+  keyboard-shadow variables; the ceiling is unchanged. The active gate passes **245 unit tests**.
+- Strict specimen accessibility passes **420/420** checks (70 pages, two schemes, three engines).
+  Integrated container visuals are running. P3 remains open until the visual changes are reviewed,
+  pins updated and the suite passes.
+- The visual runner now uses the host user and isolated writable dependencies,
+  avoiding recursive ownership changes and leaving existing caches alone.
 
 ## 1. Where it stands
 

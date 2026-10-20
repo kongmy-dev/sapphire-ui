@@ -5,7 +5,6 @@
     --sp-kbd-font-size: calc(var(--text-base) * 0.6875);
     --sp-kbd-line-height: var(--leading-normal);
     --sp-kbd-border-color: var(--border);
-    --sp-kbd-shadow: 0 var(--border-width) 0 0 var(--sp-kbd-border-color);
 
     display: inline-flex;
     align-items: center;
@@ -22,7 +21,7 @@
     border: var(--border-width) solid var(--sp-kbd-border-color);
     border-bottom-width: calc(var(--border-width) * 2);
     border-radius: var(--radius-sm);
-    box-shadow: var(--sp-kbd-shadow);
+    box-shadow: 0 var(--border-width) 0 0 var(--sp-kbd-border-color);
   }
 
   .sp-kbd[data-size="sm"] {

@@ -7,7 +7,7 @@
     --sp-button-font-size: var(--text-sm);
     --sp-button-font-weight: 600;
     --sp-button-line-height: var(--leading-normal);
-    --sp-button-spinner-size: calc(var(--space-1) * 4);
+    --sp-button-spinner-size: var(--space-4);
     --sp-button-bg: var(--primary);
     --sp-button-fg: var(--primary-foreground);
     --sp-button-border-width: 0;
@@ -166,7 +166,7 @@
     --sp-button-padding-inline: calc(var(--space-1) * 2.5);
     --sp-button-font-size: var(--text-xs);
     --sp-button-line-height: var(--space-4);
-    --sp-button-spinner-size: calc(var(--space-1) * 3);
+    --sp-button-spinner-size: var(--space-3);
   }
 
   .sp-button[data-size="sm"] {
@@ -181,7 +181,7 @@
     --sp-button-padding-inline: var(--space-8);
     --sp-button-font-size: var(--text-lg);
     --sp-button-line-height: calc(var(--space-1) * 7);
-    --sp-button-spinner-size: calc(var(--space-1) * 5);
+    --sp-button-spinner-size: var(--space-5);
   }
 
   .sp-button[data-size="xl"] {
@@ -190,7 +190,7 @@
     --sp-button-padding-inline: var(--space-10);
     --sp-button-font-size: calc(var(--text-base) * 1.25);
     --sp-button-line-height: calc(var(--space-1) * 7);
-    --sp-button-spinner-size: calc(var(--space-1) * 5);
+    --sp-button-spinner-size: var(--space-5);
   }
 
   .sp-button[data-size="icon-sm"] {
@@ -210,7 +210,7 @@
     --sp-button-padding-block: calc(var(--space-1) * 3.5);
     --sp-button-padding-inline: calc(var(--space-1) * 3.5);
     --sp-button-font-size: var(--text-base);
-    --sp-button-spinner-size: calc(var(--space-1) * 5);
+    --sp-button-spinner-size: var(--space-5);
   }
 
   @media (hover: hover) {
