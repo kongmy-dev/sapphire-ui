@@ -35,7 +35,15 @@ function notification(message: string, type: ToastType) {
   return toast;
 }
 
-function createToastElement() {
+type ToastConstructor = {
+  new (): HTMLElement & {
+    connectedCallback(): void;
+    disconnectedCallback(): void;
+    show(message: string, type?: ToastType, durationMs?: number): void;
+  };
+};
+
+function createToastElement(): ToastConstructor {
   return class ToastElement extends HTMLElement {
     static #owners = new Set<ToastElement>();
     static #previous: unknown;

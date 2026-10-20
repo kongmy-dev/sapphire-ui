@@ -39,7 +39,15 @@ function renderFooter(host: HTMLElement) {
     });
 }
 
-function createSiteFooterElement() {
+type SiteFooterConstructor = {
+  new (): HTMLElement & {
+    connectedCallback(): void;
+    attributeChangedCallback(): void;
+  };
+  observedAttributes: string[];
+};
+
+function createSiteFooterElement(): SiteFooterConstructor {
   return class SiteFooterElement extends HTMLElement {
     constructor() {
       super();

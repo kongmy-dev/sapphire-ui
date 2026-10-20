@@ -20,7 +20,18 @@ function persistBanner(host: HTMLElement, hidden: boolean) {
   }
 }
 
-function createBannerElement() {
+type BannerConstructor = {
+  new (): HTMLElement & {
+    connectedCallback(): void;
+    disconnectedCallback(): void;
+    attributeChangedCallback(name: string): void;
+    dismiss(): void;
+    show(): void;
+  };
+  observedAttributes: string[];
+};
+
+function createBannerElement(): BannerConstructor {
   return class BannerElement extends HTMLElement {
     constructor() {
       super();

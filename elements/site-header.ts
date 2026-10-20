@@ -42,7 +42,15 @@ function renderHeader(host: HTMLElement) {
   }
 }
 
-function createSiteHeaderElement() {
+type SiteHeaderConstructor = {
+  new (): HTMLElement & {
+    connectedCallback(): void;
+    attributeChangedCallback(): void;
+  };
+  observedAttributes: string[];
+};
+
+function createSiteHeaderElement(): SiteHeaderConstructor {
   return class SiteHeaderElement extends HTMLElement {
     constructor() {
       super();

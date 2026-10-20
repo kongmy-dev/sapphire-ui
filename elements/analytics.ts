@@ -1,6 +1,15 @@
 import { mountAnalytics } from '../lib/analytics.js';
 
-function createAnalyticsElement() {
+type AnalyticsConstructor = {
+  new (): HTMLElement & {
+    connectedCallback(): void;
+    disconnectedCallback(): void;
+    attributeChangedCallback(): void;
+  };
+  observedAttributes: string[];
+};
+
+function createAnalyticsElement(): AnalyticsConstructor {
   return class AnalyticsElement extends HTMLElement {
     static observedAttributes = [
       'ga-id',

@@ -57,7 +57,17 @@ function actionsOf(element: Element, choose: (analytics: boolean) => void) {
   return actions;
 }
 
-function createCookieBannerElement() {
+type CookieBannerConstructor = {
+  new (): HTMLElement & {
+    connectedCallback(): void;
+    disconnectedCallback(): void;
+    attributeChangedCallback(name: string): void;
+    open(): void;
+  };
+  observedAttributes: string[];
+};
+
+function createCookieBannerElement(): CookieBannerConstructor {
   return class CookieBannerElement extends HTMLElement {
     static observedAttributes = ['force-show', ...Object.keys(copy)];
     #container: HTMLElement | undefined;
