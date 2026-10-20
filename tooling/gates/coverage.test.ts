@@ -58,10 +58,14 @@ test('coverage enumerates examples and never silently drops unimported source', 
       'types.d.ts',
     ])
       writeFileSync(join(root, 'components/button', name), '');
+    mkdirSync(join(root, 'lib/slot-tests'), { recursive: true });
+    writeFileSync(join(root, 'lib/slot-tests/fixtures.tsx'), '');
+    writeFileSync(join(root, 'lib/slot.tsx'), '');
     expect(coverageFiles(root)).toEqual([
       'components/button/button.examples.tsx',
       FILE,
       'components/button/lost.ts',
+      'lib/slot.tsx',
     ]);
   } finally {
     rmSync(root, { recursive: true });

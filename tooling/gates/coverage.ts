@@ -7,7 +7,9 @@ type RecordCoverage = { file: string; lines: Counts; functions: Counts };
 const THRESHOLD = 95;
 const SOURCE_ROOTS = ['components', 'hooks', 'lib', 'elements'];
 const isProduction = (file: string) =>
-  /\.[cm]?tsx?$/.test(file) && !/\.(?:test|spec|d)\.[cm]?tsx?$/.test(file);
+  /\.[cm]?tsx?$/.test(file) &&
+  !file.split('/').some((part) => part.endsWith('-tests')) &&
+  !/\.(?:test|spec|d)\.[cm]?tsx?$/.test(file);
 
 export function coverageFiles(root: string): string[] {
   const walk = (directory: string): string[] =>
