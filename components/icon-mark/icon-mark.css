@@ -1,0 +1,36 @@
+@layer components {
+  .sp-icon-mark {
+    --sp-icon-mark-size: var(--space-10);
+    --sp-icon-mark-glyph-size: var(--space-6);
+
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: var(--sp-icon-mark-size);
+    height: var(--sp-icon-mark-size);
+    color: var(--foreground-strong);
+    background: var(--background);
+    border-radius: var(--radius-sm);
+  }
+
+  .sp-icon-mark > svg {
+    width: var(--sp-icon-mark-glyph-size);
+    height: var(--sp-icon-mark-glyph-size);
+  }
+
+  .sp-icon-mark[data-variant="on-dark"] {
+    color: var(--brand);
+    background: color-mix(in oklab, var(--white) 5%, transparent);
+  }
+
+  .sp-icon-mark[data-size="sm"] {
+    --sp-icon-mark-size: calc(var(--space-1) * 7);
+    --sp-icon-mark-glyph-size: var(--space-4);
+  }
+
+  .sp-icon-mark[data-size="lg"] {
+    --sp-icon-mark-size: calc(var(--space-1) * 14);
+    --sp-icon-mark-glyph-size: var(--space-8);
+  }
+}

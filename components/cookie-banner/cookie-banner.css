@@ -1,0 +1,69 @@
+@layer components {
+  .sp-cookie-banner {
+    position: fixed;
+    inset: auto 0 0;
+    z-index: 1000;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    align-items: center;
+    padding: var(--space-4);
+    color: var(--card-foreground);
+    background: var(--card);
+    border-top: var(--border-width) solid var(--border);
+  }
+
+  .sp-cookie-banner[hidden] {
+    display: none;
+  }
+
+  .sp-cookie-banner-content {
+    flex: 1 1 40ch;
+    max-width: 90ch;
+  }
+
+  .sp-cookie-banner-title {
+    margin: 0 0 var(--space-1);
+    font-family: var(--font-serif);
+    font-size: var(--text-lg);
+    color: var(--foreground-strong);
+  }
+
+  .sp-cookie-banner-description {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--muted-foreground);
+  }
+
+  .sp-cookie-banner-link {
+    color: var(--brand-text);
+    text-decoration: underline;
+    text-underline-offset: var(--space-1);
+    transition: none;
+  }
+
+  @media (hover: hover) {
+    .sp-cookie-banner-link:hover {
+      color: var(--foreground-strong);
+    }
+  }
+
+  .sp-cookie-banner-actions {
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    justify-content: flex-end;
+  }
+
+  .sp-cookie-banner-actions > .sp-button {
+    flex: 1 1 auto;
+    min-height: var(--space-10);
+  }
+
+  @media (min-width: 40rem) {
+    .sp-cookie-banner-actions {
+      flex: 0 1 auto;
+    }
+  }
+}

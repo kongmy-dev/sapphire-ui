@@ -1,0 +1,9 @@
+.docs-cookie-preview {
+  position: relative;
+  min-height: calc(var(--space-32) * 2);
+}
+
+.docs-cookie-preview .sp-cookie-banner {
+  position: absolute;
+  z-index: auto;
+}

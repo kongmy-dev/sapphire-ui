@@ -1,0 +1,17 @@
+.docs-icon-mark-sample {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  align-items: center;
+  font-size: var(--text-xs);
+}
+
+.docs-icon-mark-dark {
+  padding: var(--space-4);
+  border-radius: var(--radius-sm);
+}
+
+.docs-icon-mark-dark p {
+  margin-bottom: var(--space-2);
+  color: var(--on-dark-muted);
+}

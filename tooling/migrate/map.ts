@@ -154,6 +154,8 @@ export const utilityRenames = {
 } as const;
 
 export const classRenames = {
+  '.icon-mark': '.sp-icon-mark',
+  '.icon-mark-dark': '.sp-icon-mark[data-variant=on-dark]',
   '.btn': '.sp-button',
   '.btn-primary': '.sp-button',
   '.btn-outline': '.sp-button[data-variant=outline]',
@@ -380,6 +382,9 @@ export const unmappedClasses = {
 } as const;
 
 export const propValueRenames = {
+  IconMark: {
+    variant: { dark: 'on-dark' },
+  },
   Button: {
     variant: { accent: 'brand' },
   },
