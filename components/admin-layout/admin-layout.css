@@ -163,6 +163,7 @@
     display: none;
   }
 
+  .sp-admin-layout-link[data-collapsed],
   .sp-admin-layout-sidebar[data-collapsed] .sp-admin-layout-link {
     justify-content: center;
     padding-inline: 0;
