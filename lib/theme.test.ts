@@ -179,3 +179,13 @@ test('the startup script tolerates denied storage and still applies the system t
   expect(document.documentElement.dataset.theme).toBe('dark');
   expect(getThemePreference()).toBe('system');
 });
+
+test('uses an explicit fallback only when no valid preference has been applied or stored', () => {
+  expect(getThemePreference('dark')).toBe('dark');
+  localStorage.setItem('sapphire-theme', 'invalid');
+  expect(getThemePreference('light')).toBe('light');
+  localStorage.setItem('sapphire-theme', 'system');
+  expect(getThemePreference('dark')).toBe('system');
+  setTheme('light');
+  expect(getThemePreference('dark')).toBe('light');
+});

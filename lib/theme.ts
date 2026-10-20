@@ -13,11 +13,12 @@ const isPreference = (value: unknown): value is ThemePreference =>
 const preferenceOf = (value: unknown): ThemePreference =>
   isPreference(value) ? value : 'system';
 
-function storedPreference(): ThemePreference {
+function storedPreference(fallback: ThemePreference): ThemePreference {
   try {
-    return preferenceOf(window.localStorage.getItem(STORAGE_KEY));
+    const value: unknown = window.localStorage.getItem(STORAGE_KEY);
+    return isPreference(value) ? value : fallback;
   } catch {
-    return 'system';
+    return fallback;
   }
 }
 
@@ -30,10 +31,12 @@ export function resolveSystemTheme(): Theme {
   return mediaQuery()?.matches ? 'dark' : 'light';
 }
 
-export function getThemePreference(): ThemePreference {
-  if (!isBrowser()) return 'system';
+export function getThemePreference(
+  fallback: ThemePreference = 'system',
+): ThemePreference {
+  if (!isBrowser()) return fallback;
   const applied = document.documentElement.getAttribute(PREFERENCE_ATTRIBUTE);
-  return isPreference(applied) ? applied : storedPreference();
+  return isPreference(applied) ? applied : storedPreference(fallback);
 }
 
 export function getTheme(): Theme {

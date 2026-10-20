@@ -66,6 +66,30 @@
     align-items: center;
   }
 
+  .sp-site-header-link[data-variant="dark"] {
+    --sp-site-header-link-fg: var(--on-dark-muted);
+    --sp-site-header-link-fg-hover: var(--on-dark);
+    --sp-site-header-link-bg-hover: color-mix(
+      in oklab,
+      var(--white) 6%,
+      transparent
+    );
+    --sp-site-header-link-fg-active: var(--brand);
+    --sp-site-header-link-bg-active: color-mix(
+      in oklab,
+      var(--brand) 10%,
+      transparent
+    );
+  }
+
+  .sp-site-header-link[data-variant="light"] {
+    --sp-site-header-link-fg: var(--muted-foreground);
+    --sp-site-header-link-fg-hover: var(--foreground-strong);
+    --sp-site-header-link-bg-hover: var(--background);
+    --sp-site-header-link-fg-active: var(--foreground-strong);
+    --sp-site-header-link-bg-active: var(--background);
+  }
+
   .sp-site-header-link {
     padding: var(--space-2) var(--space-3);
     font-family: var(--font-sans);

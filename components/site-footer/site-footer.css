@@ -74,6 +74,16 @@
     gap: var(--space-2);
   }
 
+  .sp-site-footer-link[data-variant="dark"] {
+    --sp-site-footer-link-fg: var(--on-dark-muted);
+    --sp-site-footer-link-fg-hover: var(--on-dark);
+  }
+
+  .sp-site-footer-link[data-variant="light"] {
+    --sp-site-footer-link-fg: var(--muted-foreground);
+    --sp-site-footer-link-fg-hover: var(--foreground-strong);
+  }
+
   .sp-site-footer-link {
     font-family: var(--font-sans);
     font-size: var(--text-sm);
