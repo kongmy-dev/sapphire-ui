@@ -217,11 +217,11 @@ that separate related information without giving it hierarchy.
 
 - Cards start at `--space-5` inset. Disclosure rows start at `--space-3` vertical padding;
   chevrons use `--space-4`. Validate these starting points with real labels and content.
-- Default buttons and fields align at `--space-9`; compact and large variants remain
+- Default buttons and fields align at `calc(var(--space-1) * 9)` (36px); compact and large variants remain
   proportionate. Text-and-icon buttons, icon-only buttons, selects and grouped actions share
   alignment and icon scale. Do not shrink body text to create density.
 - Visible compact controls retain usable hit areas: on coarse pointers use at least
-  `--space-11` height and width where relevant. Whole disclosure rows remain operable.
+  `calc(var(--space-1) * 11)` (44px) height and width where relevant. Whole disclosure rows remain operable.
 - Check long labels, open/closed, hover, focus, disabled, loading and invalid states in both
   schemes. Keep error/help text close to its field and focus indicators unobscured.
 - Fix existing contrast, list-marker, spacing and keyboard defects in their owning component;

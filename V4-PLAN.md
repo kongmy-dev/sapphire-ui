@@ -54,19 +54,19 @@ v4 gate. The phase descriptions in §5 remain the acceptance criteria.
 - Container visual/parity tests and the registry consumer/CLI smoke were not rerun in this review.
   Committed pins and specs are evidence of coverage being present, not a fresh visual pass.
 
-### Remaining P3 work, in order
+### P3 completion checkpoint
 
-1. Port cookie-banner and icon-mark CSS and specimens, then finish the class sweep. The current
-   `tooling/migrate/classes.test.ts` checks only families already renamed; it does not yet enforce
-   an entry or an explicit reason for every class declared by `src/index.css`. Uncovered groups
-   include typography, tags, icon marks and state classes. Analytics, SEO head and theme provider
-   deliberately need no CSS, so the scorecard's 72 rows are not a CSS completion denominator.
-2. Port `sp-icon`, replace the specimens' remaining font glyphs and move the remaining reference
-   sections through the established pin review. Preserve the v3 renderer until P9 has pinned all
-   states currently covered only by parity specs.
-3. Rerun gate, strict specimen a11y and the container visual/parity suite before closing P3. The
-   268-byte budget margin must absorb the remaining CSS; exceeding it needs the owner's decision,
-   not a silent ceiling increase. Then begin P4 with button, card and dialog.
+1. Cookie-banner and icon-mark CSS and specimens are implemented. The class-map regression now
+   checks every class declared by `src/index.css`, including explicit reasons for unmapped classes.
+2. `sp-icon` and the Lucide specimen sweep are implemented. The current tree has 69 component
+   stylesheets and 70 specimen pages taking over 65 reference sections. Only the three `elements/*`
+   documentation sections await P5/P8. Preserve the v3 renderer until P9 covers every parity state.
+3. The gate passes 245 tests and strict specimen accessibility passes 420 checks. The full CSS is
+   23,762 bytes gzipped against the unchanged 23,765-byte ceiling. Reviewed glyph/proportion
+   changes are being pinned; the integrated container visual/parity suite must pass before P4.
+4. Docker's disk filled during validation. The runner now keeps dependencies and scratch files
+   in memory so validation can continue without clearing shared state. Persistent dependency
+   caching is prepared separately and awaits available disk space plus a cold/warm validation.
 
 The accessibility corrections already listed in the settled defaults remain open: tab-panel
 focus, keyboard access to bar-chart values, margin-note focus/overlap, toc truncation, prose
@@ -360,8 +360,8 @@ dimensions are starting points to validate per component, not a blanket replacem
 
 ## 5. Phases
 
-Each step is one commit and ends with `bun run gate` green. A move is pinned first, moved second and
-proved third.
+Each phase may span focused commits and closes with `bun run gate` green plus its required
+browser and smoke checks. A move is pinned first, moved second and proved third.
 
 **P0 — Make `master` safe, settle the unknowns, decide.**
 
