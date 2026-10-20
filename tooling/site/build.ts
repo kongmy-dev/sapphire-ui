@@ -57,8 +57,8 @@ writeFileSync(
   join(out, 'preview.html'),
   `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sapphire live example</title><script>document.documentElement.dataset.theme=new URLSearchParams(location.search).get('scheme')==='dark'?'dark':'light'</script><link rel="stylesheet" href="/assets/sapphire.css"><link rel="stylesheet" href="/assets/examples.css"></head><body data-example-root><main class="sp-page"><section id="example" class="sp-stack" aria-label="Component example"></section></main><script type="module">const native=new URLSearchParams(location.search).get('kind')==='native';await import(native?'/assets/elements-entry.js':'/assets/examples-entry.js');</script></body></html>`,
 );
-if (existsSync(join(root, 'public/r')))
-  cpSync(join(root, 'public/r'), join(out, 'r'), { recursive: true });
+if (existsSync(join(root, 'registry/legacy-r')))
+  cpSync(join(root, 'registry/legacy-r'), join(out, 'r'), { recursive: true });
 console.log(
   `Built ${new Set(react.map((row) => row.component)).size} React component pages and ${new Set(native.map((row) => row.component)).size} native pages in ${out}`,
 );

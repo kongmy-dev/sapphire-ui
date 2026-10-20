@@ -1,20 +1,31 @@
 # Sapphire UI v4 — plan
 
-**Status:** Implementation authorized through P11, phase by phase, with at most two GPT-6.1 Sol
-subagents. P0–P3 are complete. P4 is active: seed React clients and enforcement tooling first,
-then component families and the shared visual refinement pass. P5 native elements are in progress; P6 packaging preparation is isolated. P7–P11 remain pending. D1: CSS contract first. D2: npm to use, registry to
-own. D3: Lucide. D4: every component. D5: Tidy everywhere, retaining button widths while reducing height. Delete this file when 4.0.0 ships.
+**Status:** Implementation authorized through P11, with at most two GPT-6.1 Sol subagents.
+P0–P3 are complete. P4/P5 implementation and browser checks pass; final visual comparison is
+running. P6 is integrated and consumer-tested. P7 registry and P8 site are integrated with final
+wiring under validation. P9 retirement and P10 documentation are active; P11 release is pending.
+D5 retains button widths while reducing height and applies the approved targeted polish.
+Delete this file when 4.0.0 ships.
 
 ### Current execution checkpoint
 
-- P0–P3 are complete. All P4 React families, six hooks, app layouts and the shared visual
-  refinement are integrated. All six P5 native elements are integrated. Final visual pin and
-  complete browser validation keep P4/P5 open. P6 packaging and P7 registry preparation run in
-  isolated worktrees; they are not yet integrated or declared complete.
-- The complete quality gate passes **876 tests** and checks **168 runtime/example files** above
-  95% line/function coverage. Native accessibility/keyboard checks pass **48/48**; browser
-  class/data equivalence against the six React twins passes **36/36**, across all three engines.
-  The earlier integrated React/browser suite passed 1,521 checks; a fresh complete run is active.
+- The owner approved a narrow Bun-only exception for CI `npm publish` so releases can use
+  tokenless trusted publishing and provenance. All installs, builds, tests and other tooling
+  remain Bun. This exception does not authorize other npm commands.
+
+- All P4 React families, six hooks, app layouts and approved visual polish are integrated.
+  All six P5 native elements are integrated. The complete browser suite passes **1,605 checks**;
+  native accessibility/keyboard checks pass **48/48** and React/native class/data equivalence
+  passes **36/36**, across all three engines. A further **144** source-site and token-build
+  checks pass, including mobile overflow, keyboard skip links and every generated page route.
+- The integrated pre-registry gate passed **885 tests** and coverage for **168 runtime/example
+  files**. The new registry is undergoing the full integrated gate. The accepted visual update
+  passes **730 cases**; a clean comparison against those pins is running before P4/P5 close.
+- P6 ships 156 exact ESM/type/CSS subpaths, zero runtime dependencies and four optional peers.
+  Packed consumer checks pass for CSS-only, native SSR/registration, React without Radix and
+  Dialog consumers. P7 builds and validates 33 v4 registry items; real CLI init/add, consumer
+  type/build, both CSS import orders and compatible updates preserve vendored customization.
+  Thirty-five legacy registry assets are frozen byte-for-byte for the existing /r URLs.
 - D5 uses 36px default controls, tighter cards/disclosures/pages/documents and actual 44px coarse
   pointer targets. Button widths retain prior horizontal padding, icon widths and gaps, including
   large and icon-only sizes. Fine/coarse density checks pass in all three engines. A unitless-zero
@@ -27,8 +38,7 @@ own. D3: Lucide. D4: every component. D5: Tidy everywhere, retaining button widt
   over marginal byte savings; stop cosmetic micro-optimization while the guardrail passes.
   The current styling is within the approved ceiling.
 - Every former parity capture now compares against committed v4 state pins, preserving its
-  interactions and capture counts. The state inventory contains **870 pins**; final D5 updates
-  and native example pins are pending review. The reference renderer remains until P9.
+  interactions and capture counts. The state inventory contains **870 pins**; D5 and native pins are updated and representative card/button images reviewed. The reference renderer remains until P9.
 - `useLocalStorage` requires `(key, fallback, parse)`; the parser receives unknown JSON, throwing
   rejects it, and returning undefined is valid when included in T. SSR/initial hydration use the
   fallback; React value/updater setter semantics remain. Migration also records ThemeToggle.asChild
@@ -41,7 +51,7 @@ own. D3: Lucide. D4: every component. D5: Tidy everywhere, retaining button widt
   fallback, and analytics shares deduplicated SDK ownership between React and native elements;
   withdrawal disables collection but cannot revoke requests already dispatched.
 - Native tags, methods, events, slots and node identity are retained. Constructors are undefined
-  on server import and concrete classes in browsers; P6 declaration/package smoke must cover this
+  on server import and concrete classes in browsers; P6 declaration/package smoke covers this
   migration detail. Reconnect, storage dismissal, consent withdrawal, timers and toast bridge
   ownership are tested. Native examples are independently discovered for a11y and visual coverage.
 - Shared foundations plus per-component stylesheet ownership is recorded in ADR-0002. Package and
@@ -61,10 +71,12 @@ remain the acceptance criteria; retained v3 code does not count as a v4 implemen
 | P1 — gates and pins | Bun and devDependencies are pinned; Dependabot uses Bun. Strict `tsconfig.base.json`, Biome, knip, gate regression tests, scorecard and container pin tooling exist. `src/` remains frozen. The current gate passes; it measures the active lane rather than claiming the retained v3 debt is gone |
 | P2 — tokens | `css/tokens.css`, `css/tailwind.css` and `DESIGN.md` exist; token mappings and design tables are enforced. `tests/tokens.spec.ts` exercises source, Bun, Vite and Tailwind builds, nested scopes and overrides in three engines |
 | P3 — CSS contract | Complete: 69 component stylesheets, 70 plain-HTML specimen pages and 65 reference sections. The three elements documentation sections await P5/P8. The v3 parity renderer remains until P9 |
-| P4 — React | Active: all component families and app layouts are integrated; D5 refinement is implemented, with final visual validation pending. The current execution checkpoint gives integrated validation |
-| P5 — elements | Active: the six v4 custom elements and their lifecycle/equivalence checks have not been implemented |
-| P6–P7 — package and registry | Not started as v4 deliverables. `package.json` still exports the v3 package: 4 runtime dependencies, 21 required peers and 88 export entries. The existing registry check passes 34 v3 items; there is no v4 source `registry.json` or ported `blocks/` |
-| P8–P10 — site, retirement and docs | Public docs still build from `src/`. The React example runner, contract, coverage and boundary gates now support P4. The v4 docs site, old-lane retirement, API snapshot and docs/skill-reference gates remain pending. Only the stylesheet import list is currently registered with the generated-files gate |
+| P4 — React | All families, hooks and layouts integrated; approved D5 polish and browser checks pass. Final clean visual comparison is running |
+| P5 — elements | All six native elements implemented with lifecycle, SSR, equivalence, keyboard and accessibility coverage. Final clean visual comparison is running |
+| P6 — package | Integrated: 156 generated exact exports, ESM/declarations, zero runtime dependencies, four optional peers and passing packed consumer smoke |
+| P7 — registry | Integrated: 33 v4 items, seven ported blocks, frozen legacy URLs and passing real CLI/mixed ownership smoke. Integrated gate and production wiring remain |
+| P8 — site | Source-generated pages and foundations guides pass route, accessibility, mobile overflow and token-build checks. Final build/deployment wiring remains |
+| P9–P10 — retirement and docs | Active in isolated worktrees. Migration facts are independent of the old runtime; coverage preservation, old-lane removal and docs gates are in progress |
 | P11 — release | Pending. This review does not verify remote CI, npm configuration, installed consumers or production. Keep the first push, tag, deployment and production smoke in P11 |
 
 ### P3 completion checkpoint

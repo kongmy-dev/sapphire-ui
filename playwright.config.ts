@@ -21,6 +21,13 @@ export default defineConfig({
   },
   webServer: [
     {
+      command:
+        'bun tooling/site/build.ts && bun tooling/site/serve.ts dist-site 4178',
+      url: 'http://localhost:4178',
+      reuseExistingServer: false,
+      timeout: 60000,
+    },
+    {
       command: 'bun tooling/examples/server.ts',
       url: EXAMPLE_URL,
       reuseExistingServer: false,

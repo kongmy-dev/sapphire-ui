@@ -464,7 +464,11 @@
     "generate:package": "bun tooling/package/generate.ts",
     "api-check": "bun tooling/package/api.ts",
     "api:snapshot": "bun tooling/package/api.ts --write",
-    "test:package": "bun tooling/package/smoke.ts"
+    "test:package": "bun tooling/package/smoke.ts",
+    "generate:registry": "bun tooling/registry/generate.ts",
+    "build:registry:v4": "bun tooling/registry/build.ts",
+    "check:registry:v4": "bun tooling/registry/check.ts",
+    "smoke:registry:v4": "bun tooling/registry/smoke.ts"
   },
   "peerDependencies": {
     "react": "^19.0.0",
@@ -545,6 +549,7 @@
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "js-cookie": "3.0.8",
-    "tailwind-merge": "3.6.0"
+    "tailwind-merge": "3.6.0",
+    "shadcn": "4.22.0"
   }
 }

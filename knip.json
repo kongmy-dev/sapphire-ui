@@ -21,11 +21,11 @@
     "elements/*.examples.ts",
     "tooling/examples/element-browser.ts",
     "tooling/examples/equivalence.tsx",
-    "tooling/site/build.ts",
-    "tooling/site/serve.ts",
-    "site/client.ts"
+    "site/client.ts",
+    "blocks/*/*.tsx",
+    "blocks/*/*.css"
   ],
   "project": ["**/*.{ts,tsx,css}"],
   "ignoreUnresolved": ["^@/components/ui/"],
-  "ignoreDependencies": ["^@fontsource-variable/"]
+  "ignoreDependencies": ["^@fontsource-variable/", "shadcn"]
 }
