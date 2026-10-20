@@ -25,60 +25,21 @@ jobs:
         uses: actions/cache@v5
         with:
           path: ~/.bun/install/cache
-          # smoke-registry.ts is in the key so the packages only IT pulls
-          # (shadcn CLI, consumer scaffold deps) get saved into the cache —
-          # bun.lock alone wouldn't re-save when the smoke scaffold changes.
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock', 'scripts/smoke-registry.ts') }}
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock', 'tooling/registry/smoke.ts') }}
           restore-keys: |
             ${{ runner.os }}-bun-
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Lint
-        run: bun run lint
+      - name: Quality gates
+        run: bun run gate
 
-      - name: Type check
-        run: bun run typecheck
+      - name: Package and registry consumer smokes
+        run: bun tooling/package/release-smoke.ts
 
-      - name: Unused code and dependencies
-        run: bun run knip
-
-      - name: Comment gate
-        run: bun run comment-check
-
-      - name: Size gate
-        run: bun run size-check
-
-      - name: Dependency gate
-        run: bun run dep-check
-
-      - name: Token gate
-        run: bun run token-check
-
-      - name: Budget gate
-        run: bun run budget-check
-
-      - name: Generated-files gate
-        run: bun run generated-check
-
-      - name: Freeze gate
-        run: bun run freeze-check
-
-      - name: Build
-        run: bun run build
-
-      - name: Unit tests
-        run: bun run test
-
-      - name: Registry self-containment check
-        run: bun run check:registry
-
-      - name: Registry consumer test (vendor + typecheck + build)
-        run: bun run test:registry
-
-      - name: Registry smoke test (real shadcn add against local build)
-        run: bun run smoke:registry
+      - name: Build production documentation
+        run: bun run build:docs
 
   a11y:
     runs-on: ubuntu-latest

@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   ci:
-    uses: ./.github/workflows/ci.yml
+    uses: ./.github/workflows/ci.yaml
 
   publish:
     needs: ci
@@ -37,7 +37,7 @@ jobs:
 
       - run: bun run build
 
-      - run: npm publish --ignore-scripts
+      - run: npm publish --ignore-scripts --provenance --access public
 
       - name: Create GitHub release
         env:

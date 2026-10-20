@@ -17,6 +17,18 @@ const plainTextNotFound = () =>
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const response = await env.ASSETS.fetch(request);
-    return isHtmlFallback(response) ? plainTextNotFound() : response;
+    if (isHtmlFallback(response) || response.status === 404)
+      return plainTextNotFound();
+    const headers = new Headers(response.headers);
+    headers.set('access-control-allow-origin', '*');
+    headers.set(
+      'cache-control',
+      'public, max-age=300, stale-while-revalidate=3600',
+    );
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers,
+    });
   },
 };

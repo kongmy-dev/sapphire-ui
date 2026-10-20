@@ -530,8 +530,12 @@ its npm import and its HTML snippet, plus pages for tokens, layout and prose. It
 **P9 — Retire the old lane.** Delete `src/`, the library Vite config, `vite-plugin-dts`, the CJS
 build, the hand-written exports map, the freeze gate,
 `.husky/`, `.lintstagedrc.json`, `design/` and the two unrelated skills under `.agents/`. Set the
-size limits to the new tree's own p95, lowered only from then on, and rewrite
-`.quality-baseline.json`. `bun publish --dry-run` lists only `dist/`, `README.md`, `DESIGN.md` and
+size measurements to the new tree's p95 and rewrite
+`.quality-baseline.json`. The owner approved retaining the current enforced limits
+(cognitive complexity 7, function length 89, file length 474, nesting 5). The new tree's measured
+p95 is recorded for visibility; it is not a new blanket threshold. Literal enforcement would
+create 96 function-length and 74 complexity findings (overlapping), requiring broad refactoring
+solely for metrics. Existing limits remain enforced and cannot be raised. `bun publish --dry-run` lists only `dist/`, `README.md`, `DESIGN.md` and
 `LICENSE`. Every `tests/visual/*-parity.spec.ts` reads the v3 docs, so before deleting `src/` P9
 gives each state they compare a pin of its own through `bun run pin` (the open dialog and overlays,
 hover and focus, and each component no v3 pin covered), then deletes them.

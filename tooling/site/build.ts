@@ -3,6 +3,7 @@ import { join, resolve } from 'node:path';
 import { buildExamples } from '../examples/build';
 import { readExamples } from '../examples/catalog';
 import { readElementExamples } from '../examples/elements';
+import { buildRegistry } from '../registry/build';
 import { foundationGuides } from './foundations';
 import { catalogPage, code, componentPage, page } from './render';
 
@@ -59,6 +60,8 @@ writeFileSync(
 );
 if (existsSync(join(root, 'registry/legacy-r')))
   cpSync(join(root, 'registry/legacy-r'), join(out, 'r'), { recursive: true });
+cpSync(join(root, 'public/_headers'), join(out, '_headers'));
+if (process.argv.includes('--registry')) buildRegistry(root, join(out, 'r/v4'));
 console.log(
   `Built ${new Set(react.map((row) => row.component)).size} React component pages and ${new Set(native.map((row) => row.component)).size} native pages in ${out}`,
 );
