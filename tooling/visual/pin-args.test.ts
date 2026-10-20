@@ -33,6 +33,14 @@ describe('pin title matching', () => {
   const matches = (examples: string[], title: string) =>
     new RegExp(titleGrep(examples)).test(title);
 
+  it('captures parity state baselines without selecting ordinary examples', () => {
+    expect(matches(['parity-states'], 'forms-parity/input')).toBe(true);
+    expect(matches(['parity-states'], 'data parity: focused avatar')).toBe(
+      true,
+    );
+    expect(matches(['parity-states'], 'react/button/variants')).toBe(false);
+  });
+
   it('matches the named examples at the end of the full title', () => {
     const grep = ['buttons/variants', 'data/progress'];
     expect(matches(grep, 'pins.spec.ts buttons/variants')).toBe(true);

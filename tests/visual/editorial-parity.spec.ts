@@ -2,6 +2,7 @@ import { writeFile } from 'node:fs/promises';
 import type { Locator, Page, TestInfo } from '@playwright/test';
 import { SCHEMES } from '../../tooling/source/token-values';
 import { specimenUrl } from '../../tooling/visual/specimens';
+import { captureState } from './capture-state';
 import {
   BODY_ONLY_CALLOUT_PROBES,
   CALLOUT_LIST,
@@ -584,7 +585,7 @@ async function observe(
   return {
     styles: await readProbes(root, resolved(item.probes, side)),
     reached: await reached(target, item.interaction),
-    pixels: await root.screenshot({ animations: 'disabled', caret: 'hide' }),
+    pixels: await captureState(root, { animations: 'disabled', caret: 'hide' }),
   };
 }
 

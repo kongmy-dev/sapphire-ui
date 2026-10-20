@@ -182,6 +182,7 @@ export const ROUTES: readonly RouteExamples[] = [
 ];
 
 export const exampleNames = (): string[] => [
+  'parity-states',
   ...readVisualExamples(process.cwd()).map(({ name }) => name),
   ...ROUTES.flatMap((route) =>
     route.pinned.map((slug) => `${route.name}/${slug}`),

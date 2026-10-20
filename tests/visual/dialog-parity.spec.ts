@@ -2,6 +2,7 @@ import { writeFile } from 'node:fs/promises';
 import type { Locator, Page, TestInfo } from '@playwright/test';
 import { SCHEMES } from '../../tooling/source/token-values';
 import { specimenUrl } from '../../tooling/visual/specimens';
+import { captureState } from './capture-state';
 import { expect, test } from './fixtures';
 
 const SPECIMEN = 'components/dialog/dialog.examples.html';
@@ -75,7 +76,7 @@ const shadowGeometry = (shadow: string): string[] =>
     .filter((part) => part !== '' && !NO_SHADOW.test(part));
 
 async function capture(page: Page, panel: Locator, box: Box) {
-  return page.screenshot({
+  return captureState(page, {
     clip: {
       x: box.x + CORNER_PX,
       y: box.y + CORNER_PX,

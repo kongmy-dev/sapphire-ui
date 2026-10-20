@@ -2,6 +2,7 @@ import { writeFile } from 'node:fs/promises';
 import type { Page, TestInfo } from '@playwright/test';
 import { SCHEMES } from '../../tooling/source/token-values';
 import { specimenUrl } from '../../tooling/visual/specimens';
+import { captureState } from './capture-state';
 import {
   GROUPS,
   HOLDER,
@@ -166,7 +167,7 @@ async function observe(
     focusVisible: await target.evaluate((element) =>
       element.matches(':focus-visible'),
     ),
-    pixels: await page.locator(HOLDER).screenshot({
+    pixels: await captureState(page.locator(HOLDER), {
       animations: 'disabled',
       caret: 'hide',
     }),

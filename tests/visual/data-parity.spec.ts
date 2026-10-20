@@ -153,8 +153,14 @@ for (const state of CASES) {
     );
     await interact(page, state.v4(page), state.interaction);
     const v4 = await observe(state.v4(page));
+    await captureState(state.v4(page), {
+      animations: 'disabled',
+      caret: 'hide',
+    });
 
     expect(v4).toEqual(v3);
     if (state.interaction === 'focus') expect(v4.focusVisible).toBe(true);
   });
 }
+
+import { captureState } from './capture-state';

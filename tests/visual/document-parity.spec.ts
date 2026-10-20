@@ -2,6 +2,7 @@ import { writeFile } from 'node:fs/promises';
 import type { Locator, Page, TestInfo } from '@playwright/test';
 import { SCHEMES, type Scheme } from '../../tooling/source/token-values';
 import { specimenUrl } from '../../tooling/visual/specimens';
+import { captureState } from './capture-state';
 import { expect, test } from './fixtures';
 
 const V3_PAGE = '/extended';
@@ -625,7 +626,7 @@ async function observe(
   const probes = await readProbes(page, selectors, fixture.only ?? {});
   const holder = page.locator(HOLDER);
   const box = await holder.boundingBox();
-  const pixels = await holder.screenshot({
+  const pixels = await captureState(holder, {
     animations: 'disabled',
     caret: 'hide',
   });

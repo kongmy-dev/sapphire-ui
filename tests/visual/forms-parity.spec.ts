@@ -2,6 +2,7 @@ import { writeFile } from 'node:fs/promises';
 import type { Page, TestInfo } from '@playwright/test';
 import { SCHEMES } from '../../tooling/source/token-values';
 import { specimenUrl } from '../../tooling/visual/specimens';
+import { captureState } from './capture-state';
 import { expect, test } from './fixtures';
 
 const SPECIMEN = 'components/input/input.examples.html';
@@ -363,7 +364,7 @@ async function observe(
   const holder = page.locator('#parity');
   const read = await readStyle(page);
   const box = await holder.boundingBox();
-  const pixels = await holder.screenshot({
+  const pixels = await captureState(holder, {
     animations: 'disabled',
     caret: 'hide',
   });

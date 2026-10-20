@@ -2,6 +2,7 @@ import { writeFile } from 'node:fs/promises';
 import type { Locator, Page, TestInfo } from '@playwright/test';
 import { SCHEMES, type Scheme } from '../../tooling/source/token-values';
 import { specimenUrl } from '../../tooling/visual/specimens';
+import { captureState } from './capture-state';
 import { expect, test } from './fixtures';
 
 const GROUPS = ['alert', 'toast', 'empty'] as const;
@@ -273,7 +274,7 @@ async function observe(
     if (element instanceof HTMLElement)
       element.style.setProperty('box-shadow', 'none', 'important');
   });
-  const pixels = await panel.screenshot({
+  const pixels = await captureState(panel, {
     animations: 'disabled',
     caret: 'hide',
   });

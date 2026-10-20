@@ -2,6 +2,7 @@ import { writeFile } from 'node:fs/promises';
 import type { Locator, Page, TestInfo } from '@playwright/test';
 import { SCHEMES } from '../../tooling/source/token-values';
 import { specimenUrl } from '../../tooling/visual/specimens';
+import { captureState } from './capture-state';
 import { expect, test } from './fixtures';
 
 const SPECIMEN = 'components/select/select.examples.html';
@@ -156,7 +157,10 @@ async function observe(panel: Locator): Promise<Observed> {
     tree: await readTree(panel),
     highlighted: highlighted.join('|'),
     shadow: shadowGeometry(shadow),
-    pixels: await panel.screenshot({ animations: 'disabled', caret: 'hide' }),
+    pixels: await captureState(panel, {
+      animations: 'disabled',
+      caret: 'hide',
+    }),
   };
 }
 

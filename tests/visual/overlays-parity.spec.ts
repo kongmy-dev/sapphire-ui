@@ -2,6 +2,7 @@ import { writeFile } from 'node:fs/promises';
 import type { Locator, Page, TestInfo } from '@playwright/test';
 import type { Scheme } from '../../tooling/source/token-values';
 import { specimenUrl } from '../../tooling/visual/specimens';
+import { captureState } from './capture-state';
 import { expect, test } from './fixtures';
 import {
   CASES,
@@ -295,7 +296,7 @@ async function observe(
     tree: await readTree(copy),
     shadow: shadowGeometry(shadow),
     overlay,
-    pixels: await copy.screenshot({ animations: 'disabled', caret: 'hide' }),
+    pixels: await captureState(copy, { animations: 'disabled', caret: 'hide' }),
   };
 }
 

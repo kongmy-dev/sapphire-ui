@@ -21,4 +21,8 @@ export function parseExamples(
 }
 
 export const titleGrep = (examples: readonly string[]): string =>
-  `(?:^| )(?:${examples.map(escapeRegExp).join('|')})$`;
+  examples
+    .map((name) =>
+      name === 'parity-states' ? 'parity' : `(?:^| )${escapeRegExp(name)}$`,
+    )
+    .join('|');

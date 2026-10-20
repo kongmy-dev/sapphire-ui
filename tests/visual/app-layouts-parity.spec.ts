@@ -3,6 +3,7 @@ import type { Locator, Page, TestInfo } from '@playwright/test';
 import { SCHEMES, type Scheme } from '../../tooling/source/token-values';
 import { specimenUrl } from '../../tooling/visual/specimens';
 import { GATE_CASES, type GateCase } from './app-layouts-pairs';
+import { captureState } from './capture-state';
 import { expect, test } from './fixtures';
 
 const V3_PAGE = '/layouts';
@@ -237,7 +238,7 @@ const readStyles = (target: Locator): Promise<Style[]> =>
   );
 
 const shoot = (target: Locator) =>
-  target.screenshot({ animations: 'disabled', caret: 'hide' });
+  captureState(target, { animations: 'disabled', caret: 'hide' });
 
 async function capture(target: Locator): Promise<Capture> {
   return { styles: await readStyles(target), pixels: await shoot(target) };
@@ -399,7 +400,7 @@ async function observeDialog(page: Page, panel: Locator, overlay: Locator) {
   const focus = await page.evaluate(
     () => document.activeElement?.textContent?.trim() ?? '',
   );
-  const pixels = await page.screenshot({
+  const pixels = await captureState(page, {
     clip: {
       x: box.x + CORNER_PX,
       y: box.y + CORNER_PX,
@@ -617,6 +618,7 @@ for (const width of [NARROW, 700, WIDE]) {
     );
     await open(page, specimenUrl(TABS, scheme), scheme);
     const v4 = await readTabs(page.locator('.sp-vertical-tabs-layout'));
+    await shoot(page.locator('.sp-vertical-tabs-layout'));
     expect(v4).toEqual(v3);
   });
 }

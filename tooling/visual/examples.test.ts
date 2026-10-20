@@ -33,12 +33,15 @@ describe('example manifest', () => {
     const names = exampleNames();
     expect(new Set(names).size).toBe(names.length);
     expect(names).toContain('buttons/variants');
+    expect(names).toContain('parity-states');
     expect(
-      names.every((name) =>
-        /^(?:[a-z]+\/[a-z0-9-]+|react\/[a-z0-9-]+\/[a-z0-9-]+(?:\/open)?)$/.test(
-          name,
+      names
+        .filter((name) => name !== 'parity-states')
+        .every((name) =>
+          /^(?:[a-z]+\/[a-z0-9-]+|react\/[a-z0-9-]+\/[a-z0-9-]+(?:\/open)?)$/.test(
+            name,
+          ),
         ),
-      ),
     ).toBe(true);
   });
 

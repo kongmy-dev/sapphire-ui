@@ -15,6 +15,7 @@ import {
   SHELL_PARTS,
   WIDE,
 } from './admin-shell-pairs';
+import { captureState } from './capture-state';
 import { expect, test } from './fixtures';
 
 const V3_PAGE = '/layouts';
@@ -263,7 +264,7 @@ const readStyles = (target: Locator, deep: boolean): Promise<Style[]> =>
 
 async function shoot(target: Locator, part: Part): Promise<Buffer | null> {
   if (part.pixels === false || !(await target.isVisible())) return null;
-  return target.screenshot({ animations: 'disabled', caret: 'hide' });
+  return captureState(target, { animations: 'disabled', caret: 'hide' });
 }
 
 async function capture(target: Locator, part: Part): Promise<Capture> {

@@ -2,6 +2,7 @@ import { writeFile } from 'node:fs/promises';
 import type { Locator, Page, TestInfo } from '@playwright/test';
 import { SCHEMES, type Scheme } from '../../tooling/source/token-values';
 import { specimenUrl } from '../../tooling/visual/specimens';
+import { captureState } from './capture-state';
 import { expect, test } from './fixtures';
 import {
   CASES,
@@ -255,7 +256,7 @@ const readStyles = (target: Locator, deep: boolean): Promise<Style[]> =>
   );
 
 const shoot = (target: Locator) =>
-  target.screenshot({ animations: 'disabled', caret: 'hide' });
+  captureState(target, { animations: 'disabled', caret: 'hide' });
 
 async function capture(target: Locator, deep: boolean): Promise<Capture> {
   return {

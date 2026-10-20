@@ -12,18 +12,19 @@ own. D3: Lucide. D4: every component. D5: Tidy everywhere. Delete this file when
   behaviour peers and the preserved theme with tighter proportions.
 - P4 now includes forms, feedback, data views, editorial components, overlays, page navigation,
   theme controls, proposal/wizard/passphrase layouts, consent banners, SEO and analytics, plus
-  all six hooks and the theme helper. Split/Admin and native vertical-tabs examples are being
-  completed. Independently discovered examples feed browser checks; coverage, boundary and
-  typed CSS-contract gates are active. The last complete passing gate had **794 tests** and
-  **133 runtime/example files** above 95% line/function coverage. The next integrated run passed
-  823 tests with one manifest test corrected afterward; two type-only files need consolidation
-  before its coverage gate closes. P4 is open.
+  all six hooks and the theme helper. Split/Admin and native vertical-tabs ports are ready for
+  integration. Independently discovered examples feed browser checks; coverage, boundary and
+  typed CSS-contract gates are active. The current complete gate passes **825 tests** and checks **149 runtime/example files**
+  above 95% line/function coverage. Overlapping modal isolation now retains background inertness
+  until the last owner closes. P4 is open.
 - Navigation checks pass 48/48, composed settings/reading and mobile navigation pass 24/24,
   document/SEO/wizard checks pass 42/42, and open dropdown isolation passes 12/12 across three
   engines. A new full run remains necessary, including the known semantic status contrast fixes.
 - The React capture now has **322 pins**, including 232 newly reviewed light/dark captures and
-  open mobile-menu, dropdown and command-palette states. Existing v3-only comparison states are
-  being saved as zero-tolerance v4 pins before the D5 visual pass supersedes their old appearance.
+  open mobile-menu, dropdown and command-palette states. Existing comparison states now have **856 additional zero-tolerance v4 pins**. The capture
+  run passes 216/226 tests; ten stale v3 comparisons reflect already-fixed prose flow/markers,
+  margin-note layout, toc display and mobile-nav contrast. Reviewed v4 state pins retain these
+  states while the D5 pass replaces obsolete appearance comparisons and preserves interactions.
 - The first full run with the 90 initial React pins passed 498/502 visual/parity checks. Its four
   failures exposed minifier rounding of inlined popover/hover-card line-height calculations.
   Restoring those calculations to custom properties preserves fractional precision; the targeted
@@ -47,8 +48,7 @@ own. D3: Lucide. D4: every component. D5: Tidy everywhere. Delete this file when
   pass with 100% line/function coverage across the two clients, examples and consent helper.
   The full React browser run passed 673 checks; follow-up checks verify prose markers, callout
   link underlines, radios and scroll areas in all three engines. Status contrast and the newly
-  integrated app/layout families still require validation. The full gate currently reports
-  typed CSS-contract gaps in the data/editorial ports; these remain assigned for correction.
+  integrated app/layout families still require validation. The typed CSS-contract ownership gaps in data/editorial ports are resolved.
 - Consent uses native `document.cookie`, as planned, with validated legacy/current values,
   host-only cookies outside the shared brand domain, session fallback when writes are denied,
   and cancellation of stale deferred tracker choices. The synchronous public API requires a
