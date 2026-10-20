@@ -5,8 +5,6 @@ import { cn } from '../classes.js';
 
 const SIDEBAR_COOKIE_NAME = 'sidebar_state';
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
-const SIDEBAR_WIDTH = 'calc(var(--space-1) * 64)';
-const SIDEBAR_WIDTH_ICON = 'calc(var(--space-1) * 12)';
 const SIDEBAR_KEYBOARD_SHORTCUT = 'b';
 type SidebarContextProps = {
   state: 'expanded' | 'collapsed';
@@ -87,19 +85,14 @@ function SidebarProvider({
     }),
     [state, open, setOpen, isMobile, openMobile, toggleSidebar],
   );
-  const sidebarStyle = {
-    '--sidebar-width': SIDEBAR_WIDTH,
-    '--sidebar-width-icon': SIDEBAR_WIDTH_ICON,
-    ...style,
-  };
   return (
     <SidebarContext.Provider value={contextValue}>
       <TooltipProvider delayDuration={0}>
         <div
           data-slot="sidebar-wrapper"
-          style={sidebarStyle}
+          style={style}
           className={cn(
-            'group/sidebar-wrapper flex min-h-svh w-full has-data-[variant=inset]:bg-sidebar',
+            'sp-sidebar-wrapper group/sidebar-wrapper flex min-h-svh w-full has-data-[variant=inset]:bg-sidebar',
             className,
           )}
           {...props}

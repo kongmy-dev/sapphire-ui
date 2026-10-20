@@ -11,7 +11,7 @@
           "target": "~/.claude/skills/sapphire/SKILL.md"
         }
       ],
-      "dependencies": ["@kongmy-dev/sapphire-ui@3.0.2"],
+      "dependencies": ["@kongmy-dev/sapphire-ui@4.0.0"],
       "registryDependencies": [],
       "css": {
         "@import \"@kongmy-dev/sapphire-ui/foundations.css\"": {}
@@ -682,7 +682,7 @@
           "target": "@ui/sonner.tsx"
         }
       ],
-      "dependencies": ["sonner@2.0.8"],
+      "dependencies": ["react@19.2.7", "sonner@2.0.8"],
       "registryDependencies": [],
       "meta": {
         "foundations": "^4.0.0",
@@ -791,6 +791,11 @@
           "path": "lib/slot.tsx",
           "type": "registry:component",
           "target": "@lib/sapphire/slot.tsx"
+        },
+        {
+          "path": "blocks/sidebar/sidebar.css",
+          "type": "registry:file",
+          "target": "@ui/sidebar.css"
         }
       ],
       "dependencies": ["lucide-react@1.55.0", "react@19.2.7"],
@@ -802,6 +807,9 @@
         "@sapphire/skeleton",
         "@sapphire/tooltip"
       ],
+      "css": {
+        "@import \"@/components/ui/sidebar.css\"": {}
+      },
       "meta": {
         "foundations": "^4.0.0",
         "cssOwner": "sidebar"
@@ -824,7 +832,8 @@
       ],
       "dependencies": [
         "@radix-ui/react-icons@1.3.2",
-        "@tanstack/react-table@8.21.3"
+        "@tanstack/react-table@8.21.3",
+        "react@19.2.7"
       ],
       "registryDependencies": ["@sapphire/button", "@sapphire/dropdown-menu"],
       "meta": {
@@ -844,7 +853,8 @@
       ],
       "dependencies": [
         "@radix-ui/react-icons@1.3.2",
-        "@tanstack/react-table@8.21.3"
+        "@tanstack/react-table@8.21.3",
+        "react@19.2.7"
       ],
       "registryDependencies": ["@sapphire/button", "@sapphire/dropdown-menu"],
       "meta": {

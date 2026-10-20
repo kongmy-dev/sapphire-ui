@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "native-select",
+  "type": "registry:ui",
+  "title": "Native Select",
+  "description": "Styled native <select>.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://design.kongmy.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "ui/native-select.tsx",
+      "content": "import { cva, type VariantProps } from 'class-variance-authority';\nimport { forwardRef, type ReactNode, type SelectHTMLAttributes } from 'react';\nimport { cn } from '@/lib/utils';\n\nconst nativeSelectVariants = cva(\n  'w-full cursor-pointer appearance-none pr-10 font-sans outline-none transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50',\n  {\n    variants: {\n      variant: {\n        default:\n          'rounded-btn border border-border bg-card text-foreground focus:border-accent focus:shadow-[0_0_0_3px] focus:shadow-accent/12',\n        dark: 'rounded-sm border border-border-dark bg-black/20 text-text-on-dark focus:border-accent [&>option]:bg-primary [&>option]:text-text-on-dark',\n      },\n      size: {\n        sm: 'px-3 py-2 text-sm',\n        default: 'px-4 py-3 text-base',\n        lg: 'px-5 py-4 text-lg',\n      },\n    },\n    defaultVariants: {\n      variant: 'default',\n      size: 'default',\n    },\n  },\n);\n\nexport interface NativeSelectProps\n  extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'size'>,\n    VariantProps<typeof nativeSelectVariants> {\n  children: ReactNode;\n}\n\n/**\n * Styled native <select>. Prefer this over the Radix Select for plain\n * forms and mobile — the OS picker is the best touch experience.\n *\n * Breaking change in 2.0: the default variant is now 'default' (light\n * surface) to match Input/Textarea. Pass variant=\"dark\" explicitly for\n * navy surfaces.\n */\nconst NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(\n  ({ className, variant, size, children, disabled, ...props }, ref) => {\n    return (\n      <div className=\"relative\">\n        <select\n          ref={ref}\n          disabled={disabled}\n          className={cn(nativeSelectVariants({ variant, size }), className)}\n          {...props}\n        >\n          {children}\n        </select>\n        <svg\n          aria-hidden=\"true\"\n          viewBox=\"0 0 16 16\"\n          fill=\"none\"\n          className={cn(\n            'pointer-events-none absolute top-1/2 right-3 size-5 -translate-y-1/2',\n            variant === 'dark'\n              ? 'text-text-on-dark-muted'\n              : 'text-muted-foreground',\n          )}\n        >\n          <path\n            d=\"m4 6 4 4 4-4\"\n            stroke=\"currentColor\"\n            strokeWidth=\"1.5\"\n            strokeLinecap=\"round\"\n            strokeLinejoin=\"round\"\n          />\n        </svg>\n      </div>\n    );\n  },\n);\nNativeSelect.displayName = 'NativeSelect';\n\nexport { NativeSelect, nativeSelectVariants };\n",
+      "type": "registry:ui",
+      "target": "components/ui/native-select.tsx"
+    }
+  ]
+}

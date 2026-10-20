@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "form-field",
+  "type": "registry:ui",
+  "title": "Form Field",
+  "description": "Label + control + error composition.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://design.kongmy.dev/r/theme.json",
+    "https://design.kongmy.dev/r/label.json"
+  ],
+  "files": [
+    {
+      "path": "ui/form-field.tsx",
+      "content": "import {\n  Children,\n  cloneElement,\n  forwardRef,\n  type HTMLAttributes,\n  isValidElement,\n  type ReactElement,\n  type ReactNode,\n  useId,\n} from 'react';\nimport { cn } from '@/lib/utils';\nimport { Label } from '@/components/ui/label';\n\nexport interface FormFieldProps\n  extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {\n  /** Label text. Rendered as <Label htmlFor={fieldId}>. */\n  label?: ReactNode;\n  /** Mark field as required (visual asterisk + required prop on the child input). */\n  required?: boolean;\n  /** Helper text shown under the field. Wired as aria-describedby on the child. */\n  hint?: ReactNode;\n  /** Error message. Overrides hint when present; sets aria-invalid on the child. */\n  error?: ReactNode;\n  /** The form control (Input, Textarea, NativeSelect, Select, etc.) as a single child. */\n  children: ReactElement;\n  /** Explicit id; auto-generated if omitted. */\n  id?: string;\n}\n\n/**\n * Form field composition primitive. Wraps a single form control with:\n *  - a <Label> (htmlFor wired to the control)\n *  - an optional hint paragraph\n *  - an optional error paragraph (takes precedence over hint)\n *  - proper aria-describedby + aria-invalid on the control\n *\n *   <FormField label=\"Email\" hint=\"We'll never share this.\" required>\n *     <Input type=\"email\" placeholder=\"you@example.com\" />\n *   </FormField>\n *\n * Works with any form control that accepts id, aria-describedby, and\n * aria-invalid as props — Input, Textarea, NativeSelect, Radix Select\n * (via SelectTrigger), Radix RadioGroup, Checkbox, etc.\n */\nconst FormField = forwardRef<HTMLDivElement, FormFieldProps>(\n  (\n    { className, label, required, hint, error, children, id: idProp, ...props },\n    ref,\n  ) => {\n    const autoId = useId();\n    const id = idProp || autoId;\n    const descriptionIds: string[] = [];\n    const hintId = `${id}-hint`;\n    const errorId = `${id}-error`;\n\n    if (error) descriptionIds.push(errorId);\n    else if (hint) descriptionIds.push(hintId);\n\n    const child = Children.only(children);\n    const childProps = isValidElement(child)\n      ? {\n          id: (child.props as { id?: string }).id ?? id,\n          'aria-describedby': descriptionIds.join(' ') || undefined,\n          'aria-invalid': error ? true : undefined,\n          required:\n            required || (child.props as { required?: boolean }).required,\n        }\n      : {};\n\n    return (\n      <div\n        ref={ref}\n        className={cn('flex flex-col gap-1.5', className)}\n        {...props}\n      >\n        {label && (\n          <Label htmlFor={id} required={required}>\n            {label}\n          </Label>\n        )}\n        {isValidElement(child)\n          ? cloneElement(child, childProps as Partial<typeof child.props>)\n          : child}\n        {error ? (\n          <p id={errorId} className=\"m-0 font-sans text-error text-xs\">\n            {error}\n          </p>\n        ) : hint ? (\n          <p\n            id={hintId}\n            className=\"m-0 font-sans text-muted-foreground text-xs\"\n          >\n            {hint}\n          </p>\n        ) : null}\n      </div>\n    );\n  },\n);\nFormField.displayName = 'FormField';\n\nexport { FormField };\n",
+      "type": "registry:ui",
+      "target": "components/ui/form-field.tsx"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip",
+  "type": "registry:ui",
+  "title": "Tooltip",
+  "description": "Tooltip built on Radix.",
+  "dependencies": [
+    "@radix-ui/react-tooltip"
+  ],
+  "registryDependencies": [
+    "https://design.kongmy.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "ui/tooltip.tsx",
+      "content": "import * as TooltipPrimitive from '@radix-ui/react-tooltip';\nimport { forwardRef, type ReactNode } from 'react';\nimport { cn } from '@/lib/utils';\n\n/**\n * Short text label that appears on hover/focus of its trigger. Use only\n * for brief descriptive text — for rich content use HoverCard, for\n * substantive interactive panels use Popover.\n *\n * Radix requires a TooltipProvider somewhere up the tree. The default\n * `<Tooltip>` shortcut below wraps a single tooltip in its own Provider\n * for ergonomics; if you have many tooltips, wrap your app in one\n * <TooltipProvider> instead and use the lower-level pieces.\n */\nexport const TooltipProvider = TooltipPrimitive.Provider;\nexport const TooltipRoot = TooltipPrimitive.Root;\nexport const TooltipTrigger = TooltipPrimitive.Trigger;\n\nexport type TooltipContentProps = React.ComponentPropsWithoutRef<\n  typeof TooltipPrimitive.Content\n>;\n\nconst TooltipContent = forwardRef<\n  React.ComponentRef<typeof TooltipPrimitive.Content>,\n  TooltipContentProps\n>(({ className, sideOffset = 6, ...props }, ref) => (\n  <TooltipPrimitive.Portal>\n    <TooltipPrimitive.Content\n      ref={ref}\n      sideOffset={sideOffset}\n      className={cn(\n        'z-50 max-w-xs rounded-sm bg-primary px-2.5 py-1.5 font-medium text-primary-foreground text-xs shadow-md',\n        'data-[state=closed]:animate-out data-[state=delayed-open]:animate-in',\n        'data-[state=closed]:fade-out-0 data-[state=delayed-open]:fade-in-0',\n        'data-[state=closed]:zoom-out-95 data-[state=delayed-open]:zoom-in-95',\n        'data-[side=bottom]:slide-in-from-top-1 data-[side=left]:slide-in-from-right-1 data-[side=right]:slide-in-from-left-1 data-[side=top]:slide-in-from-bottom-1',\n        className,\n      )}\n      {...props}\n    />\n  </TooltipPrimitive.Portal>\n));\nTooltipContent.displayName = 'TooltipContent';\n\nexport interface TooltipProps {\n  /** The element that triggers the tooltip. Wrap with TooltipTrigger asChild internally. */\n  children: ReactNode;\n  /** The tooltip body. */\n  content: ReactNode;\n  /** Delay before showing, in ms. Default 300. */\n  delayDuration?: number;\n  /** Side relative to the trigger. */\n  side?: 'top' | 'right' | 'bottom' | 'left';\n  /** Render the tooltip without an extra provider (use if you have a TooltipProvider higher in the tree). */\n  noProvider?: boolean;\n}\n\n/**\n * Single-tooltip ergonomic wrapper. For pages with many tooltips, mount\n * a single <TooltipProvider> at the root and use the lower-level pieces\n * directly to avoid duplicate provider trees.\n */\nfunction Tooltip({\n  children,\n  content,\n  delayDuration = 300,\n  side = 'top',\n  noProvider,\n}: TooltipProps) {\n  const inner = (\n    <TooltipRoot>\n      <TooltipTrigger asChild>{children}</TooltipTrigger>\n      <TooltipContent side={side}>{content}</TooltipContent>\n    </TooltipRoot>\n  );\n  return noProvider ? (\n    inner\n  ) : (\n    <TooltipProvider delayDuration={delayDuration}>{inner}</TooltipProvider>\n  );\n}\n\nexport { Tooltip, TooltipContent };\n",
+      "type": "registry:ui",
+      "target": "components/ui/tooltip.tsx"
+    }
+  ]
+}

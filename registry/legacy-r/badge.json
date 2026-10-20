@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge",
+  "type": "registry:ui",
+  "title": "Badge",
+  "description": "Status/label badge.",
+  "dependencies": [
+    "@radix-ui/react-slot",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://design.kongmy.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "ui/badge.tsx",
+      "content": "import { Slot } from '@radix-ui/react-slot';\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport { forwardRef, type HTMLAttributes } from 'react';\nimport { cn } from '@/lib/utils';\n\nconst badgeVariants = cva(\n  'inline-flex items-center gap-1.5 rounded-full font-sans font-semibold uppercase tracking-[0.04em] transition-colors',\n  {\n    variants: {\n      variant: {\n        // Foreground colors are darkened from the underlying brand/state\n        // hue so 12px badge text passes WCAG AA contrast on the tinted bg.\n        default: 'border border-border bg-background text-muted-foreground',\n        accent: 'border border-accent/30 bg-accent/12 text-accent-text',\n        dark: 'border border-border-dark bg-white/10 text-primary-foreground',\n        success: 'border border-success-border bg-success-bg text-success',\n        error: 'border border-error-border bg-error-bg text-error',\n        warning: 'border border-warning-border bg-warning-bg text-warning',\n        info: 'border border-info-border bg-info-bg text-info',\n      },\n      size: {\n        sm: 'gap-1 px-2 py-[2px] text-[10px]',\n        default: 'px-2.5 py-[3px] text-[11px]',\n        lg: 'px-3 py-1 text-xs',\n      },\n    },\n    defaultVariants: {\n      variant: 'default',\n      size: 'default',\n    },\n  },\n);\n\nexport interface BadgeProps\n  extends HTMLAttributes<HTMLSpanElement>,\n    VariantProps<typeof badgeVariants> {\n  /** Render as child element (e.g. <a>, router Link) */\n  asChild?: boolean;\n}\n\nconst Badge = forwardRef<HTMLSpanElement, BadgeProps>(\n  ({ className, variant, size, asChild = false, ...props }, ref) => {\n    const Comp = asChild ? Slot : 'span';\n    return (\n      <Comp\n        ref={ref}\n        className={cn(badgeVariants({ variant, size }), className)}\n        {...props}\n      />\n    );\n  },\n);\nBadge.displayName = 'Badge';\n\nexport { Badge, badgeVariants };\n",
+      "type": "registry:ui",
+      "target": "components/ui/badge.tsx"
+    }
+  ]
+}

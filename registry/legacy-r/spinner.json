@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "spinner",
+  "type": "registry:ui",
+  "title": "Spinner",
+  "description": "Loading spinner.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://design.kongmy.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "ui/spinner.tsx",
+      "content": "import { cva, type VariantProps } from 'class-variance-authority';\nimport type { HTMLAttributes } from 'react';\nimport { cn } from '@/lib/utils';\n\nconst spinnerVariants = cva(\n  'inline-block animate-spin rounded-full border-2 border-current border-t-transparent motion-reduce:animate-none',\n  {\n    variants: {\n      size: {\n        sm: 'size-3.5',\n        default: 'size-[18px]',\n        lg: 'size-6',\n      },\n      tone: {\n        current: '',\n        muted: 'text-muted-foreground',\n        accent: 'text-accent-text',\n      },\n    },\n    defaultVariants: {\n      size: 'default',\n      tone: 'current',\n    },\n  },\n);\n\nexport interface SpinnerProps\n  extends HTMLAttributes<HTMLSpanElement>,\n    VariantProps<typeof spinnerVariants> {\n  /** Accessible status text announced to screen readers */\n  label?: string;\n}\n\nfunction Spinner({\n  className,\n  size,\n  tone,\n  label = 'Loading',\n  ...props\n}: SpinnerProps) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      className={cn(spinnerVariants({ size, tone }), className)}\n      {...props}\n    />\n  );\n}\n\nexport { Spinner, spinnerVariants };\n",
+      "type": "registry:ui",
+      "target": "components/ui/spinner.tsx"
+    }
+  ]
+}

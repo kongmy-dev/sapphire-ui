@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "icon",
+  "type": "registry:ui",
+  "title": "Icon",
+  "description": "Material Symbols icon wrapper.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://design.kongmy.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "ui/icon.tsx",
+      "content": "import type { HTMLAttributes } from 'react';\nimport { cn } from '@/lib/utils';\n\n/**\n * Sapphire UI uses Material Symbols (via Google Fonts) as the canonical\n * icon system. Consumers must load the font in their app shell — either\n * via a <link> tag (see materialSymbolsFontHref / materialSymbolsLinkTag\n * exports below) or by self-hosting the font files.\n *\n * Astro example:\n *   <link rel=\"stylesheet\" href={materialSymbolsFontHref()} />\n * React/Next example:\n *   <Head><link rel=\"stylesheet\" href={materialSymbolsFontHref()} /></Head>\n */\nexport interface IconProps extends HTMLAttributes<HTMLSpanElement> {\n  /** Material Symbols icon name (e.g. \"cloud\", \"smart_toy\"). Find names at\n   *  https://fonts.google.com/icons */\n  name: string;\n  /** Icon size in pixels */\n  size?: number;\n  /** Use filled variant */\n  filled?: boolean;\n  /** Font weight (100–700) */\n  weight?: number;\n}\n\nfunction Icon({\n  name,\n  size = 24,\n  filled = false,\n  weight = 300,\n  className,\n  style,\n  ...props\n}: IconProps) {\n  return (\n    <span\n      className={cn('material-symbols-outlined', className)}\n      style={{\n        fontSize: size,\n        fontVariationSettings: `\"FILL\" ${filled ? 1 : 0}, \"wght\" ${weight}, \"GRAD\" 0, \"opsz\" ${size}`,\n        ...style,\n      }}\n      aria-hidden={props['aria-label'] ? undefined : 'true'}\n      {...props}\n    >\n      {name}\n    </span>\n  );\n}\n\nexport { Icon };\n\n/**\n * The Google Fonts URL for the Material Symbols Outlined font, configured\n * with the axes Sapphire UI uses (opsz, wght, FILL, GRAD).\n */\nexport function materialSymbolsFontHref(): string {\n  return 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-25..0&display=block';\n}\n\n/**\n * Ready-to-inject HTML for the font link tag. Useful for Astro/HTML\n * consumers building a head fragment via string concatenation.\n */\nexport function materialSymbolsLinkTag(): string {\n  return `<link rel=\"stylesheet\" href=\"${materialSymbolsFontHref()}\" />`;\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/icon.tsx"
+    }
+  ]
+}

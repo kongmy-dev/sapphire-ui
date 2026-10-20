@@ -20,12 +20,7 @@ export type RegistryFile = {
 export type RegistryItem = {
   name: string;
   type: string;
-  extends?: string;
   files: RegistryFile[];
-  dependencies?: string[];
-  registryDependencies?: string[];
-  css?: Record<string, unknown>;
-  meta?: Record<string, unknown>;
 };
 export type Registry = { items: RegistryItem[] };
 

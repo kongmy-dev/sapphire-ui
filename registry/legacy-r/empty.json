@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "empty",
+  "type": "registry:ui",
+  "title": "Empty",
+  "description": "Empty-state block.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://design.kongmy.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "ui/empty.tsx",
+      "content": "import type { HTMLAttributes, ReactNode } from 'react';\nimport { cn } from '@/lib/utils';\n\nexport interface EmptyProps extends HTMLAttributes<HTMLDivElement> {\n  /** Material Symbols icon name */\n  icon?: string;\n  /** Title text */\n  title?: string;\n  /** Description text */\n  description?: string;\n  /** Action slot (e.g. a Button) */\n  action?: ReactNode;\n}\n\nfunction Empty({\n  className,\n  icon,\n  title,\n  description,\n  action,\n  ...props\n}: EmptyProps) {\n  return (\n    <div\n      className={cn(\n        'flex flex-col items-center justify-center px-6 py-16 text-center',\n        className,\n      )}\n      {...props}\n    >\n      {icon && (\n        <span\n          className=\"material-symbols-outlined mb-4 text-muted-foreground\"\n          style={{ fontSize: 56 }}\n          aria-hidden=\"true\"\n        >\n          {icon}\n        </span>\n      )}\n      {title && (\n        <h3 className=\"mb-2 font-medium font-serif text-(--color-text-strong) text-lg\">\n          {title}\n        </h3>\n      )}\n      {description && (\n        <p className=\"mb-6 max-w-sm font-sans text-sm text-muted-foreground\">\n          {description}\n        </p>\n      )}\n      {action}\n    </div>\n  );\n}\n\nexport { Empty };\n",
+      "type": "registry:ui",
+      "target": "components/ui/empty.tsx"
+    }
+  ]
+}

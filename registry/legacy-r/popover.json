@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "popover",
+  "type": "registry:ui",
+  "title": "Popover",
+  "description": "Popover built on Radix.",
+  "dependencies": [
+    "@radix-ui/react-popover"
+  ],
+  "registryDependencies": [
+    "https://design.kongmy.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "ui/popover.tsx",
+      "content": "import * as PopoverPrimitive from '@radix-ui/react-popover';\nimport { forwardRef } from 'react';\nimport { cn } from '@/lib/utils';\n\n/**\n * Floating panel anchored to a trigger. Use for forms, settings menus,\n * date pickers — anything substantive that needs to overlay the page.\n *\n *   <Popover>\n *     <PopoverTrigger asChild><Button>Open</Button></PopoverTrigger>\n *     <PopoverContent>…</PopoverContent>\n *   </Popover>\n */\nexport const Popover = PopoverPrimitive.Root;\nexport const PopoverTrigger = PopoverPrimitive.Trigger;\nexport const PopoverAnchor = PopoverPrimitive.Anchor;\nexport const PopoverClose = PopoverPrimitive.Close;\n\nexport type PopoverContentProps = React.ComponentPropsWithoutRef<\n  typeof PopoverPrimitive.Content\n>;\n\nconst PopoverContent = forwardRef<\n  React.ComponentRef<typeof PopoverPrimitive.Content>,\n  PopoverContentProps\n>(({ className, align = 'center', sideOffset = 6, ...props }, ref) => (\n  <PopoverPrimitive.Portal>\n    <PopoverPrimitive.Content\n      ref={ref}\n      align={align}\n      sideOffset={sideOffset}\n      className={cn(\n        'z-50 w-72 rounded-md border border-border bg-(--color-card-bg) p-4 text-sm text-foreground shadow-lg outline-none',\n        'data-[state=closed]:animate-out data-[state=open]:animate-in',\n        'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',\n        'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',\n        'data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',\n        className,\n      )}\n      {...props}\n    />\n  </PopoverPrimitive.Portal>\n));\nPopoverContent.displayName = 'PopoverContent';\n\nexport { PopoverContent };\n",
+      "type": "registry:ui",
+      "target": "components/ui/popover.tsx"
+    }
+  ]
+}

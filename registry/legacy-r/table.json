@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "table",
+  "type": "registry:ui",
+  "title": "Table",
+  "description": "Table primitives.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://design.kongmy.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "ui/table.tsx",
+      "content": "import {\n  forwardRef,\n  type HTMLAttributes,\n  type TdHTMLAttributes,\n  type ThHTMLAttributes,\n} from 'react';\nimport { cn } from '@/lib/utils';\n\nconst Table = forwardRef<HTMLTableElement, HTMLAttributes<HTMLTableElement>>(\n  ({ className, ...props }, ref) => (\n    <div className=\"w-full overflow-auto\">\n      <table\n        ref={ref}\n        className={cn(\n          'w-full border-collapse font-sans text-[14px]',\n          className,\n        )}\n        {...props}\n      />\n    </div>\n  ),\n);\nTable.displayName = 'Table';\n\nexport interface TableHeaderProps\n  extends HTMLAttributes<HTMLTableSectionElement> {\n  /**\n   * Stick the header to the top of the nearest scrolling ancestor. Requires\n   * the Table to be inside a fixed-height scroll container (`overflow: auto`\n   * + `max-height`) for the sticky behavior to actually take effect.\n   */\n  sticky?: boolean;\n}\n\nconst TableHeader = forwardRef<HTMLTableSectionElement, TableHeaderProps>(\n  ({ className, sticky, ...props }, ref) => (\n    <thead\n      ref={ref}\n      className={cn(\n        sticky &&\n          'sticky top-0 z-10 bg-(--color-card-bg) shadow-[0_1px_0_0_var(--color-border)]',\n        className,\n      )}\n      {...props}\n    />\n  ),\n);\nTableHeader.displayName = 'TableHeader';\n\nconst TableBody = forwardRef<\n  HTMLTableSectionElement,\n  HTMLAttributes<HTMLTableSectionElement>\n>(({ className, ...props }, ref) => (\n  <tbody ref={ref} className={cn('', className)} {...props} />\n));\nTableBody.displayName = 'TableBody';\n\nconst TableRow = forwardRef<\n  HTMLTableRowElement,\n  HTMLAttributes<HTMLTableRowElement>\n>(({ className, ...props }, ref) => (\n  <tr\n    ref={ref}\n    className={cn(\n      'border-border border-b transition-colors hover:bg-accent/5',\n      className,\n    )}\n    {...props}\n  />\n));\nTableRow.displayName = 'TableRow';\n\nconst TableHead = forwardRef<\n  HTMLTableCellElement,\n  ThHTMLAttributes<HTMLTableCellElement>\n>(({ className, ...props }, ref) => (\n  <th\n    ref={ref}\n    className={cn(\n      'whitespace-nowrap border-border border-b bg-page px-4 py-3 text-left font-sans font-semibold text-[11px] text-muted-foreground uppercase tracking-[0.08em]',\n      className,\n    )}\n    {...props}\n  />\n));\nTableHead.displayName = 'TableHead';\n\nconst TableCell = forwardRef<\n  HTMLTableCellElement,\n  TdHTMLAttributes<HTMLTableCellElement>\n>(({ className, ...props }, ref) => (\n  <td ref={ref} className={cn('p-4', className)} {...props} />\n));\nTableCell.displayName = 'TableCell';\n\nexport { Table, TableBody, TableCell, TableHead, TableHeader, TableRow };\n",
+      "type": "registry:ui",
+      "target": "components/ui/table.tsx"
+    }
+  ]
+}

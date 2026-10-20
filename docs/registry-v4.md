@@ -1,0 +1,46 @@
+# Registry v4
+
+The v4 registry is served at `/r/v4/{name}.json`. The 35 JSON files in
+`registry/legacy-r/` are the frozen `/r/` distribution; copy them unchanged into
+the site's `/r/` output before writing the v4 subdirectory.
+
+```sh
+bun tooling/registry/generate.ts
+bun tooling/registry/build.ts
+bun tooling/registry/check.ts
+SAPPHIRE_PACKAGE_TARBALL=/absolute/path/sapphire-ui.tgz bun tooling/registry/smoke.ts
+```
+
+`REGISTRY_V4_OUT` selects the build/check output, defaulting to `dist-docs/r/v4`.
+The source registry includes generated metadata. The build wrapper stages its
+physical source files because shadcn's included registry paths cannot traverse
+parent directories and the CLI reads file contents from disk. It runs pinned
+`shadcn@4.22.0 build` and `registry validate`, then rewrites source imports to
+consumer aliases. It never rebuilds or rewrites the legacy distribution.
+
+The base has `extends: none`, installs the exact Sapphire package, imports only
+`foundations.css`, and installs `.claude/skills/sapphire/SKILL.md`. Foundations
+includes the bundled font files and font faces; no extra font package is needed.
+Each vendored component imports its own installed CSS. Dependencies use exact
+versions from the development manifest. Transitive components are registry
+items; private implementation files, including Slot, travel with their owner.
+
+Initialize an existing Vite/Tailwind application using the base URL, then map
+`@sapphire` to `https://design.kongmy.dev/r/v4/{name}.json` in the `registries`
+object of `components.json`. Add components with the pinned CLI:
+
+```sh
+bunx --bun shadcn@4.22.0 init https://design.kongmy.dev/r/v4/base.json --yes
+bunx --bun shadcn@4.22.0 add @sapphire/button @sapphire/dialog @sapphire/sidebar
+```
+
+The smoke creates a temporary Vite application and invokes the real CLI for
+both commands. Before publication it resolves the exact package through a
+local tarball override, while the registry still declares `4.0.0`. It checks
+strict types and builds a customized vendored Button beside a package Card,
+with both CSS import orders. A synthetic compatible `4.0.1` tarball changes
+package Button CSS; the smoke verifies that customization survives and the
+unimported package Button CSS stays outside the application bundle. This is a
+build and ownership test, not a browser screenshot assertion or a published
+package upgrade. Set `SAPPHIRE_REGISTRY_URL` to the deployed URL template to
+repeat installation against production after deployment.

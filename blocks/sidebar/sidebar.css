@@ -1,0 +1,6 @@
+@layer components {
+  .sp-sidebar-wrapper {
+    --sidebar-width: calc(var(--space-1) * 64);
+    --sidebar-width-icon: calc(var(--space-1) * 12);
+  }
+}

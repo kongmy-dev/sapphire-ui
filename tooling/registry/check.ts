@@ -8,54 +8,57 @@ import { registryEntries } from './source.js';
 const record = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null;
 
+const npmName = (specifier: string) =>
+  specifier
+    .split('/')
+    .slice(0, specifier.startsWith('@') ? 2 : 1)
+    .join('/');
+function importProblems(
+  path: string,
+  content: string,
+  dependencies: unknown[],
+) {
+  return sourceImports(path, content).flatMap(({ specifier }) => {
+    if (!specifier || specifier.startsWith('.') || specifier.includes('/src/'))
+      return [`${path}: unresolved vendored import ${specifier}`];
+    if (specifier.startsWith('@/')) return [];
+    if (
+      dependencies.some(
+        (dependency) =>
+          typeof dependency === 'string' &&
+          dependency.startsWith(`${npmName(specifier)}@`),
+      )
+    )
+      return [];
+    return [`${path}: undeclared dependency ${specifier}`];
+  });
+}
+function fileProblems(file: unknown, dependencies: unknown[]): string[] {
+  if (
+    !record(file) ||
+    typeof file.content !== 'string' ||
+    typeof file.path !== 'string'
+  )
+    return ['Missing file content'];
+  if (!/\.[cm]?tsx?$/.test(file.path)) return [];
+  return importProblems(file.path, file.content, dependencies);
+}
 export function checkItem(text: string): string[] {
   const item: unknown = JSON.parse(text);
   if (!record(item) || !Array.isArray(item.files)) return ['Missing files'];
-  const failures: string[] = [];
-  const dependencies = Array.isArray(item.dependencies)
+  const dependencies: unknown[] = Array.isArray(item.dependencies)
     ? item.dependencies
     : [];
-  for (const dependency of dependencies)
-    if (
-      typeof dependency !== 'string' ||
-      !/@\d+\.\d+\.\d+(?:-[\w.-]+)?$/.test(dependency)
-    )
-      failures.push(`Unpinned dependency ${String(dependency)}`);
-  for (const file of item.files) {
-    if (
-      !record(file) ||
-      typeof file.content !== 'string' ||
-      typeof file.path !== 'string'
-    ) {
-      failures.push('Missing file content');
-      continue;
-    }
-    if (!/\.[cm]?tsx?$/.test(file.path)) continue;
-    for (const edge of sourceImports(file.path, file.content)) {
-      const specifier = edge.specifier;
-      if (
-        !specifier ||
-        specifier.startsWith('.') ||
-        specifier.includes('/src/')
-      )
-        failures.push(`${file.path}: unresolved vendored import ${specifier}`);
-      else if (
-        !specifier.startsWith('@/') &&
-        !dependencies.some(
-          (dependency) =>
-            typeof dependency === 'string' &&
-            dependency.startsWith(
-              `${specifier
-                .split('/')
-                .slice(0, specifier.startsWith('@') ? 2 : 1)
-                .join('/')}@`,
-            ),
-        )
-      )
-        failures.push(`${file.path}: undeclared dependency ${specifier}`);
-    }
-  }
-  return failures;
+  const failures = dependencies.flatMap((dependency) =>
+    typeof dependency === 'string' &&
+    /@\d+\.\d+\.\d+(?:-[\w.-]+)?$/.test(dependency)
+      ? []
+      : [`Unpinned dependency ${String(dependency)}`],
+  );
+  return [
+    ...failures,
+    ...item.files.flatMap((file) => fileProblems(file, dependencies)),
+  ];
 }
 
 export function checkRegistry(root: string, output: string): string[] {

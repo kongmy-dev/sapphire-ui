@@ -1,0 +1,664 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "sapphire-ui",
+  "homepage": "https://design.kongmy.dev",
+  "items": [
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "theme",
+      "type": "registry:style",
+      "title": "Sapphire Theme",
+      "description": "Sapphire design tokens (Tailwind v4 @theme) + shadcn-var aliases. Import once per app; required by every Sapphire component.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sapphire-theme.css",
+          "type": "registry:file",
+          "target": "styles/sapphire-theme.css"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Primary action button with variant and size options.",
+      "dependencies": [
+        "@radix-ui/react-slot",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/button.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/button.tsx"
+        }
+      ]
+    },
+    {
+      "name": "icon",
+      "type": "registry:ui",
+      "title": "Icon",
+      "description": "Material Symbols icon wrapper.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/icon.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/icon.tsx"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "Text input with sapphire form styling.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/input.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/input.tsx"
+        }
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "Multi-line text input.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/textarea.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/textarea.tsx"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label",
+      "description": "Accessible form label.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/label.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/label.tsx"
+        }
+      ]
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "description": "Visual or semantic divider (Radix).",
+      "dependencies": [
+        "@radix-ui/react-separator"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/separator.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/separator.tsx"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "Checkbox built on Radix.",
+      "dependencies": [
+        "@radix-ui/react-checkbox"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/checkbox.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/checkbox.tsx"
+        }
+      ]
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "Radio Group",
+      "description": "Radio group built on Radix.",
+      "dependencies": [
+        "@radix-ui/react-radio-group"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/radio-group.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/radio-group.tsx"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "Select menu built on Radix.",
+      "dependencies": [
+        "@radix-ui/react-select",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/select.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/select.tsx"
+        }
+      ]
+    },
+    {
+      "name": "native-select",
+      "type": "registry:ui",
+      "title": "Native Select",
+      "description": "Styled native <select>.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/native-select.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/native-select.tsx"
+        }
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "Modal dialog built on Radix.",
+      "dependencies": [
+        "@radix-ui/react-dialog"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json",
+        "https://design.kongmy.dev/r/icon.json"
+      ],
+      "files": [
+        {
+          "path": "ui/dialog.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/dialog.tsx"
+        }
+      ]
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "title": "Sheet",
+      "description": "Side sheet / drawer built on Radix Dialog.",
+      "dependencies": [
+        "@radix-ui/react-dialog",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/sheet.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/sheet.tsx"
+        }
+      ]
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "Dropdown Menu",
+      "description": "Dropdown menu built on Radix.",
+      "dependencies": [
+        "@radix-ui/react-dropdown-menu"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/dropdown-menu.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/dropdown-menu.tsx"
+        }
+      ]
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "description": "Popover built on Radix.",
+      "dependencies": [
+        "@radix-ui/react-popover"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/popover.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/popover.tsx"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "Tooltip built on Radix.",
+      "dependencies": [
+        "@radix-ui/react-tooltip"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/tooltip.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/tooltip.tsx"
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "Table primitives.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/table.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/table.tsx"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "Tabs built on Radix.",
+      "dependencies": [
+        "@radix-ui/react-tabs"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/tabs.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/tabs.tsx"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "Card container with header/body/footer.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/card.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/card.tsx"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "Status/label badge.",
+      "dependencies": [
+        "@radix-ui/react-slot",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/badge.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/badge.tsx"
+        }
+      ]
+    },
+    {
+      "name": "form-field",
+      "type": "registry:ui",
+      "title": "Form Field",
+      "description": "Label + control + error composition.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json",
+        "https://design.kongmy.dev/r/label.json"
+      ],
+      "files": [
+        {
+          "path": "ui/form-field.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/form-field.tsx"
+        }
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "Loading placeholder.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/skeleton.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/skeleton.tsx"
+        }
+      ]
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "Loading spinner.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/spinner.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/spinner.tsx"
+        }
+      ]
+    },
+    {
+      "name": "empty",
+      "type": "registry:ui",
+      "title": "Empty",
+      "description": "Empty-state block.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/empty.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/empty.tsx"
+        }
+      ]
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "description": "Pagination controls.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/pagination.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/pagination.tsx"
+        }
+      ]
+    },
+    {
+      "name": "stat",
+      "type": "registry:ui",
+      "title": "Stat",
+      "description": "Single KPI stat.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/stat.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/stat.tsx"
+        }
+      ]
+    },
+    {
+      "name": "stat-group",
+      "type": "registry:ui",
+      "title": "Stat Group",
+      "description": "Grid of Stat items.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/stat-group.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/stat-group.tsx"
+        }
+      ]
+    },
+    {
+      "name": "toaster",
+      "type": "registry:block",
+      "title": "Toaster",
+      "description": "Product-lane toast (sonner) wired to Sapphire tokens.",
+      "dependencies": [
+        "sonner"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json"
+      ],
+      "files": [
+        {
+          "path": "ui/toaster.tsx",
+          "type": "registry:block",
+          "target": "components/ui/toaster.tsx"
+        }
+      ]
+    },
+    {
+      "name": "command",
+      "type": "registry:block",
+      "title": "Command",
+      "description": "Command menu / palette primitives (cmdk).",
+      "dependencies": [
+        "cmdk",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json",
+        "https://design.kongmy.dev/r/dialog.json"
+      ],
+      "files": [
+        {
+          "path": "ui/command.tsx",
+          "type": "registry:block",
+          "target": "components/ui/command.tsx"
+        }
+      ]
+    },
+    {
+      "name": "combobox",
+      "type": "registry:block",
+      "title": "Combobox",
+      "description": "Searchable single-select (Popover + Command).",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json",
+        "https://design.kongmy.dev/r/button.json",
+        "https://design.kongmy.dev/r/command.json",
+        "https://design.kongmy.dev/r/popover.json"
+      ],
+      "files": [
+        {
+          "path": "ui/combobox.tsx",
+          "type": "registry:block",
+          "target": "components/ui/combobox.tsx"
+        }
+      ]
+    },
+    {
+      "name": "calendar",
+      "type": "registry:block",
+      "title": "Calendar",
+      "description": "Date picker calendar (react-day-picker).",
+      "dependencies": [
+        "lucide-react",
+        "react-day-picker"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json",
+        "https://design.kongmy.dev/r/button.json"
+      ],
+      "files": [
+        {
+          "path": "ui/calendar.tsx",
+          "type": "registry:block",
+          "target": "components/ui/calendar.tsx"
+        }
+      ]
+    },
+    {
+      "name": "sidebar",
+      "type": "registry:block",
+      "title": "Sidebar",
+      "description": "Collapsible app-shell sidebar with mobile sheet.",
+      "dependencies": [
+        "@radix-ui/react-slot",
+        "class-variance-authority",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json",
+        "https://design.kongmy.dev/r/button.json",
+        "https://design.kongmy.dev/r/input.json",
+        "https://design.kongmy.dev/r/separator.json",
+        "https://design.kongmy.dev/r/sheet.json",
+        "https://design.kongmy.dev/r/skeleton.json",
+        "https://design.kongmy.dev/r/tooltip.json"
+      ],
+      "files": [
+        {
+          "path": "ui/sidebar.tsx",
+          "type": "registry:block",
+          "target": "components/ui/sidebar.tsx"
+        }
+      ]
+    },
+    {
+      "name": "data-table-column-header",
+      "type": "registry:block",
+      "title": "DataTable Column Header",
+      "description": "Sortable/hideable column header for a TanStack table.",
+      "dependencies": [
+        "@radix-ui/react-icons",
+        "@tanstack/react-table"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json",
+        "https://design.kongmy.dev/r/button.json",
+        "https://design.kongmy.dev/r/dropdown-menu.json"
+      ],
+      "files": [
+        {
+          "path": "ui/data-table-column-header.tsx",
+          "type": "registry:block",
+          "target": "components/ui/data-table-column-header.tsx"
+        }
+      ]
+    },
+    {
+      "name": "data-table-view-options",
+      "type": "registry:block",
+      "title": "DataTable View Options",
+      "description": "Column-visibility menu for a TanStack table.",
+      "dependencies": [
+        "@radix-ui/react-dropdown-menu",
+        "@radix-ui/react-icons",
+        "@tanstack/react-table"
+      ],
+      "registryDependencies": [
+        "https://design.kongmy.dev/r/theme.json",
+        "https://design.kongmy.dev/r/button.json",
+        "https://design.kongmy.dev/r/dropdown-menu.json"
+      ],
+      "files": [
+        {
+          "path": "ui/data-table-view-options.tsx",
+          "type": "registry:block",
+          "target": "components/ui/data-table-view-options.tsx"
+        }
+      ]
+    }
+  ]
+}

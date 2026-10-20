@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-group",
+  "type": "registry:ui",
+  "title": "Radio Group",
+  "description": "Radio group built on Radix.",
+  "dependencies": [
+    "@radix-ui/react-radio-group"
+  ],
+  "registryDependencies": [
+    "https://design.kongmy.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "ui/radio-group.tsx",
+      "content": "import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';\nimport { forwardRef, type ReactNode, useId } from 'react';\nimport { cn } from '@/lib/utils';\n\n/**\n * Single-select option group with proper roving-tabindex keyboard nav\n * (only the selected item is in the tab order; arrow keys move within).\n *\n *   <RadioGroup value={plan} onValueChange={setPlan}>\n *     <RadioGroupItem value=\"free\" label=\"Free\" description=\"$0/mo\" />\n *     <RadioGroupItem value=\"pro\" label=\"Pro\" description=\"$12/mo\" />\n *   </RadioGroup>\n */\nconst RadioGroup = forwardRef<\n  React.ComponentRef<typeof RadioGroupPrimitive.Root>,\n  React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>\n>(({ className, ...props }, ref) => (\n  <RadioGroupPrimitive.Root\n    ref={ref}\n    className={cn('grid gap-2.5', className)}\n    {...props}\n  />\n));\nRadioGroup.displayName = 'RadioGroup';\n\nexport interface RadioGroupItemProps\n  extends React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item> {\n  /** Inline label rendered next to the radio. */\n  label?: ReactNode;\n  /** Secondary description under the label. */\n  description?: ReactNode;\n}\n\nconst RadioGroupItem = forwardRef<\n  React.ComponentRef<typeof RadioGroupPrimitive.Item>,\n  RadioGroupItemProps\n>(({ className, label, description, id: idProp, ...props }, ref) => {\n  const autoId = useId();\n  const id = idProp || autoId;\n  const descriptionId = description ? `${id}-desc` : undefined;\n\n  return (\n    <div className=\"flex items-start gap-2.5\">\n      <RadioGroupPrimitive.Item\n        ref={ref}\n        id={id}\n        aria-describedby={descriptionId}\n        className={cn(\n          'mt-0.5 size-[18px] shrink-0 cursor-pointer rounded-full border-[1.5px] border-border-strong bg-(--color-card-bg)',\n          'focus-visible:outline-none focus-visible:ring-(--color-focus-ring) focus-visible:ring-2 focus-visible:ring-offset-1',\n          'data-[state=checked]:border-accent',\n          'disabled:cursor-not-allowed disabled:opacity-50',\n          className,\n        )}\n        {...props}\n      >\n        <RadioGroupPrimitive.Indicator className=\"relative flex size-full items-center justify-center\">\n          <span className=\"block size-2 rounded-full bg-accent\" />\n        </RadioGroupPrimitive.Indicator>\n      </RadioGroupPrimitive.Item>\n      {(label || description) && (\n        <div className=\"flex flex-col\">\n          {label && (\n            <label\n              htmlFor={id}\n              className=\"cursor-pointer select-none font-medium font-sans text-sm text-foreground\"\n            >\n              {label}\n            </label>\n          )}\n          {description && (\n            <span\n              id={descriptionId}\n              className=\"mt-0.5 font-sans text-muted-foreground text-xs\"\n            >\n              {description}\n            </span>\n          )}\n        </div>\n      )}\n    </div>\n  );\n});\nRadioGroupItem.displayName = 'RadioGroupItem';\n\nexport { RadioGroup, RadioGroupItem };\n",
+      "type": "registry:ui",
+      "target": "components/ui/radio-group.tsx"
+    }
+  ]
+}

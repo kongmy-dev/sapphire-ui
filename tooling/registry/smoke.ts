@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { buildRegistry, cli } from './build.js';
 import { checkRegistry } from './check.js';
 import { consumerSource, writeConsumer } from './consumer.js';
+import { checkMixedOwnership } from './ownership.js';
 
 function command(args: string[], cwd: string) {
   const child = Bun.spawnSync(args, {
@@ -85,6 +86,7 @@ export async function smokeRegistry(
     writeFileSync(join(app, 'src/main.tsx'), consumerSource());
     command(['bunx', 'tsc', '--noEmit'], app);
     command(['bunx', 'vite', 'build'], app);
+    checkMixedOwnership(app);
     console.log(`registry v4 smoke: installed and built ${app}`);
     return app;
   } finally {

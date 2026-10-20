@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs",
+  "type": "registry:ui",
+  "title": "Tabs",
+  "description": "Tabs built on Radix.",
+  "dependencies": [
+    "@radix-ui/react-tabs"
+  ],
+  "registryDependencies": [
+    "https://design.kongmy.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "ui/tabs.tsx",
+      "content": "import * as TabsPrimitive from '@radix-ui/react-tabs';\nimport { createContext, forwardRef, useContext } from 'react';\nimport { cn } from '@/lib/utils';\n\ntype TabsVariant = 'underline' | 'pills' | 'dashboard';\n\nconst TabsVariantContext = createContext<TabsVariant>('underline');\n\nconst Tabs = TabsPrimitive.Root;\n\nconst TabsList = forwardRef<\n  React.ComponentRef<typeof TabsPrimitive.List>,\n  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List> & {\n    variant?: TabsVariant;\n  }\n>(({ className, variant = 'underline', ...props }, ref) => (\n  <TabsVariantContext.Provider value={variant}>\n    <TabsPrimitive.List\n      ref={ref}\n      className={cn(\n        'flex',\n        variant === 'underline' &&\n          'gap-0 border-border border-b data-[orientation=vertical]:flex-col data-[orientation=vertical]:border-r data-[orientation=vertical]:border-b-0',\n        variant === 'pills' &&\n          'flex-wrap gap-1 data-[orientation=vertical]:flex-col',\n        variant === 'dashboard' && 'gap-0.5',\n        className,\n      )}\n      data-variant={variant}\n      {...props}\n    />\n  </TabsVariantContext.Provider>\n));\nTabsList.displayName = 'TabsList';\n\nconst TabsTrigger = forwardRef<\n  React.ComponentRef<typeof TabsPrimitive.Trigger>,\n  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>\n>(({ className, ...props }, ref) => {\n  const variant = useContext(TabsVariantContext);\n\n  return (\n    <TabsPrimitive.Trigger\n      ref={ref}\n      className={cn(\n        'inline-flex cursor-pointer items-center gap-2 font-medium font-sans text-sm outline-none transition-all',\n        'text-muted-foreground hover:text-(--color-text-strong)',\n\n        // Underline variant\n        variant === 'underline' && [\n          '-mb-px border-transparent border-b-2 px-4 py-3',\n          'data-[state=active]:border-accent data-[state=active]:text-accent-text',\n          // Vertical orientation overrides\n          'data-[orientation=vertical]:-mr-px data-[orientation=vertical]:mb-0 data-[orientation=vertical]:w-full data-[orientation=vertical]:justify-start data-[orientation=vertical]:whitespace-normal data-[orientation=vertical]:border-r-2 data-[orientation=vertical]:border-b-0 data-[orientation=vertical]:text-left',\n        ],\n\n        // Pills variant\n        variant === 'pills' && [\n          'rounded-md px-3 py-2',\n          'hover:bg-background',\n          'data-[state=active]:bg-accent/10 data-[state=active]:text-accent-text',\n        ],\n\n        // Dashboard variant\n        variant === 'dashboard' && [\n          'rounded-md px-3.5 py-[7px] font-semibold text-[13px] text-muted-foreground',\n          'data-[state=active]:bg-primary data-[state=active]:text-white',\n        ],\n\n        'focus-visible:ring-(--color-focus-ring) focus-visible:ring-2 focus-visible:ring-offset-0',\n        className,\n      )}\n      {...props}\n    />\n  );\n});\nTabsTrigger.displayName = 'TabsTrigger';\n\nconst TabsContent = forwardRef<\n  React.ComponentRef<typeof TabsPrimitive.Content>,\n  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>\n>(({ className, ...props }, ref) => (\n  <TabsPrimitive.Content\n    ref={ref}\n    className={cn('mt-4 outline-none', className)}\n    {...props}\n  />\n));\nTabsContent.displayName = 'TabsContent';\n\nexport { Tabs, TabsContent, TabsList, TabsTrigger };\n",
+      "type": "registry:ui",
+      "target": "components/ui/tabs.tsx"
+    }
+  ]
+}

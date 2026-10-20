@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stat-group",
+  "type": "registry:ui",
+  "title": "Stat Group",
+  "description": "Grid of Stat items.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://design.kongmy.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "ui/stat-group.tsx",
+      "content": "import { forwardRef, type HTMLAttributes } from 'react';\nimport { cn } from '@/lib/utils';\n\nexport interface StatGroupProps extends HTMLAttributes<HTMLDivElement> {\n  cols?: 1 | 2 | 3 | 4;\n}\n\nconst StatGroup = forwardRef<HTMLDivElement, StatGroupProps>(\n  ({ className, cols = 3, ...props }, ref) => {\n    return (\n      <div\n        ref={ref}\n        className={cn(\n          'grid gap-6 rounded-md border border-border p-6',\n          cols === 1 && 'grid-cols-1',\n          cols === 2 && 'grid-cols-1 sm:grid-cols-2',\n          cols === 3 && 'grid-cols-1 sm:grid-cols-3',\n          cols === 4 && 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',\n          className,\n        )}\n        {...props}\n      />\n    );\n  },\n);\nStatGroup.displayName = 'StatGroup';\n\nexport { StatGroup };\n",
+      "type": "registry:ui",
+      "target": "components/ui/stat-group.tsx"
+    }
+  ]
+}

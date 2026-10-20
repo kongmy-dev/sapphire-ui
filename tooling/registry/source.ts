@@ -104,7 +104,7 @@ function dependencyOf(
 export function collectItem(root: string, entry: string) {
   const found = {
     file: new Set([entry]),
-    package: new Set<string>(),
+    package: new Set<string>(['react']),
     registry: new Set<string>(),
   };
   const owner = entry.split('/').slice(0, 2).join('/');

@@ -66,7 +66,13 @@ export function generatedRegistry(root: string): string {
     meta: { foundations: '^4.0.0', cssOwner: 'foundations' },
     extends: 'none',
   });
-  return `${JSON.stringify({ $schema: 'https://ui.shadcn.com/schema/registry.json', items }, null, 2)}\n`;
+  const json = `${JSON.stringify({ $schema: 'https://ui.shadcn.com/schema/registry.json', items }, null, 2)}\n`;
+  const formatted = Bun.spawnSync(
+    ['bunx', 'biome', 'format', '--stdin-file-path=registry.json'],
+    { cwd: root, stdin: Buffer.from(json), stdout: 'pipe', stderr: 'pipe' },
+  );
+  if (formatted.exitCode !== 0) throw new Error(formatted.stderr.toString());
+  return formatted.stdout.toString();
 }
 
 if (import.meta.main) {

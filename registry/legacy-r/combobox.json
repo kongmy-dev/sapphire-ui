@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "combobox",
+  "type": "registry:block",
+  "title": "Combobox",
+  "description": "Searchable single-select (Popover + Command).",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://design.kongmy.dev/r/theme.json",
+    "https://design.kongmy.dev/r/button.json",
+    "https://design.kongmy.dev/r/command.json",
+    "https://design.kongmy.dev/r/popover.json"
+  ],
+  "files": [
+    {
+      "path": "ui/combobox.tsx",
+      "content": "import { Check, ChevronsUpDown } from 'lucide-react';\nimport { useState } from 'react';\nimport { Button } from '@/components/ui/button';\nimport {\n  Command,\n  CommandEmpty,\n  CommandGroup,\n  CommandInput,\n  CommandItem,\n  CommandList,\n} from '@/components/ui/command';\nimport {\n  Popover,\n  PopoverContent,\n  PopoverTrigger,\n} from '@/components/ui/popover';\nimport { cn } from '@/lib/utils';\n\nexport interface ComboboxOption {\n  value: string;\n  label: string;\n}\n\nexport interface ComboboxProps {\n  options: ComboboxOption[];\n  value?: string;\n  onValueChange?: (value: string) => void;\n  placeholder?: string;\n  searchPlaceholder?: string;\n  emptyText?: string;\n  className?: string;\n}\n\n/** Searchable single-select built from Popover + Command (shadcn pattern). */\nfunction Combobox({\n  options,\n  value,\n  onValueChange,\n  placeholder = 'Select…',\n  searchPlaceholder = 'Search…',\n  emptyText = 'No results.',\n  className,\n}: ComboboxProps) {\n  const [open, setOpen] = useState(false);\n  const selected = options.find((option) => option.value === value);\n\n  return (\n    <Popover open={open} onOpenChange={setOpen}>\n      <PopoverTrigger asChild>\n        <Button\n          variant=\"outline\"\n          role=\"combobox\"\n          aria-expanded={open}\n          className={cn('w-full justify-between', className)}\n        >\n          {selected ? selected.label : placeholder}\n          <ChevronsUpDown className=\"ms-2 size-4 shrink-0 opacity-50\" />\n        </Button>\n      </PopoverTrigger>\n      <PopoverContent className=\"w-[var(--radix-popover-trigger-width)] p-0\">\n        <Command>\n          <CommandInput placeholder={searchPlaceholder} />\n          <CommandList>\n            <CommandEmpty>{emptyText}</CommandEmpty>\n            <CommandGroup>\n              {options.map((option) => (\n                <CommandItem\n                  key={option.value}\n                  value={option.value}\n                  onSelect={(next) => {\n                    onValueChange?.(next === value ? '' : next);\n                    setOpen(false);\n                  }}\n                >\n                  <Check\n                    className={cn(\n                      'me-2 size-4',\n                      value === option.value ? 'opacity-100' : 'opacity-0',\n                    )}\n                  />\n                  {option.label}\n                </CommandItem>\n              ))}\n            </CommandGroup>\n          </CommandList>\n        </Command>\n      </PopoverContent>\n    </Popover>\n  );\n}\n\nexport { Combobox };\n",
+      "type": "registry:block",
+      "target": "components/ui/combobox.tsx"
+    }
+  ]
+}

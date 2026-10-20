@@ -31,6 +31,7 @@ export function writeConsumer(root: string, app: string, tarball: string) {
     private: true,
     type: 'module',
     dependencies,
+    overrides: { '@kongmy-dev/sapphire-ui': tarball },
   });
   write('tsconfig.json', {
     compilerOptions: {
@@ -55,6 +56,7 @@ export function writeConsumer(root: string, app: string, tarball: string) {
   );
   write('src/index.css', '@import "tailwindcss";\n');
   write('src/main.tsx', 'export {};\n');
+  write('src/vite-env.d.ts', 'import "vite/client";\n');
 }
 
 export function consumerSource(): string {

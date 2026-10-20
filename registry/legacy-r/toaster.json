@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toaster",
+  "type": "registry:block",
+  "title": "Toaster",
+  "description": "Product-lane toast (sonner) wired to Sapphire tokens.",
+  "dependencies": [
+    "sonner"
+  ],
+  "registryDependencies": [
+    "https://design.kongmy.dev/r/theme.json"
+  ],
+  "files": [
+    {
+      "path": "ui/toaster.tsx",
+      "content": "import type { CSSProperties } from 'react';\nimport { Toaster as Sonner, type ToasterProps } from 'sonner';\n\n/**\n * Product-lane toast (sonner). Sapphire's editorial toast is the web-component\n * lane; product apps use this React/sonner path. Colours are wired to the\n * Sapphire token layer, so toasts match the app surface in light and dark\n * (Sapphire flips via [data-theme]). Pass `theme` to override.\n */\nfunction Toaster({ ...props }: ToasterProps) {\n  return (\n    <Sonner\n      className=\"toaster group\"\n      style={\n        {\n          '--normal-bg': 'var(--color-popover)',\n          '--normal-text': 'var(--color-popover-foreground)',\n          '--normal-border': 'var(--color-border)',\n        } as CSSProperties\n      }\n      {...props}\n    />\n  );\n}\n\nexport { Toaster };\n",
+      "type": "registry:block",
+      "target": "components/ui/toaster.tsx"
+    }
+  ]
+}
