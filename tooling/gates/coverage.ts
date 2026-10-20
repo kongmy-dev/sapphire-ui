@@ -42,7 +42,19 @@ function parseRecord(text: string): RecordCoverage | null {
     found: lineRows.length,
     hit: lineRows.filter((row) => Number(row.split(',')[1]) > 0).length,
   };
-  return { file, lines, functions: counts(rows, 'FNDA:') };
+  const functions = counts(rows, 'FNDA:');
+  const declared = rows.filter((row) => row.startsWith('FN:')).length;
+  const found = Number(
+    rows.find((row) => row.startsWith('FNF:'))?.slice(4) ?? 0,
+  );
+  return {
+    file,
+    lines,
+    functions: {
+      ...functions,
+      found: Math.max(functions.found, declared, found),
+    },
+  };
 }
 
 const violation = (file: string, problem: string): Violation => ({

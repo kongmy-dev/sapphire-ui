@@ -71,3 +71,25 @@ test('coverage enumerates examples and never silently drops unimported source', 
     rmSync(root, { recursive: true });
   }
 });
+
+test('coverage enforces the exact ninety five percent threshold per metric', () => {
+  const rows = (hit: number) =>
+    Array.from(
+      { length: 20 },
+      (_, index) =>
+        `DA:${index + 1},${Number(index < hit)}\nFNDA:${Number(index < hit)},fn${index}`,
+    ).join('\n');
+  expect(check(`SF:${FILE}\n${rows(19)}\nend_of_record`).violations).toEqual(
+    [],
+  );
+  expect(
+    check(`SF:${FILE}\n${rows(18)}\nend_of_record`).violations,
+  ).toHaveLength(2);
+});
+
+test('coverage cannot hide declared functions by omitting their hit records', () => {
+  expect(
+    check(record().replace('FNDA:1,Button', 'FN:1,Button\nFNF:1')).violations[0]
+      ?.problem,
+  ).toContain('functions coverage 0.00%');
+});
