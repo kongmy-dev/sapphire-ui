@@ -127,9 +127,21 @@ test('documentation search filters links and both shortcuts focus it', async ({
   await search.fill('button');
   await expect(button).toBeVisible();
   await expect(card).toBeHidden();
+  await search.fill('card');
+  await expect(card).toBeVisible();
+  await expect(button).toBeHidden();
   await search.fill('no-such-sapphire-component');
   await expect(button).toBeHidden();
+  const empty = nav.getByText('No matching components.', { exact: true });
+  await expect(empty).toBeVisible();
   await search.fill('');
+  await expect(empty).toBeHidden();
+  await expect(card).toHaveJSProperty('hidden', false);
+  await expect(card).toBeHidden();
+  await nav
+    .locator('summary')
+    .filter({ hasText: /^Content$/ })
+    .click();
   await expect(card).toBeVisible();
   await expect(button).toHaveAttribute('aria-current', 'page');
   for (const shortcut of ['Control+k', 'Meta+k']) {
@@ -192,10 +204,12 @@ test('mobile navigation supports keyboard dismissal and page navigation without 
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
-  await page
-    .getByRole('navigation', { name: 'Documentation' })
-    .getByRole('link', { name: 'Card', exact: true })
+  const nav = page.getByRole('navigation', { name: 'Documentation' });
+  await nav
+    .locator('summary')
+    .filter({ hasText: /^Content$/ })
     .click();
+  await nav.getByRole('link', { name: 'Card', exact: true }).click();
   await expect(page).toHaveURL(`${SITE}/components/card/`);
   await expect(
     page.getByRole('button', { name: 'Open navigation', exact: true }),
