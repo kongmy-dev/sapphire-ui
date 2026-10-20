@@ -9,6 +9,7 @@ const fixture = `
     <button class="sp-button" data-size="lg" data-density="large">Continue</button>
     <button class="sp-button" data-size="icon" aria-label="Add" data-density="icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" /></svg></button>
   </div>
+  <button class="sp-button" style="--sp-button-line-height:1.4" data-density="unitless">Legacy line height</button>
   <input class="sp-input" aria-label="Name" data-density="input" />
   <input class="sp-input" data-variant="on-dark" aria-label="Dark name" data-density="dark-input" />
   <button class="sp-select-trigger" data-density="select">Choose a plan</button>
@@ -41,6 +42,7 @@ export async function assertControlDensity(page: Page) {
   await mountFixture(page);
   for (const name of [
     'filled',
+    'unitless',
     'outline',
     'icon',
     'input',

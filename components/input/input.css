@@ -2,11 +2,7 @@
   .sp-input {
     --sp-input-radius: var(--radius-btn);
     --sp-input-height: calc(var(--space-1) * 9);
-    --sp-input-padding-block: calc(
-      (var(--sp-input-height) - var(--sp-input-line-height)) /
-      2 -
-      var(--border-width)
-    );
+    --sp-input-padding-block: calc(var(--space-1) * 1.25);
     --sp-input-padding-inline: var(--space-3);
     --sp-input-font-family: var(--font-sans);
     --sp-input-font-size: var(--text-base);
@@ -20,6 +16,7 @@
     --sp-input-focus: 0 0 transparent;
 
     width: 100%;
+    min-height: var(--sp-input-height);
     padding: var(--sp-input-padding-block) var(--sp-input-padding-inline);
     font-family: var(--sp-input-font-family);
     font-size: var(--sp-input-font-size);

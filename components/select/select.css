@@ -1,11 +1,7 @@
 @layer components {
   .sp-select-trigger {
     --sp-select-trigger-height: calc(var(--space-1) * 9);
-    --sp-select-trigger-padding-block: calc(
-      (var(--sp-select-trigger-height) - var(--sp-select-trigger-line-height)) /
-      2 -
-      var(--border-width)
-    );
+    --sp-select-trigger-padding-block: calc(var(--space-1) * 1.75);
     --sp-select-trigger-padding-inline: var(--space-3);
     --sp-select-trigger-font-size: var(--text-sm);
     --sp-select-trigger-line-height: var(--space-5);
@@ -47,6 +43,7 @@
   }
 
   .sp-select-trigger[data-size="sm"] {
+    --sp-select-trigger-padding-block: calc(var(--space-1) * 1.25);
     --sp-select-trigger-height: var(--space-8);
     --sp-select-trigger-padding-inline: calc(var(--space-1) * 2.5);
   }

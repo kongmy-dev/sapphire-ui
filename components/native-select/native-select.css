@@ -6,11 +6,7 @@
   .sp-native-select {
     --sp-native-select-radius: var(--radius-btn);
     --sp-native-select-height: calc(var(--space-1) * 9);
-    --sp-native-select-padding-block: calc(
-      (var(--sp-native-select-height) - var(--sp-native-select-line-height)) /
-      2 -
-      var(--border-width)
-    );
+    --sp-native-select-padding-block: calc(var(--space-1) * 1.25);
     --sp-native-select-padding-inline: var(--space-3);
     --sp-native-select-font-size: var(--text-base);
     --sp-native-select-line-height: var(--space-6);

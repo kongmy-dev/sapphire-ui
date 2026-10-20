@@ -3,11 +3,7 @@
     --sp-button-radius: var(--radius-btn);
     --sp-button-gap: var(--space-2);
     --sp-button-height: calc(var(--space-1) * 9);
-    --sp-button-padding-block: calc(
-      (var(--sp-button-height) - var(--sp-button-line-height)) /
-      2 -
-      var(--sp-button-border-width)
-    );
+    --sp-button-padding-block: var(--space-2);
     --sp-button-padding-inline: var(--space-4);
     --sp-button-font-size: var(--text-sm);
     --sp-button-font-weight: 600;
@@ -32,7 +28,11 @@
     gap: var(--sp-button-gap);
     min-width: var(--sp-button-height);
     min-height: var(--sp-button-height);
-    padding: var(--sp-button-padding-block) var(--sp-button-padding-inline);
+    padding: calc(
+        var(--sp-button-padding-block) -
+        var(--sp-button-border-width)
+      )
+      var(--sp-button-padding-inline);
     font-family: var(--font-sans);
     font-size: var(--sp-button-font-size);
     font-weight: var(--sp-button-font-weight);
@@ -168,6 +168,7 @@
   }
 
   .sp-button[data-size="xs"] {
+    --sp-button-padding-block: var(--space-1);
     --sp-button-gap: calc(var(--space-1) * 1.5);
     --sp-button-height: var(--space-6);
     --sp-button-padding-inline: calc(var(--space-1) * 2.5);
@@ -177,6 +178,7 @@
   }
 
   .sp-button[data-size="sm"] {
+    --sp-button-padding-block: calc(var(--space-1) * 1.5);
     --sp-button-height: var(--space-8);
     --sp-button-padding-inline: var(--space-3);
     --sp-button-font-size: calc(var(--text-base) * 0.8125);
@@ -184,6 +186,7 @@
   }
 
   .sp-button[data-size="lg"] {
+    --sp-button-padding-block: calc(var(--space-1) * 1.5);
     --sp-button-height: var(--space-10);
     --sp-button-padding-inline: var(--space-5);
     --sp-button-font-size: var(--text-lg);
@@ -201,11 +204,13 @@
   }
 
   .sp-button[data-size="icon-sm"] {
+    --sp-button-padding-block: calc(var(--space-1) * 1.5);
     --sp-button-height: var(--space-8);
     --sp-button-spinner-size: calc(var(--space-1) * 3.5);
   }
 
   .sp-button[data-size="icon-lg"] {
+    --sp-button-padding-block: calc(var(--space-1) * 2.5);
     --sp-button-height: var(--space-10);
     --sp-button-spinner-size: var(--space-5);
   }
