@@ -28,26 +28,22 @@
     --sp-switch-active: var(--brand);
 
     position: relative;
+    display: flex;
+    align-items: center;
     flex-shrink: 0;
     width: var(--sp-switch-width);
     height: var(--sp-switch-height);
-    padding: 0;
+    padding: var(--border-width);
     cursor: pointer;
     appearance: none;
-    background-color: var(--sp-switch-inactive);
-    border: var(--border-width) solid var(--sp-switch-inactive);
+    background-color: transparent;
+    border: 0;
     border-radius: var(--radius-pill);
     outline: var(--ring-width) solid transparent;
     outline-offset: var(--ring-offset);
     transition:
       background-color var(--transition-base),
       border-color var(--transition-base);
-  }
-
-  .sp-switch[data-state="checked"],
-  .sp-switch[data-checked] {
-    background-color: var(--sp-switch-active);
-    border-color: var(--sp-switch-active);
   }
 
   .sp-switch:focus-visible {
@@ -68,6 +64,7 @@
   }
 
   .sp-switch-thumb {
+    position: relative;
     display: block;
     width: var(--sp-switch-thumb-size);
     height: var(--sp-switch-thumb-size);
@@ -91,10 +88,29 @@
       transition: none;
     }
   }
+  .sp-switch::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--sp-switch-width);
+    height: var(--sp-switch-height);
+    content: "";
+    pointer-events: none;
+    background: var(--sp-switch-inactive);
+    border: var(--border-width) solid var(--sp-switch-inactive);
+    border-radius: inherit;
+    translate: -50% -50%;
+    transition: inherit;
+  }
+
+  .sp-switch[data-state="checked"]::before,
+  .sp-switch[data-checked]::before {
+    background: var(--sp-switch-active);
+    border-color: var(--sp-switch-active);
+  }
+
   @media (pointer: coarse) {
     .sp-switch {
-      display: flex;
-      align-items: center;
       min-width: calc(var(--space-1) * 11);
       min-height: calc(var(--space-1) * 11);
       padding-inline: calc(
@@ -102,37 +118,6 @@
         2 +
         var(--border-width)
       );
-      border: 0;
-    }
-
-    .sp-switch,
-    .sp-switch[data-state="checked"],
-    .sp-switch[data-checked] {
-      background-color: transparent;
-    }
-
-    .sp-switch::before {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: var(--sp-switch-width);
-      height: var(--sp-switch-height);
-      content: "";
-      pointer-events: none;
-      background: var(--sp-switch-inactive);
-      border: var(--border-width) solid var(--sp-switch-inactive);
-      border-radius: inherit;
-      translate: -50% -50%;
-    }
-
-    .sp-switch[data-state="checked"]::before,
-    .sp-switch[data-checked]::before {
-      background: var(--sp-switch-active);
-      border-color: var(--sp-switch-active);
-    }
-
-    .sp-switch-thumb {
-      position: relative;
     }
   }
 }
