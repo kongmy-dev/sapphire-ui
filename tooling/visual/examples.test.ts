@@ -1,35 +1,14 @@
 import { describe, expect, it } from 'bun:test';
-import { exampleNames, ROUTES, slugOf } from './examples';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+import { ARCHIVED_DOCUMENTATION_PINS, exampleNames } from './examples.js';
+import sectionPins from './section-pins.json' with { type: 'json' };
+import { coveredPins } from './specimens.js';
 
-describe('example slugs', () => {
-  it('slugs the headings of the v3 docs sections', () => {
-    const slugs = [
-      'As Link (asChild)',
-      'Select (Radix)',
-      'Theming & Customization',
-      'Editorial & Complex Primitives',
-      'SEO / Head',
-      'Custom Elements (Astro / vanilla HTML)',
-      'useIsomorphicLayoutEffect',
-    ].map(slugOf);
-    expect(slugs).toEqual([
-      'as-link-aschild',
-      'select-radix',
-      'theming-customization',
-      'editorial-complex-primitives',
-      'seo-head',
-      'custom-elements-astro-vanilla-html',
-      'useisomorphiclayouteffect',
-    ]);
-  });
-
-  it('trims separators from both ends', () => {
-    expect(slugOf('  --Props!  ')).toBe('props');
-  });
-});
+const ROOT = join(import.meta.dir, '../..');
 
 describe('example manifest', () => {
-  it('names each pinned section or React example once', () => {
+  it('names each active section or rendered example once', () => {
     const names = exampleNames();
     expect(new Set(names).size).toBe(names.length);
     expect(names).toContain('buttons/variants');
@@ -45,20 +24,20 @@ describe('example manifest', () => {
     ).toBe(true);
   });
 
-  it('lists a section as pinned or skipped, never both', () => {
-    const both = ROUTES.flatMap((route) =>
-      route.pinned.filter((slug) => slug in route.skipped),
-    );
-    expect(both).toEqual([]);
+  it('has a v4 specimen for every active section pin and no unknown section', () => {
+    expect(coveredPins(ROOT).toSorted()).toEqual(sectionPins.toSorted());
   });
 
-  it('gives every skipped section a reason', () => {
-    const reasons = ROUTES.flatMap((route) => Object.values(route.skipped));
-    expect(reasons.every((reason) => reason.length > 0)).toBe(true);
-  });
-
-  it('serves every route once', () => {
-    const paths = ROUTES.map((route) => route.path);
-    expect(new Set(paths).size).toBe(paths.length);
+  it('preserves explicitly retired documentation PNGs without scheduling them', () => {
+    const names = exampleNames();
+    for (const [name, reason] of Object.entries(ARCHIVED_DOCUMENTATION_PINS)) {
+      expect(reason.length).toBeGreaterThan(0);
+      expect(names).not.toContain(name);
+      for (const scheme of ['light', 'dark']) {
+        expect(
+          existsSync(join(ROOT, `tests/visual/pins/${name}.${scheme}.png`)),
+        ).toBe(true);
+      }
+    }
   });
 });

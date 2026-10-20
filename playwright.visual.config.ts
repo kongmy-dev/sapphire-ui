@@ -3,19 +3,12 @@ import { EXAMPLE_URL } from './tooling/examples/catalog';
 import { SPECIMEN_URL } from './tooling/visual/specimens';
 
 const PIN_CONTAINER_VARIABLE = 'SAPPHIRE_PIN_CONTAINER';
-const PORT = 4174;
-const BASE_URL = `http://localhost:${PORT}`;
 
 if (process.env[PIN_CONTAINER_VARIABLE] !== '1') {
   throw new Error(
     'Visual pins are compared and updated only in the pin container: run bun run test:visual or bun run pin.',
   );
 }
-
-const buildThenPreviewDocs = [
-  'bunx vite build --config vite.docs.config.ts --outDir dist-docs',
-  `bunx vite preview --config vite.docs.config.ts --outDir dist-docs --port ${PORT} --strictPort`,
-].join(' && ');
 
 export default defineConfig({
   testDir: './tests/visual',
@@ -39,7 +32,7 @@ export default defineConfig({
     },
   },
   use: {
-    baseURL: BASE_URL,
+    baseURL: SPECIMEN_URL,
     ...devices['Desktop Chrome'],
     deviceScaleFactor: 1,
   },
@@ -49,12 +42,6 @@ export default defineConfig({
       url: EXAMPLE_URL,
       reuseExistingServer: false,
       timeout: 60_000,
-    },
-    {
-      command: buildThenPreviewDocs,
-      url: BASE_URL,
-      reuseExistingServer: false,
-      timeout: 240_000,
     },
     {
       command: 'bun tooling/visual/specimen-server.ts',

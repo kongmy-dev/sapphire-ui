@@ -128,7 +128,7 @@ describe('pin problems', () => {
 });
 
 describe('the repository specimens', () => {
-  it('cover only pins the v3 docs know, each once', () => {
+  it('cover only declared active section pins, each once', () => {
     expect(pinProblems(readSpecimens(REPO), exampleNames())).toEqual([]);
   });
 
