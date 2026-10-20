@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'bun:test';
-import { existsSync, readFileSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { componentStylesheets } from '../css/stylesheet';
+import legacyFacts from './legacy-facts.json' with { type: 'json' };
 import {
   classRenames,
   propValueRenames,
@@ -11,16 +12,6 @@ import {
 
 const ROOT = join(import.meta.dir, '../..');
 const read = (path: string) => readFileSync(join(ROOT, path), 'utf8');
-
-const v3Source = (component: string): string =>
-  [
-    `src/components/ui/${component}.tsx`,
-    `src/components/${component}.tsx`,
-    `src/components/${component}Element.ts`,
-  ]
-    .filter((path) => existsSync(join(ROOT, path)))
-    .map(read)
-    .join('\n');
 
 const CLASS = /\.([a-z][a-z0-9]*(?:--?[a-z0-9]+)*)(?![\w-])/g;
 const TARGET_CLASS = /^\.sp-[a-z0-9]+(?:-[a-z0-9]+)*/;
@@ -69,8 +60,8 @@ const componentCss = (): Record<string, string> => ({
   [FOUNDATION_SHEET]: read(FOUNDATION_SHEET),
 });
 
-const v3Css = read('src/index.css');
-const v3Classes = classesIn(v3Css);
+const v3Classes = legacyFacts.classes;
+const legacyValues: Record<string, string[]> = legacyFacts.componentValues;
 const classMap: Record<string, string> = classRenames;
 const unmapped: Record<string, string> = unmappedClasses;
 const propRenames: Record<
@@ -154,10 +145,10 @@ describe('the prop value renames', () => {
       Object.entries(props).flatMap(([prop, values]) =>
         Object.entries(values).flatMap(([from, to]) => {
           const name = component.replace(/(?<!^)([A-Z])/g, '-$1').toLowerCase();
-          const source = v3Source(component);
+          const offered = legacyValues[component] ?? [];
           const declared = declaredAttributes(sheets[name] ?? '');
           return [
-            ...(new RegExp(`\\b${from}:\\s*\\n?\\s*'|'${from}'`).test(source)
+            ...(offered.includes(from)
               ? []
               : [`v3 ${component} has no ${prop} ${from}`]),
             ...(declared.has(`data-${prop}=${to}`)
@@ -174,7 +165,9 @@ describe('the prop value renames', () => {
 describe('the variable renames', () => {
   it('rename a variable v3 reads to one a component declares', () => {
     const problems = Object.entries(variableRenames).flatMap(([from, to]) => [
-      ...(v3Css.includes(`var(${from}`) ? [] : [`v3 never reads ${from}`]),
+      ...(legacyFacts.variableReads.includes(from)
+        ? []
+        : [`v3 never reads ${from}`]),
       ...(Object.values(sheets).some((sheet) => sheet.includes(`${to}:`))
         ? []
         : [`no component declares ${to}`]),

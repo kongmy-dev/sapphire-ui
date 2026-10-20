@@ -8,13 +8,14 @@ import {
   type Scheme,
   tokenSheet,
 } from '../source/token-values';
+import legacyFacts from './legacy-facts.json' with { type: 'json' };
 import { newTokens, tokenRenames, utilityRenames } from './map';
 
 const read = (path: string) =>
   readFileSync(join(import.meta.dir, '../..', path), 'utf8');
 
-const v3Theme = tokenSheet(read('src/theme.css'));
-const v3Index = tokenSheet(read('src/index.css'));
+const v3Theme = legacyFacts.themeTokens;
+const v3Index = legacyFacts.indexTokens;
 const v3 = [...v3Theme, ...v3Index];
 const v4 = tokenSheet(read('css/tokens.css'));
 const mapping = tokenSheet(read('css/tailwind.css'));
