@@ -9,13 +9,21 @@ it('limits avatars, shows the overflow count, preserves refs and child styles', 
   const ref = createRef<HTMLDivElement>();
   const child = createRef<HTMLSpanElement>();
   render(
-    <AvatarGroup ref={ref} className="custom" max={2} spacing={12}>
+    <AvatarGroup
+      ref={ref}
+      className="custom"
+      aria-label="Team members"
+      max={2}
+      spacing={12}
+    >
       <Avatar ref={child} fallback="AB" style={{ opacity: 0.7 }} />
       <Avatar fallback="CD" />
       <Avatar fallback="EF" />
       ignored text
     </AvatarGroup>,
   );
+  expect(screen.getByRole('group', { name: 'Team members' })).toBe(ref.current);
+  expect(screen.getByRole('img', { name: '1 more people' })).not.toBeNull();
   expect(ref.current?.className).toBe('sp-avatar-group custom');
   expect(child.current?.style.opacity).toBe('0.7');
   expect(child.current?.style.marginInlineStart).toBe('0');

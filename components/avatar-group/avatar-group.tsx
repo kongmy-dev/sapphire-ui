@@ -30,6 +30,7 @@ export function AvatarGroup({
   const overflow = items.length - visible.length;
   return (
     <div
+      role="group"
       {...props}
       className={['sp-avatar-group', className].filter(Boolean).join(' ')}
       data-slot="avatar-group"
@@ -45,6 +46,7 @@ export function AvatarGroup({
       )}
       {overflow > 0 && (
         <Avatar
+          role="img"
           fallback={`+${overflow}`}
           aria-label={`${overflow} more people`}
           style={{
