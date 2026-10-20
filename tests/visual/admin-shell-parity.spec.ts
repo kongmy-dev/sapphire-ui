@@ -204,6 +204,8 @@ const readStyles = (target: Locator, deep: boolean): Promise<Style[]> =>
         'white-space',
         'flex-shrink',
         'flex-basis',
+        'overflow-x',
+        'overflow-y',
       ];
       const origin = element.getBoundingClientRect();
       const read = (node: Element): Style => {
@@ -245,7 +247,9 @@ const readStyles = (target: Locator, deep: boolean): Promise<Style[]> =>
       const nodes = spec.deep
         ? [element, ...element.querySelectorAll('*')]
         : [element];
-      return nodes.map(read);
+      return nodes
+        .filter((node) => !node.parentElement?.closest(spec.glyphs))
+        .map(read);
     },
     {
       properties: [...PROPERTIES],

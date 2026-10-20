@@ -1,65 +1,91 @@
 ---
 name: sapphire-component
-description: How to port one v3 component to its v4 CSS contract in Sapphire UI. Covers the order of a port, the CSS and specimen conventions, the renames map, the checks, the files a port may not touch and what the report carries. Read before porting any component.
+description: Port or change a v4 component, its shared CSS, React examples and behavioural checks.
 ---
 
-# Skill: Port one component
+# Port or change a component
 
-One session ports one component (or one family, as card and badge shared a session). The v3 React look is the starting point; approved D5 refinements and defect fixes supersede it. Read the `sapphire-css`, `sapphire-testing` and `typescript` skills first, then `components/button/`, `components/card/` and `components/dialog/` as the worked examples.
+Read `V4-PLAN.md`, `DESIGN.md`, `coding-principles`, `typescript`, `sapphire-css`
+and `sapphire-testing`; read `sapphire-react` for React work. The frozen `src/`
+tree is reference material until P9. Approved D5 refinements and defect fixes
+supersede the v3 look.
 
-## Setup
+## Scope and setup
 
-```bash
-git worktree add -q .claude/worktrees/<name> -b v4/<name> master
-cd .claude/worktrees/<name> && bun install --ignore-scripts --frozen-lockfile
-```
+Use the assigned worktree and own only the assigned component folders. Reuse a
+suitable managed worktree; a new branch uses `codex/`. Do not reset another
+session's work. Install with `bun install --ignore-scripts --frozen-lockfile`.
+Read the component's v3 public props and behaviour, existing v4 CSS and HTML,
+and its current examples and tests before editing. State what the port covers
+and which shared changes need integration. Button, card and dialog establish
+the pattern for each phase.
 
-Prefix every later command with `cd <worktree> &&`. Bun only. ctx7 before any API you have not used.
+## Shared CSS
 
-## The steps, in order
+- Keep styles in `@layer components`, with `sp-*` classes naming parts and
+  `data-*` attributes naming variants, sizes and states. CSS is shared by HTML,
+  React and custom elements; client code does not import it.
+- Follow D5's tighter proportions in product and editorial UI. Preserve the
+  theme, readable type, focus indication and coarse-pointer target sizes.
+  Fix defects where they originate, not through an example-only override.
+- Use tokens for colours and absolute lengths. Font-relative `em` and `ch`
+  and token-based `calc()` are allowed. Gold text uses `--brand-text`.
+- Keep a component variable only when a variant/state reassigns it, several
+  rules read it, or a documented customization/example uses it. One-use
+  aliases add bytes without adding a useful customization point.
+- Hover belongs in `@media (hover: hover)` and excludes disabled states.
+  Reduced-motion rules disable the component's animations and transitions.
+- Own glyphs are inline Lucide SVG geometry with `sp-icon`, hidden from
+  assistive technology when decorative. Apps and examples may use Lucide.
+  No font glyphs or bundled icon-name lookup.
+- Demo-only layout belongs in the component's `.examples.css`; it must not
+  conceal a defect in the shipped CSS. Preserve existing specimen geometry
+  for unchanged pins, including declared `data-pin-y` offsets.
+- Record renamed classes, props and values in `tooling/migrate/map.ts`.
+  Run `bun run generate` when the component folder inventory changes.
 
-1. **Read the v3 source.** `src/components/ui/<Name>.tsx` (variants, sizes, props, the Radix structure), its rules in `src/index.css`, and its section in `src/pages/<Route>Page.tsx`. The pins are `tests/visual/pins/<route>/<slug>.<scheme>.png`; `bun run scorecard` lists each component's state. Decide out loud what the pins show, what they do not (variants, hover, disabled, a second structure), and what you are choosing not to build.
-2. **Write `components/<name>/<name>.css`** (conventions below).
-3. **Write `components/<name>/<name>.examples.html`**: the v3 page header, then one `<section class="docs-section" data-pin="<route>/<slug>">` per pin you take over, reproducing the v3 section's markup with `sp-*` classes. A section that is not first on its v3 page sets `data-pin-y` to its y in the v3 page (`getBoundingClientRect().top + scrollY`, read in the browser on the v3 docs). Whitespace between inline elements renders as a space; JSX had none.
-4. **Demo-only styles** (v3's inline `maxWidth`, serif card titles) go in `components/<name>/<name>.examples.css`, linked automatically after `/specimen.css`. A `style` attribute may only set a component variable to a `var()` (`style="--sp-button-fg: var(--error-text)"`); the token gate fails a colour or length literal there.
-5. **Add renames to `tooling/migrate/map.ts`**: every v3 class of the family in `classRenames` (or `unmappedClasses` with the reason), every renamed prop value in `propValueRenames`. `tooling/migrate/classes.test.ts` is generic: it checks each entry against `src/` and your CSS, so a port edits the map and never the test.
-6. **Regenerate**: `bun run generate` rebuilds `sapphire.css` (the generated-files gate fails on a stale one).
-7. **Check and commit** (below). Look at the specimen at `http://localhost:4175/components/<name>/<name>.examples.html?scheme=dark` after `bun tooling/visual/specimen-server.ts`.
+## React and examples
 
-## CSS conventions
+- React 19 refs are props. Use native/Radix-derived prop types, named exports,
+  `data-slot`, literal variant tuples and the fixed class plus `className`.
+- Static clients import no Radix. `asChild` uses the tested `lib/slot`.
+  Behaviour uses the unified optional `radix-ui` peer. Keep modules safe to
+  import on a server and preserve existing public acceptance of nullable or
+  explicitly undefined props unless a mapped API change is intentional.
+- `<name>.examples.tsx` exports `examples`, an `as const` array of
+  `{ name: 'stable-name', render: NamedExample }`. Render functions are named,
+  zero-prop React components. Consumers use `createElement` or JSX, never
+  call the render function directly. These examples feed docs and tests.
+- Tests reach components through their public props and DOM roles/names.
+  Cover controlled/uncontrolled and disabled states, callbacks, refs,
+  keyboard operation and defect regressions that apply. Browser tests cover
+  layout and portals; axe scans the full document after opening overlays.
+- SSR HTML snippets cannot show portalled content. Documentation must explain
+  that limitation rather than imply a static snippet implements the dialog.
 
-- Everything sits in `@layer components`. `.sp-<name>` is the default variant and size; `data-variant`, `data-size` and boolean `data-*` (`data-hoverable`, `data-full-width`) describe the rest. Sub-parts are `.sp-<name>-header`, `-body`, `-footer`.
-- A variable `--sp-<name>-<thing>` is declared on the base class only when a variant, size, state or media query reassigns it, more than one rule reads it, or a specimen or test sets it. A value read once and never reassigned is written inline: an app overrides that property directly, since its unlayered CSS beats `@layer components`, and the variable would cost bytes against the budget (P-13) for nothing. A number-only `calc()` (`calc(1.25 / 0.875)`) stays in a variable, because the minifier folds it to five decimals. The report names every variable.
-- Colours are tokens (`var(--card)`, `var(--error)`); never a hex. Use `--brand-text` for gold text and the status text tokens (`--error-text`, `--success-text`, `--warning-text`, `--info-text`) for status-coloured text and outlines; a filled status colour keeps its base token (`--error`). Use the `--on-dark` family on dark surfaces. A value that no token holds and two components share becomes a token in `css/tokens.css` with its `css/tailwind.css` mapping and `DESIGN.md` row; one component's own value stays a variable.
-- Lengths: an on-scale value uses its token; off-scale geometry is `calc(var(--space-1) * N)`; off-scale type is `calc(var(--text-base) * N)`; a length that follows the font size (tracking, prose rhythm, a line measure) is an `em` or `ch` literal. The token gate bans px, rem and the other absolute literals outside `css/tokens.css` (a media-query condition such as `min-width: 48rem` is not scanned).
-- Hover goes in `@media (hover: hover)` and never applies to disabled elements. `@media (prefers-reduced-motion: reduce)` stops every transition and animation the component has.
-- Focus is `:focus-visible` with the ring tokens. Preserve visible keyboard focus when applying D5; never retain a missing focus indicator for parity.
-- No comments (P-1), no gradients except the `premium` button.
-- A component with two structures (native `<dialog>` and Radix's `data-state` overlay plus content) states the look once and shares keyframes; native exit animation works only where the engine supports `display` and `overlay` transitions, so entry must work everywhere (dialog.css).
-- Names keep v3's React names unless a v4 token makes one wrong (`accent` becomes `brand`; `dark` becomes `on-dark`). Every rename is in the map.
-- A glyph arrives with the icon port: a section that renders a Material Symbols icon stays on its v3 pin, and the specimen leaves the glyph out. Do not add an icon library or a glyph.
+## Validation and integration
 
-## Checks (all must pass in the worktree)
+Run `bun run gate`, the affected accessibility checks and container visual
+checks. New files must be included explicitly in scoped gates or staged before
+running tracked-file gates. Report counts and remaining failures honestly.
+Coverage counts every public implementation and example file, including
+unimported files; tooling gates have their own failure-case tests (P-15).
 
-```bash
-bun run gate                 # lint, typecheck, knip, comment, size, dep, token, budget, generated, freeze, test, registry
-bun run test:visual          # run it twice in a row, both green (needs Docker; counts in the report)
-bun run test:a11y            # green; counts in the report
-git diff master --stat -- tests/visual/pins    # must print nothing
-```
+Only the integrating session updates pins through `bun run pin`, after reviewing
+expected, actual and diff images for an approved change. Preserve unchanged
+states and all behaviour/geometry checks. When a refinement supersedes a v3
+parity comparison, first give the affected state an equivalent v4 pin; keep
+its interaction assertions. Retain the old renderer until P9 closes the full
+state inventory.
 
-- Only the integrating session runs `bun run pin` for named, owner-approved visual changes after displaying expected/actual/diff images. Never pass `--update-snapshots` directly. Never `docker rm`, `stop` or `prune`; never restart Colima.
-- A pin you cannot match after a real attempt: copy its expected, actual and diff PNGs to the scratchpad folder the brief names, leave that section on its v3 pin (remove its `data-pin` from the specimen), and report the cause. Never change the look to pass.
-- Fix axe findings when the affected component is touched; never add waivers to preserve a known defect. Remove resolved entries from `KNOWN_VIOLATIONS` in `tests/specimens.a11y.spec.ts` and retain regression coverage.
-- A behaviour the pin cannot show (an open dialog) gets a live parity spec against the v3 docs under `tests/visual/`, comparing pixels, computed styles and focus; P9 replaces it with a pin.
-- Hermetic tests only; a new test fails when the code it covers is reverted. No casts but `as const`, no `!`, no `any`.
+Run a check again when code changes, a failure or an unresolved concern warrants
+it. Never lower a threshold or waive a defect to obtain a pass. Before a phase
+closes, the integrated gate and all checks required by that phase must pass.
+An independent reviewer checks the changes before integration.
 
-## Files a port must not touch
-
-Other components' folders; `site/specimen.css`; `css/` (except a shared token added through the token rules); `tooling/` (except `tooling/migrate/map.ts`); `tests/visual/pins/`; this skill; `src/`, `registry/blocks/`, `tests/registry-consumer/app/` and `design/`. A change a port needs in any of them goes to the owner in the report.
-
-## Commits and report
-
-One-line commits (`type: what changed`), explicit `git add <paths>`, never `git add .`, never push, tag or publish. Several small commits are fine.
-
-The report pastes command output and labels each claim measured, inferred or unverified. It carries: the gate result; `test:visual` counts for both runs and the pins now rendered by specimens; `test:a11y` counts and each waiver with its ratio; the budget gate's gzipped bytes; the commits; every variable, variant and data attribute with each rename; sections left on v3 pins and why; mismatch image paths; every judgment call.
+Do not push, tag, publish, clear shared caches or alter Docker services as part
+of a component port. Report infrastructure blockers to the integrating session.
+Commit only owned files, with an explicit path list and a short one-line subject.
+Report the commits, validation evidence, API/migration changes, reviewed visual
+changes and any unresolved integration dependency. Do not edit the frozen lane
+or another component's folder without the integrating session assigning it.

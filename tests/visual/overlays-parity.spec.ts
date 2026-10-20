@@ -27,6 +27,8 @@ const GLYPH_TYPOGRAPHY = [
   'line-height',
   'letter-spacing',
   'white-space',
+  'overflow-x',
+  'overflow-y',
 ] as const;
 const KBD_SKIPPED = ['line-height'] as const;
 const HIGHLIGHTED = '[data-highlighted]';
@@ -247,14 +249,20 @@ const readTree = (panel: Locator): Promise<Entry[]> =>
         for (const name of wanted.colours)
           style[name] = colourOf(computed, name);
         return {
-          tag: element.tagName.toLowerCase(),
+          tag: element.matches(wanted.glyphs)
+            ? 'glyph'
+            : element.tagName.toLowerCase(),
           text: textOf(element),
           rect: rectOf(element),
           style,
         };
       };
       return [root, ...root.querySelectorAll('*')]
-        .filter((element) => !(element instanceof SVGElement))
+        .filter(
+          (element) =>
+            !(element instanceof SVGElement) ||
+            element.matches('.sp-command-palette-icon'),
+        )
         .map(describe);
     },
     {
