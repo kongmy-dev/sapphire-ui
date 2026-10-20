@@ -42,7 +42,10 @@ export function DropdownMenuContent({
       return () => {
         restore?.();
         if (typeof cleanup === 'function') return cleanup();
-        if (typeof ref === 'function') return ref(null);
+        if (typeof ref === 'function') {
+          ref(null);
+          return;
+        }
         if (ref) ref.current = null;
       };
     },
