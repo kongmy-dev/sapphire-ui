@@ -5,8 +5,13 @@
 
   .sp-native-select {
     --sp-native-select-radius: var(--radius-btn);
-    --sp-native-select-padding-block: var(--space-3);
-    --sp-native-select-padding-inline: var(--space-4);
+    --sp-native-select-height: calc(var(--space-1) * 9);
+    --sp-native-select-padding-block: calc(
+      (var(--sp-native-select-height) - var(--sp-native-select-line-height)) /
+      2 -
+      var(--border-width)
+    );
+    --sp-native-select-padding-inline: var(--space-3);
     --sp-native-select-font-size: var(--text-base);
     --sp-native-select-line-height: var(--space-6);
     --sp-native-select-bg: var(--card);
@@ -22,6 +27,7 @@
     --sp-native-select-focus: 0 0 transparent;
 
     width: 100%;
+    min-height: var(--sp-native-select-height);
     padding: var(--sp-native-select-padding-block) var(--space-10)
       var(--sp-native-select-padding-block)
       var(--sp-native-select-padding-inline);
@@ -76,15 +82,14 @@
   }
 
   .sp-native-select[data-size="sm"] {
-    --sp-native-select-padding-block: var(--space-2);
-    --sp-native-select-padding-inline: var(--space-3);
+    --sp-native-select-height: var(--space-8);
     --sp-native-select-font-size: var(--text-sm);
     --sp-native-select-line-height: var(--space-5);
   }
 
   .sp-native-select[data-size="lg"] {
-    --sp-native-select-padding-block: var(--space-4);
-    --sp-native-select-padding-inline: var(--space-5);
+    --sp-native-select-height: var(--space-10);
+    --sp-native-select-padding-inline: var(--space-4);
     --sp-native-select-font-size: var(--text-lg);
     --sp-native-select-line-height: calc(var(--space-1) * 7);
   }
@@ -111,5 +116,21 @@
     .sp-native-select {
       transition: none;
     }
+  }
+  @media (pointer: coarse) {
+    .sp-native-select {
+      min-height: calc(var(--space-1) * 11);
+    }
+  }
+
+  .sp-native-select[multiple],
+  .sp-native-select[size]:not([size="1"]) {
+    min-height: calc(var(--sp-native-select-height) * 3);
+    padding-inline: var(--sp-native-select-padding-inline);
+  }
+
+  .sp-native-select[multiple] + .sp-native-select-icon,
+  .sp-native-select[size]:not([size="1"]) + .sp-native-select-icon {
+    display: none;
   }
 }

@@ -20,7 +20,7 @@
   .sp-dialog {
     --sp-dialog-width: calc(100vw - var(--space-8));
     --sp-dialog-max-width: calc(var(--space-1) * 200);
-    --sp-dialog-padding-inline: var(--space-6);
+    --sp-dialog-padding-inline: var(--space-5);
 
     position: fixed;
     inset: 50% auto auto 50%;
@@ -88,6 +88,7 @@
     align-items: center;
     justify-content: space-between;
     padding: var(--space-4) var(--sp-dialog-padding-inline);
+    padding-inline-end: calc(var(--sp-dialog-padding-inline) + var(--space-10));
     border-bottom: var(--border-width) solid var(--border);
   }
 
@@ -101,7 +102,7 @@
   }
 
   .sp-dialog-description {
-    margin: var(--space-1) 0 var(--space-4);
+    margin: var(--space-1) 0 var(--space-2);
     font-family: var(--font-sans);
     font-size: var(--text-sm);
     line-height: calc(var(--space-1) * 5);
@@ -163,7 +164,9 @@
     --sp-dialog-action-ring: var(--ring);
     --sp-dialog-action-focus: none;
 
-    padding: calc(var(--space-1) * 2.5) var(--space-5);
+    min-height: calc(var(--space-1) * 9);
+    padding: calc(var(--space-2) - var(--sp-dialog-action-border-width))
+      var(--space-4);
     font-family: var(--font-sans);
     font-size: var(--text-sm);
     font-weight: 500;
@@ -274,6 +277,14 @@
 
     to {
       opacity: 0;
+    }
+  }
+  @media (pointer: coarse) {
+    .sp-dialog-close,
+    .sp-dialog-action {
+      min-width: calc(var(--space-1) * 11);
+      min-height: calc(var(--space-1) * 11);
+      margin-block: 0;
     }
   }
 }

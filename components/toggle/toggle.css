@@ -108,4 +108,10 @@
       transition: none;
     }
   }
+  @media (pointer: coarse) {
+    .sp-toggle {
+      min-width: calc(var(--space-1) * 11);
+      min-height: calc(var(--space-1) * 11);
+    }
+  }
 }

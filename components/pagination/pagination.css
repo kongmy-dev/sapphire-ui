@@ -1,6 +1,6 @@
 @layer components {
   .sp-pagination {
-    --sp-pagination-size: var(--space-8);
+    --sp-pagination-size: calc(var(--space-1) * 9);
     --sp-pagination-bg: transparent;
     --sp-pagination-fg: var(--foreground);
     --sp-pagination-border-color: var(--border);
@@ -90,6 +90,12 @@
   @media (prefers-reduced-motion: reduce) {
     .sp-pagination-link {
       transition: none;
+    }
+  }
+  @media (pointer: coarse) {
+    .sp-pagination-link {
+      min-width: calc(var(--space-1) * 11);
+      min-height: calc(var(--space-1) * 11);
     }
   }
 }

@@ -1,8 +1,13 @@
 @layer components {
   .sp-input {
     --sp-input-radius: var(--radius-btn);
-    --sp-input-padding-block: var(--space-3);
-    --sp-input-padding-inline: var(--space-4);
+    --sp-input-height: calc(var(--space-1) * 9);
+    --sp-input-padding-block: calc(
+      (var(--sp-input-height) - var(--sp-input-line-height)) /
+      2 -
+      var(--border-width)
+    );
+    --sp-input-padding-inline: var(--space-3);
     --sp-input-font-family: var(--font-sans);
     --sp-input-font-size: var(--text-base);
     --sp-input-line-height: var(--space-6);
@@ -53,7 +58,6 @@
 
   .sp-input[data-variant="on-dark"] {
     --sp-input-radius: var(--radius-sm);
-    --sp-input-padding-block: calc(var(--space-1) * 2.5);
     --sp-input-padding-inline: var(--space-3);
     --sp-input-bg: var(--field-dark);
     --sp-input-fg: var(--on-dark);
@@ -62,15 +66,14 @@
   }
 
   .sp-input[data-size="sm"] {
-    --sp-input-padding-block: var(--space-2);
-    --sp-input-padding-inline: var(--space-3);
+    --sp-input-height: var(--space-8);
     --sp-input-font-size: var(--text-sm);
     --sp-input-line-height: var(--space-5);
   }
 
   .sp-input[data-size="lg"] {
-    --sp-input-padding-block: var(--space-4);
-    --sp-input-padding-inline: var(--space-5);
+    --sp-input-height: var(--space-10);
+    --sp-input-padding-inline: var(--space-4);
     --sp-input-font-size: var(--text-lg);
     --sp-input-line-height: calc(var(--space-1) * 7);
   }
@@ -88,6 +91,11 @@
   @media (prefers-reduced-motion: reduce) {
     .sp-input {
       transition: none;
+    }
+  }
+  @media (pointer: coarse) {
+    .sp-input {
+      min-height: calc(var(--space-1) * 11);
     }
   }
 }

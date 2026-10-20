@@ -176,4 +176,10 @@
       transform: scale(0.95);
     }
   }
+  @media (pointer: coarse) {
+    .sp-dropdown-menu-item {
+      min-width: calc(var(--space-1) * 11);
+      min-height: calc(var(--space-1) * 11);
+    }
+  }
 }

@@ -58,7 +58,6 @@
 
   .sp-cookie-banner-actions > .sp-button {
     flex: 1 1 auto;
-    min-height: var(--space-10);
   }
 
   @media (min-width: 40rem) {

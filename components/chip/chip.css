@@ -94,4 +94,15 @@
       transition: none;
     }
   }
+  @media (pointer: coarse) {
+    .sp-chip:has(.sp-chip-dismiss) {
+      padding-block: 0;
+    }
+
+    .sp-chip-dismiss {
+      min-width: calc(var(--space-1) * 11);
+      min-height: calc(var(--space-1) * 11);
+      margin-block: 0;
+    }
+  }
 }

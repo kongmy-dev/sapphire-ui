@@ -111,4 +111,36 @@
       transition: none;
     }
   }
+  @media (pointer: coarse) {
+    .sp-checkbox-field {
+      align-items: center;
+    }
+
+    .sp-checkbox {
+      position: relative;
+      width: calc(var(--space-1) * 11);
+      height: calc(var(--space-1) * 11);
+      margin: 0;
+      background: transparent;
+      border: 0;
+    }
+
+    .sp-checkbox::before {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: var(--sp-checkbox-size);
+      height: var(--sp-checkbox-size);
+      content: "";
+      pointer-events: none;
+      background: var(--sp-checkbox-bg);
+      border: var(--border-width-strong) solid var(--sp-checkbox-border-color);
+      border-radius: inherit;
+      translate: -50% -50%;
+    }
+
+    .sp-checkbox-indicator {
+      position: relative;
+    }
+  }
 }

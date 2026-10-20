@@ -1,6 +1,6 @@
 @layer components {
   .sp-card {
-    --sp-card-padding: var(--space-8);
+    --sp-card-padding: var(--space-5);
     --sp-card-bg: var(--card);
     --sp-card-fg: currentcolor;
     --sp-card-border-width: var(--border-width);
@@ -46,7 +46,7 @@
     --sp-card-lift: 0;
 
     display: grid;
-    gap: var(--space-8);
+    gap: var(--space-5);
   }
 
   .sp-card[data-variant="dashed"] {
@@ -61,7 +61,7 @@
   }
 
   .sp-card[data-padding="compact"] {
-    --sp-card-padding: var(--space-5);
+    --sp-card-padding: var(--space-3);
   }
 
   .sp-card[data-padding="none"] {

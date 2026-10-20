@@ -90,4 +90,37 @@
     line-height: var(--space-4);
     color: var(--muted-foreground);
   }
+  @media (pointer: coarse) {
+    .sp-radio-group-option {
+      align-items: center;
+    }
+
+    .sp-radio-group-item {
+      position: relative;
+      width: calc(var(--space-1) * 11);
+      height: calc(var(--space-1) * 11);
+      margin: 0;
+      background: transparent;
+      border: 0;
+    }
+
+    .sp-radio-group-item::before {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: var(--sp-radio-group-item-size);
+      height: var(--sp-radio-group-item-size);
+      content: "";
+      pointer-events: none;
+      background: var(--card);
+      border: var(--border-width-strong) solid
+        var(--sp-radio-group-item-border-color);
+      border-radius: inherit;
+      translate: -50% -50%;
+    }
+
+    .sp-radio-group-indicator {
+      position: relative;
+    }
+  }
 }

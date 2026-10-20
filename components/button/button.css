@@ -2,11 +2,16 @@
   .sp-button {
     --sp-button-radius: var(--radius-btn);
     --sp-button-gap: var(--space-2);
-    --sp-button-padding-block: calc(var(--space-1) * 2.25);
+    --sp-button-height: calc(var(--space-1) * 9);
+    --sp-button-padding-block: calc(
+      (var(--sp-button-height) - var(--sp-button-line-height)) /
+      2 -
+      var(--sp-button-border-width)
+    );
     --sp-button-padding-inline: var(--space-4);
     --sp-button-font-size: var(--text-sm);
     --sp-button-font-weight: 600;
-    --sp-button-line-height: var(--leading-normal);
+    --sp-button-line-height: var(--space-5);
     --sp-button-spinner-size: var(--space-4);
     --sp-button-bg: var(--primary);
     --sp-button-fg: var(--primary-foreground);
@@ -25,6 +30,8 @@
     align-items: center;
     justify-content: center;
     gap: var(--sp-button-gap);
+    min-width: var(--sp-button-height);
+    min-height: var(--sp-button-height);
     padding: var(--sp-button-padding-block) var(--sp-button-padding-inline);
     font-family: var(--font-sans);
     font-size: var(--sp-button-font-size);
@@ -162,7 +169,7 @@
 
   .sp-button[data-size="xs"] {
     --sp-button-gap: calc(var(--space-1) * 1.5);
-    --sp-button-padding-block: var(--space-1);
+    --sp-button-height: var(--space-6);
     --sp-button-padding-inline: calc(var(--space-1) * 2.5);
     --sp-button-font-size: var(--text-xs);
     --sp-button-line-height: var(--space-4);
@@ -170,15 +177,15 @@
   }
 
   .sp-button[data-size="sm"] {
-    --sp-button-padding-block: calc(var(--space-1) * 1.5);
+    --sp-button-height: var(--space-8);
     --sp-button-padding-inline: var(--space-3);
     --sp-button-font-size: calc(var(--text-base) * 0.8125);
     --sp-button-spinner-size: calc(var(--space-1) * 3.5);
   }
 
   .sp-button[data-size="lg"] {
-    --sp-button-padding-block: var(--space-4);
-    --sp-button-padding-inline: var(--space-8);
+    --sp-button-height: var(--space-10);
+    --sp-button-padding-inline: var(--space-5);
     --sp-button-font-size: var(--text-lg);
     --sp-button-line-height: calc(var(--space-1) * 7);
     --sp-button-spinner-size: var(--space-5);
@@ -186,30 +193,20 @@
 
   .sp-button[data-size="xl"] {
     --sp-button-gap: calc(var(--space-1) * 2.5);
-    --sp-button-padding-block: var(--space-5);
-    --sp-button-padding-inline: var(--space-10);
+    --sp-button-height: calc(var(--space-1) * 11);
+    --sp-button-padding-inline: var(--space-6);
     --sp-button-font-size: calc(var(--text-base) * 1.25);
     --sp-button-line-height: calc(var(--space-1) * 7);
     --sp-button-spinner-size: var(--space-5);
   }
 
   .sp-button[data-size="icon-sm"] {
-    --sp-button-padding-block: calc(var(--space-1) * 1.5);
-    --sp-button-padding-inline: calc(var(--space-1) * 1.5);
-    --sp-button-font-size: var(--text-base);
+    --sp-button-height: var(--space-8);
     --sp-button-spinner-size: calc(var(--space-1) * 3.5);
   }
 
-  .sp-button[data-size="icon"] {
-    --sp-button-padding-block: calc(var(--space-1) * 2.5);
-    --sp-button-padding-inline: calc(var(--space-1) * 2.5);
-    --sp-button-font-size: var(--text-base);
-  }
-
   .sp-button[data-size="icon-lg"] {
-    --sp-button-padding-block: calc(var(--space-1) * 3.5);
-    --sp-button-padding-inline: calc(var(--space-1) * 3.5);
-    --sp-button-font-size: var(--text-base);
+    --sp-button-height: var(--space-10);
     --sp-button-spinner-size: var(--space-5);
   }
 
@@ -251,6 +248,29 @@
   @keyframes sp-button-spin {
     to {
       transform: rotate(360deg);
+    }
+  }
+  .sp-button[data-size="icon-sm"],
+  .sp-button[data-size="icon"],
+  .sp-button[data-size="icon-lg"] {
+    --sp-button-font-size: var(--text-base);
+    --sp-button-padding-inline: calc(
+      (var(--sp-button-height) - var(--sp-button-spinner-size)) /
+      2 -
+      var(--sp-button-border-width)
+    );
+  }
+
+  .sp-button > svg {
+    flex-shrink: 0;
+    width: var(--sp-button-spinner-size);
+    height: var(--sp-button-spinner-size);
+  }
+
+  @media (pointer: coarse) {
+    .sp-button {
+      min-width: calc(var(--space-1) * 11);
+      min-height: calc(var(--space-1) * 11);
     }
   }
 }

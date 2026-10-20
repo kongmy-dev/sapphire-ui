@@ -1,7 +1,11 @@
 @layer components {
   .sp-select-trigger {
-    --sp-select-trigger-height: var(--space-10);
-    --sp-select-trigger-padding-block: var(--space-2);
+    --sp-select-trigger-height: calc(var(--space-1) * 9);
+    --sp-select-trigger-padding-block: calc(
+      (var(--sp-select-trigger-height) - var(--sp-select-trigger-line-height)) /
+      2 -
+      var(--border-width)
+    );
     --sp-select-trigger-padding-inline: var(--space-3);
     --sp-select-trigger-font-size: var(--text-sm);
     --sp-select-trigger-line-height: var(--space-5);
@@ -12,7 +16,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: var(--sp-select-trigger-height);
+    min-height: var(--sp-select-trigger-height);
     padding: var(--sp-select-trigger-padding-block)
       var(--sp-select-trigger-padding-inline);
     font-family: var(--font-sans);
@@ -44,13 +48,11 @@
 
   .sp-select-trigger[data-size="sm"] {
     --sp-select-trigger-height: var(--space-8);
-    --sp-select-trigger-padding-block: calc(var(--space-1) * 1.5);
     --sp-select-trigger-padding-inline: calc(var(--space-1) * 2.5);
   }
 
   .sp-select-trigger[data-size="lg"] {
-    --sp-select-trigger-height: var(--space-12);
-    --sp-select-trigger-padding-block: calc(var(--space-1) * 2.5);
+    --sp-select-trigger-height: var(--space-10);
     --sp-select-trigger-padding-inline: var(--space-4);
     --sp-select-trigger-font-size: var(--text-base);
     --sp-select-trigger-line-height: var(--space-6);
@@ -66,8 +68,8 @@
 
   .sp-select-icon {
     flex-shrink: 0;
-    width: calc(var(--space-1) * 3.5);
-    height: calc(var(--space-1) * 3.5);
+    width: var(--space-4);
+    height: var(--space-4);
     margin-left: var(--space-2);
     opacity: 0.6;
   }
@@ -150,8 +152,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: calc(var(--space-1) * 3.5);
-    height: calc(var(--space-1) * 3.5);
+    width: var(--space-4);
+    height: var(--space-4);
   }
 
   .sp-select-check {
@@ -162,5 +164,11 @@
     height: var(--border-width);
     margin: var(--space-1) calc(var(--space-1) * -1);
     background: var(--border);
+  }
+  @media (pointer: coarse) {
+    .sp-select-trigger,
+    .sp-select-item {
+      min-height: calc(var(--space-1) * 11);
+    }
   }
 }

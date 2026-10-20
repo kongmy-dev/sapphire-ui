@@ -1,9 +1,9 @@
 @layer components {
   .sp-textarea {
     --sp-textarea-radius: var(--radius-btn);
-    --sp-textarea-min-height: calc(var(--space-1) * 30);
-    --sp-textarea-padding-block: var(--space-3);
-    --sp-textarea-padding-inline: var(--space-4);
+    --sp-textarea-min-height: var(--space-24);
+    --sp-textarea-padding-block: var(--space-2);
+    --sp-textarea-padding-inline: var(--space-3);
     --sp-textarea-font-family: var(--font-sans);
     --sp-textarea-font-size: var(--text-base);
     --sp-textarea-line-height: var(--space-6);
@@ -60,7 +60,6 @@
 
   .sp-textarea[data-variant="on-dark"] {
     --sp-textarea-radius: var(--radius-sm);
-    --sp-textarea-padding-block: calc(var(--space-1) * 2.5);
     --sp-textarea-padding-inline: var(--space-3);
     --sp-textarea-bg: var(--field-dark);
     --sp-textarea-fg: var(--on-dark);
@@ -69,7 +68,7 @@
   }
 
   .sp-textarea[data-size="sm"] {
-    --sp-textarea-min-height: calc(var(--space-1) * 20);
+    --sp-textarea-min-height: var(--space-16);
     --sp-textarea-padding-block: var(--space-2);
     --sp-textarea-padding-inline: var(--space-3);
     --sp-textarea-font-size: var(--text-sm);
@@ -77,9 +76,9 @@
   }
 
   .sp-textarea[data-size="lg"] {
-    --sp-textarea-min-height: calc(var(--space-1) * 40);
-    --sp-textarea-padding-block: var(--space-4);
-    --sp-textarea-padding-inline: var(--space-5);
+    --sp-textarea-min-height: var(--space-32);
+    --sp-textarea-padding-block: var(--space-3);
+    --sp-textarea-padding-inline: var(--space-4);
     --sp-textarea-font-size: var(--text-lg);
     --sp-textarea-line-height: calc(var(--space-1) * 7);
   }
