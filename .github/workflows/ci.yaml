@@ -68,6 +68,14 @@ jobs:
       - name: Accessibility tests
         run: bun run test:a11y
 
+      - name: Preserve browser diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: browser-failures
+          path: test-results/
+          retention-days: 7
+
   visual:
     runs-on: ubuntu-24.04-arm
     steps:
@@ -80,3 +88,11 @@ jobs:
 
       - name: Visual pins
         run: bun run test:visual
+
+      - name: Preserve visual differences
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: visual-failures
+          path: test-results/
+          retention-days: 7
