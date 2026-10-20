@@ -5,6 +5,28 @@
 3.0.1 and 3.0.2 reached GitHub Packages only, so this is the first npm release since
 3.0.0. The migration maps from 3.x land here with the release.
 
+### Package and migration
+
+- ESM-only, file-for-file JavaScript and declarations. Import components through named
+  subpaths such as `@kongmy-dev/sapphire-ui/button`; the root barrel and CommonJS exports
+  are removed. Internal modules and examples are not public import paths.
+- Import `sapphire.css` for all styles, or `foundations.css` plus the component CSS files
+  an app owns. Foundations includes the selected fonts, tokens, base and layout only.
+  `style.css` remains an alias for the full stylesheet. Font binaries ship in the package.
+- React, React DOM, Radix UI and resizable panels are optional peers. CSS and native
+  custom elements install without React. Basic React components do not load Radix.
+  The package has no runtime dependencies.
+- Native elements use `elements/<name>` subpaths. Their exported constructors are
+  undefined on the server; import modules safely during SSR and construct elements only
+  in a browser. React clients render shared CSS directly rather than wrapping elements.
+- App helpers use `theme`, `consent`, `seo-tags` and `hooks/use-*` subpaths. Metadata
+  serialization escapes closing-script injection. Analytics waits for consent and
+  rejects conflicting simultaneous PostHog configurations.
+- Icons accept React SVG elements; string font glyphs and filled-icon options are removed.
+  Use Lucide-compatible SVG geometry. `accent` banner styling becomes `brand`.
+- The committed API snapshot covers declaration graphs, CSS selectors, custom property
+  names and the exact export map; changes require a version increase and release notes.
+
 ### Distribution
 
 - **npm only.** The package is no longer published to GitHub Packages. If your `.npmrc`

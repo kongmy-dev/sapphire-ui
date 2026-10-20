@@ -1,0 +1,26 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "rootDir": ".",
+    "outDir": "dist",
+    "types": ["react", "react-dom"],
+    "removeComments": true
+  },
+  "include": [
+    "components/**/*.ts",
+    "components/**/*.tsx",
+    "elements/**/*.ts",
+    "hooks/**/*.ts",
+    "lib/**/*.ts",
+    "lib/**/*.tsx"
+  ],
+  "exclude": [
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.examples.ts",
+    "**/*.examples.tsx",
+    "**/*-tests/**"
+  ]
+}

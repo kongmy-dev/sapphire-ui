@@ -1,3 +1,7 @@
+> v4 package work is on this branch. Read [the v4 package contract](https://github.com/kongmy-dev/sapphire-ui/blob/master/docs/package-v4.md)
+> for ESM subpaths, shared foundations, optional peers and native-element SSR behavior.
+> The older usage sections below remain until the documentation migration completes.
+
 # Sapphire UI — Design System Spec & Components
 
 Sapphire UI is the official, editorial-focused design system for **KONGMY Digital Solutions** (`kongmy.dev`). Grounded in deep navy authority and crisp gold accents, it is engineered to be a ruthlessly efficient, zero-bloat specimen tailored for professional IT consultancies, technical blogs (such as `blog.kongmy.dev`), and high-performance Web tools.
