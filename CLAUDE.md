@@ -1,150 +1,84 @@
-# CLAUDE.md — Sapphire UI
+# Sapphire UI
 
-Sapphire UI is the official design system for **KONGMY Digital Solutions** (`kongmy.dev`). It exports both a compiled stylesheet (`sapphire.css`) and a typed React component library. All work here must honour the navy + gold editorial aesthetic.
+Sapphire UI is KONGMY Digital Solutions' design system: navy, gold, editorial type,
+shared CSS, typed React clients and native custom elements. Read `DESIGN.md` for UI work.
+`AGENTS.md` links to this file. `V4-PLAN.md` remains the release checklist until release.
 
-## V4 contract and distribution
+## Working rules
 
-`V4-PLAN.md` is the active phase plan. CSS is the shared visual contract; React and custom elements render it. Every component is ported. npm is for using components; the registry is for owning their source, served under `/r/v4/`.
+- State unresolved input/output choices before building; choose the narrowest useful scope.
+- Answer an experimentally testable question with an experiment. Verify unfamiliar APIs with ctx7;
+  if it is unavailable, use the dependency's official documentation and report that fallback.
+- Use Bun for installs, scripts and local tools. Only the approved CI publishing step uses npm.
+- A measurement names its command and commit. Mark other claims inferred or unverified.
+- Record an architectural decision in an ADR before implementation; keep open work in `docs/backlog.md`.
+- Fix a rule wherever it applies. A repeated correction becomes a gate; judgment belongs in a skill.
+- Preserve concurrent work. Stage explicit owned paths; commit a short `type: subject` line.
+- Never push, publish, tag, change pins or perform destructive operations without authorization.
+- Never clear shared caches or Docker state to make a check pass. Use `.yaml` for new YAML.
 
-Shared foundations contain fonts, tokens, base and layout. A component's CSS comes from its package or its vendored source, never both. Full-package consumers may use `sapphire.css`; mixed apps use foundations and individual CSS entries. Sapphire stays backend-agnostic. Registry items declare their own transitive requirements.
+## Rules and enforcement
 
-Apply Tidy everywhere across product and editorial surfaces: compact controls, restrained disclosure affordances and tighter grouping, preserving the navy/gold theme, typefaces, legibility and effective targets. Fix defects in the affected port. The owner controls consumer adoption.
+| ID | Rule | Enforcement |
+|---|---|---|
+| P-1 | No source comments except justified style/complexity suppressions or an untestable vendor-bug URL. | `comment-check` |
+| P-2 | Imports follow css → lib/hooks → components/elements → blocks → site; runtime never imports tooling; every tracked source is reached. | `boundary-check`, Knip |
+| P-3 | No `any`, assertions except `as const`, non-null assertions, interfaces or enums; derive props and variant unions. | TypeScript, Biome |
+| P-4 | Rendered classes and attribute values match CSS; native elements preserve the shared contract. | `contract-check`, equivalence tests |
+| P-5 | Tokens own colours and absolute lengths; mappings and DESIGN tables agree; every variable resolves. | `token-check` |
+| P-6 | Each new file, export and dependency has a consumer in the same change. | Knip |
+| P-7 | Limits stay 7 cognitive complexity, 89 function lines, 474 file lines and 5 nesting levels; improve measured p95 without raising limits. | `size-check` |
+| P-8 | Examples are accessible in both schemes; interactions support keyboard input. | `test:a11y`, coverage checks |
+| P-9 | Examples and reached states match zero-tolerance pins; only reviewed `bun run pin` updates them. | `test:visual` |
+| P-10 | Tests use public props and DOM roles, assert behaviour without snapshots, and cover at least 95% of lines/functions per runtime/example file. | `test`, `coverage-check`, boundary gate |
+| P-11 | Docs describe the current contract; CLAUDE ≤120 lines, consumer skill ≤60; ADRs <1,000 words; skill paths exist. | `docs-check`, `skill-refs-check` |
+| P-12 | Exact devDeps, pinned Bun/TypeScript, no runtime dependencies, optional peers, versioned registry dependencies. | `dep-check` |
+| P-13 | Full CSS stays within its approved gzip budget. | `budget-check` |
+| P-14 | Public API changes follow semver and have migration entries. | `api-check`, migration tests |
+| P-15 | A gate rejects a planted violation and an empty scope; failures give file, line, rule and fix. | Gate tests |
+| P-16 | Every committed generated file matches its generator. | `generated-check` |
 
----
+## Layout
 
-## Size and shape
-
-**When a request is underspecified, decide out loud before you build.** List what the request leaves open — input shape, output shape, edge behaviour, anything you would otherwise settle silently while typing. Take the narrowest answer that satisfies it, and say what you are choosing *not* to build. Then implement that list and nothing beyond it.
-
-**A new export needs a consumer in the same change.** An interface with one implementation, a factory that constructs one thing, or an options object read in one place is indirection nobody is paying for. Write the direct version; the seam appears on its own when a second caller arrives, and it lands somewhere other than you would have guessed.
-
-The gates run on every tracked file outside the frozen lane (`src/`, `registry/blocks/`, `tests/registry-consumer/app/`, `design/`) and, after every edit, through `.claude/hooks/check-edit.sh`; `AI-CODE-QUALITY.md` gives the size limits and why. `src/` is frozen until P9 (P-17): a v3 fix goes to the `v3` branch.
-
----
-
-## Stack
-
-| Layer | Tool |
+| Path | Owns |
 |---|---|
-| Bundler / dev server | Vite 8 |
-| Language | TypeScript 6 |
-| UI framework | React 19 |
-| Styling | Shared CSS contract; Tailwind CSS v4 token mapping |
-| Component primitives | Unified `radix-ui` optional peer for behaviour |
-| Variant logic | Literal unions and `data-*` modifiers |
-| Class composition | Fixed `sp-*` class plus consumer `className` |
-| Package manager | **Bun** (never npm/npx) |
-| Icons | Lucide SVG; internal glyphs inline |
-
----
+| `css/` | Layer order, fonts, tokens, base, layout and Tailwind mapping |
+| `components/<name>/` | Shared CSS, React implementation, named examples and public behaviour tests |
+| `elements/` | Browser registrations and lifecycle clients; imports only `lib/` |
+| `lib/`, `hooks/` | Shared behaviour and React hooks |
+| `blocks/` | Vendored registry compositions and their declared dependencies |
+| `site/`, `tooling/site/` | Static catalogue and its builder |
+| `tooling/` | Gates, package/registry builders, migration and measurement |
+| `tests/` | Browser accessibility, keyboard, lifecycle and pinned-state tests |
+| `registry/legacy-r/` | Frozen registry assets; copied without regeneration |
+| `skills/sapphire/` | Consumer instructions shipped with package and registry |
+| `docs/adr/` | Decisions and their critical reasoning |
 
 ## Commands
 
-```bash
-bun run dev          # specimen viewer at localhost:5173
-bun run build        # tsc + vite build → dist/
-bun run lint         # Biome check, warnings fail (lint + format, TS/TSX + CSS)
-bun run typecheck    # tsc -b over every tsconfig
-bun run knip         # unused files, exports and dependencies
-bun run lint:fix     # Biome check --write (auto-fix + format, incl. Tailwind class sort)
-bun run format       # Alias of lint:fix (Biome check --write)
-bun run test         # Unit test suite (bun test)
-bun run test:a11y    # Playwright a11y tests
-bun run gate         # lint, typecheck, knip, then the gates below, test, check:registry
-bun run comment-check # Comment gate (P-1): every in-scope file
-bun run size-check   # Size gate (P-7): every in-scope TS file
-bun run dep-check    # Dependency gate (P-12)
-bun run freeze-check # Freeze gate (P-17): src/ is unchanged
-bun run token-check  # Token gate (P-5): css/, components/, blocks/, elements/, site/ and DESIGN.md
-bun run budget-check # Budget gate (P-13): gzipped sapphire.css, built into a temp dir, against its ceiling
-bun run generated-check # Generated-files gate (P-16): every generator rerun in memory, any diff fails
-bun run generate     # Write the generated files (sapphire.css); run it after adding a component folder
-bun run scorecard [sha] # v4 numbers and per-component state at a commit (default HEAD), measured in a temp checkout
-bun run test:visual   # compare every pin inside the linux/arm64 Playwright container (needs Docker)
-bun run pin <example>… # the only way to change a pin: compare, print expected/actual/diff paths, update those pins
-bun run build:docs   # docs site → dist-docs/
-bun run deploy:docs  # deploy docs to Cloudflare Pages
+```sh
+bun install --ignore-scripts --frozen-lockfile
+bun run generate
+bun run lint:fix
+bun run typecheck
+bun run gate
+bun run test:a11y
+bun run test:visual
+bun run build
+bun run build:docs
+bun run test:package
+bun run migrate <app> --check
 ```
 
----
+Use the package manifest for the complete command list. Tests preload happy-dom before
+Testing Library. Layout, portals, focus trapping and pointer resizing need browser checks.
+New files must be staged or explicitly named in scoped gates so they are counted.
+Report incomplete checks rather than implying a clean integrated result.
 
-## Key Paths
+## Skills
 
-```
-DESIGN.md               ← v4 design spec: brand, token tables (checked against css/tokens.css), UX rules
-
-sapphire.css            ← GENERATED stylesheet entry: layer order, then fonts, tokens, base, every component (bun run generate)
-
-css/
-  layers.css            ← the @layer order line; first import so it stays first
-  fonts.css             ← @font-face from @fontsource-variable (latin, latin-ext, woff2)
-  tokens.css            ← v4 tokens, the single source (ADR-0004)
-  base.css              ← element defaults, focus ring, type scale (@layer base)
-  base.examples.html    ← plain-HTML specimens of base (typography)
-  base.examples.css     ← demo styles for those specimens
-  layout.css            ← page layout primitives: stack, cluster, columns, page, masthead, sr-only
-  layout.examples.html  ← plain-HTML specimens of those primitives
-  layout.examples.css   ← demo styles for those specimens
-  tailwind.css          ← maps every v4 token to Tailwind utilities
-
-components/<name>/      ← <name>.css (@layer components, sp-* classes), <name>.examples.html (specimens) and <name>.examples.css (demo styles)
-
-site/specimen.css       ← docs chrome the specimens use; tooling/visual/specimen-server.ts serves them
-
-tooling/migrate/map.ts  ← v3 → v4 token, utility, class and prop-value renames
-
-design/
-  colors_and_type.css   ← v3 design tokens (frozen lane)
-  design.md             ← v3 design spec (frozen lane)
-
-docs/
-  coding/
-    principles.md       ← coding principles & gates register
-
-src/
-  theme.css             ← v3 Tailwind @theme tokens (frozen until P9)
-  index.css             ← component styles and utility imports
-  index.ts              ← main library entry (React)
-  elements.ts           ← Web Components / custom elements entry
-  components/ui/        ← primitive components (Button, Card, Badge…)
-  components/           ← composite / behaviour components (Toast, Banner…)
-  hooks/                ← reusable React hooks
-  lib/
-    utils.ts            ← cn() helper
-    theme.ts            ← dark-mode helpers
-    consent.ts          ← cookie consent helpers
-```
-
----
-
-## AI Skills (read before working)
-
-| Task | Read first |
-|---|---|
-| Coding principles & standards | `.claude/skills/coding-principles/SKILL.md` |
-| Writing, typing or reviewing any `.ts`/`.tsx` | `.claude/skills/typescript/SKILL.md` |
-| Writing or editing React components | `.claude/skills/sapphire-react/SKILL.md` |
-| Writing or editing CSS & tokens | `.claude/skills/sapphire-css/SKILL.md` |
-| Porting one v3 component to v4 CSS | `.claude/skills/sapphire-component/SKILL.md` |
-| Writing or running tests | `.claude/skills/sapphire-testing/SKILL.md` |
-| Downstream app integration | `.claude/skills/sapphire-consumer/SKILL.md` |
-| Reviewing code | `.claude/skills/review-code/SKILL.md` |
-| Refactoring & size gate fixes | `.claude/skills/refactor-code/SKILL.md` |
-| Running quality gates | `.claude/skills/gate/SKILL.md` |
-| Adding new rules or gates | `.claude/skills/add-rule/SKILL.md` |
-| Any UI work | `DESIGN.md` |
-
----
-
-## Hard Rules
-
-- **Bun only.** Never use `npm`, `npx`, or `yarn`.
-- **No new dependencies without justification.** This library ships to consumers; every dep has a size cost.
-- **Peer deps stay peer deps.** V4 has optional `react`, `react-dom` and `radix-ui` peers and no runtime dependencies. Static components import no Radix.
-- **v4 design tokens are in `css/tokens.css` (ADR-0004) — that is the single source.** Colours are `light-dark(<light>, <dark>)`, declared once, only in the block `:root, [data-theme=light], [data-theme=dark], .dark`; every other token is declared once on `:root`. `css/tailwind.css` maps each token to utilities, and the token gate (P-5) fails on an unmapped token, a misplaced colour or a `DESIGN.md` table that disagrees. Never hard-code hex values; reference CSS custom properties. `src/theme.css` is the v3 token file, frozen with `src/` until P9; a v3 fix goes to the `v3` branch.
-- **No gradients in primary UI** except the `premium` button variant (intentional exception).
-- **`--brand` (the gold) is decorative.** For gold text use `--brand-text` (`#8a5a1f` in light) — it passes WCAG AA contrast; `--brand` does not. `--accent` is shadcn's quiet surface (the gold tint), not the gold.
-- **Token vocabulary is shadcn-canonical + a brand extension.** Prefer the shadcn utility name where an equivalent exists (`text-muted-foreground`, `bg-background`, `bg-card`, `text-primary-foreground`) so components read as idiomatic shadcn and mix with community items. Use the brand-only tokens for what shadcn lacks: `bg-brand`, `text-brand-text` (AA gold), `text-foreground-strong`, `rounded-btn`, the `on-dark` family. The v3 names under `src/` map to these through `tooling/migrate/map.ts`.
-- **Exports are generated in P6.** Each public component has a named subpath; no root barrel or reachable internals. Never update the frozen `src/index.ts` for v4.
-- **a11y first.** Run `bun run test:a11y` before shipping any component change.
-- **No comments in TS, TSX or CSS (P-1, ADR-0001).** The comment gate fails any comment outside the two forms the ADR lists.
+Read `.claude/skills/coding-principles/SKILL.md` and
+`.claude/skills/typescript/SKILL.md` before TypeScript work. Component work also reads
+`.claude/skills/sapphire-component/SKILL.md`. Refactoring, new gates and independent review use
+`refactor-code`, `add-rule` and `review-code` in `.claude/skills/` respectively.
+Consumer setup is in `skills/sapphire/SKILL.md`, `docs/package-v4.md` and `docs/registry-v4.md`.

@@ -1,91 +1,53 @@
 ---
 name: sapphire-component
-description: Port or change a v4 component, its shared CSS, React examples and behavioural checks.
+description: Add or change shared Sapphire CSS, React/native clients, examples and behaviour checks.
 ---
 
-# Port or change a component
+# Component changes
 
-Read `V4-PLAN.md`, `DESIGN.md`, `coding-principles`, `typescript`, `sapphire-css`
-and `sapphire-testing`; read `sapphire-react` for React work. The frozen `src/`
-tree is reference material until P9. Approved D5 refinements and defect fixes
-supersede the v3 look.
+Read `CLAUDE.md`, `DESIGN.md`, `.claude/skills/typescript/SKILL.md` and
+`.claude/skills/coding-principles/SKILL.md`. Reuse an assigned managed worktree.
+Read the component's implementation, CSS, named examples and tests before editing.
 
-## Scope and setup
+## Shared CSS and clients
 
-Use the assigned worktree and own only the assigned component folders. Reuse a
-suitable managed worktree; a new branch uses `codex/`. Do not reset another
-session's work. Install with `bun install --ignore-scripts --frozen-lockfile`.
-Read the component's v3 public props and behaviour, existing v4 CSS and HTML,
-and its current examples and tests before editing. State what the port covers
-and which shared changes need integration. Button, card and dialog establish
-the pattern for each phase.
+Keep shared styles in the component's CSS and render its `sp-*` parts,
+`data-slot` and declared data attributes from clients (P-4). React does not
+import CSS. Static React components do not import Radix; `asChild` uses `lib/slot.tsx`.
+Behaviour primitives use unified `radix-ui`; SplitLayout uses its optional panels peer.
+Elements import only `lib/`; browser registration is safe to import during SSR.
 
-## Shared CSS
+Use native/Radix-derived props and React 19 ref-as-prop. Preserve accepted null
+and explicit undefined values unless a mapped major API change is intentional.
+Record public renames and manual migration steps in `tooling/migrate/map.ts`.
+Generate public maps after entrypoint changes and review emitted declarations.
 
-- Keep styles in `@layer components`, with `sp-*` classes naming parts and
-  `data-*` attributes naming variants, sizes and states. CSS is shared by HTML,
-  React and custom elements; client code does not import it.
-- Follow D5's tighter proportions in product and editorial UI. Preserve the
-  theme, readable type, focus indication and coarse-pointer target sizes.
-  Fix defects where they originate, not through an example-only override.
-- Use tokens for colours and absolute lengths. Font-relative `em` and `ch`
-  and token-based `calc()` are allowed. Gold text uses `--brand-text`.
-- Keep a component variable only when a variant/state reassigns it, several
-  rules read it, or a documented customization/example uses it. One-use
-  aliases add bytes without adding a useful customization point.
-- Hover belongs in `@media (hover: hover)` and excludes disabled states.
-  Reduced-motion rules disable the component's animations and transitions.
-- Own glyphs are inline Lucide SVG geometry with `sp-icon`, hidden from
-  assistive technology when decorative. Apps and examples may use Lucide.
-  No font glyphs or bundled icon-name lookup.
-- Demo-only layout belongs in the component's `.examples.css`; it must not
-  conceal a defect in the shipped CSS. Preserve existing specimen geometry
-  for unchanged pins, including declared `data-pin-y` offsets.
-- Record renamed classes, props and values in `tooling/migrate/map.ts`.
-  Run `bun run generate` when the component folder inventory changes.
+Follow the density and coarse-pointer targets in `DESIGN.md`. Fix defects in
+shared runtime/CSS rather than demo overrides. CSS variable, hover, motion,
+contrast and theme rules are in DESIGN and P-4/P-5/P-8.
 
-## React and examples
+A component knob earns its name when a variant reassigns it, multiple rules
+read it, or a real consumer/example customizes it. Otherwise use the value directly.
+Own decorative glyphs use hidden inline Lucide-compatible SVG with `sp-icon`;
+examples can import Lucide. Do not add a glyph-name runtime registry.
 
-- React 19 refs are props. Use native/Radix-derived prop types, named exports,
-  `data-slot`, literal variant tuples and the fixed class plus `className`.
-- Static clients import no Radix. `asChild` uses the tested `lib/slot`.
-  Behaviour uses the unified optional `radix-ui` peer. Keep modules safe to
-  import on a server and preserve existing public acceptance of nullable or
-  explicitly undefined props unless a mapped API change is intentional.
-- `<name>.examples.tsx` exports `examples`, an `as const` array of
-  `{ name: 'stable-name', render: NamedExample }`. Render functions are named,
-  zero-prop React components. Consumers use `createElement` or JSX, never
-  call the render function directly. These examples feed docs and tests.
-- Tests reach components through their public props and DOM roles/names.
-  Cover controlled/uncontrolled and disabled states, callbacks, refs,
-  keyboard operation and defect regressions that apply. Browser tests cover
-  layout and portals; axe scans the full document after opening overlays.
-- SSR HTML snippets cannot show portalled content. Documentation must explain
-  that limitation rather than imply a static snippet implements the dialog.
+## Examples and tests
 
-## Validation and integration
+`<name>.examples.tsx` exports a literal `examples` array of
+`{ name: 'stable-name', render: NamedExample } as const`. Each render is a
+named zero-prop React function; consumers render via JSX or `createElement`.
+Native `.examples.ts` functions return `HTMLElement`. Demo layout belongs in
+`.examples.css`. Keep names stable because browser cases and pins use them.
 
-Run `bun run gate`, the affected accessibility checks and container visual
-checks. New files must be included explicitly in scoped gates or staged before
-running tracked-file gates. Report counts and remaining failures honestly.
-Coverage counts every public implementation and example file, including
-unimported files; tooling gates have their own failure-case tests (P-15).
+Test public props and DOM roles/names (P-10): refs, callbacks, form values,
+controlled/uncontrolled states, disabled/loading states and defect regressions.
+Happy-dom preloads before Testing Library. Real browsers cover layout, pointer
+resizing, focus containment and portalled overlays. Axe scans the full document
+with overlays open. Rendered SSR snippets cannot represent portal interaction.
 
-Only the integrating session updates pins through `bun run pin`, after reviewing
-expected, actual and diff images for an approved change. Preserve unchanged
-states and all behaviour/geometry checks. When a refinement supersedes a v3
-parity comparison, first give the affected state an equivalent v4 pin; keep
-its interaction assertions. Retain the old renderer until P9 closes the full
-state inventory.
-
-Run a check again when code changes, a failure or an unresolved concern warrants
-it. Never lower a threshold or waive a defect to obtain a pass. Before a phase
-closes, the integrated gate and all checks required by that phase must pass.
-An independent reviewer checks the changes before integration.
-
-Do not push, tag, publish, clear shared caches or alter Docker services as part
-of a component port. Report infrastructure blockers to the integrating session.
-Commit only owned files, with an explicit path list and a short one-line subject.
-Report the commits, validation evidence, API/migration changes, reviewed visual
-changes and any unresolved integration dependency. Do not edit the frozen lane
-or another component's folder without the integrating session assigning it.
+Run `bun run gate` and affected browser checks. Stage new files or explicitly
+name them in scoped gates. Never lower coverage or waive an accessibility defect.
+Pin updates require `bun run pin` and review of expected, actual and diff paths;
+preserve reached interaction assertions and retained state captures.
+An independent session reviews before integration. Commit only owned paths and
+report changed APIs, verification and unresolved integration work.

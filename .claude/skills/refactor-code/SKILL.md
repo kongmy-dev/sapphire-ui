@@ -1,45 +1,23 @@
 ---
 name: refactor-code
-description: Refactoring procedures for Sapphire UI. Use when addressing review findings, size-gate alerts, or cleaning up components. Explains how to pin behavior with tests, extract comments safely, simplify component trees, and reduce size.
+description: Refactor Sapphire without losing public behaviour, evidence or ownership boundaries.
 ---
 
-# Refactor Code — Sapphire UI
+# Refactor code
 
-Refactoring changes code structure without changing its external behavior. Follow these procedures to resolve review findings and gate violations.
+Use the rules in `CLAUDE.md` and types guidance in
+`.claude/skills/typescript/SKILL.md`. Pin observable behaviour before moving it.
+Keep structural changes separate from behaviour changes when that makes review possible.
 
-## Core Rules
+Subtract dead wrappers and exports before adding an abstraction. Invert guard
+conditions, use typed lookup tables for value selection, and split only at a
+coherent UI or data boundary. P-7 thresholds stay fixed; a helper that exists
+only to move a branch out of the measurement is not a simplification.
 
-1. **Pin behavior before moving code:** Run the test suite first. If a component lacks behavioral test coverage, write the test before refactoring.
-2. **One step at a time:** Keep structural reorganization and behavioral changes in separate steps.
-3. **Subtract before adding:** Delete obsolete wrappers, unused exports, and dead helpers before introducing new abstractions.
+For P-1 findings, preserve useful reasoning in a regression test, an ADR or the
+smallest relevant skill. Names and types replace restated descriptions; open
+work belongs in `docs/backlog.md`. Do not create another copy of a rule table.
 
-## Removing Stray Comments Without Losing Knowledge (P-1)
-
-When the comment gate reports a stray comment:
-
-| What the comment was doing | How to eliminate it |
-|---|---|
-| Explaining what a variable or prop means | Rename the variable or prop to be self-explanatory (`disabled` → `isDisabled`, `delay` → `delayMs`). |
-| Describing a component or prop for consumers | Tighten the type until it needs no sentence: a literal union, a named type, a smaller prop. |
-| Explaining why an unusual branch or workaround exists | Name the test after the behaviour it protects. A browser or vendor bug no test can observe keeps its URL alone above the workaround (ADR-0001). |
-| Explaining design architecture or token decisions | Move into an ADR under `docs/adr/` or into the design spec. |
-| Marking open work or reminders | Remove from code and record in project issue or task list. |
-
-## Reducing Size and Cognitive Complexity (P-7)
-
-When `bun run size-check` fails on complexity or line count:
-
-1. **Invert deeply nested conditionals:** Convert nested `if` statements into early returns/guards.
-2. **Extract discrete UI sub-blocks:** If a JSX render function exceeds 89 lines, identify cohesive sub-elements (e.g. Header, Item, EmptyState) and extract them into focused child components.
-3. **Replace complex conditionals with lookup objects:** Replace nested ternaries with an `as const` map or CVA variant.
-4. **Eliminate single-use helper indirection:** Inline wrappers that simply call a Radix primitive without adding logic.
-
-## Verification
-
-After any refactoring:
-```bash
-bun tooling/gates/size.ts <edited-files>
-bun tooling/gates/comments.ts <edited-files>
-bun run test
-bun run test:a11y
-```
+Run the affected tests, scoped gates, typecheck and integrated gate; use browser
+checks when the behaviour depends on layout or focus. Commit owned paths and
+report any check that could not run. An independent session reviews the result.

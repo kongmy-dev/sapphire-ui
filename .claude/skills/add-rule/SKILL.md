@@ -1,32 +1,23 @@
 ---
 name: add-rule
-description: Establish a new rule or gate in Sapphire UI. Use when recurring review findings or architectural constraints require automated enforcement. Guides defining principle IDs, creating AST gates, and testing failure scenarios.
+description: Add a Sapphire rule with a gate, a regression and a precise remediation message.
 ---
 
-# Add Rule — Sapphire UI
+# Add a rule
 
-A rule in Sapphire UI is never established as unenforced prose. A rule lands together with its automated gate and an accompanying test proving that the gate fires when the rule is broken.
+Read the rule table in `CLAUDE.md`. Reuse an existing ID when the restriction is
+already part of that principle; a new principle needs the owner's agreement.
+A mechanical correction belongs in a gate, not another checklist.
 
-## Steps to Add a Rule
+Implement `tooling/gates/<name>.ts` as a pure function over file names/text or
+an explicit input contract. Only the CLI boundary reads git and files. Reuse
+`tooling/gates/scope.ts`, `tooling/gates/report.ts` and `tooling/source/parse.ts`.
+Prefer the TypeScript AST for structural source checks. A gate that checked
+nothing fails, and each finding includes file, line, rule ID and a concrete fix.
 
-### 1. Define the Rule and Principle ID
-- Choose the next available stable ID in `docs/coding/principles.md`.
-- Formulate the rule in one unambiguous sentence: what is required, where it applies, and what is prohibited.
+Test valid input, an empty scope and an actual forbidden shape. Assert the
+failure and remediation, not just an arbitrary finding count. Run the real gate
+against the intended scope to detect false positives before wiring it.
 
-### 2. Implement the Gate
-- Place automated checks under `tooling/gates/<rule-name>.ts`.
-- Prefer TypeScript AST parsing (`tooling/source/parse.ts`) over regex where structural syntax is checked.
-- Ensure the gate takes target files as arguments and defaults to every in-scope file from `tooling/gates/scope.ts`.
-- Expose a pure function over file names and text, report through `tooling/gates/report.ts`, and let only `main()` touch git or the file system. A gate that checked nothing fails.
-- Ensure the error message clearly states the remediation action.
-
-### 3. Plant a Violation Test
-- Create `tooling/gates/<rule-name>.test.ts`.
-- Assert that a valid example passes and that an empty file list fails.
-- Feed the pure function a real violation copied from this repository or its history, and assert the file, line and rule ID it reports.
-- Revert the check and confirm the test fails.
-
-### 4. Wire the Gate
-- Add the gate to `package.json` scripts.
-- Incorporate into `bun run gate` or the pre-push check.
-- Update `docs/coding/principles.md` with the new rule, its gate, and status `built`.
+Coordinate package scripts and `bun run gate` with their owner. Update the
+single rule table and relevant reference, without copying it into every skill.

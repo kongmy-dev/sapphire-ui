@@ -6,7 +6,7 @@ description: Consume Sapphire v4 through npm or owned registry source.
 # Sapphire v4
 
 Use Bun. Install the v4 registry base before adding `@sapphire` items.
-The base installs Sapphire at an exact version, imports `foundations.css`,
+The base installs Sapphire at an exact version, imports the foundations stylesheet,
 and bundles the fonts; no Google Fonts or icon font request is needed.
 
 ## Choose one owner per component
@@ -33,3 +33,8 @@ React and Radix are optional package peers; install the exact dependencies liste
 by the registry items you select. A vendored copy receives fixes only when you
 review and reinstall it. Run typecheck, build, keyboard and accessibility checks
 after edits and compatible foundations updates.
+
+Override colours on the full theme scope list, not only the root:
+`:root, [data-theme="light"], [data-theme="dark"], .dark`.
+The catalogue at https://design.kongmy.dev shows live named examples, source,
+public imports and HTML snippets. Installed declarations define accepted props.

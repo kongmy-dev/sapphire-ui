@@ -1,320 +1,113 @@
-> v4 package work is on this branch. Read [the v4 package contract](https://github.com/kongmy-dev/sapphire-ui/blob/master/docs/package-v4.md)
-> for ESM subpaths, shared foundations, optional peers and native-element SSR behavior.
-> The older usage sections below remain until the documentation migration completes.
+# Sapphire UI
 
-# Sapphire UI — Design System Spec & Components
+Navy and gold, editorial typography, one CSS contract. Use Sapphire as plain HTML
+classes, Tailwind tokens, typed React components, or vendored registry source.
+Fonts ship with the package. CSS and native elements need no React dependency.
 
-Sapphire UI is the official, editorial-focused design system for **KONGMY Digital Solutions** (`kongmy.dev`). Grounded in deep navy authority and crisp gold accents, it is engineered to be a ruthlessly efficient, zero-bloat specimen tailored for professional IT consultancies, technical blogs (such as `blog.kongmy.dev`), and high-performance Web tools.
+[Catalogue](https://design.kongmy.dev) · [Design](DESIGN.md) ·
+[Package contract](docs/package-v4.md) · [Registry](docs/registry-v4.md) ·
+[Migration](docs/migration.md) · [Changelog](CHANGELOG.md)
 
-📖 **Live docs & interactive specimen:** [design.kongmy.dev](https://design.kongmy.dev)
-
----
-
-## 🎨 Architectural Design System
-
-Sapphire UI operates on a **three-layer export architecture** — consume it at whichever level fits your stack:
-
-1. **CSS layer** (`style.css`) — design tokens plus framework-agnostic component classes (`.btn .btn-primary .btn-lg`, `.badge-success`, `.card card-compact`, …) for plain HTML, Astro, Angular, Vue.
-2. **Web Components layer** (`/elements`) — `<sapphire-toast>`, `<sapphire-banner>`, `<sapphire-site-header>`, `<cookie-banner>` and friends; attribute-driven (including all user-facing copy for i18n), no React runtime.
-3. **React layer** (root export + per-component subpaths) — typed components on Radix UI primitives with CVA variants, exported `*Variants` for composition, and `asChild` polymorphism.
-
-All three layers read from one token contract (`theme.css`); override a CSS custom property once and every layer follows.
-
-```mermaid
-graph TD
-    Tokens[Design Tokens: colors_and_type.css] --> CSS[Global Styles: index.css]
-    CSS --> Tail[Tailwind v4 Theme Engine]
-    Tail --> ComponentSpec[React Component Library: App.tsx / App.css]
-    Tail --> RawStyles[Raw compiled stylesheet: sapphire-ui.css]
-    ComponentSpec --> LibExport[NPM / Github Package Export]
-    RawStyles --> LibExport
-```
-
-### 1. Unified Brand Tokens
-- **Primary Navy (`#0a192f`)**: Dominates headers, structural components, and deep dark regions.
-- **Accent Gold (`#c5a065`)**: Reserved strictly for interactive calls to action, highlights, active lists, and thin dividers.
-- **Surface Off-White (`#f4f6f8`)**: Provides clean, readable page bases that mirror professional print publications.
-- **Editorial Typography**: Interplays `Newsreader` (Georgia-fallback serif for headings) with `Source Sans 3` (system-ui fallback sans-serif for UI copy) and `JetBrains Mono` (technical scripts).
-
----
-
-## 🚀 Local Development
-
-This project is built using **Vite**, **TypeScript**, and **Tailwind CSS v4**, and is managed with **Bun**.
-
-### Scripts & Commands
-
-| Command | Action |
-|:---|:---|
-| `bun install` | Clean, cached installation of dependencies. |
-| `bun run dev` | Runs the interactive specimen viewer locally at `http://localhost:5173/`. |
-| `bun run build` | Compiles type declarations, bundle outputs, and minified CSS variables to `dist/`. |
-| `bun run lint` | Runs Biome check on workspace source files. |
-| `bun run preview` | Spins up a local web server to preview production builds. |
-
----
-
-## 📦 Consuming Sapphire UI
-
-You can install Sapphire UI directly from GitHub Packages:
-
-```bash
+```sh
 bun add @kongmy-dev/sapphire-ui
 ```
 
-To consume the styles globally in your application:
+## HTML classes
 
-```typescript
-import '@kongmy-dev/sapphire-ui/style.css';
+Import the full stylesheet through your bundler:
+
+```css
+@import '@kongmy-dev/sapphire-ui/sapphire.css';
 ```
-
-### Custom Elements (Astro / vanilla HTML / any framework)
-
-Sapphire UI ships a framework-agnostic Web Components bundle. Import once
-to register every `<sapphire-*>` element — no React runtime required.
-
-```typescript
-import '@kongmy-dev/sapphire-ui/style.css';
-import '@kongmy-dev/sapphire-ui/elements';
-```
-
-Then drop the elements into any HTML environment:
 
 ```html
-<sapphire-site-header variant="dark" sticky>
-  <div data-slot="brand">
-    <a href="/">BRAND</a>
-  </div>
-  <nav data-slot="nav">
-    <a href="#features">Features</a>
-    <a href="#pricing">Pricing</a>
-  </nav>
-  <div data-slot="actions">
-    <a class="sapphire-btn sapphire-btn--primary" href="/download">Download</a>
-  </div>
-</sapphire-site-header>
-
-<sapphire-site-footer variant="dark">
-  <div data-slot="brand">
-    <h4>BRAND</h4>
-    <p>Tagline.</p>
-  </div>
-  <div data-slot="links">
-    <div>
-      <span>Product</span>
-      <a href="/features">Features</a>
-    </div>
-  </div>
-  <div data-slot="bottom">
-    <span>© 2026 KONGMY Digital Solutions</span>
-    <span>Built with Astro · Hosted on Cloudflare</span>
-  </div>
-</sapphire-site-footer>
-
-<sapphire-analytics
-  posthog-token="phc_..."
-  ga-id="G-..."
-  domains="example.com,blog.example.com"
-></sapphire-analytics>
-<sapphire-toast></sapphire-toast>
-<cookie-banner></cookie-banner>
+<button class="sp-button" data-variant="brand">Save</button>
+<article class="sp-card"><h2>Account</h2><p>Shared styles, native markup.</p></article>
 ```
 
-Tree-shake by importing only the elements you need:
+Use the catalogue's HTML snippets for static markup. A snippet of a React portal
+cannot implement its overlay interaction; use its React component or your own behaviour.
 
-```typescript
-import '@kongmy-dev/sapphire-ui/site-header-element';
-import '@kongmy-dev/sapphire-ui/site-footer-element';
+## Tailwind tokens
+
+Compile your utilities against Sapphire's token mapping:
+
+```css
+@import 'tailwindcss';
+@import '@kongmy-dev/sapphire-ui/tailwind.css';
+@import '@kongmy-dev/sapphire-ui/sapphire.css';
 ```
 
----
+```html
+<p class="text-muted-foreground">Quiet copy</p>
+```
 
-## 🧩 Two lanes: npm package vs. shadcn registry
+Utilities override component-layer styles. `--brand` is decorative gold;
+`--brand-text` is the token for readable gold text.
 
-Sapphire ships in **two distribution lanes**. Pick by what you're building:
+## React
 
-| Lane | How you consume | Best for |
-|---|---|---|
-| **Editorial / brand** (above) | npm package — import compiled components + `style.css` | kongmy.dev sites, blog, proposals, marketing — surfaces we fully control |
-| **Product** (below) | **shadcn registry** — `shadcn add` vendors the source into your repo | product & client apps that need to diverge (client theming, POS/kiosk touch targets, one-offs) |
+Install `react` and `react-dom`. Interactive primitives also use the optional
+`radix-ui` peer; SplitLayout uses optional `react-resizable-panels`.
 
-The **token contract is shared** — both lanes read the same `theme.css` custom properties — so a component looks identical in either lane, and you can reskin by overriding tokens.
+```tsx
+import { Button } from '@kongmy-dev/sapphire-ui/button';
+import { Card } from '@kongmy-dev/sapphire-ui/card';
+import '@kongmy-dev/sapphire-ui/sapphire.css';
 
-### Product lane — `shadcn add` from the registry
-
-The registry is public over HTTPS (no credentials, no PAT). Point your `components.json` at it:
-
-```jsonc
-// components.json
-{
-  "registries": {
-    "@sapphire": "https://design.kongmy.dev/r/{name}.json"
-  }
+export function Account() {
+  return <Card><Button variant="brand">Save</Button></Card>;
 }
 ```
 
-Add the token layer once, then any component or block:
+Use public subpaths; there is no JavaScript root barrel or CommonJS build.
+Icons accept React SVG elements. Basic components do not load Radix.
 
-```bash
-# 1. tokens (brand + shadcn semantic layer) — required, once per app
-bunx shadcn add @sapphire/theme
+## Registry
 
-# 2. primitives + admin blocks (vendored source you own)
-bunx shadcn add @sapphire/button @sapphire/dialog @sapphire/sidebar
-bunx shadcn add @sapphire/command @sapphire/combobox @sapphire/toaster
-bunx shadcn add @sapphire/data-table-column-header @sapphire/data-table-view-options
+Initialize an existing Vite/Tailwind app with the base and map `@sapphire` to
+`https://design.kongmy.dev/r/v4/{name}.json` in `components.json`:
+
+```sh
+bunx --bun shadcn@4.22.0 init https://design.kongmy.dev/r/v4/base.json --yes
+bunx --bun shadcn@4.22.0 add @sapphire/button @sapphire/dialog @sapphire/sidebar
 ```
 
-Then import the token layer in your Tailwind entry CSS:
+The base imports foundations and bundled fonts. Each vendored component owns
+its local CSS. In a mixed app, import `foundations.css` plus only the package
+component CSS still in use. Give each component one JavaScript and CSS owner.
+The existing `/r/` registry remains frozen; moving to `/r/v4/` is explicit.
+
+## Customization
+
+Use props and data attributes first, then utilities or consumer classes,
+then component `--sp-*` variables, then shared token overrides. Vendor a
+component when the app needs to own its implementation. Do not load its package
+CSS alongside the vendored CSS or combine the full stylesheet with mixed ownership.
+
+Override colours on every theme scope so nested light/dark sections keep working:
 
 ```css
-@import 'tailwindcss';
-@import './styles/sapphire-theme.css';
+:root, [data-theme="light"], [data-theme="dark"], .dark {
+  --brand-text: light-dark(var(--primary), var(--on-dark));
+}
 ```
 
-**Sapphire speaks shadcn's token vocabulary.** The theme layer defines shadcn's semantic tokens (`bg-background`, `text-muted-foreground`, `bg-card`, `bg-sidebar`, `bg-primary`, …) as first-class, so Sapphire items and **community shadcn items render on the same tokens** — mix them freely under one `components.json`. Brand-only extras (`text-accent-text` for AA-safe gold, `rounded-btn`, the on-dark family) layer on top.
+Set `data-theme="light"` or `data-theme="dark"` on a scope. The `theme` helper
+exports `initTheme`, `setTheme` and subscriptions; the React `theme-provider`
+entry supplies reactive theme preferences. Call initialization in a browser;
+importing a module on the server does not initialize a document.
 
-**Requirements:** a Tailwind v4 app, and (for `icon`/icon-bearing components) the [Material Symbols Outlined](https://fonts.google.com/icons) font loaded in your HTML `<head>`, plus the Sapphire typefaces (Newsreader, Source Sans 3, JetBrains Mono).
+## Native elements
 
-Dark mode: set `data-theme="dark"` on `<html>` — every token (including the shadcn aliases) flips automatically.
-
----
-
-## 🔗 CI/CD & Automated Publishing
-
-Every merge or push to `master` triggers our automated GitHub Actions workflow (`.github/workflows/publish.yml`), which features:
-
-1. **Dual-Registry Publishing**: Publishes to both **GitHub Packages** (scoped `@kongmy-dev`) and the **public npm registry** in a single run.
-2. **Node.js 24 Execution**: Explicitly configured via the `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24` flag to utilize modern runtime performance.
-3. **Advanced Caching**: Caches global Bun dependency trees (`~/.bun/install/cache`), checking against hashes of `bun.lock` for lightning-fast incremental pipelines.
-4. **Tag-Based Deduplication**: Reads `version` from `package.json`, checks for an existing git tag, and skips the entire publish pipeline if the version has already been released.
-5. **GitHub Releases**: Automatically creates a tagged GitHub Release with auto-generated release notes.
-
-> **Required Secrets**: `NPM_TOKEN` — an npm access token with publish permissions. `GITHUB_TOKEN` is provided automatically.
-
----
-
-## 🏛️ Interactive Design Catalog Specimen
-
-When running the local environment (`bun run dev`), the default landing page hosts a premium, interactive spec specimen designed to aid product managers and front-end engineers:
-
-- **Color Swatch Copier**: Click any visual color cell to automatically copy its exact Hex representation or CSS variable directly to your clipboard (with modern, custom floating toast alerts).
-- **Typography Playground**: Enter any trial sentences inside our custom text box, and watch all serif headings, sans-serif body sizes, tracking tags, and monospace snippets re-render in real-time.
-- **Component Register**: Showcases interactive primary, outline, ghost buttons, custom on-dark UI variants, pill badges, and structured product layout cards.
-
----
-
-## 🤖 Custom AI Skill — Adopting the Design System
-
-The repository ships a machine-readable design spec at [`design/design.md`](design/design.md). AI coding assistants — Gemini, GitHub Copilot, Claude, Cursor, or any tool that supports custom skills / instructions — can reference this file to generate UI code that stays on-brand automatically.
-
-### Why a Custom Skill?
-
-Without explicit design context, AI tools default to generic palettes, system fonts, and arbitrary spacing. A custom skill feeds the design tokens, typography scale, component patterns, and do's/don'ts directly into the model's context, producing code that matches the Sapphire UI system on the first attempt.
-
-### Quick Setup (Gemini / Antigravity)
-
-Create a skill folder in your global or project config:
-
-```
-.gemini/
-  config/
-    plugins/
-      sapphire-ui-plugin/
-        skills/
-          sapphire-design/
-            SKILL.md
+```ts
+import '@kongmy-dev/sapphire-ui/elements/toast';
+import '@kongmy-dev/sapphire-ui/sapphire.css';
 ```
 
-**`SKILL.md`** — minimal example:
+Native tags include `sapphire-toast`, `cookie-banner`, `sapphire-analytics`,
+`sapphire-banner`, `sapphire-site-header` and `sapphire-site-footer`. Import each
+entry to register its tag in a browser. Constructors are undefined during SSR.
+See [the package guide](docs/package-v4.md) for lifecycle and import contracts.
 
-```markdown
----
-name: sapphire-design
-description: >
-  Enforces the Sapphire UI design system (navy + gold, editorial typography,
-  anti-bloat layout) when generating or modifying front-end code.
----
-
-# Sapphire UI Design Skill
-
-When generating HTML, CSS, React, or Astro code for any KONGMY project,
-follow the design tokens and component specifications defined in the
-Sapphire UI design system.
-
-## Design Spec Reference
-
-Read the full token specification from the repository:
-
-- **Tokens & Spec:** `design/design.md`
-- **CSS Variables:** `design/colors_and_type.css`
-- **Live Catalog:** [design.kongmy.dev](https://design.kongmy.dev)
-
-## Key Rules
-
-1. **Colors** — Use `--color-primary` (#0a192f), `--color-accent` (#c5a065),
-   `--color-surface` (#f4f6f8). No gradients in primary UI.
-2. **Typography** — Headings: `Newsreader`. Body: `Source Sans 3`.
-   Code: `JetBrains Mono`. Icons: `Material Symbols Outlined`.
-3. **Spacing** — 4px base grid. Section padding: `--space-24` (96px) on desktop.
-4. **Shapes** — Cards: 8px radius. Buttons: 6px. Tags/badges: pill (9999px).
-5. **Elevation** — Background-color contrast, not heavy shadows. Hover lift:
-   `translateY(-2px)` with a crisp card shadow.
-6. **Voice** — First-person singular. No emoji, no exclamation marks.
-```
-
-### Quick Setup (Other AI Tools)
-
-For tools that support project-level instructions (`.github/copilot-instructions.md`, `.cursorrules`, `.claude/instructions.md`, etc.), add the same core rules:
-
-```markdown
-# Sapphire UI Design System
-
-When generating front-end code for this project, follow these design tokens:
-
-- Primary: #0a192f (navy) — headers, structural components
-- Accent: #c5a065 (gold) — CTAs, highlights, interactive elements
-- Surface: #f4f6f8 (off-white) — page backgrounds
-- Headings: Newsreader (serif) | Body: Source Sans 3 | Code: JetBrains Mono
-- Cards: 8px radius, 1px border, 32px padding
-- Buttons: 6px radius, 12px 24px padding
-- No gradients in primary UI. No heavy drop shadows.
-- See `design/design.md` for the complete specification.
-```
-
-### Consuming in Your Own Project
-
-If you're building a new project on the Sapphire design language:
-
-```bash
-# 1. Install the package
-bun add @kongmy-dev/sapphire-ui
-
-# 2. Import the stylesheet (includes all design tokens as CSS variables)
-import '@kongmy-dev/sapphire-ui/style.css';
-
-# 3. Import components as needed
-import { Button, Card, Badge } from '@kongmy-dev/sapphire-ui';
-```
-
-The stylesheet exports all design tokens as CSS custom properties (`--color-primary`, `--font-serif`, `--space-6`, etc.), so even non-React projects can consume the system by importing the CSS and applying the variables.
-
-#### Tailwind v4 apps — extend your own utilities from Sapphire tokens
-
-`style.css` ships a **prebuilt** bundle: it includes the exact utility classes Sapphire's own components use, but your Tailwind can't see its tokens, so writing your own `text-text-muted` / `bg-primary-hover` requires re-declaring tokens. Instead, import the **raw token contract** into your Tailwind pipeline:
-
-```css
-/* your app's global.css */
-@import 'tailwindcss';
-@import '@kongmy-dev/sapphire-ui/theme.css';   /* contributes Sapphire's @theme tokens */
-```
-
-Now your Tailwind generates **any** utility referencing a Sapphire token on demand — `text-text-muted`, `bg-primary-hover`, `marker:text-accent`, etc. — with no token duplication, and dark-mode (`[data-theme="dark"]`) overrides flow through automatically. Use `style.css` for the components' baked styling and `theme.css` for your own markup; they share one source.
-
----
-
-## ⚖️ License
-
-Sapphire UI is open-source software licensed under the **[BSD 3-Clause License](LICENSE)**. Copyright © 2026 KONGMY Digital Solutions.
-
-
+[BSD 3-Clause License](LICENSE)

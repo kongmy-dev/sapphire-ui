@@ -93,7 +93,7 @@ authenticates only with a token (`NPM_CONFIG_TOKEN`, per Bun's docs) and cannot
 write provenance; the request is open as oven-sh/bun#15601, and the OIDC
 request oven-sh/bun#22423 was closed as its duplicate. Trusted publishing
 generates provenance automatically when the npm CLI publishes (GitHub
-changelog, 2025-07-31). Revisit when Bun ships either.
+changelog). Revisit when Bun ships either.
 
 ## What we accept in exchange
 
@@ -123,4 +123,4 @@ changelog, 2025-07-31). Revisit when Bun ships either.
 - oven-sh/bun#22423, "bun publish does not support npm OIDC authentication in
   GitHub Actions": closed as a duplicate of #15601.
 - GitHub changelog, "npm trusted publishing with OIDC is generally available",
-  2025-07-31.
+  publication announcement.

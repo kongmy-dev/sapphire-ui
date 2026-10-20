@@ -1,40 +1,27 @@
 ---
 name: review-code
-description: Review changes against Sapphire UI coding principles. Run before pushing or after writing code. Verifies the rules in docs/coding/principles.md, component exports, token compliance, and comments. Reports findings citing rule IDs without modifying code.
+description: Independently review Sapphire changes for root causes, duplication, boundaries and simpler designs.
 ---
 
-# Review Code — Sapphire UI
+# Independent review
 
-Judge code strictly against `docs/coding/principles.md`. Every finding must cite a principle ID (e.g., `P-1`, `P-5`, `P-7`). "I would write it differently" is not a valid finding.
+Read `CLAUDE.md` and the affected contract/tests. The reviewer did not author the
+change. Stay read-only and report actionable findings with file, line, rule ID,
+observable failure and the smallest correction. Do not substitute taste for evidence.
 
-Review is non-destructive: report findings and their exact locations; do not alter files during review.
+The gates already check mechanical rules. Look for what they cannot establish:
 
-## Review Passes
+- Does the fix address the owner of the defect, or hide it in a specimen?
+- Is there now a second way to perform the same task?
+- Can another module import an internal that should remain private?
+- Did a split merely move complexity behind a single-caller abstraction?
+- Is a type guard claiming properties it did not verify?
+- Is a test asserting the implementation instead of a public behaviour?
+- Were interactions, state loops or difficult examples removed to obtain green?
+- Does an API change have an honest migration path, including manual work?
+- Can the same result be expressed with fewer public states or exports?
 
-### Pass 1: Principles and Invariants
-
-1. **Exports (P-6):** Does every new export have a consumer and, once P6 lands, an intended generated package subpath? Does a mixed app load component CSS from exactly one owner?
-2. **Tokens (P-5):** Are there raw hex color values (`#...`) or hardcoded style values in the components? Are text colors on light backgrounds using `--brand-text` instead of `--brand`?
-3. **Boundaries (P-2):** Does `src/` import from `registry/`, `scripts/`, or `tests/`? Does `registry/blocks/` import from `src/`?
-4. **Types (P-3):** Are there `any`, `!`, `as` casts (other than `as const`), or `enum` declarations? Are variants literal unions rendered as data attributes, with no CVA or utility strings?
-5. **Accessibility (P-8):** Do interactive elements have appropriate ARIA attributes, keyboard support, and token-based focus-visible rings?
-6. **Complexity (P-7):** Does any function exceed cognitive complexity 7 or 89 lines? Are there deeply nested ternary operators or conditionals?
-
-### Pass 2: Comment Discipline (P-1)
-
-Run the comment gate on the modified files:
-```bash
-bun tooling/gates/comments.ts <file>
-```
-
-The gate already fails any comment outside the forms ADR-0001 allows. Check what it cannot:
-1. Is the knowledge a deleted comment carried now in a name, a type, a test name or an ADR?
-2. Does a remaining `biome-ignore` name a `style` or `complexity` rule, with a reason that is true?
-3. Does a vendor-bug URL sit over a workaround that no test could observe?
-
-## Reporting Findings
-
-Format every finding with:
-- `File:Line`
-- Principle ID (the `P-n` from `docs/coding/principles.md`)
-- Concrete problem description and recommended remediation
+Check required command results; a scoped pass is not an integrated pass. Review
+expected, actual and diff images for intentional visual changes. Distinguish
+measured behaviour from inference. No findings means no actionable issue found,
+not a guarantee that unchecked browser, release or deployment steps succeeded.

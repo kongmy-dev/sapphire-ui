@@ -7,6 +7,9 @@ import { GENERATORS } from '../generators';
 import { generatedGate } from './generated';
 import { renderReport } from './report';
 
+const stylesheetGenerators = [
+  { file: STYLESHEET_FILE, generate: stylesheetSource },
+];
 const REPOSITORY = join(import.meta.dir, '../..');
 
 let tree: Tree | null = null;
@@ -24,7 +27,9 @@ function addComponent(root: string, name: string) {
 describe('generated gate: every committed generated file is fresh', () => {
   it('passes a stylesheet that its generator would write again', () => {
     tree = makeTree({ alpha: '.sp-alpha {}' });
-    expect(renderReport(generatedGate(tree.root))).toEqual({
+    expect(
+      renderReport(generatedGate(tree.root, stylesheetGenerators)),
+    ).toEqual({
       ok: true,
       text: 'generated gate: 1 file checked\ngenerated gate: OK',
     });
@@ -33,7 +38,7 @@ describe('generated gate: every committed generated file is fresh', () => {
   it('names the file, the first differing line and the command when a component folder was added without regenerating', () => {
     tree = makeTree({ alpha: '.sp-alpha {}' });
     addComponent(tree.root, 'beta');
-    const report = renderReport(generatedGate(tree.root));
+    const report = renderReport(generatedGate(tree.root, stylesheetGenerators));
     expect(report.ok).toBe(false);
     expect(report.text.split('\n').slice(1, 3)).toEqual([
       '  sapphire.css:7  P-16  sapphire.css differs from what its generator writes',
@@ -47,15 +52,17 @@ describe('generated gate: every committed generated file is fresh', () => {
       join(tree.root, STYLESHEET_FILE),
       `${stylesheetSource(tree.root)}.sp-edited {}\n`,
     );
-    expect(renderReport(generatedGate(tree.root)).ok).toBe(false);
+    expect(
+      renderReport(generatedGate(tree.root, stylesheetGenerators)).ok,
+    ).toBe(false);
   });
 
   it('fails a stylesheet that is missing', () => {
     tree = makeTree({});
     rmSync(join(tree.root, STYLESHEET_FILE));
-    expect(renderReport(generatedGate(tree.root)).text).toContain(
-      'sapphire.css:1  P-16  sapphire.css is missing',
-    );
+    expect(
+      renderReport(generatedGate(tree.root, stylesheetGenerators)).text,
+    ).toContain('sapphire.css:1  P-16  sapphire.css is missing');
   });
 
   it('fails when no generator ran', () => {
@@ -68,4 +75,21 @@ describe('generated gate: every committed generated file is fresh', () => {
   it('holds the committed stylesheet of this repository fresh', () => {
     expect(generatedGate(REPOSITORY, GENERATORS).violations).toEqual([]);
   });
+});
+
+it('registers the registry generator and rejects a manually edited registry', () => {
+  const generator = GENERATORS.find(
+    (entry) => entry.file === 'tooling/registry/generated/registry.json',
+  );
+  expect(generator).toBeDefined();
+  if (!generator) throw new Error('Missing registry generator');
+  tree = makeTree({});
+  const target = join(tree.root, generator.file);
+  mkdirSync(join(tree.root, 'tooling/registry/generated'), { recursive: true });
+  writeFileSync(target, '{}');
+  const result = generatedGate(tree.root, [
+    { file: generator.file, generate: () => generator.generate(REPOSITORY) },
+  ]);
+  expect(result.violations[0]?.file).toBe(generator.file);
+  expect(result.violations[0]?.rule).toBe('P-16');
 });

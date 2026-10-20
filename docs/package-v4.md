@@ -33,8 +33,7 @@ Font licenses accompany the redistributed files. A consumer needs no font packag
 React, React DOM, Radix UI and resizable panels are optional peers. Install only the peers
 used by the selected component. Basic Button, Card, Badge and Alert clients require React
 and do not load Radix. CSS-only apps and native custom elements require none of these peers.
-The library has no runtime dependencies; legacy documentation tooling remains a development
-dependency until the frozen renderer retires.
+The library has no runtime dependencies.
 
 App-facing helpers are `theme`, `consent`, `seo-tags` and `hooks/use-*`. `seo-tags` generates
 raw metadata without React. Internal slots, modal isolation and analytics transport modules
