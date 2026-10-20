@@ -144,3 +144,23 @@ test('boundary permits public Radix composition without exposing private compone
   );
   expect(result.violations[0]?.rule).toBe('P-2');
 });
+
+test('boundary permits optional resizable peer in components and public API tests only', () => {
+  expect(
+    check([
+      file(
+        'components/split-layout/split-layout.tsx',
+        `import { Group } from 'react-resizable-panels';`,
+      ),
+      file(
+        'components/split-layout/split-layout.test.tsx',
+        `import type { GroupImperativeHandle } from 'react-resizable-panels';`,
+      ),
+    ]).violations,
+  ).toEqual([]);
+  expect(
+    check([
+      file('lib/layout.ts', `import { Group } from 'react-resizable-panels';`),
+    ]).violations,
+  ).toHaveLength(1);
+});

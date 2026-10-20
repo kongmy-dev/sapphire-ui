@@ -35,6 +35,22 @@
     translate: -50% 0;
   }
 
+  .sp-split-layout-handle[aria-orientation="horizontal"] {
+    width: 100%;
+    height: var(--border-width);
+  }
+
+  .sp-split-layout-handle[aria-orientation="horizontal"]::after {
+    inset: auto 0;
+    height: var(--space-1);
+    width: 100%;
+    translate: 0 -50%;
+  }
+
+  .sp-split-layout-handle[aria-orientation="horizontal"] .sp-split-layout-grip {
+    rotate: 90deg;
+  }
+
   .sp-split-layout-handle:focus-visible {
     box-shadow:
       0 0 0 var(--border-width) var(--white),

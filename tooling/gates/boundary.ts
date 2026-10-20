@@ -27,7 +27,7 @@ const ALLOWED: Record<string, readonly string[]> = {
 const EXTERNALS: Record<string, readonly string[]> = {
   lib: ['react', 'react-dom'],
   hooks: ['react', 'react-dom'],
-  components: ['react', 'react-dom', 'radix-ui'],
+  components: ['react', 'react-dom', 'radix-ui', 'react-resizable-panels'],
   elements: [],
   css: ['@fontsource-variable'],
 };
@@ -99,6 +99,7 @@ function testPackageProblems(input: {
     '@playwright/test',
     '@radix-ui/react-slot',
     'radix-ui',
+    'react-resizable-panels',
   ];
   return allowed.includes(packageOf(specifier))
     ? []
