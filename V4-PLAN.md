@@ -13,7 +13,7 @@ Delete this file when 4.0.0 ships.
 - The owner approved a narrow Bun-only exception for CI `npm publish` so releases can use
   tokenless trusted publishing and provenance. All installs, builds, tests and other tooling
   remain Bun. This exception does not authorize other npm commands.
-- P11's integrated gate passes **912 tests**, including **39 migration tests** and **102
+- P11's integrated gate passes **915 tests**, including **41 migration tests** and **207
   migration assertions**. The CLI previews without writes, skips symlinks/dependencies,
   safely rewrites literals and reports manual work. CHANGELOG migration maps are generated
   and freshness-checked. Settled owner decisions are preserved in ADRs 0001–0005.
@@ -23,6 +23,12 @@ Delete this file when 4.0.0 ships.
   packed consumers, production build and Cloudflare deployment pass. Live v4 examples render;
   legacy registry bytes, v4 CORS/cache headers and missing-item 404s are verified. The v3
   maintenance CI passes. The v4 accessibility and arm64 visual jobs are still running.
+- Candidate `5b9c75b` passes remote quality and all **748** arm64 visual cases. The first
+  candidate differed at 20 comparison pixels on one dark avatar edge; the unchanged pins
+  passed the next remote run and 20 focused local captures. No tolerance or styling changed.
+- Independent review found and fixed escaped CSS URL delimiters and missing directional
+  colour utility migrations in `2acc055`; its integrated gate passes **915 tests**. The final
+  remote checkpoint must include these tooling corrections before the release tag.
 
 - All P4 React families, six hooks, app layouts and approved visual polish are integrated.
   All six P5 native elements are integrated. The final post-retirement browser suite passes **1,578 checks**;
