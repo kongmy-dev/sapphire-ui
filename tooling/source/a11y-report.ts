@@ -26,8 +26,9 @@ function specResults(value: unknown): A11yResult[] | null {
     !Array.isArray(value.tests)
   )
     return null;
-  if (!value.title.startsWith('react/')) return [];
-  const rows = value.tests.map((test) => testResults(test, value.title));
+  const title = value.title;
+  if (!title.startsWith('react/')) return [];
+  const rows = value.tests.map((test) => testResults(test, title));
   return rows.some((row) => row === null)
     ? null
     : rows.flatMap((row) => row ?? []);
