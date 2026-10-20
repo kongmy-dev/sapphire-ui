@@ -1,7 +1,8 @@
 import { getTheme, initTheme, setTheme, subscribeTheme } from '../lib/theme.js';
+import { initSearch } from './search.js';
 
 const menu = document.querySelector<HTMLButtonElement>('.docs-menu');
-const search = document.querySelector<HTMLInputElement>('.docs-search input');
+const search = document.querySelector<HTMLButtonElement>('.docs-search');
 const main = document.querySelector<HTMLElement>('#main');
 const mobile = matchMedia('(max-width: 48rem)');
 const theme = document.querySelector<HTMLButtonElement>('.docs-theme');
@@ -16,25 +17,6 @@ function navigation(open: boolean) {
   if (main) main.inert = open;
   if (open) search?.focus();
   else if (mobile.matches) menu?.focus();
-}
-
-function searchNavigation() {
-  const query = search?.value.trim().toLowerCase() ?? '';
-  const links = [
-    ...document.querySelectorAll<HTMLAnchorElement>('.docs-nav-link'),
-  ];
-  for (const link of links)
-    link.hidden = !link.textContent?.toLowerCase().includes(query);
-  for (const group of document.querySelectorAll<HTMLDetailsElement>(
-    '.docs-nav-group',
-  )) {
-    group.hidden = !group.querySelector('.docs-nav-link:not([hidden])');
-    group.open = query.length > 0 || group.dataset.active === 'true';
-  }
-  for (const label of document.querySelectorAll<HTMLElement>('.docs-nav-label'))
-    label.hidden = query.length > 0;
-  const empty = document.querySelector<HTMLElement>('.docs-search-empty');
-  if (empty) empty.hidden = links.some((link) => !link.hidden);
 }
 
 function themeLabel() {
@@ -64,11 +46,7 @@ function trapNavigation(event: KeyboardEvent) {
 }
 
 function shortcuts(event: KeyboardEvent) {
-  if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
-    event.preventDefault();
-    if (mobile.matches) navigation(true);
-    search?.focus();
-  }
+  if (document.querySelector('dialog[open]')) return;
   if (event.key === 'Escape' && document.body.hasAttribute('data-nav-open')) {
     navigation(false);
     menu?.focus();
@@ -77,6 +55,7 @@ function shortcuts(event: KeyboardEvent) {
 }
 
 initTheme();
+initSearch();
 themeLabel();
 subscribeTheme(themeLabel);
 theme?.addEventListener('click', () =>
@@ -85,7 +64,6 @@ theme?.addEventListener('click', () =>
 menu?.addEventListener('click', () =>
   navigation(!document.body.hasAttribute('data-nav-open')),
 );
-search?.addEventListener('input', searchNavigation);
 document
   .querySelector('.docs-nav-backdrop')
   ?.addEventListener('click', () => navigation(false));

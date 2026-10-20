@@ -141,5 +141,5 @@ export function navigation(
     names.filter((name) => !grouped.has(name)),
     'components',
     current,
-  )}<p class="docs-nav-label">Native HTML</p>${link('/native/', 'Native elements', current)}${group('Custom elements', [...new Set(native.map((row) => row.component))], 'native', current)}<p class="docs-search-empty" hidden>No matching components.</p></nav>`;
+  )}<p class="docs-nav-label">Native HTML</p>${link('/native/', 'Native elements', current)}${group('Custom elements', [...new Set(native.map((row) => row.component))], 'native', current)}</nav>`;
 }

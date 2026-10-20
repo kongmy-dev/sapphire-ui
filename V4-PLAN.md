@@ -12,7 +12,7 @@ Delete this file when 4.0.0 ships.
 ### Current execution checkpoint
 
 - The deployed P8 rewrite incorrectly replaced the left sidebar with a flat catalogue and top links.
-  Restore a persistent navy sidebar with grouped component links, active-page indication, search,
+  Restore a persistent sidebar with grouped component links, active-page indication, search,
   theme switching and a keyboard-accessible mobile drawer. Keep the approved component polish.
   Show the corrected local preview before another deployment; do not tag or publish while this
   review is pending. Route and accessibility passes did not establish visual acceptance.
@@ -20,6 +20,12 @@ Delete this file when 4.0.0 ships.
   checks across Chromium, Firefox and WebKit, including open-drawer accessibility. Desktop
   light/dark and mobile visuals were inspected. Review: `http://localhost:4177/sidebar-review.html`;
   interactive preview: `http://localhost:4179/components/button/`.
+- The owner requested light-theme navigation and restoration of overlay search. The sidebar now
+  follows the page theme: light surface/navy text in light mode, navy in dark mode. Search opens
+  a modal command palette from its launcher or Cmd/Ctrl+K, supports arrows/Enter, empty results,
+  Escape and focus restoration, and leaves navigation groups intact. No new dependency or shared
+  component styling change. The updated site passes 39 three-engine browser checks, including
+  dark-mode contrast, mobile resize and pointer selection; local visual review is complete.
 
 - The owner approved a narrow Bun-only exception for CI `npm publish` so releases can use
   tokenless trusted publishing and provenance. All installs, builds, tests and other tooling

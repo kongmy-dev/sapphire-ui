@@ -110,48 +110,62 @@ test('desktop documentation keeps a persistent sidebar beside the active page', 
   expect(after.x + after.width).toBe(columns.sidebarRight);
 });
 
-test('documentation search filters links and both shortcuts focus it', async ({
+test('documentation search opens a keyboard command palette and restores focus', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(`${SITE}/components/button/`);
-  const nav = page.getByRole('navigation', { name: 'Documentation' });
-  const search = page.getByLabel('Find a component', { exact: true });
-  const button = nav.getByRole('link', {
-    name: 'Button',
+  const trigger = page.getByRole('button', {
+    name: 'Search documentation',
     exact: true,
-    includeHidden: true,
   });
-  const card = nav.getByRole('link', {
-    name: 'Card',
-    exact: true,
-    includeHidden: true,
-  });
-  await search.fill('button');
-  await expect(button).toBeVisible();
-  await expect(card).toBeHidden();
-  await search.fill('card');
-  await expect(card).toBeVisible();
-  await expect(button).toBeHidden();
+  const dialog = page.getByRole('dialog', { name: 'Search documentation' });
+  const search = dialog.getByRole('combobox', { name: 'Search documentation' });
+  await trigger.click();
+  await expect(dialog).toBeVisible();
+  await expect(search).toBeFocused();
   await search.fill('no-such-sapphire-component');
-  await expect(button).toBeHidden();
-  const empty = nav.getByText('No matching components.', { exact: true });
-  await expect(empty).toBeVisible();
-  await search.fill('');
-  await expect(empty).toBeHidden();
-  await expect(card).toHaveJSProperty('hidden', false);
-  await expect(card).toBeHidden();
-  await nav
-    .locator('summary')
-    .filter({ hasText: /^Content$/ })
-    .click();
-  await expect(card).toBeVisible();
-  await expect(button).toHaveAttribute('aria-current', 'page');
+  await expect(dialog.getByRole('status')).toHaveText('No matching pages.');
+  await expect(search).not.toHaveAttribute('aria-activedescendant');
+  await search.press('Enter');
+  await expect(dialog).toBeVisible();
+  await search.fill('card');
+  await expect(
+    dialog.getByRole('option', { name: 'Card Content', exact: true }),
+  ).toBeVisible();
+  expect(
+    (
+      await new AxeBuilder({ page })
+        .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+        .analyze()
+    ).violations,
+  ).toEqual([]);
+  await search.press('Escape');
+  await expect(dialog).toBeHidden();
+  await expect(trigger).toBeFocused();
+  const nav = page.getByRole('navigation', { name: 'Documentation' });
+  await expect(
+    nav.getByRole('link', { name: 'Button', exact: true }),
+  ).toBeVisible();
   for (const shortcut of ['Control+k', 'Meta+k']) {
-    await button.focus();
-    await page.keyboard.press(shortcut);
+    await trigger.press(shortcut);
     await expect(search).toBeFocused();
+    await search.press(shortcut);
+    await expect(dialog).toBeHidden();
   }
+  await trigger.click();
+  await search.fill('');
+  await search.press('ArrowDown');
+  await expect(dialog.getByRole('option', { selected: true })).toHaveText(
+    'Getting startedGuides',
+  );
+  await search.press('ArrowUp');
+  await expect(dialog.getByRole('option', { selected: true })).toHaveText(
+    'OverviewGuides',
+  );
+  await search.fill('card');
+  await search.press('Enter');
+  await expect(page).toHaveURL(`${SITE}/components/card/`);
 });
 
 test('documentation theme toggle changes and persists the selected scheme', async ({
@@ -160,10 +174,18 @@ test('documentation theme toggle changes and persists the selected scheme', asyn
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.emulateMedia({ colorScheme: 'light' });
   await page.goto(`${SITE}/components/button/`);
+  const sidebar = page.locator('#docs-sidebar');
+  const lightSurface = await sidebar.evaluate(
+    (element) => getComputedStyle(element).backgroundColor,
+  );
   await page
     .getByRole('button', { name: 'Switch to dark theme', exact: true })
     .click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  const darkSurface = await sidebar.evaluate(
+    (element) => getComputedStyle(element).backgroundColor,
+  );
+  expect(darkSurface).not.toBe(lightSurface);
   await expect(
     page.getByRole('button', { name: 'Switch to light theme', exact: true }),
   ).toBeVisible();
@@ -203,8 +225,13 @@ test('mobile navigation supports keyboard dismissal and page navigation without 
         .analyze()
     ).violations,
   ).toEqual([]);
-  const search = page.getByLabel('Find a component', { exact: true });
-  await search.focus();
+  await page
+    .getByRole('button', { name: 'Search documentation', exact: true })
+    .click();
+  const search = page.getByRole('combobox', { name: 'Search documentation' });
+  await expect(search).toBeFocused();
+  await search.press('Escape');
+  await expect(sidebar).toBeInViewport();
   await page.keyboard.press('Escape');
   await expect(open).toBeFocused();
   await expect(sidebar).not.toBeInViewport();
@@ -230,4 +257,40 @@ test('mobile navigation supports keyboard dismissal and page navigation without 
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
+});
+
+test('search supports dark mode, mobile resize and pointer selection', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await page.goto(`${SITE}/components/button/`);
+  await page
+    .getByRole('button', { name: 'Search documentation', exact: true })
+    .click();
+  const dialog = page.getByRole('dialog', { name: 'Search documentation' });
+  const search = dialog.getByRole('combobox');
+  await search.fill('card');
+  expect(
+    (
+      await new AxeBuilder({ page })
+        .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+        .analyze()
+    ).violations,
+  ).toEqual([]);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(dialog).toBeInViewport();
+  await dialog.getByRole('button', { name: 'Close search' }).click();
+  const menu = page.getByRole('button', {
+    name: 'Open navigation',
+    exact: true,
+  });
+  await expect(menu).toBeFocused();
+  await menu.press('Control+k');
+  await expect(search).toBeFocused();
+  await search.fill('card');
+  await dialog
+    .getByRole('option', { name: 'Card Content', exact: true })
+    .click();
+  await expect(page).toHaveURL(`${SITE}/components/card/`);
 });
