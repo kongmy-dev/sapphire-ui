@@ -570,6 +570,9 @@ test('app-layouts-parity/split-layout', async ({ page }, testInfo) => {
   const v3Rects = await readSplit(v3Frame);
   const v3Pixels = await shoot(v3Frame);
   await open(page, specimenUrl(SPLIT, scheme), scheme);
+  await page.addStyleTag({
+    content: '.sp-split-layout-grip > .sp-icon { visibility: hidden }',
+  });
   const v4Frame = page.locator('.docs-split-frame');
   const v4Rects = await readSplit(v4Frame);
   const v4Pixels = await shoot(v4Frame);

@@ -103,6 +103,8 @@ type Observation = {
 type Accents = { brandText: string; successText: string; errorText: string };
 
 const GLYPH = '.material-symbols-outlined';
+const V4_GLYPHS =
+  '#parity .sp-document-bar-separator, #parity .sp-document-card-icon > .sp-icon';
 
 const proseV3 = (size: string) => (v4Html: string) =>
   v4Html.replace(
@@ -754,6 +756,9 @@ for (const group of GROUPS) {
     const scheme = schemeOf(testInfo);
     const fixtures = FIXTURES.filter((fixture) => fixture.group === group);
     await open(page, specimenUrl(SPECIMENS[group], scheme), scheme);
+    await page.addStyleTag({
+      content: `${V4_GLYPHS} { visibility: hidden !important }`,
+    });
     const accents = await readAccents(page);
     const problems: string[] =
       group === 'document' ? await stickyProblems(page) : [];
