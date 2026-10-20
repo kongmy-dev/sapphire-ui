@@ -2,4 +2,5 @@
 exact = true
 
 [test]
+preload = ["./tooling/testing/dom.ts", "./tooling/testing/cleanup.ts"]
 pathIgnorePatterns = ["tests/**", "src/**", ".claude/**"]

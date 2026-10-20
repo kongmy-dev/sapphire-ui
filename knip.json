@@ -14,7 +14,9 @@
     "css/*.examples.css",
     "components/*/*.examples.css",
     "playwright.visual.config.ts",
-    "tests/visual/*.spec.ts"
+    "tests/visual/*.spec.ts",
+    "components/*/*.examples.tsx",
+    "tooling/testing/*.ts"
   ],
   "project": ["**/*.{ts,tsx,css}"],
   "ignoreUnresolved": ["^@/components/ui/"],

@@ -521,10 +521,14 @@
     "@radix-ui/react-tooltip": "^1.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-resizable-panels": "^4.0.0"
+    "react-resizable-panels": "^4.0.0",
+    "radix-ui": "^1.8.1"
   },
   "peerDependenciesMeta": {
     "react-resizable-panels": {
+      "optional": true
+    },
+    "radix-ui": {
       "optional": true
     }
   },
@@ -584,6 +588,11 @@
     "vite": "8.3.4",
     "vite-plugin-dts": "5.1.2",
     "vite-plugin-sitemap": "0.8.2",
-    "wrangler": "4.149.0"
+    "wrangler": "4.149.0",
+    "@happy-dom/global-registrator": "21.0.3",
+    "@testing-library/dom": "10.4.2",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.8",
+    "radix-ui": "1.8.1"
   }
 }
