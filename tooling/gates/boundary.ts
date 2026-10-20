@@ -32,7 +32,10 @@ const EXTERNALS: Record<string, readonly string[]> = {
   css: ['@fontsource-variable'],
 };
 const layer = (name: string) => name.split('/')[0] ?? '';
-const isTest = (name: string) => /\.(?:test|spec)\.[cm]?tsx?$/.test(name);
+const isSupport = (name: string) =>
+  name.split('/').some((part) => part.endsWith('-tests'));
+const isTest = (name: string) =>
+  /\.(?:test|spec)\.[cm]?tsx?$/.test(name) || isSupport(name);
 const isStrictTest = (name: string) =>
   isTest(name) &&
   (RUNTIME.includes(layer(name)) || name.startsWith('tests/components/'));
@@ -66,7 +69,7 @@ function localProblems(input: {
 }): Violation[] {
   const { file, edge, target } = input;
   if (isStrictTest(file))
-    return isPublic(target)
+    return isPublic(target) || isSupport(target)
       ? []
       : [problem(file, edge, `Test imports private module ${target}`)];
   const allowed = ALLOWED[layer(file)]?.includes(layer(target));

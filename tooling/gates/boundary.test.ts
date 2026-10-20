@@ -93,3 +93,20 @@ test('boundary rejects CSS imports into runtime layers but ignores comments', ()
   expect(result.violations).toHaveLength(1);
   expect(result.violations[0]?.line).toBe(2);
 });
+
+test('boundary isolates test support from runtime and private implementation', () => {
+  const result = check([
+    file('lib/slot.tsx', `import './slot-tests/fixtures';`),
+    file('lib/slot.test.tsx', `import './slot-tests/fixtures';`),
+    file(
+      'lib/slot-tests/fixtures.tsx',
+      `import '../../components/button/private';`,
+    ),
+    file('components/button/private.ts'),
+  ]);
+  expect(result.violations).toHaveLength(2);
+  expect(result.violations.map((issue) => issue.file)).toEqual([
+    'lib/slot.tsx',
+    'lib/slot-tests/fixtures.tsx',
+  ]);
+});
