@@ -1,3 +1,7 @@
+.docs-main {
+  max-width: none;
+}
+
 .docs-admin-demo {
   height: 85vh;
   min-height: calc(var(--space-1) * 175);
