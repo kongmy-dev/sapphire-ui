@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import { EXAMPLE_URL } from './tooling/examples/catalog';
 import { SPECIMEN_URL } from './tooling/visual/specimens';
 
 const PIN_CONTAINER_VARIABLE = 'SAPPHIRE_PIN_CONTAINER';
@@ -43,6 +44,12 @@ export default defineConfig({
     deviceScaleFactor: 1,
   },
   webServer: [
+    {
+      command: 'bun tooling/examples/server.ts',
+      url: EXAMPLE_URL,
+      reuseExistingServer: false,
+      timeout: 60_000,
+    },
     {
       command: buildThenPreviewDocs,
       url: BASE_URL,

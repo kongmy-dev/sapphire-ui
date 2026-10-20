@@ -65,14 +65,20 @@ export function checkA11yCoverage(
 }
 
 if (import.meta.main) {
-  finish({
-    name: 'a11y coverage',
-    files: 0,
-    violations: [
-      problem(
-        'a11y-report',
-        'Invoke checkA11yCoverage with the discovered catalog and actual browser results',
-      ),
-    ],
-  });
+  const root = process.cwd();
+  const path = resolve(root, process.argv[2] ?? 'test-results/a11y.json');
+  const results = existsSync(path)
+    ? readA11yResults(readFileSync(path, 'utf8'))
+    : null;
+  const result = checkA11yCoverage(readExamples(root), results ?? []);
+  if (results === null)
+    result.violations.push(
+      problem(path, 'Missing or invalid Playwright report'),
+    );
+  finish(result);
 }
+
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { readExamples } from '../examples/catalog';
+import { readA11yResults } from '../source/a11y-report';

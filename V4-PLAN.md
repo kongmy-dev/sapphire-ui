@@ -10,11 +10,23 @@ own. D3: Lucide. D4: every component. D5: Tidy everywhere. Delete this file when
 - Shared foundations plus per-component stylesheet ownership is recorded in ADR-0002.
 - Active working rules now match v4: CSS classes/data attributes, generated subpaths, optional
   behaviour peers and the preserved theme with tighter proportions.
+- P4 has Slot, Button, Card, Dialog, the five plain form components, Skeleton, Spinner, Empty
+  and Progress, all six hooks and the theme helper. Independently discovered examples feed the
+  browser checks; per-file coverage, boundary and typed CSS-contract gates are active. The gate
+  passes 565 tests and all 32 runtime/example files clear 95% line/function coverage. All 40
+  current examples pass 240 strict accessibility/keyboard checks. Seed visual pins are captured;
+  the next family's captures are running. The phase remains open.
+- `useLocalStorage` requires a caller-supplied parser in v4. Stored JSON is untrusted; invalid,
+  missing or inaccessible reads use the fallback; failed writes retain the in-memory value.
+  Server rendering and initial hydration use the fallback before reading storage. The migration
+  map must describe the parser argument: throwing rejects a value, while returning `undefined`
+  is valid when it belongs to the caller's type. React's value/updater setter convention is retained.
+  The owner selected this over primitive-only storage or returning `unknown`.
 - Cookie-banner and icon-mark CSS, SVG specimen icons and exhaustive legacy-class coverage have
   landed. Only the three `elements/*` documentation sections still use the reference renderer;
   their takeover belongs to P5/P8. The v3 parity renderer remains until P9.
-- Integrated CSS measures **23,762 / 23,765 gzip bytes**. Removed unconsumed single-use toast and
-  keyboard-shadow variables; the ceiling is unchanged. The active gate passes **246 unit tests**.
+- Integrated CSS measures **23,758 / 23,765 gzip bytes** after the shared dark-card text fix and
+  removal of unused single-use internal variables; the ceiling is unchanged.
 - Strict specimen accessibility passes **420/420** checks (70 pages, two schemes, three engines).
   The two subsequently changed specimens also pass all 12 targeted checks. The integrated
   container visual/parity suite passes **412/412** after reviewed SVG pin and parity updates.
@@ -25,36 +37,20 @@ own. D3: Lucide. D4: every component. D5: Tidy everywhere. Delete this file when
 
 ## 1. Where it stands
 
-This is a review of the tree at `2e88221`, not a release sign-off. Counts come from
-`bun run scorecard 2e88221` and the checks below; §10 separates whole-tree debt from the active
-v4 gate. The phase descriptions in §5 remain the acceptance criteria.
+This records the current execution state, not a release sign-off. The phase descriptions in §5
+remain the acceptance criteria; retained v3 code does not count as a v4 implementation.
 
 | Phase | Current position and evidence |
 |---|---|
 | P0 — safety and decisions | Local `v3` branch exists with the build peer/external fix. Both branches have tag-only publishing, CI as a prerequisite and OIDC permission. Five ADRs exist in `docs/adr/`; spike outcomes and owner decisions are in §9. npm trusted-publisher account configuration and a real publication are unverified; P11 still owns release execution |
 | P1 — gates and pins | Bun and devDependencies are pinned; Dependabot uses Bun. Strict `tsconfig.base.json`, Biome, knip, gate regression tests, scorecard and container pin tooling exist. `src/` remains frozen. The current gate passes; it measures the active lane rather than claiming the retained v3 debt is gone |
 | P2 — tokens | `css/tokens.css`, `css/tailwind.css` and `DESIGN.md` exist; token mappings and design tables are enforced. `tests/tokens.spec.ts` exercises source, Bun, Vite and Tailwind builds, nested scopes and overrides in three engines |
-| P3 — CSS contract | 66 component stylesheets, base/layout/fonts and the generated `sapphire.css` entry exist. 67 plain-HTML specimen pages include the foundations; label is demonstrated through the forms. Specimens take over 54 reference sections; 28 light/dark reference PNGs still use the v3 renderer. The scorecard's 45 component pin flags count only component folders declaring `data-pin`, not every parity-tested state |
-| P4–P5 — React and elements | Not started in the v4 folders: no component `.tsx`, React examples, component tests or `elements/` implementations. The retained `src/` implementations do not count as ports |
+| P3 — CSS contract | Complete: 69 component stylesheets, 70 plain-HTML specimen pages and 65 reference sections. The three elements documentation sections await P5/P8. The v3 parity renderer remains until P9 |
+| P4 — React | Active: seed clients, plain forms, initial feedback, hooks and theme are implemented; stateful forms and remaining families are in progress. The current execution checkpoint gives integrated validation |
+| P5 — elements | Pending: the six v4 custom elements and their lifecycle/equivalence checks have not been implemented |
 | P6–P7 — package and registry | Not started as v4 deliverables. `package.json` still exports the v3 package: 4 runtime dependencies, 21 required peers and 88 export entries. The existing registry check passes 34 v3 items; there is no v4 source `registry.json` or ported `blocks/` |
-| P8–P10 — site, retirement and docs | `site/specimen.css` and the specimen server support P3; the public docs still build from `src/`. Old-lane retirement, the v4 docs site, API/contract/coverage/boundary gates and the docs/skill-reference gates remain work for their planned phases. Only the stylesheet import list is currently registered with the generated-files gate |
+| P8–P10 — site, retirement and docs | Public docs still build from `src/`. The React example runner, contract, coverage and boundary gates now support P4. The v4 docs site, old-lane retirement, API snapshot and docs/skill-reference gates remain pending. Only the stylesheet import list is currently registered with the generated-files gate |
 | P11 — release | Pending. This review does not verify remote CI, npm configuration, installed consumers or production. Keep the first push, tag, deployment and production smoke in P11 |
-
-### Validation at `2e88221`
-
-- `bun run gate` passes: lint, typecheck, knip, comment (227 files), size (107 files), dependency,
-  token (187 files), budget, generated-files, freeze, 245 unit tests and the v3 registry check.
-  Biome reports 21 informational diagnostics in the retained lane; no errors or warnings fail it.
-- The v4 budget check measures **23,497 bytes gzipped against 23,765**, leaving **268 bytes**.
-  The scorecard instead reports **23,932 bytes** for the currently exported v3 stylesheet:
-  `tooling/scorecard/run.ts` builds the package and follows `package.json`'s stylesheet export.
-  Use `bun run budget-check` for the v4 CSS until P6 changes the package export.
-- `bun run test:a11y` passes **573 tests** across Chromium, Firefox and WebKit, including **402**
-  strict v4 specimen checks (67 pages × two schemes × three engines) and the token-build probes.
-  The old docs and interaction checks still log contrast violations without failing unless
-  `STRICT_A11Y=1`; this pass does not certify those pages as accessible.
-- Container visual/parity tests and the registry consumer/CLI smoke were not rerun in this review.
-  Committed pins and specs are evidence of coverage being present, not a fresh visual pass.
 
 ### P3 completion checkpoint
 
@@ -69,9 +65,11 @@ v4 gate. The phase descriptions in §5 remain the acceptance criteria.
 4. Persistent dependency caching passes cold and warm validation. Scratch files remain in memory;
    the runner never performs recursive ownership changes or clears shared caches.
 
-The accessibility corrections already listed in the settled defaults remain open: tab-panel
-focus, keyboard access to bar-chart values, margin-note focus/overlap, toc truncation, prose
-markers/spacing, financial-header consistency and dark-card paragraph contrast. Static CSS and axe
+The remaining accessibility corrections are tab-panel focus, keyboard access to bar-chart values,
+margin-note focus/overlap, toc truncation, prose markers/spacing and financial-header consistency.
+P4's browser checks now verify the shared dark-card heading and paragraph contrast correction.
+The React ports also exposed vertical-slider geometry and the multiple-select chevron as items
+for the shared refinement pass; their accepted states must work before P4 closes. Static CSS and axe
 checks alone do not close those behaviour and layout gaps. Fix each defect when its component is
 next touched, in the shared CSS or behaviour that owns it, with a regression check and reviewed
 pin where the look changes. They are not a separate prerequisite to closing P3; none carries into

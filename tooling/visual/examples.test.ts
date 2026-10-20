@@ -29,11 +29,17 @@ describe('example slugs', () => {
 });
 
 describe('example manifest', () => {
-  it('names each pinned section as route/slug, once', () => {
+  it('names each pinned section or React example once', () => {
     const names = exampleNames();
     expect(new Set(names).size).toBe(names.length);
     expect(names).toContain('buttons/variants');
-    expect(names.every((name) => /^[a-z]+\/[a-z0-9-]+$/.test(name))).toBe(true);
+    expect(
+      names.every((name) =>
+        /^(?:[a-z]+\/[a-z0-9-]+|react\/[a-z0-9-]+\/[a-z0-9-]+(?:\/open)?)$/.test(
+          name,
+        ),
+      ),
+    ).toBe(true);
   });
 
   it('lists a section as pinned or skipped, never both', () => {

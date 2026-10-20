@@ -1,6 +1,5 @@
 @layer components {
   .sp-theme-toggle {
-    --sp-theme-toggle-icon-size: calc(var(--space-1) * 6);
     --sp-theme-toggle-focus: 0 0 transparent;
 
     display: inline-flex;
@@ -39,7 +38,7 @@
     flex-shrink: 0;
     width: 1em;
     height: 1em;
-    font-size: var(--sp-theme-toggle-icon-size);
+    font-size: calc(var(--space-1) * 6);
     line-height: 1;
   }
 

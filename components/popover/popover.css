@@ -1,6 +1,5 @@
 @layer components {
   .sp-popover {
-    --sp-popover-line-height: calc(1.25 / 0.875);
     --sp-popover-enter-x: 0;
     --sp-popover-enter-y: 0;
 
@@ -8,7 +7,7 @@
     padding: var(--space-4);
     font-family: var(--font-sans);
     font-size: var(--text-sm);
-    line-height: var(--sp-popover-line-height);
+    line-height: calc(1.25 / 0.875);
     color: var(--foreground);
     background: var(--card);
     border: var(--border-width) solid var(--border);

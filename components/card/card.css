@@ -36,6 +36,10 @@
     --sp-card-lift: 0;
   }
 
+  .sp-card[data-variant="dark"] :where(h1, h2, h3, h4, h5, h6, p) {
+    color: inherit;
+  }
+
   .sp-card[data-variant="feature"] {
     --sp-card-cursor: auto;
     --sp-card-shadow-hover: none;
