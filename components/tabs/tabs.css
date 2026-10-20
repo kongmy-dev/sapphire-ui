@@ -125,12 +125,6 @@
 
   .sp-tabs-content {
     margin-top: var(--space-4);
-    outline: none;
-  }
-
-  .sp-tabs-content:focus-visible {
-    outline: var(--ring-width) solid var(--ring);
-    outline-offset: var(--ring-offset);
   }
 
   @media (hover: hover) {

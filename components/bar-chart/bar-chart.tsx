@@ -18,6 +18,7 @@ export function BarChart({
 }: BarChartProps) {
   return (
     <div
+      role="group"
       {...props}
       className={['sp-bar-chart', className].filter(Boolean).join(' ')}
       data-slot="bar-chart"

@@ -20,9 +20,7 @@
     justify-content: flex-end;
     height: 100%;
     padding: 0;
-    color: inherit;
-    cursor: help;
-    background: transparent;
+    background: none;
     border: 0;
   }
 
@@ -63,12 +61,7 @@
     color: var(--muted-foreground);
   }
 
-  .sp-bar-chart-column:focus-visible {
-    outline: var(--ring-width) solid var(--ring);
-    outline-offset: var(--ring-offset);
-  }
-
-  .sp-bar-chart-column:focus-visible .sp-bar-chart-value {
+  .sp-bar-chart-column:focus .sp-bar-chart-value {
     opacity: 1;
   }
 

@@ -21,6 +21,7 @@ export function Sparkline({
 }: SparklineProps) {
   return (
     <div
+      role="group"
       {...props}
       className={['sp-sparkline', className].filter(Boolean).join(' ')}
       data-slot="sparkline"

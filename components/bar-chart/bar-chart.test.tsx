@@ -70,6 +70,6 @@ for (const { name, render: Example } of examples) {
     const bars = screen.getAllByRole('button');
     expect(bars).toHaveLength(4);
     await userEvent.tab();
-    expect(document.activeElement).toBe(bars[0]);
+    expect<Element | null | undefined>(document.activeElement).toBe(bars[0]);
   });
 }

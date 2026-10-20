@@ -36,10 +36,10 @@ it('links tabs and focusable panels and preserves native refs and classes', asyn
   const panel = screen.getByRole('tabpanel', { name: 'One' });
   expect(root.current?.className).toBe('sp-tabs root');
   expect(list.current?.className).toBe('sp-tabs-list list');
-  expect(trigger.current).toBe(tab);
-  expect(content.current).toBe(panel);
+  expect<HTMLElement | null>(trigger.current).toBe(tab);
+  expect<HTMLElement | null>(content.current).toBe(panel);
   expect(panel.className).toBe('sp-tabs-content content');
-  expect(panel.id).toBe(tab.getAttribute('aria-controls'));
+  expect(tab.getAttribute('aria-controls')).toBe(panel.id);
   expect(panel.tabIndex).toBe(0);
   await userEvent.click(tab);
   await userEvent.tab();
@@ -73,7 +73,12 @@ it('honors controlled selection rather than switching without consumer updates',
 
 for (const { name, render: Example } of examples) {
   it(`operates ${name} by keyboard`, async () => {
-    render(<Example />);
+    render(
+      <>
+        <style>{'[hidden] { display: none; }'}</style>
+        <Example />
+      </>,
+    );
     const tabs = screen.getAllByRole('tab');
     const first = tabs[0];
     const second = tabs[1];
@@ -90,5 +95,6 @@ for (const { name, render: Example } of examples) {
     expect(second.getAttribute('aria-selected')).toBe('true');
     await userEvent.tab();
     expect(document.activeElement?.getAttribute('role')).toBe('tabpanel');
+    expect(document.activeElement?.getAttribute('data-state')).toBe('active');
   });
 }
