@@ -103,11 +103,18 @@ function projectDir(base: string, name: string, kind: Kind, variant: Variant) {
 }
 
 function bunBuild(dir: string): string {
-  const out = join(dir, 'out.css');
-  execFileSync('bun', ['build', join(dir, 'entry.css'), '--outfile', out], {
-    stdio: 'pipe',
-  });
-  return readFileSync(out, 'utf8');
+  const out = join(dir, 'bun-output');
+  execFileSync(
+    'bun',
+    [
+      '--eval',
+      'const result = await Bun.build({entrypoints:[Bun.argv.at(-2)],outdir:Bun.argv.at(-1)}); if (!result.success) throw new Error(result.logs.map(String).join("\\n"));',
+      join(dir, 'entry.css'),
+      out,
+    ],
+    { stdio: 'pipe' },
+  );
+  return readFileSync(join(out, 'entry.css'), 'utf8');
 }
 
 async function viteBuild(dir: string, kind: Kind): Promise<string> {

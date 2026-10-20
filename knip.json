@@ -20,7 +20,10 @@
     "tooling/examples/browser.tsx",
     "elements/*.examples.ts",
     "tooling/examples/element-browser.ts",
-    "tooling/examples/equivalence.tsx"
+    "tooling/examples/equivalence.tsx",
+    "tooling/site/build.ts",
+    "tooling/site/serve.ts",
+    "site/client.ts"
   ],
   "project": ["**/*.{ts,tsx,css}"],
   "ignoreUnresolved": ["^@/components/ui/"],
