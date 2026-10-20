@@ -1,0 +1,6 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "sapphire-ui",
+  "homepage": "https://design.kongmy.dev",
+  "include": ["tooling/registry/generated/registry.json"]
+}

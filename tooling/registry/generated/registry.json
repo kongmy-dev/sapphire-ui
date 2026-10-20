@@ -1,0 +1,856 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "base",
+      "type": "registry:base",
+      "files": [
+        {
+          "path": "skills/sapphire/SKILL.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/sapphire/SKILL.md"
+        }
+      ],
+      "dependencies": ["@kongmy-dev/sapphire-ui@3.0.2"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@kongmy-dev/sapphire-ui/foundations.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "foundations"
+      },
+      "extends": "none"
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/button/button.tsx",
+          "type": "registry:component",
+          "target": "@ui/button.tsx"
+        },
+        {
+          "path": "lib/slot.tsx",
+          "type": "registry:component",
+          "target": "@lib/sapphire/slot.tsx"
+        },
+        {
+          "path": "components/button/button.css",
+          "type": "registry:file",
+          "target": "@ui/button.css"
+        }
+      ],
+      "dependencies": ["react@19.2.7"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@/components/ui/button.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "button"
+      }
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/input/input.tsx",
+          "type": "registry:component",
+          "target": "@ui/input.tsx"
+        },
+        {
+          "path": "components/input/input.css",
+          "type": "registry:file",
+          "target": "@ui/input.css"
+        }
+      ],
+      "dependencies": ["react@19.2.7"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@/components/ui/input.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "input"
+      }
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/textarea/textarea.tsx",
+          "type": "registry:component",
+          "target": "@ui/textarea.tsx"
+        },
+        {
+          "path": "components/textarea/textarea.css",
+          "type": "registry:file",
+          "target": "@ui/textarea.css"
+        }
+      ],
+      "dependencies": ["react@19.2.7"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@/components/ui/textarea.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "textarea"
+      }
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/label/label.tsx",
+          "type": "registry:component",
+          "target": "@ui/label.tsx"
+        },
+        {
+          "path": "components/label/label.css",
+          "type": "registry:file",
+          "target": "@ui/label.css"
+        }
+      ],
+      "dependencies": ["react@19.2.7"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@/components/ui/label.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "label"
+      }
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/separator/separator.tsx",
+          "type": "registry:component",
+          "target": "@ui/separator.tsx"
+        },
+        {
+          "path": "lib/slot.tsx",
+          "type": "registry:component",
+          "target": "@lib/sapphire/slot.tsx"
+        },
+        {
+          "path": "components/separator/separator.css",
+          "type": "registry:file",
+          "target": "@ui/separator.css"
+        }
+      ],
+      "dependencies": ["react@19.2.7"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@/components/ui/separator.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "separator"
+      }
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/checkbox/checkbox.tsx",
+          "type": "registry:component",
+          "target": "@ui/checkbox.tsx"
+        },
+        {
+          "path": "components/checkbox/checkbox.css",
+          "type": "registry:file",
+          "target": "@ui/checkbox.css"
+        }
+      ],
+      "dependencies": ["radix-ui@1.8.1", "react@19.2.7"],
+      "registryDependencies": ["@sapphire/label"],
+      "css": {
+        "@import \"@/components/ui/checkbox.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "checkbox"
+      }
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/radio-group/radio-group.tsx",
+          "type": "registry:component",
+          "target": "@ui/radio-group.tsx"
+        },
+        {
+          "path": "components/radio-group/radio-group.css",
+          "type": "registry:file",
+          "target": "@ui/radio-group.css"
+        }
+      ],
+      "dependencies": ["radix-ui@1.8.1", "react@19.2.7"],
+      "registryDependencies": ["@sapphire/label"],
+      "css": {
+        "@import \"@/components/ui/radio-group.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "radio-group"
+      }
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/select/select.tsx",
+          "type": "registry:component",
+          "target": "@ui/select.tsx"
+        },
+        {
+          "path": "lib/isolate-modal.ts",
+          "type": "registry:component",
+          "target": "@lib/sapphire/isolate-modal.ts"
+        },
+        {
+          "path": "components/select/select.css",
+          "type": "registry:file",
+          "target": "@ui/select.css"
+        }
+      ],
+      "dependencies": ["radix-ui@1.8.1", "react@19.2.7"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@/components/ui/select.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "select"
+      }
+    },
+    {
+      "name": "native-select",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/native-select/native-select.tsx",
+          "type": "registry:component",
+          "target": "@ui/native-select.tsx"
+        },
+        {
+          "path": "components/native-select/native-select.css",
+          "type": "registry:file",
+          "target": "@ui/native-select.css"
+        }
+      ],
+      "dependencies": ["react@19.2.7"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@/components/ui/native-select.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "native-select"
+      }
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/dialog/dialog.tsx",
+          "type": "registry:component",
+          "target": "@ui/dialog.tsx"
+        },
+        {
+          "path": "components/dialog/dialog.css",
+          "type": "registry:file",
+          "target": "@ui/dialog.css"
+        }
+      ],
+      "dependencies": ["radix-ui@1.8.1", "react@19.2.7"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@/components/ui/dialog.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "dialog"
+      }
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/sheet/sheet.tsx",
+          "type": "registry:component",
+          "target": "@ui/sheet.tsx"
+        },
+        {
+          "path": "components/sheet/sheet.css",
+          "type": "registry:file",
+          "target": "@ui/sheet.css"
+        }
+      ],
+      "dependencies": ["radix-ui@1.8.1", "react@19.2.7"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@/components/ui/sheet.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "sheet"
+      }
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/dropdown-menu/dropdown-menu.tsx",
+          "type": "registry:component",
+          "target": "@ui/dropdown-menu.tsx"
+        },
+        {
+          "path": "lib/isolate-modal.ts",
+          "type": "registry:component",
+          "target": "@lib/sapphire/isolate-modal.ts"
+        },
+        {
+          "path": "components/dropdown-menu/dropdown-menu.css",
+          "type": "registry:file",
+          "target": "@ui/dropdown-menu.css"
+        }
+      ],
+      "dependencies": ["radix-ui@1.8.1", "react@19.2.7"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@/components/ui/dropdown-menu.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "dropdown-menu"
+      }
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/popover/popover.tsx",
+          "type": "registry:component",
+          "target": "@ui/popover.tsx"
+        },
+        {
+          "path": "components/popover/popover.css",
+          "type": "registry:file",
+          "target": "@ui/popover.css"
+        }
+      ],
+      "dependencies": ["radix-ui@1.8.1", "react@19.2.7"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@/components/ui/popover.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "popover"
+      }
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/tooltip/tooltip.tsx",
+          "type": "registry:component",
+          "target": "@ui/tooltip.tsx"
+        },
+        {
+          "path": "components/tooltip/tooltip.css",
+          "type": "registry:file",
+          "target": "@ui/tooltip.css"
+        }
+      ],
+      "dependencies": ["radix-ui@1.8.1", "react@19.2.7"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@/components/ui/tooltip.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "tooltip"
+      }
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/table/table.tsx",
+          "type": "registry:component",
+          "target": "@ui/table.tsx"
+        },
+        {
+          "path": "components/table/table.css",
+          "type": "registry:file",
+          "target": "@ui/table.css"
+        }
+      ],
+      "dependencies": ["react@19.2.7"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@/components/ui/table.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "table"
+      }
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/tabs/tabs.tsx",
+          "type": "registry:component",
+          "target": "@ui/tabs.tsx"
+        },
+        {
+          "path": "components/tabs/tabs.css",
+          "type": "registry:file",
+          "target": "@ui/tabs.css"
+        }
+      ],
+      "dependencies": ["radix-ui@1.8.1", "react@19.2.7"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@/components/ui/tabs.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "tabs"
+      }
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/card/card.tsx",
+          "type": "registry:component",
+          "target": "@ui/card.tsx"
+        },
+        {
+          "path": "components/card/card.css",
+          "type": "registry:file",
+          "target": "@ui/card.css"
+        }
+      ],
+      "dependencies": ["react@19.2.7"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@/components/ui/card.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "card"
+      }
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/badge/badge.tsx",
+          "type": "registry:component",
+          "target": "@ui/badge.tsx"
+        },
+        {
+          "path": "lib/slot.tsx",
+          "type": "registry:component",
+          "target": "@lib/sapphire/slot.tsx"
+        },
+        {
+          "path": "components/badge/badge.css",
+          "type": "registry:file",
+          "target": "@ui/badge.css"
+        }
+      ],
+      "dependencies": ["react@19.2.7"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@/components/ui/badge.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "badge"
+      }
+    },
+    {
+      "name": "form-field",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/form-field/form-field.tsx",
+          "type": "registry:component",
+          "target": "@ui/form-field.tsx"
+        },
+        {
+          "path": "components/form-field/form-field.css",
+          "type": "registry:file",
+          "target": "@ui/form-field.css"
+        }
+      ],
+      "dependencies": ["react@19.2.7"],
+      "registryDependencies": ["@sapphire/label"],
+      "css": {
+        "@import \"@/components/ui/form-field.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "form-field"
+      }
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/skeleton/skeleton.tsx",
+          "type": "registry:component",
+          "target": "@ui/skeleton.tsx"
+        },
+        {
+          "path": "components/skeleton/skeleton.css",
+          "type": "registry:file",
+          "target": "@ui/skeleton.css"
+        }
+      ],
+      "dependencies": ["react@19.2.7"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@/components/ui/skeleton.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "skeleton"
+      }
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/spinner/spinner.tsx",
+          "type": "registry:component",
+          "target": "@ui/spinner.tsx"
+        },
+        {
+          "path": "components/spinner/spinner.css",
+          "type": "registry:file",
+          "target": "@ui/spinner.css"
+        }
+      ],
+      "dependencies": ["react@19.2.7"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@/components/ui/spinner.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "spinner"
+      }
+    },
+    {
+      "name": "empty",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/empty/empty.tsx",
+          "type": "registry:component",
+          "target": "@ui/empty.tsx"
+        },
+        {
+          "path": "components/empty/empty.css",
+          "type": "registry:file",
+          "target": "@ui/empty.css"
+        }
+      ],
+      "dependencies": ["react@19.2.7"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@/components/ui/empty.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "empty"
+      }
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/pagination/pagination.tsx",
+          "type": "registry:component",
+          "target": "@ui/pagination.tsx"
+        },
+        {
+          "path": "components/pagination/pagination.css",
+          "type": "registry:file",
+          "target": "@ui/pagination.css"
+        }
+      ],
+      "dependencies": ["react@19.2.7"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@/components/ui/pagination.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "pagination"
+      }
+    },
+    {
+      "name": "stat",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/stat/stat.tsx",
+          "type": "registry:component",
+          "target": "@ui/stat.tsx"
+        },
+        {
+          "path": "components/stat/stat.css",
+          "type": "registry:file",
+          "target": "@ui/stat.css"
+        }
+      ],
+      "dependencies": ["react@19.2.7"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@/components/ui/stat.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "stat"
+      }
+    },
+    {
+      "name": "stat-group",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/stat-group/stat-group.tsx",
+          "type": "registry:component",
+          "target": "@ui/stat-group.tsx"
+        },
+        {
+          "path": "components/stat-group/stat-group.css",
+          "type": "registry:file",
+          "target": "@ui/stat-group.css"
+        }
+      ],
+      "dependencies": ["react@19.2.7"],
+      "registryDependencies": [],
+      "css": {
+        "@import \"@/components/ui/stat-group.css\"": {}
+      },
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "stat-group"
+      }
+    },
+    {
+      "name": "toaster",
+      "type": "registry:block",
+      "files": [
+        {
+          "path": "blocks/sonner/sonner.tsx",
+          "type": "registry:component",
+          "target": "@ui/sonner.tsx"
+        }
+      ],
+      "dependencies": ["sonner@2.0.8"],
+      "registryDependencies": [],
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "toaster"
+      }
+    },
+    {
+      "name": "command",
+      "type": "registry:block",
+      "files": [
+        {
+          "path": "blocks/classes.ts",
+          "type": "registry:component",
+          "target": "@lib/sapphire/classes.ts"
+        },
+        {
+          "path": "blocks/command/command.tsx",
+          "type": "registry:component",
+          "target": "@ui/command.tsx"
+        }
+      ],
+      "dependencies": ["cmdk@1.1.1", "lucide-react@1.55.0", "react@19.2.7"],
+      "registryDependencies": ["@sapphire/dialog"],
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "command"
+      }
+    },
+    {
+      "name": "combobox",
+      "type": "registry:block",
+      "files": [
+        {
+          "path": "blocks/classes.ts",
+          "type": "registry:component",
+          "target": "@lib/sapphire/classes.ts"
+        },
+        {
+          "path": "blocks/combobox/combobox.tsx",
+          "type": "registry:component",
+          "target": "@ui/combobox.tsx"
+        }
+      ],
+      "dependencies": ["lucide-react@1.55.0", "react@19.2.7"],
+      "registryDependencies": [
+        "@sapphire/button",
+        "@sapphire/command",
+        "@sapphire/popover"
+      ],
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "combobox"
+      }
+    },
+    {
+      "name": "calendar",
+      "type": "registry:block",
+      "files": [
+        {
+          "path": "blocks/calendar/calendar.tsx",
+          "type": "registry:component",
+          "target": "@ui/calendar.tsx"
+        },
+        {
+          "path": "blocks/classes.ts",
+          "type": "registry:component",
+          "target": "@lib/sapphire/classes.ts"
+        }
+      ],
+      "dependencies": [
+        "lucide-react@1.55.0",
+        "react@19.2.7",
+        "react-day-picker@10.0.2"
+      ],
+      "registryDependencies": ["@sapphire/button"],
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "calendar"
+      }
+    },
+    {
+      "name": "sidebar",
+      "type": "registry:block",
+      "files": [
+        {
+          "path": "blocks/classes.ts",
+          "type": "registry:component",
+          "target": "@lib/sapphire/classes.ts"
+        },
+        {
+          "path": "blocks/sidebar/sidebar-context.tsx",
+          "type": "registry:component",
+          "target": "@ui/_sapphire/sidebar/sidebar-context.tsx"
+        },
+        {
+          "path": "blocks/sidebar/sidebar-menu.tsx",
+          "type": "registry:component",
+          "target": "@ui/_sapphire/sidebar/sidebar-menu.tsx"
+        },
+        {
+          "path": "blocks/sidebar/sidebar.tsx",
+          "type": "registry:component",
+          "target": "@ui/sidebar.tsx"
+        },
+        {
+          "path": "lib/slot.tsx",
+          "type": "registry:component",
+          "target": "@lib/sapphire/slot.tsx"
+        }
+      ],
+      "dependencies": ["lucide-react@1.55.0", "react@19.2.7"],
+      "registryDependencies": [
+        "@sapphire/button",
+        "@sapphire/input",
+        "@sapphire/separator",
+        "@sapphire/sheet",
+        "@sapphire/skeleton",
+        "@sapphire/tooltip"
+      ],
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "sidebar"
+      }
+    },
+    {
+      "name": "data-table-column-header",
+      "type": "registry:block",
+      "files": [
+        {
+          "path": "blocks/classes.ts",
+          "type": "registry:component",
+          "target": "@lib/sapphire/classes.ts"
+        },
+        {
+          "path": "blocks/data-table-column-header/data-table-column-header.tsx",
+          "type": "registry:component",
+          "target": "@ui/data-table-column-header.tsx"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons@1.3.2",
+        "@tanstack/react-table@8.21.3"
+      ],
+      "registryDependencies": ["@sapphire/button", "@sapphire/dropdown-menu"],
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "data-table-column-header"
+      }
+    },
+    {
+      "name": "data-table-view-options",
+      "type": "registry:block",
+      "files": [
+        {
+          "path": "blocks/data-table-view-options/data-table-view-options.tsx",
+          "type": "registry:component",
+          "target": "@ui/data-table-view-options.tsx"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons@1.3.2",
+        "@tanstack/react-table@8.21.3"
+      ],
+      "registryDependencies": ["@sapphire/button", "@sapphire/dropdown-menu"],
+      "meta": {
+        "foundations": "^4.0.0",
+        "cssOwner": "data-table-view-options"
+      }
+    }
+  ]
+}
