@@ -43,8 +43,12 @@ function readSelector(part: string, contract: CssContract): void {
 
 export function cssContract(text: string): CssContract {
   const contract: CssContract = { classes: new Set(), variants: new Map() };
-  for (const match of withoutComments(text).matchAll(/([^{}]+)\{/g)) {
-    const selector = match[1] ?? '';
+  const clean = withoutComments(text);
+  for (const match of scanCss(clean).masked.matchAll(/([^{}]+)\{/g)) {
+    const selector = clean.slice(
+      match.index,
+      match.index + (match[1]?.length ?? 0),
+    );
     if (selector.trimStart().startsWith('@')) continue;
     for (const part of selector.split(',')) readSelector(part, contract);
   }

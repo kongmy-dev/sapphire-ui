@@ -84,7 +84,7 @@ test('contract ignores strings and comments that are not CSS selectors', () => {
   expect(
     check(
       source(),
-      `${css} /* .sp-button[data-variant="ghost"] {} */ .label { content: '.sp-button[data-variant="ghost"]' }`,
+      `${css} /* .sp-button[data-variant="ghost"] {} */ .label { content: '.sp-button[data-variant="ghost"] { display: block }' }`,
     ).violations,
   ).toEqual([]);
 });
