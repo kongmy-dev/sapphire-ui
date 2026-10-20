@@ -9,6 +9,8 @@
   }
 
   .sp-margin-note-anchor {
+    color: inherit;
+    text-decoration: none;
     cursor: help;
     border-bottom: var(--border-width) dashed
       color-mix(in oklab, var(--brand) 50%, transparent);
@@ -30,24 +32,16 @@
   }
 
   .sp-margin-note-aside {
-    position: absolute;
-    top: 0;
-    left: calc(100% + var(--space-8));
     display: none;
-    width: calc(var(--space-1) * 60);
-    font-size: var(--sp-margin-note-font-size);
-    line-height: var(--sp-margin-note-line-height);
-    color: var(--sp-margin-note-fg);
-    transition: color var(--transition-fast);
   }
 
   @media (min-width: 64rem) {
     .sp-margin-note-inline {
-      display: none;
-    }
-
-    .sp-margin-note-aside {
-      display: block;
+      float: inline-end;
+      clear: inline-end;
+      width: calc(var(--space-1) * 60);
+      max-width: 50%;
+      margin: 0 0 var(--space-4) var(--space-8);
     }
   }
 
@@ -57,14 +51,14 @@
       border-bottom-color: var(--brand);
     }
 
-    .sp-margin-note:hover .sp-margin-note-aside {
+    .sp-margin-note:hover .sp-margin-note-inline {
       color: var(--foreground);
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .sp-margin-note-anchor,
-    .sp-margin-note-aside {
+    .sp-margin-note-inline {
       transition: none;
     }
   }

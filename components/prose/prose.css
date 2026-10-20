@@ -24,12 +24,8 @@
     --sp-prose-line-height: var(--leading-relaxed);
   }
 
-  .sp-prose :where(pre, hr, img) {
+  .sp-prose :where(p, ul, ol, blockquote, pre, hr, img) {
     margin: 0;
-  }
-
-  .sp-prose > * + * {
-    margin-block-start: 1.25em;
   }
 
   .sp-prose :is(h1, h2, h3, h4) {
@@ -58,10 +54,6 @@
     font-size: var(--text-lg);
   }
 
-  .sp-prose p {
-    margin: 0;
-  }
-
   .sp-prose a {
     color: var(--brand-text);
     text-decoration: underline;
@@ -76,8 +68,15 @@
 
   .sp-prose :is(ul, ol) {
     padding-inline-start: 1.5em;
-    margin: 0;
-    list-style: none;
+    list-style: disc;
+  }
+
+  .sp-prose ol {
+    list-style: decimal;
+  }
+
+  .sp-prose > * + * {
+    margin-block-start: 1.25em;
   }
 
   .sp-prose li {
@@ -90,7 +89,6 @@
 
   .sp-prose blockquote {
     padding-inline-start: 1.25em;
-    margin: 0;
     font-style: italic;
     color: var(--muted-foreground);
     border-inline-start: calc(var(--space-1) * 0.75) solid var(--brand);
