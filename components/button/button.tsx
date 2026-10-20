@@ -4,6 +4,7 @@ import {
   type ComponentProps,
   cloneElement,
   isValidElement,
+  type KeyboardEvent,
   type ReactElement,
   type ReactNode,
   type SyntheticEvent,
@@ -49,6 +50,10 @@ function preventActivation(event: SyntheticEvent) {
   event.stopPropagation();
 }
 
+function preventKeyboardActivation(event: KeyboardEvent<HTMLElement>) {
+  if (event.key === 'Enter' || event.key === ' ') preventActivation(event);
+}
+
 function inactiveChild(children: ReactNode, loading: boolean | undefined) {
   if (!isValidElement<Record<string, unknown>>(children)) return children;
   return cloneElement(children, {
@@ -58,7 +63,7 @@ function inactiveChild(children: ReactNode, loading: boolean | undefined) {
     onAuxClickCapture: preventActivation,
     tabIndex: -1,
     onClickCapture: preventActivation,
-    onKeyDownCapture: preventActivation,
+    onKeyDownCapture: preventKeyboardActivation,
     onPointerDownCapture: preventActivation,
   });
 }
@@ -69,6 +74,10 @@ function stateAttribute<T>(state: boolean | undefined, fallback: T) {
 
 function captureHandler<T>(inactive: boolean | undefined, handler: T) {
   return inactive ? preventActivation : handler;
+}
+
+function keyboardCapture<T>(inactive: boolean | undefined, handler: T) {
+  return inactive ? preventKeyboardActivation : handler;
 }
 
 function buttonContent({
@@ -129,7 +138,7 @@ export function Button({
       disabled={inactive}
       onClickCapture={captureHandler(inactive, props.onClickCapture)}
       onAuxClickCapture={captureHandler(inactive, props.onAuxClickCapture)}
-      onKeyDownCapture={captureHandler(inactive, props.onKeyDownCapture)}
+      onKeyDownCapture={keyboardCapture(inactive, props.onKeyDownCapture)}
       onPointerDownCapture={captureHandler(
         inactive,
         props.onPointerDownCapture,

@@ -147,6 +147,69 @@ for (const state of ['disabled', 'loading'] as const) {
   });
 }
 
+for (const state of ['disabled', 'loading'] as const) {
+  it(`allows keyboard focus to leave a link that becomes ${state}`, async () => {
+    const user = userEvent.setup();
+    const { rerender } = render(
+      <>
+        <a href="#before">Before</a>
+        <Button asChild>
+          <a href="#dynamic">Dynamic link</a>
+        </Button>
+        <button type="button">After</button>
+      </>,
+    );
+    const link = screen.getByRole('link', { name: 'Dynamic link' });
+    link.focus();
+    rerender(
+      <>
+        <a href="#before">Before</a>
+        <Button
+          asChild
+          disabled={state === 'disabled'}
+          loading={state === 'loading'}
+        >
+          <a href="#dynamic">Dynamic link</a>
+        </Button>
+        <button type="button">After</button>
+      </>,
+    );
+    expect(document.activeElement).toBe(link);
+    expect(fireEvent.keyDown(link, { key: 'Enter' })).toBe(false);
+    expect(fireEvent.keyDown(link, { key: ' ' })).toBe(false);
+    expect(fireEvent.keyDown(link, { key: 'Escape' })).toBe(true);
+    expect(fireEvent.keyDown(link, { key: 'ArrowRight' })).toBe(true);
+    await user.tab();
+    expect(document.activeElement).toBe(
+      screen.getByRole('button', { name: 'After' }),
+    );
+    link.focus();
+    await user.tab({ shift: true });
+    expect(document.activeElement).toBe(
+      screen.getByRole('link', { name: 'Before' }),
+    );
+  });
+}
+
+it('lets the dynamic disabled example retain keyboard navigation', async () => {
+  const example = examples.find((item) => item.name === 'dynamic-disabled');
+  if (!example) throw new Error('Dynamic example missing');
+  const Example = example.render;
+  const user = userEvent.setup();
+  render(<Example />);
+  const link = screen.getByRole('link', { name: 'Disable this link with D' });
+  link.focus();
+  await user.keyboard('d');
+  expect(link.getAttribute('aria-disabled')).toBe('true');
+  expect(screen.getByText('Disabled')).not.toBeNull();
+  await user.tab();
+  const toggle = screen.getByRole('button', { name: 'Toggle link disabled' });
+  expect(document.activeElement).toBe(toggle);
+  await user.click(toggle);
+  expect(link.hasAttribute('aria-disabled')).toBe(false);
+  expect(screen.getByText('Enabled')).not.toBeNull();
+});
+
 it('keeps a loading slotted child busy even when its own attributes conflict', () => {
   render(
     <Button asChild loading>

@@ -1,4 +1,7 @@
+'use client';
+
 import { ArrowRight, Plus } from 'lucide-react';
+import { useState } from 'react';
 import { Button } from './button.js';
 
 function ButtonVariants() {
@@ -89,6 +92,31 @@ function ButtonLinks() {
   );
 }
 
+function ButtonDynamicDisabled() {
+  const [disabled, setDisabled] = useState(false);
+  return (
+    <div className="sp-cluster">
+      <Button
+        asChild
+        disabled={disabled}
+        onKeyDown={(event) => {
+          if (event.key.toLowerCase() === 'd') setDisabled(true);
+        }}
+      >
+        <a href="#dynamic-destination">Disable this link with D</a>
+      </Button>
+      <Button
+        onClick={() => setDisabled((current) => !current)}
+        aria-pressed={disabled}
+      >
+        Toggle link disabled
+      </Button>
+      <a href="#next-destination">Next destination</a>
+      <output>{disabled ? 'Disabled' : 'Enabled'}</output>
+    </div>
+  );
+}
+
 export const examples = [
   { name: 'variants', render: ButtonVariants },
   { name: 'on-dark', render: ButtonOnDark },
@@ -96,4 +124,5 @@ export const examples = [
   { name: 'icons', render: ButtonIcons },
   { name: 'states', render: ButtonStates },
   { name: 'links', render: ButtonLinks },
+  { name: 'dynamic-disabled', render: ButtonDynamicDisabled },
 ] as const;
