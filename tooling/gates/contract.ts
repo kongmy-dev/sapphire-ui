@@ -1,4 +1,4 @@
-import { resolve } from 'node:path';
+import { dirname, resolve } from 'node:path';
 import { type CssContract, cssContract } from '../source/contract-css';
 import { type JsxContract, jsxContract } from '../source/contract-jsx';
 import { contractProgram } from '../source/contract-program';
@@ -53,26 +53,27 @@ function renderedProblems(
 
 function selectorProblems(input: {
   file: string;
-  jsx: JsxContract;
+  renderers: { jsx: JsxContract; primitives: readonly string[] }[];
   css: CssContract;
-  primitives: readonly string[];
 }): Violation[] {
-  const { file, jsx, css, primitives } = input;
-  const classes = classesFor(jsx);
+  const { file, renderers, css } = input;
   return [...css.variants].flatMap(([key, values]) => {
     const [className, attribute] = key.split('/');
-    if (
-      className === undefined ||
-      attribute === undefined ||
-      !classes.has(className)
-    )
-      return [];
-    const declared = jsx.variants
-      .filter((entry) => entry.key === key)
-      .flatMap((entry) => entry.values);
+    if (className === undefined || attribute === undefined) return [];
+    const matching = renderers.filter(({ jsx }) =>
+      classesFor(jsx).has(className),
+    );
+    if (matching.length === 0) return [];
+    const declared = matching.flatMap(({ jsx }) =>
+      jsx.variants
+        .filter((entry) => entry.key === key)
+        .flatMap((entry) => entry.values),
+    );
     const allowed = new Set([
       ...declared,
-      ...radixValues(primitives, attribute),
+      ...matching.flatMap(({ primitives }) =>
+        radixValues(primitives, attribute),
+      ),
     ]);
     return [...values]
       .filter((value) => !allowed.has(value))
@@ -110,21 +111,43 @@ export function contractGate(input: {
     files: input.files.filter((file) => /\.tsx?$/.test(file.name)),
   });
   const checker = program.getTypeChecker();
-  const violations = files.flatMap((file) => {
+  const renderers = files.flatMap((file) => {
     const source = program.getSourceFile(resolve(input.root, file.name));
-    if (source === undefined)
-      return [problem(file.name, 1, 'Component source was not analyzed')];
-    const jsx = jsxContract(source, checker);
-    return [
-      ...renderedProblems(file.name, jsx, css),
-      ...selectorProblems({
-        file: file.name,
-        jsx,
-        css,
-        primitives: radixImports(source),
-      }),
-    ];
+    return source === undefined
+      ? []
+      : [
+          {
+            file: file.name,
+            jsx: jsxContract(source, checker),
+            primitives: radixImports(source),
+          },
+        ];
   });
+  const violations = files.flatMap((file) => {
+    const renderer = renderers.find((entry) => entry.file === file.name);
+    return renderer === undefined
+      ? [problem(file.name, 1, 'Component source was not analyzed')]
+      : renderedProblems(file.name, renderer.jsx, css);
+  });
+  for (const folder of new Set(files.map((file) => dirname(file.name)))) {
+    const owned = cssContract(
+      input.files
+        .filter(
+          (file) =>
+            dirname(file.name) === folder &&
+            file.name.endsWith('.css') &&
+            !file.name.endsWith('.examples.css'),
+        )
+        .map((file) => file.text)
+        .join('\n'),
+    );
+    const local = renderers.filter((entry) => dirname(entry.file) === folder);
+    const first = local[0];
+    if (first !== undefined)
+      violations.push(
+        ...selectorProblems({ file: first.file, renderers: local, css: owned }),
+      );
+  }
   return { name: 'contract', files: files.length, violations };
 }
 

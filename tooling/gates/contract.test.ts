@@ -146,3 +146,66 @@ test('contract accepts finite conditional modifiers while rejecting unsupported 
     ).violations.some((issue) => issue.problem.includes('value 4')),
   ).toBe(true);
 });
+
+test('contract scopes reverse coverage to owning folders and unions local renderers', () => {
+  const files = [
+    {
+      name: 'components/document/document.css',
+      text: '.sp-document-mark {} .sp-document-mark[data-variant="primary"] {}',
+    },
+    {
+      name: 'components/proposal/proposal.tsx',
+      text: 'export function Proposal() { return <div className="sp-document-mark"/> }',
+    },
+  ];
+  expect(contractGate({ root: '/project', files }).violations).toEqual([]);
+  expect(
+    contractGate({
+      root: '/project',
+      files: [
+        ...files.slice(0, 1),
+        {
+          ...files[1],
+          name: 'components/proposal/proposal.tsx',
+          text: `export function Proposal({variant}: {variant: 'typo'}) { return <div className="sp-document-mark" data-variant={variant}/> }`,
+        },
+      ],
+    }).violations[0]?.problem,
+  ).toContain('typo');
+  const owner = {
+    name: 'components/document/document.tsx',
+    text: 'export function Document() { return <div className="sp-document-mark"/> }',
+  };
+  expect(
+    contractGate({ root: '/project', files: [...files, owner] }).violations[0]
+      ?.problem,
+  ).toContain('primary');
+  const modifier = {
+    name: 'components/document/mark.tsx',
+    text: `export function Mark({variant}: {variant: 'primary'}) { return <div className="sp-document-mark" data-variant={variant}/> }`,
+  };
+  expect(
+    contractGate({ root: '/project', files: [...files, owner, modifier] })
+      .violations,
+  ).toEqual([]);
+});
+
+test('contract does not borrow Radix states from unrelated class renderers', () => {
+  const files = [
+    {
+      name: 'components/example/example.css',
+      text: '.sp-example {} .sp-example[data-state="open"] {} .sp-menu {}',
+    },
+    {
+      name: 'components/example/example.tsx',
+      text: 'export function Example() { return <div className="sp-example"/> }',
+    },
+    {
+      name: 'components/example/menu.tsx',
+      text: 'import { DropdownMenu } from "radix-ui"; export function Menu() { return <DropdownMenu.Content className="sp-menu"/> }',
+    },
+  ];
+  expect(
+    contractGate({ root: '/project', files }).violations[0]?.problem,
+  ).toContain('open');
+});
