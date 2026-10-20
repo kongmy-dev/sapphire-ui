@@ -7,7 +7,7 @@ export const CONTAINER_ROOT = '/work';
 
 const DOCKERFILE = 'tooling/visual/Dockerfile';
 const EXACT_VERSION = /^\d+\.\d+\.\d+$/;
-const BUN_CACHE_DIR = '/tmp/sapphire-bun-cache';
+const BUN_CACHE_DIR = `${CONTAINER_ROOT}/node_modules/.cache/bun`;
 
 const CONTAINER_SCRIPT = [
   'set -eu',
@@ -75,8 +75,6 @@ export const runArgs = (
   `${root}:${CONTAINER_ROOT}`,
   '--tmpfs',
   `${CONTAINER_ROOT}/node_modules:rw,exec,uid=${owner.uid},gid=${owner.gid},mode=0755`,
-  '--tmpfs',
-  `${BUN_CACHE_DIR}:rw,exec,uid=${owner.uid},gid=${owner.gid},mode=0755`,
   '--workdir',
   CONTAINER_ROOT,
   imageTag(versions),

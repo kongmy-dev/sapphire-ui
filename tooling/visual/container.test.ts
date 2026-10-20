@@ -38,14 +38,14 @@ describe('pin container commands', () => {
     expect(args).toContain('--platform linux/arm64');
     expect(args).toContain(`--volume ${root}:/work`);
     expect(args).toContain('--user 501:20');
+    expect(
+      runArgs(root, versions, owner, []).filter((arg) => arg === '--tmpfs'),
+    ).toHaveLength(1);
     expect(args).toContain(
       '--tmpfs /work/node_modules:rw,exec,uid=501,gid=20,mode=0755',
     );
     expect(args).toContain(
-      '--tmpfs /tmp/sapphire-bun-cache:rw,exec,uid=501,gid=20,mode=0755',
-    );
-    expect(args).toContain(
-      '--env BUN_INSTALL_CACHE_DIR=/tmp/sapphire-bun-cache',
+      '--env BUN_INSTALL_CACHE_DIR=/work/node_modules/.cache/bun',
     );
   });
 
