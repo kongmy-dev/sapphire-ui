@@ -1,5 +1,12 @@
-import { cpSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import {
+  cpSync,
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  renameSync,
+  writeFileSync,
+} from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
 import { buildExamples } from '../examples/build';
 import { readExamples } from '../examples/catalog';
 import { readElementExamples } from '../examples/elements';
@@ -8,7 +15,11 @@ import { foundationGuides } from './foundations';
 import { catalogPage, code, componentPage, page } from './render';
 
 const root = process.cwd();
-const out = resolve(root, process.argv[2] ?? 'dist-site');
+const destination = resolve(root, process.argv[2] ?? 'dist-site');
+const cache = join(root, 'node_modules/.cache/sapphire-site');
+mkdirSync(cache, { recursive: true });
+const scratch = mkdtempSync(join(cache, 'build-'));
+const out = join(scratch, 'output');
 const assets = join(out, 'assets');
 mkdirSync(assets, { recursive: true });
 const react = readExamples(root);
@@ -62,6 +73,9 @@ if (existsSync(join(root, 'registry/legacy-r')))
   cpSync(join(root, 'registry/legacy-r'), join(out, 'r'), { recursive: true });
 cpSync(join(root, 'public/_headers'), join(out, '_headers'));
 if (process.argv.includes('--registry')) buildRegistry(root, join(out, 'r/v4'));
+mkdirSync(dirname(destination), { recursive: true });
+if (existsSync(destination)) renameSync(destination, join(scratch, 'previous'));
+renameSync(out, destination);
 console.log(
-  `Built ${new Set(react.map((row) => row.component)).size} React component pages and ${new Set(native.map((row) => row.component)).size} native pages in ${out}`,
+  `Built ${new Set(react.map((row) => row.component)).size} React component pages and ${new Set(native.map((row) => row.component)).size} native pages in ${destination}`,
 );

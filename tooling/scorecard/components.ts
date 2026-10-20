@@ -91,7 +91,13 @@ export function componentTable(
     css: present.has(`components/${name}/${name}.css`),
     react: present.has(`components/${name}/${name}.tsx`),
     examples: present.has(`components/${name}/${name}.examples.tsx`),
-    pin: pinsOf(specimens.get(specimenPath(name)) ?? '').length > 0,
+    pin:
+      pinsOf(specimens.get(specimenPath(name)) ?? '').length > 0 ||
+      paths.some((path) =>
+        ['react', 'native'].some((kind) =>
+          path.startsWith(`${PIN_DIR}/${kind}/${name}/`),
+        ),
+      ),
     element: present.has(`elements/${name}.ts`),
     registry: registered.has(name),
   }));
@@ -106,6 +112,10 @@ export function referencePinCount(
   );
   return paths.filter((path) => {
     const { route, slug } = PIN_FILE.exec(path)?.groups ?? {};
-    return route !== undefined && !covered.has(`${route}/${slug}`);
+    return (
+      route !== undefined &&
+      !['react', 'native', 'states'].includes(route) &&
+      !covered.has(`${route}/${slug}`)
+    );
   }).length;
 }

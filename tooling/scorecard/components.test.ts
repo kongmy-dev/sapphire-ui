@@ -164,3 +164,15 @@ describe('scorecard reference pins', () => {
     expect(referencePinCount(paths, specimens)).toBe(2);
   });
 });
+
+it('counts native and React pins as current coverage, not legacy references', () => {
+  const paths = [
+    ...v4Button,
+    `${PIN_DIR}/react/button/states.light.png`,
+    `${PIN_DIR}/native/banner/default.dark.png`,
+    `${PIN_DIR}/states/dialog/open.light.png`,
+    `${PIN_DIR}/elements/usage.light.png`,
+  ];
+  expect(componentTable(paths, null, NO_SPECIMENS)[0]?.pin).toBe(true);
+  expect(referencePinCount(paths, NO_SPECIMENS)).toBe(1);
+});

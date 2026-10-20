@@ -1,9 +1,9 @@
 # Sapphire UI v4 — plan
 
 **Status:** Implementation authorized through P11, with at most two GPT-6.1 Sol subagents.
-P0–P3 are complete. P4/P5 implementation and browser checks pass; final visual comparison is
-running. P6 is integrated and consumer-tested. P7 registry and P8 site are integrated with final
-wiring under validation. P9 retirement and P10 documentation are active; P11 release is pending.
+P0–P9 are complete. P10 documentation consolidation and P11 migration/release work are active.
+The v4-only visual suite passes 748 zero-tolerance cases; final whole-tree browser validation is
+running after retirement. No remote push, v4 tag or publication has occurred yet.
 D5 retains button widths while reducing height and applies the approved targeted polish.
 Delete this file when 4.0.0 ships.
 
@@ -19,8 +19,8 @@ Delete this file when 4.0.0 ships.
   passes **36/36**, across all three engines. A further **144** source-site and token-build
   checks pass, including mobile overflow, keyboard skip links and every generated page route.
 - The integrated pre-registry gate passed **885 tests** and coverage for **168 runtime/example
-  files**. The new registry is undergoing the full integrated gate. The accepted visual update
-  passes **730 cases**; a clean comparison against those pins is running before P4/P5 close.
+  files**. The post-retirement gate passes 883 tests with the new registry. The accepted visual update
+  passes **730 cases**; the final v4-only comparison passes **748 cases** at zero pixel tolerance.
 - P6 ships 156 exact ESM/type/CSS subpaths, zero runtime dependencies and four optional peers.
   Packed consumer checks pass for CSS-only, native SSR/registration, React without Radix and
   Dialog consumers. P7 builds and validates 33 v4 registry items; real CLI init/add, consumer
@@ -38,7 +38,7 @@ Delete this file when 4.0.0 ships.
   over marginal byte savings; stop cosmetic micro-optimization while the guardrail passes.
   The current styling is within the approved ceiling.
 - Every former parity capture now compares against committed v4 state pins, preserving its
-  interactions and capture counts. The state inventory contains **870 pins**; D5 and native pins are updated and representative card/button images reviewed. The reference renderer remains until P9.
+  interactions and capture counts. The state inventory contains **870 pins**; D5 and native pins are updated and representative card/button images reviewed. The reference renderer is retired.
 - `useLocalStorage` requires `(key, fallback, parse)`; the parser receives unknown JSON, throwing
   rejects it, and returning undefined is valid when included in T. SSR/initial hydration use the
   fallback; React value/updater setter semantics remain. Migration also records ThemeToggle.asChild
@@ -67,17 +67,18 @@ remain the acceptance criteria; retained v3 code does not count as a v4 implemen
 
 | Phase | Current position and evidence |
 |---|---|
-| P0 — safety and decisions | Local `v3` branch exists with the build peer/external fix. Both branches have tag-only publishing, CI as a prerequisite and OIDC permission. Five ADRs exist in `docs/adr/`; spike outcomes and owner decisions are in §9. npm trusted-publisher account configuration and a real publication are unverified; P11 still owns release execution |
+| P0 — safety and decisions | Local `v3` branch exists with the build peer/external fix. Both branches have tag-only publishing, CI as a prerequisite and OIDC permission. Five ADRs exist in `docs/adr/`; spike outcomes and owner decisions are in §9. The owner confirmed npm trusted-publisher configuration for `publish.yaml`; a real publication is unverified; P11 still owns release execution |
 | P1 — gates and pins | Bun and devDependencies are pinned; Dependabot uses Bun. Strict `tsconfig.base.json`, Biome, knip, gate regression tests, scorecard and container pin tooling exist. `src/` remains frozen. The current gate passes; it measures the active lane rather than claiming the retained v3 debt is gone |
 | P2 — tokens | `css/tokens.css`, `css/tailwind.css` and `DESIGN.md` exist; token mappings and design tables are enforced. `tests/tokens.spec.ts` exercises source, Bun, Vite and Tailwind builds, nested scopes and overrides in three engines |
 | P3 — CSS contract | Complete: 69 component stylesheets, 70 plain-HTML specimen pages and 65 reference sections. The three elements documentation sections await P5/P8. The v3 parity renderer remains until P9 |
-| P4 — React | All families, hooks and layouts integrated; approved D5 polish and browser checks pass. Final clean visual comparison is running |
-| P5 — elements | All six native elements implemented with lifecycle, SSR, equivalence, keyboard and accessibility coverage. Final clean visual comparison is running |
+| P4 — React | Complete: all families, hooks and layouts, approved D5 polish, browser checks and zero-tolerance visual comparison pass |
+| P5 — elements | Complete: six native elements with passing lifecycle, SSR, equivalence, keyboard, accessibility and visual coverage |
 | P6 — package | Integrated: 156 generated exact exports, ESM/declarations, zero runtime dependencies, four optional peers and passing packed consumer smoke |
-| P7 — registry | Integrated: 33 v4 items, seven ported blocks, frozen legacy URLs and passing real CLI/mixed ownership smoke. Integrated gate and production wiring remain |
-| P8 — site | Source-generated pages and foundations guides pass route, accessibility, mobile overflow and token-build checks. Final build/deployment wiring remains |
-| P9–P10 — retirement and docs | Active in isolated worktrees. Migration facts are independent of the old runtime; coverage preservation, old-lane removal and docs gates are in progress |
-| P11 — release | Pending. This review does not verify remote CI, npm configuration, installed consumers or production. Keep the first push, tag, deployment and production smoke in P11 |
+| P7 — registry | Integrated: 33 v4 items, seven ported blocks, frozen legacy URLs and passing real CLI/mixed ownership smoke. Integrated gate and production build pass; deployed smoke remains P11 |
+| P8 — site | Source-generated pages and foundations guides pass route, accessibility, mobile overflow and token-build checks. Clean production build and deployment dry run pass; deployed smoke remains P11 |
+| P9 — retirement | Complete: v3 runtime/build removed, historical migration facts and legacy registry retained, interaction inventory preserved. Current size limits retained by owner approval; measured p95 is 4/34/211/5. Package dry run lists only allowed files, then stops for missing local publish credentials; packed consumer checks pass |
+| P10 — docs | Consolidation, documentation gates and skill-reference checks are under final validation |
+| P11 — release | Pending. This review does not verify remote CI, npm configuration, installed consumers or production. Keep the first push, tag and production smoke in P11. Cloudflare deployment is automated from Git; no local deploy is required |
 
 ### P3 completion checkpoint
 

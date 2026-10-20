@@ -118,9 +118,11 @@ function componentRows(
   paths: readonly string[],
   specimens: Specimens,
 ) {
-  const registryText = paths.includes(REGISTRY_SOURCE)
-    ? readText(tree, REGISTRY_SOURCE)
-    : null;
+  const source = [
+    'tooling/registry/generated/registry.json',
+    REGISTRY_SOURCE,
+  ].find((path) => paths.includes(path));
+  const registryText = source ? readText(tree, source) : null;
   return componentTable(paths, registryText, specimens);
 }
 
@@ -151,7 +153,6 @@ function scorecardFor(
 function removeWorktree(repo: string, scratch: string, tree: string) {
   if (existsSync(tree)) git(repo, ['worktree', 'remove', '--force', tree]);
   rmSync(scratch, { recursive: true, force: true });
-  git(repo, ['worktree', 'prune']);
 }
 
 function resolveCommit(repo: string, revision: string): string | null {

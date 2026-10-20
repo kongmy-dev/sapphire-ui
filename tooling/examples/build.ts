@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { buildStylesheet } from '../css/build';
 import type { ExampleRow } from './catalog';
@@ -31,6 +31,7 @@ export async function buildExamples(options: {
   });
   if (!result.success)
     throw new Error(result.logs.map((log) => log.message).join('\n'));
+  unlinkSync(entry);
   await buildElementExamples(root, out);
   const equivalence = await Bun.build({
     entrypoints: [join(root, 'tooling/examples/equivalence.tsx')],
@@ -73,4 +74,5 @@ async function buildElementExamples(root: string, out: string) {
   });
   if (!result.success)
     throw new Error(result.logs.map((log) => log.message).join('\n'));
+  unlinkSync(entry);
 }
