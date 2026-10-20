@@ -31,7 +31,7 @@ export function Sparkline({
         <div
           key={`point-${index}`}
           className="sp-sparkline-bar"
-          data-status={point.status}
+          data-status={point.status === 'success' ? undefined : point.status}
           role="img"
           aria-label={
             point.tooltip ? `${point.status}: ${point.tooltip}` : point.status

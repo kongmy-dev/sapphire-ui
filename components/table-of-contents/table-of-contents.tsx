@@ -25,7 +25,11 @@ export function TableOfContents({
       <p className="sp-toc-title">{title}</p>
       <ul className="sp-toc-list">
         {items.map((item) => (
-          <li key={item.id} className="sp-toc-item" data-level={item.level}>
+          <li
+            key={item.id}
+            className="sp-toc-item"
+            data-level={item.level === 3 ? 3 : undefined}
+          >
             <a
               className="sp-toc-link"
               href={`#${item.id}`}

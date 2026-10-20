@@ -64,7 +64,7 @@ export function Steps({
             <li
               key={`step-${index}`}
               className="sp-steps-step"
-              data-status={state}
+              data-status={state === 'upcoming' ? undefined : state}
               aria-current={state === 'active' ? 'step' : undefined}
             >
               {renderIndicator ? (

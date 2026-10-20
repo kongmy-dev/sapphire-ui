@@ -4,13 +4,23 @@ export type TableHeaderProps = ComponentProps<'thead'> & {
   sticky?: boolean | undefined;
 };
 
-export function Table({ className, ...props }: ComponentProps<'table'>) {
+const variants = ['financial'] as const;
+const rowKinds = ['section', 'subtotal', 'total'] as const;
+
+export function Table({
+  className,
+  'data-variant': variant,
+  ...props
+}: ComponentProps<'table'> & {
+  'data-variant'?: (typeof variants)[number] | undefined;
+}) {
   return (
     <div className="sp-table-container">
       <table
         {...props}
         className={['sp-table', className].filter(Boolean).join(' ')}
         data-slot="table"
+        data-variant={variant}
       />
     </div>
   );
@@ -28,21 +38,22 @@ export function TableHeader({ className, sticky, ...props }: TableHeaderProps) {
 }
 
 export function TableBody({ className, ...props }: ComponentProps<'tbody'>) {
-  return (
-    <tbody
-      {...props}
-      className={['sp-table-body', className].filter(Boolean).join(' ')}
-      data-slot="table-body"
-    />
-  );
+  return <tbody {...props} className={className} data-slot="table-body" />;
 }
 
-export function TableRow({ className, ...props }: ComponentProps<'tr'>) {
+export function TableRow({
+  className,
+  'data-row': row,
+  ...props
+}: ComponentProps<'tr'> & {
+  'data-row'?: (typeof rowKinds)[number] | undefined;
+}) {
   return (
     <tr
       {...props}
       className={['sp-table-row', className].filter(Boolean).join(' ')}
       data-slot="table-row"
+      data-row={row}
     />
   );
 }

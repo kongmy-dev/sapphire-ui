@@ -133,3 +133,16 @@ test('contract allows unstylized language metadata but rejects an unbounded styl
     check(component, '.sp-code[data-lang="js"] {}').violations[0]?.problem,
   ).toContain('unbounded');
 });
+
+test('contract accepts finite conditional modifiers while rejecting unsupported branches', () => {
+  const component = `export function Example({level, status}: {level: number; status: 'success' | 'error'}) { return <div className="sp-example" data-level={level === 3 ? 3 : undefined} data-status={status === 'success' ? undefined : status}/> }`;
+  const stylesheet =
+    '.sp-example {} .sp-example[data-level="3"] {} .sp-example[data-status="error"] {}';
+  expect(check(component, stylesheet).violations).toEqual([]);
+  expect(
+    check(
+      component.replace('3 : undefined', '4 : undefined'),
+      stylesheet,
+    ).violations.some((issue) => issue.problem.includes('value 4')),
+  ).toBe(true);
+});

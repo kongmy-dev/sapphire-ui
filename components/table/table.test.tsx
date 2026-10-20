@@ -47,7 +47,7 @@ it('preserves semantic structure, native attributes and refs for every part', ()
   expect(table.current?.className).toBe('sp-table custom');
   expect(header.current?.hasAttribute('data-sticky')).toBe(true);
   expect(header.current?.className).toBe('sp-table-header header');
-  expect(body.current?.className).toBe('sp-table-body body');
+  expect(body.current?.className).toBe('body');
   expect(row.current?.className).toBe('sp-table-row row');
   expect(head.current).toBe(
     screen.getByRole('columnheader', { name: 'Product' }),

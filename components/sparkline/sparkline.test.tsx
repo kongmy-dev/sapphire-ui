@@ -38,7 +38,7 @@ for (const { name, render: Example } of examples) {
     expect(points.length).toBe(name === 'health' ? 5 : 3);
     for (const point of points)
       expect(point.getAttribute('aria-label')).toContain(
-        point.getAttribute('data-status'),
+        point.getAttribute('data-status') ?? 'success',
       );
   });
 }
