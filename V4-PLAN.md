@@ -1,8 +1,8 @@
 # Sapphire UI v4 — plan
 
 **Status:** Implementation authorized through P11, phase by phase, with at most two GPT-6.1 Sol
-subagents. P0–P2 are in place. P3 ports and class/icon sweep have landed; integrated visual
-validation is running. P4–P11 remain pending. D1: CSS contract first. D2: npm to use, registry to
+subagents. P0–P3 are complete. P4 is active: seed React clients and enforcement tooling first,
+then component families and the shared visual refinement pass. P5–P11 remain pending. D1: CSS contract first. D2: npm to use, registry to
 own. D3: Lucide. D4: every component. D5: Tidy everywhere. Delete this file when 4.0.0 ships.
 
 ### Current execution checkpoint
@@ -14,12 +14,14 @@ own. D3: Lucide. D4: every component. D5: Tidy everywhere. Delete this file when
   landed. Only the three `elements/*` documentation sections still use the reference renderer;
   their takeover belongs to P5/P8. The v3 parity renderer remains until P9.
 - Integrated CSS measures **23,762 / 23,765 gzip bytes**. Removed unconsumed single-use toast and
-  keyboard-shadow variables; the ceiling is unchanged. The active gate passes **245 unit tests**.
+  keyboard-shadow variables; the ceiling is unchanged. The active gate passes **246 unit tests**.
 - Strict specimen accessibility passes **420/420** checks (70 pages, two schemes, three engines).
-  Integrated container visuals are running. P3 remains open until the visual changes are reviewed,
-  pins updated and the suite passes.
-- The visual runner now uses the host user and isolated writable dependencies,
-  avoiding recursive ownership changes and leaving existing caches alone.
+  The two subsequently changed specimens also pass all 12 targeted checks. The integrated
+  container visual/parity suite passes **412/412** after reviewed SVG pin and parity updates.
+- The visual runner uses the host user, a separate dependency volume per checkout/toolchain/owner
+  and memory-backed scratch files. Cold and warm validation pass; the warm dependency check
+  takes 8 ms. The owner cleared unused Docker build cache after the command guard blocked the
+  agent from doing so; unrelated volumes and services were preserved.
 
 ## 1. Where it stands
 
@@ -61,12 +63,11 @@ v4 gate. The phase descriptions in §5 remain the acceptance criteria.
 2. `sp-icon` and the Lucide specimen sweep are implemented. The current tree has 69 component
    stylesheets and 70 specimen pages taking over 65 reference sections. Only the three `elements/*`
    documentation sections await P5/P8. Preserve the v3 renderer until P9 covers every parity state.
-3. The gate passes 245 tests and strict specimen accessibility passes 420 checks. The full CSS is
-   23,762 bytes gzipped against the unchanged 23,765-byte ceiling. Reviewed glyph/proportion
-   changes are being pinned; the integrated container visual/parity suite must pass before P4.
-4. Docker's disk filled during validation. The runner now keeps dependencies and scratch files
-   in memory so validation can continue without clearing shared state. Persistent dependency
-   caching is prepared separately and awaits available disk space plus a cold/warm validation.
+3. The gate passes 246 tests, strict specimen accessibility passes 420 checks and the integrated
+   container visual/parity suite passes 412 checks. The full CSS is 23,762 bytes gzipped against
+   the unchanged 23,765-byte ceiling. P3 is closed; P4 starts from this verified baseline.
+4. Persistent dependency caching passes cold and warm validation. Scratch files remain in memory;
+   the runner never performs recursive ownership changes or clears shared caches.
 
 The accessibility corrections already listed in the settled defaults remain open: tab-panel
 focus, keyboard access to bar-chart values, margin-note focus/overlap, toc truncation, prose
@@ -443,9 +444,19 @@ left on its v3 pin for a glyph moves to its specimen through `bun run pin`. The 
 button glyph's size: v3's draws at 24px, because the global Material Symbols rule beats the
 button's 20px utility.
 
-**P4 — React components.** First reconcile the active working rules and review skills with v4
-(§3). Fix known defects and apply D5's Tidy everywhere direction as each component is touched; review
-changed pins without weakening checks for unchanged states.
+**P4 — React components.** The active working rules and review skills are reconciled with v4
+(§3). Port behaviour against the verified P3 CSS first, starting with Slot, button, card and
+dialog, then the component families. Fix behaviour defects in each port. Capture the React
+examples and every state currently covered only by v3 parity before a visual refinement
+supersedes that comparison; retain its interaction assertions. Then complete a shared CSS
+refinement pass for D5 and the known layout/contrast defects, reviewing changed pins without
+weakening unchanged states. P4 is not complete until this visual pass is done. P9 still owns
+retiring the v3 renderer; its affected-state pinning prerequisite moves earlier where needed.
+
+Execution alternatives: ports then a shared visual pass (70%, selected: consistent component
+proportions and reviewable state baselines); density per port (25%, earlier previews but repeated
+changes to shared button/card comparisons); defer density to P9 (5%, too late for feedback).
+This changes the order within P4, not its scope or acceptance criteria.
 `components/<name>/<name>.tsx` for every component: React 19 (`ref` as
 a prop), `data-slot`, variants as `as const` tuples rendered as `data-*`, the `sp-*` class plus
 `className`, `radix-ui` for behaviour. `<name>.examples.tsx` is the single source for the site, the
