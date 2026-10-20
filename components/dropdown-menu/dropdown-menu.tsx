@@ -1,9 +1,26 @@
 'use client';
 
 import { DropdownMenu as Primitive } from 'radix-ui';
-import type { ComponentProps } from 'react';
+import {
+  type ComponentProps,
+  createContext,
+  useCallback,
+  useContext,
+} from 'react';
+import { isolateModal } from '../../lib/isolate-modal.js';
 
-export const DropdownMenu = Primitive.Root;
+const ModalContext = createContext(true);
+
+export function DropdownMenu({
+  modal = true,
+  ...props
+}: ComponentProps<typeof Primitive.Root>) {
+  return (
+    <ModalContext value={modal}>
+      <Primitive.Root {...props} modal={modal} />
+    </ModalContext>
+  );
+}
 export const DropdownMenuTrigger = Primitive.Trigger;
 export const DropdownMenuGroup = Primitive.Group;
 export const DropdownMenuPortal = Primitive.Portal;
@@ -13,12 +30,29 @@ export const DropdownMenuRadioGroup = Primitive.RadioGroup;
 export function DropdownMenuContent({
   className,
   sideOffset = 4,
+  ref,
   ...props
 }: ComponentProps<typeof Primitive.Content>) {
+  const modal = useContext(ModalContext);
+  const contentRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      const cleanup = typeof ref === 'function' ? ref(node) : undefined;
+      if (ref && typeof ref !== 'function') ref.current = node;
+      const restore = modal ? isolateModal(node) : undefined;
+      return () => {
+        restore?.();
+        if (typeof cleanup === 'function') return cleanup();
+        if (typeof ref === 'function') return ref(null);
+        if (ref) ref.current = null;
+      };
+    },
+    [modal, ref],
+  );
   return (
     <Primitive.Portal>
       <Primitive.Content
         {...props}
+        ref={contentRef}
         className={['sp-dropdown-menu', className].filter(Boolean).join(' ')}
         data-slot="dropdown-menu"
         sideOffset={sideOffset}

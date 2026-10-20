@@ -112,3 +112,54 @@ for (const { name, render: Example } of examples)
       );
     }
   });
+
+it('isolates modal background and restores existing inert state and callback refs', async () => {
+  const cleanup = mock();
+  const contentRef = mock((node: HTMLDivElement | null) =>
+    node ? cleanup : undefined,
+  );
+  const { unmount } = render(
+    <>
+      <button type="button">Outside</button>
+      <div inert>Already inert</div>
+      <DropdownMenu>
+        <DropdownMenuTrigger>Modal actions</DropdownMenuTrigger>
+        <DropdownMenuContent ref={contentRef}>
+          <DropdownMenuItem>Run</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>,
+  );
+  const outside = screen.getByRole('button', { name: 'Outside' });
+  const existing = screen.getByText('Already inert');
+  screen.getByRole('button', { name: 'Modal actions' }).focus();
+  await userEvent.keyboard('{Enter}');
+  expect(outside.closest('[inert]')).not.toBeNull();
+  await userEvent.keyboard('{Escape}');
+  await waitFor(() => expect(outside.closest('[inert]')).toBeNull());
+  expect(existing.inert).toBe(true);
+  expect(cleanup).toHaveBeenCalled();
+  unmount();
+});
+
+it('leaves nonmodal background interactive and clears object refs on close', async () => {
+  const ref = createRef<HTMLDivElement>();
+  render(
+    <>
+      <button type="button">Outside</button>
+      <DropdownMenu modal={false}>
+        <DropdownMenuTrigger>Nonmodal actions</DropdownMenuTrigger>
+        <DropdownMenuContent ref={ref}>
+          <DropdownMenuItem>Run</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>,
+  );
+  const outside = screen.getByRole('button', { name: 'Outside' });
+  screen.getByRole('button', { name: 'Nonmodal actions' }).focus();
+  await userEvent.keyboard('{Enter}');
+  expect(ref.current).not.toBeNull();
+  expect(outside.closest('[inert]')).toBeNull();
+  await userEvent.keyboard('{Escape}');
+  await waitFor(() => expect(ref.current).toBeNull());
+});

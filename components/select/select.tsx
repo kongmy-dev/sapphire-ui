@@ -2,7 +2,7 @@
 
 import { Select as Primitive } from 'radix-ui';
 import type { ComponentProps } from 'react';
-import { isolateSelect } from './select-isolation.js';
+import { isolateModal } from '../../lib/isolate-modal.js';
 
 export const Select = Primitive.Root;
 export const SelectGroup = Primitive.Group;
@@ -76,7 +76,7 @@ export function SelectContent({
         data-slot="select-content"
       >
         <Primitive.Viewport
-          ref={isolateSelect}
+          ref={isolateModal}
           className="sp-select-viewport"
           data-slot="select-viewport"
         >

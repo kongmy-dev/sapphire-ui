@@ -13,7 +13,7 @@ function inertSiblings(current: Element): HTMLElement[] {
     });
 }
 
-export function isolateSelect(viewport: HTMLDivElement | null) {
+export function isolateModal(viewport: HTMLDivElement | null) {
   if (!viewport?.isConnected) return;
   const changed: HTMLElement[] = [];
   let current: Element = viewport;
