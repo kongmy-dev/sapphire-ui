@@ -1,4 +1,5 @@
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -16,6 +17,7 @@ const CONTAINER_SCRIPT = [
 ].join('\n');
 
 export type Versions = { bun: string; playwright: string };
+type Owner = { readonly uid: number; readonly gid: number };
 
 export function readVersions(
   bunVersionText: string,
@@ -36,10 +38,10 @@ export function readVersions(
   return isPinned ? { bun, playwright } : null;
 }
 
-export const imageTag = (versions: Versions) =>
-  `sapphire-visual:playwright-${versions.playwright}-bun-${versions.bun}`;
+export const imageTag = (versions: Versions, owner: Owner) =>
+  `sapphire-visual-owned-v1:playwright-${versions.playwright}-bun-${versions.bun}-uid-${owner.uid}-gid-${owner.gid}`;
 
-export const buildArgs = (versions: Versions): string[] => [
+export const buildArgs = (versions: Versions, owner: Owner): string[] => [
   'build',
   '--quiet',
   '--platform',
@@ -48,8 +50,12 @@ export const buildArgs = (versions: Versions): string[] => [
   `BUN_VERSION=${versions.bun}`,
   '--build-arg',
   `PLAYWRIGHT_VERSION=${versions.playwright}`,
+  '--build-arg',
+  `HOST_UID=${owner.uid}`,
+  '--build-arg',
+  `HOST_GID=${owner.gid}`,
   '--tag',
-  imageTag(versions),
+  imageTag(versions, owner),
   '--file',
   DOCKERFILE,
   'tooling/visual',
@@ -58,7 +64,7 @@ export const buildArgs = (versions: Versions): string[] => [
 export const runArgs = (
   root: string,
   versions: Versions,
-  owner: { uid: number; gid: number },
+  owner: Owner,
   playwrightArgs: readonly string[],
 ): string[] => [
   'run',
@@ -73,13 +79,16 @@ export const runArgs = (
   `BUN_INSTALL_CACHE_DIR=${BUN_CACHE_DIR}`,
   '--volume',
   `${root}:${CONTAINER_ROOT}`,
-  '--tmpfs',
-  `${CONTAINER_ROOT}/node_modules:rw,exec,uid=${owner.uid},gid=${owner.gid},mode=0755`,
+  '--volume',
+  `sapphire-visual-owned-v1-${createHash('sha256')
+    .update(`${root}:${imageTag(versions, owner)}`)
+    .digest('hex')
+    .slice(0, 24)}:${CONTAINER_ROOT}/node_modules`,
   '--tmpfs',
   '/tmp:rw,exec,mode=1777',
   '--workdir',
   CONTAINER_ROOT,
-  imageTag(versions),
+  imageTag(versions, owner),
   'sh',
   '-c',
   CONTAINER_SCRIPT,
@@ -100,8 +109,8 @@ export function runInContainer(playwrightArgs: readonly string[]): number {
     console.error('.bun-version and @playwright/test must be exact versions');
     return 1;
   }
-  const built = docker(buildArgs(versions));
-  if (built !== 0) return built;
   const owner = { uid: process.getuid?.() ?? 0, gid: process.getgid?.() ?? 0 };
+  const built = docker(buildArgs(versions, owner));
+  if (built !== 0) return built;
   return docker(runArgs(root, versions, owner, playwrightArgs));
 }
