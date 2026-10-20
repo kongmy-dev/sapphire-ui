@@ -111,12 +111,13 @@ async function toggleMultiple(page: Page) {
 }
 
 async function scrollArea(page: Page) {
-  const region = page.getByRole('region');
+  const region = page.locator('#example').getByRole('region');
   await region.focus();
   await expect(region).toBeFocused();
   const horizontal =
     (await region.getAttribute('aria-label')) === 'Release timeline';
-  await page.keyboard.press(horizontal ? 'ArrowRight' : 'ArrowDown');
+  const key = horizontal ? 'ArrowRight' : 'ArrowDown';
+  await page.keyboard.down(key);
   await expect
     .poll(() =>
       region.evaluate(
@@ -125,6 +126,7 @@ async function scrollArea(page: Page) {
       ),
     )
     .toBeGreaterThan(0);
+  await page.keyboard.up(key);
   await expect(region).toBeFocused();
 }
 

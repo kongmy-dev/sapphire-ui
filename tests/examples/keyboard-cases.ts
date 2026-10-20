@@ -6,6 +6,8 @@ import {
   pagination,
   separatorLinks,
 } from './keyboard-data';
+import { keyboardCases as editorialCases } from './keyboard-editorial';
+import { keyboardCases as extendedCases } from './keyboard-extended';
 import {
   controlledField,
   controlledPlan,
@@ -13,6 +15,7 @@ import {
   selectPlans,
   validateEmail,
 } from './keyboard-forms';
+import { banner, cookiePreferences } from './keyboard-notices';
 import { hoverCard, popover, tooltip } from './keyboard-overlays';
 import {
   checkboxes,
@@ -22,6 +25,7 @@ import {
   sliders,
   switches,
 } from './keyboard-stateful';
+import { keyboardCases as viewCases } from './keyboard-views';
 
 const forwardTab = (page: Page) =>
   page.context().browser()?.browserType().name() === 'webkit'
@@ -108,6 +112,11 @@ async function dialog(page: Page) {
 export const keyboardCases: Readonly<
   Record<string, (page: Page) => Promise<void>>
 > = {
+  ...editorialCases,
+  'banner/dismissible': banner,
+  'cookie-banner/preferences': cookiePreferences,
+  ...extendedCases,
+  ...viewCases,
   'checkbox/states': checkboxes,
   'checkbox/controlled': checkboxes,
   'switch/states': switches,

@@ -21,7 +21,7 @@ own. D3: Lucide. D4: every component. D5: Tidy everywhere. Delete this file when
 - The first full run with the 90 initial React pins passed 498/502 visual/parity checks. Its four
   failures exposed minifier rounding of inlined popover/hover-card line-height calculations.
   Restoring those calculations to custom properties preserves fractional precision; the targeted
-  parity rerun and next React captures are pending. No changed pin was used to hide that drift.
+  parity rerun passes all 502 existing checks; 108 new React states need initial pins. No changed pin was used to hide that drift.
 - Data ports clamp non-finite/unsafe pagination values and cap sibling windows at 100; avatar
   groups use named group/image semantics. Select makes background content inert while its listbox
   is open, restores previous state on close/unmount, and preserves live announcement regions.
@@ -33,10 +33,24 @@ own. D3: Lucide. D4: every component. D5: Tidy everywhere. Delete this file when
   map must describe the parser argument: throwing rejects a value, while returning `undefined`
   is valid when it belongs to the caller's type. React's value/updater setter convention is retained.
   The owner selected this over primitive-only storage or returning `unknown`.
+- SplitLayout retains `react-resizable-panels` as a fourth optional peer, selected by the owner
+  to preserve its exposed Group/Panel/Separator API, persistence, collapse, sizing and imperative
+  handles. Only resize-component consumers need it; no owned resize engine or vendored copy is
+  planned. P6 must verify optional installation and keep this peer external to package output.
+- Banner and CookieBanner now own their React markup and consent lifecycle. Their 18 tests
+  pass with 100% line/function coverage across the two clients, examples and consent helper.
+  The full React browser run passed 673 checks; follow-up checks verify prose markers, callout
+  link underlines, radios and scroll areas in all three engines. Status contrast and the newly
+  integrated app/layout families still require validation. The full gate currently reports
+  typed CSS-contract gaps in the data/editorial ports; these remain assigned for correction.
+- Consent uses native `document.cookie`, as planned, with validated legacy/current values,
+  host-only cookies outside the shared brand domain, session fallback when writes are denied,
+  and cancellation of stale deferred tracker choices. The synchronous public API requires a
+  narrow Biome `noDocumentCookie` exception for this helper and its tests; it adds no dependency.
 - Cookie-banner and icon-mark CSS, SVG specimen icons and exhaustive legacy-class coverage have
   landed. Only the three `elements/*` documentation sections still use the reference renderer;
   their takeover belongs to P5/P8. The v3 parity renderer remains until P9.
-- Integrated CSS measures **23,744 / 23,765 gzip bytes** after the shared dark-card text fix and
+- Integrated CSS measures **23,753 / 23,765 gzip bytes** after the shared dark-card text fix and
   removal of unused single-use internal variables; the ceiling is unchanged.
 - Strict specimen accessibility passes **420/420** checks (70 pages, two schemes, three engines).
   The two subsequently changed specimens also pass all 12 targeted checks. The integrated
@@ -110,7 +124,7 @@ css/tokens.css        shadcn variable names + brand extension; colours via color
   (`--sp-button-radius`) → `data-*` variants → utility classes, which win by layer order → the app's
   own CSS, since unlayered beats layered → the vendored copy.
 - **npm to use, registry to own.** npm ships the stylesheets, fonts, React components, custom
-  elements and `DESIGN.md`, ESM only. The peers `react`, `react-dom` and `radix-ui` are all
+  elements and `DESIGN.md`, ESM only. The peers `react`, `react-dom`, `radix-ui` and `react-resizable-panels` are all
   optional: a CSS-only app installs none of them, and a component without behaviour (button, card,
   badge, alert…) imports no Radix, since its `asChild` uses the slot in `lib/`, so an app that uses
   only those installs no `radix-ui`. The registry serves

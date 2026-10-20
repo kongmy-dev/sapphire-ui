@@ -41,13 +41,15 @@ export async function switches(page: Page) {
 export async function radios(page: Page) {
   const controls = page.getByRole('radio').filter({ visible: true });
   await controls.first().focus();
-  await page.keyboard.press('ArrowDown');
+  await page.keyboard.down('ArrowDown');
   await expect(controls.nth(1)).toBeChecked();
   await expect(controls.nth(1)).toBeFocused();
+  await page.keyboard.up('ArrowDown');
   if (await page.locator('output').count())
     await expect(page.locator('output')).toHaveText('annual');
-  await page.keyboard.press('ArrowDown');
+  await page.keyboard.down('ArrowDown');
   await expect(controls.first()).toBeChecked();
+  await page.keyboard.up('ArrowDown');
 }
 
 export async function sliders(page: Page) {

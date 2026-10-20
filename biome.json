@@ -1,6 +1,10 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.5.3/schema.json",
-  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
   "files": {
     "ignoreUnknown": true,
     "includes": [
@@ -82,7 +86,9 @@
         "noEnum": "error",
         "useConsistentTypeDefinitions": {
           "level": "error",
-          "options": { "style": "type" }
+          "options": {
+            "style": "type"
+          }
         },
         "noNestedTernary": "error",
         "noUselessElse": "error",
@@ -91,17 +97,27 @@
     }
   },
   "css": {
-    "parser": { "tailwindDirectives": true },
-    "formatter": { "enabled": true },
-    "linter": { "enabled": true }
+    "parser": {
+      "tailwindDirectives": true
+    },
+    "formatter": {
+      "enabled": true
+    },
+    "linter": {
+      "enabled": true
+    }
   },
   "overrides": [
     {
       "includes": ["registry/blocks/**"],
       "linter": {
         "rules": {
-          "correctness": { "useExhaustiveDependencies": "off" },
-          "nursery": { "useSortedClasses": "off" }
+          "correctness": {
+            "useExhaustiveDependencies": "off"
+          },
+          "nursery": {
+            "useSortedClasses": "off"
+          }
         }
       }
     },
@@ -140,8 +156,12 @@
       ],
       "linter": {
         "rules": {
-          "suspicious": { "noExplicitAny": "off" },
-          "correctness": { "noUnusedVariables": "off" }
+          "suspicious": {
+            "noExplicitAny": "off"
+          },
+          "correctness": {
+            "noUnusedVariables": "off"
+          }
         }
       }
     },
@@ -149,7 +169,9 @@
       "includes": ["components/**/*.examples.html"],
       "linter": {
         "rules": {
-          "a11y": { "noNoninteractiveTabindex": "off" }
+          "a11y": {
+            "noNoninteractiveTabindex": "off"
+          }
         }
       }
     },
@@ -157,7 +179,9 @@
       "includes": ["scripts/**", "tooling/**", "tests/**"],
       "linter": {
         "rules": {
-          "suspicious": { "noConsole": "off" }
+          "suspicious": {
+            "noConsole": "off"
+          }
         }
       }
     },
@@ -187,13 +211,27 @@
       "includes": ["src/**"],
       "linter": {
         "rules": {
-          "style": { "useTemplate": "info" },
+          "style": {
+            "useTemplate": "info"
+          },
           "complexity": {
             "useOptionalChain": "info",
             "noBannedTypes": "info",
             "noUselessConstructor": "info"
           },
-          "nursery": { "useSortedClasses": "info" }
+          "nursery": {
+            "useSortedClasses": "info"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["lib/consent.ts", "lib/consent.test.ts"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noDocumentCookie": "off"
+          }
         }
       }
     }

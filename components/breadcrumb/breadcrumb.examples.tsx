@@ -1,16 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import { Breadcrumb } from './breadcrumb.js';
+import { Breadcrumb, type BreadcrumbItem } from './breadcrumb.js';
 
 function BreadcrumbTrail() {
   return (
     <Breadcrumb
-      items={[
-        { label: 'Home', href: '#home' },
-        { label: 'Components', href: '#components' },
-        { label: 'Breadcrumb' },
-      ]}
+      items={
+        [
+          { label: 'Home', href: '#home' },
+          { label: 'Components', href: '#components' },
+          { label: 'Breadcrumb' },
+        ] satisfies BreadcrumbItem[]
+      }
     />
   );
 }

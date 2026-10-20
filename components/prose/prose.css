@@ -66,8 +66,11 @@
     color: var(--sp-prose-fg);
   }
 
-  .sp-prose :is(ul, ol) {
+  .sp-prose :where(ul, ol) {
     padding-inline-start: 1.5em;
+  }
+
+  .sp-prose ul {
     list-style: disc;
   }
 
