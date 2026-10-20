@@ -1,10 +1,13 @@
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { loadFiles } from '../gates/scope.js';
+import { calibration } from './calibration.js';
 import { type FileMetrics, measureFile } from './measure';
 
 type Snapshot = {
   takenAt: string;
+  calibration: ReturnType<typeof calibration>;
   commit: string;
   totals: {
     files: number;
@@ -46,8 +49,6 @@ type Snapshot = {
   };
 };
 
-const SOURCE_GLOBS = ['src', 'registry', 'tests'];
-
 const FRAMEWORK_ENTRY = [
   /(^|\/)(page|layout|template|loading|error|not-found|route|default|middleware|instrumentation)\.tsx?$/,
   /(^|\/)app\.tsx?$/,
@@ -56,47 +57,6 @@ const FRAMEWORK_ENTRY = [
 
 const isFrameworkEntry = (p: string) =>
   FRAMEWORK_ENTRY.some((re) => re.test(p));
-
-function listSourceFiles(root: string): string[] {
-  const out = execFileSync(
-    'find',
-    [
-      ...SOURCE_GLOBS,
-      '-type',
-      'f',
-      '(',
-      '-name',
-      '*.ts',
-      '-o',
-      '-name',
-      '*.tsx',
-      ')',
-      '-not',
-      '-path',
-      '*/node_modules/*',
-      '-not',
-      '-path',
-      '*/dist/*',
-      '-not',
-      '-path',
-      '*/build/*',
-      '-not',
-      '-path',
-      '*/.next/*',
-      '-not',
-      '-path',
-      '*/coverage/*',
-      '-not',
-      '-path',
-      '*/vendor/*',
-      '-not',
-      '-path',
-      '*/registry-consumer/*',
-    ],
-    { cwd: root, encoding: 'utf8' },
-  );
-  return out.split('\n').filter(Boolean).sort();
-}
 
 const CLONE_WINDOW_LINES = 8;
 
@@ -251,7 +211,7 @@ function fileSummaries(measured: FileMetrics[]): Snapshot['files'] {
 }
 
 export function snapshot(root: string): Snapshot {
-  const files = listSourceFiles(root);
+  const files = loadFiles(root, [], ['.ts', '.tsx']).map((file) => file.name);
   const measured = files.map((f) => measureFile(root, f));
   const src = measured.filter((m) => !m.isTest);
   const tests = measured.filter((m) => m.isTest);
@@ -261,6 +221,7 @@ export function snapshot(root: string): Snapshot {
   );
   return {
     takenAt: new Date().toISOString(),
+    calibration: calibration(src),
     commit: execFileSync('git', ['rev-parse', 'HEAD'], {
       cwd: root,
       encoding: 'utf8',

@@ -1,979 +1,2547 @@
 {
-  "takenAt": "2026-09-04T05:54:10.615Z",
-  "commit": "f55db9be3f7717531cddcec937891001901e02fb",
+  "takenAt": "2026-10-20T07:22:39.090Z",
+  "calibration": {
+    "method": "nearest-rank-95th-percentile",
+    "population": "tracked in-scope non-test TypeScript files",
+    "files": 289,
+    "functions": 1790,
+    "p95": {
+      "cognitive": 4,
+      "functionLines": 34,
+      "fileCodeLines": 211,
+      "nesting": 5
+    }
+  },
+  "commit": "b4ba1215838a760ea4ad8015f814689cb0acf4de",
   "totals": {
-    "files": 131,
-    "srcFiles": 108,
-    "testFiles": 23,
-    "codeLines": 14042,
-    "testCodeLines": 1279,
-    "commentLines": 909,
-    "commentRatio": 0.065,
-    "testRatio": 0.091,
-    "exports": 185,
-    "unreferencedExports": 8,
-    "interfaces": 92,
-    "types": 25,
-    "abstractionsPerKloc": 8.3,
-    "worstCognitive": 56,
-    "worstOwnCognitive": 24,
-    "functionsOverOwnCognitive15": 5,
-    "functionsOver50Lines": 43,
-    "filesOver300CodeLines": 12,
-    "maxNesting": 8,
-    "cloneBlocks": 11
+    "files": 447,
+    "srcFiles": 289,
+    "testFiles": 158,
+    "codeLines": 20958,
+    "testCodeLines": 18186,
+    "commentLines": 0,
+    "commentRatio": 0,
+    "testRatio": 0.868,
+    "exports": 681,
+    "unreferencedExports": 2,
+    "interfaces": 0,
+    "types": 235,
+    "abstractionsPerKloc": 11.2,
+    "worstCognitive": 22,
+    "worstOwnCognitive": 7,
+    "functionsOverOwnCognitive15": 0,
+    "functionsOver50Lines": 32,
+    "filesOver300CodeLines": 4,
+    "maxNesting": 5,
+    "cloneBlocks": 112
   },
   "files": {
-    "registry/blocks/calendar.tsx": {
-      "codeLines": 206,
+    "blocks/calendar/calendar.tsx": {
+      "codeLines": 227,
       "commentLines": 0,
       "worstOwnCognitive": 2
     },
-    "registry/blocks/combobox.tsx": {
+    "blocks/classes.ts": {
+      "codeLines": 7,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "blocks/combobox/combobox.tsx": {
       "codeLines": 86,
-      "commentLines": 1,
+      "commentLines": 0,
       "worstOwnCognitive": 1
     },
-    "registry/blocks/command.tsx": {
+    "blocks/command/command.tsx": {
       "codeLines": 166,
       "commentLines": 0,
       "worstOwnCognitive": 0
     },
-    "registry/blocks/data-table-column-header.tsx": {
-      "codeLines": 71,
+    "blocks/data-table-column-header/data-table-column-header.tsx": {
+      "codeLines": 72,
       "commentLines": 0,
-      "worstOwnCognitive": 5
+      "worstOwnCognitive": 2
     },
-    "registry/blocks/data-table-view-options.tsx": {
+    "blocks/data-table-view-options/data-table-view-options.tsx": {
       "codeLines": 54,
       "commentLines": 0,
       "worstOwnCognitive": 0
     },
-    "registry/blocks/sidebar.tsx": {
-      "codeLines": 674,
-      "commentLines": 12,
-      "worstOwnCognitive": 8
-    },
-    "registry/blocks/sonner.tsx": {
-      "codeLines": 18,
-      "commentLines": 6,
-      "worstOwnCognitive": 0
-    },
-    "registry/items.ts": {
-      "codeLines": 214,
-      "commentLines": 17,
-      "worstOwnCognitive": 0
-    },
-    "src/App.tsx": {
-      "codeLines": 296,
-      "commentLines": 3,
-      "worstOwnCognitive": 3
-    },
-    "src/components/Analytics.tsx": {
-      "codeLines": 24,
-      "commentLines": 1,
-      "worstOwnCognitive": 0
-    },
-    "src/components/AnalyticsElement.ts": {
-      "codeLines": 156,
-      "commentLines": 9,
-      "worstOwnCognitive": 13
-    },
-    "src/components/Banner.tsx": {
-      "codeLines": 64,
-      "commentLines": 18,
-      "worstOwnCognitive": 2
-    },
-    "src/components/BannerElement.ts": {
-      "codeLines": 79,
-      "commentLines": 12,
-      "worstOwnCognitive": 4
-    },
-    "src/components/CommandPalette.tsx": {
-      "codeLines": 168,
-      "commentLines": 15,
-      "worstOwnCognitive": 5
-    },
-    "src/components/CookieBanner.tsx": {
-      "codeLines": 30,
-      "commentLines": 2,
-      "worstOwnCognitive": 3
-    },
-    "src/components/CookieBannerElement.ts": {
-      "codeLines": 160,
-      "commentLines": 10,
-      "worstOwnCognitive": 12
-    },
-    "src/components/SiteFooterElement.ts": {
-      "codeLines": 161,
-      "commentLines": 24,
-      "worstOwnCognitive": 11
-    },
-    "src/components/SiteHeaderElement.ts": {
-      "codeLines": 133,
-      "commentLines": 28,
-      "worstOwnCognitive": 9
-    },
-    "src/components/ThemeProvider.tsx": {
-      "codeLines": 58,
-      "commentLines": 18,
-      "worstOwnCognitive": 1
-    },
-    "src/components/Toast.tsx": {
-      "codeLines": 27,
-      "commentLines": 10,
-      "worstOwnCognitive": 0
-    },
-    "src/components/ToastElement.ts": {
-      "codeLines": 68,
-      "commentLines": 21,
-      "worstOwnCognitive": 4
-    },
-    "src/components/ui/Accordion.tsx": {
-      "codeLines": 66,
-      "commentLines": 10,
-      "worstOwnCognitive": 0
-    },
-    "src/components/ui/AdminLayout.tsx": {
-      "codeLines": 312,
-      "commentLines": 27,
-      "worstOwnCognitive": 17
-    },
-    "src/components/ui/Alert.tsx": {
-      "codeLines": 76,
-      "commentLines": 6,
-      "worstOwnCognitive": 3
-    },
-    "src/components/ui/Avatar.tsx": {
-      "codeLines": 44,
-      "commentLines": 4,
-      "worstOwnCognitive": 0
-    },
-    "src/components/ui/AvatarGroup.tsx": {
-      "codeLines": 56,
-      "commentLines": 18,
-      "worstOwnCognitive": 4
-    },
-    "src/components/ui/Badge.tsx": {
-      "codeLines": 48,
-      "commentLines": 3,
-      "worstOwnCognitive": 1
-    },
-    "src/components/ui/BarChart.tsx": {
-      "codeLines": 47,
-      "commentLines": 0,
-      "worstOwnCognitive": 1
-    },
-    "src/components/ui/Breadcrumb.tsx": {
-      "codeLines": 69,
-      "commentLines": 8,
-      "worstOwnCognitive": 9
-    },
-    "src/components/ui/Button.tsx": {
-      "codeLines": 142,
-      "commentLines": 6,
-      "worstOwnCognitive": 11
-    },
-    "src/components/ui/Callout.tsx": {
-      "codeLines": 61,
+    "blocks/sidebar/sidebar-context.tsx": {
+      "codeLines": 117,
       "commentLines": 0,
       "worstOwnCognitive": 3
     },
-    "src/components/ui/Card.tsx": {
-      "codeLines": 95,
-      "commentLines": 7,
+    "blocks/sidebar/sidebar-menu.tsx": {
+      "codeLines": 249,
+      "commentLines": 0,
       "worstOwnCognitive": 4
     },
-    "src/components/ui/Checkbox.tsx": {
-      "codeLines": 77,
-      "commentLines": 12,
-      "worstOwnCognitive": 6
+    "blocks/sidebar/sidebar.test.tsx": {
+      "codeLines": 70,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
     },
-    "src/components/ui/Chip.tsx": {
-      "codeLines": 83,
-      "commentLines": 12,
-      "worstOwnCognitive": 2
-    },
-    "src/components/ui/CodeBlock.tsx": {
-      "codeLines": 64,
-      "commentLines": 17,
+    "blocks/sidebar/sidebar.tsx": {
+      "codeLines": 335,
+      "commentLines": 0,
       "worstOwnCognitive": 7
     },
-    "src/components/ui/Container.tsx": {
-      "codeLines": 31,
+    "blocks/sonner/sonner.tsx": {
+      "codeLines": 11,
       "commentLines": 0,
-      "worstOwnCognitive": 2
-    },
-    "src/components/ui/Dialog.tsx": {
-      "codeLines": 213,
-      "commentLines": 13,
-      "worstOwnCognitive": 1
-    },
-    "src/components/ui/DropdownMenu.tsx": {
-      "codeLines": 154,
-      "commentLines": 15,
-      "worstOwnCognitive": 1
-    },
-    "src/components/ui/Empty.tsx": {
-      "codeLines": 48,
-      "commentLines": 4,
-      "worstOwnCognitive": 3
-    },
-    "src/components/ui/FormField.tsx": {
-      "codeLines": 75,
-      "commentLines": 21,
-      "worstOwnCognitive": 14
-    },
-    "src/components/ui/HoverCard.tsx": {
-      "codeLines": 31,
-      "commentLines": 15,
       "worstOwnCognitive": 0
     },
-    "src/components/ui/Icon.tsx": {
-      "codeLines": 39,
-      "commentLines": 24,
-      "worstOwnCognitive": 2
-    },
-    "src/components/ui/IconMark.tsx": {
+    "components/accordion/accordion.examples.tsx": {
       "codeLines": 51,
-      "commentLines": 5,
-      "worstOwnCognitive": 1
-    },
-    "src/components/ui/Input.tsx": {
-      "codeLines": 45,
-      "commentLines": 1,
-      "worstOwnCognitive": 0
-    },
-    "src/components/ui/Kbd.tsx": {
-      "codeLines": 25,
-      "commentLines": 8,
-      "worstOwnCognitive": 3
-    },
-    "src/components/ui/Label.tsx": {
-      "codeLines": 43,
-      "commentLines": 1,
-      "worstOwnCognitive": 1
-    },
-    "src/components/ui/Layout.tsx": {
-      "codeLines": 34,
-      "commentLines": 19,
-      "worstOwnCognitive": 1
-    },
-    "src/components/ui/MarginNote.tsx": {
-      "codeLines": 42,
       "commentLines": 0,
       "worstOwnCognitive": 0
     },
-    "src/components/ui/MobileNav.tsx": {
-      "codeLines": 182,
-      "commentLines": 22,
-      "worstOwnCognitive": 9
+    "components/accordion/accordion.test.tsx": {
+      "codeLines": 72,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
     },
-    "src/components/ui/NativeSelect.tsx": {
-      "codeLines": 66,
-      "commentLines": 8,
-      "worstOwnCognitive": 1
+    "components/accordion/accordion.tsx": {
+      "codeLines": 77,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
     },
-    "src/components/ui/PageSection.tsx": {
-      "codeLines": 61,
-      "commentLines": 4,
-      "worstOwnCognitive": 5
+    "components/admin-layout/admin-layout.examples.tsx": {
+      "codeLines": 90,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
     },
-    "src/components/ui/Pagination.tsx": {
-      "codeLines": 128,
-      "commentLines": 18,
-      "worstOwnCognitive": 4
+    "components/admin-layout/admin-layout.test.tsx": {
+      "codeLines": 155,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
     },
-    "src/components/ui/PassphraseGate.tsx": {
-      "codeLines": 50,
+    "components/admin-layout/admin-layout.tsx": {
+      "codeLines": 230,
       "commentLines": 0,
       "worstOwnCognitive": 7
     },
-    "src/components/ui/Popover.tsx": {
-      "codeLines": 33,
-      "commentLines": 9,
-      "worstOwnCognitive": 0
-    },
-    "src/components/ui/Progress.tsx": {
-      "codeLines": 60,
-      "commentLines": 3,
-      "worstOwnCognitive": 6
-    },
-    "src/components/ui/ProposalLayout.tsx": {
-      "codeLines": 99,
-      "commentLines": 0,
-      "worstOwnCognitive": 5
-    },
-    "src/components/ui/RadioGroup.tsx": {
-      "codeLines": 70,
-      "commentLines": 11,
-      "worstOwnCognitive": 6
-    },
-    "src/components/ui/RangeSlider.tsx": {
-      "codeLines": 79,
-      "commentLines": 20,
-      "worstOwnCognitive": 3
-    },
-    "src/components/ui/SEOHead.tsx": {
-      "codeLines": 340,
-      "commentLines": 58,
-      "worstOwnCognitive": 24
-    },
-    "src/components/ui/ScrollArea.tsx": {
-      "codeLines": 49,
-      "commentLines": 9,
-      "worstOwnCognitive": 2
-    },
-    "src/components/ui/SegmentedBar.tsx": {
-      "codeLines": 70,
-      "commentLines": 11,
-      "worstOwnCognitive": 3
-    },
-    "src/components/ui/Select.tsx": {
-      "codeLines": 152,
-      "commentLines": 14,
-      "worstOwnCognitive": 2
-    },
-    "src/components/ui/Separator.tsx": {
-      "codeLines": 26,
-      "commentLines": 0,
-      "worstOwnCognitive": 1
-    },
-    "src/components/ui/Sheet.tsx": {
-      "codeLines": 120,
-      "commentLines": 13,
-      "worstOwnCognitive": 1
-    },
-    "src/components/ui/SiteFooter.tsx": {
-      "codeLines": 94,
-      "commentLines": 8,
-      "worstOwnCognitive": 9
-    },
-    "src/components/ui/SiteHeader.tsx": {
-      "codeLines": 84,
-      "commentLines": 10,
-      "worstOwnCognitive": 5
-    },
-    "src/components/ui/Skeleton.tsx": {
+    "components/alert/alert.examples.tsx": {
       "codeLines": 42,
       "commentLines": 0,
       "worstOwnCognitive": 0
     },
-    "src/components/ui/Sparkline.tsx": {
-      "codeLines": 42,
+    "components/alert/alert.test.tsx": {
+      "codeLines": 37,
       "commentLines": 0,
-      "worstOwnCognitive": 1
-    },
-    "src/components/ui/Spinner.tsx": {
-      "codeLines": 46,
-      "commentLines": 1,
       "worstOwnCognitive": 0
     },
-    "src/components/ui/SplitLayout.tsx": {
-      "codeLines": 32,
-      "commentLines": 0,
-      "worstOwnCognitive": 1
-    },
-    "src/components/ui/Stat.tsx": {
+    "components/alert/alert.tsx": {
       "codeLines": 78,
-      "commentLines": 11,
-      "worstOwnCognitive": 11
-    },
-    "src/components/ui/StatGroup.tsx": {
-      "codeLines": 25,
       "commentLines": 0,
       "worstOwnCognitive": 4
     },
-    "src/components/ui/Steps.tsx": {
-      "codeLines": 125,
-      "commentLines": 21,
-      "worstOwnCognitive": 14
-    },
-    "src/components/ui/Table.tsx": {
-      "codeLines": 83,
-      "commentLines": 5,
-      "worstOwnCognitive": 1
-    },
-    "src/components/ui/TableOfContents.tsx": {
-      "codeLines": 54,
+    "components/analytics/analytics.examples.tsx": {
+      "codeLines": 13,
       "commentLines": 0,
-      "worstOwnCognitive": 2
-    },
-    "src/components/ui/Tabs.tsx": {
-      "codeLines": 75,
-      "commentLines": 4,
-      "worstOwnCognitive": 3
-    },
-    "src/components/ui/Textarea.tsx": {
-      "codeLines": 44,
-      "commentLines": 1,
       "worstOwnCognitive": 0
     },
-    "src/components/ui/ThemeToggle.tsx": {
-      "codeLines": 62,
-      "commentLines": 8,
-      "worstOwnCognitive": 7
-    },
-    "src/components/ui/Timeline.tsx": {
-      "codeLines": 105,
+    "components/analytics/analytics.test.tsx": {
+      "codeLines": 290,
       "commentLines": 0,
-      "worstOwnCognitive": 4
+      "worstOwnCognitive": 6
     },
-    "src/components/ui/Toggle.tsx": {
-      "codeLines": 93,
-      "commentLines": 15,
-      "worstOwnCognitive": 2
-    },
-    "src/components/ui/ToggleSwitch.tsx": {
-      "codeLines": 44,
-      "commentLines": 10,
-      "worstOwnCognitive": 4
-    },
-    "src/components/ui/Tooltip.tsx": {
-      "codeLines": 57,
-      "commentLines": 20,
-      "worstOwnCognitive": 1
-    },
-    "src/components/ui/WizardLayout.tsx": {
-      "codeLines": 148,
-      "commentLines": 0,
-      "worstOwnCognitive": 8
-    },
-    "src/components/ui/__tests__/AdminLayout.test.tsx": {
-      "codeLines": 40,
-      "commentLines": 3,
-      "worstOwnCognitive": 0
-    },
-    "src/components/ui/__tests__/Alert.test.tsx": {
+    "components/analytics/analytics.tsx": {
       "codeLines": 19,
       "commentLines": 0,
       "worstOwnCognitive": 0
     },
-    "src/components/ui/__tests__/Badge.test.tsx": {
+    "components/avatar-group/avatar-group.examples.tsx": {
+      "codeLines": 25,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/avatar-group/avatar-group.test.tsx": {
+      "codeLines": 57,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/avatar-group/avatar-group.tsx": {
+      "codeLines": 57,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/avatar/avatar.examples.tsx": {
+      "codeLines": 35,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/avatar/avatar.test.tsx": {
+      "codeLines": 107,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "components/avatar/avatar.tsx": {
+      "codeLines": 41,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/badge/badge.examples.tsx": {
+      "codeLines": 33,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/badge/badge.test.tsx": {
+      "codeLines": 47,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/badge/badge.tsx": {
+      "codeLines": 35,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "components/banner/banner.examples.tsx": {
+      "codeLines": 38,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/banner/banner.test.tsx": {
+      "codeLines": 89,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/banner/banner.tsx": {
+      "codeLines": 95,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "components/bar-chart/bar-chart.examples.tsx": {
+      "codeLines": 24,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/bar-chart/bar-chart.test.tsx": {
+      "codeLines": 71,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/bar-chart/bar-chart.tsx": {
+      "codeLines": 55,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "components/breadcrumb/breadcrumb.examples.tsx": {
+      "codeLines": 41,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/breadcrumb/breadcrumb.test.tsx": {
+      "codeLines": 50,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/breadcrumb/breadcrumb.tsx": {
+      "codeLines": 67,
+      "commentLines": 0,
+      "worstOwnCognitive": 7
+    },
+    "components/button/button.examples.tsx": {
+      "codeLines": 119,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/button/button.test.tsx": {
+      "codeLines": 233,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/button/button.tsx": {
+      "codeLines": 140,
+      "commentLines": 0,
+      "worstOwnCognitive": 7
+    },
+    "components/callout/callout.examples.tsx": {
+      "codeLines": 39,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/callout/callout.test.tsx": {
+      "codeLines": 29,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/callout/callout.tsx": {
+      "codeLines": 34,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "components/card/card.examples.tsx": {
+      "codeLines": 57,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/card/card.test.tsx": {
+      "codeLines": 64,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/card/card.tsx": {
+      "codeLines": 56,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "components/checkbox/checkbox.examples.tsx": {
+      "codeLines": 38,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/checkbox/checkbox.test.tsx": {
+      "codeLines": 103,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/checkbox/checkbox.tsx": {
+      "codeLines": 67,
+      "commentLines": 0,
+      "worstOwnCognitive": 7
+    },
+    "components/chip/chip.examples.tsx": {
+      "codeLines": 44,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/chip/chip.test.tsx": {
+      "codeLines": 63,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/chip/chip.tsx": {
+      "codeLines": 54,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "components/code-block/code-block.examples.tsx": {
       "codeLines": 17,
       "commentLines": 0,
       "worstOwnCognitive": 0
     },
-    "src/components/ui/__tests__/Button.test.tsx": {
-      "codeLines": 46,
-      "commentLines": 1,
+    "components/code-block/code-block.test.tsx": {
+      "codeLines": 78,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/code-block/code-block.tsx": {
+      "codeLines": 45,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "components/command-palette/command-palette.examples.tsx": {
+      "codeLines": 72,
+      "commentLines": 0,
       "worstOwnCognitive": 0
     },
-    "src/components/ui/__tests__/Card.test.tsx": {
-      "codeLines": 49,
-      "commentLines": 2,
+    "components/command-palette/command-palette.test.tsx": {
+      "codeLines": 108,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "components/command-palette/command-palette.tsx": {
+      "codeLines": 203,
+      "commentLines": 0,
+      "worstOwnCognitive": 7
+    },
+    "components/container/container.examples.tsx": {
+      "codeLines": 24,
+      "commentLines": 0,
       "worstOwnCognitive": 0
     },
-    "src/components/ui/__tests__/CodeBlock.test.tsx": {
+    "components/container/container.test.tsx": {
+      "codeLines": 33,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/container/container.tsx": {
+      "codeLines": 23,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/cookie-banner/cookie-banner.examples.tsx": {
+      "codeLines": 16,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/cookie-banner/cookie-banner.test.tsx": {
+      "codeLines": 69,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/cookie-banner/cookie-banner.tsx": {
+      "codeLines": 61,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/dialog/dialog.examples.tsx": {
+      "codeLines": 138,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/dialog/dialog.test.tsx": {
+      "codeLines": 298,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "components/dialog/dialog.tsx": {
+      "codeLines": 198,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/document/document.examples.tsx": {
       "codeLines": 35,
-      "commentLines": 1,
-      "worstOwnCognitive": 0
-    },
-    "src/components/ui/__tests__/Coverage.test.tsx": {
-      "codeLines": 164,
       "commentLines": 0,
       "worstOwnCognitive": 0
     },
-    "src/components/ui/__tests__/Dialog.test.tsx": {
-      "codeLines": 66,
+    "components/document/document.test.tsx": {
+      "codeLines": 11,
       "commentLines": 0,
       "worstOwnCognitive": 0
     },
-    "src/components/ui/__tests__/Icon.test.tsx": {
-      "codeLines": 50,
+    "components/dropdown-menu/dropdown-menu.examples.tsx": {
+      "codeLines": 82,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/dropdown-menu/dropdown-menu.test.tsx": {
+      "codeLines": 185,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/dropdown-menu/dropdown-menu.tsx": {
+      "codeLines": 182,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "components/empty/empty.examples.tsx": {
+      "codeLines": 24,
       "commentLines": 0,
       "worstOwnCognitive": 0
     },
-    "src/components/ui/__tests__/Input.test.tsx": {
+    "components/empty/empty.test.tsx": {
+      "codeLines": 31,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/empty/empty.tsx": {
+      "codeLines": 32,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "components/form-field/form-field.examples.tsx": {
+      "codeLines": 63,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/form-field/form-field.test.tsx": {
+      "codeLines": 97,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/form-field/form-field.tsx": {
+      "codeLines": 104,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "components/hover-card/hover-card.examples.tsx": {
       "codeLines": 32,
       "commentLines": 0,
       "worstOwnCognitive": 0
     },
-    "src/components/ui/__tests__/Pagination.test.tsx": {
-      "codeLines": 89,
-      "commentLines": 1,
-      "worstOwnCognitive": 0
-    },
-    "src/elements.ts": {
-      "codeLines": 29,
-      "commentLines": 8,
-      "worstOwnCognitive": 0
-    },
-    "src/hooks/useCopyToClipboard.test.ts": {
-      "codeLines": 51,
-      "commentLines": 0,
-      "worstOwnCognitive": 1
-    },
-    "src/hooks/useCopyToClipboard.ts": {
-      "codeLines": 39,
-      "commentLines": 10,
-      "worstOwnCognitive": 4
-    },
-    "src/hooks/useDebounce.test.ts": {
-      "codeLines": 34,
+    "components/hover-card/hover-card.test.tsx": {
+      "codeLines": 52,
       "commentLines": 0,
       "worstOwnCognitive": 0
     },
-    "src/hooks/useDebounce.ts": {
-      "codeLines": 9,
-      "commentLines": 10,
-      "worstOwnCognitive": 0
-    },
-    "src/hooks/useIsomorphicLayoutEffect.test.ts": {
-      "codeLines": 14,
-      "commentLines": 1,
-      "worstOwnCognitive": 0
-    },
-    "src/hooks/useIsomorphicLayoutEffect.ts": {
-      "codeLines": 3,
-      "commentLines": 8,
-      "worstOwnCognitive": 0
-    },
-    "src/hooks/useLocalStorage.test.ts": {
-      "codeLines": 43,
-      "commentLines": 0,
-      "worstOwnCognitive": 0
-    },
-    "src/hooks/useLocalStorage.ts": {
-      "codeLines": 45,
-      "commentLines": 14,
-      "worstOwnCognitive": 3
-    },
-    "src/hooks/useMediaQuery.test.ts": {
-      "codeLines": 55,
-      "commentLines": 1,
-      "worstOwnCognitive": 0
-    },
-    "src/hooks/useMediaQuery.ts": {
-      "codeLines": 15,
-      "commentLines": 5,
-      "worstOwnCognitive": 1
-    },
-    "src/hooks/useOnClickOutside.test.tsx": {
-      "codeLines": 34,
-      "commentLines": 1,
-      "worstOwnCognitive": 0
-    },
-    "src/hooks/useOnClickOutside.ts": {
+    "components/hover-card/hover-card.tsx": {
       "codeLines": 24,
-      "commentLines": 11,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/icon-mark/icon-mark.examples.tsx": {
+      "codeLines": 46,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/icon-mark/icon-mark.test.tsx": {
+      "codeLines": 32,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/icon-mark/icon-mark.tsx": {
+      "codeLines": 27,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/input/input.examples.tsx": {
+      "codeLines": 67,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/input/input.test.tsx": {
+      "codeLines": 85,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/input/input.tsx": {
+      "codeLines": 25,
+      "commentLines": 0,
       "worstOwnCognitive": 2
     },
-    "src/index.ts": {
-      "codeLines": 84,
-      "commentLines": 11,
-      "worstOwnCognitive": 0
-    },
-    "src/lib/consent.test.ts": {
-      "codeLines": 131,
-      "commentLines": 3,
-      "worstOwnCognitive": 1
-    },
-    "src/lib/consent.ts": {
-      "codeLines": 114,
-      "commentLines": 9,
-      "worstOwnCognitive": 20
-    },
-    "src/lib/theme.test.ts": {
-      "codeLines": 115,
-      "commentLines": 1,
-      "worstOwnCognitive": 0
-    },
-    "src/lib/theme.ts": {
-      "codeLines": 51,
-      "commentLines": 32,
-      "worstOwnCognitive": 3
-    },
-    "src/lib/utils.test.ts": {
-      "codeLines": 28,
-      "commentLines": 5,
-      "worstOwnCognitive": 0
-    },
-    "src/lib/utils.ts": {
-      "codeLines": 5,
+    "components/kbd/kbd.examples.tsx": {
+      "codeLines": 21,
       "commentLines": 0,
       "worstOwnCognitive": 0
     },
-    "src/main.tsx": {
+    "components/kbd/kbd.test.tsx": {
+      "codeLines": 26,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/kbd/kbd.tsx": {
+      "codeLines": 15,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/key-value-list/key-value-list.examples.tsx": {
+      "codeLines": 15,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/key-value-list/key-value-list.test.tsx": {
       "codeLines": 9,
       "commentLines": 0,
       "worstOwnCognitive": 0
     },
-    "src/pages/ButtonsPage.tsx": {
-      "codeLines": 316,
+    "components/label/label.examples.tsx": {
+      "codeLines": 32,
       "commentLines": 0,
       "worstOwnCognitive": 0
     },
-    "src/pages/CardsPage.tsx": {
-      "codeLines": 207,
+    "components/label/label.test.tsx": {
+      "codeLines": 38,
       "commentLines": 0,
       "worstOwnCognitive": 0
     },
-    "src/pages/ColorsPage.tsx": {
+    "components/label/label.tsx": {
+      "codeLines": 33,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/layout/layout.examples.tsx": {
+      "codeLines": 176,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/layout/layout.test.tsx": {
+      "codeLines": 41,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/layout/layout.tsx": {
+      "codeLines": 40,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/margin-note/margin-note.examples.tsx": {
+      "codeLines": 28,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/margin-note/margin-note.test.tsx": {
+      "codeLines": 34,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "components/margin-note/margin-note.tsx": {
+      "codeLines": 32,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/mobile-nav/mobile-nav.examples.tsx": {
+      "codeLines": 82,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/mobile-nav/mobile-nav.test.tsx": {
+      "codeLines": 154,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "components/mobile-nav/mobile-nav.tsx": {
+      "codeLines": 211,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "components/native-select/native-select.examples.tsx": {
+      "codeLines": 85,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/native-select/native-select.test.tsx": {
+      "codeLines": 102,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/native-select/native-select.tsx": {
+      "codeLines": 42,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/page-section/page-section.examples.tsx": {
+      "codeLines": 24,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/page-section/page-section.test.tsx": {
+      "codeLines": 39,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/page-section/page-section.tsx": {
+      "codeLines": 37,
+      "commentLines": 0,
+      "worstOwnCognitive": 6
+    },
+    "components/pagination/pagination.examples.tsx": {
+      "codeLines": 36,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/pagination/pagination.test.tsx": {
+      "codeLines": 155,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/pagination/pagination.tsx": {
+      "codeLines": 133,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "components/passphrase-gate/passphrase-gate.examples.tsx": {
+      "codeLines": 66,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "components/passphrase-gate/passphrase-gate.test.tsx": {
+      "codeLines": 41,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/passphrase-gate/passphrase-gate.tsx": {
+      "codeLines": 50,
+      "commentLines": 0,
+      "worstOwnCognitive": 7
+    },
+    "components/popover/popover.examples.tsx": {
+      "codeLines": 49,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/popover/popover.test.tsx": {
+      "codeLines": 49,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/popover/popover.tsx": {
+      "codeLines": 26,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/progress/progress.examples.tsx": {
+      "codeLines": 23,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/progress/progress.test.tsx": {
+      "codeLines": 46,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/progress/progress.tsx": {
+      "codeLines": 59,
+      "commentLines": 0,
+      "worstOwnCognitive": 7
+    },
+    "components/proposal-layout/proposal-layout.examples.tsx": {
+      "codeLines": 44,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/proposal-layout/proposal-layout.test.tsx": {
+      "codeLines": 58,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/proposal-layout/proposal-layout.tsx": {
+      "codeLines": 114,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "components/prose/prose.examples.tsx": {
+      "codeLines": 24,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/prose/prose.test.tsx": {
+      "codeLines": 11,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/radio-group/radio-group.examples.tsx": {
+      "codeLines": 40,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/radio-group/radio-group.test.tsx": {
+      "codeLines": 106,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/radio-group/radio-group.tsx": {
+      "codeLines": 62,
+      "commentLines": 0,
+      "worstOwnCognitive": 7
+    },
+    "components/range-slider/range-slider.examples.tsx": {
+      "codeLines": 46,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/range-slider/range-slider.test.tsx": {
+      "codeLines": 103,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/range-slider/range-slider.tsx": {
+      "codeLines": 74,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "components/scroll-area/scroll-area.examples.tsx": {
+      "codeLines": 27,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/scroll-area/scroll-area.test.tsx": {
+      "codeLines": 52,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/scroll-area/scroll-area.tsx": {
+      "codeLines": 44,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/segmented-bar/segmented-bar.examples.tsx": {
+      "codeLines": 46,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/segmented-bar/segmented-bar.test.tsx": {
+      "codeLines": 86,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/segmented-bar/segmented-bar.tsx": {
+      "codeLines": 72,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "components/select/select.examples.tsx": {
+      "codeLines": 69,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/select/select.test.tsx": {
+      "codeLines": 192,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/select/select.tsx": {
+      "codeLines": 140,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/seo-head/metadata.ts": {
+      "codeLines": 126,
+      "commentLines": 0,
+      "worstOwnCognitive": 6
+    },
+    "components/seo-head/organization.ts": {
+      "codeLines": 53,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/seo-head/seo-head.examples.tsx": {
+      "codeLines": 31,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/seo-head/seo-head.test.tsx": {
+      "codeLines": 150,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "components/seo-head/seo-head.tsx": {
+      "codeLines": 21,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/seo-head/seo-tags.ts": {
+      "codeLines": 20,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "components/separator/separator.examples.tsx": {
+      "codeLines": 23,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/separator/separator.test.tsx": {
+      "codeLines": 38,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/separator/separator.tsx": {
+      "codeLines": 27,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "components/sheet/sheet.examples.tsx": {
+      "codeLines": 62,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/sheet/sheet.test.tsx": {
+      "codeLines": 89,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/sheet/sheet.tsx": {
+      "codeLines": 112,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/site-footer/site-footer.examples.tsx": {
+      "codeLines": 40,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/site-footer/site-footer.test.tsx": {
+      "codeLines": 49,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/site-footer/site-footer.tsx": {
+      "codeLines": 74,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "components/site-header/site-header.examples.tsx": {
+      "codeLines": 49,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/site-header/site-header.test.tsx": {
+      "codeLines": 49,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/site-header/site-header.tsx": {
+      "codeLines": 61,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "components/skeleton/skeleton.examples.tsx": {
+      "codeLines": 22,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/skeleton/skeleton.test.tsx": {
+      "codeLines": 28,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/skeleton/skeleton.tsx": {
+      "codeLines": 24,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/sparkline/sparkline.examples.tsx": {
+      "codeLines": 28,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/sparkline/sparkline.test.tsx": {
+      "codeLines": 41,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "components/sparkline/sparkline.tsx": {
+      "codeLines": 40,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/spinner/spinner.examples.tsx": {
+      "codeLines": 22,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/spinner/spinner.test.tsx": {
+      "codeLines": 28,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "components/spinner/spinner.tsx": {
+      "codeLines": 27,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/split-layout/split-layout.examples.tsx": {
+      "codeLines": 42,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/split-layout/split-layout.test.tsx": {
+      "codeLines": 172,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/split-layout/split-layout.tsx": {
+      "codeLines": 87,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "components/stat-group/stat-group.examples.tsx": {
+      "codeLines": 34,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/stat-group/stat-group.test.tsx": {
+      "codeLines": 25,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/stat-group/stat-group.tsx": {
+      "codeLines": 15,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/stat/stat.examples.tsx": {
+      "codeLines": 38,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/stat/stat.test.tsx": {
+      "codeLines": 35,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/stat/stat.tsx": {
+      "codeLines": 43,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/steps/steps.examples.tsx": {
+      "codeLines": 31,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/steps/steps.test.tsx": {
+      "codeLines": 64,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/steps/steps.tsx": {
+      "codeLines": 85,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "components/switch/switch.examples.tsx": {
+      "codeLines": 31,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/switch/switch.test.tsx": {
+      "codeLines": 79,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/switch/switch.tsx": {
+      "codeLines": 42,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "components/table-of-contents/table-of-contents.examples.tsx": {
+      "codeLines": 30,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/table-of-contents/table-of-contents.test.tsx": {
+      "codeLines": 48,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/table-of-contents/table-of-contents.tsx": {
+      "codeLines": 43,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/table/table.examples.tsx": {
+      "codeLines": 56,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/table/table.test.tsx": {
+      "codeLines": 74,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/table/table.tsx": {
+      "codeLines": 71,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/tabs/tabs.examples.tsx": {
+      "codeLines": 40,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/tabs/tabs.test.tsx": {
+      "codeLines": 97,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "components/tabs/tabs.tsx": {
+      "codeLines": 57,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/textarea/textarea.examples.tsx": {
+      "codeLines": 75,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/textarea/textarea.test.tsx": {
+      "codeLines": 92,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/textarea/textarea.tsx": {
+      "codeLines": 23,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/theme-provider/theme-provider.examples.tsx": {
+      "codeLines": 30,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/theme-provider/theme-provider.test.tsx": {
+      "codeLines": 108,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/theme-provider/theme-provider.tsx": {
+      "codeLines": 52,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/theme-toggle/theme-toggle.examples.tsx": {
+      "codeLines": 13,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/theme-toggle/theme-toggle.test.tsx": {
+      "codeLines": 83,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/theme-toggle/theme-toggle.tsx": {
+      "codeLines": 64,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "components/timeline/timeline.examples.tsx": {
+      "codeLines": 49,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/timeline/timeline.test.tsx": {
+      "codeLines": 60,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/timeline/timeline.tsx": {
+      "codeLines": 61,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/toast/toast.examples.tsx": {
+      "codeLines": 52,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/toast/toast.test.tsx": {
+      "codeLines": 76,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/toast/toast.tsx": {
+      "codeLines": 153,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/toggle/toggle.examples.tsx": {
+      "codeLines": 65,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/toggle/toggle.test.tsx": {
+      "codeLines": 108,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "components/toggle/toggle.tsx": {
+      "codeLines": 77,
+      "commentLines": 0,
+      "worstOwnCognitive": 6
+    },
+    "components/tooltip/tooltip.examples.tsx": {
+      "codeLines": 37,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/tooltip/tooltip.test.tsx": {
+      "codeLines": 50,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/tooltip/tooltip.tsx": {
+      "codeLines": 49,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "components/vertical-tabs-layout/vertical-tabs-layout.examples.tsx": {
+      "codeLines": 29,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/vertical-tabs-layout/vertical-tabs-layout.test.tsx": {
+      "codeLines": 32,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "components/wizard-layout/wizard-layout.examples.tsx": {
+      "codeLines": 55,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "components/wizard-layout/wizard-layout.test.tsx": {
+      "codeLines": 94,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "components/wizard-layout/wizard-layout.tsx": {
+      "codeLines": 170,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "elements/analytics.examples.ts": {
+      "codeLines": 24,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "elements/analytics.test.tsx": {
+      "codeLines": 132,
+      "commentLines": 0,
+      "worstOwnCognitive": 7
+    },
+    "elements/analytics.ts": {
+      "codeLines": 52,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "elements/banner.examples.ts": {
+      "codeLines": 19,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "elements/banner.test.tsx": {
+      "codeLines": 118,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "elements/banner.ts": {
+      "codeLines": 115,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "elements/cookie-banner.examples.ts": {
+      "codeLines": 28,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "elements/cookie-banner.test.tsx": {
+      "codeLines": 130,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "elements/cookie-banner.ts": {
+      "codeLines": 144,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "elements/examples.test.ts": {
+      "codeLines": 19,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "elements/server.test.ts": {
+      "codeLines": 16,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "elements/site-footer.examples.ts": {
+      "codeLines": 9,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "elements/site-footer.ts": {
+      "codeLines": 75,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "elements/site-header.examples.ts": {
+      "codeLines": 10,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "elements/site-header.ts": {
+      "codeLines": 80,
+      "commentLines": 0,
+      "worstOwnCognitive": 6
+    },
+    "elements/site-layout.test.tsx": {
+      "codeLines": 125,
+      "commentLines": 0,
+      "worstOwnCognitive": 6
+    },
+    "elements/ssr.test.ts": {
+      "codeLines": 22,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "elements/toast.examples.ts": {
+      "codeLines": 24,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "elements/toast.test.tsx": {
       "codeLines": 140,
       "commentLines": 0,
       "worstOwnCognitive": 3
     },
-    "src/pages/DataPage.tsx": {
-      "codeLines": 578,
-      "commentLines": 2,
-      "worstOwnCognitive": 3
-    },
-    "src/pages/ElementsPage.tsx": {
-      "codeLines": 474,
+    "elements/toast.ts": {
+      "codeLines": 115,
       "commentLines": 0,
-      "worstOwnCognitive": 0
+      "worstOwnCognitive": 6
     },
-    "src/pages/ExtendedPage.tsx": {
-      "codeLines": 522,
-      "commentLines": 0,
-      "worstOwnCognitive": 1
-    },
-    "src/pages/FeedbackPage.tsx": {
-      "codeLines": 274,
-      "commentLines": 0,
-      "worstOwnCognitive": 1
-    },
-    "src/pages/FormsPage.tsx": {
-      "codeLines": 342,
+    "hooks/use-copy-to-clipboard.test.tsx": {
+      "codeLines": 112,
       "commentLines": 0,
       "worstOwnCognitive": 2
     },
-    "src/pages/HooksPage.tsx": {
-      "codeLines": 414,
-      "commentLines": 10,
-      "worstOwnCognitive": 11
-    },
-    "src/pages/InteractivePage.tsx": {
-      "codeLines": 519,
+    "hooks/use-copy-to-clipboard.ts": {
+      "codeLines": 43,
       "commentLines": 0,
-      "worstOwnCognitive": 0
+      "worstOwnCognitive": 6
     },
-    "src/pages/LayoutsPage.tsx": {
-      "codeLines": 1400,
-      "commentLines": 2,
-      "worstOwnCognitive": 18
-    },
-    "src/pages/OverviewPage.tsx": {
-      "codeLines": 328,
-      "commentLines": 0,
-      "worstOwnCognitive": 0
-    },
-    "src/pages/TypographyPage.tsx": {
-      "codeLines": 199,
-      "commentLines": 0,
-      "worstOwnCognitive": 2
-    },
-    "src/pages/__tests__/Pages.test.tsx": {
+    "hooks/use-debounce.test.tsx": {
       "codeLines": 32,
       "commentLines": 0,
       "worstOwnCognitive": 0
     },
-    "tests/a11y-interactions.spec.ts": {
-      "codeLines": 87,
-      "commentLines": 7,
+    "hooks/use-debounce.ts": {
+      "codeLines": 10,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "hooks/use-isomorphic-layout-effect.test.tsx": {
+      "codeLines": 42,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "hooks/use-isomorphic-layout-effect.ts": {
+      "codeLines": 15,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "hooks/use-local-storage.test.tsx": {
+      "codeLines": 151,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "hooks/use-local-storage.ts": {
+      "codeLines": 82,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "hooks/use-media-query.test.tsx": {
+      "codeLines": 33,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "hooks/use-media-query.ts": {
+      "codeLines": 13,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "hooks/use-on-click-outside.test.tsx": {
+      "codeLines": 51,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "hooks/use-on-click-outside.ts": {
+      "codeLines": 25,
+      "commentLines": 0,
       "worstOwnCognitive": 2
     },
-    "tests/a11y.spec.ts": {
-      "codeLines": 48,
-      "commentLines": 10,
+    "lib/analytics-google.ts": {
+      "codeLines": 63,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "lib/analytics-posthog.ts": {
+      "codeLines": 94,
+      "commentLines": 0,
+      "worstOwnCognitive": 6
+    },
+    "lib/analytics-sdk.ts": {
+      "codeLines": 37,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "lib/analytics.ts": {
+      "codeLines": 58,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "lib/consent.test.ts": {
+      "codeLines": 211,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "lib/consent.ts": {
+      "codeLines": 168,
+      "commentLines": 0,
+      "worstOwnCognitive": 7
+    },
+    "lib/element-slots.ts": {
+      "codeLines": 31,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "lib/isolate-modal.ts": {
+      "codeLines": 38,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "lib/slot-tests/composition.test.tsx": {
+      "codeLines": 168,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "lib/slot-tests/differential.test.tsx": {
+      "codeLines": 173,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "lib/slot-tests/extras.test.tsx": {
+      "codeLines": 294,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "lib/slot-tests/fixtures.tsx": {
+      "codeLines": 244,
+      "commentLines": 0,
+      "worstOwnCognitive": 6
+    },
+    "lib/slot-tests/flight.ts": {
+      "codeLines": 47,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "lib/slot-tests/impls.ts": {
+      "codeLines": 16,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "lib/slot-tests/slot.test.tsx": {
+      "codeLines": 314,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "lib/slot-tests/slottable.test.tsx": {
+      "codeLines": 295,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "lib/slot.tsx": {
+      "codeLines": 134,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "lib/theme.test.ts": {
+      "codeLines": 179,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "lib/theme.ts": {
+      "codeLines": 91,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "playwright.config.ts": {
+      "codeLines": 53,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "playwright.visual.config.ts": {
+      "codeLines": 54,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "site/client.ts": {
+      "codeLines": 12,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tests/density.spec.ts": {
+      "codeLines": 31,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tests/elements-equivalence.spec.ts": {
+      "codeLines": 53,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tests/elements.a11y.spec.ts": {
+      "codeLines": 24,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tests/examples.a11y.spec.ts": {
+      "codeLines": 53,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tests/examples/audit.ts": {
+      "codeLines": 19,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tests/examples/density-assertions.ts": {
+      "codeLines": 166,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "tests/examples/keyboard-apps.ts": {
+      "codeLines": 121,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tests/examples/keyboard-cases.ts": {
+      "codeLines": 174,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tests/examples/keyboard-data.ts": {
+      "codeLines": 53,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tests/examples/keyboard-editorial.ts": {
+      "codeLines": 78,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "tests/examples/keyboard-extended.ts": {
+      "codeLines": 176,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tests/examples/keyboard-forms.ts": {
+      "codeLines": 44,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tests/examples/keyboard-layouts.ts": {
+      "codeLines": 199,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "tests/examples/keyboard-native.ts": {
+      "codeLines": 72,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tests/examples/keyboard-notices.ts": {
+      "codeLines": 44,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tests/examples/keyboard-overlays.ts": {
+      "codeLines": 36,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tests/examples/keyboard-stateful.ts": {
+      "codeLines": 110,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "tests/examples/keyboard-views.ts": {
+      "codeLines": 61,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tests/examples/keyboard-workspaces.ts": {
+      "codeLines": 74,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "tests/site.spec.ts": {
+      "codeLines": 59,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tests/specimens.a11y.spec.ts": {
+      "codeLines": 35,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tests/tokens.spec.ts": {
+      "codeLines": 324,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "tests/visual/admin-shell-pairs.ts": {
+      "codeLines": 229,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tests/visual/admin-shell-parity.spec.ts": {
+      "codeLines": 442,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "tests/visual/app-layouts-pairs.ts": {
+      "codeLines": 89,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tests/visual/app-layouts-parity.spec.ts": {
+      "codeLines": 405,
+      "commentLines": 0,
+      "worstOwnCognitive": 6
+    },
+    "tests/visual/capture-state.ts": {
+      "codeLines": 25,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tests/visual/data-parity.spec.ts": {
+      "codeLines": 148,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tests/visual/data-views-pairs.ts": {
+      "codeLines": 249,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tests/visual/data-views-parity.spec.ts": {
+      "codeLines": 228,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tests/visual/dialog-motion.spec.ts": {
+      "codeLines": 53,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tests/visual/dialog-parity.spec.ts": {
+      "codeLines": 136,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tests/visual/document-parity.spec.ts": {
+      "codeLines": 629,
+      "commentLines": 0,
+      "worstOwnCognitive": 6
+    },
+    "tests/visual/editorial-pairs.ts": {
+      "codeLines": 343,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "tests/visual/editorial-parity.spec.ts": {
+      "codeLines": 584,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "tests/visual/elements.spec.ts": {
+      "codeLines": 26,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tests/visual/examples.spec.ts": {
+      "codeLines": 62,
+      "commentLines": 0,
+      "worstOwnCognitive": 6
+    },
+    "tests/visual/extended-parity.spec.ts": {
+      "codeLines": 638,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tests/visual/feedback-parity.spec.ts": {
+      "codeLines": 298,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tests/visual/fixtures.ts": {
+      "codeLines": 70,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tests/visual/forms-parity.spec.ts": {
+      "codeLines": 410,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tests/visual/overlays-cases.ts": {
+      "codeLines": 171,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tests/visual/overlays-motion.spec.ts": {
+      "codeLines": 190,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tests/visual/overlays-parity.spec.ts": {
+      "codeLines": 326,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "tests/visual/page-layout-pairs.ts": {
+      "codeLines": 317,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tests/visual/page-layout-parity.spec.ts": {
+      "codeLines": 457,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "tests/visual/select-parity.spec.ts": {
+      "codeLines": 175,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "tests/visual/specimens.spec.ts": {
+      "codeLines": 45,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tests/visual/viewport.ts": {
+      "codeLines": 15,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tooling/biome/no-cast.test.ts": {
+      "codeLines": 46,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/css/build.ts": {
+      "codeLines": 38,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tooling/css/stylesheet.test.ts": {
+      "codeLines": 98,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tooling/css/stylesheet.ts": {
+      "codeLines": 25,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tooling/css/tree.ts": {
+      "codeLines": 28,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tooling/examples/browser.tsx": {
+      "codeLines": 16,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tooling/examples/build.ts": {
+      "codeLines": 74,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tooling/examples/catalog.test.ts": {
+      "codeLines": 84,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tooling/examples/catalog.ts": {
+      "codeLines": 105,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "tooling/examples/element-browser.ts": {
+      "codeLines": 16,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tooling/examples/elements.ts": {
+      "codeLines": 20,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tooling/examples/equivalence.tsx": {
+      "codeLines": 87,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/examples/server.ts": {
+      "codeLines": 77,
+      "commentLines": 0,
+      "worstOwnCognitive": 7
+    },
+    "tooling/gates/a11y-coverage.test.ts": {
+      "codeLines": 53,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tooling/gates/a11y-coverage.ts": {
+      "codeLines": 83,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tooling/gates/boundary.test.ts": {
+      "codeLines": 166,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/gates/boundary.ts": {
+      "codeLines": 203,
+      "commentLines": 0,
+      "worstOwnCognitive": 7
+    },
+    "tooling/gates/budget.test.ts": {
+      "codeLines": 61,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/gates/budget.ts": {
+      "codeLines": 41,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tooling/gates/comments.test.ts": {
+      "codeLines": 170,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/gates/comments.ts": {
+      "codeLines": 82,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tooling/gates/contract.test.ts": {
+      "codeLines": 195,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/gates/contract.ts": {
+      "codeLines": 160,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tooling/gates/coverage.test.ts": {
+      "codeLines": 104,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tooling/gates/coverage.ts": {
+      "codeLines": 125,
+      "commentLines": 0,
+      "worstOwnCognitive": 7
+    },
+    "tooling/gates/deps.test.ts": {
+      "codeLines": 234,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/gates/deps.ts": {
+      "codeLines": 237,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "tooling/gates/generated.test.ts": {
+      "codeLines": 62,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/gates/generated.ts": {
+      "codeLines": 50,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tooling/gates/report.test.ts": {
+      "codeLines": 52,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/gates/report.ts": {
+      "codeLines": 47,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tooling/gates/scope.test.ts": {
+      "codeLines": 18,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/gates/scope.ts": {
+      "codeLines": 28,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tooling/gates/size.test.ts": {
+      "codeLines": 107,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/gates/size.ts": {
+      "codeLines": 22,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/gates/tokens-css.test.ts": {
+      "codeLines": 154,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/gates/tokens-css.ts": {
+      "codeLines": 131,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "tooling/gates/tokens-design.test.ts": {
+      "codeLines": 91,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tooling/gates/tokens-design.ts": {
+      "codeLines": 111,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tooling/gates/tokens.test.ts": {
+      "codeLines": 292,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/gates/tokens.ts": {
+      "codeLines": 277,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tooling/generate.ts": {
+      "codeLines": 8,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/generators.ts": {
+      "codeLines": 8,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/migrate/classes.test.ts": {
+      "codeLines": 159,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "tooling/migrate/map.ts": {
+      "codeLines": 462,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/migrate/tokens.test.ts": {
+      "codeLines": 114,
+      "commentLines": 0,
+      "worstOwnCognitive": 6
+    },
+    "tooling/package/api-contract.test.ts": {
+      "codeLines": 65,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tooling/package/api-contract.ts": {
+      "codeLines": 97,
+      "commentLines": 0,
+      "worstOwnCognitive": 7
+    },
+    "tooling/package/api.ts": {
+      "codeLines": 70,
+      "commentLines": 0,
+      "worstOwnCognitive": 6
+    },
+    "tooling/package/build.ts": {
+      "codeLines": 30,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tooling/package/consumer.ts": {
+      "codeLines": 60,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tooling/package/entries.test.ts": {
+      "codeLines": 50,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tooling/package/entries.ts": {
+      "codeLines": 51,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "tooling/package/generate.ts": {
+      "codeLines": 13,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/package/release-smoke.ts": {
+      "codeLines": 5,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/package/smoke.ts": {
+      "codeLines": 152,
+      "commentLines": 0,
+      "worstOwnCognitive": 7
+    },
+    "tooling/package/styles.ts": {
+      "codeLines": 79,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tooling/package/surface.test.ts": {
+      "codeLines": 81,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tooling/package/surface.ts": {
+      "codeLines": 73,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tooling/quality-metrics/calibration.test.ts": {
+      "codeLines": 35,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/quality-metrics/calibration.ts": {
+      "codeLines": 22,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tooling/quality-metrics/check.ts": {
+      "codeLines": 69,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tooling/quality-metrics/cognitive.ts": {
+      "codeLines": 75,
+      "commentLines": 0,
+      "worstOwnCognitive": 6
+    },
+    "tooling/quality-metrics/measure.ts": {
+      "codeLines": 207,
+      "commentLines": 0,
+      "worstOwnCognitive": 6
+    },
+    "tooling/quality-metrics/metrics.ts": {
+      "codeLines": 14,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tooling/quality-metrics/snapshot.ts": {
+      "codeLines": 224,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "tooling/registry/build.ts": {
+      "codeLines": 120,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "tooling/registry/check.ts": {
+      "codeLines": 96,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "tooling/registry/consumer.ts": {
+      "codeLines": 70,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tooling/registry/generate.ts": {
+      "codeLines": 80,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "tooling/registry/headers.test.ts": {
+      "codeLines": 43,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/registry/headers.ts": {
+      "codeLines": 27,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tooling/registry/ownership.ts": {
+      "codeLines": 106,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "tooling/registry/smoke.ts": {
+      "codeLines": 109,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "tooling/registry/source.test.ts": {
+      "codeLines": 96,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/registry/source.ts": {
+      "codeLines": 176,
+      "commentLines": 0,
+      "worstOwnCognitive": 6
+    },
+    "tooling/scorecard/components.test.ts": {
+      "codeLines": 150,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/scorecard/components.ts": {
+      "codeLines": 97,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "tooling/scorecard/measure.test.ts": {
+      "codeLines": 182,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tooling/scorecard/measure.ts": {
+      "codeLines": 125,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "tooling/scorecard/render.test.ts": {
+      "codeLines": 70,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/scorecard/render.ts": {
+      "codeLines": 81,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tooling/scorecard/run.test.ts": {
+      "codeLines": 14,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/scorecard/run.ts": {
+      "codeLines": 178,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "tooling/site/build.ts": {
+      "codeLines": 66,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/site/foundations.ts": {
+      "codeLines": 25,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/site/render.test.ts": {
+      "codeLines": 56,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/site/render.ts": {
+      "codeLines": 91,
+      "commentLines": 0,
+      "worstOwnCognitive": 6
+    },
+    "tooling/site/serve.ts": {
+      "codeLines": 23,
+      "commentLines": 0,
+      "worstOwnCognitive": 6
+    },
+    "tooling/source/a11y-report.test.ts": {
+      "codeLines": 50,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tooling/source/a11y-report.ts": {
+      "codeLines": 52,
+      "commentLines": 0,
+      "worstOwnCognitive": 6
+    },
+    "tooling/source/contract-css.ts": {
+      "codeLines": 51,
+      "commentLines": 0,
+      "worstOwnCognitive": 6
+    },
+    "tooling/source/contract-jsx.ts": {
+      "codeLines": 139,
+      "commentLines": 0,
+      "worstOwnCognitive": 7
+    },
+    "tooling/source/contract-program.ts": {
+      "codeLines": 31,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tooling/source/contract-radix.ts": {
+      "codeLines": 79,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "tooling/source/css-imports.ts": {
+      "codeLines": 14,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tooling/source/css.test.ts": {
+      "codeLines": 34,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/source/css.ts": {
+      "codeLines": 76,
+      "commentLines": 0,
+      "worstOwnCognitive": 6
+    },
+    "tooling/source/imports.ts": {
+      "codeLines": 44,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "tooling/source/parse.ts": {
+      "codeLines": 44,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tooling/source/token-values.test.ts": {
+      "codeLines": 95,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tooling/source/token-values.ts": {
+      "codeLines": 227,
+      "commentLines": 0,
+      "worstOwnCognitive": 5
+    },
+    "tooling/testing/cleanup.ts": {
+      "codeLines": 3,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/testing/dom.ts": {
+      "codeLines": 2,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/visual/container.test.ts": {
+      "codeLines": 83,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/visual/container.ts": {
+      "codeLines": 106,
+      "commentLines": 0,
+      "worstOwnCognitive": 7
+    },
+    "tooling/visual/examples.test.ts": {
+      "codeLines": 39,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tooling/visual/examples.ts": {
+      "codeLines": 19,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/visual/pin-args.test.ts": {
+      "codeLines": 53,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "tooling/visual/pin-args.ts": {
+      "codeLines": 24,
+      "commentLines": 0,
+      "worstOwnCognitive": 2
+    },
+    "tooling/visual/pin.ts": {
+      "codeLines": 52,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "tooling/visual/report.test.ts": {
+      "codeLines": 98,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tooling/visual/report.ts": {
+      "codeLines": 62,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "tooling/visual/specimen-server.ts": {
+      "codeLines": 62,
+      "commentLines": 0,
+      "worstOwnCognitive": 4
+    },
+    "tooling/visual/specimens.test.ts": {
+      "codeLines": 169,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tooling/visual/specimens.ts": {
+      "codeLines": 97,
+      "commentLines": 0,
+      "worstOwnCognitive": 3
+    },
+    "tooling/visual/state-inventory.test.ts": {
+      "codeLines": 109,
+      "commentLines": 0,
+      "worstOwnCognitive": 1
+    },
+    "tooling/visual/state-inventory.ts": {
+      "codeLines": 75,
+      "commentLines": 0,
+      "worstOwnCognitive": 6
+    },
+    "tooling/visual/test.ts": {
+      "codeLines": 2,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "worker/registry-404.test.ts": {
+      "codeLines": 39,
+      "commentLines": 0,
+      "worstOwnCognitive": 0
+    },
+    "worker/registry-404.ts": {
+      "codeLines": 31,
+      "commentLines": 0,
       "worstOwnCognitive": 2
     }
   },
   "offenders": {
     "cognitive": [
       {
-        "file": "src/components/ui/SEOHead.tsx",
-        "fn": "generateSEOTags",
-        "line": 270,
-        "score": 30,
-        "own": 24
+        "file": "blocks/sidebar/sidebar.tsx",
+        "fn": "Sidebar",
+        "line": 18,
+        "score": 7,
+        "own": 7
       },
       {
-        "file": "src/components/ui/SEOHead.tsx",
-        "fn": "SEOHead",
-        "line": 126,
-        "score": 21,
-        "own": 21
+        "file": "components/admin-layout/admin-layout.tsx",
+        "fn": "AdminSidebarLink",
+        "line": 179,
+        "score": 7,
+        "own": 7
       },
       {
-        "file": "src/lib/consent.ts",
-        "fn": "updateTrackers",
-        "line": 72,
-        "score": 40,
-        "own": 20
+        "file": "components/breadcrumb/breadcrumb.tsx",
+        "fn": "<anonymous@37>",
+        "line": 37,
+        "score": 7,
+        "own": 7
       },
       {
-        "file": "src/pages/LayoutsPage.tsx",
-        "fn": "LayoutsPage",
-        "line": 120,
-        "score": 56,
-        "own": 18
+        "file": "components/button/button.tsx",
+        "fn": "Button",
+        "line": 108,
+        "score": 7,
+        "own": 7
       },
       {
-        "file": "src/components/ui/AdminLayout.tsx",
-        "fn": "<anonymous@215>",
-        "line": 215,
-        "score": 17,
-        "own": 17
+        "file": "components/checkbox/checkbox.tsx",
+        "fn": "Checkbox",
+        "line": 15,
+        "score": 7,
+        "own": 7
       },
       {
-        "file": "src/components/ui/FormField.tsx",
-        "fn": "<anonymous@46>",
-        "line": 46,
-        "score": 14,
-        "own": 14
+        "file": "components/command-palette/command-palette.tsx",
+        "fn": "key",
+        "line": 100,
+        "score": 7,
+        "own": 7
       },
       {
-        "file": "src/components/ui/Steps.tsx",
-        "fn": "<anonymous@69>",
-        "line": 69,
-        "score": 14,
-        "own": 14
+        "file": "components/passphrase-gate/passphrase-gate.tsx",
+        "fn": "PassphraseGate",
+        "line": 13,
+        "score": 7,
+        "own": 7
       },
       {
-        "file": "src/lib/consent.ts",
-        "fn": "syncWithZaraz",
-        "line": 105,
-        "score": 14,
-        "own": 14
+        "file": "components/progress/progress.tsx",
+        "fn": "Progress",
+        "line": 13,
+        "score": 7,
+        "own": 7
       },
       {
-        "file": "src/components/AnalyticsElement.ts",
-        "fn": "connectedCallback",
-        "line": 16,
-        "score": 13,
-        "own": 13
-      },
-      {
-        "file": "src/components/CookieBannerElement.ts",
-        "fn": "attributeChangedCallback",
-        "line": 39,
-        "score": 12,
-        "own": 12
-      },
-      {
-        "file": "src/components/CookieBannerElement.ts",
-        "fn": "render",
-        "line": 119,
-        "score": 11,
-        "own": 11
-      },
-      {
-        "file": "src/components/SiteFooterElement.ts",
-        "fn": "renderInner",
-        "line": 143,
-        "score": 11,
-        "own": 11
-      },
-      {
-        "file": "src/components/ui/Button.tsx",
-        "fn": "<anonymous@93>",
-        "line": 93,
-        "score": 11,
-        "own": 11
-      },
-      {
-        "file": "src/components/ui/Stat.tsx",
-        "fn": "<anonymous@25>",
+        "file": "components/radio-group/radio-group.tsx",
+        "fn": "RadioGroupItem",
         "line": 25,
-        "score": 11,
-        "own": 11
+        "score": 7,
+        "own": 7
       },
       {
-        "file": "src/lib/consent.ts",
+        "file": "lib/consent.ts",
         "fn": "getConsentStatus",
-        "line": 20,
-        "score": 11,
-        "own": 11
+        "line": 65,
+        "score": 7,
+        "own": 7
+      },
+      {
+        "file": "tooling/examples/server.ts",
+        "fn": "respond",
+        "line": 28,
+        "score": 7,
+        "own": 7
+      },
+      {
+        "file": "tooling/gates/boundary.ts",
+        "fn": "localProblems",
+        "line": 82,
+        "score": 7,
+        "own": 7
+      },
+      {
+        "file": "tooling/gates/boundary.ts",
+        "fn": "edgeProblem",
+        "line": 124,
+        "score": 7,
+        "own": 7
+      },
+      {
+        "file": "tooling/gates/coverage.ts",
+        "fn": "functionCounts",
+        "line": 49,
+        "score": 7,
+        "own": 7
+      },
+      {
+        "file": "tooling/package/api-contract.ts",
+        "fn": "newerVersion",
+        "line": 49,
+        "score": 7,
+        "own": 7
       }
     ],
     "longFunctions": [
       {
-        "file": "src/pages/LayoutsPage.tsx",
-        "fn": "LayoutsPage",
-        "line": 120,
-        "lines": 1313
+        "file": "components/command-palette/command-palette.tsx",
+        "fn": "CommandSearch",
+        "line": 78,
+        "lines": 89
       },
       {
-        "file": "src/pages/DataPage.tsx",
-        "fn": "DataPage",
-        "line": 38,
-        "lines": 559
+        "file": "elements/banner.ts",
+        "fn": "createBannerElement",
+        "line": 34,
+        "lines": 88
       },
       {
-        "file": "src/pages/ExtendedPage.tsx",
-        "fn": "ExtendedPage",
-        "line": 39,
-        "lines": 504
-      },
-      {
-        "file": "src/pages/ElementsPage.tsx",
-        "fn": "ElementsPage",
-        "line": 3,
-        "lines": 482
-      },
-      {
-        "file": "src/pages/InteractivePage.tsx",
-        "fn": "InteractivePage",
-        "line": 57,
-        "lines": 477
-      },
-      {
-        "file": "src/pages/HooksPage.tsx",
-        "fn": "HooksPage",
-        "line": 20,
-        "lines": 425
-      },
-      {
-        "file": "src/pages/FormsPage.tsx",
-        "fn": "FormsPage",
-        "line": 22,
-        "lines": 333
-      },
-      {
-        "file": "src/pages/ButtonsPage.tsx",
-        "fn": "ButtonsPage",
-        "line": 29,
-        "lines": 298
-      },
-      {
-        "file": "src/pages/FeedbackPage.tsx",
-        "fn": "FeedbackPage",
-        "line": 10,
-        "lines": 275
-      },
-      {
-        "file": "src/pages/OverviewPage.tsx",
-        "fn": "OverviewPage",
-        "line": 101,
-        "lines": 239
-      },
-      {
-        "file": "src/App.tsx",
-        "fn": "AppShell",
-        "line": 94,
-        "lines": 212
-      },
-      {
-        "file": "src/pages/CardsPage.tsx",
-        "fn": "CardsPage",
-        "line": 5,
-        "lines": 209
-      },
-      {
-        "file": "src/components/ui/MobileNav.tsx",
-        "fn": "MobileNav",
-        "line": 39,
-        "lines": 182
-      },
-      {
-        "file": "registry/blocks/calendar.tsx",
+        "file": "blocks/calendar/calendar.tsx",
         "fn": "Calendar",
-        "line": 15,
-        "lines": 160
+        "line": 109,
+        "lines": 84
       },
       {
-        "file": "src/components/CommandPalette.tsx",
-        "fn": "CommandPalette",
-        "line": 35,
-        "lines": 157
+        "file": "components/wizard-layout/wizard-layout.tsx",
+        "fn": "WizardLayout",
+        "line": 91,
+        "lines": 84
+      },
+      {
+        "file": "elements/cookie-banner.ts",
+        "fn": "createCookieBannerElement",
+        "line": 70,
+        "lines": 82
+      },
+      {
+        "file": "blocks/sidebar/sidebar-context.tsx",
+        "fn": "SidebarProvider",
+        "line": 26,
+        "lines": 80
+      },
+      {
+        "file": "blocks/sidebar/sidebar.tsx",
+        "fn": "Sidebar",
+        "line": 18,
+        "lines": 79
+      },
+      {
+        "file": "components/mobile-nav/mobile-nav.tsx",
+        "fn": "MobileNav",
+        "line": 140,
+        "lines": 78
+      },
+      {
+        "file": "components/mobile-nav/mobile-nav.tsx",
+        "fn": "Drawer",
+        "line": 62,
+        "lines": 77
+      },
+      {
+        "file": "elements/toast.ts",
+        "fn": "createToastElement",
+        "line": 46,
+        "lines": 72
+      },
+      {
+        "file": "tooling/registry/smoke.ts",
+        "fn": "smokeRegistry",
+        "line": 34,
+        "lines": 69
+      },
+      {
+        "file": "blocks/calendar/calendar.tsx",
+        "fn": "calendarClassNames",
+        "line": 41,
+        "lines": 68
+      },
+      {
+        "file": "tooling/registry/generate.ts",
+        "fn": "generatedRegistry",
+        "line": 11,
+        "lines": 66
+      },
+      {
+        "file": "components/dialog/dialog.tsx",
+        "fn": "ConfirmDialog",
+        "line": 146,
+        "lines": 65
+      },
+      {
+        "file": "components/layout/layout.examples.tsx",
+        "fn": "LayoutSettings",
+        "line": 49,
+        "lines": 64
       }
     ],
     "bigFiles": [
       {
-        "file": "src/pages/LayoutsPage.tsx",
-        "codeLines": 1400
+        "file": "tooling/migrate/map.ts",
+        "codeLines": 462
       },
       {
-        "file": "registry/blocks/sidebar.tsx",
-        "codeLines": 674
+        "file": "tests/visual/editorial-pairs.ts",
+        "codeLines": 343
       },
       {
-        "file": "src/pages/DataPage.tsx",
-        "codeLines": 578
+        "file": "blocks/sidebar/sidebar.tsx",
+        "codeLines": 335
       },
       {
-        "file": "src/pages/ExtendedPage.tsx",
-        "codeLines": 522
+        "file": "tests/visual/page-layout-pairs.ts",
+        "codeLines": 317
       },
       {
-        "file": "src/pages/InteractivePage.tsx",
-        "codeLines": 519
+        "file": "tooling/gates/tokens.ts",
+        "codeLines": 277
       },
       {
-        "file": "src/pages/ElementsPage.tsx",
-        "codeLines": 474
+        "file": "blocks/sidebar/sidebar-menu.tsx",
+        "codeLines": 249
       },
       {
-        "file": "src/pages/HooksPage.tsx",
-        "codeLines": 414
+        "file": "tests/visual/data-views-pairs.ts",
+        "codeLines": 249
       },
       {
-        "file": "src/pages/FormsPage.tsx",
-        "codeLines": 342
+        "file": "lib/slot-tests/fixtures.tsx",
+        "codeLines": 244
       },
       {
-        "file": "src/components/ui/SEOHead.tsx",
-        "codeLines": 340
+        "file": "tooling/gates/deps.ts",
+        "codeLines": 237
       },
       {
-        "file": "src/pages/OverviewPage.tsx",
-        "codeLines": 328
+        "file": "components/admin-layout/admin-layout.tsx",
+        "codeLines": 230
       },
       {
-        "file": "src/pages/ButtonsPage.tsx",
-        "codeLines": 316
+        "file": "tests/visual/admin-shell-pairs.ts",
+        "codeLines": 229
       },
       {
-        "file": "src/components/ui/AdminLayout.tsx",
-        "codeLines": 312
+        "file": "blocks/calendar/calendar.tsx",
+        "codeLines": 227
       },
       {
-        "file": "src/App.tsx",
-        "codeLines": 296
+        "file": "tooling/source/token-values.ts",
+        "codeLines": 227
       },
       {
-        "file": "src/pages/FeedbackPage.tsx",
-        "codeLines": 274
+        "file": "tooling/quality-metrics/snapshot.ts",
+        "codeLines": 224
       },
       {
-        "file": "registry/items.ts",
-        "codeLines": 214
+        "file": "components/mobile-nav/mobile-nav.tsx",
+        "codeLines": 211
       }
     ],
     "unreferencedExports": [
       {
-        "file": "registry/blocks/data-table-column-header.tsx",
+        "file": "blocks/data-table-column-header/data-table-column-header.tsx",
         "name": "DataTableColumnHeader"
       },
       {
-        "file": "registry/blocks/data-table-view-options.tsx",
+        "file": "blocks/data-table-view-options/data-table-view-options.tsx",
         "name": "DataTableViewOptions"
-      },
-      {
-        "file": "registry/items.ts",
-        "name": "productItems"
-      },
-      {
-        "file": "registry/items.ts",
-        "name": "productBlocks"
-      },
-      {
-        "file": "src/components/ui/DropdownMenu.tsx",
-        "name": "DropdownMenuPortal"
-      },
-      {
-        "file": "src/components/ui/DropdownMenu.tsx",
-        "name": "DropdownMenuSub"
-      },
-      {
-        "file": "src/components/ui/Popover.tsx",
-        "name": "PopoverAnchor"
-      },
-      {
-        "file": "src/components/ui/Popover.tsx",
-        "name": "PopoverClose"
       }
     ]
   }
