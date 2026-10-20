@@ -1,6 +1,6 @@
-import { getConsentStatus } from '../../lib/consent.js';
-import type { AnalyticsProps } from './analytics.js';
-import { call, member, retain, sdkScript } from './sdk.js';
+import type { AnalyticsOptions } from './analytics.js';
+import { call, member, retain, sdkScript } from './analytics-sdk.js';
+import { getConsentStatus } from './consent.js';
 
 function stub() {
   const queue: unknown[] = [];
@@ -25,7 +25,7 @@ function stub() {
   return sdk;
 }
 
-function options(props: AnalyticsProps, script: HTMLScriptElement) {
+function options(props: AnalyticsOptions, script: HTMLScriptElement) {
   const config = script.dataset.config;
   return {
     api_host: props.posthogHost || 'https://phg-t.kongmy.dev',
@@ -47,7 +47,7 @@ function options(props: AnalyticsProps, script: HTMLScriptElement) {
   };
 }
 
-export function acquirePosthog(props: AnalyticsProps): () => void {
+export function acquirePosthog(props: AnalyticsOptions): () => void {
   const host = props.posthogHost || 'https://phg-t.kongmy.dev';
   const config = JSON.stringify([
     props.posthogToken,

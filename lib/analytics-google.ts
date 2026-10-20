@@ -1,7 +1,7 @@
-import type { AnalyticsProps } from './analytics.js';
-import { call, member, retain, sdkScript } from './sdk.js';
+import type { AnalyticsOptions } from './analytics.js';
+import { call, member, retain, sdkScript } from './analytics-sdk.js';
 
-function configure(props: AnalyticsProps) {
+function configure(props: AnalyticsOptions) {
   const dataLayer: unknown[] = [];
   if (!Array.isArray(member(window, 'dataLayer')))
     Reflect.set(window, 'dataLayer', dataLayer);
@@ -46,7 +46,7 @@ function configure(props: AnalyticsProps) {
   });
 }
 
-export function acquireGoogle(props: AnalyticsProps): () => void {
+export function acquireGoogle(props: AnalyticsOptions): () => void {
   const key = `ga-disable-${props.gaId}`;
   const source = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(props.gaId ?? '')}`;
   let script = Array.from(document.scripts).find(
