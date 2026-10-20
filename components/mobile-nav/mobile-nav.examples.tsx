@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Container } from '../container/container.js';
-import { MobileNav } from './mobile-nav.js';
+import { MobileNav, type MobileNavItem } from './mobile-nav.js';
 
 function MobileNavLinks() {
   return (
@@ -11,25 +11,27 @@ function MobileNavLinks() {
       brandSuffix="UI"
       version="v4"
       pathname="/overview"
-      navItems={[
-        {
-          href: '/overview',
-          label: 'Overview',
-          icon: (
-            <svg
-              aria-hidden="true"
-              className="sp-icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="m3 10 9-7 9 7v11H3Z" />
-            </svg>
-          ),
-        },
-        { href: '#mobile-guide', label: 'Guide' },
-      ]}
+      navItems={
+        [
+          {
+            href: '/overview',
+            label: 'Overview',
+            icon: (
+              <svg
+                aria-hidden="true"
+                className="sp-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="m3 10 9-7 9 7v11H3Z" />
+              </svg>
+            ),
+          },
+          { href: '#mobile-guide', label: 'Guide' },
+        ] satisfies readonly MobileNavItem[]
+      }
       extraActions={
         <form onSubmit={(event) => event.preventDefault()}>
           <label>

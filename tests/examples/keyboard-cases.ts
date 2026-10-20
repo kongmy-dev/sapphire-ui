@@ -1,4 +1,5 @@
 import { expect, type Page } from '@playwright/test';
+import { keyboardCases as appCases } from './keyboard-apps';
 import {
   avatarLifecycle,
   badgeLink,
@@ -15,6 +16,7 @@ import {
   selectPlans,
   validateEmail,
 } from './keyboard-forms';
+import { keyboardCases as layoutCases } from './keyboard-layouts';
 import { banner, cookiePreferences } from './keyboard-notices';
 import { hoverCard, popover, tooltip } from './keyboard-overlays';
 import {
@@ -112,6 +114,8 @@ async function dialog(page: Page) {
 export const keyboardCases: Readonly<
   Record<string, (page: Page) => Promise<void>>
 > = {
+  ...appCases,
+  ...layoutCases,
   ...editorialCases,
   'banner/dismissible': banner,
   'cookie-banner/preferences': cookiePreferences,

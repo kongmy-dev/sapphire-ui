@@ -36,7 +36,7 @@ async function independentLinkVariants(page: Page, kind: 'header' | 'footer') {
     const original = await link.getAttribute('data-variant');
     for (const variant of ['light', 'dark'] as const) {
       const colors = await link.evaluate(linkColor, { kind, variant });
-      expect(colors.actual).toBe(colors.expected);
+      await expect(link).toHaveCSS('color', colors.expected);
     }
     await link.evaluate((element, value) => {
       if (value === null) element.removeAttribute('data-variant');
@@ -155,11 +155,50 @@ async function mobileNavigation(page: Page) {
     await page.keyboard.press('Escape');
     await expect(trigger).toBeFocused();
   } else await expect(page).toHaveURL(/#mobile-guide$/);
+  await trigger.focus();
+  await page.keyboard.press('Enter');
+  await expect(dialog).toBeVisible();
+}
+
+async function workspaceSettings(page: Page) {
+  const name = page.getByRole('textbox', { name: 'Workspace name' });
+  await name.fill('Design operations');
+  await page.getByRole('combobox').selectOption('ms');
+  const save = page.getByRole('button', { name: 'Save changes' });
+  await save.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.getByRole('status')).toHaveText('Settings saved');
+  const disclosure = page.getByRole('button', {
+    name: /^Advanced notification/,
+  });
+  await disclosure.focus();
+  await page.keyboard.press('Enter');
+  const checkbox = page.getByRole('checkbox', {
+    name: 'Include detailed audit events',
+  });
+  await checkbox.focus();
+  await page.keyboard.press('Space');
+  await expect(checkbox).toBeChecked();
+  await page.getByRole('button', { name: 'Reset', exact: true }).click();
+  await expect(name).toHaveValue('Sapphire Studio');
+}
+
+async function editorialReading(page: Page) {
+  const like = page.getByRole('button', { name: 'Like this article' });
+  await like.focus();
+  await page.keyboard.press('Space');
+  await expect(like).toHaveAttribute('aria-pressed', 'true');
+  const link = page.getByRole('link', { name: 'Make actions clear' });
+  await link.focus();
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL(/#reading-actions$/);
 }
 
 export const keyboardCases: Readonly<
   Record<string, (page: Page) => Promise<void>>
 > = {
+  'layout/settings': workspaceSettings,
+  'layout/reading': editorialReading,
   'site-header/dark': headerLinks,
   'site-header/light': headerLinks,
   'site-footer/dark': footerLinks,

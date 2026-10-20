@@ -24,6 +24,10 @@ async function openExample(page: Page, component: string) {
     await expect(page.locator('.sp-toast[data-state="open"]')).toBeVisible();
     return;
   }
+  if (component === 'dropdown-menu') {
+    await expect(page.getByRole('menu')).toBeVisible();
+    return;
+  }
   await expect(
     page.getByRole(component === 'select' ? 'listbox' : 'dialog'),
   ).toBeVisible();
@@ -43,8 +47,10 @@ for (const { example, open, name } of cases) {
     const scheme = SCHEMES.find((name) => name === testInfo.project.name);
     if (!scheme) throw new Error('Unknown color scheme');
     if (example.component === 'toast') await page.clock.install();
+    if (example.component === 'mobile-nav')
+      await page.setViewportSize({ width: 375, height: 812 });
     await page.goto(exampleUrl(example, scheme));
-    await page.locator('#example > *').first().waitFor();
+    await page.locator('#example > *').first().waitFor({ state: 'attached' });
     await page.evaluate(() => document.fonts.ready);
     await settleAvatar(page, example.component);
     if (open) await openExample(page, example.component);

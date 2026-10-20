@@ -10,14 +10,20 @@ own. D3: Lucide. D4: every component. D5: Tidy everywhere. Delete this file when
 - Shared foundations plus per-component stylesheet ownership is recorded in ADR-0002.
 - Active working rules now match v4: CSS classes/data attributes, generated subpaths, optional
   behaviour peers and the preserved theme with tighter proportions.
-- P4 implements Slot, the seed components, both form families, feedback, data primitives,
-  Popover, HoverCard, Tooltip and Sheet, all six hooks and the theme helper. Independently
-  discovered examples feed browser checks; coverage, boundary and typed CSS-contract gates are
-  active. The gate passes **674 tests** and all **73 runtime/example files** clear 95% line/function
-  coverage. The corrected select isolation, avatar semantics, overlay focus and settled-animation
-  audits pass **96 targeted accessibility/keyboard checks** across three engines. The preceding
-  444-check run passed 406; remaining status-colour contrast defects and the subsequent families
-  require a new complete run. P4 is open.
+- P4 now includes forms, feedback, data views, editorial components, overlays, page navigation,
+  theme controls, proposal/wizard/passphrase layouts, consent banners, SEO and analytics, plus
+  all six hooks and the theme helper. Split/Admin and native vertical-tabs examples are being
+  completed. Independently discovered examples feed browser checks; coverage, boundary and
+  typed CSS-contract gates are active. The last complete passing gate had **794 tests** and
+  **133 runtime/example files** above 95% line/function coverage. The next integrated run passed
+  823 tests with one manifest test corrected afterward; two type-only files need consolidation
+  before its coverage gate closes. P4 is open.
+- Navigation checks pass 48/48, composed settings/reading and mobile navigation pass 24/24,
+  document/SEO/wizard checks pass 42/42, and open dropdown isolation passes 12/12 across three
+  engines. A new full run remains necessary, including the known semantic status contrast fixes.
+- The React capture now has **322 pins**, including 232 newly reviewed light/dark captures and
+  open mobile-menu, dropdown and command-palette states. Existing v3-only comparison states are
+  being saved as zero-tolerance v4 pins before the D5 visual pass supersedes their old appearance.
 - The first full run with the 90 initial React pins passed 498/502 visual/parity checks. Its four
   failures exposed minifier rounding of inlined popover/hover-card line-height calculations.
   Restoring those calculations to custom properties preserves fractional precision; the targeted
@@ -47,10 +53,16 @@ own. D3: Lucide. D4: every component. D5: Tidy everywhere. Delete this file when
   host-only cookies outside the shared brand domain, session fallback when writes are denied,
   and cancellation of stale deferred tracker choices. The synchronous public API requires a
   narrow Biome `noDocumentCookie` exception for this helper and its tests; it adds no dependency.
+- SEOHead and raw HTML generation share one metadata pipeline; JSON-LD escapes script-closing
+  content, and the raw helper builds without React. Analytics renders directly, waits for positive
+  consent before loading SDKs, deduplicates mounts, disables collection on withdrawal/unmount,
+  and rejects conflicting simultaneous PostHog configurations before changing the active instance.
+  Tests cover the SDK boundary; actual third-party transport execution is not claimed, and already
+  dispatched network requests cannot be revoked by a UI library.
 - Cookie-banner and icon-mark CSS, SVG specimen icons and exhaustive legacy-class coverage have
   landed. Only the three `elements/*` documentation sections still use the reference renderer;
   their takeover belongs to P5/P8. The v3 parity renderer remains until P9.
-- Integrated CSS measures **23,753 / 23,765 gzip bytes** after the shared dark-card text fix and
+- Integrated CSS measures **23,760 / 23,765 gzip bytes** after the shared dark-card text fix and
   removal of unused single-use internal variables; the ceiling is unchanged.
 - Strict specimen accessibility passes **420/420** checks (70 pages, two schemes, three engines).
   The two subsequently changed specimens also pass all 12 targeted checks. The integrated
@@ -71,7 +83,7 @@ remain the acceptance criteria; retained v3 code does not count as a v4 implemen
 | P1 — gates and pins | Bun and devDependencies are pinned; Dependabot uses Bun. Strict `tsconfig.base.json`, Biome, knip, gate regression tests, scorecard and container pin tooling exist. `src/` remains frozen. The current gate passes; it measures the active lane rather than claiming the retained v3 debt is gone |
 | P2 — tokens | `css/tokens.css`, `css/tailwind.css` and `DESIGN.md` exist; token mappings and design tables are enforced. `tests/tokens.spec.ts` exercises source, Bun, Vite and Tailwind builds, nested scopes and overrides in three engines |
 | P3 — CSS contract | Complete: 69 component stylesheets, 70 plain-HTML specimen pages and 65 reference sections. The three elements documentation sections await P5/P8. The v3 parity renderer remains until P9 |
-| P4 — React | Active: forms, feedback, data primitives and initial overlays are implemented; data views and extended components are in progress. The current execution checkpoint gives integrated validation |
+| P4 — React | Active: component families and app layouts are integrated; Split/Admin, final validation and the D5 visual pass remain. The current execution checkpoint gives integrated validation |
 | P5 — elements | Pending: the six v4 custom elements and their lifecycle/equivalence checks have not been implemented |
 | P6–P7 — package and registry | Not started as v4 deliverables. `package.json` still exports the v3 package: 4 runtime dependencies, 21 required peers and 88 export entries. The existing registry check passes 34 v3 items; there is no v4 source `registry.json` or ported `blocks/` |
 | P8–P10 — site, retirement and docs | Public docs still build from `src/`. The React example runner, contract, coverage and boundary gates now support P4. The v4 docs site, old-lane retirement, API snapshot and docs/skill-reference gates remain pending. Only the stylesheet import list is currently registered with the generated-files gate |

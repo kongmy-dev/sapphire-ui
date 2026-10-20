@@ -98,6 +98,9 @@ export const readVisualExamples = (root: string) =>
       'popover',
       'tooltip',
       'hover-card',
+      'mobile-nav',
+      'dropdown-menu',
+      'command-palette',
     ].includes(example.component)
       ? [false, true]
       : [false]

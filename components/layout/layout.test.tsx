@@ -1,5 +1,5 @@
 import { expect, test } from 'bun:test';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { createElement, createRef } from 'react';
 import { examples } from './layout.examples.js';
 import { Layout } from './layout.js';
@@ -35,5 +35,9 @@ for (const example of examples) {
     const view = render(createElement(example.render));
     expect(view.container.firstElementChild).not.toBeNull();
     expect(view.container.querySelector('[data-slot]')).not.toBeNull();
+    if (example.name === 'settings') {
+      fireEvent.click(screen.getByRole('button', { name: 'Save changes' }));
+      expect(screen.getByRole('status').textContent).toBe('Settings saved');
+    }
   });
 }

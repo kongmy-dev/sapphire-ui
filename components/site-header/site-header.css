@@ -3,19 +3,6 @@
     --sp-site-header-bg: var(--primary);
     --sp-site-header-fg: var(--on-dark);
     --sp-site-header-border-color: var(--border-dark);
-    --sp-site-header-link-fg: var(--on-dark-muted);
-    --sp-site-header-link-fg-hover: var(--on-dark);
-    --sp-site-header-link-bg-hover: color-mix(
-      in oklab,
-      var(--white) 6%,
-      transparent
-    );
-    --sp-site-header-link-fg-active: var(--brand);
-    --sp-site-header-link-bg-active: color-mix(
-      in oklab,
-      var(--brand) 10%,
-      transparent
-    );
 
     z-index: 40;
     width: 100%;
@@ -28,11 +15,6 @@
     --sp-site-header-bg: var(--card);
     --sp-site-header-fg: var(--foreground-strong);
     --sp-site-header-border-color: var(--border);
-    --sp-site-header-link-fg: var(--muted-foreground);
-    --sp-site-header-link-fg-hover: var(--foreground-strong);
-    --sp-site-header-link-bg-hover: var(--background);
-    --sp-site-header-link-fg-active: var(--foreground-strong);
-    --sp-site-header-link-bg-active: var(--background);
   }
 
   .sp-site-header[data-sticky] {
@@ -66,6 +48,7 @@
     align-items: center;
   }
 
+  .sp-site-header,
   .sp-site-header-link[data-variant="dark"] {
     --sp-site-header-link-fg: var(--on-dark-muted);
     --sp-site-header-link-fg-hover: var(--on-dark);
@@ -82,6 +65,7 @@
     );
   }
 
+  .sp-site-header[data-variant="light"],
   .sp-site-header-link[data-variant="light"] {
     --sp-site-header-link-fg: var(--muted-foreground);
     --sp-site-header-link-fg-hover: var(--foreground-strong);

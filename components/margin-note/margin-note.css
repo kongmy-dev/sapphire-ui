@@ -1,9 +1,5 @@
 @layer components {
   .sp-margin-note {
-    --sp-margin-note-font-size: var(--text-sm);
-    --sp-margin-note-line-height: calc(var(--space-1) * 5);
-    --sp-margin-note-fg: var(--muted-foreground);
-
     position: relative;
     display: inline;
   }
@@ -24,9 +20,9 @@
     display: block;
     padding: var(--space-3);
     margin-top: var(--space-2);
-    font-size: var(--sp-margin-note-font-size);
-    line-height: var(--sp-margin-note-line-height);
-    color: var(--sp-margin-note-fg);
+    font-size: var(--text-sm);
+    line-height: calc(var(--space-1) * 5);
+    color: var(--muted-foreground);
     background: var(--background);
     border-radius: var(--radius-sm);
   }

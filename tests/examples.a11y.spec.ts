@@ -47,8 +47,10 @@ for (const example of readExamples(root)) {
     }) => {
       const errors: string[] = [];
       page.on('pageerror', (error) => errors.push(error.message));
+      if (example.component === 'mobile-nav')
+        await page.setViewportSize({ width: 375, height: 812 });
       await page.goto(exampleUrl(example, scheme));
-      await page.locator('#example > *').first().waitFor();
+      await page.locator('#example > *').first().waitFor({ state: 'attached' });
       await page.evaluate(() => document.fonts.ready);
       await audit(page);
       const controls = page.locator(actionable);

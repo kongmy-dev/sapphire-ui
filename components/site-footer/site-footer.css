@@ -6,8 +6,6 @@
     --sp-site-footer-fg: var(--on-dark);
     --sp-site-footer-border-color: var(--border-dark);
     --sp-site-footer-title-fg: var(--brand);
-    --sp-site-footer-link-fg: var(--on-dark-muted);
-    --sp-site-footer-link-fg-hover: var(--on-dark);
     --sp-site-footer-bottom-fg: var(--on-dark-muted);
     --sp-site-footer-bottom-border-color: var(--border-dark);
 
@@ -22,8 +20,6 @@
     --sp-site-footer-fg: var(--foreground);
     --sp-site-footer-border-color: var(--border);
     --sp-site-footer-title-fg: var(--brand-text);
-    --sp-site-footer-link-fg: var(--muted-foreground);
-    --sp-site-footer-link-fg-hover: var(--foreground-strong);
     --sp-site-footer-bottom-fg: var(--muted-foreground);
     --sp-site-footer-bottom-border-color: var(--border);
   }
@@ -74,11 +70,13 @@
     gap: var(--space-2);
   }
 
+  .sp-site-footer,
   .sp-site-footer-link[data-variant="dark"] {
     --sp-site-footer-link-fg: var(--on-dark-muted);
     --sp-site-footer-link-fg-hover: var(--on-dark);
   }
 
+  .sp-site-footer[data-variant="light"],
   .sp-site-footer-link[data-variant="light"] {
     --sp-site-footer-link-fg: var(--muted-foreground);
     --sp-site-footer-link-fg-hover: var(--foreground-strong);

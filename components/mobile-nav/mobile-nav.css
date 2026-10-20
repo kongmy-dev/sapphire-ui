@@ -10,11 +10,7 @@
     --sp-mobile-nav-radius: var(--radius-md);
     --sp-mobile-nav-accent: var(--brand);
     --sp-mobile-nav-hover-bg: color-mix(in oklab, var(--white) 5%, transparent);
-    --sp-mobile-nav-dim-fg: color-mix(
-      in oklab,
-      var(--on-dark) 40%,
-      transparent
-    );
+    --sp-mobile-nav-dim-fg: var(--on-dark-muted);
     --sp-mobile-nav-duration: 300ms;
     --sp-mobile-nav-easing: cubic-bezier(0.4, 0, 0.2, 1);
   }
