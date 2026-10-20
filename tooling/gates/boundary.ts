@@ -62,6 +62,11 @@ function problem(file: string, edge: ImportEdge, message: string): Violation {
   };
 }
 
+const canUseExample = (file: string, target: string) =>
+  !target.includes('.examples.') || layer(file) === 'site';
+const canUseIcons = (file: string, specifier: string) =>
+  file.endsWith('.examples.tsx') && packageOf(specifier) === 'lucide-react';
+
 function localProblems(input: {
   file: string;
   edge: ImportEdge;
@@ -73,7 +78,7 @@ function localProblems(input: {
       ? []
       : [problem(file, edge, `Test imports private module ${target}`)];
   const allowed = ALLOWED[layer(file)]?.includes(layer(target));
-  const isRuntime = !isTest(target) && !target.includes('.examples.');
+  const isRuntime = !isTest(target) && canUseExample(file, target);
   return allowed && isRuntime
     ? []
     : [problem(file, edge, `Forbidden dependency on ${target}`)];
@@ -92,11 +97,15 @@ function testPackageProblems(input: {
     '@testing-library/react',
     '@testing-library/user-event',
     '@playwright/test',
+    '@radix-ui/react-slot',
   ];
   return allowed.includes(packageOf(specifier))
     ? []
     : [problem(file, edge, `Unverified test package ${specifier}`)];
 }
+
+const isLocalSpecifier = (specifier: string) =>
+  specifier.startsWith('.') || specifier.startsWith('/');
 
 function edgeProblem(input: {
   file: string;
@@ -110,9 +119,10 @@ function edgeProblem(input: {
       problem(file, edge, 'Computed imports cannot be statically verified'),
     ];
   if (target !== null) return localProblems({ file, edge, target });
-  if (specifier.startsWith('.') || specifier.startsWith('/'))
+  if (isLocalSpecifier(specifier))
     return [problem(file, edge, `Unresolved local import ${specifier}`)];
   if (isStrictTest(file)) return testPackageProblems({ file, edge, specifier });
+  if (canUseIcons(file, specifier)) return [];
   const external = EXTERNALS[layer(file)];
   if (external === undefined || external.includes(packageOf(specifier)))
     return [];

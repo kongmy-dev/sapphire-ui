@@ -110,3 +110,21 @@ test('boundary isolates test support from runtime and private implementation', (
     'lib/slot-tests/fixtures.tsx',
   ]);
 });
+
+test('boundary allows icons in examples and reference primitives only in tests', () => {
+  const result = check([
+    file('components/button/button.examples.tsx', `import 'lucide-react';`),
+    file(
+      'components/button/button.tsx',
+      `import 'lucide-react'; import '@radix-ui/react-slot';`,
+    ),
+    file('lib/slot.test.tsx', `import '@radix-ui/react-slot';`),
+    file('site/main.tsx', `import '../components/button/button.examples';`),
+  ]);
+  expect(result.violations).toHaveLength(2);
+  expect(
+    result.violations.every(
+      (issue) => issue.file === 'components/button/button.tsx',
+    ),
+  ).toBe(true);
+});
