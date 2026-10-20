@@ -27,7 +27,7 @@ function specResults(value: unknown): A11yResult[] | null {
   )
     return null;
   const title = value.title;
-  if (!title.startsWith('react/')) return [];
+  if (!/^(react|native)\//.test(title)) return [];
   const rows = value.tests.map((test) => testResults(test, title));
   return rows.some((row) => row === null)
     ? null

@@ -1,8 +1,8 @@
 @layer components {
   .sp-page-section {
     --sp-page-section-max-width: var(--page-width);
-    --sp-page-section-padding-block: var(--space-16);
-    --sp-page-section-header-gap: var(--space-10);
+    --sp-page-section-padding-block: var(--space-8);
+    --sp-page-section-header-gap: var(--space-6);
     --sp-page-section-description-size: var(--text-base);
     --sp-page-section-description-line-height: var(--leading-relaxed);
 
@@ -68,8 +68,8 @@
 
   @media (min-width: 48rem) {
     .sp-page-section {
-      --sp-page-section-padding-block: var(--space-24);
-      --sp-page-section-header-gap: calc(var(--space-1) * 14);
+      --sp-page-section-padding-block: var(--space-12);
+      --sp-page-section-header-gap: var(--space-8);
       --sp-page-section-description-size: var(--text-lg);
       --sp-page-section-description-line-height: calc(var(--space-1) * 7);
     }

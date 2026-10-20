@@ -1,8 +1,8 @@
 import { join } from 'node:path';
-import AxeBuilder from '@axe-core/playwright';
-import { expect, type Page, test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { exampleUrl, readExamples } from '../tooling/examples/catalog';
 import { SCHEMES } from '../tooling/source/token-values';
+import { audit } from './examples/audit';
 import { keyboardCases } from './examples/keyboard-cases';
 
 const root = join(import.meta.dirname, '..');
@@ -21,24 +21,6 @@ const actionable = [
   '[role="tab"]',
   '[role="menuitem"]',
 ].join(',');
-
-async function audit(page: Page) {
-  await page.evaluate(async () => {
-    const finite = document
-      .getAnimations()
-      .filter(
-        (animation) =>
-          animation.effect?.getComputedTiming().iterations !== Infinity,
-      );
-    await Promise.all(
-      finite.map((animation) => animation.finished.catch(() => undefined)),
-    );
-  });
-  const results = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-    .analyze();
-  expect(results.violations).toEqual([]);
-}
 
 for (const example of readExamples(root)) {
   for (const scheme of SCHEMES) {

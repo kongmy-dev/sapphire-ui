@@ -1,5 +1,5 @@
 const variants = ['info', 'success', 'warning', 'error', 'brand'] as const;
-export type BannerVariant = (typeof variants)[number];
+type BannerVariant = (typeof variants)[number];
 
 function bannerVariant(value: string | null): BannerVariant {
   return (

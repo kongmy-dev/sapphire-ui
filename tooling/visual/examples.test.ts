@@ -38,7 +38,7 @@ describe('example manifest', () => {
       names
         .filter((name) => name !== 'parity-states')
         .every((name) =>
-          /^(?:[a-z]+\/[a-z0-9-]+|react\/[a-z0-9-]+\/[a-z0-9-]+(?:\/open)?)$/.test(
+          /^(?:[a-z]+\/[a-z0-9-]+|(?:react|native)\/[a-z0-9-]+\/[a-z0-9-]+(?:\/open)?)$/.test(
             name,
           ),
         ),

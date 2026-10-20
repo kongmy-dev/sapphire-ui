@@ -94,7 +94,7 @@ Each row gives the resolved colour per scheme.
 | Token | Light | Dark | Use |
 | --- | --- | --- | --- |
 | `--success` | `#15803d` | `#15803d` | Confirmations, passed states |
-| `--success-text` | `#15803d` | `#4ade80` | Green text and outlines on any surface; AA on light and dark |
+| `--success-text` | `#166534` | `#4ade80` | Green text and outlines on any surface; AA on light and dark |
 | `--success-bg` | `rgb(34, 197, 94, 0.1)` | `rgb(34, 197, 94, 0.1)` | Tinted success background |
 | `--success-border` | `rgb(34, 197, 94, 0.2)` | `rgb(34, 197, 94, 0.2)` | Tinted success border |
 | `--success-foreground` | `#fff` | `#fff` | Text on a solid success fill |
@@ -105,7 +105,7 @@ Each row gives the resolved colour per scheme.
 | `--error-bg` | `rgb(239, 68, 68, 0.1)` | `rgb(239, 68, 68, 0.1)` | Tinted error background |
 | `--error-border` | `rgb(239, 68, 68, 0.2)` | `rgb(239, 68, 68, 0.2)` | Tinted error border |
 | `--warning` | `#b45309` | `#b45309` | Caution, pending states |
-| `--warning-text` | `#b45309` | `#fbbf24` | Amber text and outlines on any surface; AA on light and dark |
+| `--warning-text` | `#92400e` | `#fbbf24` | Amber text and outlines on any surface; AA on light and dark |
 | `--warning-bg` | `rgb(245, 158, 11, 0.1)` | `rgb(245, 158, 11, 0.1)` | Tinted warning background |
 | `--warning-border` | `rgb(245, 158, 11, 0.2)` | `rgb(245, 158, 11, 0.2)` | Tinted warning border |
 | `--warning-foreground` | `#fff` | `#fff` | Text on a solid warning fill |
@@ -219,10 +219,19 @@ that separate related information without giving it hierarchy.
   chevrons use `--space-4`. Validate these starting points with real labels and content.
 - Default buttons and fields align at `calc(var(--space-1) * 9)` (36px); compact and large variants remain
   proportionate. Text-and-icon buttons, icon-only buttons, selects and grouped actions share
-  alignment and icon scale. Do not shrink body text to create density.
+  alignment. Preserve existing button widths, horizontal padding, icon widths and gaps; reduce
+  their vertical spacing only. Do not shrink body text to create density.
 - Visible compact controls retain usable hit areas: on coarse pointers use at least
   `calc(var(--space-1) * 11)` (44px) height and width where relevant. Whole disclosure rows remain operable.
 - Check long labels, open/closed, hover, focus, disabled, loading and invalid states in both
   schemes. Keep error/help text close to its field and focus indicators unobscured.
 - Fix existing contrast, list-marker, spacing and keyboard defects in their owning component;
   reviewed visual changes replace old pins, not accessibility checks.
+
+### Card and disclosure hierarchy
+
+Card headers group their title and description with a small gap and reset inherited text margins.
+Operational card titles use the sans family; page and editorial headings keep the serif family.
+Card actions sit together at the trailing edge with a consistent gap. Disclosure rows use a
+quiet hover surface and small chevrons, with inset labels and a visible keyboard focus ring.
+Button widths, horizontal padding and icon footprints remain unchanged by this polish.

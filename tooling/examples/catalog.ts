@@ -32,7 +32,7 @@ function exampleName(node: ts.Expression, file: string): string {
       `${file}: example names must be literal kebab-case strings`,
     );
   if (!render || !ts.isIdentifier(render) || !/^[A-Z]/.test(render.text))
-    throw new Error(`${file}: render must name a React component`);
+    throw new Error(`${file}: render must name an example function`);
   return name.text;
 }
 
@@ -82,11 +82,13 @@ export function readExamples(root: string): ExampleRow[] {
 }
 
 export const exampleUrl = (example: ExampleRow, scheme: Scheme): string =>
-  `${EXAMPLE_URL}/?${new URLSearchParams({
-    component: example.component,
-    example: example.name,
-    scheme,
-  })}`;
+  `${EXAMPLE_URL}/${example.file.startsWith('elements/') ? 'elements' : ''}?${new URLSearchParams(
+    {
+      component: example.component,
+      example: example.name,
+      scheme,
+    },
+  )}`;
 
 export const readVisualExamples = (root: string) =>
   readExamples(root).flatMap((example) =>

@@ -7,7 +7,11 @@ const fixture = `
     <button class="sp-button" data-variant="outline" data-density="outline">Continue</button>
     <button class="sp-button" data-size="sm" data-density="small">Continue</button>
     <button class="sp-button" data-size="lg" data-density="large">Continue</button>
-    <button class="sp-button" data-size="icon" aria-label="Add" data-density="icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" /></svg></button>
+    <button class="sp-button" data-size="xs" data-density="extra-small">Continue</button>
+    <button class="sp-button" data-size="xl" data-density="extra-large">Continue</button>
+    <button class="sp-button" data-size="icon-sm" aria-label="Small add" data-density="small-icon"><svg class="sp-icon" viewBox="0 0 24 24"></svg></button>
+    <button class="sp-button" data-size="icon-lg" aria-label="Large add" data-density="large-icon"><svg class="sp-icon" viewBox="0 0 24 24"></svg></button>
+    <button class="sp-button" data-size="icon" aria-label="Add" data-density="icon"><svg class="sp-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" /></svg></button>
   </div>
   <button class="sp-button" style="--sp-button-line-height:1.4" data-density="unitless">Legacy line height</button>
   <input class="sp-input" aria-label="Name" data-density="input" />
@@ -77,6 +81,29 @@ export async function assertControlDensity(page: Page) {
     'font-size',
     '14px',
   );
+  for (const [name, padding] of Object.entries({
+    'extra-small': 10,
+    small: 12,
+    filled: 16,
+    large: 32,
+    'extra-large': 40,
+    'small-icon': 6,
+    icon: 10,
+    'large-icon': 14,
+  })) {
+    const button = page.locator(`[data-density="${name}"]`);
+    await expect(button).toHaveCSS('padding-left', `${padding}px`);
+    await expect(button).toHaveCSS('padding-right', `${padding}px`);
+  }
+  for (const [name, width] of Object.entries({
+    'small-icon': 28,
+    icon: 36,
+    'large-icon': 44,
+  }))
+    expect(
+      (await dimensions(page, name)).width,
+      `${name} retained width`,
+    ).toBeCloseTo(width, 1);
   await assertSliderAndMultipleSelect(page);
 }
 
@@ -125,7 +152,13 @@ export async function assertCoarseControlDensity(page: Page) {
   expect(checkbox).not.toBeNull();
   expect(radio).not.toBeNull();
   if (checkbox && radio)
-    expect(checkbox.y + checkbox.height).toBeLessThanOrEqual(radio.y);
+    expect(
+      checkbox.x + checkbox.width <= radio.x ||
+        radio.x + radio.width <= checkbox.x ||
+        checkbox.y + checkbox.height <= radio.y ||
+        radio.y + radio.height <= checkbox.y,
+      'Coarse pointer targets do not overlap',
+    ).toBe(true);
   for (const name of ['checkbox', 'radio', 'switch']) {
     const mark = await page
       .locator(`[data-density="${name}"]`)

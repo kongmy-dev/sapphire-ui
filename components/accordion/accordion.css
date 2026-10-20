@@ -18,7 +18,8 @@
     flex: 1;
     align-items: center;
     justify-content: space-between;
-    padding: var(--space-3) 0;
+    gap: var(--space-3);
+    padding: var(--space-3);
     font-family: var(--font-sans);
     font-size: var(--text-sm);
     font-weight: 500;
@@ -29,7 +30,7 @@
     cursor: pointer;
     background: transparent;
     border: 0;
-    border-radius: 0;
+    border-radius: var(--radius-sm);
     outline: var(--ring-width) solid transparent;
     box-shadow: var(--sp-accordion-focus);
   }
@@ -98,7 +99,8 @@
 
   @media (hover: hover) {
     .sp-accordion-trigger:hover {
-      text-decoration: underline;
+      text-decoration: none;
+      background: var(--muted);
     }
   }
 

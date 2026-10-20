@@ -126,3 +126,53 @@ for (const { name, render: Example } of examples)
     act(() => handle.focus());
     expect(document.activeElement).toBe(handle);
   });
+
+it('keeps scrollable panel content keyboard reachable and preserves callback ref cleanup', () => {
+  const cleanup = mock();
+  const elementRef = mock((node: HTMLDivElement | null) =>
+    node ? cleanup : undefined,
+  );
+  const view = render(
+    <SplitLayout>
+      <SplitPanel elementRef={elementRef}>Scrollable text</SplitPanel>
+    </SplitLayout>,
+  );
+  const content = screen.getByText('Scrollable text');
+  expect(content.tabIndex).toBe(0);
+  act(() => content.focus());
+  expect(document.activeElement).toBe(content);
+  view.unmount();
+  expect(cleanup).toHaveBeenCalled();
+});
+
+it('honors panel tab order and clears callback refs without cleanup returns', () => {
+  const elementRef = mock((_node: HTMLDivElement | null) => undefined);
+  const view = render(
+    <SplitLayout>
+      <SplitPanel elementRef={elementRef} tabIndex={-1}>
+        Programmatic panel
+      </SplitPanel>
+    </SplitLayout>,
+  );
+  expect(screen.getByText('Programmatic panel').tabIndex).toBe(-1);
+  expect(
+    screen
+      .getByText('Programmatic panel')
+      .parentElement?.hasAttribute('tabindex'),
+  ).toBe(false);
+  view.rerender(
+    <SplitLayout>
+      <SplitPanel elementRef={elementRef} tabIndex={0}>
+        Programmatic panel
+      </SplitPanel>
+    </SplitLayout>,
+  );
+  expect(screen.getByText('Programmatic panel').tabIndex).toBe(0);
+  expect(
+    screen
+      .getByText('Programmatic panel')
+      .parentElement?.hasAttribute('tabindex'),
+  ).toBe(false);
+  view.unmount();
+  expect(elementRef).toHaveBeenLastCalledWith(null);
+});

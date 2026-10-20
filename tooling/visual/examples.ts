@@ -1,4 +1,5 @@
 import { readVisualExamples } from '../examples/catalog';
+import { readElementExamples } from '../examples/elements';
 
 export type RouteExamples = {
   name: string;
@@ -183,6 +184,9 @@ export const ROUTES: readonly RouteExamples[] = [
 
 export const exampleNames = (): string[] => [
   'parity-states',
+  ...readElementExamples(process.cwd()).map(
+    (row) => `native/${row.component}/${row.name}`,
+  ),
   ...readVisualExamples(process.cwd()).map(({ name }) => name),
   ...ROUTES.flatMap((route) =>
     route.pinned.map((slug) => `${route.name}/${slug}`),

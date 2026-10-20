@@ -57,7 +57,7 @@
   --card-dark: var(--primary);
 
   --success: light-dark(#15803d, #15803d);
-  --success-text: light-dark(#15803d, #4ade80);
+  --success-text: light-dark(#166534, #4ade80);
   --success-bg: light-dark(rgb(34, 197, 94, 0.1), rgb(34, 197, 94, 0.1));
   --success-border: light-dark(rgb(34, 197, 94, 0.2), rgb(34, 197, 94, 0.2));
   --success-foreground: var(--white);
@@ -68,7 +68,7 @@
   --error-bg: light-dark(rgb(239, 68, 68, 0.1), rgb(239, 68, 68, 0.1));
   --error-border: light-dark(rgb(239, 68, 68, 0.2), rgb(239, 68, 68, 0.2));
   --warning: light-dark(#b45309, #b45309);
-  --warning-text: light-dark(#b45309, #fbbf24);
+  --warning-text: light-dark(#92400e, #fbbf24);
   --warning-bg: light-dark(rgb(245, 158, 11, 0.1), rgb(245, 158, 11, 0.1));
   --warning-border: light-dark(rgb(245, 158, 11, 0.2), rgb(245, 158, 11, 0.2));
   --warning-foreground: var(--white);

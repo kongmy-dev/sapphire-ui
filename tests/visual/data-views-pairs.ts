@@ -19,7 +19,6 @@ export type Pair = {
   observe: readonly string[];
   scroll: string;
 };
-export type Side = 'v3' | 'v4';
 
 const V3_TRIGGER_BASE =
   'inline-flex cursor-pointer items-center gap-2 font-sans outline-none transition-all hover:text-(--color-text-strong) focus-visible:ring-(--color-focus-ring) focus-visible:ring-2 focus-visible:ring-offset-0';

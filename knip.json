@@ -17,7 +17,10 @@
     "tests/visual/*.spec.ts",
     "components/*/*.examples.tsx",
     "tooling/testing/*.ts",
-    "tooling/examples/browser.tsx"
+    "tooling/examples/browser.tsx",
+    "elements/*.examples.ts",
+    "tooling/examples/element-browser.ts",
+    "tooling/examples/equivalence.tsx"
   ],
   "project": ["**/*.{ts,tsx,css}"],
   "ignoreUnresolved": ["^@/components/ui/"],

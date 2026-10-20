@@ -41,6 +41,11 @@
     align-items: center;
   }
 
+  .sp-site-header-brand :where(a) {
+    color: inherit;
+    text-decoration: none;
+  }
+
   .sp-site-header-nav {
     display: none;
     flex: 1;
@@ -109,6 +114,13 @@
   @media (prefers-reduced-motion: reduce) {
     .sp-site-header-link {
       transition: none;
+    }
+  }
+  @media (pointer: coarse) {
+    .sp-site-header-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: calc(var(--space-1) * 11);
     }
   }
 }

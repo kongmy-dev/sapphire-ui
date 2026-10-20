@@ -13,7 +13,7 @@
     --sp-table-head-tracking: 0.08;
     --sp-table-head-padding-block: var(--space-3);
     --sp-table-head-padding-inline: var(--space-4);
-    --sp-table-cell-padding: var(--space-4);
+    --sp-table-cell-padding: var(--space-3);
     --sp-table-row-bg-hover: color-mix(in oklab, var(--brand) 5%, transparent);
 
     width: 100%;
@@ -85,8 +85,11 @@
 
   .sp-table[data-variant="financial"]
     :is(.sp-table-head, .sp-table-cell):first-child {
-    font-weight: 500;
     text-align: left;
+  }
+
+  .sp-table[data-variant="financial"] .sp-table-cell:first-child {
+    font-weight: 500;
   }
 
   .sp-table[data-variant="financial"]

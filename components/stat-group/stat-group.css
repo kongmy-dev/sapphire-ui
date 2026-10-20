@@ -4,8 +4,8 @@
 
     display: grid;
     grid-template-columns: repeat(var(--sp-stat-group-columns), minmax(0, 1fr));
-    gap: var(--space-6);
-    padding: var(--space-6);
+    gap: var(--space-5);
+    padding: var(--space-5);
     border: var(--border-width) solid var(--border);
     border-radius: var(--radius-md);
   }

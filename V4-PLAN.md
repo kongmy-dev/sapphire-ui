@@ -2,75 +2,53 @@
 
 **Status:** Implementation authorized through P11, phase by phase, with at most two GPT-6.1 Sol
 subagents. P0–P3 are complete. P4 is active: seed React clients and enforcement tooling first,
-then component families and the shared visual refinement pass. P5–P11 remain pending. D1: CSS contract first. D2: npm to use, registry to
-own. D3: Lucide. D4: every component. D5: Tidy everywhere. Delete this file when 4.0.0 ships.
+then component families and the shared visual refinement pass. P5 native elements are in progress; P6 packaging preparation is isolated. P7–P11 remain pending. D1: CSS contract first. D2: npm to use, registry to
+own. D3: Lucide. D4: every component. D5: Tidy everywhere, retaining button widths while reducing height. Delete this file when 4.0.0 ships.
 
 ### Current execution checkpoint
 
-- Shared foundations plus per-component stylesheet ownership is recorded in ADR-0002.
-- Active working rules now match v4: CSS classes/data attributes, generated subpaths, optional
-  behaviour peers and the preserved theme with tighter proportions.
-- P4 now includes forms, feedback, data views, editorial components, overlays, page navigation,
-  theme controls, proposal/wizard/passphrase layouts, consent banners, SEO and analytics, plus
-  all six hooks and the theme helper. Split/Admin and native vertical-tabs ports are ready for
-  integration. Independently discovered examples feed browser checks; coverage, boundary and
-  typed CSS-contract gates are active. The current complete gate passes **825 tests** and checks **149 runtime/example files**
-  above 95% line/function coverage. Overlapping modal isolation now retains background inertness
-  until the last owner closes. P4 is open.
-- Navigation checks pass 48/48, composed settings/reading and mobile navigation pass 24/24,
-  document/SEO/wizard checks pass 42/42, and open dropdown isolation passes 12/12 across three
-  engines. A new full run remains necessary, including the known semantic status contrast fixes.
-- The React capture now has **322 pins**, including 232 newly reviewed light/dark captures and
-  open mobile-menu, dropdown and command-palette states. Existing comparison states now have **856 additional zero-tolerance v4 pins**. The capture
-  run passes 216/226 tests; ten stale v3 comparisons reflect already-fixed prose flow/markers,
-  margin-note layout, toc display and mobile-nav contrast. Reviewed v4 state pins retain these
-  states while the D5 pass replaces obsolete appearance comparisons and preserves interactions.
-- The first full run with the 90 initial React pins passed 498/502 visual/parity checks. Its four
-  failures exposed minifier rounding of inlined popover/hover-card line-height calculations.
-  Restoring those calculations to custom properties preserves fractional precision; the targeted
-  parity rerun passes all 502 existing checks; 108 new React states need initial pins. No changed pin was used to hide that drift.
-- Data ports clamp non-finite/unsafe pagination values and cap sibling windows at 100; avatar
-  groups use named group/image semantics. Select makes background content inert while its listbox
-  is open, restores previous state on close/unmount, and preserves live announcement regions.
-  CVA-only `sheetVariants` is replaced by the existing side prop and CSS data attribute contract;
-  the migration guide must record removal of styling helpers rather than invent replacements.
-- `useLocalStorage` requires a caller-supplied parser in v4. Stored JSON is untrusted; invalid,
-  missing or inaccessible reads use the fallback; failed writes retain the in-memory value.
-  Server rendering and initial hydration use the fallback before reading storage. The migration
-  map must describe the parser argument: throwing rejects a value, while returning `undefined`
-  is valid when it belongs to the caller's type. React's value/updater setter convention is retained.
-  The owner selected this over primitive-only storage or returning `unknown`.
-- SplitLayout retains `react-resizable-panels` as a fourth optional peer, selected by the owner
-  to preserve its exposed Group/Panel/Separator API, persistence, collapse, sizing and imperative
-  handles. Only resize-component consumers need it; no owned resize engine or vendored copy is
-  planned. P6 must verify optional installation and keep this peer external to package output.
-- Banner and CookieBanner now own their React markup and consent lifecycle. Their 18 tests
-  pass with 100% line/function coverage across the two clients, examples and consent helper.
-  The full React browser run passed 673 checks; follow-up checks verify prose markers, callout
-  link underlines, radios and scroll areas in all three engines. Status contrast and the newly
-  integrated app/layout families still require validation. The typed CSS-contract ownership gaps in data/editorial ports are resolved.
-- Consent uses native `document.cookie`, as planned, with validated legacy/current values,
-  host-only cookies outside the shared brand domain, session fallback when writes are denied,
-  and cancellation of stale deferred tracker choices. The synchronous public API requires a
-  narrow Biome `noDocumentCookie` exception for this helper and its tests; it adds no dependency.
-- SEOHead and raw HTML generation share one metadata pipeline; JSON-LD escapes script-closing
-  content, and the raw helper builds without React. Analytics renders directly, waits for positive
-  consent before loading SDKs, deduplicates mounts, disables collection on withdrawal/unmount,
-  and rejects conflicting simultaneous PostHog configurations before changing the active instance.
-  Tests cover the SDK boundary; actual third-party transport execution is not claimed, and already
-  dispatched network requests cannot be revoked by a UI library.
-- Cookie-banner and icon-mark CSS, SVG specimen icons and exhaustive legacy-class coverage have
-  landed. Only the three `elements/*` documentation sections still use the reference renderer;
-  their takeover belongs to P5/P8. The v3 parity renderer remains until P9.
-- Integrated CSS measures **23,760 / 23,765 gzip bytes** after the shared dark-card text fix and
-  removal of unused single-use internal variables; the ceiling is unchanged.
-- Strict specimen accessibility passes **420/420** checks (70 pages, two schemes, three engines).
-  The two subsequently changed specimens also pass all 12 targeted checks. The integrated
-  container visual/parity suite passes **412/412** after reviewed SVG pin and parity updates.
-- The visual runner uses the host user, a separate dependency volume per checkout/toolchain/owner
-  and memory-backed scratch files. Cold and warm validation pass; the warm dependency check
-  takes 8 ms. The owner cleared unused Docker build cache after the command guard blocked the
-  agent from doing so; unrelated volumes and services were preserved.
+- P0–P3 are complete. All P4 React families, six hooks, app layouts and the shared visual
+  refinement are integrated. All six P5 native elements are integrated. Final visual pin and
+  complete browser validation keep P4/P5 open. P6 packaging and P7 registry preparation run in
+  isolated worktrees; they are not yet integrated or declared complete.
+- The complete quality gate passes **876 tests** and checks **168 runtime/example files** above
+  95% line/function coverage. Native accessibility/keyboard checks pass **48/48**; browser
+  class/data equivalence against the six React twins passes **36/36**, across all three engines.
+  The earlier integrated React/browser suite passed 1,521 checks; a fresh complete run is active.
+- D5 uses 36px default controls, tighter cards/disclosures/pages/documents and actual 44px coarse
+  pointer targets. Button widths retain prior horizontal padding, icon widths and gaps, including
+  large and icon-only sizes. Fine/coarse density checks pass in all three engines. A unitless-zero
+  border token that invalidated filled-button padding was corrected and is covered by those checks.
+- The owner approved targeted polish from `http://localhost:4177/proposal.html`: compact card
+  heading rhythm, sans operational card titles, grouped trailing actions and quiet disclosure
+  hover. Page/editorial serif typography, navy/gold tokens and button widths remain. The earlier
+  density comparison remains at `http://localhost:4177` during this session.
+- The owner approved a **24 KiB (24,576-byte) gzip ceiling**. Delivered UI value takes priority
+  over marginal byte savings; stop cosmetic micro-optimization while the guardrail passes.
+  The current styling is within the approved ceiling.
+- Every former parity capture now compares against committed v4 state pins, preserving its
+  interactions and capture counts. The state inventory contains **870 pins**; final D5 updates
+  and native example pins are pending review. The reference renderer remains until P9.
+- `useLocalStorage` requires `(key, fallback, parse)`; the parser receives unknown JSON, throwing
+  rejects it, and returning undefined is valid when included in T. SSR/initial hydration use the
+  fallback; React value/updater setter semantics remain. Migration also records ThemeToggle.asChild
+  removal, accent-to-brand, IconMark.filled removal and removal of CVA styling helpers.
+- SplitLayout retains `react-resizable-panels` as the fourth optional peer, preserving its full
+  sizing/persistence/collapse/imperative contract. Scrollports are keyboard reachable, outer native
+  refs retain identity, callback cleanup is preserved and tabIndex updates without duplicate stops.
+- Overlapping modal isolation remains active until the last owner closes. Status text and dark
+  header brand links pass contrast checks. Consent uses validated native cookies with a session
+  fallback, and analytics shares deduplicated SDK ownership between React and native elements;
+  withdrawal disables collection but cannot revoke requests already dispatched.
+- Native tags, methods, events, slots and node identity are retained. Constructors are undefined
+  on server import and concrete classes in browsers; P6 declaration/package smoke must cover this
+  migration detail. Reconnect, storage dismissal, consent withdrawal, timers and toast bridge
+  ownership are tested. Native examples are independently discovered for a11y and visual coverage.
+- Shared foundations plus per-component stylesheet ownership is recorded in ADR-0002. Package and
+  registry consumers use one implementation per component. If package foundations include font
+  assets and faces, the registry base installs that exact package without a redundant font dependency.
+- Docker validation uses isolated dependency volumes and memory-backed scratch files. The owner
+  cleared unused build cache; unrelated services, volumes and caches remain untouched.
 
 ## 1. Where it stands
 
@@ -83,8 +61,8 @@ remain the acceptance criteria; retained v3 code does not count as a v4 implemen
 | P1 — gates and pins | Bun and devDependencies are pinned; Dependabot uses Bun. Strict `tsconfig.base.json`, Biome, knip, gate regression tests, scorecard and container pin tooling exist. `src/` remains frozen. The current gate passes; it measures the active lane rather than claiming the retained v3 debt is gone |
 | P2 — tokens | `css/tokens.css`, `css/tailwind.css` and `DESIGN.md` exist; token mappings and design tables are enforced. `tests/tokens.spec.ts` exercises source, Bun, Vite and Tailwind builds, nested scopes and overrides in three engines |
 | P3 — CSS contract | Complete: 69 component stylesheets, 70 plain-HTML specimen pages and 65 reference sections. The three elements documentation sections await P5/P8. The v3 parity renderer remains until P9 |
-| P4 — React | Active: component families and app layouts are integrated; Split/Admin, final validation and the D5 visual pass remain. The current execution checkpoint gives integrated validation |
-| P5 — elements | Pending: the six v4 custom elements and their lifecycle/equivalence checks have not been implemented |
+| P4 — React | Active: all component families and app layouts are integrated; D5 refinement is implemented, with final visual validation pending. The current execution checkpoint gives integrated validation |
+| P5 — elements | Active: the six v4 custom elements and their lifecycle/equivalence checks have not been implemented |
 | P6–P7 — package and registry | Not started as v4 deliverables. `package.json` still exports the v3 package: 4 runtime dependencies, 21 required peers and 88 export entries. The existing registry check passes 34 v3 items; there is no v4 source `registry.json` or ported `blocks/` |
 | P8–P10 — site, retirement and docs | Public docs still build from `src/`. The React example runner, contract, coverage and boundary gates now support P4. The v4 docs site, old-lane retirement, API snapshot and docs/skill-reference gates remain pending. Only the stylesheet import list is currently registered with the generated-files gate |
 | P11 — release | Pending. This review does not verify remote CI, npm configuration, installed consumers or production. Keep the first push, tag, deployment and production smoke in P11 |
@@ -102,13 +80,13 @@ remain the acceptance criteria; retained v3 code does not count as a v4 implemen
 4. Persistent dependency caching passes cold and warm validation. Scratch files remain in memory;
    the runner never performs recursive ownership changes or clears shared caches.
 
-The remaining accessibility corrections are tab-panel focus, keyboard access to bar-chart values,
-margin-note focus/overlap, toc truncation, prose markers/spacing and financial-header consistency.
+P4 corrects tab-panel focus, keyboard access to bar-chart values, margin-note focus/overlap,
+toc truncation, prose markers/spacing and financial-header consistency.
 P4's browser checks now verify the shared dark-card heading and paragraph contrast correction.
-Success and warning text on tinted page-background surfaces still fails AA (4.27:1 and 4.31:1);
-the shared visual pass must correct those semantic colours and review the affected pins.
-The React ports also exposed vertical-slider geometry and the multiple-select chevron as items
-for the shared refinement pass; their accepted states must work before P4 closes. Static CSS and axe
+Success and warning text on tinted page backgrounds now uses darker semantic tokens;
+the integrated accessibility run passes. Affected visual pins await the D5 review.
+Vertical-slider geometry and the multiple-select chevron are corrected, with browser geometry
+checks. Their accepted visual states must be captured before P4 closes. Static CSS and axe
 checks alone do not close those behaviour and layout gaps. Fix each defect when its component is
 next touched, in the shared CSS or behaviour that owns it, with a regression check and reviewed
 pin where the look changes. They are not a separate prerequisite to closing P3; none carries into
@@ -653,9 +631,10 @@ is the snapshot before this status-document update, not a claim that P9's retire
 | Stray comments | 929 | 771 | 0 |
 | Size findings / failing files | 75 / 40 | 56 / 29 | 0 / 0 |
 | Markdown lines, excluding `CHANGELOG.md` | 5,303 | 6,275 | Target at most 2,651; complete consumer guidance takes precedence |
-| v4 stylesheet, gzipped | Not present | 23,497 bytes (`bun run budget-check`) | At most 23,765 bytes |
+| v4 stylesheet, gzipped | Not present | 23,497 bytes (`bun run budget-check`) | At most 24,576 bytes (owner-approved D5 cap) |
 
-The CSS ceiling is the recorded `dcdcf1e` measurement, since `bc2e116`'s build fails. The current
+The CSS ceiling is 24 KiB, approved by the owner for D5 density and touch-target refinement.
+The original baseline used the recorded `dcdcf1e` measurement, since `bc2e116`'s build fails. The current
 scorecard's 23,932-byte stylesheet is v3, as explained in §1; it must not be compared to the v4
 budget as though it measured `sapphire.css`. Re-run the baseline and release scorecards at P11,
 after the package and old-lane retirement are complete. A green scoped gate now does not satisfy

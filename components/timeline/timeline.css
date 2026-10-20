@@ -19,7 +19,7 @@
     --sp-timeline-connector-width: var(--sp-timeline-connector-thickness);
     --sp-timeline-connector-height: auto;
     --sp-timeline-connector-shift: -50% 0;
-    --sp-timeline-content-padding: calc(var(--space-1) * 0.5) 0 var(--space-8);
+    --sp-timeline-content-padding: calc(var(--space-1) * 0.5) 0 var(--space-6);
 
     display: flex;
     flex-direction: var(--sp-timeline-direction);
@@ -43,7 +43,7 @@
     --sp-timeline-connector-width: auto;
     --sp-timeline-connector-height: var(--sp-timeline-connector-thickness);
     --sp-timeline-connector-shift: 0 -50%;
-    --sp-timeline-content-padding: 0 var(--space-8) 0 0;
+    --sp-timeline-content-padding: 0 var(--space-6) 0 0;
   }
 
   .sp-timeline-item {

@@ -20,7 +20,7 @@ export function checkA11yCoverage(
   const expected = catalog.flatMap((example) =>
     SCHEMES.flatMap((scheme) =>
       BROWSERS.map((project) => ({
-        title: `react/${example.component}/${example.name}/${scheme}`,
+        title: `${example.file.startsWith('elements/') ? 'native' : 'react'}/${example.component}/${example.name}/${scheme}`,
         project,
         file: example.file,
       })),
@@ -70,7 +70,10 @@ if (import.meta.main) {
   const results = existsSync(path)
     ? readA11yResults(readFileSync(path, 'utf8'))
     : null;
-  const result = checkA11yCoverage(readExamples(root), results ?? []);
+  const result = checkA11yCoverage(
+    [...readExamples(root), ...readElementExamples(root)],
+    results ?? [],
+  );
   if (results === null)
     result.violations.push(
       problem(path, 'Missing or invalid Playwright report'),
@@ -81,4 +84,5 @@ if (import.meta.main) {
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { readExamples } from '../examples/catalog';
+import { readElementExamples } from '../examples/elements';
 import { readA11yResults } from '../source/a11y-report';

@@ -1,7 +1,7 @@
 @layer components {
   .sp-document-shell {
     max-width: calc(var(--space-1) * 230);
-    padding: 0 var(--space-8);
+    padding: 0 clamp(var(--space-4), 3vw, var(--space-6));
     margin: 0 auto;
   }
 
@@ -13,7 +13,7 @@
     display: flex;
     gap: var(--space-4);
     align-items: center;
-    padding: var(--space-3) var(--space-8);
+    padding: var(--space-3) var(--space-6);
     font-size: calc(var(--text-base) * 0.8125);
     color: var(--sp-document-bar-fg);
     background: var(--primary);
@@ -123,7 +123,7 @@
     --sp-document-hero-border-width: var(--border-width);
     --sp-document-hero-border-color: var(--border);
 
-    padding: calc(var(--space-1) * 20) 0 calc(var(--space-1) * 14);
+    padding: var(--space-12) 0 var(--space-8);
     border-bottom: var(--sp-document-hero-border-width) solid
       var(--sp-document-hero-border-color);
   }
@@ -161,9 +161,9 @@
   .sp-document-hero-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-10);
-    padding-top: calc(var(--space-1) * 7);
-    margin: calc(var(--space-1) * 9) 0 0;
+    gap: var(--space-6);
+    padding-top: var(--space-5);
+    margin: var(--space-6) 0 0;
     border-top: var(--sp-document-hero-border-width) dashed
       var(--sp-document-hero-border-color);
   }
@@ -186,7 +186,7 @@
   }
 
   .sp-document-section {
-    padding: calc(var(--space-1) * 14) 0;
+    padding: var(--space-8) 0;
     scroll-margin-top: calc(var(--space-1) * 20);
     border-bottom: var(--border-width) solid var(--border);
   }
@@ -203,7 +203,7 @@
   }
 
   .sp-document-section > h2 {
-    margin: calc(var(--space-1) * 1.5) 0 calc(var(--space-1) * 7);
+    margin: calc(var(--space-1) * 1.5) 0 var(--space-5);
     font-family: var(--font-serif);
     font-size: calc(var(--text-base) * 2.25);
     font-weight: 500;
@@ -213,7 +213,7 @@
 
   .sp-document-section > h2 + .sp-document-lede {
     max-width: 60ch;
-    margin: calc(var(--space-1) * -4) 0 var(--space-8);
+    margin: calc(var(--space-1) * -2) 0 var(--space-6);
     font-family: var(--font-serif);
     font-size: var(--text-lg);
     font-style: italic;
@@ -258,7 +258,7 @@
       transparent
     );
 
-    padding: var(--space-6);
+    padding: var(--space-5);
     color: var(--sp-document-card-fg);
     background: var(--sp-document-card-bg);
     border: var(--border-width) solid var(--sp-document-card-border-color);
@@ -297,7 +297,7 @@
     display: flex;
     gap: var(--space-6);
     align-items: center;
-    padding: calc(var(--space-1) * 12) 0 calc(var(--space-1) * 20);
+    padding: var(--space-8) 0 var(--space-12);
     font-size: calc(var(--text-base) * 0.8125);
     color: var(--muted-foreground);
     border-top: var(--border-width) solid var(--border);

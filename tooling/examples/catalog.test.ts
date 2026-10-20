@@ -73,3 +73,18 @@ test('enumerates colocated examples independently of test imports', () => {
 test('an absent components tree has no examples', () => {
   expect(readExamples(root)).toEqual([]);
 });
+
+test('native examples receive a separate browser entry', () => {
+  expect(
+    exampleUrl(
+      {
+        component: 'banner',
+        name: 'notice',
+        file: 'elements/banner.examples.ts',
+      },
+      'light',
+    ),
+  ).toBe(
+    'http://localhost:4176/elements?component=banner&example=notice&scheme=light',
+  );
+});

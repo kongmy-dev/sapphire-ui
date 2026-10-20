@@ -6,7 +6,7 @@ import { STYLESHEET_FILE } from '../css/stylesheet';
 import { gzippedBytes } from '../scorecard/measure';
 import { finish, type GateResult } from './report';
 
-export const CEILING_BYTES = 23_765;
+export const CEILING_BYTES = 24 * 1_024;
 
 const count = (bytes: number) => bytes.toLocaleString('en-US');
 

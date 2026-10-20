@@ -17,6 +17,7 @@
     "worker",
     "components",
     "lib",
-    "hooks"
+    "hooks",
+    "elements"
   ]
 }

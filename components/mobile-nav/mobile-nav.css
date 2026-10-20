@@ -260,4 +260,12 @@
       transition: none;
     }
   }
+  @media (pointer: coarse) {
+    .sp-mobile-nav-toggle,
+    .sp-mobile-nav-close,
+    .sp-mobile-nav-link {
+      min-width: calc(var(--space-1) * 11);
+      min-height: calc(var(--space-1) * 11);
+    }
+  }
 }

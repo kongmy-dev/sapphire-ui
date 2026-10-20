@@ -39,8 +39,7 @@
     display: flex;
     gap: calc(var(--space-1) * 2.5);
     align-items: center;
-    padding: calc(var(--space-1) * 5.5) calc(var(--space-1) * 5.5)
-      calc(var(--space-1) * 4.5);
+    padding: var(--space-4);
     border-bottom: var(--border-width) solid var(--border-dark);
     transition: padding var(--sp-admin-layout-motion);
   }
@@ -85,7 +84,7 @@
 
   .sp-admin-layout-nav {
     flex: 1;
-    padding: calc(var(--space-1) * 3.5) var(--space-3);
+    padding: var(--space-3);
     overflow-y: auto;
   }
 
@@ -131,7 +130,7 @@
     flex-shrink: 0;
     width: 1em;
     height: 1em;
-    font-size: var(--space-6);
+    font-size: var(--space-5);
     line-height: 1;
   }
 
@@ -204,7 +203,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: calc(var(--space-1) * 3.5) var(--space-8);
+    padding: var(--space-3) var(--space-6);
     background: var(--card);
     border-bottom: var(--border-width) solid var(--border);
     transition:
@@ -235,7 +234,7 @@
     width: 100%;
     max-width: var(--page-width);
     min-width: 0;
-    padding: var(--space-8) var(--space-8) calc(var(--space-1) * 20);
+    padding: var(--space-6) var(--space-6) var(--space-12);
     margin: 0 auto;
     overflow-y: auto;
   }
@@ -455,7 +454,7 @@
 
     .sp-admin-layout-content {
       max-width: 100%;
-      padding: var(--space-6) var(--space-4) calc(var(--space-1) * 20);
+      padding: var(--space-5) var(--space-4) var(--space-8);
     }
   }
 
@@ -480,6 +479,22 @@
     .sp-admin-layout-icon,
     .sp-admin-layout-header {
       transition: none;
+    }
+  }
+  @media (pointer: coarse) {
+    .sp-admin-layout-toggle,
+    .sp-admin-layout-icon-button,
+    .sp-admin-layout-row-actions button,
+    .sp-admin-layout-pass button {
+      min-width: calc(var(--space-1) * 11);
+      min-height: calc(var(--space-1) * 11);
+    }
+    .sp-admin-layout-link {
+      min-height: calc(var(--space-1) * 11);
+    }
+    .sp-admin-layout-sidebar[data-collapsed]
+      :is(.sp-admin-layout-sidebar-header, .sp-admin-layout-nav) {
+      padding-inline: var(--space-2);
     }
   }
 }

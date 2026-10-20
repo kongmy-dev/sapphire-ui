@@ -164,3 +164,17 @@ test('boundary permits optional resizable peer in components and public API test
     ]).violations,
   ).toHaveLength(1);
 });
+
+test('native examples and tests use public element entries without opening runtime dependencies', () => {
+  const result = check([
+    file('elements/banner.examples.ts', "import './banner';"),
+    file(
+      'elements/banner.test.ts',
+      "import './banner'; import './banner.examples';",
+    ),
+    file('elements/banner.ts', "import '../components/button/button';"),
+    file('components/button/button.tsx'),
+  ]);
+  expect(result.violations).toHaveLength(1);
+  expect(result.violations[0]?.file).toBe('elements/banner.ts');
+});

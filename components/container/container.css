@@ -1,7 +1,7 @@
 @layer components {
   .sp-container {
     --sp-container-max-width: var(--page-width);
-    --sp-container-padding-block: var(--space-8);
+    --sp-container-padding-block: var(--space-6);
     --sp-container-padding-inline: var(--space-4);
 
     width: 100%;
@@ -33,7 +33,7 @@
   }
 
   .sp-container[data-padding="lg"] {
-    --sp-container-padding-block: var(--space-16);
+    --sp-container-padding-block: var(--space-10);
     --sp-container-padding-inline: var(--space-6);
   }
 
@@ -54,11 +54,11 @@
 
   @media (min-width: 48rem) {
     .sp-container {
-      --sp-container-padding-block: var(--space-12);
+      --sp-container-padding-block: var(--space-8);
     }
 
     .sp-container[data-padding="lg"] {
-      --sp-container-padding-block: var(--space-24);
+      --sp-container-padding-block: var(--space-12);
     }
   }
 }

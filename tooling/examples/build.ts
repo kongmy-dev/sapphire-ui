@@ -2,6 +2,7 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { buildStylesheet } from '../css/build';
 import type { ExampleRow } from './catalog';
+import { readElementExamples } from './elements';
 
 export async function buildExamples(options: {
   root: string;
@@ -30,10 +31,46 @@ export async function buildExamples(options: {
   });
   if (!result.success)
     throw new Error(result.logs.map((log) => log.message).join('\n'));
+  await buildElementExamples(root, out);
+  const equivalence = await Bun.build({
+    entrypoints: [join(root, 'tooling/examples/equivalence.tsx')],
+    outdir: out,
+    target: 'browser',
+    define: { 'process.env.NODE_ENV': '"development"' },
+  });
+  if (!equivalence.success)
+    throw new Error(equivalence.logs.map((log) => log.message).join('\n'));
   await buildStylesheet(root, out, { minify: true });
   const styles = files
     .map(([, file]) => resolve(root, file.replace(/\.tsx$/, '.css')))
     .filter(existsSync)
     .map((file) => readFileSync(file, 'utf8'));
   writeFileSync(join(out, 'examples.css'), styles.join('\n'));
+}
+
+async function buildElementExamples(root: string, out: string) {
+  const files = [
+    ...new Map(
+      readElementExamples(root).map((row) => [row.component, row.file]),
+    ),
+  ];
+  const entry = join(out, 'elements-entry.ts');
+  writeFileSync(
+    entry,
+    [
+      `import {mountElementExample} from ${JSON.stringify(join(root, 'tooling/examples/element-browser.ts'))};`,
+      ...files.map(
+        ([, file], index) =>
+          `import {examples as examples${index}} from ${JSON.stringify(resolve(root, file))};`,
+      ),
+      `mountElementExample({${files.map(([name], index) => `${JSON.stringify(name)}:examples${index}`).join(',')}});`,
+    ].join('\n'),
+  );
+  const result = await Bun.build({
+    entrypoints: [entry],
+    outdir: out,
+    target: 'browser',
+  });
+  if (!result.success)
+    throw new Error(result.logs.map((log) => log.message).join('\n'));
 }

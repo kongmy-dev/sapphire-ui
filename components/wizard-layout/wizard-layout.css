@@ -5,7 +5,7 @@
 
   .sp-wizard-layout {
     flex-direction: column;
-    min-height: calc(var(--space-1) * 125);
+    min-height: calc(var(--space-1) * 100);
     overflow: hidden;
     font-family: var(--font-sans);
     background: var(--background);
@@ -30,7 +30,7 @@
 
   .sp-wizard-layout-header {
     flex-shrink: 0;
-    padding: var(--space-6);
+    padding: var(--space-5);
     background: var(--background);
     border-bottom: var(--border-width) solid var(--border);
   }
@@ -51,7 +51,7 @@
   }
 
   .sp-wizard-layout-description {
-    margin: 0 0 var(--space-8);
+    margin: 0 0 var(--space-5);
     font-size: var(--text-sm);
     line-height: calc(var(--space-1) * 5);
     color: var(--muted-foreground);
@@ -67,7 +67,7 @@
 
   .sp-wizard-layout-body {
     flex: 1;
-    padding: var(--space-6);
+    padding: var(--space-5);
     overflow-y: auto;
   }
 
@@ -76,7 +76,7 @@
     flex-shrink: 0;
     align-items: center;
     justify-content: space-between;
-    padding: var(--space-4) var(--space-6);
+    padding: var(--space-3) var(--space-5);
     background: color-mix(in oklab, var(--background) 50%, transparent);
     border-top: var(--border-width) solid var(--border);
   }

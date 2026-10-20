@@ -44,7 +44,9 @@ const packageOf = (name: string) =>
     ? name.split('/').slice(0, 2).join('/')
     : (name.split('/')[0] ?? '');
 const isPublic = (name: string) => {
-  if (name.endsWith('.examples.tsx')) return true;
+  if (/\.examples\.tsx?$/.test(name)) return true;
+  if (layer(name) === 'elements')
+    return name.split('/').length === 2 && !isTest(name);
   if (layer(name) === 'hooks' || layer(name) === 'lib') return !isTest(name);
   const parts = name.split('/');
   return (
@@ -67,6 +69,16 @@ const canUseExample = (file: string, target: string) =>
 const canUseIcons = (file: string, specifier: string) =>
   file.endsWith('.examples.tsx') && packageOf(specifier) === 'lucide-react';
 
+const isNativeExampleImport = (file: string, target: string) =>
+  file.startsWith('elements/') &&
+  file.endsWith('.examples.ts') &&
+  layer(target) === 'elements' &&
+  isPublic(target);
+
+const allowedLayer = (file: string, target: string) =>
+  isNativeExampleImport(file, target) ||
+  ALLOWED[layer(file)]?.includes(layer(target));
+
 function localProblems(input: {
   file: string;
   edge: ImportEdge;
@@ -77,7 +89,7 @@ function localProblems(input: {
     return isPublic(target) || isSupport(target)
       ? []
       : [problem(file, edge, `Test imports private module ${target}`)];
-  const allowed = ALLOWED[layer(file)]?.includes(layer(target));
+  const allowed = allowedLayer(file, target);
   const isRuntime = !isTest(target) && canUseExample(file, target);
   return allowed && isRuntime
     ? []

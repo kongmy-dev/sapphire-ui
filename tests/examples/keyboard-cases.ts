@@ -28,6 +28,7 @@ import {
   switches,
 } from './keyboard-stateful';
 import { keyboardCases as viewCases } from './keyboard-views';
+import { keyboardCases as workspaceCases } from './keyboard-workspaces';
 
 const forwardTab = (page: Page) =>
   page.context().browser()?.browserType().name() === 'webkit'
@@ -115,6 +116,7 @@ export const keyboardCases: Readonly<
   Record<string, (page: Page) => Promise<void>>
 > = {
   ...appCases,
+  ...workspaceCases,
   ...layoutCases,
   ...editorialCases,
   'banner/dismissible': banner,

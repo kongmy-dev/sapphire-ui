@@ -5,8 +5,11 @@ import { SCHEMES } from '../source/token-values';
 import { buildExamples } from './build';
 import { EXAMPLE_PORT, EXAMPLE_URL, readExamples } from './catalog';
 
+import { readElementExamples } from './elements';
+
 const root = process.cwd();
 const examples = readExamples(root);
+const elements = readElementExamples(root);
 if (!examples.length) throw new Error('No React examples were found');
 const out = mkdtempSync(join(tmpdir(), 'sapphire-react-examples-'));
 process.on('exit', () => rmSync(out, { recursive: true, force: true }));
@@ -25,12 +28,13 @@ const requestedScheme = (url: URL) => url.searchParams.get('scheme') ?? 'light';
 function respond(request: Request): Response {
   const url = new URL(request.url);
   const asset =
-    /^\/(examples-entry\.js|examples\.css|sapphire\.css|fonts\/[a-z0-9-]+\.woff2)$/.exec(
+    /^\/((?:examples|elements)-entry\.js|equivalence\.js|examples\.css|sapphire\.css|fonts\/[a-z0-9-]+\.woff2)$/.exec(
       url.pathname,
     )?.[1];
   if (asset) return new Response(Bun.file(join(out, asset)));
   if (url.pathname === '/catalog.json') return Response.json(examples);
-  if (url.pathname !== '/') return html('Not found', 404);
+  if (url.pathname === '/equivalence') return equivalencePage(url);
+  if (!['/', '/elements'].includes(url.pathname)) return html('Not found', 404);
   const component = url.searchParams.get('component');
   const name = url.searchParams.get('example');
   const scheme = requestedScheme(url);
@@ -40,7 +44,17 @@ function respond(request: Request): Response {
     return html(
       '<!doctype html><title>React examples</title><h1>React examples</h1>',
     );
-  const example = examples.find(
+  return exampleResponse(url, component, name, scheme);
+}
+
+function exampleResponse(
+  url: URL,
+  component: string | null,
+  name: string | null,
+  scheme: string,
+) {
+  const native = url.pathname === '/elements';
+  const example = (native ? elements : examples).find(
     (row) => row.component === component && row.name === name,
   );
   if (!example) return html('Unknown example', 404);
@@ -55,10 +69,17 @@ function respond(request: Request): Response {
       '<body data-example-root><main class="sp-page sp-stack">',
       `<h1>${example.component}: ${example.name}</h1>`,
       '<section id="example" class="sp-stack" aria-label="Component example"></section>',
-      '</main><script type="module" src="/examples-entry.js"></script></body></html>',
+      `</main><script type="module" src="/${native ? 'elements' : 'examples'}-entry.js"></script></body></html>`,
     ].join('\n'),
   );
 }
 
 Bun.serve({ port: EXAMPLE_PORT, fetch: respond });
 console.log(`React examples: ${EXAMPLE_URL}`);
+
+function equivalencePage(url: URL) {
+  const scheme = requestedScheme(url) === 'dark' ? 'dark' : 'light';
+  return html(
+    `<!doctype html><html lang="en" data-theme="${scheme}"><title>Element equivalence</title><link rel="stylesheet" href="/sapphire.css"><body><script type="module" src="/equivalence.js"></script></body></html>`,
+  );
+}

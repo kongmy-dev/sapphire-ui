@@ -1,7 +1,8 @@
 'use client';
 
-import type { ComponentProps, Ref } from 'react';
+import { type ComponentProps, type Ref, useRef } from 'react';
 import { Group, Panel, Separator } from 'react-resizable-panels';
+import { useIsomorphicLayoutEffect } from '../../hooks/use-isomorphic-layout-effect.js';
 
 export function SplitLayout({
   className,
@@ -18,11 +19,33 @@ export function SplitLayout({
 
 export function SplitPanel({
   className,
+  elementRef,
+  tabIndex,
   ...props
 }: ComponentProps<typeof Panel>) {
+  const ref = useRef<HTMLDivElement>(null);
+  useIsomorphicLayoutEffect(() => {
+    const scrollport = ref.current?.querySelector('.sp-split-layout-panel');
+    if (scrollport instanceof HTMLElement) scrollport.tabIndex = tabIndex ?? 0;
+  }, [tabIndex]);
+  useIsomorphicLayoutEffect(() => {
+    const cleanup =
+      typeof elementRef === 'function' ? elementRef(ref.current) : undefined;
+    if (elementRef && typeof elementRef !== 'function')
+      elementRef.current = ref.current;
+    return () => {
+      if (typeof cleanup === 'function') return cleanup();
+      if (typeof elementRef === 'function') {
+        elementRef(null);
+        return;
+      }
+      if (elementRef) elementRef.current = null;
+    };
+  }, [elementRef]);
   return (
     <Panel
       {...props}
+      elementRef={ref}
       className={['sp-split-layout-panel', className].filter(Boolean).join(' ')}
       data-slot="split-panel"
     />
