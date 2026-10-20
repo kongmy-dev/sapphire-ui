@@ -76,6 +76,25 @@ function localProblems(input: {
     : [problem(file, edge, `Forbidden dependency on ${target}`)];
 }
 
+function testPackageProblems(input: {
+  file: string;
+  edge: ImportEdge;
+  specifier: string;
+}): Violation[] {
+  const { file, edge, specifier } = input;
+  const allowed = [
+    'bun:test',
+    'react',
+    'react-dom',
+    '@testing-library/react',
+    '@testing-library/user-event',
+    '@playwright/test',
+  ];
+  return allowed.includes(packageOf(specifier))
+    ? []
+    : [problem(file, edge, `Unverified test package ${specifier}`)];
+}
+
 function edgeProblem(input: {
   file: string;
   edge: ImportEdge;
@@ -90,19 +109,7 @@ function edgeProblem(input: {
   if (target !== null) return localProblems({ file, edge, target });
   if (specifier.startsWith('.') || specifier.startsWith('/'))
     return [problem(file, edge, `Unresolved local import ${specifier}`)];
-  if (isStrictTest(file)) {
-    const allowed = [
-      'bun:test',
-      'react',
-      'react-dom',
-      '@testing-library/react',
-      '@testing-library/user-event',
-      '@playwright/test',
-    ];
-    return allowed.includes(packageOf(specifier))
-      ? []
-      : [problem(file, edge, `Unverified test package ${specifier}`)];
-  }
+  if (isStrictTest(file)) return testPackageProblems({ file, edge, specifier });
   const external = EXTERNALS[layer(file)];
   if (external === undefined || external.includes(packageOf(specifier)))
     return [];
