@@ -89,7 +89,29 @@ test('coverage enforces the exact ninety five percent threshold per metric', () 
 
 test('coverage cannot hide declared functions by omitting their hit records', () => {
   expect(
-    check(record().replace('FNDA:1,Button', 'FN:1,Button\nFNF:1')).violations[0]
-      ?.problem,
+    check(record().replace('FNDA:1,Button', 'FN:1,Button\nFNF:1\nFNH:0'))
+      .violations[0]?.problem,
   ).toContain('functions coverage 0.00%');
+});
+
+test('coverage accepts real Bun aggregate function counters without FNDA records', () => {
+  const bunRecord = `TN:\nSF:${FILE}\nFNF:6\nFNH:6\nDA:1,48\nDA:2,36\nend_of_record`;
+  expect(check(bunRecord).violations).toEqual([]);
+  expect(
+    check(bunRecord.replace('FNH:6', 'FNH:5')).violations[0]?.problem,
+  ).toContain('83.33%');
+});
+
+test('coverage rejects malformed Bun aggregate counts and missing hits', () => {
+  for (const summary of [
+    'FNF:6',
+    'FNF:6\nFNH:7',
+    'FNF:6\nFNH:-1',
+    'FNF:invalid\nFNH:0',
+  ]) {
+    const lcov = record().replace('FNDA:1,Button', summary);
+    expect(check(lcov).violations[0]?.problem).toContain(
+      'Invalid LCOV functions',
+    );
+  }
 });
