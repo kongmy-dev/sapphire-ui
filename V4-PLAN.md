@@ -3,7 +3,8 @@
 **Status:** Implementation authorized through P11, with at most two GPT-6.1 Sol subagents.
 P0–P10 are complete. P11 migration tooling is complete; remote release validation is next.
 The v4-only visual suite passes 748 zero-tolerance cases; all 1,578 final browser checks pass
-with 161 discovered examples after retirement. No remote push, v4 tag or publication has occurred yet.
+with 161 discovered examples after retirement. The first push and automated documentation deployment
+are complete; remote browser/visual verification, the v4 tag and publication remain.
 D5 retains button widths while reducing height and applies the approved targeted polish.
 Delete this file when 4.0.0 ships.
 
@@ -18,6 +19,10 @@ Delete this file when 4.0.0 ships.
   and freshness-checked. Settled owner decisions are preserved in ADRs 0001–0005.
 - The owner confirmed the npm trusted publisher matches `publish.yaml`. Cloudflare deployment
   is automated from Git; verify its build and live routes after the first push, without local deployment.
+- Release candidate `6b80d56` is pushed with the `v3` maintenance branch. GitHub quality,
+  packed consumers, production build and Cloudflare deployment pass. Live v4 examples render;
+  legacy registry bytes, v4 CORS/cache headers and missing-item 404s are verified. The v3
+  maintenance CI passes. The v4 accessibility and arm64 visual jobs are still running.
 
 - All P4 React families, six hooks, app layouts and approved visual polish are integrated.
   All six P5 native elements are integrated. The final post-retirement browser suite passes **1,578 checks**;
@@ -84,7 +89,7 @@ remain the acceptance criteria; retained v3 code does not count as a v4 implemen
 | P8 — site | Source-generated pages and foundations guides pass route, accessibility, mobile overflow and token-build checks. Clean production build and deployment dry run pass; deployed smoke remains P11 |
 | P9 — retirement | Complete: v3 runtime/build removed, historical migration facts and legacy registry retained, interaction inventory preserved. Current size limits retained by owner approval; measured p95 is 4/34/211/5. Package dry run lists only allowed files, then stops for missing local publish credentials; packed consumer checks pass |
 | P10 — docs | Complete: CLAUDE is 84 lines, consumer skill 40 lines; consolidated guidance, docs and skill-reference gates pass. Release migration notes remain P11 |
-| P11 — release | Migration tooling, generated release maps, local gates and consumer smoke complete. Trusted publisher confirmed by owner. First push, remote CI stabilization, v4 tag, publication and production smoke remain. Cloudflare deployment is automated from Git; no local deploy is required |
+| P11 — release | Migration tooling, generated release maps, local gates and consumer smoke complete. Trusted publisher confirmed by owner. First push and automated Cloudflare deployment pass; remote browser/visual jobs, v4 tag, publication and published-package smoke remain |
 
 ### P3 completion checkpoint
 

@@ -1,6 +1,6 @@
 # Changelog
 
-## 4.0.0 — unreleased
+## 4.0.0 — 2026-10-20
 
 3.0.1 and 3.0.2 reached GitHub Packages only, so this is the first npm release since
 3.0.0. The migration maps below cover 3.x.
