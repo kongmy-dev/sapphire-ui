@@ -1,27 +1,60 @@
 # Sapphire UI v4 — plan
 
-**Status:** decided. D1: the CSS contract comes first. D2: npm to use, registry to own. D3: Lucide.
-D4: every component is ported. Numbers measured at `bc2e116`. This file is deleted when 4.0.0 ships.
+**Status:** P3 in progress at `2e88221`; P0–P2 foundations are in place locally. No v4 React,
+custom-element or registry port has landed. D1: the CSS contract comes first. D2: npm to use,
+registry to own. D3: Lucide. D4: every component is ported. This file is deleted when 4.0.0 ships.
 
 ## 1. Where it stands
 
-| Finding | Evidence |
+This is a review of the tree at `2e88221`, not a release sign-off. Counts come from
+`bun run scorecard 2e88221` and the checks below; §10 separates whole-tree debt from the active
+v4 gate. The phase descriptions in §5 remain the acceptance criteria.
+
+| Phase | Current position and evidence |
 |---|---|
-| The stylesheet's classes and the React components are two implementations of one design, and they disagree | `.btn` pads 12 × 24 px at 16 px (`src/index.css`); `<Button>` pads 9 × 16 px at 14 px (`src/components/ui/Button.tsx`) |
-| The stylesheet works against its consumers | `sapphire-ui.css` is 135.4 KB, 23.6 KB gzipped. 73.0 KB is the utilities layer, almost all of it generated for the React components. 307 rules (28.7 KB) sit outside every cascade layer, so they beat any utility a consumer applies |
-| Tokens are declared three times | `src/theme.css` (`@theme`), `src/index.css` (`:root`, 64 hex literals), `design/colors_and_type.css` (stale: `--color-text-muted: #64748b`) |
-| Dark mode is `[data-theme="dark"]` only | no `prefers-color-scheme`; aliases such as `--color-background: var(--color-surface)` resolve at `:root`, so they do not flip inside a nested dark scope |
-| The variable names are not shadcn's theming contract | no raw `--background`, `--primary`, `--radius` or `--chart-1`; a community item reading `var(--chart-1)` gets nothing, and presets or `shadcn apply` write variables sapphire never reads |
-| Packaging costs the apps that want only CSS | 19 required Radix peers; 88 subpath exports, most with ESM, CJS and `.d.ts`; the root entry re-exports six custom elements and the analytics and consent code, all listed in `sideEffects` |
-| Two icon systems in the registry | primitives use the Material Symbols font (19 files in `src/`); blocks import `lucide-react` |
-| Fonts are named, never loaded | no `@font-face` in the package |
-| Consumers, from a scan of every local repository | 2 apps use the stylesheet's classes only; 2 import React components from npm (one is still on 2.x, one also vendors from the registry); 3 vendor from the registry, the app template among them. The company website and blog use none of it. No app uses the custom elements, Analytics, CookieBanner, SEOHead or the proposal React components; the CSS-only apps do use the document, financial-table, prose, page and admin-shell classes |
-| Vendored copies are reformatted by each app | every vendored `button`, `badge`, `dialog`, `select` and `table` differs from its source by 32–287 lines, mostly formatting, so re-pulling a fix through the registry is noisy |
-| The gate is red, and three gates pass on nothing | `bun run gate`: `test` and `externals-check` fail on a stale `dist/` that a test reads; the comment, size and token gates print "0 files" and exit 0 |
-| Releases have been stuck since 3.0.1, and a working publish step would ship whatever `master` holds | npm's newest version is 3.0.0 and the remote's newest tag is `v3.0.0`. 3.0.1 and 3.0.2 reached GitHub Packages, then npm refused them with `404 Not Found - PUT`: the token is no longer accepted (inferred; its expiry shows only in the npm account). At `bc2e116`, CI fails at `bun install --frozen-lockfile` because the lockfile is out of sync, and the publish run fails in `tsc` because nothing installs the peer `react-resizable-panels` (`src/components/ui/SplitLayout.tsx`). `publish.yml` runs on every push to `master` and publishes any version that has no tag |
-| Comment and size debt | comment gate over `src/`: 328 stray comments, over `tooling/`: 26; size gate: 28 of 121 `src/` files fail |
-| Code lags React 19 and current shadcn | 54 files use `forwardRef` and `displayName`; no `data-slot`; per-package `@radix-ui/react-*` imports |
-| Docs sprawl | 2,391 lines of Markdown; two plans written as task history; files that name other projects: `design/colors_and_type.css`, `src/components/AnalyticsElement.ts`, `src/components/ui/Layout.tsx`, `AI-CODE-QUALITY.md`, `REGISTRY-PLAN.md`, `tooling/quality-metrics/` |
+| P0 — safety and decisions | Local `v3` branch exists with the build peer/external fix. Both branches have tag-only publishing, CI as a prerequisite and OIDC permission. Five ADRs exist in `docs/adr/`; spike outcomes and owner decisions are in §9. npm trusted-publisher account configuration and a real publication are unverified; P11 still owns release execution |
+| P1 — gates and pins | Bun and devDependencies are pinned; Dependabot uses Bun. Strict `tsconfig.base.json`, Biome, knip, gate regression tests, scorecard and container pin tooling exist. `src/` remains frozen. The current gate passes; it measures the active lane rather than claiming the retained v3 debt is gone |
+| P2 — tokens | `css/tokens.css`, `css/tailwind.css` and `DESIGN.md` exist; token mappings and design tables are enforced. `tests/tokens.spec.ts` exercises source, Bun, Vite and Tailwind builds, nested scopes and overrides in three engines |
+| P3 — CSS contract | 66 component stylesheets, base/layout/fonts and the generated `sapphire.css` entry exist. 67 plain-HTML specimen pages include the foundations; label is demonstrated through the forms. Specimens take over 54 reference sections; 28 light/dark reference PNGs still use the v3 renderer. The scorecard's 45 component pin flags count only component folders declaring `data-pin`, not every parity-tested state |
+| P4–P5 — React and elements | Not started in the v4 folders: no component `.tsx`, React examples, component tests or `elements/` implementations. The retained `src/` implementations do not count as ports |
+| P6–P7 — package and registry | Not started as v4 deliverables. `package.json` still exports the v3 package: 4 runtime dependencies, 21 required peers and 88 export entries. The existing registry check passes 34 v3 items; there is no v4 source `registry.json` or ported `blocks/` |
+| P8–P10 — site, retirement and docs | `site/specimen.css` and the specimen server support P3; the public docs still build from `src/`. Old-lane retirement, the v4 docs site, API/contract/coverage/boundary gates and the docs/skill-reference gates remain work for their planned phases. Only the stylesheet import list is currently registered with the generated-files gate |
+| P11 — release | Pending. This review does not verify remote CI, npm configuration, installed consumers or production. Keep the first push, tag, deployment and production smoke in P11 |
+
+### Validation at `2e88221`
+
+- `bun run gate` passes: lint, typecheck, knip, comment (227 files), size (107 files), dependency,
+  token (187 files), budget, generated-files, freeze, 245 unit tests and the v3 registry check.
+  Biome reports 21 informational diagnostics in the retained lane; no errors or warnings fail it.
+- The v4 budget check measures **23,497 bytes gzipped against 23,765**, leaving **268 bytes**.
+  The scorecard instead reports **23,932 bytes** for the currently exported v3 stylesheet:
+  `tooling/scorecard/run.ts` builds the package and follows `package.json`'s stylesheet export.
+  Use `bun run budget-check` for the v4 CSS until P6 changes the package export.
+- `bun run test:a11y` passes **573 tests** across Chromium, Firefox and WebKit, including **402**
+  strict v4 specimen checks (67 pages × two schemes × three engines) and the token-build probes.
+  The old docs and interaction checks still log contrast violations without failing unless
+  `STRICT_A11Y=1`; this pass does not certify those pages as accessible.
+- Container visual/parity tests and the registry consumer/CLI smoke were not rerun in this review.
+  Committed pins and specs are evidence of coverage being present, not a fresh visual pass.
+
+### Remaining P3 work, in order
+
+1. Port cookie-banner and icon-mark CSS and specimens, then finish the class sweep. The current
+   `tooling/migrate/classes.test.ts` checks only families already renamed; it does not yet enforce
+   an entry or an explicit reason for every class declared by `src/index.css`. Uncovered groups
+   include typography, tags, icon marks and state classes. Analytics, SEO head and theme provider
+   deliberately need no CSS, so the scorecard's 72 rows are not a CSS completion denominator.
+2. Port `sp-icon`, replace the specimens' remaining font glyphs and move the remaining reference
+   sections through the established pin review. Preserve the v3 renderer until P9 has pinned all
+   states currently covered only by parity specs.
+3. Rerun gate, strict specimen a11y and the container visual/parity suite before closing P3. The
+   268-byte budget margin must absorb the remaining CSS; exceeding it needs the owner's decision,
+   not a silent ceiling increase. Then begin P4 with button, card and dialog.
+
+The P4 accessibility corrections already listed in the settled defaults remain open: tab-panel
+focus, keyboard access to bar-chart values, margin-note focus/overlap, toc truncation, prose
+markers/spacing, financial-header consistency and dark-card paragraph contrast. Static CSS and axe
+checks alone do not close those behaviour and layout gaps.
 
 ## 2. Target
 
@@ -458,8 +491,21 @@ Stop and ask the owner when:
 
 ## 10. Done means
 
-Measured by `bun run scorecard` at `bc2e116` and at the release commit, over the whole tree:
-runtime dependencies 4 → 0, required peers 21 → 0, export entries 88 → under 10, stray comments
-929 → 0, size-gate findings 75 in 40 files → 0, Markdown other than `CHANGELOG.md` 5,303 → at most
-2,651 lines, gzipped stylesheet under 23,765 bytes (measured at `dcdcf1e`, since `bc2e116`'s build
-fails).
+Measured by `bun run scorecard` over the whole tree, including the frozen lane. The middle column
+is the snapshot before this status-document update, not a claim that P9's retirement has happened.
+
+| Measure | Baseline `bc2e116` | Current `2e88221` | Release requirement |
+|---|---|---|---|
+| Runtime dependencies | 4 | 4 | 0 |
+| Required peers | 21 | 21 | 0 |
+| Export entries | 88 | 88 | Under 10 |
+| Stray comments | 929 | 771 | 0 |
+| Size findings / failing files | 75 / 40 | 56 / 29 | 0 / 0 |
+| Markdown lines, excluding `CHANGELOG.md` | 5,303 | 6,275 | At most 2,651 |
+| v4 stylesheet, gzipped | Not present | 23,497 bytes (`bun run budget-check`) | At most 23,765 bytes |
+
+The CSS ceiling is the recorded `dcdcf1e` measurement, since `bc2e116`'s build fails. The current
+scorecard's 23,932-byte stylesheet is v3, as explained in §1; it must not be compared to the v4
+budget as though it measured `sapphire.css`. Re-run the baseline and release scorecards at P11,
+after the package and old-lane retirement are complete. A green scoped gate now does not satisfy
+the whole-tree release requirements above.
