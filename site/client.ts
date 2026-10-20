@@ -68,7 +68,9 @@ document
   .querySelector('.docs-nav-backdrop')
   ?.addEventListener('click', () => navigation(false));
 document.addEventListener('keydown', shortcuts);
-mobile.addEventListener('change', () => navigation(false));
+mobile.addEventListener('change', () => {
+  if (document.body.hasAttribute('data-nav-open')) navigation(false);
+});
 for (const link of document.querySelectorAll('.docs-nav-link'))
   link.addEventListener('click', () => navigation(false));
 

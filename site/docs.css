@@ -25,8 +25,8 @@ html.docs-preview-page {
   flex-direction: column;
   height: 100dvh;
   padding: var(--space-5) var(--space-3) var(--space-3);
-  color: var(--foreground);
-  background: light-dark(var(--card), var(--sidebar));
+  color: var(--sidebar-foreground);
+  background: var(--sidebar);
   border-right: var(--border-width) solid var(--border);
 }
 
@@ -172,13 +172,11 @@ html.docs-preview-page {
   min-width: 0;
   width: 100%;
   max-width: var(--page-width);
-  padding: var(--space-8);
+  padding: var(--space-8) var(--space-10);
 }
 
 .docs-page-header {
-  margin-bottom: var(--space-6);
-  padding-bottom: var(--space-4);
-  border-bottom: var(--border-width) solid var(--border);
+  margin-bottom: var(--space-3);
 }
 
 .docs-page-header h1 {
@@ -202,13 +200,81 @@ html.docs-preview-page {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--space-3);
+  margin-top: var(--space-4);
 }
 
-.docs-example > h2,
-.docs-content > h2 {
+.docs-example > h3 {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.docs-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+  scroll-margin-top: var(--space-16);
+}
+
+.docs-section > h2 {
   margin: var(--space-2) 0 0;
-  font-size: var(--text-subheading);
+  padding-bottom: var(--space-2);
+  border-bottom: var(--border-width) solid var(--border);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 600;
   line-height: var(--leading-snug);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.docs-section > p {
+  margin: 0;
+}
+
+.docs-lead {
+  max-width: 80ch;
+  color: var(--muted-foreground);
+}
+
+.docs-content p a {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.docs-page-links {
+  font-size: var(--text-sm);
+}
+
+.docs-section .sp-card h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.docs-layer {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--brand-text);
+}
+
+.docs-component-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+}
+
+.docs-component-links a {
+  display: inline-block;
+  padding-block: var(--space-1);
 }
 
 .docs-preview {
@@ -234,6 +300,7 @@ html.docs-preview-page {
   font-size: var(--text-xs);
 }
 
+.docs-section > details,
 .docs-content > details {
   padding: var(--space-3) var(--space-4);
   border: var(--border-width) solid var(--border);
@@ -241,25 +308,16 @@ html.docs-preview-page {
   background: var(--card);
 }
 
+.docs-section > details > summary,
 .docs-content > details > summary {
   cursor: pointer;
   font-size: var(--text-sm);
   font-weight: 600;
 }
 
+.docs-section > details[open] > summary,
 .docs-content > details[open] > summary {
   margin-bottom: var(--space-3);
-}
-
-.docs-catalog h2 {
-  margin: 0;
-  font-family: var(--font-sans);
-  font-size: var(--text-base);
-  line-height: var(--leading-snug);
-}
-
-.docs-catalog p {
-  font-size: var(--text-xs);
 }
 
 .docs-footer {
@@ -293,8 +351,8 @@ html.docs-preview-page {
     justify-content: space-between;
     min-height: var(--space-12);
     padding: var(--space-2) var(--space-4);
-    color: var(--foreground);
-    background: light-dark(var(--card), var(--sidebar));
+    color: var(--sidebar-foreground);
+    background: var(--sidebar);
   }
 
   .docs-menu {

@@ -2,6 +2,8 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { THEME_INIT_SCRIPT } from '../../lib/theme';
 import type { ExampleRow } from '../examples/catalog';
+import { componentGroups } from './navigation';
+import { componentSetup } from './setup';
 
 const escapeHtml = (text: string) =>
   text
@@ -21,7 +23,59 @@ const searchDialog = `<dialog id="docs-search-dialog" class="docs-search-dialog 
 
 export function page(title: string, body: string, navigation = '') {
   const brand = '<a class="docs-brand" href="/">Sapphire <span>UI</span></a>';
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Sapphire UI: navy and gold components for React and native HTML."><title>${escapeHtml(title)} · Sapphire UI</title><script>${THEME_INIT_SCRIPT}</script><link rel="stylesheet" href="/assets/sapphire.css"><link rel="stylesheet" href="/assets/docs.css"></head><body class="docs-site"><a class="sp-sr-only-focusable" href="#main">Skip to content</a><header class="docs-mobile-bar">${brand}<button type="button" class="docs-menu" aria-label="Open navigation" aria-controls="docs-sidebar" aria-expanded="false"><svg class="sp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></header><aside id="docs-sidebar" class="docs-sidebar">${brand}<p class="docs-version">v4.0.0 · Design system</p><button type="button" class="docs-search" aria-label="Search documentation" aria-haspopup="dialog" aria-controls="docs-search-dialog"><span>Search documentation…</span><kbd aria-hidden="true">⌘K</kbd></button>${navigation}<div class="docs-sidebar-bottom"><button type="button" class="docs-theme" aria-label="Switch to dark theme">Theme: light</button><a class="docs-sidebar-footer" href="https://kongmy.dev">KONGMY.DEV ↗</a></div></aside><button class="docs-nav-backdrop" tabindex="-1" aria-label="Close navigation overlay"></button><main id="main" class="docs-main sp-cq" tabindex="-1"><header class="docs-page-header"><h1>${escapeHtml(title)}</h1></header><div class="docs-content">${body}</div><footer class="docs-footer">Sapphire UI · KONGMY Digital Solutions</footer></main>${searchDialog}<script type="module" src="/assets/site-client.js"></script></body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Sapphire UI: navy and gold components for React and native HTML."><title>${escapeHtml(title)} · Sapphire UI</title><script>${THEME_INIT_SCRIPT}</script><link rel="stylesheet" href="/assets/sapphire.css"><link rel="stylesheet" href="/assets/docs.css"></head><body class="docs-site"><a class="sp-sr-only-focusable" href="#main">Skip to content</a><header class="docs-mobile-bar" data-theme="dark">${brand}<button type="button" class="docs-menu" aria-label="Open navigation" aria-controls="docs-sidebar" aria-expanded="false"><svg class="sp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></header><aside id="docs-sidebar" class="docs-sidebar" data-theme="dark">${brand}<p class="docs-version">v4.0.0 · Design system</p><button type="button" class="docs-search" aria-label="Search documentation" aria-haspopup="dialog" aria-controls="docs-search-dialog"><span>Search documentation…</span><kbd aria-hidden="true">⌘K</kbd></button>${navigation}<div class="docs-sidebar-bottom"><button type="button" class="docs-theme" aria-label="Switch to dark theme">Theme: light</button><a class="docs-sidebar-footer" href="https://kongmy.dev">KONGMY.DEV ↗</a></div></aside><button class="docs-nav-backdrop" tabindex="-1" aria-label="Close navigation overlay"></button><main id="main" class="docs-main sp-cq" tabindex="-1"><header class="docs-page-header"><h1>${escapeHtml(title)}</h1></header><div class="docs-content">${body}</div><footer class="docs-footer">Sapphire UI · KONGMY Digital Solutions</footer></main>${searchDialog}<script type="module" src="/assets/site-client.js"></script></body></html>`;
+}
+
+const architecture = [
+  [
+    'CSS design system',
+    'Tokens, typography and shared component styles. Use plain HTML or your preferred framework.',
+    'import "@kongmy-dev/sapphire-ui/foundations.css";\nimport "@kongmy-dev/sapphire-ui/button.css";',
+    '/foundations/',
+    'Set up styles',
+  ],
+  [
+    'Native elements',
+    'Browser behaviour for site chrome, announcements and consent. Register only the elements you need.',
+    'import "@kongmy-dev/sapphire-ui/elements/banner";\nimport "@kongmy-dev/sapphire-ui/banner.css";',
+    '/native/',
+    'Explore native elements',
+  ],
+  [
+    'React components',
+    'Typed component entries with the same CSS contract. Install behaviour peers only where required.',
+    'import { Button } from "@kongmy-dev/sapphire-ui/button";',
+    '#catalogue',
+    'Explore the catalogue',
+  ],
+] as const;
+
+function catalogue(rows: readonly ExampleRow[], native: boolean) {
+  const names = [...new Set(rows.map((row) => row.component))];
+  if (native)
+    return names
+      .map(
+        (name) =>
+          `<article class="sp-card sp-stack"><h3><a href="/native/${name}/">${titleOf(name)}</a></h3><p>${rows.filter((row) => row.component === name).length} live examples</p></article>`,
+      )
+      .join('');
+  const grouped = new Set<string>(
+    componentGroups.flatMap(([, items]) => [...items]),
+  );
+  return [
+    ...componentGroups,
+    ['Utilities', names.filter((name) => !grouped.has(name))] as const,
+  ]
+    .map(([title, items]) => ({
+      title,
+      items: items.filter((name) => names.includes(name)),
+    }))
+    .filter(({ items }) => items.length)
+    .map(
+      ({ title, items }) =>
+        `<article class="sp-card sp-stack"><h3>${title}</h3><ul class="docs-component-links">${items.map((name) => `<li><a href="/components/${name}/">${titleOf(name)}</a></li>`).join('')}</ul></article>`,
+    )
+    .join('');
 }
 
 export function catalogPage(
@@ -29,11 +83,12 @@ export function catalogPage(
   native = false,
   navigation = '',
 ) {
-  const names = [...new Set(rows.map((row) => row.component))];
-  const prefix = native ? 'native' : 'components';
+  const intro = native
+    ? '<p class="docs-lead">Native browser behaviour. Shared Sapphire styles. Use custom elements in plain HTML or any framework.</p>'
+    : `<p class="docs-lead">A design system with editorial character and practical controls. Navy and gold, shared CSS, typed React components and native elements.</p><section class="docs-section"><h2>Architecture</h2><div class="sp-stack">${architecture.map(([title, description, source, href, label], index) => `<article class="sp-card sp-stack"><h3><span class="docs-layer">0${index + 1}</span>${title}</h3><p>${description}</p>${code(source)}<a href="${href}">${label} →</a></article>`).join('')}</div></section>`;
   return page(
     native ? 'Native elements' : 'Sapphire UI',
-    `<p>Editorial character. Practical controls. Use the package, plain HTML or source you own.</p>${code('bun add @kongmy-dev/sapphire-ui')}<p>Import foundations once, then the stylesheet for each component you use. Install React only for React components and behaviour peers only where required.</p>${code('import "@kongmy-dev/sapphire-ui/foundations.css";\nimport "@kongmy-dev/sapphire-ui/button.css";\nimport { Button } from "@kongmy-dev/sapphire-ui/button";')}<div class="docs-catalog sp-columns" data-columns="3" data-from="md">${names.map((name) => `<article class="sp-card"><div class="sp-card-header"><h2><a href="/${prefix}/${name}/">${titleOf(name)}</a></h2><p>${rows.filter((row) => row.component === name).length} examples · light and dark</p></div></article>`).join('')}</div>`,
+    `${intro}<section class="docs-section" id="quick-start"><h2>Quick start</h2>${code('bun add @kongmy-dev/sapphire-ui')}<p>Load foundations once, then the styles and entry points on each component page. <a href="/foundations/">Read the setup guide →</a></p></section><section class="docs-section" id="catalogue"><h2>${native ? 'Custom elements' : 'Component catalogue'}</h2><p>Choose a component for setup, live light and dark examples, and source.</p><div class="docs-catalog sp-columns" data-columns="2" data-from="md">${catalogue(rows, native)}</div></section>`,
     navigation,
   );
 }
@@ -42,7 +97,7 @@ const ranks: Record<string, number> = { variants: 0, default: 1, states: 2 };
 const exampleRank = (name: string) => ranks[name] ?? 3;
 
 function preview(row: ExampleRow, native: boolean) {
-  return `<section class="docs-example"><h2>${titleOf(row.name)}</h2><div class="docs-preview-columns sp-columns" data-columns="2" data-from="md">${[
+  return `<section class="docs-example" id="example-${row.name}"><h3>${titleOf(row.name)}</h3><div class="docs-preview-columns sp-columns" data-columns="2" data-from="md">${[
     'light',
     'dark',
   ]
@@ -62,17 +117,18 @@ export function componentPage(
   const first = rows[0];
   if (!first) throw new Error('A component needs examples');
   const name = first.component;
-  const { text, imports, snippet } = componentSource(root, name, native);
+  const { text, snippet } = componentSource(root, name, native);
+  const { imports, install } = componentSetup(root, name, native);
   return page(
     titleOf(name),
-    `<nav aria-label="Breadcrumb"><a href="/${native ? 'native/' : ''}">All ${native ? 'native elements' : 'components'}</a></nav>${code(imports)}${[
+    `<p class="docs-lead">${native ? 'Native HTML' : 'Component'} · ${rows.length} named examples, shown in both colour schemes.</p><nav class="docs-page-links sp-cluster" aria-label="On this page"><a href="#setup">Setup</a><a href="#examples">Examples</a><a href="#source">Source</a><a href="/${native ? 'native/' : '#catalogue'}">All ${native ? 'native elements' : 'components'} →</a></nav><section class="docs-section" id="setup"><h2>Setup</h2>${code(install)}<p>For an app using package components throughout, load the full stylesheet once. Add this ${native ? 'element registration' : 'component import'} where you use it.</p>${code(imports)}<p>Mixing package and vendored components? Use the selective styles in <a href="/foundations/">application setup</a> · <a href="/tokens/">Tokens and themes</a></p></section><section class="docs-section" id="examples"><h2>Examples</h2>${[
       ...rows,
     ]
       .sort((a, b) => exampleRank(a.name) - exampleRank(b.name))
       .map((row) => preview(row, native))
       .join(
         '',
-      )}<details><summary>Component source</summary>${code(text)}</details><details><summary>Example source</summary>${code(readFileSync(join(root, first.file), 'utf8'))}</details><details><summary>HTML specimen source</summary>${code(snippet)}</details>`,
+      )}</section><section class="docs-section" id="source"><h2>Source</h2><details><summary>Component source</summary>${code(text)}</details><details><summary>Example source</summary>${code(readFileSync(join(root, first.file), 'utf8'))}</details><details><summary>HTML specimen source</summary>${code(snippet)}</details></section>`,
     navigation,
   );
 }
@@ -86,20 +142,7 @@ function componentSource(root: string, name: string, native: boolean) {
     join(root, runtime ? source : `components/${name}/${name}.css`),
     'utf8',
   );
-  const exported = /export (?:function|const) (\w+)/.exec(text)?.[1] ?? name;
-  const snippet = htmlSource(root, name);
-  const path = native ? `elements/${name}` : name;
-  const imports = [
-    runtime
-      ? `import { ${exported} } from "@kongmy-dev/sapphire-ui/${path}";`
-      : '',
-    existsSync(join(root, `components/${name}/${name}.css`))
-      ? `import "@kongmy-dev/sapphire-ui/${name}.css";`
-      : '',
-  ]
-    .filter(Boolean)
-    .join('\n');
-  return { text, imports, snippet };
+  return { text, snippet: htmlSource(root, name) };
 }
 
 function htmlSource(root: string, name: string) {
