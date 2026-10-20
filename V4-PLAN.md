@@ -643,17 +643,17 @@ Stop and ask the owner when:
 
 ## 10. Done means
 
-Measured by `bun run scorecard` over the whole tree. The current column is the completed P9
-snapshot before the P10 documentation consolidation; the final release measurement follows P11.
+Measured by `bun run scorecard` over the whole tree. The current column measures the completed
+implementation and migration tooling at the release candidate, before remote release verification.
 
-| Measure | Baseline `bc2e116` | Current `b52f10d` | Release requirement |
+| Measure | Baseline `bc2e116` | Current `64bba24` | Release requirement |
 |---|---|---|---|
 | Runtime dependencies | 4 | 0 | 0 |
 | Required peers | 21 | 0 | 0 |
 | Reachable public subpaths | 88 historical export keys | 156, packed and tested | No unintended internals |
 | Stray comments | 929 | 0 | 0 |
 | Size findings / failing files | 75 / 40 | 0 / 0 | 0 / 0 |
-| Markdown lines, excluding `CHANGELOG.md` | 5,303 | 3,150 before P10 | Target at most 2,651; complete consumer guidance takes precedence |
+| Markdown lines, excluding `CHANGELOG.md` | 5,303 | 1,837 | Target at most 2,651; complete consumer guidance takes precedence |
 | v4 stylesheet, gzipped | Unavailable: baseline build fails | 24,500 bytes | At most 24,576 bytes (owner-approved D5 cap) |
 
 Both columns were measured with `bun run scorecard` at their named commits. The baseline
