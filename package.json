@@ -497,7 +497,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "4.12.1",
-    "@biomejs/biome": "2.5.3",
+    "@biomejs/biome": "2.5.15",
     "@fontsource-variable/jetbrains-mono": "5.3.0",
     "@fontsource-variable/newsreader": "5.3.0",
     "@fontsource-variable/source-sans-3": "5.3.1",
