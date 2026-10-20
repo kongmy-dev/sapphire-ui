@@ -217,3 +217,60 @@ it('renames CSS tokens and overrides without altering strings, comments, URLs or
   expect(result.issues[0]?.message).toContain('theme.css');
   expect(migrateText('app.css', result.text).text).toBe(result.text);
 });
+
+it('migrates exact colour utility families while preserving variants and opacity', () => {
+  const families = [
+    'border-x',
+    'border-y',
+    'border-s',
+    'border-e',
+    'border-t',
+    'border-r',
+    'border-b',
+    'border-l',
+    'ring-offset',
+    'inset-ring',
+    'inset-shadow',
+    'text-shadow',
+    'caret',
+    'accent',
+    'from',
+    'via',
+    'to',
+  ];
+  for (const family of families) {
+    const before = `<div class="dark:hover:${family}-text-muted/80"/>`;
+    const result = migrateText('index.html', before);
+    expect(result.text).toBe(
+      `<div class="dark:hover:${family}-muted-foreground/80"/>`,
+    );
+    expect(result.issues).toEqual([]);
+    expect(migrateText('index.html', result.text).text).toBe(result.text);
+    const ambiguous = `<div class="hover:${family}-accent/50"/>`;
+    expect(migrateText('index.html', ambiguous).text).toBe(ambiguous);
+    expect(migrateText('index.html', ambiguous).issues).toHaveLength(1);
+    const custom = `<div class="custom-${family}-text-muted"/>`;
+    expect(migrateText('index.html', custom)).toEqual({
+      text: custom,
+      changes: 0,
+      issues: [],
+    });
+  }
+  const identities =
+    '<div class="font-serif text-heading leading-snug rounded-lg shadow-card-hover"/>';
+  expect(migrateText('index.html', identities)).toEqual({
+    text: identities,
+    changes: 0,
+    issues: [],
+  });
+});
+
+it('does not migrate token-shaped payloads inside escaped unquoted CSS URLs', () => {
+  const source =
+    '.hero { background: url(foo\\);--color-primary:bar); color: var(--color-text-main); }';
+  const result = migrateText('app.css', source);
+  expect(result.text).toBe(
+    source.replace('var(--color-text-main)', 'var(--foreground)'),
+  );
+  expect(result.issues).toEqual([]);
+});

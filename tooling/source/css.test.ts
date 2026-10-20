@@ -36,3 +36,18 @@ describe('css scan', () => {
     expect(locate('one\ntwo\nthree', 10)).toEqual({ line: 3, column: 2 });
   });
 });
+
+it('keeps escaped URL delimiters inside the payload and resumes at the real close', () => {
+  const source =
+    '.hero { background: url(foo\\);--color-primary:bar); color: var(--color-text-main); }';
+  const { masked } = scanCss(source);
+  expect(masked).toHaveLength(source.length);
+  expect(masked).not.toContain('--color-primary');
+  expect(masked).toContain('color: var(--color-text-main)');
+  const escapedBackslash = scanCss(
+    'a { background: url(foo\\\\); color: red; }',
+  );
+  expect(escapedBackslash.masked).toContain('); color: red;');
+  const unterminated = scanCss('a { background: url(foo\\) --color-primary');
+  expect(unterminated.masked).not.toContain('--color-primary');
+});

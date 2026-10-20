@@ -34,14 +34,20 @@ function stringRegion(text: string, start: number): Region | null {
 
 const UNQUOTED_URL = /^url\(\s*(?!["'\s])/i;
 
+function unquotedUrlEnd(text: string, start: number): number {
+  let end = start;
+  while (end < text.length && text[end] !== ')')
+    end += text[end] === '\\' ? 2 : 1;
+  return Math.min(end, text.length);
+}
+
 function urlRegion(text: string, start: number): Region | null {
   if (text[start] !== 'u' && text[start] !== 'U') return null;
   if (/[\w-]/.test(text[start - 1] ?? '')) return null;
   const opening = UNQUOTED_URL.exec(text.slice(start, start + 64));
   if (!opening) return null;
   const from = start + opening[0].length;
-  const close = text.indexOf(')', from);
-  const end = close < 0 ? text.length : close;
+  const end = unquotedUrlEnd(text, from);
   return { blank: { pos: from, end }, next: end + 1, isComment: false };
 }
 
