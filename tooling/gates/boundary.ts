@@ -98,6 +98,7 @@ function testPackageProblems(input: {
     '@testing-library/user-event',
     '@playwright/test',
     '@radix-ui/react-slot',
+    'radix-ui',
   ];
   return allowed.includes(packageOf(specifier))
     ? []

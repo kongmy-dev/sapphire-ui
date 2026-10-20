@@ -128,3 +128,19 @@ test('boundary allows icons in examples and reference primitives only in tests',
     ),
   ).toBe(true);
 });
+
+test('boundary permits public Radix composition without exposing private component modules', () => {
+  const result = check([
+    file(
+      'components/dropdown-menu/dropdown-menu.test.tsx',
+      `import { DropdownMenu } from 'radix-ui'; import './dropdown-menu'; import './private';`,
+    ),
+    file('components/dropdown-menu/dropdown-menu.tsx'),
+    file('components/dropdown-menu/private.ts'),
+  ]);
+  expect(result.violations).toHaveLength(1);
+  expect(result.violations[0]?.problem).toBe(
+    'Test imports private module components/dropdown-menu/private.ts',
+  );
+  expect(result.violations[0]?.rule).toBe('P-2');
+});
