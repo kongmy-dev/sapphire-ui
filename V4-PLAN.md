@@ -1,7 +1,7 @@
 # Sapphire UI v4 — plan
 
 **Status:** Implementation authorized through P11, with at most two GPT-6.1 Sol subagents.
-P0–P9 are complete. P10 documentation consolidation and P11 migration/release work are active.
+P0–P10 are complete. P11 migration tooling is complete; remote release validation is next.
 The v4-only visual suite passes 748 zero-tolerance cases; all 1,578 final browser checks pass
 with 161 discovered examples after retirement. No remote push, v4 tag or publication has occurred yet.
 D5 retains button widths while reducing height and applies the approved targeted polish.
@@ -12,6 +12,12 @@ Delete this file when 4.0.0 ships.
 - The owner approved a narrow Bun-only exception for CI `npm publish` so releases can use
   tokenless trusted publishing and provenance. All installs, builds, tests and other tooling
   remain Bun. This exception does not authorize other npm commands.
+- P11's integrated gate passes **912 tests**, including **39 migration tests** and **102
+  migration assertions**. The CLI previews without writes, skips symlinks/dependencies,
+  safely rewrites literals and reports manual work. CHANGELOG migration maps are generated
+  and freshness-checked. Settled owner decisions are preserved in ADRs 0001–0005.
+- The owner confirmed the npm trusted publisher matches `publish.yaml`. Cloudflare deployment
+  is automated from Git; verify its build and live routes after the first push, without local deployment.
 
 - All P4 React families, six hooks, app layouts and approved visual polish are integrated.
   All six P5 native elements are integrated. The final post-retirement browser suite passes **1,578 checks**;
@@ -78,7 +84,7 @@ remain the acceptance criteria; retained v3 code does not count as a v4 implemen
 | P8 — site | Source-generated pages and foundations guides pass route, accessibility, mobile overflow and token-build checks. Clean production build and deployment dry run pass; deployed smoke remains P11 |
 | P9 — retirement | Complete: v3 runtime/build removed, historical migration facts and legacy registry retained, interaction inventory preserved. Current size limits retained by owner approval; measured p95 is 4/34/211/5. Package dry run lists only allowed files, then stops for missing local publish credentials; packed consumer checks pass |
 | P10 — docs | Complete: CLAUDE is 84 lines, consumer skill 40 lines; consolidated guidance, docs and skill-reference gates pass. Release migration notes remain P11 |
-| P11 — release | Pending. This review does not verify remote CI, npm configuration, installed consumers or production. Keep the first push, tag and production smoke in P11. Cloudflare deployment is automated from Git; no local deploy is required |
+| P11 — release | Migration tooling, generated release maps, local gates and consumer smoke complete. Trusted publisher confirmed by owner. First push, remote CI stabilization, v4 tag, publication and production smoke remain. Cloudflare deployment is automated from Git; no local deploy is required |
 
 ### P3 completion checkpoint
 
@@ -548,9 +554,9 @@ and sweeps what is left (§6); contradictory active instructions were already re
 `tooling/migrate/map.ts`, and `bun run migrate <app>` applies them. CI runs `bun run gate` and the
 a11y, visual and smoke specs. Nothing is pushed before this step, so the first push runs CI over
 all of v4 at once: budget a shake-out (the arm64 visual job, the pin image, the three-engine a11y
-run) before the tag. `v3`'s `publish.yml` first gains `--tag v3`, so a 3.x fix never takes
+run) before the tag. `v3`'s `publish.yaml` first gains `--tag v3`, so a 3.x fix never takes
 `latest`. The owner adds the trusted publisher on npmjs.com, pushes `master`, then the `v4.0.0`
-tag only after the remote CI stabilization checkpoint in §3 passes; `publish.yml` publishes after
+tag only after the remote CI stabilization checkpoint in §3 passes; `publish.yaml` publishes after
 CI passes; then deploy and the production smoke. `bun run scorecard` at `bc2e116` and at the release
 commit fills §10.
 

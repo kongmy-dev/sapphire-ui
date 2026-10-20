@@ -450,6 +450,8 @@
     "budget-check": "bun tooling/gates/budget.ts",
     "generated-check": "bun tooling/gates/generated.ts",
     "generate": "bun tooling/generate.ts",
+    "migrate": "bun tooling/migrate/cli.ts",
+    "generate:migration": "bun tooling/migrate/changelog.ts",
     "dep-check": "bun tooling/gates/deps.ts",
     "scorecard": "bun tooling/scorecard/run.ts",
     "test:visual": "bun tooling/visual/test.ts",
