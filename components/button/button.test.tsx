@@ -147,6 +147,19 @@ for (const state of ['disabled', 'loading'] as const) {
   });
 }
 
+it('keeps a loading slotted child busy even when its own attributes conflict', () => {
+  render(
+    <Button asChild loading>
+      <a href="#busy" aria-busy={false} aria-disabled={false}>
+        Saving link
+      </a>
+    </Button>,
+  );
+  const link = screen.getByRole('link');
+  expect(link.getAttribute('aria-busy')).toBe('true');
+  expect(link.getAttribute('aria-disabled')).toBe('true');
+});
+
 it('disables native activation and keeps an explicit accessible busy state', () => {
   const callback = mock(() => {});
   render(

@@ -49,10 +49,11 @@ function preventActivation(event: SyntheticEvent) {
   event.stopPropagation();
 }
 
-function inactiveChild(children: ReactNode) {
+function inactiveChild(children: ReactNode, loading: boolean | undefined) {
   if (!isValidElement<Record<string, unknown>>(children)) return children;
   return cloneElement(children, {
     'aria-disabled': true,
+    'aria-busy': loading || children.props['aria-busy'],
     disabled: true,
     onAuxClickCapture: preventActivation,
     tabIndex: -1,
@@ -88,8 +89,11 @@ function buttonContent({
   );
 }
 
-function slottedContent(content: ReactNode, inactive: boolean | undefined) {
-  return inactive ? inactiveChild(content) : content;
+function slottedContent(
+  content: ReactNode,
+  { disabled, loading }: ButtonProps,
+) {
+  return disabled || loading ? inactiveChild(content, loading) : content;
 }
 
 export function Button({
@@ -133,7 +137,7 @@ export function Button({
       aria-disabled={inactive || props['aria-disabled']}
       aria-busy={stateAttribute(loading, props['aria-busy'])}
     >
-      {asChild ? slottedContent(content, inactive) : content}
+      {asChild ? slottedContent(content, { disabled, loading }) : content}
     </Comp>
   );
 }
