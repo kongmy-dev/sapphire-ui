@@ -27,6 +27,18 @@ function staticText(node: ts.Node | undefined): string {
   return '';
 }
 
+function classText(node: ts.Node | undefined, checker: ts.TypeChecker): string {
+  if (node === undefined) return '';
+  const parts = [staticText(node)];
+  const visit = (child: ts.Node): void => {
+    if (ts.isStringLiteralLike(child)) parts.push(child.text);
+    ts.forEachChild(child, visit);
+  };
+  ts.forEachChild(node, visit);
+  const typed = stringValues(checker.getTypeAtLocation(node));
+  return [...parts, ...(typed ?? [])].join(' ');
+}
+
 function stringValues(type: ts.Type): string[] | null {
   if (type.isStringLiteral()) return [type.value];
   if (type.isNumberLiteral()) return [String(type.value)];
@@ -89,8 +101,9 @@ function readTag(input: {
   const classAttribute = attributes.find(
     (attribute) => attribute.name.getText(source) === 'className',
   );
-  const classes = staticText(
+  const classes = classText(
     classAttribute === undefined ? undefined : expressionOf(classAttribute),
+    checker,
   )
     .split(/\s+/)
     .filter((name) => name.startsWith('sp-'));

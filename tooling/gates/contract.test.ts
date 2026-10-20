@@ -88,3 +88,16 @@ test('contract ignores strings and comments that are not CSS selectors', () => {
     ).violations,
   ).toEqual([]);
 });
+
+test('contract checks class arrays and conditional class expressions used by production components', () => {
+  const array = source().replace(
+    'className="sp-button"',
+    `className={['sp-button', 'sp-typo'].filter(Boolean).join(' ')}`,
+  );
+  expect(check(array).violations[0]?.problem).toContain('sp-typo');
+  const conditional = source().replace(
+    'className="sp-button"',
+    `className={variant === 'outline' ? 'sp-button' : 'sp-typo'}`,
+  );
+  expect(check(conditional).violations[0]?.problem).toContain('sp-typo');
+});
