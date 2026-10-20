@@ -454,7 +454,7 @@
     "scorecard": "bun tooling/scorecard/run.ts",
     "test:visual": "bun tooling/visual/test.ts",
     "pin": "bun tooling/visual/pin.ts",
-    "gate": "bun run lint && bun run typecheck && bun run knip && bun run comment-check && bun run size-check && bun run dep-check && bun run token-check && bun run budget-check && bun run generated-check && bun run api-check && bun run boundary-check && bun run contract-check && bun run test && bun run coverage-check && bun run check:registry",
+    "gate": "bun run lint && bun run typecheck && bun run knip && bun run comment-check && bun run size-check && bun run dep-check && bun run token-check && bun run budget-check && bun run generated-check && bun run api-check && bun run boundary-check && bun run contract-check && bun run docs-check && bun run skill-refs-check && bun run test && bun run coverage-check && bun run check:registry",
     "deploy:docs": "bun run build:docs && wrangler deploy",
     "boundary-check": "bun tooling/gates/boundary.ts",
     "contract-check": "bun tooling/gates/contract.ts",
@@ -468,7 +468,10 @@
     "generate:registry": "bun tooling/registry/generate.ts",
     "build:registry:v4": "bun tooling/registry/build.ts",
     "check:registry:v4": "bun tooling/registry/check.ts",
-    "smoke:registry:v4": "bun tooling/registry/smoke.ts"
+    "smoke:registry:v4": "bun tooling/registry/smoke.ts",
+    "docs-check": "bun tooling/gates/docs.ts",
+    "skill-refs-check": "bun tooling/gates/skill-refs.ts",
+    "test:published": "bun tooling/package/published-smoke.ts"
   },
   "peerDependencies": {
     "react": "^19.0.0",

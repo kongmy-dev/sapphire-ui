@@ -146,6 +146,12 @@ export async function smokePackage(root: string) {
   const scratch = mkdtempSync(join(tmpdir(), 'sapphire-package-'));
   await buildPackage(root);
   const tarball = await packPackage(root, scratch);
+  await smokeTarball(root, tarball);
+  return tarball;
+}
+
+export async function smokeTarball(root: string, tarball: string) {
+  const scratch = mkdtempSync(join(tmpdir(), 'sapphire-consumer-'));
   const cwd = await cssOnly(root, scratch, tarball);
   await exportBoundaries(root, cwd);
   await elementSideEffects(root, cwd);
@@ -154,7 +160,6 @@ export async function smokePackage(root: string) {
   process.stdout.write(
     `Package consumer smokes passed: ${scratch}\n${Object.keys(packageEntries(root)).length} reachable public subpaths\nTarball: ${tarball}\n`,
   );
-  return tarball;
 }
 
 if (import.meta.main) await smokePackage(process.cwd());

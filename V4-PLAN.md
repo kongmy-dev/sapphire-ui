@@ -2,8 +2,8 @@
 
 **Status:** Implementation authorized through P11, with at most two GPT-6.1 Sol subagents.
 P0–P9 are complete. P10 documentation consolidation and P11 migration/release work are active.
-The v4-only visual suite passes 748 zero-tolerance cases; final whole-tree browser validation is
-running after retirement. No remote push, v4 tag or publication has occurred yet.
+The v4-only visual suite passes 748 zero-tolerance cases; all 1,578 final browser checks pass
+with 161 discovered examples after retirement. No remote push, v4 tag or publication has occurred yet.
 D5 retains button widths while reducing height and applies the approved targeted polish.
 Delete this file when 4.0.0 ships.
 
@@ -14,12 +14,12 @@ Delete this file when 4.0.0 ships.
   remain Bun. This exception does not authorize other npm commands.
 
 - All P4 React families, six hooks, app layouts and approved visual polish are integrated.
-  All six P5 native elements are integrated. The complete browser suite passes **1,605 checks**;
+  All six P5 native elements are integrated. The final post-retirement browser suite passes **1,578 checks**;
   native accessibility/keyboard checks pass **48/48** and React/native class/data equivalence
   passes **36/36**, across all three engines. A further **144** source-site and token-build
   checks pass, including mobile overflow, keyboard skip links and every generated page route.
 - The integrated pre-registry gate passed **885 tests** and coverage for **168 runtime/example
-  files**. The post-retirement gate passes 883 tests with the new registry. The accepted visual update
+  files**. The integrated P10 gate passes 893 tests with the new registry, docs and skill-reference checks. The accepted visual update
   passes **730 cases**; the final v4-only comparison passes **748 cases** at zero pixel tolerance.
 - P6 ships 156 exact ESM/type/CSS subpaths, zero runtime dependencies and four optional peers.
   Packed consumer checks pass for CSS-only, native SSR/registration, React without Radix and
@@ -77,7 +77,7 @@ remain the acceptance criteria; retained v3 code does not count as a v4 implemen
 | P7 — registry | Integrated: 33 v4 items, seven ported blocks, frozen legacy URLs and passing real CLI/mixed ownership smoke. Integrated gate and production build pass; deployed smoke remains P11 |
 | P8 — site | Source-generated pages and foundations guides pass route, accessibility, mobile overflow and token-build checks. Clean production build and deployment dry run pass; deployed smoke remains P11 |
 | P9 — retirement | Complete: v3 runtime/build removed, historical migration facts and legacy registry retained, interaction inventory preserved. Current size limits retained by owner approval; measured p95 is 4/34/211/5. Package dry run lists only allowed files, then stops for missing local publish credentials; packed consumer checks pass |
-| P10 — docs | Consolidation, documentation gates and skill-reference checks are under final validation |
+| P10 — docs | Complete: CLAUDE is 84 lines, consumer skill 40 lines; consolidated guidance, docs and skill-reference gates pass. Release migration notes remain P11 |
 | P11 — release | Pending. This review does not verify remote CI, npm configuration, installed consumers or production. Keep the first push, tag and production smoke in P11. Cloudflare deployment is automated from Git; no local deploy is required |
 
 ### P3 completion checkpoint
@@ -637,22 +637,21 @@ Stop and ask the owner when:
 
 ## 10. Done means
 
-Measured by `bun run scorecard` over the whole tree, including the frozen lane. The middle column
-is the snapshot before this status-document update, not a claim that P9's retirement has happened.
+Measured by `bun run scorecard` over the whole tree. The current column is the completed P9
+snapshot before the P10 documentation consolidation; the final release measurement follows P11.
 
-| Measure | Baseline `bc2e116` | Current `2e88221` | Release requirement |
+| Measure | Baseline `bc2e116` | Current `b52f10d` | Release requirement |
 |---|---|---|---|
-| Runtime dependencies | 4 | 4 | 0 |
-| Required peers | 21 | 21 | 0 |
-| Export entries (historical key count) | 88 | 88 | Enumerate reachable public subpaths; no unintended internals |
-| Stray comments | 929 | 771 | 0 |
-| Size findings / failing files | 75 / 40 | 56 / 29 | 0 / 0 |
-| Markdown lines, excluding `CHANGELOG.md` | 5,303 | 6,275 | Target at most 2,651; complete consumer guidance takes precedence |
-| v4 stylesheet, gzipped | Not present | 23,497 bytes (`bun run budget-check`) | At most 24,576 bytes (owner-approved D5 cap) |
+| Runtime dependencies | 4 | 0 | 0 |
+| Required peers | 21 | 0 | 0 |
+| Reachable public subpaths | 88 historical export keys | 156, packed and tested | No unintended internals |
+| Stray comments | 929 | 0 | 0 |
+| Size findings / failing files | 75 / 40 | 0 / 0 | 0 / 0 |
+| Markdown lines, excluding `CHANGELOG.md` | 5,303 | 3,150 before P10 | Target at most 2,651; complete consumer guidance takes precedence |
+| v4 stylesheet, gzipped | Unavailable: baseline build fails | 24,500 bytes | At most 24,576 bytes (owner-approved D5 cap) |
 
-The CSS ceiling is 24 KiB, approved by the owner for D5 density and touch-target refinement.
-The original baseline used the recorded `dcdcf1e` measurement, since `bc2e116`'s build fails. The current
-scorecard's 23,932-byte stylesheet is v3, as explained in §1; it must not be compared to the v4
-budget as though it measured `sapphire.css`. Re-run the baseline and release scorecards at P11,
-after the package and old-lane retirement are complete. A green scoped gate now does not satisfy
-the whole-tree release requirements above.
+Both columns were measured with `bun run scorecard` at their named commits. The baseline
+stylesheet remains unmeasured because its build cannot resolve the resizing dependency; do not
+substitute a different revision's CSS as though it were the baseline. The owner approved the
+24 KiB ceiling for UI value and accessible touch targets. Current size limits remain enforced;
+the improved p95 is recorded in `.quality-baseline.json`, not imposed retroactively.
