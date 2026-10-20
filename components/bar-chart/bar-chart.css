@@ -19,6 +19,11 @@
     align-items: center;
     justify-content: flex-end;
     height: 100%;
+    padding: 0;
+    color: inherit;
+    cursor: help;
+    background: transparent;
+    border: 0;
   }
 
   .sp-bar-chart-bar {
@@ -56,6 +61,15 @@
     font-family: var(--font-mono);
     font-size: calc(var(--text-base) * 0.625);
     color: var(--muted-foreground);
+  }
+
+  .sp-bar-chart-column:focus-visible {
+    outline: var(--ring-width) solid var(--ring);
+    outline-offset: var(--ring-offset);
+  }
+
+  .sp-bar-chart-column:focus-visible .sp-bar-chart-value {
+    opacity: 1;
   }
 
   @media (hover: hover) {
