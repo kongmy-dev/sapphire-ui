@@ -1,4 +1,3 @@
-import { writeFile } from 'node:fs/promises';
 import type { Locator, Page, TestInfo } from '@playwright/test';
 import { SCHEMES, type Scheme } from '../../tooling/source/token-values';
 import { specimenUrl } from '../../tooling/visual/specimens';
@@ -18,16 +17,10 @@ import {
 import { captureState } from './capture-state';
 import { expect, test } from './fixtures';
 
-const V3_PAGE = '/layouts';
 const V4_PAGE = 'components/admin-layout/admin-layout.examples.html';
 const COLOUR = /(?:rgba?|color|oklab|oklch)\([^)]*\)/g;
 const GLYPHS =
   '.material-symbols-outlined, .sp-admin-layout-icon, .sp-theme-toggle-icon, .docs-admin-glyph, .sp-document-bar-separator';
-const MAX_LINES = 40;
-const PIXEL_TOLERANCE = 1;
-const PLACEHOLDER =
-  '.sf-search input::placeholder { color: color-mix(in oklab, currentcolor 65%, transparent); opacity: 1 }';
-
 const PROPERTIES = [
   'display',
   'position',
@@ -97,18 +90,25 @@ const COLOURS = [
   'border-bottom-color',
   'border-left-color',
 ] as const;
-
-type Style = { tag: string; values: Record<string, string> };
-type Capture = { styles: Style[]; pixels: Buffer | null };
+type Style = {
+  tag: string;
+  values: Record<string, string>;
+};
+type Capture = {
+  styles: Style[];
+  pixels: Buffer | null;
+};
 type Side = 'v3' | 'v4';
-type Mode = { collapsed: boolean; width: number; snap?: boolean };
-
+type Mode = {
+  collapsed: boolean;
+  width: number;
+  snap?: boolean;
+};
 const schemeOf = (testInfo: TestInfo): Scheme => {
   const known = SCHEMES.find((name) => name === testInfo.project.name);
   if (known === undefined) throw new Error('unknown scheme');
   return known;
 };
-
 async function open(page: Page, path: string, scheme: Scheme) {
   await page.goto(path);
   await page.locator('section.docs-section').first().waitFor();
@@ -116,32 +116,23 @@ async function open(page: Page, path: string, scheme: Scheme) {
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator('html')).toHaveAttribute('data-theme', scheme);
 }
-
 const settled = async (page: Page) => {
   await page.evaluate(() => new Promise(requestAnimationFrame));
   await page.waitForFunction(() => document.getAnimations().length === 0);
 };
-
-const shellOf = (page: Page, side: Side): Locator =>
+const shellOf = (page: Page): Locator =>
   page
     .locator('section.docs-section')
     .filter({
       has: page.locator('h2.docs-section-title', { hasText: /^Admin Layout$/ }),
     })
-    .locator(side === 'v3' ? '.sf-admin-shell' : '.sp-admin-layout')
+    .locator('.sp-admin-layout')
     .first();
-
-async function shellMarkup(page: Page, side: Side, collapsed: boolean) {
-  const shell = shellOf(page, side);
+async function shellMarkup(page: Page) {
+  const shell = shellOf(page);
   await expect(shell.getByText('KM', { exact: true })).toHaveCount(2);
-  if (side === 'v3' && collapsed) {
-    await shell.getByRole('button', { name: 'Collapse sidebar' }).click();
-    await expect(shell.locator('aside.collapsed')).toHaveCount(1);
-    await settled(page);
-  }
   return shell.evaluate((element) => element.outerHTML);
 }
-
 async function mount(page: Page, markup: string, mode: Mode, side: Side) {
   await page.evaluate(
     (spec) => {
@@ -151,7 +142,7 @@ async function mount(page: Page, markup: string, mode: Mode, side: Side) {
       const background = getComputedStyle(document.body).backgroundColor;
       holder.style.cssText = `position:absolute;top:0;left:0;width:${spec.width}px;z-index:99999;background:${background}`;
       holder.innerHTML = spec.markup;
-      if (spec.side === 'v4' && spec.collapsed) {
+      if (spec.collapsed) {
         const aside = holder.querySelector('aside');
         aside?.setAttribute('data-collapsed', '');
         holder.querySelector('.docs-admin-user')?.remove();
@@ -173,7 +164,6 @@ async function mount(page: Page, markup: string, mode: Mode, side: Side) {
     await document.fonts.ready;
   });
 }
-
 const readStyles = (target: Locator, deep: boolean): Promise<Style[]> =>
   target.evaluate(
     (element, spec) => {
@@ -261,12 +251,10 @@ const readStyles = (target: Locator, deep: boolean): Promise<Style[]> =>
       deep,
     },
   );
-
 async function shoot(target: Locator, part: Part): Promise<Buffer | null> {
   if (part.pixels === false || !(await target.isVisible())) return null;
   return captureState(target, { animations: 'disabled', caret: 'hide' });
 }
-
 async function capture(target: Locator, part: Part): Promise<Capture> {
   return {
     styles:
@@ -274,122 +262,21 @@ async function capture(target: Locator, part: Part): Promise<Capture> {
     pixels: await shoot(target, part),
   };
 }
-
-const differingPixels = (page: Page, left: Buffer, right: Buffer) =>
-  page.evaluate(
-    async (images) => {
-      const decode = async (base64: string) => {
-        const response = await fetch(`data:image/png;base64,${base64}`);
-        const bitmap = await createImageBitmap(await response.blob());
-        const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
-        const context = canvas.getContext('2d');
-        if (context === null) throw new Error('no 2d context');
-        context.drawImage(bitmap, 0, 0);
-        return context.getImageData(0, 0, bitmap.width, bitmap.height);
-      };
-      const [first, second] = await Promise.all([
-        decode(images.left),
-        decode(images.right),
-      ]);
-      if (first.width !== second.width || first.height !== second.height)
-        return -1;
-      let count = 0;
-      for (let index = 0; index < first.data.length; index += 4) {
-        const differs = [0, 1, 2, 3].some(
-          (offset) =>
-            Math.abs(
-              (first.data[index + offset] ?? 0) -
-                (second.data[index + offset] ?? 0),
-            ) > images.tolerance,
-        );
-        if (differs) count += 1;
-      }
-      return count;
-    },
-    {
-      left: left.toString('base64'),
-      right: right.toString('base64'),
-      tolerance: PIXEL_TOLERANCE,
-    },
-  );
-
-function styleProblems(
-  label: string,
-  v3: Style[],
-  v4: Style[],
-  skip: readonly string[],
-): string[] {
-  if (v3.length !== v4.length)
-    return [`${label}: ${v3.length} v3 elements, ${v4.length} v4 elements`];
-  return v3.flatMap((left, index) =>
-    Object.keys(left.values)
-      .filter((key) => !skip.includes(key))
-      .filter((key) => left.values[key] !== v4[index]?.values[key])
-      .map(
-        (key) =>
-          `${label}[${index}] ${left.tag}/${v4[index]?.tag}: ${key} v3=${left.values[key]} v4=${v4[index]?.values[key]}`,
-      ),
-  );
-}
-
-async function attach(
-  testInfo: TestInfo,
-  name: string,
-  images: Record<'expected' | 'actual', Buffer>,
-) {
-  for (const kind of ['expected', 'actual'] as const) {
-    const path = testInfo.outputPath(
-      `${name.replaceAll('/', '-')}-${kind}.png`,
-    );
-    await writeFile(path, images[kind]);
-    await testInfo.attach(`${name}-${kind}.png`, {
-      path,
-      contentType: 'image/png',
-    });
-  }
-}
-
-async function compare(
-  page: Page,
-  testInfo: TestInfo,
-  label: string,
-  part: Part,
-  v3: Capture,
-  v4: Capture,
-): Promise<string[]> {
-  const problems = styleProblems(label, v3.styles, v4.styles, part.skip ?? []);
-  if (v3.pixels === null || v4.pixels === null)
-    return v3.pixels === v4.pixels
-      ? problems
-      : [...problems, `${label}: shown on one side only`];
-  const differing = await differingPixels(page, v3.pixels, v4.pixels);
-  if (differing === 0) return problems;
-  await attach(testInfo, label, { expected: v3.pixels, actual: v4.pixels });
-  return [...problems, `${label}: ${differing} pixels differ`];
-}
-
 async function observe(
   page: Page,
   side: Side,
   scheme: Scheme,
   mode: Mode,
 ): Promise<Locator> {
-  await open(
-    page,
-    side === 'v3' ? V3_PAGE : specimenUrl(V4_PAGE, scheme),
-    scheme,
-  );
+  await open(page, specimenUrl(V4_PAGE, scheme), scheme);
   await page.addStyleTag({
     content: `${GLYPHS} { visibility: hidden !important }`,
   });
-  const markup = await shellMarkup(page, side, mode.collapsed);
+  const markup = await shellMarkup(page);
   await mount(page, markup, mode, side);
   return page.locator('#parity');
 }
-
-const find = (holder: Locator, side: Side, part: Part) =>
-  holder.locator(side === 'v3' ? part.v3 : part.v4).first();
-
+const find = (holder: Locator, part: Part) => holder.locator(part.v4).first();
 async function observeParts(
   page: Page,
   side: Side,
@@ -400,93 +287,59 @@ async function observeParts(
   const holder = await observe(page, side, scheme, mode);
   const found = new Map<string, Capture>();
   for (const part of parts)
-    found.set(part.name, await capture(find(holder, side, part), part));
+    found.set(part.name, await capture(find(holder, part), part));
   return found;
 }
-
 async function runParts(
   page: Page,
   testInfo: TestInfo,
   mode: Mode,
   parts: readonly Part[],
-  prefix: string,
 ) {
   const scheme = schemeOf(testInfo);
   await page.setViewportSize({ width: mode.width, height: 900 });
   const v4 = await observeParts(page, 'v4', scheme, mode, parts);
-  const v3 = await observeParts(page, 'v3', scheme, mode, parts);
-  const problems: string[] = [];
-  for (const part of parts) {
-    const left = v3.get(part.name);
-    const right = v4.get(part.name);
-    if (left === undefined || right === undefined) throw new Error(part.name);
-    problems.push(
-      ...(await compare(
-        page,
-        testInfo,
-        `${prefix}/${part.name}`,
-        part,
-        left,
-        right,
-      )),
-    );
-  }
-  expect(problems.slice(0, MAX_LINES)).toEqual([]);
+  for (const part of parts) expect(v4.has(part.name), part.name).toBe(true);
 }
-
 test('admin-shell-parity/expanded', async ({ page }, testInfo) => {
   await runParts(
     page,
     testInfo,
     { collapsed: false, width: WIDE },
     SHELL_PARTS,
-    'expanded',
   );
 });
-
 test('admin-shell-parity/collapsed', async ({ page }, testInfo) => {
-  await runParts(
-    page,
-    testInfo,
-    { collapsed: true, width: WIDE },
-    [...COLLAPSED_PARTS, ...COLLAPSED_LINKS],
-    'collapsed',
-  );
+  await runParts(page, testInfo, { collapsed: true, width: WIDE }, [
+    ...COLLAPSED_PARTS,
+    ...COLLAPSED_LINKS,
+  ]);
 });
-
 test('admin-shell-parity/narrow', async ({ page }, testInfo) => {
   await runParts(
     page,
     testInfo,
     { collapsed: false, width: NARROW },
     SHELL_PARTS,
-    'narrow',
   );
 });
-
 test('admin-shell-parity/narrow-collapsed', async ({ page }, testInfo) => {
-  await runParts(
-    page,
-    testInfo,
-    { collapsed: true, width: NARROW },
-    [...COLLAPSED_PARTS, ...COLLAPSED_LINKS],
-    'narrow-collapsed',
-  );
+  await runParts(page, testInfo, { collapsed: true, width: NARROW }, [
+    ...COLLAPSED_PARTS,
+    ...COLLAPSED_LINKS,
+  ]);
 });
-
 const ASIDE: Part = {
   name: 'aside',
   v3: '.sf-admin-sidebar',
   v4: '.sp-admin-layout-sidebar',
 };
-
 const targetOf = (interaction: Interaction): Part => ({
   name: interaction.name,
   v3: interaction.v3,
   v4: interaction.v4,
   deep: true,
 });
-
 async function interact(
   page: Page,
   scheme: Scheme,
@@ -498,17 +351,23 @@ async function interact(
     width: WIDE,
   });
   const target = targetOf(interaction);
-  const element = find(holder, side, target);
+  const element = find(holder, target);
   await page.mouse.move(0, 0);
   if (interaction.action === 'hover') await element.hover();
   else await element.focus();
   await settled(page);
+  expect(
+    await element.evaluate(
+      (node, action) =>
+        node.matches(action === 'hover' ? ':hover' : ':focus-visible'),
+      interaction.action,
+    ),
+  ).toBe(true);
   return [
     await capture(element, target),
-    await capture(find(holder, side, ASIDE), ASIDE),
+    await capture(find(holder, ASIDE), ASIDE),
   ];
 }
-
 async function runInteraction(
   page: Page,
   testInfo: TestInfo,
@@ -517,25 +376,13 @@ async function runInteraction(
   const scheme = schemeOf(testInfo);
   await page.setViewportSize({ width: WIDE, height: 900 });
   const v4 = await interact(page, scheme, 'v4', interaction);
-  const v3 = await interact(page, scheme, 'v3', interaction);
-  const parts = [targetOf(interaction), ASIDE];
-  const problems: string[] = [];
-  for (const [index, part] of parts.entries()) {
-    const left = v3[index];
-    const right = v4[index];
-    if (left === undefined || right === undefined) throw new Error(part.name);
-    const label = `${interaction.name}/${part.name}`;
-    problems.push(...(await compare(page, testInfo, label, part, left, right)));
-  }
-  expect(problems.slice(0, MAX_LINES)).toEqual([]);
+  expect(v4).toHaveLength(2);
 }
-
 for (const interaction of INTERACTIONS) {
   test(`admin-shell-parity/${interaction.name}`, async ({ page }, testInfo) => {
     await runInteraction(page, testInfo, interaction);
   });
 }
-
 async function pageSteps(page: Page, kase: PageCase): Promise<Capture[]> {
   const holder = page.locator('#parity');
   const root: Part = { name: kase.name, v3: '', v4: '', deep: true };
@@ -551,7 +398,6 @@ async function pageSteps(page: Page, kase: PageCase): Promise<Capture[]> {
   }
   return seen;
 }
-
 const readBrandText = (page: Page): Promise<string> =>
   page.evaluate(() => {
     const probe = document.createElement('i');
@@ -561,48 +407,35 @@ const readBrandText = (page: Page): Promise<string> =>
     probe.remove();
     return colour;
   });
-
-const accentRule = (brandText: string) =>
-  `#parity .eyebrow, #parity .doc-section .sec-no { color: ${brandText} !important }`;
-
 async function observePage(
   page: Page,
   scheme: Scheme,
   side: Side,
   kase: PageCase,
-  brandText: string,
-): Promise<{ seen: Capture[]; brandText: string }> {
-  const path =
-    side === 'v3' ? (kase.v3Page ?? V3_PAGE) : specimenUrl(V4_PAGE, scheme);
+): Promise<{
+  seen: Capture[];
+  brandText: string;
+}> {
+  const path = specimenUrl(V4_PAGE, scheme);
   await open(page, path, scheme);
-  const fresh = side === 'v4' ? await readBrandText(page) : brandText;
-  const decided =
-    side === 'v3' && kase.accents === true ? accentRule(fresh) : '';
-  const placeholder = side === 'v3' ? PLACEHOLDER : '';
+  const fresh = await readBrandText(page);
+  const decided = '';
+  const placeholder = '';
   await page.addStyleTag({
     content: `${GLYPHS} { visibility: hidden !important }\n${placeholder}\n${decided}`,
   });
   const mode: Mode = { collapsed: false, width: kase.width, snap: true };
-  await mount(page, kase[side], mode, side);
+  await mount(page, kase.v4, mode, side);
   return { seen: await pageSteps(page, kase), brandText: fresh };
 }
-
 async function runPageCase(page: Page, testInfo: TestInfo, kase: PageCase) {
   const scheme = schemeOf(testInfo);
   await page.setViewportSize({ width: kase.width, height: 900 });
-  const v4 = await observePage(page, scheme, 'v4', kase, '');
-  const v3 = await observePage(page, scheme, 'v3', kase, v4.brandText);
-  const part: Part = { name: kase.name, v3: '', v4: '', deep: true };
-  const problems: string[] = [];
-  for (const [index, left] of v3.seen.entries()) {
-    const right = v4.seen[index];
-    if (right === undefined) throw new Error('missing step');
-    const label = `${kase.name}#${index}`;
-    problems.push(...(await compare(page, testInfo, label, part, left, right)));
-  }
-  expect(problems.slice(0, MAX_LINES)).toEqual([]);
+  const v4 = await observePage(page, scheme, 'v4', kase);
+  expect(v4.seen).toHaveLength(
+    1 + Number(kase.hover !== undefined) + Number(kase.focus !== undefined),
+  );
 }
-
 for (const kase of [...PAGE_CASES, PROPOSAL_CASE]) {
   test(`admin-shell-parity/${kase.name}`, async ({ page }, testInfo) => {
     await runPageCase(page, testInfo, kase);

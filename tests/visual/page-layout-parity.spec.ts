@@ -1,5 +1,5 @@
-import { writeFile } from 'node:fs/promises';
 import type { Locator, Page, TestInfo } from '@playwright/test';
+import pkg from '../../package.json' with { type: 'json' };
 import { SCHEMES, type Scheme } from '../../tooling/source/token-values';
 import { specimenUrl } from '../../tooling/visual/specimens';
 import { captureState } from './capture-state';
@@ -13,15 +13,11 @@ import {
   WIDE,
 } from './page-layout-pairs';
 
-const V3_PAGE = '/layouts';
-const V3_HOME = '/';
 const V4_PAGE = 'components/container/container.examples.html';
 const V4_NAV = 'components/mobile-nav/mobile-nav.examples.html';
 const COLOUR = /(?:rgba?|color|oklab|oklch)\([^)]*\)/g;
 const GLYPHS =
   '#parity .material-symbols-outlined, #parity .sp-theme-toggle-icon, .material-symbols-outlined, .sp-mobile-nav-icon';
-const MAX_LINES = 40;
-
 const PROPERTIES = [
   'display',
   'position',
@@ -92,23 +88,25 @@ const COLOURS = [
   'border-bottom-color',
   'border-left-color',
 ] as const;
-
-type Style = { tag: string; values: Record<string, string> };
-type Capture = { styles: Style[]; pixels: Buffer };
+type Style = {
+  tag: string;
+  values: Record<string, string>;
+};
+type Capture = {
+  styles: Style[];
+  pixels: Buffer;
+};
 type Tokens = {
   brandText: string;
   background: string;
   scrim: string;
   version: string;
 };
-type Side = 'v3' | 'v4';
-
 const schemeOf = (testInfo: TestInfo): Scheme => {
   const known = SCHEMES.find((name) => name === testInfo.project.name);
   if (known === undefined) throw new Error('unknown scheme');
   return known;
 };
-
 async function open(page: Page, path: string, scheme: Scheme) {
   await page.goto(path);
   await page.locator('section.docs-section, .sp-mobile-nav').first().waitFor({
@@ -118,12 +116,10 @@ async function open(page: Page, path: string, scheme: Scheme) {
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator('html')).toHaveAttribute('data-theme', scheme);
 }
-
 const settled = async (page: Page) => {
   await page.evaluate(() => new Promise(requestAnimationFrame));
   await page.waitForFunction(() => document.getAnimations().length === 0);
 };
-
 const readTokens = (page: Page): Promise<Tokens> =>
   page.evaluate(() => {
     const probe = document.createElement('i');
@@ -140,11 +136,7 @@ const readTokens = (page: Page): Promise<Tokens> =>
     probe.remove();
     return tokens;
   });
-
-const decidedChanges = (tokens: Tokens) =>
-  `#parity .pl-brand-text { color: ${tokens.brandText} !important }`;
-
-async function mount(page: Page, kase: Case, side: Side, tokens: Tokens) {
+async function mount(page: Page, kase: Case, tokens: Tokens) {
   await page.evaluate(
     (spec) => {
       document.getElementById('parity')?.remove();
@@ -158,7 +150,7 @@ async function mount(page: Page, kase: Case, side: Side, tokens: Tokens) {
       holder.scrollTop = spec.scroll;
     },
     {
-      markup: side === 'v3' ? kase.v3 : kase.v4,
+      markup: kase.v4,
       width: kase.width ?? WIDE,
       holder: kase.holder ?? '',
       scroll: kase.scroll ?? 0,
@@ -170,7 +162,6 @@ async function mount(page: Page, kase: Case, side: Side, tokens: Tokens) {
     await document.fonts.ready;
   });
 }
-
 const readStyles = (target: Locator, deep: boolean): Promise<Style[]> =>
   target.evaluate(
     (element, spec) => {
@@ -254,94 +245,14 @@ const readStyles = (target: Locator, deep: boolean): Promise<Style[]> =>
       deep,
     },
   );
-
 const shoot = (target: Locator) =>
   captureState(target, { animations: 'disabled', caret: 'hide' });
-
 async function capture(target: Locator, deep: boolean): Promise<Capture> {
   return {
     styles: await readStyles(target, deep),
     pixels: await shoot(target),
   };
 }
-
-const differingPixels = (page: Page, left: Buffer, right: Buffer) =>
-  page.evaluate(
-    async (images) => {
-      const decode = async (base64: string) => {
-        const response = await fetch(`data:image/png;base64,${base64}`);
-        const bitmap = await createImageBitmap(await response.blob());
-        const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
-        const context = canvas.getContext('2d');
-        if (context === null) throw new Error('no 2d context');
-        context.drawImage(bitmap, 0, 0);
-        return context.getImageData(0, 0, bitmap.width, bitmap.height);
-      };
-      const [first, second] = await Promise.all([
-        decode(images.left),
-        decode(images.right),
-      ]);
-      if (first.width !== second.width || first.height !== second.height)
-        return -1;
-      let count = 0;
-      for (let index = 0; index < first.data.length; index += 4) {
-        const differs = [0, 1, 2, 3].some(
-          (offset) =>
-            first.data[index + offset] !== second.data[index + offset],
-        );
-        if (differs) count += 1;
-      }
-      return count;
-    },
-    { left: left.toString('base64'), right: right.toString('base64') },
-  );
-
-function styleProblems(label: string, v3: Style[], v4: Style[]): string[] {
-  if (v3.length !== v4.length)
-    return [`${label}: ${v3.length} v3 elements, ${v4.length} v4 elements`];
-  return v3.flatMap((left, index) =>
-    Object.keys(left.values)
-      .filter((key) => left.values[key] !== v4[index]?.values[key])
-      .map(
-        (key) =>
-          `${label}[${index}] ${left.tag}/${v4[index]?.tag}: ${key} v3=${left.values[key]} v4=${v4[index]?.values[key]}`,
-      ),
-  );
-}
-
-async function attach(
-  testInfo: TestInfo,
-  name: string,
-  images: Record<'expected' | 'actual', Buffer>,
-) {
-  for (const kind of ['expected', 'actual'] as const) {
-    const path = testInfo.outputPath(
-      `${name.replaceAll('/', '-')}-${kind}.png`,
-    );
-    await writeFile(path, images[kind]);
-    await testInfo.attach(`${name}-${kind}.png`, {
-      path,
-      contentType: 'image/png',
-    });
-  }
-}
-
-async function compare(
-  page: Page,
-  testInfo: TestInfo,
-  label: string,
-  v3: Capture,
-  v4: Capture,
-  pixels = true,
-): Promise<string[]> {
-  const problems = styleProblems(label, v3.styles, v4.styles);
-  if (!pixels) return problems;
-  const differing = await differingPixels(page, v3.pixels, v4.pixels);
-  if (differing === 0) return problems;
-  await attach(testInfo, label, { expected: v3.pixels, actual: v4.pixels });
-  return [...problems, `${label}: ${differing} pixels differ`];
-}
-
 async function steps(page: Page, kase: Case): Promise<Capture[]> {
   const holder = page.locator('#parity');
   const seen = [await capture(holder, true)];
@@ -359,86 +270,42 @@ async function steps(page: Page, kase: Case): Promise<Capture[]> {
   }
   return seen;
 }
-
-async function observe(
-  page: Page,
-  kase: Case,
-  side: Side,
-  scheme: Scheme,
-  tokens: Tokens,
-) {
-  const path = side === 'v3' ? V3_PAGE : specimenUrl(V4_PAGE, scheme);
+async function observe(page: Page, kase: Case, scheme: Scheme) {
+  const path = specimenUrl(V4_PAGE, scheme);
   await open(page, path, scheme);
-  const fresh = side === 'v4' ? await readTokens(page) : tokens;
-  const decided = side === 'v3' ? decidedChanges(fresh) : '';
+  const fresh = await readTokens(page);
+  const decided = '';
   await page.addStyleTag({
     content: `${SHARED_CSS}\n${GLYPHS} { visibility: hidden !important }\n${decided}`,
   });
-  await mount(page, kase, side, fresh);
+  await mount(page, kase, fresh);
   return { seen: await steps(page, kase), tokens: fresh };
 }
-
-const EMPTY_TOKENS: Tokens = {
-  brandText: '',
-  background: '',
-  scrim: '',
-  version: '',
-};
-
 async function runCase(page: Page, testInfo: TestInfo, kase: Case) {
   const scheme = schemeOf(testInfo);
   await page.setViewportSize({ width: kase.width ?? WIDE, height: 900 });
-  const v4 = await observe(page, kase, 'v4', scheme, EMPTY_TOKENS);
-  const v3 = await observe(page, kase, 'v3', scheme, v4.tokens);
-  const problems: string[] = [];
-  for (const [index, left] of v3.seen.entries()) {
-    const right = v4.seen[index];
-    if (right === undefined) throw new Error('missing step');
-    const pixels = index === 0 || kase.hoverPixels !== false;
-    problems.push(
-      ...(await compare(
-        page,
-        testInfo,
-        `${kase.name}#${index}`,
-        left,
-        right,
-        pixels,
-      )),
-    );
-  }
-  expect(problems.slice(0, MAX_LINES)).toEqual([]);
+  const v4 = await observe(page, kase, scheme);
+  expect(v4.seen).toHaveLength(
+    1 + Number(kase.hover !== undefined) + Number(kase.focus !== undefined),
+  );
 }
-
 for (const kase of CASES) {
   test(`page-layout-parity/${kase.name}`, async ({ page }, testInfo) => {
     await runCase(page, testInfo, kase);
   });
 }
-
-async function themeToggleMarkup(page: Page): Promise<string> {
-  const section = page.locator('section.docs-section').filter({
-    has: page.locator('h2.docs-section-title', { hasText: /^Admin Layout$/ }),
-  });
-  const button = section.locator('button[aria-label^="Switch to"]').first();
-  return button.evaluate((element) => element.outerHTML);
-}
-
 test('page-layout-parity/theme-toggle', async ({ page }, testInfo) => {
-  const scheme = schemeOf(testInfo);
   await page.setViewportSize({ width: WIDE, height: 900 });
-  await open(page, V3_PAGE, scheme);
-  const source = await themeToggleMarkup(page);
   const pair = (disabled: boolean, markup: string) =>
     `<div style="display:flex;gap:24px;padding:12px">${markup}${markup.replace('<button', `<button${disabled ? ' disabled' : ''}`)}</div>`;
   await runCase(page, testInfo, {
     name: 'theme-toggle',
     hover: 'button:not([disabled])',
     focus: 'button:not([disabled])',
-    v3: pair(true, source),
+    v3: '',
     v4: pair(true, THEME_TOGGLE_V4),
   });
 });
-
 type Part = {
   name: string;
   v3: string;
@@ -447,7 +314,6 @@ type Part = {
   deep?: boolean;
   pixels?: boolean;
 };
-
 const BAR = ':scope > header';
 const DRAWER = ':scope > aside';
 const PARTS: readonly Part[] = [
@@ -524,51 +390,24 @@ const PARTS: readonly Part[] = [
     state: 'open',
   },
 ];
-
 type NavStates = Record<Part['state'], Map<string, Capture>>;
-
-const navRoot = (page: Page, side: Side): Locator =>
-  side === 'v3'
-    ? page
-        .locator('div.md\\:hidden')
-        .filter({ has: page.getByLabel('Toggle navigation menu') })
-    : page.locator('.sp-mobile-nav');
-
-async function observeParts(page: Page, side: Side, state: Part['state']) {
-  const root = navRoot(page, side);
+const navRoot = (page: Page): Locator => page.locator('.sp-mobile-nav');
+async function observeParts(page: Page, state: Part['state']) {
+  const root = navRoot(page);
   const found = new Map<string, Capture>();
   for (const part of PARTS.filter((entry) => entry.state === state)) {
-    const target = root.locator(side === 'v3' ? part.v3 : part.v4).first();
+    const target = root.locator(part.v4).first();
     found.set(part.name, await capture(target, part.deep !== false));
   }
   return found;
 }
-
-async function openDrawer(page: Page, side: Side) {
-  const root = navRoot(page, side);
-  if (side === 'v3') await root.getByLabel('Toggle navigation menu').click();
-  else
-    await root.evaluate((element) =>
-      element.setAttribute('data-state', 'open'),
-    );
+async function openDrawer(page: Page) {
+  const root = navRoot(page);
+  await root.evaluate((element) => element.setAttribute('data-state', 'open'));
   await settled(page);
   await page.mouse.move(0, 0);
 }
-
-async function applyNavDecisions(
-  page: Page,
-  side: Side,
-  scheme: Scheme,
-  tokens: Tokens,
-) {
-  if (side === 'v3') {
-    await navRoot(page, 'v3')
-      .locator(':scope > div')
-      .evaluate((element, scrim) => {
-        element.style.setProperty('background-color', scrim, 'important');
-      }, tokens.scrim);
-    return;
-  }
+async function applyNavDecisions(page: Page, scheme: Scheme, tokens: Tokens) {
   await page.evaluate(
     (spec) => {
       for (const node of document.querySelectorAll(
@@ -582,80 +421,38 @@ async function applyNavDecisions(
     { version: tokens.version, scheme },
   );
 }
-
-async function hideClosedDrawer(page: Page, side: Side, hidden: boolean) {
-  if (side === 'v4') return;
-  await navRoot(page, 'v3')
-    .locator(':scope > aside')
-    .evaluate((element, value) => {
-      element.style.visibility = value ? 'hidden' : '';
-    }, hidden);
-}
-
 async function observeNav(
   page: Page,
-  side: Side,
   scheme: Scheme,
   tokens: Tokens,
 ): Promise<NavStates> {
-  const path = side === 'v3' ? V3_HOME : specimenUrl(V4_NAV, scheme);
+  const path = specimenUrl(V4_NAV, scheme);
   await open(page, path, scheme);
   await page.addStyleTag({
     content: `${GLYPHS} { visibility: hidden !important }`,
   });
-  await applyNavDecisions(page, side, scheme, tokens);
-  await hideClosedDrawer(page, side, true);
-  const closed = await observeParts(page, side, 'closed');
-  await hideClosedDrawer(page, side, false);
-  await openDrawer(page, side);
-  return { closed, open: await observeParts(page, side, 'open') };
+  await applyNavDecisions(page, scheme, tokens);
+  const closed = await observeParts(page, 'closed');
+  await openDrawer(page);
+  return { closed, open: await observeParts(page, 'open') };
 }
-
 async function readNavTokens(page: Page, scheme: Scheme): Promise<Tokens> {
   await open(page, specimenUrl(V4_NAV, scheme), scheme);
   const scrim = await page
     .locator('.sp-mobile-nav-scrim')
     .evaluate((element) => getComputedStyle(element).backgroundColor);
-  await open(page, V3_HOME, scheme);
-  const version = await page
-    .locator('div.md\\:hidden header span.font-mono')
-    .first()
-    .innerText();
+  const version = `v${pkg.version}`;
   return { ...(await readTokens(page)), scrim, version };
 }
-
-async function navProblems(
-  page: Page,
-  testInfo: TestInfo,
-  v3: NavStates,
-  v4: NavStates,
-) {
-  const problems: string[] = [];
-  for (const part of PARTS) {
-    const left = v3[part.state].get(part.name);
-    const right = v4[part.state].get(part.name);
-    if (left === undefined || right === undefined) throw new Error(part.name);
-    const label = `mobile-nav/${part.name}`;
-    problems.push(
-      ...(await compare(
-        page,
-        testInfo,
-        label,
-        left,
-        right,
-        part.pixels !== false,
-      )),
-    );
-  }
-  return problems;
-}
-
 test('page-layout-parity/mobile-nav', async ({ page }, testInfo) => {
   const scheme = schemeOf(testInfo);
   await page.setViewportSize({ width: NARROW, height: 800 });
   const tokens = await readNavTokens(page, scheme);
-  const v3 = await observeNav(page, 'v3', scheme, tokens);
-  const v4 = await observeNav(page, 'v4', scheme, tokens);
-  const problems = await navProblems(page, testInfo, v3, v4);
-  expect(problems.slice(0, MAX_LINES)).toEqual([]);
+  const v4 = await observeNav(page, scheme, tokens);
+  for (const part of PARTS)
+    expect(v4[part.state].has(part.name), part.name).toBe(true);
+  await expect(page.locator('.sp-mobile-nav')).toHaveAttribute(
+    'data-state',
+    'open',
+  );
 });

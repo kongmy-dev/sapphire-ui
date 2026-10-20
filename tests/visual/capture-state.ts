@@ -1,5 +1,6 @@
 import type { Locator, Page } from '@playwright/test';
 import { SPECIMEN_URL } from '../../tooling/visual/specimens';
+import { stateName } from '../../tooling/visual/state-inventory';
 import { expect, test } from './fixtures';
 
 export async function captureState(
@@ -14,7 +15,7 @@ export async function captureState(
     (item) => item.type === 'v4-state',
   ).length;
   info.annotations.push({ type: 'v4-state', description: String(index) });
-  const name = info.title.replace(/[^a-z0-9-]+/gi, '-').toLowerCase();
+  const name = stateName(info.title);
   expect
     .soft(pixels)
     .toMatchSnapshot(['states', name, `${index}.${info.project.name}.png`], {

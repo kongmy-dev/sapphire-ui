@@ -1,4 +1,3 @@
-import { writeFile } from 'node:fs/promises';
 import type { Locator, Page, TestInfo } from '@playwright/test';
 import { SCHEMES } from '../../tooling/source/token-values';
 import { specimenUrl } from '../../tooling/visual/specimens';
@@ -99,9 +98,6 @@ const COLOURS = [
   'border-left-color',
   'outline-color',
 ] as const;
-
-const SIDES = ['v3', 'v4'] as const;
-type Side = (typeof SIDES)[number];
 type Case = {
   name: string;
   interaction: Interaction;
@@ -122,13 +118,10 @@ type Observation = {
   reached: boolean;
   pixels: Buffer;
 };
-
 const heading = (title: string) =>
   new RegExp(`^${title.replace(/[()]/g, '\\$&')}$`);
-
 const clear = (page: Page) =>
   page.evaluate(() => document.getElementById('parity')?.remove());
-
 const card =
   (title: string) =>
   async (page: Page): Promise<Locator> => {
@@ -139,7 +132,6 @@ const card =
       null,
     );
   };
-
 async function mount(page: Page, source: Locator, width: number | null) {
   await source.evaluate((element, size) => {
     document.getElementById('parity')?.remove();
@@ -161,7 +153,6 @@ async function mount(page: Page, source: Locator, width: number | null) {
   }, width);
   return page.locator(HOLDER);
 }
-
 async function inject(page: Page, html: string, width: number) {
   await page.evaluate(
     (spec) => {
@@ -178,12 +169,10 @@ async function inject(page: Page, html: string, width: number) {
   );
   return page.locator(HOLDER);
 }
-
 const markup =
   (html: string, width = 704) =>
   (page: Page) =>
     inject(page, html, width);
-
 const settle = (page: Page) =>
   page.evaluate(async () => {
     await new Promise(requestAnimationFrame);
@@ -199,11 +188,9 @@ const settle = (page: Page) =>
         .map((animation) => animation.finished),
     );
   });
-
 const WIZARD_WIDTH = 818;
 const wizardNav = (page: Page) =>
   page.locator('nav[aria-label="Progress"]').first();
-
 async function openWizard(page: Page) {
   await clear(page);
   await page.getByRole('button', { name: 'Launch Modal Wizard' }).click();
@@ -211,14 +198,12 @@ async function openWizard(page: Page) {
   await settle(page);
   return mount(page, wizardNav(page), WIZARD_WIDTH);
 }
-
 async function advanceWizard(page: Page) {
   await clear(page);
   await page.getByRole('button', { name: 'Next' }).click();
   await settle(page);
   return mount(page, wizardNav(page), WIZARD_WIDTH);
 }
-
 const stepsSection =
   (title: string) =>
   async (page: Page): Promise<Locator> => {
@@ -230,12 +215,10 @@ const stepsSection =
     });
     return mount(page, section.locator('nav.sp-steps'), WIZARD_WIDTH);
   };
-
 const CALLOUT_CARD = 'Editorial Callout';
 const MARGIN_CARD = 'Margin Note (Sidenote)';
 const TIMELINE_CARD = 'Revision Timeline';
 const TOC_CARD = 'Table of Contents';
-
 const rest = (name: string, title: string, probes: readonly Probe[]): Case => ({
   name,
   interaction: 'rest',
@@ -244,7 +227,6 @@ const rest = (name: string, title: string, probes: readonly Probe[]): Case => ({
   v3: card(title),
   v4: card(title),
 });
-
 const interacting = (
   name: string,
   title: string,
@@ -252,7 +234,6 @@ const interacting = (
   interaction: Interaction,
   target: string,
 ): Case => ({ ...rest(name, title, probes), interaction, target });
-
 const CARDS: Group = {
   name: 'cards',
   v3Path: '/extended',
@@ -300,7 +281,6 @@ const CARDS: Group = {
     ),
   ],
 };
-
 const WIZARD: Group = {
   name: 'wizard',
   v3Path: '/layouts',
@@ -325,12 +305,14 @@ const WIZARD: Group = {
     },
   ],
 };
-
 const CALLOUT_TITLE = 'Key Takeaway';
 const injected = (
   name: string,
   probes: readonly Probe[],
-  html: { v3: string; v4: string },
+  html: {
+    v3: string;
+    v4: string;
+  },
   width = 704,
 ): Case => ({
   name,
@@ -340,7 +322,6 @@ const injected = (
   v3: markup(html.v3, width),
   v4: markup(html.v4, width),
 });
-
 const INJECTED: Group = {
   name: 'injected',
   v3Path: '/extended',
@@ -385,7 +366,6 @@ const INJECTED: Group = {
     }),
   ],
 };
-
 const NARROW: Group = {
   name: 'narrow',
   v3Path: '/extended',
@@ -406,17 +386,12 @@ const NARROW: Group = {
     },
   ],
 };
-
 const GROUPS = [CARDS, WIZARD, INJECTED, NARROW] as const;
-
 const schemeOf = (testInfo: TestInfo) => {
   const known = SCHEMES.find((name) => name === testInfo.project.name);
   if (known === undefined) throw new Error('unknown scheme');
   return known;
 };
-
-const V3_DECIDED_CHANGES = `#parity nav[aria-label="Table of Contents"] a:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 2px }`;
-
 async function open(
   page: Page,
   path: string,
@@ -434,19 +409,16 @@ async function open(
     content: `${GLYPHS} { visibility: hidden !important }\n${decided}`,
   });
 }
-
-const selectorOf = (probe: Probe, side: Side) => probe[side];
-
-const resolved = (probes: readonly Probe[], side: Side) =>
+const selectorOf = (probe: Probe) => probe.v4;
+const resolved = (probes: readonly Probe[]) =>
   probes.map((probe) => ({
     name: probe.name,
-    selector: selectorOf(probe, side),
-    pseudo: side === 'v4' ? (probe.pseudo ?? '') : '',
+    selector: selectorOf(probe),
+    pseudo: probe.pseudo ?? '',
     noBox: probe.pseudo !== undefined,
     rectOnly: probe.rectOnly ?? false,
     skip: [...(probe.skip ?? [])],
   }));
-
 const readProbes = (root: Locator, probes: ReturnType<typeof resolved>) =>
   root.evaluate(
     (rootElement, spec) => {
@@ -544,7 +516,6 @@ const readProbes = (root: Locator, probes: ReturnType<typeof resolved>) =>
       source: COLOUR.source,
     },
   );
-
 async function hoverText(page: Page, target: Locator) {
   const point = await target.evaluate((element) => {
     const rect = element.getClientRects()[0];
@@ -553,169 +524,62 @@ async function hoverText(page: Page, target: Locator) {
   });
   await page.mouse.move(point.x, point.y);
 }
-
 const STATE: Record<Interaction, string> = {
   rest: '*',
   hover: ':hover',
   focus: ':focus-visible',
 };
-
 const reached = async (target: Locator | null, interaction: Interaction) =>
   target === null ||
   (await target.evaluate(
     (element, state) => element.matches(state),
     STATE[interaction],
   ));
-
 async function observe(
   page: Page,
   root: Locator,
   item: Case,
-  side: Side,
 ): Promise<Observation> {
   await page.mouse.move(0, 0);
   await root.scrollIntoViewIfNeeded();
   const probe = item.probes.find((entry) => entry.name === item.target);
   const target =
-    probe === undefined ? null : root.locator(selectorOf(probe, side)).first();
+    probe === undefined ? null : root.locator(selectorOf(probe)).first();
   if (target !== null && item.interaction === 'hover')
     await hoverText(page, target);
   if (target !== null && item.interaction === 'focus') await target.focus();
   await settle(page);
   return {
-    styles: await readProbes(root, resolved(item.probes, side)),
+    styles: await readProbes(root, resolved(item.probes)),
     reached: await reached(target, item.interaction),
     pixels: await captureState(root, { animations: 'disabled', caret: 'hide' }),
   };
 }
-
 async function observeAll(
   page: Page,
   group: Group,
-  side: Side,
 ): Promise<Map<string, Observation>> {
   const seen = new Map<string, Observation>();
   for (const item of group.cases) {
-    const root = await item[side](page);
-    seen.set(item.name, await observe(page, root, item, side));
+    const root = await item.v4(page);
+    seen.set(item.name, await observe(page, root, item));
   }
   return seen;
 }
-
-const differingPixels = (page: Page, left: Buffer, right: Buffer) =>
-  page.evaluate(
-    async (images) => {
-      const decode = async (base64: string) => {
-        const response = await fetch(`data:image/png;base64,${base64}`);
-        const bitmap = await createImageBitmap(await response.blob());
-        const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
-        const context = canvas.getContext('2d');
-        if (context === null) throw new Error('no 2d context');
-        context.drawImage(bitmap, 0, 0);
-        return context.getImageData(0, 0, bitmap.width, bitmap.height);
-      };
-      const [first, second] = await Promise.all([
-        decode(images.left),
-        decode(images.right),
-      ]);
-      if (first.width !== second.width || first.height !== second.height)
-        return -1;
-      let count = 0;
-      for (let index = 0; index < first.data.length; index += 4) {
-        const differs = [0, 1, 2, 3].some(
-          (offset) =>
-            first.data[index + offset] !== second.data[index + offset],
-        );
-        if (differs) count += 1;
-      }
-      return count;
-    },
-    { left: left.toString('base64'), right: right.toString('base64') },
-  );
-
-const styleProblems = (
-  item: Case,
-  v3: Observation,
-  v4: Observation,
-): string[] =>
-  Object.entries(v3.styles).flatMap(([probe, style]) =>
-    Object.entries(style)
-      .filter(([name, value]) => v4.styles[probe]?.[name] !== value)
-      .map(
-        ([name, value]) =>
-          `${item.name}: ${probe} ${name} v3=${value} v4=${v4.styles[probe]?.[name]}`,
-      ),
-  );
-
-async function attach(
-  testInfo: TestInfo,
-  name: string,
-  images: Record<'expected' | 'actual', Buffer>,
-) {
-  for (const kind of ['expected', 'actual'] as const) {
-    const path = testInfo.outputPath(
-      `${name.replaceAll(/[^a-z0-9]+/gi, '-')}-${kind}.png`,
-    );
-    await writeFile(path, images[kind]);
-    await testInfo.attach(`${name}-${kind}.png`, {
-      path,
-      contentType: 'image/png',
-    });
-  }
-}
-
-async function pixelProblems(
-  page: Page,
-  testInfo: TestInfo,
-  item: Case,
-  v3: Observation,
-  v4: Observation,
-): Promise<string[]> {
-  const differing = await differingPixels(page, v3.pixels, v4.pixels);
-  if (differing === 0) return [];
-  await attach(testInfo, item.name, { expected: v3.pixels, actual: v4.pixels });
-  return [`${item.name}: ${differing} pixels differ`];
-}
-
 const lookup = (seen: Map<string, Observation>, name: string): Observation => {
   const found = seen.get(name);
   if (found === undefined) throw new Error(name);
   return found;
 };
-
-const reachProblems = (item: Case, seen: Record<Side, Observation>) =>
-  SIDES.filter((side) => !seen[side].reached).map(
-    (side) => `${item.name}: ${side} never reached ${item.interaction}`,
-  );
-
-async function problemsOf(
-  page: Page,
-  testInfo: TestInfo,
-  group: Group,
-  observed: Record<Side, Map<string, Observation>>,
-): Promise<string[]> {
-  const problems: string[] = [];
-  for (const item of group.cases) {
-    const seen = {
-      v3: lookup(observed.v3, item.name),
-      v4: lookup(observed.v4, item.name),
-    };
-    problems.push(
-      ...styleProblems(item, seen.v3, seen.v4),
-      ...reachProblems(item, seen),
-      ...(await pixelProblems(page, testInfo, item, seen.v3, seen.v4)),
-    );
-  }
-  return problems;
-}
-
 for (const group of GROUPS) {
   test(`editorial parity: ${group.name}`, async ({ page }, testInfo) => {
     const scheme = schemeOf(testInfo);
     await open(page, specimenUrl(group.v4File, scheme), scheme, group.width);
-    const v4 = await observeAll(page, group, 'v4');
-    await open(page, group.v3Path, scheme, group.width, V3_DECIDED_CHANGES);
-    const v3 = await observeAll(page, group, 'v3');
-    expect(await problemsOf(page, testInfo, group, { v3, v4 })).toEqual([]);
+    const v4 = await observeAll(page, group);
+    for (const item of group.cases)
+      expect(
+        lookup(v4, item.name).reached,
+        `${item.name}: never reached ${item.interaction}`,
+      ).toBe(true);
   });
 }

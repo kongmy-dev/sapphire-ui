@@ -1,10 +1,14 @@
 import { execFileSync } from 'node:child_process';
-import { readFileSync, rmSync } from 'node:fs';
+import { readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import inventory from '../../tests/visual/state-inventory.json' with {
+  type: 'json',
+};
 import { runInContainer } from './container';
 import { exampleNames } from './examples';
 import { parseExamples, titleGrep } from './pin-args';
 import { describeFailure, parseFailures } from './report';
+import { STATE_INVENTORY_FILE, updatedInventory } from './state-inventory';
 
 const REPORT = 'test-results/visual-report.json';
 const PINS = 'tests/visual/pins';
@@ -42,6 +46,11 @@ function main(argv: readonly string[]) {
   console.log(['pin: differences', ...differing(root)].join('\n'));
   const updated = runInContainer(['--grep', grep, '--update-snapshots=all']);
   if (updated !== 0) process.exit(updated);
+  const report: unknown = JSON.parse(readFileSync(join(root, REPORT), 'utf8'));
+  writeFileSync(
+    join(root, STATE_INVENTORY_FILE),
+    `${JSON.stringify(updatedInventory(inventory, report), null, 2)}\n`,
+  );
   console.log(`pin: changed files\n${changedPins(root) || '  (none)'}`);
 }
 

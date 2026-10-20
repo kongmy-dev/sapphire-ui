@@ -1,14 +1,11 @@
-import { writeFile } from 'node:fs/promises';
 import type { Page, TestInfo } from '@playwright/test';
 import { SCHEMES, type Scheme } from '../../tooling/source/token-values';
 import { specimenUrl } from '../../tooling/visual/specimens';
 import { captureState } from './capture-state';
 import { expect, test } from './fixtures';
 
-const V3_PAGE = '/extended';
 const HOLDER = '#parity';
 const AWAY = { x: 960, y: 700 };
-
 const PROPERTIES = [
   'display',
   'position',
@@ -68,10 +65,12 @@ const OUTLINE = [
   'outline-offset',
   'outline-color',
 ] as const;
-
 type Interaction = 'hover' | 'focus';
 type Probes = Record<string, readonly [string, string]>;
-type Action = { probe: string; interaction: Interaction };
+type Action = {
+  probe: string;
+  interaction: Interaction;
+};
 type Pair = {
   name: string;
   v3: string;
@@ -95,7 +94,6 @@ type Observation = {
   box: string;
   pixels: Buffer;
 };
-
 const VARIANTS = ['default', 'outline', 'ghost'] as const;
 const SIZES = ['sm', 'default', 'lg'] as const;
 const TOGGLE_STATES = [
@@ -109,7 +107,6 @@ const TOGGLE_STATES = [
 type ToggleVariant = (typeof VARIANTS)[number];
 type ToggleSize = (typeof SIZES)[number];
 type ToggleState = (typeof TOGGLE_STATES)[number];
-
 const V3_TOGGLE_BASE =
   'inline-flex cursor-pointer items-center justify-center gap-1.5 font-medium font-sans outline-none transition-colors focus-visible:ring-(--color-focus-ring) focus-visible:ring-2 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50';
 const V3_TOGGLE_VARIANT: Record<ToggleVariant, string> = {
@@ -125,19 +122,16 @@ const V3_TOGGLE_SIZE: Record<ToggleSize, string> = {
   default: 'h-9 rounded-btn px-3 text-sm',
   lg: 'h-10 rounded-btn px-4 text-base',
 };
-
 const toggleData = (variant: ToggleVariant, size: ToggleSize) =>
   [
     variant === 'default' ? '' : ` data-variant="${variant}"`,
     size === 'default' ? '' : ` data-size="${size}"`,
   ].join('');
-
 const toggleAct = (state: ToggleState): Action | undefined => {
   if (state === 'focus') return { probe: 'toggle', interaction: 'focus' };
   if (state.endsWith('hover')) return { probe: 'toggle', interaction: 'hover' };
   return undefined;
 };
-
 function togglePair(
   variant: ToggleVariant,
   size: ToggleSize,
@@ -155,7 +149,6 @@ function togglePair(
     antialiased: state === 'disabled',
   };
 }
-
 const V3_BREADCRUMB_LINK =
   'text-text-muted no-underline transition-colors hover:text-accent-text';
 const breadcrumbPair = (name: string, hover: boolean): Pair => ({
@@ -171,7 +164,6 @@ const breadcrumbPair = (name: string, hover: boolean): Pair => ({
   },
   act: hover ? { probe: 'link', interaction: 'hover' } : undefined,
 });
-
 const CODE_VARIANTS = ['light', 'dark'] as const;
 const CODE_STATES = [
   'rest',
@@ -182,7 +174,6 @@ const CODE_STATES = [
 ] as const;
 type CodeVariant = (typeof CODE_VARIANTS)[number];
 type CodeState = (typeof CODE_STATES)[number];
-
 const V3_CODE_PRE: Record<CodeVariant, string> = {
   light: 'border border-border bg-surface text-text-main',
   dark: 'bg-primary text-text-on-dark',
@@ -193,7 +184,6 @@ const V3_CODE_COPY: Record<CodeVariant, string> = {
   dark: 'border-none bg-white/10 text-text-on-dark hover:bg-white/20',
 };
 const CODE = 'const answer = 42;';
-
 function codePair(variant: CodeVariant, state: CodeState): Pair {
   const copied = state === 'copied';
   const label = copied ? 'Copied!' : 'Copy';
@@ -217,14 +207,10 @@ function codePair(variant: CodeVariant, state: CodeState): Pair {
     act: act[state],
   };
 }
-
 const DISMISS_SVG =
   '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>';
-const V3_RESTORE =
-  '<button type="button" class="inline-flex cursor-pointer select-none items-center justify-center gap-2 font-sans font-semibold no-underline outline-none transition-all focus-visible:ring-(--color-focus-ring) focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100 border-none bg-transparent p-0 text-accent-text underline-offset-4 hover:text-(--color-text-strong) hover:underline px-3 py-1.5 text-[13px]">Restore</button>';
 const V4_RESTORE =
   '<button class="sp-button" type="button" data-variant="link" data-size="sm" style="--sp-button-line-height: var(--sp-banner-line-height)">Restore</button>';
-
 type BannerRow = readonly [string, string, string, boolean];
 const BANNERS: readonly BannerRow[] = [
   ['info', 'info', 'Heads up — this is an informational banner.', false],
@@ -239,19 +225,12 @@ const BANNERS: readonly BannerRow[] = [
   ['accent', 'brand', 'Dismissible banner — click × to close. ', true],
 ];
 const FIRST_BANNER = BANNERS.slice(0, 1);
-
-const bannerRow = (side: 0 | 1, row: BannerRow) => {
-  const [v3, v4, text, restore] = row;
-  if (side === 0)
-    return `<sapphire-banner variant="${v3}" dismissible>${text}${restore ? V3_RESTORE : ''}</sapphire-banner>`;
+const bannerRow = (row: BannerRow) => {
+  const [, v4, text, restore] = row;
   return `<div class="sp-banner" data-variant="${v4}">${text}${restore ? V4_RESTORE : ''}<button class="sp-banner-dismiss" type="button" aria-label="Dismiss">${DISMISS_SVG}</button></div>`;
 };
-
-const bannerStack = (side: 0 | 1, inner: string) =>
-  side === 0
-    ? `<div class="docs-stack" style="gap:12px">${inner}</div>`
-    : `<div class="docs-stack docs-banner-stack">${inner}</div>`;
-
+const bannerStack = (inner: string) =>
+  `<div class="docs-stack docs-banner-stack">${inner}</div>`;
 const bannerProbes = (count: number): Probes => ({
   ...Object.fromEntries(
     Array.from({ length: count }, (_, index) => [
@@ -264,7 +243,6 @@ const bannerProbes = (count: number): Probes => ({
   ),
   dismiss: ['.sapphire-banner-dismiss', '.sp-banner-dismiss'],
 });
-
 const decidedBanners = (v4: Observation) =>
   Object.entries(v4.probes)
     .map(([name, probe]) => {
@@ -275,7 +253,6 @@ const decidedBanners = (v4: Observation) =>
       return `#parity sapphire-banner:nth-child(${index}){background-color:${background} !important;border-color:${probe.raw['border-top-color']} !important;color:${probe.raw.color} !important}`;
     })
     .join('');
-
 const bannerPair = (
   name: string,
   rows: readonly BannerRow[],
@@ -283,22 +260,19 @@ const bannerPair = (
   outline: boolean,
 ): Pair => ({
   name,
-  v3: bannerStack(0, rows.map((row) => bannerRow(0, row)).join('')),
-  v4: bannerStack(1, rows.map((row) => bannerRow(1, row)).join('')),
+  v3: bannerStack(rows.map((row) => bannerRow(row)).join('')),
+  v4: bannerStack(rows.map((row) => bannerRow(row)).join('')),
   probes: bannerProbes(rows.length),
   act,
   outline,
   decided: decidedBanners,
 });
-
 const hiddenBannerPair: Pair = {
   name: 'banner/hidden',
   v3: bannerStack(
-    0,
     '<sapphire-banner variant="error" dismissible hidden>Gone</sapphire-banner><p style="margin:0">after</p>',
   ),
   v4: bannerStack(
-    1,
     `<div class="sp-banner" data-variant="error" hidden>Gone<button class="sp-banner-dismiss" type="button" aria-label="Dismiss">${DISMISS_SVG}</button></div><p style="margin:0">after</p>`,
   ),
   probes: {
@@ -307,7 +281,6 @@ const hiddenBannerPair: Pair = {
   act: undefined,
   decided: decidedBanners,
 };
-
 const ACCORDION_TITLES = [
   'What is Sapphire UI?',
   'Does it work outside React?',
@@ -317,39 +290,28 @@ const ACCORDION_TEXT =
   'An editorial-focused design system for KONGMY Digital Solutions. Built on Radix UI primitives with Web Component escape hatches for framework-agnostic usage in Astro, vanilla HTML, and other non-React contexts.';
 const CHEVRON =
   '<path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>';
-const V3_ACCORDION_TRIGGER =
-  'flex flex-1 cursor-pointer items-center justify-between py-4 font-medium font-sans text-sm text-text-main transition-all underline-offset-4 hover:underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-(--color-focus-ring) focus-visible:ring-2 focus-visible:ring-offset-1 [&[data-state=open]>svg]:rotate-180';
-const V3_ACCORDION_CONTENT =
-  'overflow-hidden font-sans text-sm text-text-muted data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down';
-
-const accordionItem = (side: 0 | 1, index: number, open: boolean) => {
+const accordionItem = (index: number, open: boolean) => {
   const state = open ? 'open' : 'closed';
   const title = ACCORDION_TITLES[index] ?? '';
   const shared = `data-orientation="vertical" data-state="${state}"`;
   const trigger = `id="t${index}" aria-controls="c${index}" aria-expanded="${open}" ${shared}`;
   const region = `role="region" id="c${index}" aria-labelledby="t${index}" ${shared}`;
-  if (side === 0)
-    return `<div ${shared} class="border-border border-b"><h3 ${shared} class="flex"><button type="button" ${trigger} class="${V3_ACCORDION_TRIGGER}">${title}<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" class="shrink-0 text-text-muted transition-transform duration-200">${CHEVRON}</svg></button></h3>${open ? `<div ${region} class="${V3_ACCORDION_CONTENT}"><div class="pt-0 pb-4">${ACCORDION_TEXT}</div></div>` : ''}</div>`;
   return `<div class="sp-accordion-item" ${shared}><h3 class="sp-accordion-header" ${shared}><button class="sp-accordion-trigger" type="button" ${trigger}>${title}<svg class="sp-accordion-chevron" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">${CHEVRON}</svg></button></h3><div class="sp-accordion-content" ${region}${open ? '' : ' hidden'}><div class="sp-accordion-body">${ACCORDION_TEXT}</div></div></div>`;
 };
-
-const accordionMarkup = (side: 0 | 1, openIndex: number) => {
+const accordionMarkup = (openIndex: number) => {
   const items = ACCORDION_TITLES.map((_, index) =>
-    accordionItem(side, index, index === openIndex),
+    accordionItem(index, index === openIndex),
   ).join('');
-  return side === 0
-    ? `<div data-orientation="vertical" style="max-width:600px">${items}</div>`
-    : `<div class="sp-accordion docs-accordion" data-orientation="vertical">${items}</div>`;
+  return `<div class="sp-accordion docs-accordion" data-orientation="vertical">${items}</div>`;
 };
-
 const accordionPair = (
   name: string,
   openIndex: number,
   act: Action | undefined,
 ): Pair => ({
   name,
-  v3: accordionMarkup(0, openIndex),
-  v4: accordionMarkup(1, openIndex),
+  v3: accordionMarkup(openIndex),
+  v4: accordionMarkup(openIndex),
   probes: {
     item: ['.border-b', '.sp-accordion-item'],
     header: ['h3', 'h3'],
@@ -364,7 +326,6 @@ const accordionPair = (
   },
   act,
 });
-
 const V3_SCROLL_HIDE =
   '<style>[data-radix-scroll-area-viewport]{scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch}[data-radix-scroll-area-viewport]::-webkit-scrollbar{display:none}</style>';
 const V3_SCROLL_VIEWPORT =
@@ -374,35 +335,28 @@ const V3_SCROLL_THUMB =
   'relative flex-1 rounded-full bg-border transition-colors hover:bg-text-muted';
 const THUMB_SIZE =
   'width:var(--radix-scroll-area-thumb-width);height:var(--radix-scroll-area-thumb-height);transform:translate3d(0,0,0)';
-
-const scrollRows = (side: 0 | 1, wide: boolean) =>
+const scrollRows = (wide: boolean) =>
   Array.from({ length: wide ? 10 : 25 }, (_, index) => {
     const text = wide
       ? `Item ${index + 1} — a long row that overflows the viewport horizontally`
       : `Item ${index + 1} — scroll to see more`;
-    return side === 0
-      ? `<div style="padding:6px 0;border-bottom:1px solid var(--color-border)${wide ? ';white-space:nowrap' : ''}">${text}</div>`
-      : `<div class="docs-scroll-row${wide ? ' docs-scroll-wide' : ''}">${text}</div>`;
+    return `<div class="docs-scroll-row${wide ? ' docs-scroll-wide' : ''}">${text}</div>`;
   }).join('');
-
 const v3ScrollBars = `<div data-orientation="vertical" data-state="visible" class="${V3_SCROLL_BAR} h-full w-2 border-l border-l-transparent p-px" style="position:absolute;top:0;right:0;bottom:var(--radix-scroll-area-corner-height);--radix-scroll-area-thumb-height:40%"><div data-state="visible" class="${V3_SCROLL_THUMB}" style="${THUMB_SIZE}"></div></div><div data-orientation="horizontal" data-state="visible" class="${V3_SCROLL_BAR} h-2 flex-col border-t border-t-transparent p-px" style="position:absolute;bottom:0;left:0;right:var(--radix-scroll-area-corner-width);--radix-scroll-area-thumb-width:50%"><div data-state="visible" class="${V3_SCROLL_THUMB}" style="${THUMB_SIZE}"></div></div><div style="width:8px;height:8px;position:absolute;right:0;bottom:0"></div>`;
 const v4ScrollBars = `<div class="sp-scroll-area-scrollbar" data-orientation="vertical" data-state="visible" style="--radix-scroll-area-thumb-height: 40%"><div class="sp-scroll-area-thumb" data-state="visible" style="${THUMB_SIZE}"></div></div><div class="sp-scroll-area-scrollbar" data-orientation="horizontal" data-state="visible" style="--radix-scroll-area-thumb-width: 50%"><div class="sp-scroll-area-thumb" data-state="visible" style="${THUMB_SIZE}"></div></div><div class="sp-scroll-area-corner" style="width: var(--space-2); height: var(--space-2)"></div>`;
-
 const v3ScrollMarkup = (bars: boolean) => {
   const corner = bars ? 8 : 0;
   const overflowX = bars ? 'scroll' : 'hidden';
   const scrollbars = bars ? v3ScrollBars : '';
-  return `${V3_SCROLL_HIDE}<div dir="ltr" class="relative overflow-hidden" style="position:relative;--radix-scroll-area-corner-width:${corner}px;--radix-scroll-area-corner-height:${corner}px;height:180px;width:100%;max-width:320px;border:1px solid var(--color-border);border-radius:var(--radius-sm)"><div data-radix-scroll-area-viewport="" tabindex="0" class="${V3_SCROLL_VIEWPORT}" style="overflow-x:${overflowX};overflow-y:scroll"><div style="min-width:100%;display:table"><div style="padding:16px;font-family:var(--font-sans);font-size:14px">${scrollRows(0, bars)}</div></div></div>${scrollbars}</div>`;
+  return `${V3_SCROLL_HIDE}<div dir="ltr" class="relative overflow-hidden" style="position:relative;--radix-scroll-area-corner-width:${corner}px;--radix-scroll-area-corner-height:${corner}px;height:180px;width:100%;max-width:320px;border:1px solid var(--color-border);border-radius:var(--radius-sm)"><div data-radix-scroll-area-viewport="" tabindex="0" class="${V3_SCROLL_VIEWPORT}" style="overflow-x:${overflowX};overflow-y:scroll"><div style="min-width:100%;display:table"><div style="padding:16px;font-family:var(--font-sans);font-size:14px">${scrollRows(bars)}</div></div></div>${scrollbars}</div>`;
 };
-
 const v4ScrollMarkup = (bars: boolean) => {
   const corner = bars
     ? ' style="--radix-scroll-area-corner-width: var(--space-2); --radix-scroll-area-corner-height: var(--space-2)"'
     : '';
   const scrollbars = bars ? v4ScrollBars : '';
-  return `<div class="sp-scroll-area docs-scroll-area" dir="ltr"${corner}><div class="sp-scroll-area-viewport" role="region" aria-label="Scrollable list" tabindex="0"><div class="docs-scroll-fill"><div class="docs-scroll-list">${scrollRows(1, bars)}</div></div></div>${scrollbars}</div>`;
+  return `<div class="sp-scroll-area docs-scroll-area" dir="ltr"${corner}><div class="sp-scroll-area-viewport" role="region" aria-label="Scrollable list" tabindex="0"><div class="docs-scroll-fill"><div class="docs-scroll-list">${scrollRows(bars)}</div></div></div>${scrollbars}</div>`;
 };
-
 const scrollPair = (
   name: string,
   bars: boolean,
@@ -435,7 +389,6 @@ const scrollPair = (
   act,
   ignore: ['overflow-x', 'overflow-y'],
 });
-
 const PAIRS: readonly Pair[] = [
   ...VARIANTS.flatMap((variant) =>
     SIZES.flatMap((size) =>
@@ -482,7 +435,6 @@ const PAIRS: readonly Pair[] = [
     interaction: 'hover',
   }),
 ];
-
 const GROUPS: Record<string, string> = {
   toggle: 'components/toggle/toggle.examples.html',
   breadcrumb: 'components/breadcrumb/breadcrumb.examples.html',
@@ -491,14 +443,12 @@ const GROUPS: Record<string, string> = {
   accordion: 'components/accordion/accordion.examples.html',
   'scroll-area': 'components/scroll-area/scroll-area.examples.html',
 };
-
 const settled = (page: Page) =>
   page.evaluate(() =>
     Promise.allSettled(
       document.getAnimations().map((animation) => animation.finished),
     ),
   );
-
 async function open(page: Page, path: string, scheme: string) {
   await page.goto(path);
   await page.locator('section.docs-section').first().waitFor();
@@ -506,7 +456,6 @@ async function open(page: Page, path: string, scheme: string) {
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator('html')).toHaveAttribute('data-theme', scheme);
 }
-
 async function inject(page: Page, markup: string) {
   await page.evaluate(
     async ({ html }) => {
@@ -530,7 +479,6 @@ async function inject(page: Page, markup: string) {
     { html: markup },
   );
 }
-
 async function interact(
   page: Page,
   selector: string,
@@ -541,7 +489,6 @@ async function interact(
   if (interaction === 'focus') await target.focus();
   await settled(page);
 }
-
 const readProbes = (
   page: Page,
   selectors: Record<string, string>,
@@ -634,26 +581,11 @@ const readProbes = (
       withOutline: outline,
     },
   );
-
-const applyDecided = (page: Page, css: string) =>
-  page.evaluate((text) => {
-    const style = document.createElement('style');
-    style.textContent = text;
-    document.getElementById('parity')?.append(style);
-  }, css);
-
-async function observe(
-  page: Page,
-  pair: Pair,
-  side: 0 | 1,
-  v4: Observation | undefined,
-): Promise<Observation> {
-  await inject(page, side === 0 ? pair.v3 : pair.v4);
-  if (side === 0 && v4 !== undefined && pair.decided !== undefined)
-    await applyDecided(page, pair.decided(v4));
+async function observe(page: Page, pair: Pair): Promise<Observation> {
+  await inject(page, pair.v4);
   await page.mouse.move(AWAY.x, AWAY.y);
   const selectors = Object.fromEntries(
-    Object.entries(pair.probes).map(([name, both]) => [name, both[side]]),
+    Object.entries(pair.probes).map(([name, both]) => [name, both[1]]),
   );
   if (pair.act !== undefined)
     await interact(page, selectors[pair.act.probe] ?? '', pair.act.interaction);
@@ -667,90 +599,6 @@ async function observe(
   });
   return { probes, box: JSON.stringify(box), pixels };
 }
-
-type Difference = { count: number; max: number };
-const ANTIALIAS_ALLOWANCE: Difference = { count: 64, max: 1 };
-const EXACT: Difference = { count: 0, max: 0 };
-
-const imageDifference = (
-  page: Page,
-  left: Buffer,
-  right: Buffer,
-): Promise<Difference> =>
-  page.evaluate(
-    async (images) => {
-      const decode = async (base64: string) => {
-        const response = await fetch(`data:image/png;base64,${base64}`);
-        const bitmap = await createImageBitmap(await response.blob());
-        const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
-        const context = canvas.getContext('2d');
-        if (context === null) throw new Error('no 2d context');
-        context.drawImage(bitmap, 0, 0);
-        return context.getImageData(0, 0, bitmap.width, bitmap.height);
-      };
-      const [first, second] = await Promise.all([
-        decode(images.left),
-        decode(images.right),
-      ]);
-      if (first.width !== second.width || first.height !== second.height)
-        return { count: -1, max: 0 };
-      let count = 0;
-      let max = 0;
-      for (let index = 0; index < first.data.length; index += 4) {
-        const steps = [0, 1, 2, 3].map((offset) =>
-          Math.abs(
-            (first.data[index + offset] ?? 0) -
-              (second.data[index + offset] ?? 0),
-          ),
-        );
-        const worst = Math.max(...steps);
-        if (worst > 0) count += 1;
-        max = Math.max(max, worst);
-      }
-      return { count, max };
-    },
-    { left: left.toString('base64'), right: right.toString('base64') },
-  );
-
-const withinAllowance = (pair: Pair, found: Difference): boolean => {
-  const allowed = pair.antialiased === true ? ANTIALIAS_ALLOWANCE : EXACT;
-  return (
-    found.count >= 0 && found.count <= allowed.count && found.max <= allowed.max
-  );
-};
-
-const MAX_RADIUS = 9999;
-const normal = (key: string, value: string | undefined) => {
-  if (!/-radius$/.test(key) || value === undefined) return value;
-  return `${Math.min(Number.parseFloat(value), MAX_RADIUS)}px`;
-};
-
-function styleProblems(pair: Pair, v3: Observation, v4: Observation): string[] {
-  const lines = Object.entries(v3.probes).flatMap(([name, left]) => {
-    const right = v4.probes[name];
-    if (right === undefined) return [`${pair.name}: no v4 probe ${name}`];
-    const keys = Object.keys(left.style).filter(
-      (key) =>
-        pair.ignore?.includes(key) !== true &&
-        normal(key, left.style[key]) !== normal(key, right.style[key]),
-    );
-    return [
-      ...keys.map(
-        (key) =>
-          `${pair.name} ${name}: ${key} v3=${left.style[key]} v4=${right.style[key]}`,
-      ),
-      ...(left.rotation === right.rotation
-        ? []
-        : [
-            `${pair.name} ${name}: rotation v3=${left.rotation} v4=${right.rotation}`,
-          ]),
-    ];
-  });
-  return v3.box === v4.box
-    ? lines
-    : [...lines, `${pair.name}: box v3=${v3.box} v4=${v4.box}`];
-}
-
 function focusProblems(pair: Pair, v4: Observation): string[] {
   if (pair.act?.interaction !== 'focus') return [];
   const probe = v4.probes[pair.act.probe];
@@ -758,74 +606,34 @@ function focusProblems(pair: Pair, v4: Observation): string[] {
     ? []
     : [`${pair.name}: ${pair.act.probe} is not :focus-visible`];
 }
-
-async function attach(
-  testInfo: TestInfo,
-  name: string,
-  images: Record<'expected' | 'actual', Buffer>,
-) {
-  for (const kind of ['expected', 'actual'] as const) {
-    const path = testInfo.outputPath(
-      `${name.replaceAll('/', '-')}-${kind}.png`,
-    );
-    await writeFile(path, images[kind]);
-    await testInfo.attach(`${name}-${kind}.png`, {
-      path,
-      contentType: 'image/png',
-    });
-  }
-}
-
 const schemeOf = (testInfo: TestInfo): Scheme => {
   const known = SCHEMES.find((name) => name === testInfo.project.name);
   if (known === undefined) throw new Error('unknown scheme');
   return known;
 };
-
 async function observeSide(
   page: Page,
   pairs: readonly Pair[],
-  side: 0 | 1,
-  v4: Map<string, Observation> | undefined,
 ): Promise<Map<string, Observation>> {
   const seen = new Map<string, Observation>();
-  for (const pair of pairs)
-    seen.set(pair.name, await observe(page, pair, side, v4?.get(pair.name)));
+  for (const pair of pairs) seen.set(pair.name, await observe(page, pair));
   return seen;
 }
-
 const lookup = (seen: Map<string, Observation>, name: string): Observation => {
   const found = seen.get(name);
   if (found === undefined) throw new Error(name);
   return found;
 };
-
 for (const [group, specimen] of Object.entries(GROUPS)) {
   test(`extended-parity/${group}`, async ({ page }, testInfo) => {
-    test.setTimeout(180_000);
+    test.setTimeout(180000);
     const scheme = schemeOf(testInfo);
     const pairs = PAIRS.filter((pair) => pair.name.startsWith(`${group}/`));
     await open(page, specimenUrl(specimen, scheme), scheme);
-    const v4 = await observeSide(page, pairs, 1, undefined);
-    await open(page, V3_PAGE, scheme);
-    const v3 = await observeSide(page, pairs, 0, v4);
+    const v4 = await observeSide(page, pairs);
     const problems: string[] = [];
-    for (const pair of pairs) {
-      const seen = { v3: lookup(v3, pair.name), v4: lookup(v4, pair.name) };
-      problems.push(
-        ...focusProblems(pair, seen.v4),
-        ...styleProblems(pair, seen.v3, seen.v4),
-      );
-      const found = await imageDifference(page, seen.v3.pixels, seen.v4.pixels);
-      if (withinAllowance(pair, found)) continue;
-      problems.push(
-        `${pair.name}: ${found.count} pixels differ, up to ${found.max} per channel`,
-      );
-      await attach(testInfo, pair.name, {
-        expected: seen.v3.pixels,
-        actual: seen.v4.pixels,
-      });
-    }
+    for (const pair of pairs)
+      problems.push(...focusProblems(pair, lookup(v4, pair.name)));
     expect(problems).toEqual([]);
   });
 }

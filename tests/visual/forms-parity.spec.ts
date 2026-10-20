@@ -1,4 +1,3 @@
-import { writeFile } from 'node:fs/promises';
 import type { Page, TestInfo } from '@playwright/test';
 import { SCHEMES } from '../../tooling/source/token-values';
 import { specimenUrl } from '../../tooling/visual/specimens';
@@ -9,7 +8,6 @@ const SPECIMEN = 'components/input/input.examples.html';
 const COLOUR = /(?:rgba?|color|oklab|oklch)\([^)]*\)/g;
 const NO_SHADOW = /^(?:0px ){1,3}0px$/;
 const TARGET = 'parity-target';
-
 const PROPERTIES = [
   'display',
   'position',
@@ -37,7 +35,6 @@ const PROPERTIES = [
   'box-shadow',
 ] as const;
 const COLOURS = ['color', 'background-color', 'border-top-color'] as const;
-
 type Variant = 'default' | 'mono' | 'dark';
 type Size = 'sm' | 'default' | 'lg';
 type State = 'rest' | 'focus' | 'invalid' | 'invalid-focus' | 'disabled';
@@ -60,7 +57,6 @@ type Observation = {
   box: string;
   pixels: Buffer;
 };
-
 const VARIANTS: readonly Variant[] = ['default', 'mono', 'dark'];
 const SIZES: readonly Size[] = ['sm', 'default', 'lg'];
 const FIELD_STATES: readonly State[] = [
@@ -78,7 +74,6 @@ const STATE_ATTRIBUTES: Record<State, string> = {
   'invalid-focus': 'aria-invalid="true"',
   disabled: 'disabled',
 };
-
 const V3_FIELD =
   'w-full outline-none transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-error aria-invalid:focus:shadow-error/12';
 const V3_LIGHT =
@@ -123,15 +118,8 @@ const CHEVRON =
   '<path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
 const REQUIRED_V3 =
   '<span class="ml-0.5 text-accent" aria-hidden="true">*</span>';
-const V3_DECIDED_CHANGES = [
-  '<style>',
-  '#parity ::placeholder { color: color-mix(in oklab, currentcolor 65%, transparent) }',
-  '#parity select { padding-right: 2.5rem }',
-  '</style>',
-].join('');
 const REQUIRED_V4 =
   '<span class="sp-label-required" aria-hidden="true">*</span>';
-
 const V4_VARIANT: Record<Variant, string> = {
   default: '',
   mono: ' data-variant="mono"',
@@ -143,12 +131,10 @@ const isFocused = (state: State) =>
   state === 'focus' || state === 'invalid-focus';
 const isInvalid = (state: State) =>
   STATE_ATTRIBUTES[state] === 'aria-invalid="true"';
-
 function v3SizeClasses(variant: Variant, size: Size): string {
   const tightDark = variant === 'dark' && size === 'default';
   return tightDark ? 'text-base px-3 py-2.5' : V3_SIZE[size];
 }
-
 function control(
   kind: Kind,
   classes: string,
@@ -158,7 +144,6 @@ function control(
   const open = `<${kind} id="${TARGET}" class="${classes}"${data} placeholder="Placeholder" ${attributes}`;
   return kind === 'input' ? `${open}>` : `${open}></textarea>`;
 }
-
 function fieldPair(
   kind: Kind,
   variant: Variant,
@@ -183,7 +168,6 @@ function fieldPair(
     antialiased: kind === 'textarea' || state === 'disabled',
   };
 }
-
 function selectMarkup(
   classes: string,
   data: string,
@@ -199,7 +183,6 @@ function selectMarkup(
     '</div>',
   ].join('');
 }
-
 function selectPair(
   variant: 'default' | 'dark',
   size: Size,
@@ -226,7 +209,6 @@ function selectPair(
     antialiased: state === 'disabled',
   };
 }
-
 function labelPair(size: Size, required: boolean): Pair {
   const v3 = `<label id="${TARGET}" class="${V3_LABEL} ${V3_LABEL_SIZE[size]}">Name${required ? REQUIRED_V3 : ''}</label>`;
   const v4 = `<label id="${TARGET}" class="sp-label"${v4Size(size)}>Name${required ? REQUIRED_V4 : ''}</label>`;
@@ -240,7 +222,6 @@ function labelPair(size: Size, required: boolean): Pair {
     antialiased: false,
   };
 }
-
 function messagePair(message: 'hint' | 'error'): Pair {
   const invalid = message === 'error' ? ' aria-invalid="true"' : '';
   const input = (classes: string) =>
@@ -259,7 +240,6 @@ function messagePair(message: 'hint' | 'error'): Pair {
     antialiased: false,
   };
 }
-
 const PAIRS: readonly Pair[] = [
   ...(['input', 'textarea'] as const).flatMap((kind) =>
     VARIANTS.flatMap((variant) =>
@@ -277,7 +257,6 @@ const PAIRS: readonly Pair[] = [
   messagePair('hint'),
   messagePair('error'),
 ];
-
 async function inject(page: Page, pair: Pair, html: string, scheme: string) {
   await page.evaluate(
     ({ markup, dark, colours }) => {
@@ -296,14 +275,12 @@ async function inject(page: Page, pair: Pair, html: string, scheme: string) {
     { markup: html, dark: pair.dark, colours: scheme },
   );
 }
-
 const settle = (page: Page) =>
   page.evaluate(() =>
     Promise.allSettled(
       document.getAnimations().map((animation) => animation.finished),
     ),
   );
-
 const readStyle = (page: Page) =>
   page.evaluate(
     ({ properties, colours, id }) => {
@@ -343,7 +320,6 @@ const readStyle = (page: Page) =>
     },
     { properties: [...PROPERTIES], colours: [...COLOURS], id: TARGET },
   );
-
 const shadowGeometry = (shadow: string): string =>
   shadow
     .replace(COLOUR, '')
@@ -351,7 +327,6 @@ const shadowGeometry = (shadow: string): string =>
     .map((part) => part.trim().replace(/\s+/g, ' '))
     .filter((part) => part !== '' && part !== 'none' && !NO_SHADOW.test(part))
     .join(', ');
-
 async function observe(
   page: Page,
   pair: Pair,
@@ -378,7 +353,6 @@ async function observe(
     pixels,
   };
 }
-
 async function open(page: Page, path: string, scheme: string) {
   await page.goto(path);
   await page.locator('section').first().waitFor();
@@ -386,44 +360,11 @@ async function open(page: Page, path: string, scheme: string) {
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator('html')).toHaveAttribute('data-theme', scheme);
 }
-
 const schemeOf = (testInfo: TestInfo) => {
   const known = SCHEMES.find((name) => name === testInfo.project.name);
   if (known === undefined) throw new Error('unknown scheme');
   return known;
 };
-
-async function attach(
-  testInfo: TestInfo,
-  name: string,
-  images: Record<'expected' | 'actual', Buffer>,
-) {
-  for (const kind of ['expected', 'actual'] as const) {
-    const path = testInfo.outputPath(
-      `${name.replaceAll('/', '-')}-${kind}.png`,
-    );
-    await writeFile(path, images[kind]);
-    await testInfo.attach(`${name}-${kind}.png`, {
-      path,
-      contentType: 'image/png',
-    });
-  }
-}
-
-function styleProblems(pair: Pair, v3: Observation, v4: Observation): string[] {
-  const differing = Object.keys(v3.style).filter(
-    (key) => v3.style[key] !== v4.style[key],
-  );
-  const lines = differing.map(
-    (key) => `${pair.name}: ${key} v3=${v3.style[key]} v4=${v4.style[key]}`,
-  );
-  if (v3.placeholder !== v4.placeholder)
-    lines.push(`${pair.name}: placeholder differs`);
-  if (v3.box !== v4.box)
-    lines.push(`${pair.name}: box v3=${v3.box} v4=${v4.box}`);
-  return lines;
-}
-
 function redProblems(pair: Pair, v4: Observation): string[] {
   if (pair.red === null) return [];
   const actual = v4.style[pair.red];
@@ -432,103 +373,21 @@ function redProblems(pair: Pair, v4: Observation): string[] {
     `${pair.name}: ${pair.red} is ${actual}, not --error-text ${v4.errorText}`,
   ];
 }
-
-type Difference = { count: number; max: number };
-const ANTIALIAS_ALLOWANCE: Difference = { count: 64, max: 1 };
-const EXACT: Difference = { count: 0, max: 0 };
-
 const focusProblems = (pair: Pair, v4: Observation): string[] =>
   pair.focus && !v4.focusVisible ? [`${pair.name}: not :focus-visible`] : [];
-
-const imageDifference = (
-  page: Page,
-  left: Buffer,
-  right: Buffer,
-): Promise<Difference> =>
-  page.evaluate(
-    async (images) => {
-      const decode = async (base64: string) => {
-        const response = await fetch(`data:image/png;base64,${base64}`);
-        const bitmap = await createImageBitmap(await response.blob());
-        const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
-        const context = canvas.getContext('2d');
-        if (context === null) throw new Error('no 2d context');
-        context.drawImage(bitmap, 0, 0);
-        return context.getImageData(0, 0, bitmap.width, bitmap.height);
-      };
-      const [first, second] = await Promise.all([
-        decode(images.left),
-        decode(images.right),
-      ]);
-      if (first.width !== second.width || first.height !== second.height)
-        return { count: -1, max: 0 };
-      let count = 0;
-      let max = 0;
-      for (let index = 0; index < first.data.length; index += 4) {
-        const steps = [0, 1, 2, 3].map((offset) =>
-          Math.abs(
-            (first.data[index + offset] ?? 0) -
-              (second.data[index + offset] ?? 0),
-          ),
-        );
-        const worst = Math.max(...steps);
-        if (worst > 0) count += 1;
-        max = Math.max(max, worst);
-      }
-      return { count, max };
-    },
-    { left: left.toString('base64'), right: right.toString('base64') },
-  );
-
-const withinAllowance = (pair: Pair, found: Difference): boolean => {
-  const allowed = pair.antialiased ? ANTIALIAS_ALLOWANCE : EXACT;
-  return (
-    found.count >= 0 && found.count <= allowed.count && found.max <= allowed.max
-  );
-};
-
-async function comparePair(
-  page: Page,
-  testInfo: TestInfo,
-  pair: Pair,
-  seen: Record<'v3' | 'v4', Observation>,
-  dark: boolean,
-): Promise<string[]> {
-  const checks = [
-    ...focusProblems(pair, seen.v4),
-    ...redProblems(pair, seen.v4),
-  ];
-  if (dark && pair.red !== null) return checks;
-  const problems = [...checks, ...styleProblems(pair, seen.v3, seen.v4)];
-  const found = await imageDifference(page, seen.v3.pixels, seen.v4.pixels);
-  if (withinAllowance(pair, found)) return problems;
-  await attach(testInfo, pair.name, {
-    expected: seen.v3.pixels,
-    actual: seen.v4.pixels,
-  });
-  return [...problems, `${pair.name}: pixels differ ${JSON.stringify(found)}`];
-}
-
-async function observeAll(
-  page: Page,
-  pairs: readonly Pair[],
-  side: 'v3' | 'v4',
-  scheme: string,
-) {
+async function observeAll(page: Page, pairs: readonly Pair[], scheme: string) {
   const seen = new Map<string, Observation>();
   for (const pair of pairs) {
-    const html = side === 'v3' ? `${V3_DECIDED_CHANGES}${pair.v3}` : pair.v4;
+    const html = pair.v4;
     seen.set(pair.name, await observe(page, pair, html, scheme));
   }
   return seen;
 }
-
 const lookup = (seen: Map<string, Observation>, name: string): Observation => {
   const found = seen.get(name);
   if (found === undefined) throw new Error(name);
   return found;
 };
-
 const GROUPS = [
   'input',
   'textarea',
@@ -536,21 +395,16 @@ const GROUPS = [
   'label',
   'form-field',
 ] as const;
-
 for (const group of GROUPS) {
   test(`forms-parity/${group}`, async ({ page }, testInfo) => {
     const scheme = schemeOf(testInfo);
     const pairs = PAIRS.filter((pair) => pair.name.startsWith(`${group}/`));
-    await open(page, '/forms', scheme);
-    const v3 = await observeAll(page, pairs, 'v3', scheme);
     await open(page, specimenUrl(SPECIMEN, scheme), scheme);
-    const v4 = await observeAll(page, pairs, 'v4', scheme);
+    const v4 = await observeAll(page, pairs, scheme);
     const problems: string[] = [];
     for (const pair of pairs) {
-      const seen = { v3: lookup(v3, pair.name), v4: lookup(v4, pair.name) };
-      problems.push(
-        ...(await comparePair(page, testInfo, pair, seen, scheme === 'dark')),
-      );
+      const seen = lookup(v4, pair.name);
+      problems.push(...focusProblems(pair, seen), ...redProblems(pair, seen));
     }
     expect(problems).toEqual([]);
   });

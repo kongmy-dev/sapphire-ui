@@ -1,6 +1,11 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { test as base, expect, type Route } from '@playwright/test';
+import {
+  test as base,
+  expect,
+  type Route,
+  type TestInfo,
+} from '@playwright/test';
 import {
   FONT_SOURCES,
   GOOGLE_STYLESHEET_HOST,
@@ -8,6 +13,34 @@ import {
   ICON_CLASS_CSS,
   localFontFile,
 } from '../../tooling/visual/fonts';
+
+import {
+  captureCountProblem,
+  STATE_COUNT_ANNOTATION,
+  type StateInventory,
+  stateName,
+} from '../../tooling/visual/state-inventory';
+import inventory from './state-inventory.json' with { type: 'json' };
+
+const expectedCounts: StateInventory = inventory;
+
+function assertStateCount(info: TestInfo) {
+  const key = `${stateName(info.title)}/${info.project.name}`;
+  const captured = info.annotations.filter(
+    (item) => item.type === 'v4-state',
+  ).length;
+  info.annotations.push({
+    type: STATE_COUNT_ANNOTATION,
+    description: `${key}=${captured}`,
+  });
+  expect(
+    captureCountProblem({
+      expected: expectedCounts[key] ?? 0,
+      captured,
+      updating: info.config.updateSnapshots !== 'none',
+    }),
+  ).toBeNull();
+}
 
 const THEME_KEY = 'sapphire-theme';
 const CONSENT_COOKIE = 'kongmy_consent';
@@ -56,7 +89,7 @@ async function answer(route: Route, blocked: string[]) {
 }
 
 export const test = base.extend({
-  context: async ({ context, colorScheme }, use) => {
+  context: async ({ context, colorScheme }, use, info) => {
     const blocked: string[] = [];
     const scheme = colorScheme === 'dark' ? 'dark' : 'light';
     await context.addInitScript(
@@ -75,6 +108,7 @@ export const test = base.extend({
     ]);
     await context.route(/^https?:/, (route) => answer(route, blocked));
     await use(context);
+    assertStateCount(info);
     expect(blocked, 'requests beyond localhost').toEqual([]);
   },
 });

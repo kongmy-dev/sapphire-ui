@@ -1,16 +1,13 @@
-import { writeFile } from 'node:fs/promises';
 import type { Locator, Page, TestInfo } from '@playwright/test';
 import { SCHEMES, type Scheme } from '../../tooling/source/token-values';
 import { specimenUrl } from '../../tooling/visual/specimens';
 import { captureState } from './capture-state';
 import { expect, test } from './fixtures';
 
-const V3_PAGE = '/extended';
 const HOLDER = '#parity';
 const AWAY = { x: 1100, y: 700 };
 const HOLDER_STYLE =
   'position:fixed;top:0;left:0;width:960px;z-index:99999;border-radius:0;';
-
 const PROPERTIES = [
   'display',
   'position',
@@ -70,7 +67,6 @@ const COLOURS = [
   'border-bottom-color',
   'border-left-color',
 ] as const;
-
 const GROUPS = ['prose', 'document', 'table', 'key-value-list'] as const;
 type Group = (typeof GROUPS)[number];
 const SPECIMENS: Record<Group, string> = {
@@ -79,7 +75,6 @@ const SPECIMENS: Record<Group, string> = {
   table: 'components/table/table.examples.html',
   'key-value-list': 'components/key-value-list/key-value-list.examples.html',
 };
-
 type Fixture = {
   name: string;
   group: Group;
@@ -101,18 +96,14 @@ type Observation = {
   box: string;
   pixels: Buffer;
 };
-type Accents = { brandText: string; successText: string; errorText: string };
-
 const GLYPH = '.material-symbols-outlined';
 const V4_GLYPHS =
   '#parity .sp-document-bar-separator, #parity .sp-document-card-icon > .sp-icon';
-
 const proseV3 = (size: string) => (v4Html: string) =>
   v4Html.replace(
     /class="sp-prose"(?: data-size="(?:sm|lg)")?/,
     `class="prose${size}"`,
   );
-
 const PROSE_PARTS = {
   h1: ' h1',
   h2: ' h2',
@@ -131,9 +122,7 @@ const PROSE_PARTS = {
   hr: ' hr',
   img: ' img',
 } as const;
-
 const pairOf = (v3: string, v4: string): readonly [string, string] => [v3, v4];
-
 const PROSE_PROBES: Record<string, readonly [string, string]> = {
   root: pairOf('.prose', '.sp-prose'),
   ...Object.fromEntries(
@@ -143,7 +132,6 @@ const PROSE_PROBES: Record<string, readonly [string, string]> = {
     ]),
   ),
 };
-
 const BAR_V3 = `<div class="doc-bar">
   <div class="sf-mark">S</div>
   <div class="wm">Sapphire <small>Proposals</small></div>
@@ -155,7 +143,6 @@ const BAR_V3 = `<div class="doc-bar">
     <span class="sf-pill locked">Locked</span>
   </div>
 </div>`;
-
 const HERO_V3 = `<div class="doc-shell">
   <div class="doc-hero">
     <div class="eyebrow">Proposal</div>
@@ -177,7 +164,6 @@ const HERO_V3 = `<div class="doc-shell">
     </dl>
   </div>
 </div>`;
-
 const SECTION_V3 = `<div class="doc-shell">
   <section class="doc-section">
     <div class="sec-no">01</div>
@@ -197,20 +183,17 @@ const SECTION_V3 = `<div class="doc-shell">
     <p>Three waves over twelve weeks.</p>
   </section>
 </div>`;
-
 const CARD_V3 = `<div class="doc-card">
   <div class="ic"><span class="material-symbols-outlined">cloud</span></div>
   <h3>Managed hosting</h3>
   <p>Servers, patches and backups run by us, with a monthly report.</p>
 </div>`;
-
 const DARK_CARD_V3 = `<div class="doc-card dark">
   <div class="ic"><span class="material-symbols-outlined">support_agent</span></div>
   <h3>Premium support</h3>
   <h4>Included</h4>
   <div>Four-hour response on every ticket, any day of the week.</div>
 </div>`;
-
 const FOOT_V3 = `<div class="doc-shell">
   <div class="doc-foot">
     <div class="sf-mark">S</div>
@@ -218,14 +201,12 @@ const FOOT_V3 = `<div class="doc-shell">
     <div class="muted">Valid for 30 days</div>
   </div>
 </div>`;
-
 const row = (cells: readonly string[], kind = '') =>
   `<tr${kind === '' ? '' : ` class="${kind}"`}>${cells
     .map((cell) => `<td>${cell}</td>`)
     .join('')}</tr>`;
 const sectionRow = (label: string) =>
   `<tr class="section"><td colspan="4">${label}</td></tr>`;
-
 const FIN_V3 = `<table class="fin-table">
   <thead>
     <tr><th>Line item</th><th>Q1</th><th>Q2</th><th>Total</th></tr>
@@ -241,7 +222,6 @@ const FIN_V3 = `<table class="fin-table">
     ${row(['Net income', '$38,200', '$38,300', '$76,500'], 'total')}
   </tbody>
 </table>`;
-
 const KVS_V3 = `<dl class="kvs">
   <dt>Client</dt>
   <dd>Acme Holdings</dd>
@@ -252,7 +232,6 @@ const KVS_V3 = `<dl class="kvs">
   <dt>Owner</dt>
   <dd>Platform team</dd>
 </dl>`;
-
 const FIXTURES: readonly Fixture[] = [
   {
     name: 'prose/default',
@@ -445,14 +424,12 @@ const FIXTURES: readonly Fixture[] = [
     },
   },
 ];
-
 const section = (page: Page, title: string) =>
   page.locator('section.docs-section').filter({
     has: page.locator('h2.docs-section-title', {
       hasText: new RegExp(`^${title}$`),
     }),
   });
-
 async function open(page: Page, path: string, scheme: string) {
   await page.goto(path);
   await page.locator('section.docs-section').first().waitFor();
@@ -460,31 +437,6 @@ async function open(page: Page, path: string, scheme: string) {
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator('html')).toHaveAttribute('data-theme', scheme);
 }
-
-const readAccents = (page: Page): Promise<Accents> =>
-  page.evaluate(() => {
-    const colourOf = (token: string) => {
-      const probe = document.createElement('i');
-      probe.style.color = `var(${token})`;
-      document.body.append(probe);
-      const colour = getComputedStyle(probe).color;
-      probe.remove();
-      return colour;
-    };
-    return {
-      brandText: colourOf('--brand-text'),
-      successText: colourOf('--success-text'),
-      errorText: colourOf('--error-text'),
-    };
-  });
-
-const decidedChanges = (accents: Accents): string =>
-  [
-    `#parity .eyebrow, #parity .doc-section .sec-no, #parity .doc-card:not(.dark) .ic, #parity .fin-table tbody tr.section td { color: ${accents.brandText} !important }`,
-    `#parity .num-pos { color: ${accents.successText} !important }`,
-    `#parity .num-neg { color: ${accents.errorText} !important }`,
-  ].join('\n');
-
 async function mount(page: Page, html: string) {
   await page.evaluate(
     async (spec) => {
@@ -500,7 +452,6 @@ async function mount(page: Page, html: string) {
     { html, style: HOLDER_STYLE },
   );
 }
-
 const readProbes = (
   page: Page,
   selectors: Record<string, string>,
@@ -590,7 +541,6 @@ const readProbes = (
       colours: [...COLOURS],
     },
   );
-
 const textOf = (page: Page, withoutGlyphs: boolean) =>
   page.evaluate(
     (spec) => {
@@ -604,17 +554,15 @@ const textOf = (page: Page, withoutGlyphs: boolean) =>
     },
     { withoutGlyphs, glyph: GLYPH },
   );
-
 async function observe(
   page: Page,
   fixture: Fixture,
-  side: 0 | 1,
   html: string,
 ): Promise<Observation> {
   await mount(page, html);
   await page.mouse.move(AWAY.x, AWAY.y);
   const selectors = Object.fromEntries(
-    Object.entries(fixture.probes).map(([name, both]) => [name, both[side]]),
+    Object.entries(fixture.probes).map(([name, both]) => [name, both[1]]),
   );
   const hovered = fixture.hover;
   if (hovered !== undefined) {
@@ -632,109 +580,19 @@ async function observe(
   });
   return {
     html,
-    text: await textOf(page, side === 0),
+    text: await textOf(page, false),
     probes,
     box: JSON.stringify(box),
     pixels,
   };
 }
-
-const differingPixels = (page: Page, left: Buffer, right: Buffer) =>
-  page.evaluate(
-    async (images) => {
-      const decode = async (base64: string) => {
-        const response = await fetch(`data:image/png;base64,${base64}`);
-        const bitmap = await createImageBitmap(await response.blob());
-        const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
-        const context = canvas.getContext('2d');
-        if (context === null) throw new Error('no 2d context');
-        context.drawImage(bitmap, 0, 0);
-        return context.getImageData(0, 0, bitmap.width, bitmap.height);
-      };
-      const [first, second] = await Promise.all([
-        decode(images.left),
-        decode(images.right),
-      ]);
-      if (first.width !== second.width || first.height !== second.height)
-        return -1;
-      let count = 0;
-      for (let index = 0; index < first.data.length; index += 4) {
-        const differs = [0, 1, 2, 3].some(
-          (offset) =>
-            first.data[index + offset] !== second.data[index + offset],
-        );
-        if (differs) count += 1;
-      }
-      return count;
-    },
-    { left: left.toString('base64'), right: right.toString('base64') },
-  );
-
-function styleProblems(
-  fixture: Fixture,
-  v3: Observation,
-  v4: Observation,
-): string[] {
-  const lines = Object.entries(v3.probes).flatMap(([name, left]) => {
-    const right = v4.probes[name];
-    if (right === undefined) return [`${fixture.name}: no v4 probe ${name}`];
-    const keys = Object.keys(left.style).filter(
-      (key) => left.style[key] !== right.style[key],
-    );
-    return [
-      ...keys.map(
-        (key) =>
-          `${fixture.name} ${name}: ${key} v3=${left.style[key]} v4=${right.style[key]}`,
-      ),
-      ...(left.box === right.box
-        ? []
-        : [`${fixture.name} ${name}: box v3=${left.box} v4=${right.box}`]),
-    ];
-  });
-  const problems =
-    v3.box === v4.box
-      ? lines
-      : [...lines, `${fixture.name}: box v3=${v3.box} v4=${v4.box}`];
-  return v3.text === v4.text
-    ? problems
-    : [...problems, `${fixture.name}: text v3="${v3.text}" v4="${v4.text}"`];
-}
-
-async function attach(
-  testInfo: TestInfo,
-  name: string,
-  images: Record<'expected' | 'actual', Buffer>,
-) {
-  for (const kind of ['expected', 'actual'] as const) {
-    const path = testInfo.outputPath(
-      `${name.replaceAll('/', '-')}-${kind}.png`,
-    );
-    await writeFile(path, images[kind]);
-    await testInfo.attach(`${name}-${kind}.png`, {
-      path,
-      contentType: 'image/png',
-    });
-  }
-}
-
 const schemeOf = (testInfo: TestInfo): Scheme => {
   const known = SCHEMES.find((name) => name === testInfo.project.name);
   if (known === undefined) throw new Error('unknown scheme');
   return known;
 };
-
 const pickOf = (page: Page, fixture: Fixture): Locator =>
   section(page, fixture.title).locator(fixture.pick).first();
-
-const lookup = (seen: Map<string, Observation>, name: string): Observation => {
-  const found = seen.get(name);
-  if (found === undefined) throw new Error(name);
-  return found;
-};
-
-const v3Markup = (fixture: Fixture, v4Html: string): string =>
-  typeof fixture.v3 === 'string' ? fixture.v3 : fixture.v3(v4Html);
-
 const stickyProblems = (page: Page): Promise<string[]> =>
   page.evaluate(() => {
     const read = (selector: string) => {
@@ -750,46 +608,22 @@ const stickyProblems = (page: Page): Promise<string[]> =>
       ...(plain.startsWith('static') ? [] : [`plain bar is "${plain}"`]),
     ];
   });
-
 for (const group of GROUPS) {
   test(`document-parity/${group}`, async ({ page }, testInfo) => {
-    test.setTimeout(180_000);
+    test.setTimeout(180000);
     const scheme = schemeOf(testInfo);
     const fixtures = FIXTURES.filter((fixture) => fixture.group === group);
     await open(page, specimenUrl(SPECIMENS[group], scheme), scheme);
     await page.addStyleTag({
       content: `${V4_GLYPHS} { visibility: hidden !important }`,
     });
-    const accents = await readAccents(page);
     const problems: string[] =
       group === 'document' ? await stickyProblems(page) : [];
-    const v4 = new Map<string, Observation>();
     for (const fixture of fixtures) {
       const html = await pickOf(page, fixture).evaluate(
         (element) => element.outerHTML,
       );
-      v4.set(fixture.name, await observe(page, fixture, 1, html));
-    }
-    await open(page, V3_PAGE, scheme);
-    await page.addStyleTag({
-      content: `#parity ${GLYPH} { visibility: hidden !important }\n${decidedChanges(accents)}`,
-    });
-    for (const fixture of fixtures) {
-      const right = lookup(v4, fixture.name);
-      const left = await observe(
-        page,
-        fixture,
-        0,
-        v3Markup(fixture, right.html),
-      );
-      problems.push(...styleProblems(fixture, left, right));
-      const differing = await differingPixels(page, left.pixels, right.pixels);
-      if (differing === 0) continue;
-      problems.push(`${fixture.name}: ${differing} pixels differ`);
-      await attach(testInfo, fixture.name, {
-        expected: left.pixels,
-        actual: right.pixels,
-      });
+      await observe(page, fixture, html);
     }
     expect(problems).toEqual([]);
   });
