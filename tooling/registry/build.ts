@@ -8,6 +8,7 @@ import {
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { generatedRegistry, REGISTRY_SOURCE } from './generate.js';
+import { shadcnCliEnv } from './headers.js';
 import { rewrittenSource } from './source.js';
 
 export const SHADCN = 'shadcn@4.22.0';
@@ -56,6 +57,7 @@ export function readRegistry(text: string): Registry {
 export function cli(args: readonly string[], cwd: string) {
   const result = Bun.spawnSync(['bunx', '--bun', SHADCN, ...args], {
     cwd,
+    env: shadcnCliEnv(process.env),
     stdout: 'pipe',
     stderr: 'pipe',
     timeout: 180000,

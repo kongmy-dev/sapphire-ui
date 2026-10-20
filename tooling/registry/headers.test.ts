@@ -1,8 +1,5 @@
 import { describe, expect, it } from 'bun:test';
-import {
-  registryItemHeaderProblems,
-  shadcnCliEnv,
-} from './registry-smoke-checks';
+import { registryItemHeaderProblems, shadcnCliEnv } from './headers.js';
 
 describe('shadcnCliEnv', () => {
   it('hides REGISTRY_URL from the shadcn CLI, which reads it as its default registry and would fetch colors/<baseColor>.json from ours', () => {

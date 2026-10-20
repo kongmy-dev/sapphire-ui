@@ -1,5 +1,0 @@
-/* A consumer's Tailwind entry: pull in Tailwind, then the Sapphire theme item
-   (tokens + shadcn-var aliases) exactly as the registry docs instruct. */
-@import "tailwindcss";
-@import "./styles/sapphire-theme.css";
-@source "./**/*.{ts,tsx}";

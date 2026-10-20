@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { buildRegistry, cli } from './build.js';
 import { checkRegistry } from './check.js';
 import { consumerSource, writeConsumer } from './consumer.js';
+import { registryItemHeaderProblems } from './headers.js';
 import { checkMixedOwnership } from './ownership.js';
 
 function command(args: string[], cwd: string) {
@@ -43,7 +44,7 @@ export async function smokeRegistry(
   const serverSource = join(directory, 'serve.ts');
   writeFileSync(
     serverSource,
-    `const server = Bun.serve({port:0,async fetch(request){const name=new URL(request.url).pathname.split('/').pop();const file=Bun.file(${JSON.stringify(output)}+'/'+name);return await file.exists()?new Response(file,{headers:{'content-type':'application/json'}}):new Response('missing',{status:404});}});console.log(server.url.href);`,
+    `const server = Bun.serve({port:0,async fetch(request){const name=new URL(request.url).pathname.split('/').pop();const file=Bun.file(${JSON.stringify(output)}+'/'+name);return await file.exists()?new Response(file,{headers:{'content-type':'application/json','access-control-allow-origin':'*','cache-control':'public, max-age=300, stale-while-revalidate=3600'}}):new Response('missing',{status:404});}});console.log(server.url.href);`,
   );
   const server = Bun.spawn(['bun', serverSource], {
     stdout: 'pipe',
@@ -55,6 +56,12 @@ export async function smokeRegistry(
   const url = deployed ?? `${address}{name}.json`;
   const app = join(directory, 'app');
   try {
+    const response = await fetch(url.replace('{name}', 'base'));
+    const headerProblems = registryItemHeaderProblems(response.headers);
+    if (!response.ok || headerProblems.length)
+      throw new Error(
+        `Registry response ${response.status}: ${headerProblems.join('; ')}`,
+      );
     writeConsumer(root, app, tarball);
     command(['bun', 'install', '--ignore-scripts'], app);
     console.log(

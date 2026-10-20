@@ -1,13 +1,7 @@
 {
   "$schema": "./node_modules/knip/schema.json",
   "entry": [
-    "src/index.ts",
-    "src/elements.ts",
-    "registry/blocks/*.tsx",
-    "tests/registry-consumer/vite.config.ts",
-    "tests/registry-consumer/app/**/*.{ts,tsx}",
     "tooling/quality-metrics/metrics.ts",
-    "design/colors_and_type.css",
     "css/tailwind.css",
     "sapphire.css",
     "site/specimen.css",
@@ -26,6 +20,5 @@
     "blocks/*/*.css"
   ],
   "project": ["**/*.{ts,tsx,css}"],
-  "ignoreUnresolved": ["^@/components/ui/"],
-  "ignoreDependencies": ["^@fontsource-variable/", "shadcn"]
+  "ignoreDependencies": ["^@fontsource-variable/", "shadcn", "tailwindcss"]
 }

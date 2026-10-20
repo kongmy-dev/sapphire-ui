@@ -7,10 +7,6 @@
   "include": [
     "playwright.config.ts",
     "playwright.visual.config.ts",
-    "vite.config.ts",
-    "vite.docs.config.ts",
-    "registry/*.ts",
-    "scripts",
     "tests/*.spec.ts",
     "tests/visual/*.ts",
     "tooling",
@@ -18,6 +14,8 @@
     "components",
     "lib",
     "hooks",
-    "elements"
+    "elements",
+    "blocks",
+    "site"
   ]
 }

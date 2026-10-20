@@ -12,23 +12,14 @@
       "!dist",
       "!dist-docs",
       "!coverage",
-      "!design",
       "!public",
-      "!tests/registry-consumer/app/components",
-      "!tests/registry-consumer/app/styles",
-      "!tests/registry-consumer/dist",
       "!registry/legacy-r"
     ]
   },
   "plugins": [
     {
       "path": "./tooling/biome/no-cast.grit",
-      "includes": [
-        "**",
-        "!**/src/**",
-        "!**/registry/blocks/**",
-        "!**/tests/registry-consumer/app/**"
-      ]
+      "includes": ["**"]
     }
   ],
   "formatter": {
@@ -110,63 +101,6 @@
   },
   "overrides": [
     {
-      "includes": ["registry/blocks/**"],
-      "linter": {
-        "rules": {
-          "correctness": {
-            "useExhaustiveDependencies": "off"
-          },
-          "nursery": {
-            "useSortedClasses": "off"
-          }
-        }
-      }
-    },
-    {
-      "includes": ["src/components/*Element.ts", "src/elements.ts"],
-      "linter": {
-        "rules": {
-          "suspicious": {
-            "noExplicitAny": "off",
-            "noAssignInExpressions": "off",
-            "useIterableCallbackReturn": "off",
-            "noImplicitAnyLet": "off",
-            "noDoubleEquals": "off"
-          },
-          "correctness": {
-            "noUnusedVariables": "off",
-            "noInnerDeclarations": "off"
-          },
-          "complexity": {
-            "noArguments": "off",
-            "noCommaOperator": "off"
-          }
-        }
-      }
-    },
-    {
-      "includes": [
-        "src/components/Toast.tsx",
-        "src/components/ui/Dialog.tsx",
-        "src/components/ui/PageSection.tsx",
-        "src/components/ui/SEOHead.tsx",
-        "src/components/ui/SiteFooter.tsx",
-        "src/components/ui/SiteHeader.tsx",
-        "src/pages/**",
-        "src/lib/consent.ts"
-      ],
-      "linter": {
-        "rules": {
-          "suspicious": {
-            "noExplicitAny": "off"
-          },
-          "correctness": {
-            "noUnusedVariables": "off"
-          }
-        }
-      }
-    },
-    {
       "includes": ["components/**/*.examples.html"],
       "linter": {
         "rules": {
@@ -182,46 +116,6 @@
         "rules": {
           "suspicious": {
             "noConsole": "off"
-          }
-        }
-      }
-    },
-    {
-      "includes": ["src/**", "registry/blocks/**"],
-      "linter": {
-        "rules": {
-          "suspicious": {
-            "noExplicitAny": "off",
-            "noConsole": "off",
-            "noFocusedTests": "off",
-            "noSkippedTests": "off",
-            "noDocumentCookie": "info"
-          },
-          "style": {
-            "noNonNullAssertion": "off",
-            "noEnum": "off",
-            "useConsistentTypeDefinitions": "off",
-            "noNestedTernary": "off",
-            "noUselessElse": "off",
-            "noParameterAssign": "off"
-          }
-        }
-      }
-    },
-    {
-      "includes": ["src/**"],
-      "linter": {
-        "rules": {
-          "style": {
-            "useTemplate": "info"
-          },
-          "complexity": {
-            "useOptionalChain": "info",
-            "noBannedTypes": "info",
-            "noUselessConstructor": "info"
-          },
-          "nursery": {
-            "useSortedClasses": "info"
           }
         }
       }

@@ -4,15 +4,8 @@ import { relative, resolve } from 'node:path';
 
 export type FileText = { name: string; text: string };
 
-const FROZEN_LANE = [
-  'src/',
-  'registry/blocks/',
-  'tests/registry-consumer/app/',
-  'design/',
-] as const;
-
 export const isInScope = (name: string) =>
-  !FROZEN_LANE.some((prefix) => name.startsWith(prefix));
+  !name.startsWith('registry/legacy-r/');
 
 export const hasExtension = (name: string, extensions: readonly string[]) =>
   extensions.some((extension) => name.endsWith(extension));

@@ -2,9 +2,6 @@ import { defineConfig, devices } from '@playwright/test';
 import { EXAMPLE_URL } from './tooling/examples/catalog';
 import { SPECIMEN_URL } from './tooling/visual/specimens';
 
-const buildThenPreviewDocs =
-  'bun run build:docs && vite preview --config vite.docs.config.ts --port 4173';
-
 export default defineConfig({
   testDir: './tests',
   testIgnore: '**/visual/**',
@@ -16,7 +13,7 @@ export default defineConfig({
     ['json', { outputFile: 'test-results/a11y.json' }],
   ],
   use: {
-    baseURL: 'http://localhost:4173',
+    baseURL: 'http://localhost:4178',
     trace: 'on-first-retry',
   },
   webServer: [
@@ -32,12 +29,6 @@ export default defineConfig({
       url: EXAMPLE_URL,
       reuseExistingServer: false,
       timeout: 60_000,
-    },
-    {
-      command: buildThenPreviewDocs,
-      url: 'http://localhost:4173',
-      reuseExistingServer: !process.env.CI,
-      timeout: 180_000,
     },
     {
       command: 'bun tooling/visual/specimen-server.ts',

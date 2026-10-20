@@ -23,7 +23,7 @@ export function registryItemHeaderProblems(headers: Headers): string[] {
   const cacheControl = headers.get('cache-control');
   if (cacheControl !== registryCacheControl) {
     problems.push(
-      `Cache-Control is ${JSON.stringify(cacheControl)}, expected exactly "${registryCacheControl}": public/_headers must detach the /* and /*.json values with "! Cache-Control" before setting /r/*`,
+      `Cache-Control is ${JSON.stringify(cacheControl)}, expected exactly "${registryCacheControl}": registry responses must use the exact registry cache policy`,
     );
   }
   return problems;
