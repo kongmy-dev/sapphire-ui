@@ -129,8 +129,8 @@
 
   .sp-admin-layout-icon {
     flex-shrink: 0;
-    width: var(--space-6);
-    height: var(--space-6);
+    width: 1em;
+    height: 1em;
     font-size: var(--space-6);
     line-height: 1;
   }

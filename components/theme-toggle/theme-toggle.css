@@ -37,8 +37,8 @@
 
   .sp-theme-toggle-icon {
     flex-shrink: 0;
-    width: var(--sp-theme-toggle-icon-size);
-    height: var(--sp-theme-toggle-icon-size);
+    width: 1em;
+    height: 1em;
     font-size: var(--sp-theme-toggle-icon-size);
     line-height: 1;
   }

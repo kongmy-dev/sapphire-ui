@@ -1,0 +1,14 @@
+.docs-button-stacked {
+  margin-top: var(--space-3);
+}
+
+.docs-button-full-width {
+  max-width: calc(var(--space-1) * 90);
+}
+
+.docs-button-hint {
+  margin-top: var(--space-4);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--muted-foreground);
+}

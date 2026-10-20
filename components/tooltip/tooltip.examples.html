@@ -3,12 +3,12 @@
   <p>Modal dialogs, toast notifications, sheets, tooltips, and popovers.</p>
 </header>
 
-<section class="docs-section">
+<section class="docs-section" data-pin="interactive/tooltip">
   <h2 class="docs-section-title">Tooltip</h2>
   <div class="docs-preview">
     <div class="docs-flex">
       <button class="sp-button" type="button" data-variant="outline" data-size="sm" data-state="closed">Hover me</button>
-      <button class="sp-button" type="button" data-variant="ghost" data-size="icon" aria-label="Settings" data-state="closed"><span aria-hidden="true"></span></button>
+      <button class="sp-button" type="button" data-variant="ghost" data-size="icon" aria-label="Settings" data-state="closed"><svg class="sp-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
       <button class="sp-button" type="button" data-variant="ghost" data-size="icon" aria-label="Help" data-state="closed">?</button>
     </div>
   </div>
@@ -23,7 +23,7 @@
         <button class="sp-button" type="button" data-variant="outline" data-size="sm" aria-describedby="tooltip-top" data-state="delayed-open">Hover me</button>
       </div>
       <div class="docs-tooltip-stage">
-        <button class="sp-button" type="button" data-variant="ghost" data-size="icon" aria-label="Settings" aria-describedby="tooltip-bottom" data-state="delayed-open"><span aria-hidden="true"></span></button>
+        <button class="sp-button" type="button" data-variant="ghost" data-size="icon" aria-label="Settings" aria-describedby="tooltip-bottom" data-state="delayed-open"><svg class="sp-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
         <div class="sp-tooltip" id="tooltip-bottom" role="tooltip" data-state="delayed-open" data-side="bottom" data-align="center">Settings</div>
       </div>
       <div class="docs-tooltip-stage docs-tooltip-beside">

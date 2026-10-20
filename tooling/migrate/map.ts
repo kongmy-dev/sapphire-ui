@@ -156,6 +156,18 @@ export const utilityRenames = {
 export const classRenames = {
   '.icon-mark': '.sp-icon-mark',
   '.icon-mark-dark': '.sp-icon-mark[data-variant=on-dark]',
+  '.tag': '.sp-badge[data-size=lg]',
+  '.tag-accent': '.sp-badge[data-variant=brand]',
+  '.tag-dark': '.sp-badge[data-variant=on-dark]',
+  '.delta': '.sp-stat-change',
+  '.up': '.sp-stat-change[data-direction=up]',
+  '.down': '.sp-stat-change[data-direction=down]',
+  '.plan': '.sp-admin-layout-doc-icon[data-kind=plan]',
+  '.proposal': '.sp-admin-layout-doc-icon[data-kind=proposal]',
+  '.published': '.sp-badge[data-variant=success]',
+  '.draft': '.sp-badge',
+  '.review': '.sp-badge[data-variant=warning]',
+  '.x': '.sp-dialog-close',
   '.btn': '.sp-button',
   '.btn-primary': '.sp-button',
   '.btn-outline': '.sp-button[data-variant=outline]',
@@ -347,6 +359,45 @@ export const variableRenames = {
 } as const;
 
 export const unmappedClasses = {
+  '.t-display':
+    'display typography moves to the semantic h2 base rule or consumer utilities using --text-display; no sp-* typography class is shipped',
+  '.t-heading':
+    'heading typography moves to the semantic h3 base rule or consumer utilities using --text-heading; no sp-* typography class is shipped',
+  '.t-subheading':
+    'subheading typography moves to the semantic h4 base rule or consumer utilities using --text-subheading; no sp-* typography class is shipped',
+  '.t-body':
+    'body typography is inherited from the base body and p rules; remove this helper after checking the element context',
+  '.t-body-sm':
+    'small muted copy uses consumer CSS with --text-sm and --muted-foreground; the base p rule intentionally stays body-sized',
+  '.t-body-lg':
+    'large copy uses consumer CSS with --text-lg; there is no global sp-* type-scale utility',
+  '.t-eyebrow':
+    'uppercase tracked labels use --text-xs and consumer CSS; .sp-document-eyebrow has document-specific spacing and is not a general replacement',
+  '.t-mono':
+    'monospace copy uses --font-mono and --text-sm in consumer CSS; semantic code also receives component-specific styling',
+  '.status-radio':
+    'the enabled/disabled status dot has no standalone v4 component; choose a labelled .sp-badge status instead of retaining a colour-only indicator',
+  '.enabled':
+    'a modifier of .status-radio; represent the enabled status in text and choose a badge variant in the consuming markup',
+  '.disabled':
+    'a modifier of .status-radio, not the native disabled state; represent the disabled status in text and choose a badge variant',
+  '.feature-badge':
+    'a monospace feature pill with different casing and padding from .sp-badge; compose .sp-badge and consumer typography after reviewing its content',
+  '.material-symbols-outlined':
+    'font ligature text must be replaced with the corresponding Lucide SVG carrying .sp-icon; a class rename cannot replace its text node',
+  '.collapsed':
+    'the admin sidebar collapses with data-collapsed on .sp-admin-layout-sidebar; the class migrator cannot attach a state-only attribute',
+  '.is-active':
+    'admin links use aria-current=page and tab triggers use data-state=active; select the attribute from the element role',
+  '.who':
+    'the admin sidebar user-name and role wrapper has no public component part; compose consumer markup inside .sp-admin-layout-sidebar-footer',
+  '.ct':
+    'a count inside .sf-tab; v4 tab triggers accept composed badge content and have no count-specific part',
+  '.archived':
+    'an admin status pill with a special mixed muted fill; use a labelled .sp-badge and review whether its default muted styling is sufficient',
+  '.show':
+    'the modal overlay opens with data-state=open on .sp-dialog-overlay; visibility is an attribute state and cannot be migrated as a standalone class',
+
   '.is-hidden':
     'a modifier of .gate alone; the passphrase gate hides with data-hidden, an attribute no class stands for',
   '.is-visible':

@@ -11,8 +11,8 @@
   }
 
   .sp-empty-icon {
-    width: var(--sp-empty-icon-size);
-    height: var(--sp-empty-icon-size);
+    width: 1em;
+    height: 1em;
     margin-bottom: var(--space-4);
     font-size: var(--sp-empty-icon-size);
     line-height: 1;

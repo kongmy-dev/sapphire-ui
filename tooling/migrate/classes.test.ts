@@ -30,13 +30,14 @@ const COMMENT = /\/\*[\s\S]*?\*\//g;
 
 const classesIn = (css: string): string[] => [
   ...new Set(
-    [...css.replace(COMMENT, '').matchAll(CLASS)].map(
-      (match) => `.${match[1]}`,
-    ),
+    [
+      ...css
+        .replace(COMMENT, '')
+        .replace(/"[^"]*"|'[^']*'/g, '')
+        .matchAll(CLASS),
+    ].map((match) => `.${match[1]}`),
   ),
 ];
-
-const stemOf = (name: string): string => name.slice(1).split('-')[0] ?? '';
 
 const withoutEntry = (
   classes: readonly string[],
@@ -86,6 +87,8 @@ describe('classesIn', () => {
       '.card .btn-sm::before, .btn--wide { color: red }',
       'a { border-radius: var(--radius-btn); margin: 0.5rem }',
       '/* .btn-ghost */',
+      '@import "./theme.css";',
+      'a { background-image: url("./icon.svg") }',
     ].join('\n');
     expect(classesIn(css)).toEqual([
       '.btn',
@@ -105,10 +108,8 @@ describe('withoutEntry', () => {
 });
 
 describe('the class map', () => {
-  it('has an entry for every v3 class of a family it renames', () => {
-    const families = new Set(Object.keys(classMap).map(stemOf));
-    const inFamilies = v3Classes.filter((name) => families.has(stemOf(name)));
-    expect(withoutEntry(inFamilies, { ...classMap, ...unmapped })).toEqual([]);
+  it('has a rename or explicit reason for every v3 stylesheet class', () => {
+    expect(withoutEntry(v3Classes, { ...classMap, ...unmapped })).toEqual([]);
   });
 
   it('has no entry for a class the v3 stylesheet never declared', () => {

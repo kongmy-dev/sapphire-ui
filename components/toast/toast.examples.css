@@ -3,3 +3,9 @@
   flex-direction: column;
   align-items: flex-start;
 }
+
+.docs-toast-description {
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--muted-foreground);
+}
