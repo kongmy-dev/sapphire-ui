@@ -12,7 +12,7 @@ import { ThemeContext } from '../theme-provider/theme-provider.js';
 
 export type ThemeToggleProps = Omit<
   ButtonProps,
-  'onClick' | 'icon' | 'children'
+  'onClick' | 'icon' | 'children' | 'asChild'
 >;
 
 export function ThemeToggle({

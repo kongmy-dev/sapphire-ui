@@ -4,7 +4,7 @@ import { createElement, createRef } from 'react';
 import { renderToString } from 'react-dom/server';
 import { setTheme } from '../../lib/theme.js';
 import { examples } from './theme-toggle.examples.js';
-import { ThemeToggle } from './theme-toggle.js';
+import { ThemeToggle, type ThemeToggleProps } from './theme-toggle.js';
 
 afterEach(() => {
   localStorage.clear();
@@ -69,3 +69,20 @@ for (const example of examples) {
     expect(document.documentElement.dataset.theme).toBe(theme);
   });
 }
+
+test('owns its button content and retains native accessible button behavior', () => {
+  const supportsAsChild: 'asChild' extends keyof ThemeToggleProps
+    ? true
+    : false = false;
+  expect(supportsAsChild).toBe(false);
+  setTheme('light');
+  const props = {
+    type: 'button',
+    'aria-label': 'Change appearance',
+  } satisfies ThemeToggleProps;
+  render(<ThemeToggle {...props} />);
+  const button = screen.getByRole('button', { name: 'Change appearance' });
+  expect(button.tagName).toBe('BUTTON');
+  fireEvent.click(button);
+  expect(document.documentElement.dataset.theme).toBe('dark');
+});
