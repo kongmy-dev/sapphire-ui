@@ -1,4 +1,4 @@
-import type { AnalyticsProps } from './analytics-types.js';
+import type { AnalyticsProps } from './analytics.js';
 import { call, member, retain, sdkScript } from './sdk.js';
 
 function configure(props: AnalyticsProps) {

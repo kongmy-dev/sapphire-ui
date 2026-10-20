@@ -1,6 +1,6 @@
 import { createElement, type ReactNode } from 'react';
+import type { SEOOptions } from './metadata.js';
 import { metadata } from './metadata.js';
-import type { SEOOptions } from './seo-types.js';
 
 export { generateSEOTags } from './seo-tags.js';
 export type SEOProps = SEOOptions & { children?: ReactNode };

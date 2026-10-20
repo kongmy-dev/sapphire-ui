@@ -6,12 +6,17 @@ import {
   getConsentStatus,
   updateTrackers,
 } from '../../lib/consent.js';
-import type { AnalyticsProps } from './analytics-types.js';
 import { acquireGoogle } from './google.js';
 import { acquirePosthog } from './posthog.js';
 import { member } from './sdk.js';
 
-export type { AnalyticsProps } from './analytics-types.js';
+export type AnalyticsProps = {
+  gaId?: string | undefined;
+  posthogToken?: string | undefined;
+  posthogHost?: string | undefined;
+  posthogUiHost?: string | undefined;
+  domains?: string | undefined;
+};
 
 function isLocal() {
   const host = window.location.hostname;

@@ -1,5 +1,5 @@
+import type { SEOOptions } from './metadata.js';
 import { metadata } from './metadata.js';
-import type { SEOOptions } from './seo-types.js';
 
 function escapeHTML(value: string): string {
   return value
