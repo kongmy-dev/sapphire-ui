@@ -16,6 +16,7 @@ shared CSS, typed React clients and native custom elements. Read `DESIGN.md` for
 - Preserve concurrent work. Stage explicit owned paths; commit a short `type: subject` line.
 - Never push, publish, tag, change pins or perform destructive operations without authorization.
 - Never clear shared caches or Docker state to make a check pass. Use `.yaml` for new YAML.
+- Reuse cached evidence only for unchanged inputs; use `bun run gate --force` for fresh proof.
 
 ## Rules and enforcement
 
@@ -73,6 +74,8 @@ bun run migrate <app> --check
 Use the package manifest for the complete command list. Tests preload happy-dom before
 Testing Library. Layout, portals, focus trapping and pointer resizing need browser checks.
 New files must be staged or explicitly named in scoped gates so they are counted.
+The gate uses Turbo with four concurrent tasks and a local cache (ADR-0006).
+Tests restore coverage before its check; Git-dependent checks always run fresh.
 Report incomplete checks rather than implying a clean integrated result.
 
 ## Skills
@@ -81,4 +84,5 @@ Read `.claude/skills/coding-principles/SKILL.md` and
 `.claude/skills/typescript/SKILL.md` before TypeScript work. Component work also reads
 `.claude/skills/sapphire-component/SKILL.md`. Refactoring, new gates and independent review use
 `refactor-code`, `add-rule` and `review-code` in `.claude/skills/` respectively.
+Use `.claude/skills/gate/SKILL.md` to choose verification and interpret cached evidence.
 Consumer setup is in `skills/sapphire/SKILL.md`, `docs/package-v4.md` and `docs/registry-v4.md`.
