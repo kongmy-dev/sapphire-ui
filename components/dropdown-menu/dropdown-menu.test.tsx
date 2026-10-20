@@ -163,3 +163,29 @@ it('leaves nonmodal background interactive and clears object refs on close', asy
   await userEvent.keyboard('{Escape}');
   await waitFor(() => expect(ref.current).toBeNull());
 });
+
+it('keeps the background inert until the last overlapping modal closes', async () => {
+  const menus = (first: boolean, second: boolean) => (
+    <>
+      <button type="button">Background action</button>
+      <DropdownMenu open={first}>
+        <DropdownMenuTrigger>First menu</DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem>First action</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <DropdownMenu open={second}>
+        <DropdownMenuTrigger>Second menu</DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem>Second action</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
+  );
+  const view = render(menus(true, true));
+  await waitFor(() => expect(view.container.inert).toBe(true));
+  view.rerender(menus(false, true));
+  await waitFor(() => expect(view.container.inert).toBe(true));
+  view.rerender(menus(false, false));
+  await waitFor(() => expect(view.container.inert).toBe(false));
+});
