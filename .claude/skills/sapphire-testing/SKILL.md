@@ -26,8 +26,9 @@ A specimen is plain HTML that renders one v3 docs section from `sapphire.css` al
 `components/<name>/<name>.examples.html` (and `css/base.examples.html`), a list of
 `<section class="docs-section" data-pin="<route>/<slug>">` fragments. `bun run test:visual` screenshots each
 against the pin of the same name at zero tolerance; `pins.spec.ts` skips a pin a specimen covers, and
-`tests/specimens.a11y.spec.ts` runs axe on every specimen page in both schemes. You never run `bun run pin`
-to make a specimen pass: a pin that cannot match goes to the owner with expected, actual and diff.
+`tests/specimens.a11y.spec.ts` runs axe on every specimen page in both schemes. An unexpected mismatch goes to the owner with expected, actual and diff. Approved D5 refinements
+and defect fixes may update pins only through `bun run pin` after reviewing that evidence.
+Unrelated states remain pinned; never directly invoke snapshot updates.
 
 - The specimen page keeps the v3 page geometry (the 240 px sidebar column, the page header): a gradient's
   dither and a box's snapped edges change with the section's offset.

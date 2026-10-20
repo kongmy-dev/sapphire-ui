@@ -180,7 +180,7 @@ Depth comes from background contrast, not shadow. A light card has a 1px `--bord
 
 ## Layout
 
-- Sections pad `--space-24` (96px) vertically on desktop; content is at most about 1200px wide and centred.
+- Tidy everywhere: use `--space-12` (48px) as the starting point for desktop editorial section padding; reduce it on narrow screens. Product sections group related content more closely. Keep content at most about 1200px wide and centred.
 - One column on mobile, a multi-column grid on desktop.
 - All spacing comes from `--space-N`; map an arbitrary value to the nearest token.
 
@@ -208,3 +208,21 @@ Icons are Lucide, outlined. An icon-only control carries an `aria-label`.
 - Respect `prefers-reduced-motion`; motion is opt-in.
 - Do not combine illustrative, hand-drawn or cartoon elements with the system.
 - Do not introduce a typeface.
+
+## Density and control proportions
+
+Tidy everywhere applies to product screens, editorial pages, documents and every control.
+Preserve the palette, typefaces, readable body size and line length; reduce padding and gaps
+that separate related information without giving it hierarchy.
+
+- Cards start at `--space-5` inset. Disclosure rows start at `--space-3` vertical padding;
+  chevrons use `--space-4`. Validate these starting points with real labels and content.
+- Default buttons and fields align at `--space-9`; compact and large variants remain
+  proportionate. Text-and-icon buttons, icon-only buttons, selects and grouped actions share
+  alignment and icon scale. Do not shrink body text to create density.
+- Visible compact controls retain usable hit areas: on coarse pointers use at least
+  `--space-11` height and width where relevant. Whole disclosure rows remain operable.
+- Check long labels, open/closed, hover, focus, disabled, loading and invalid states in both
+  schemes. Keep error/help text close to its field and focus indicators unobscured.
+- Fix existing contrast, list-marker, spacing and keyboard defects in their owning component;
+  reviewed visual changes replace old pins, not accessibility checks.

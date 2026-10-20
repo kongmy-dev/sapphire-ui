@@ -14,8 +14,8 @@ Rule IDs are those of `V4-PLAN.md` §7. A failing gate prints `file:line`, the I
 - **P-1 No comments in TS, TSX or CSS.** Names, types, structure and tests say *what*; the *why* lives in an ADR, a test name or the commit message. The two allowed forms are in `docs/adr/0001-rules-ship-with-gates.md`. Gate: `bun run comment-check`, and `.claude/hooks/check-edit.sh` on each edit.
 - **P-2 Strict boundary separation.** `src/` never imports `registry/`, `scripts/`, or `tests/`. `registry/blocks/` never imports `src/` (registry items must be self-contained). Gate: `bun run check:registry`.
 - **P-3 Types carry the rules.** No `any`, no `!`, no `as` but `as const`, `type` over `interface`, variants as `as const` tuples with derived unions, no `enum`; discriminated unions over boolean flags paired with optional fields. Gate: `tsc` strict and Biome (`noExplicitAny`, `noNonNullAssertion`, `noEnum`, and the `tooling/biome/no-cast.grit` plugin for `as`).
-- **P-5 Tokens only.** No colour or length literal outside `css/tokens.css` (font-relative `em` and `ch` excepted), and every `var()` resolves. `--color-accent` is decorative; text on light surfaces uses `--color-accent-text`. Gate: `bun run token-check`; it joins `bun run gate` in P2.
-- **P-6 Subtract before you add.** Every new export, file or dependency needs a consumer in the same change; every exported component is mapped in `src/index.ts` and `package.json -> exports`. Gate: knip.
+- **P-5 Tokens only.** No colour or length literal outside `css/tokens.css` (font-relative `em` and `ch` excepted), and every `var()` resolves. `--brand` is decorative; gold text uses `--brand-text`. Gate: `bun run token-check`.
+- **P-6 Subtract before you add.** Every new export, file or dependency needs a consumer in the same change; v4 exports come from component folders through the generated map in P6; never edit the frozen v3 barrel for a v4 port. Gate: knip.
 - **P-7 Minimise reader load.** Collapse single-caller wrappers and single-implementation interfaces. Limits: cognitive complexity 7, function lines 89, file lines 474, nesting 5. Gate: `bun run size-check`, and Biome `noNestedTernary`, `noUselessElse`, `noParameterAssign`.
 - **P-8 Accessibility first.** Interactive components support keyboard navigation, correct ARIA roles and focus rings, and pass axe. Gate: `bun run test:a11y`.
 - **P-12 Pinned toolchain, peers stay peers.** Exact devDependencies, `.bun-version`, TypeScript 6.0.x; React and Radix stay in `peerDependencies`. Gate: `bun run dep-check`.
@@ -31,6 +31,6 @@ Rule IDs are those of `V4-PLAN.md` §7. A failing gate prints `file:line`, the I
 ## After You Write
 
 1. Ensure no comment exists outside the forms ADR-0001 allows.
-2. Confirm new components have matching entries in `src/index.ts` and `package.json`.
+2. Confirm new components have examples/tests and enter the generated public map when packaging lands.
 3. Verify that `bun run gate` passes.
 4. Run `bun run test` and `bun run test:a11y`.

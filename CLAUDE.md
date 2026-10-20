@@ -1,23 +1,20 @@
 # CLAUDE.md — Sapphire UI
 
-Sapphire UI is the official design system for **KONGMY Digital Solutions** (`kongmy.dev`). It exports both a compiled stylesheet (`sapphire-ui.css`) and a typed React component library. All work here must honour the navy + gold editorial aesthetic.
+Sapphire UI is the official design system for **KONGMY Digital Solutions** (`kongmy.dev`). It exports both a compiled stylesheet (`sapphire.css`) and a typed React component library. All work here must honour the navy + gold editorial aesthetic.
 
-## Two-lane model (v3 — decided 2026-07-13)
+## V4 contract and distribution
 
-| Lane | Distribution | Audience |
-|---|---|---|
-| **Editorial/brand** | npm package (unchanged) | Properties, blog, proposals |
-| **Product** | shadcn-format **registry** (vendored source, hosted on design.kongmy.dev) | product/client apps scaffolded from the internal stack template |
+`V4-PLAN.md` is the active phase plan. CSS is the shared visual contract; React and custom elements render it. Every component is ported. npm is for using components; the registry is for owning their source, served under `/r/v4/`.
 
-Why: product apps must diverge (client theming, POS touch UIs) — vendored source makes divergence an edit, not a fork; a public registry also kills PAT friction. Only the **product subset** (~15 components + admin blocks adapted from an upstream shadcn admin reference, restyled onto tokens) gets registry-shaped; editorial components stay npm-only. Existing npm consumers are never broken.
+Shared foundations contain fonts, tokens, base and layout. A component's CSS comes from its package or its vendored source, never both. Full-package consumers may use `sapphire.css`; mixed apps use foundations and individual CSS entries. Sapphire stays backend-agnostic. Registry items declare their own transitive requirements.
 
-**Plan: `V4-PLAN.md`.** Hard boundary: sapphire stays backend-agnostic — sapphire never imports from consuming apps; contract-aware blocks live in the consuming template, composed from sapphire primitives. Registry items must be self-contained (shadcn conventions) and read tokens only via CSS custom properties.
+Apply Tidy everywhere across product and editorial surfaces: compact controls, restrained disclosure affordances and tighter grouping, preserving the navy/gold theme, typefaces, legibility and effective targets. Fix defects in the affected port. The owner controls consumer adoption.
 
 ---
 
 ## Size and shape
 
-**When a request is underspecified, decide out loud before you build.** List what the request leaves open — input shape, output shape, edge behaviour, anything you would otherwise settle silently while typing. Take the narrowest answer that satisfies it, and say what you are choosing *not* to build. Then implement that list and nothing beyond it. Measured over six runs on a sibling repo: 19% less code, 30% fewer exports, 32% lower complexity.
+**When a request is underspecified, decide out loud before you build.** List what the request leaves open — input shape, output shape, edge behaviour, anything you would otherwise settle silently while typing. Take the narrowest answer that satisfies it, and say what you are choosing *not* to build. Then implement that list and nothing beyond it.
 
 **A new export needs a consumer in the same change.** An interface with one implementation, a factory that constructs one thing, or an options object read in one place is indirection nobody is paying for. Write the direct version; the seam appears on its own when a second caller arrives, and it lands somewhere other than you would have guessed.
 
@@ -32,12 +29,12 @@ The gates run on every tracked file outside the frozen lane (`src/`, `registry/b
 | Bundler / dev server | Vite 8 |
 | Language | TypeScript 6 |
 | UI framework | React 19 |
-| Styling | Tailwind CSS v4 (`@theme {}`) |
-| Component primitives | Radix UI (peer deps) |
-| Variant logic | `class-variance-authority` (CVA) |
-| Class merging | `clsx` + `tailwind-merge` via `cn()` |
+| Styling | Shared CSS contract; Tailwind CSS v4 token mapping |
+| Component primitives | Unified `radix-ui` optional peer for behaviour |
+| Variant logic | Literal unions and `data-*` modifiers |
+| Class composition | Fixed `sp-*` class plus consumer `className` |
 | Package manager | **Bun** (never npm/npx) |
-| Icons | Material Symbols Outlined |
+| Icons | Lucide SVG; internal glyphs inline |
 
 ---
 
@@ -143,11 +140,11 @@ src/
 
 - **Bun only.** Never use `npm`, `npx`, or `yarn`.
 - **No new dependencies without justification.** This library ships to consumers; every dep has a size cost.
-- **Peer deps stay peer deps.** React and all Radix packages are peer deps — never move them to `dependencies`.
+- **Peer deps stay peer deps.** V4 has optional `react`, `react-dom` and `radix-ui` peers and no runtime dependencies. Static components import no Radix.
 - **v4 design tokens are in `css/tokens.css` (ADR-0004) — that is the single source.** Colours are `light-dark(<light>, <dark>)`, declared once, only in the block `:root, [data-theme=light], [data-theme=dark], .dark`; every other token is declared once on `:root`. `css/tailwind.css` maps each token to utilities, and the token gate (P-5) fails on an unmapped token, a misplaced colour or a `DESIGN.md` table that disagrees. Never hard-code hex values; reference CSS custom properties. `src/theme.css` is the v3 token file, frozen with `src/` until P9; a v3 fix goes to the `v3` branch.
 - **No gradients in primary UI** except the `premium` button variant (intentional exception).
 - **`--brand` (the gold) is decorative.** For gold text use `--brand-text` (`#8a5a1f` in light) — it passes WCAG AA contrast; `--brand` does not. `--accent` is shadcn's quiet surface (the gold tint), not the gold.
 - **Token vocabulary is shadcn-canonical + a brand extension.** Prefer the shadcn utility name where an equivalent exists (`text-muted-foreground`, `bg-background`, `bg-card`, `text-primary-foreground`) so components read as idiomatic shadcn and mix with community items. Use the brand-only tokens for what shadcn lacks: `bg-brand`, `text-brand-text` (AA gold), `text-foreground-strong`, `rounded-btn`, the `on-dark` family. The v3 names under `src/` map to these through `tooling/migrate/map.ts`.
-- **Exports are explicit.** Every new component gets its own named export in `package.json → exports`. Update `src/index.ts` and `package.json` together.
+- **Exports are generated in P6.** Each public component has a named subpath; no root barrel or reachable internals. Never update the frozen `src/index.ts` for v4.
 - **a11y first.** Run `bun run test:a11y` before shipping any component change.
 - **No comments in TS, TSX or CSS (P-1, ADR-0001).** The comment gate fails any comment outside the two forms the ADR lists.

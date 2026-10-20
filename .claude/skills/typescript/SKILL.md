@@ -91,8 +91,7 @@ Older files break rules this skill sets. Copy the rule, not the neighbouring cod
   happens" throw; otherwise keep the simplest total type. *Caught by:* types.
 - **T3 · No `any`, `!`, `as` (but `as const`), `enum` or `interface`** (P-3).
   `unknown` at the edge; handle the `undefined` that `noUncheckedIndexedAccess`
-  reports; `satisfies` to check a literal without widening it. The one
-  sanctioned cast is inside a parse function minting a branded type. *Caught
+  reports; `satisfies` to check a literal without widening it. *Caught
   by:* lint (`noExplicitAny`, `noNonNullAssertion`, `noEnum`,
   `useConsistentTypeDefinitions` set to `type`), types (`erasableSyntaxOnly`),
   review (casts).

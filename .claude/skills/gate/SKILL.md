@@ -26,7 +26,7 @@ The standard gate pipeline executes:
 7. **Unit Tests:** `bun run test` (`bun test` over the gates and scripts).
 8. **Registry Boundaries:** `bun run check:registry` (verifies independence of registry blocks).
 
-`bun run token-check` (P-5) is built but joins `bun run gate` in P2, when `css/`, `components/`, `blocks/`, `elements/` and `site/` exist. `bun run test:a11y` (Playwright + axe) runs in CI beside the gate.
+Token (P-5), full CSS budget (P-13) and generated-file checks (P-16) are part of `bun run gate`. `bun run test:a11y` (Playwright + axe) runs in CI beside the gate.
 
 In scope is every tracked file outside the frozen lane: `src/`, `registry/blocks/`, `tests/registry-consumer/app/`, `design/`.
 

@@ -13,11 +13,11 @@ Review is non-destructive: report findings and their exact locations; do not alt
 
 ### Pass 1: Principles and Invariants
 
-1. **Exports (P-6):** Does every new export have a consumer or a matching entry in `src/index.ts` and `package.json -> exports`?
-2. **Tokens (P-5):** Are there raw hex color values (`#...`) or hardcoded style values in the components? Are text colors on light backgrounds using `--color-accent-text` instead of `--color-accent`?
+1. **Exports (P-6):** Does every new export have a consumer and, once P6 lands, an intended generated package subpath? Does a mixed app load component CSS from exactly one owner?
+2. **Tokens (P-5):** Are there raw hex color values (`#...`) or hardcoded style values in the components? Are text colors on light backgrounds using `--brand-text` instead of `--brand`?
 3. **Boundaries (P-2):** Does `src/` import from `registry/`, `scripts/`, or `tests/`? Does `registry/blocks/` import from `src/`?
-4. **Types (P-3):** Are there `any`, `!`, `as` casts (other than `as const`), or `enum` declarations? Are variants modeled with CVA?
-5. **Accessibility (P-8):** Do interactive elements have appropriate ARIA attributes, keyboard support, and focus rings (`focus-visible:ring-2`)?
+4. **Types (P-3):** Are there `any`, `!`, `as` casts (other than `as const`), or `enum` declarations? Are variants literal unions rendered as data attributes, with no CVA or utility strings?
+5. **Accessibility (P-8):** Do interactive elements have appropriate ARIA attributes, keyboard support, and token-based focus-visible rings?
 6. **Complexity (P-7):** Does any function exceed cognitive complexity 7 or 89 lines? Are there deeply nested ternary operators or conditionals?
 
 ### Pass 2: Comment Discipline (P-1)

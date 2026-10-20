@@ -5,7 +5,7 @@ description: How to port one v3 component to its v4 CSS contract in Sapphire UI.
 
 # Skill: Port one component
 
-One session ports one component (or one family, as card and badge shared a session). The v3 React look wins: the pin is the proof. Read the `sapphire-css`, `sapphire-testing` and `typescript` skills first, then `components/button/`, `components/card/` and `components/dialog/` as the worked examples.
+One session ports one component (or one family, as card and badge shared a session). The v3 React look is the starting point; approved D5 refinements and defect fixes supersede it. Read the `sapphire-css`, `sapphire-testing` and `typescript` skills first, then `components/button/`, `components/card/` and `components/dialog/` as the worked examples.
 
 ## Setup
 
@@ -33,7 +33,7 @@ Prefix every later command with `cd <worktree> &&`. Bun only. ctx7 before any AP
 - Colours are tokens (`var(--card)`, `var(--error)`); never a hex. Use `--brand-text` for gold text and the status text tokens (`--error-text`, `--success-text`, `--warning-text`, `--info-text`) for status-coloured text and outlines; a filled status colour keeps its base token (`--error`). Use the `--on-dark` family on dark surfaces. A value that no token holds and two components share becomes a token in `css/tokens.css` with its `css/tailwind.css` mapping and `DESIGN.md` row; one component's own value stays a variable.
 - Lengths: an on-scale value uses its token; off-scale geometry is `calc(var(--space-1) * N)`; off-scale type is `calc(var(--text-base) * N)`; a length that follows the font size (tracking, prose rhythm, a line measure) is an `em` or `ch` literal. The token gate bans px, rem and the other absolute literals outside `css/tokens.css` (a media-query condition such as `min-width: 48rem` is not scanned).
 - Hover goes in `@media (hover: hover)` and never applies to disabled elements. `@media (prefers-reduced-motion: reduce)` stops every transition and animation the component has.
-- Focus is `:focus-visible` with the ring tokens. Keep v3's focus look; a ring that the pin shows is part of the look.
+- Focus is `:focus-visible` with the ring tokens. Preserve visible keyboard focus when applying D5; never retain a missing focus indicator for parity.
 - No comments (P-1), no gradients except the `premium` button.
 - A component with two structures (native `<dialog>` and Radix's `data-state` overlay plus content) states the look once and shares keyframes; native exit animation works only where the engine supports `display` and `overlay` transitions, so entry must work everywhere (dialog.css).
 - Names keep v3's React names unless a v4 token makes one wrong (`accent` becomes `brand`; `dark` becomes `on-dark`). Every rename is in the map.
@@ -48,9 +48,9 @@ bun run test:a11y            # green; counts in the report
 git diff master --stat -- tests/visual/pins    # must print nothing
 ```
 
-- Never run `bun run pin` and never pass `--update-snapshots`. Never `docker rm`, `stop` or `prune`; never restart Colima.
+- Only the integrating session runs `bun run pin` for named, owner-approved visual changes after displaying expected/actual/diff images. Never pass `--update-snapshots` directly. Never `docker rm`, `stop` or `prune`; never restart Colima.
 - A pin you cannot match after a real attempt: copy its expected, actual and diff PNGs to the scratchpad folder the brief names, leave that section on its v3 pin (remove its `data-pin` from the specimen), and report the cause. Never change the look to pass.
-- An axe finding that the pin shows (the v3 look) goes into `KNOWN_VIOLATIONS` in `tests/specimens.a11y.spec.ts` with the `found` string axe prints, the colours and the measured ratio in the reason. The spec fails on a stale entry, so a fix removes its entry.
+- Fix axe findings when the affected component is touched; never add waivers to preserve a known defect. Remove resolved entries from `KNOWN_VIOLATIONS` in `tests/specimens.a11y.spec.ts` and retain regression coverage.
 - A behaviour the pin cannot show (an open dialog) gets a live parity spec against the v3 docs under `tests/visual/`, comparing pixels, computed styles and focus; P9 replaces it with a pin.
 - Hermetic tests only; a new test fails when the code it covers is reverted. No casts but `as const`, no `!`, no `any`.
 
