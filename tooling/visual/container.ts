@@ -1,5 +1,4 @@
 import { spawnSync } from 'node:child_process';
-import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -8,10 +7,10 @@ export const CONTAINER_ROOT = '/work';
 
 const DOCKERFILE = 'tooling/visual/Dockerfile';
 const EXACT_VERSION = /^\d+\.\d+\.\d+$/;
-const BUN_CACHE_VOLUME = 'sapphire-visual-bun-cache';
+const BUN_CACHE_DIR = '/tmp/sapphire-bun-cache';
 
 const CONTAINER_SCRIPT = [
-  `trap 'chown -R "$HOST_UID:$HOST_GID" test-results dist-docs tests/visual/pins 2>/dev/null || true' EXIT`,
+  'set -eu',
   'bun install --frozen-lockfile --ignore-scripts',
   'bunx playwright test -c playwright.visual.config.ts "$@"',
 ].join('\n');
@@ -39,9 +38,6 @@ export function readVersions(
 
 export const imageTag = (versions: Versions) =>
   `sapphire-visual:playwright-${versions.playwright}-bun-${versions.bun}`;
-
-export const modulesVolume = (root: string) =>
-  `sapphire-visual-modules-${createHash('sha1').update(root).digest('hex').slice(0, 8)}`;
 
 export const buildArgs = (versions: Versions): string[] => [
   'build',
@@ -71,16 +67,16 @@ export const runArgs = (
   '--ipc=host',
   '--platform',
   PLATFORM,
+  '--user',
+  `${owner.uid}:${owner.gid}`,
   '--env',
-  `HOST_UID=${owner.uid}`,
-  '--env',
-  `HOST_GID=${owner.gid}`,
+  `BUN_INSTALL_CACHE_DIR=${BUN_CACHE_DIR}`,
   '--volume',
   `${root}:${CONTAINER_ROOT}`,
-  '--volume',
-  `${modulesVolume(root)}:${CONTAINER_ROOT}/node_modules`,
-  '--volume',
-  `${BUN_CACHE_VOLUME}:/root/.bun/install/cache`,
+  '--tmpfs',
+  `${CONTAINER_ROOT}/node_modules:rw,exec,uid=${owner.uid},gid=${owner.gid},mode=0755`,
+  '--tmpfs',
+  `${BUN_CACHE_DIR}:rw,exec,uid=${owner.uid},gid=${owner.gid},mode=0755`,
   '--workdir',
   CONTAINER_ROOT,
   imageTag(versions),

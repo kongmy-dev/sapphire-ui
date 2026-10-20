@@ -1,11 +1,5 @@
 import { describe, expect, it } from 'bun:test';
-import {
-  buildArgs,
-  imageTag,
-  modulesVolume,
-  readVersions,
-  runArgs,
-} from './container';
+import { buildArgs, imageTag, readVersions, runArgs } from './container';
 
 const packageText = JSON.stringify({
   devDependencies: { '@playwright/test': '1.61.1', vite: '8.3.4' },
@@ -39,12 +33,19 @@ describe('pin container commands', () => {
     expect(args).toContain(`--tag ${imageTag(versions)}`);
   });
 
-  it('runs on linux/arm64 with node_modules in a volume of its own', () => {
+  it('runs as the host user with writable ephemeral modules and cache', () => {
     const args = runArgs(root, versions, owner, []).join(' ');
     expect(args).toContain('--platform linux/arm64');
     expect(args).toContain(`--volume ${root}:/work`);
+    expect(args).toContain('--user 501:20');
     expect(args).toContain(
-      `--volume ${modulesVolume(root)}:/work/node_modules`,
+      '--tmpfs /work/node_modules:rw,exec,uid=501,gid=20,mode=0755',
+    );
+    expect(args).toContain(
+      '--tmpfs /tmp/sapphire-bun-cache:rw,exec,uid=501,gid=20,mode=0755',
+    );
+    expect(args).toContain(
+      '--env BUN_INSTALL_CACHE_DIR=/tmp/sapphire-bun-cache',
     );
   });
 
@@ -53,8 +54,11 @@ describe('pin container commands', () => {
     expect(args.slice(-3)).toEqual(['sh', '--grep', 'a b']);
   });
 
-  it('keeps a volume per checkout', () => {
-    expect(modulesVolume('/a/one')).not.toBe(modulesVolume('/a/two'));
-    expect(modulesVolume('/a/one')).toBe(modulesVolume('/a/one'));
+  it('never changes permissions or mounts shared caches', () => {
+    const args = runArgs(root, versions, owner, []).join(' ');
+    expect(args).not.toMatch(/\b(?:chown|chmod)\b/);
+    expect(args).not.toContain('sapphire-visual-modules-');
+    expect(args).not.toContain('sapphire-visual-bun-cache');
+    expect(args).not.toContain('/root/');
   });
 });
