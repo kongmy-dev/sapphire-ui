@@ -1,11 +1,27 @@
 import { expect, type Page } from '@playwright/test';
 import {
+  avatarLifecycle,
+  badgeLink,
+  dismissChip,
+  pagination,
+  separatorLinks,
+} from './keyboard-data';
+import {
   controlledField,
   controlledPlan,
   editFields,
   selectPlans,
   validateEmail,
 } from './keyboard-forms';
+import { hoverCard, popover, tooltip } from './keyboard-overlays';
+import {
+  checkboxes,
+  notifications,
+  radios,
+  selectOptions,
+  sliders,
+  switches,
+} from './keyboard-stateful';
 
 const forwardTab = (page: Page) =>
   page.context().browser()?.browserType().name() === 'webkit'
@@ -92,6 +108,32 @@ async function dialog(page: Page) {
 export const keyboardCases: Readonly<
   Record<string, (page: Page) => Promise<void>>
 > = {
+  'checkbox/states': checkboxes,
+  'checkbox/controlled': checkboxes,
+  'switch/states': switches,
+  'switch/controlled': switches,
+  'radio-group/states': radios,
+  'radio-group/controlled': radios,
+  'range-slider/states': sliders,
+  'range-slider/controlled': sliders,
+  'select/states': selectOptions,
+  'select/controlled': selectOptions,
+  'toast/statuses': notifications,
+  'toast/duration': notifications,
+  'separator/vertical': separatorLinks,
+  'badge/sizes': badgeLink,
+  'chip/dismissible': dismissChip,
+  'avatar/lifecycle': avatarLifecycle,
+  'pagination/controlled': pagination,
+  'pagination/boundaries': pagination,
+  'popover/settings': popover,
+  'popover/controlled': popover,
+  'hover-card/profile': hoverCard,
+  'hover-card/preview': hoverCard,
+  'tooltip/shortcut': tooltip,
+  'tooltip/shared-provider': tooltip,
+  'sheet/settings': dialog,
+  'sheet/bottom': dialog,
   'button/variants': buttons,
   'button/on-dark': buttons,
   'button/sizes': buttons,

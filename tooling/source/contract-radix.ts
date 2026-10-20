@@ -4,6 +4,7 @@ const STATES: Record<string, readonly string[]> = {
   Dialog: ['open', 'closed'],
   AlertDialog: ['open', 'closed'],
   Popover: ['open', 'closed'],
+  HoverCard: ['open', 'closed'],
   Collapsible: ['open', 'closed'],
   Accordion: ['open', 'closed'],
   DropdownMenu: ['open', 'closed', 'checked', 'unchecked', 'indeterminate'],

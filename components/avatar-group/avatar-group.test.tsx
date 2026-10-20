@@ -22,7 +22,7 @@ it('limits avatars, shows the overflow count, preserves refs and child styles', 
       ignored text
     </AvatarGroup>,
   );
-  expect(screen.getByRole('group', { name: 'Team members' })).toBe(ref.current);
+  expect(ref.current).toBe(screen.getByRole('group', { name: 'Team members' }));
   expect(screen.getByRole('img', { name: '1 more people' })).not.toBeNull();
   expect(ref.current?.className).toBe('sp-avatar-group custom');
   expect(child.current?.style.opacity).toBe('0.7');

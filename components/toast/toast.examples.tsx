@@ -2,13 +2,14 @@
 
 import { useRef } from 'react';
 import { Button } from '../button/button.js';
-import { Toast, type ToastRef } from './toast.js';
+import { Toast, type ToastRef, type ToastType } from './toast.js';
 
 function ToastStatuses() {
   const toast = useRef<ToastRef>(null);
+  const success: ToastType = 'success';
   return (
     <div className="sp-cluster">
-      <Button onClick={() => toast.current?.show('Changes saved', 'success')}>
+      <Button onClick={() => toast.current?.show('Changes saved', success)}>
         Show success
       </Button>
       <Button

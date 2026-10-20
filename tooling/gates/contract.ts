@@ -31,7 +31,11 @@ function renderedProblems(
       ),
     );
   const variants = jsx.variants.flatMap((entry) => {
-    if (entry.key.endsWith('/data-slot') || entry.key.endsWith('/data-testid'))
+    const metadata = ['data-slot', 'data-testid', 'data-lang'];
+    if (
+      metadata.some((name) => entry.key.endsWith(`/${name}`)) &&
+      !css.variants.has(entry.key)
+    )
       return [];
     const selectors = css.variants.get(entry.key) ?? new Set();
     return entry.values

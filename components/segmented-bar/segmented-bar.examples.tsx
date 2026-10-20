@@ -1,15 +1,23 @@
-import { SegmentedBar } from './segmented-bar.js';
+import {
+  SegmentedBar,
+  type SegmentedBarMarker,
+  type SegmentedBarSegment,
+} from './segmented-bar.js';
 
 function CapacityExample() {
   return (
     <SegmentedBar
       aria-label="Capacity: 30 percent used, 40 percent reserved, 30 percent available"
-      segments={[
-        { value: 30, color: 'var(--brand)' },
-        { value: 40, color: 'var(--info)' },
-        { value: 30, color: 'var(--success)' },
-      ]}
-      markers={[{ position: 80, color: 'var(--error)' }]}
+      segments={
+        [
+          { value: 30, color: 'var(--brand)' },
+          { value: 40, color: 'var(--info)' },
+          { value: 30, color: 'var(--success)' },
+        ] satisfies SegmentedBarSegment[]
+      }
+      markers={
+        [{ position: 80, color: 'var(--error)' }] satisfies SegmentedBarMarker[]
+      }
     />
   );
 }

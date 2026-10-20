@@ -10,12 +10,23 @@ own. D3: Lucide. D4: every component. D5: Tidy everywhere. Delete this file when
 - Shared foundations plus per-component stylesheet ownership is recorded in ADR-0002.
 - Active working rules now match v4: CSS classes/data attributes, generated subpaths, optional
   behaviour peers and the preserved theme with tighter proportions.
-- P4 has Slot, Button, Card, Dialog, the five plain form components, Skeleton, Spinner, Empty
-  and Progress, all six hooks and the theme helper. Independently discovered examples feed the
-  browser checks; per-file coverage, boundary and typed CSS-contract gates are active. The gate
-  passes 565 tests and all 32 runtime/example files clear 95% line/function coverage. All 40
-  current examples pass 240 strict accessibility/keyboard checks. Seed visual pins are captured;
-  the next family's captures are running. The phase remains open.
+- P4 implements Slot, the seed components, both form families, feedback, data primitives,
+  Popover, HoverCard, Tooltip and Sheet, all six hooks and the theme helper. Independently
+  discovered examples feed browser checks; coverage, boundary and typed CSS-contract gates are
+  active. The gate passes **674 tests** and all **73 runtime/example files** clear 95% line/function
+  coverage. The corrected select isolation, avatar semantics, overlay focus and settled-animation
+  audits pass **96 targeted accessibility/keyboard checks** across three engines. The preceding
+  444-check run passed 406; remaining status-colour contrast defects and the subsequent families
+  require a new complete run. P4 is open.
+- The first full run with the 90 initial React pins passed 498/502 visual/parity checks. Its four
+  failures exposed minifier rounding of inlined popover/hover-card line-height calculations.
+  Restoring those calculations to custom properties preserves fractional precision; the targeted
+  parity rerun and next React captures are pending. No changed pin was used to hide that drift.
+- Data ports clamp non-finite/unsafe pagination values and cap sibling windows at 100; avatar
+  groups use named group/image semantics. Select makes background content inert while its listbox
+  is open, restores previous state on close/unmount, and preserves live announcement regions.
+  CVA-only `sheetVariants` is replaced by the existing side prop and CSS data attribute contract;
+  the migration guide must record removal of styling helpers rather than invent replacements.
 - `useLocalStorage` requires a caller-supplied parser in v4. Stored JSON is untrusted; invalid,
   missing or inaccessible reads use the fallback; failed writes retain the in-memory value.
   Server rendering and initial hydration use the fallback before reading storage. The migration
@@ -25,7 +36,7 @@ own. D3: Lucide. D4: every component. D5: Tidy everywhere. Delete this file when
 - Cookie-banner and icon-mark CSS, SVG specimen icons and exhaustive legacy-class coverage have
   landed. Only the three `elements/*` documentation sections still use the reference renderer;
   their takeover belongs to P5/P8. The v3 parity renderer remains until P9.
-- Integrated CSS measures **23,758 / 23,765 gzip bytes** after the shared dark-card text fix and
+- Integrated CSS measures **23,744 / 23,765 gzip bytes** after the shared dark-card text fix and
   removal of unused single-use internal variables; the ceiling is unchanged.
 - Strict specimen accessibility passes **420/420** checks (70 pages, two schemes, three engines).
   The two subsequently changed specimens also pass all 12 targeted checks. The integrated
@@ -46,7 +57,7 @@ remain the acceptance criteria; retained v3 code does not count as a v4 implemen
 | P1 — gates and pins | Bun and devDependencies are pinned; Dependabot uses Bun. Strict `tsconfig.base.json`, Biome, knip, gate regression tests, scorecard and container pin tooling exist. `src/` remains frozen. The current gate passes; it measures the active lane rather than claiming the retained v3 debt is gone |
 | P2 — tokens | `css/tokens.css`, `css/tailwind.css` and `DESIGN.md` exist; token mappings and design tables are enforced. `tests/tokens.spec.ts` exercises source, Bun, Vite and Tailwind builds, nested scopes and overrides in three engines |
 | P3 — CSS contract | Complete: 69 component stylesheets, 70 plain-HTML specimen pages and 65 reference sections. The three elements documentation sections await P5/P8. The v3 parity renderer remains until P9 |
-| P4 — React | Active: seed clients, plain forms, initial feedback, hooks and theme are implemented; stateful forms and remaining families are in progress. The current execution checkpoint gives integrated validation |
+| P4 — React | Active: forms, feedback, data primitives and initial overlays are implemented; data views and extended components are in progress. The current execution checkpoint gives integrated validation |
 | P5 — elements | Pending: the six v4 custom elements and their lifecycle/equivalence checks have not been implemented |
 | P6–P7 — package and registry | Not started as v4 deliverables. `package.json` still exports the v3 package: 4 runtime dependencies, 21 required peers and 88 export entries. The existing registry check passes 34 v3 items; there is no v4 source `registry.json` or ported `blocks/` |
 | P8–P10 — site, retirement and docs | Public docs still build from `src/`. The React example runner, contract, coverage and boundary gates now support P4. The v4 docs site, old-lane retirement, API snapshot and docs/skill-reference gates remain pending. Only the stylesheet import list is currently registered with the generated-files gate |
@@ -68,6 +79,8 @@ remain the acceptance criteria; retained v3 code does not count as a v4 implemen
 The remaining accessibility corrections are tab-panel focus, keyboard access to bar-chart values,
 margin-note focus/overlap, toc truncation, prose markers/spacing and financial-header consistency.
 P4's browser checks now verify the shared dark-card heading and paragraph contrast correction.
+Success and warning text on tinted page-background surfaces still fails AA (4.27:1 and 4.31:1);
+the shared visual pass must correct those semantic colours and review the affected pins.
 The React ports also exposed vertical-slider geometry and the multiple-select chevron as items
 for the shared refinement pass; their accepted states must work before P4 closes. Static CSS and axe
 checks alone do not close those behaviour and layout gaps. Fix each defect when its component is

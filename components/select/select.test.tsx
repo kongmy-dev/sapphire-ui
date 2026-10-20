@@ -44,6 +44,7 @@ it('opens by keyboard, selects an item, calls back and returns focus', async () 
   trigger.focus();
   await userEvent.keyboard('{Enter}');
   expect(screen.getByRole('listbox')).not.toBeNull();
+  expect(trigger.closest('[inert]')).not.toBeNull();
   expect(
     screen
       .getByRole('option', { name: 'Locked' })
@@ -54,6 +55,7 @@ it('opens by keyboard, selects an item, calls back and returns focus', async () 
   expect(trigger.textContent).toContain('Pro');
   await waitFor(() => expect(screen.queryByRole('listbox')).toBeNull());
   await waitFor(() => expect(document.activeElement).toBe(trigger));
+  expect(trigger.closest('[inert]')).toBeNull();
 });
 
 it('supports controlled values, placeholder, nullable trigger size and disabled state', async () => {
@@ -160,3 +162,38 @@ for (const { name, render: Example } of examples) {
       expect(screen.getByRole('status').textContent).toBe('pro');
   });
 }
+
+it('preserves prior inert state and live announcements while isolating the open listbox', async () => {
+  const { unmount } = render(
+    <>
+      <div inert data-testid="already-inert" />
+      <div aria-live="polite">Saved</div>
+      <button type="button">Background action</button>
+      <Select defaultValue="free">
+        <SelectTrigger aria-label="Plan">
+          <SelectValue />
+        </SelectTrigger>
+        <Options />
+      </Select>
+    </>,
+  );
+  const root = screen.getByRole('button', {
+    name: 'Background action',
+  }).parentElement;
+  const live = document.createElement('div');
+  live.setAttribute('aria-live', 'polite');
+  document.body.append(live);
+  const prior = document.createElement('div');
+  prior.inert = true;
+  document.body.append(prior);
+  screen.getByRole('combobox').focus();
+  await userEvent.keyboard('{Enter}');
+  expect(root?.inert).toBe(true);
+  expect(prior.inert).toBe(true);
+  expect(live.inert).toBe(false);
+  unmount();
+  expect(root?.inert).toBe(false);
+  expect(prior.inert).toBe(true);
+  prior.remove();
+  live.remove();
+});

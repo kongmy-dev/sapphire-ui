@@ -1,4 +1,4 @@
-import { readExamples } from '../examples/catalog';
+import { readVisualExamples } from '../examples/catalog';
 
 export type RouteExamples = {
   name: string;
@@ -182,10 +182,7 @@ export const ROUTES: readonly RouteExamples[] = [
 ];
 
 export const exampleNames = (): string[] => [
-  ...readExamples(process.cwd()).flatMap((row) => {
-    const name = `react/${row.component}/${row.name}`;
-    return row.component === 'dialog' ? [name, `${name}/open`] : [name];
-  }),
+  ...readVisualExamples(process.cwd()).map(({ name }) => name),
   ...ROUTES.flatMap((route) =>
     route.pinned.map((slug) => `${route.name}/${slug}`),
   ),

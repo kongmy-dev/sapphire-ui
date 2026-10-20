@@ -18,7 +18,8 @@ const expressionOf = (attribute: ts.JsxAttribute) => {
 
 function staticText(node: ts.Node | undefined): string {
   if (node === undefined) return '';
-  if (ts.isStringLiteralLike(node)) return node.text;
+  if (ts.isStringLiteralLike(node) || ts.isNumericLiteral(node))
+    return node.text;
   if (ts.isTemplateExpression(node))
     return [
       node.head.text,

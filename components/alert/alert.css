@@ -3,7 +3,6 @@
     --sp-alert-border-color: var(--info-border);
     --sp-alert-bg: var(--info-bg);
     --sp-alert-accent: var(--info-text);
-    --sp-alert-icon-size: calc(var(--space-1) * 5);
 
     display: flex;
     gap: var(--space-3);
@@ -45,7 +44,7 @@
     width: 1em;
     height: 1em;
     margin-top: calc(var(--space-1) * 0.5);
-    font-size: var(--sp-alert-icon-size);
+    font-size: calc(var(--space-1) * 5);
     line-height: 1;
     color: var(--sp-alert-accent);
   }

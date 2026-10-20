@@ -4,7 +4,6 @@
     --sp-callout-bg: var(--background);
     --sp-callout-icon-size: var(--space-6);
     --sp-callout-title-size: var(--text-lg);
-    --sp-callout-title-spacing: calc(var(--sp-callout-title-size) * -0.025);
 
     position: relative;
     display: flex;
@@ -46,7 +45,7 @@
     font-weight: 600;
     line-height: calc(var(--space-1) * 7);
     color: var(--foreground-strong);
-    letter-spacing: var(--sp-callout-title-spacing);
+    letter-spacing: calc(var(--sp-callout-title-size) * -0.025);
   }
 
   .sp-callout-body {

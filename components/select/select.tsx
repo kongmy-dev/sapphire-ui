@@ -2,6 +2,7 @@
 
 import { Select as Primitive } from 'radix-ui';
 import type { ComponentProps } from 'react';
+import { isolateSelect } from './select-isolation.js';
 
 export const Select = Primitive.Root;
 export const SelectGroup = Primitive.Group;
@@ -75,6 +76,7 @@ export function SelectContent({
         data-slot="select-content"
       >
         <Primitive.Viewport
+          ref={isolateSelect}
           className="sp-select-viewport"
           data-slot="select-viewport"
         >

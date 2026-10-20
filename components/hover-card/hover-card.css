@@ -1,5 +1,6 @@
 @layer components {
   .sp-hover-card {
+    --sp-hover-card-line-height: calc(1.25 / 0.875);
     --sp-hover-card-enter-x: 0;
     --sp-hover-card-enter-y: 0;
 
@@ -7,7 +8,7 @@
     padding: var(--space-4);
     font-family: var(--font-sans);
     font-size: var(--text-sm);
-    line-height: calc(1.25 / 0.875);
+    line-height: var(--sp-hover-card-line-height);
     color: var(--foreground);
     background: var(--card);
     border: var(--border-width) solid var(--border);

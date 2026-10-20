@@ -2,7 +2,12 @@ import { afterEach, expect, test } from 'bun:test';
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { exampleUrl, namesFromSource, readExamples } from './catalog';
+import {
+  exampleUrl,
+  namesFromSource,
+  readExamples,
+  readVisualExamples,
+} from './catalog';
 
 const root = mkdtempSync(join(tmpdir(), 'sapphire-example-catalog-'));
 afterEach(() =>
@@ -45,6 +50,11 @@ test('enumerates colocated examples independently of test imports', () => {
     );
   }
   mkdirSync(join(root, 'components', 'without-examples'));
+  expect(readVisualExamples(root).map(({ name }) => name)).toEqual([
+    'react/button/default',
+    'react/dialog/default',
+    'react/dialog/default/open',
+  ]);
   const rows = readExamples(root);
   expect(rows.map(({ component }) => component)).toEqual(['button', 'dialog']);
   expect(rows[0]).toEqual({

@@ -2,7 +2,6 @@
   .sp-toc {
     --sp-toc-font-size: var(--text-sm);
     --sp-toc-line-height: calc(var(--space-1) * 5);
-    --sp-toc-title-spacing: calc(var(--sp-toc-font-size) * 0.05);
 
     font-family: var(--font-sans);
   }
@@ -14,7 +13,7 @@
     line-height: var(--sp-toc-line-height);
     color: var(--foreground-strong);
     text-transform: uppercase;
-    letter-spacing: var(--sp-toc-title-spacing);
+    letter-spacing: calc(var(--sp-toc-font-size) * 0.05);
   }
 
   .sp-toc-list {

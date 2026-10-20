@@ -87,3 +87,23 @@ export const exampleUrl = (example: ExampleRow, scheme: Scheme): string =>
     example: example.name,
     scheme,
   })}`;
+
+export const readVisualExamples = (root: string) =>
+  readExamples(root).flatMap((example) =>
+    ([
+      'dialog',
+      'select',
+      'toast',
+      'sheet',
+      'popover',
+      'tooltip',
+      'hover-card',
+    ].includes(example.component)
+      ? [false, true]
+      : [false]
+    ).map((open) => ({
+      example,
+      open,
+      name: `react/${example.component}/${example.name}${open ? '/open' : ''}`,
+    })),
+  );
