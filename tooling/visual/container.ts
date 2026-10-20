@@ -75,6 +75,8 @@ export const runArgs = (
   `${root}:${CONTAINER_ROOT}`,
   '--tmpfs',
   `${CONTAINER_ROOT}/node_modules:rw,exec,uid=${owner.uid},gid=${owner.gid},mode=0755`,
+  '--tmpfs',
+  '/tmp:rw,exec,mode=1777',
   '--workdir',
   CONTAINER_ROOT,
   imageTag(versions),

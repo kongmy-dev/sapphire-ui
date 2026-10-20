@@ -40,7 +40,8 @@ describe('pin container commands', () => {
     expect(args).toContain('--user 501:20');
     expect(
       runArgs(root, versions, owner, []).filter((arg) => arg === '--tmpfs'),
-    ).toHaveLength(1);
+    ).toHaveLength(2);
+    expect(args).toContain('--tmpfs /tmp:rw,exec,mode=1777');
     expect(args).toContain(
       '--tmpfs /work/node_modules:rw,exec,uid=501,gid=20,mode=0755',
     );
