@@ -65,7 +65,11 @@ function open(from: Element | null) {
     ...document.querySelectorAll(
       '[role="dialog"], [role="alertdialog"], dialog[open]',
     ),
-  ].some((element) => element.getClientRects().length > 0);
+  ].some(
+    (element) =>
+      element !== trigger?.closest('[role="dialog"]') &&
+      element.getClientRects().length > 0,
+  );
   if (modal) return;
   launcher = from instanceof HTMLElement ? from : null;
   input.value = '';

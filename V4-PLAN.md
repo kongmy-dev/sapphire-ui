@@ -25,6 +25,12 @@ Delete this file when 4.0.0 ships.
   published comparison and repository migration guide remain available. Documentation
   acceptance, production deployment, tagging and publication stay held.
 
+- Mobile documentation restores the menu before the brand and version, with the
+  drawer covering the header and its close control inside the drawer. Mobile
+  navigation rows retain touch targets; the page list scrolls independently.
+  Drawer search, focus containment, backdrop dismissal and desktop resize have
+  browser regressions, alongside the existing content and accessibility checks.
+
 - Owner requested the remote accessibility correction and a separately published migration
   comparison. Documentation acceptance, release tagging and npm publication stay owner-gated.
   The three Linux WebKit failures pair inherited light text with a browser-selected grey

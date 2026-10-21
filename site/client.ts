@@ -3,19 +3,28 @@ import { initCopy } from './copy.js';
 import { initSearch } from './search.js';
 
 const menu = document.querySelector<HTMLButtonElement>('.docs-menu');
+const sidebar = document.querySelector<HTMLElement>('#docs-sidebar');
+const close = document.querySelector<HTMLButtonElement>('.docs-sidebar-close');
 const search = document.querySelector<HTMLButtonElement>('.docs-search');
-const main = document.querySelector<HTMLElement>('#main');
 const mobile = matchMedia('(max-width: 48rem)');
 const theme = document.querySelector<HTMLButtonElement>('.docs-theme');
 
 function navigation(open: boolean) {
   document.body.toggleAttribute('data-nav-open', open);
   menu?.setAttribute('aria-expanded', String(open));
-  menu?.setAttribute(
-    'aria-label',
-    open ? 'Close navigation' : 'Open navigation',
-  );
-  if (main) main.inert = open;
+  if (open) {
+    sidebar?.setAttribute('role', 'dialog');
+    sidebar?.setAttribute('aria-modal', 'true');
+    sidebar?.setAttribute('aria-label', 'Documentation navigation');
+  } else {
+    sidebar?.removeAttribute('aria-modal');
+    sidebar?.removeAttribute('role');
+    sidebar?.removeAttribute('aria-label');
+  }
+  for (const element of document.querySelectorAll<HTMLElement>(
+    '.docs-mobile-bar, .docs-site > a, #main',
+  ))
+    element.inert = open;
   if (open) search?.focus();
   else if (mobile.matches) menu?.focus();
 }
@@ -33,7 +42,7 @@ function trapNavigation(event: KeyboardEvent) {
   if (event.key !== 'Tab' || !document.body.hasAttribute('data-nav-open'))
     return;
   const candidates = document.querySelectorAll<HTMLElement>(
-    '.docs-mobile-bar a, .docs-menu, .docs-sidebar a, .docs-sidebar input, .docs-sidebar summary, .docs-sidebar button',
+    '.docs-sidebar a, .docs-sidebar input, .docs-sidebar summary, .docs-sidebar button',
   );
   const visible = [...candidates].filter(
     (element) => element.getClientRects().length > 0,
@@ -66,12 +75,15 @@ theme?.addEventListener('click', () =>
 menu?.addEventListener('click', () =>
   navigation(!document.body.hasAttribute('data-nav-open')),
 );
+close?.addEventListener('click', () => navigation(false));
 document
   .querySelector('.docs-nav-backdrop')
   ?.addEventListener('click', () => navigation(false));
 document.addEventListener('keydown', shortcuts);
 mobile.addEventListener('change', () => {
-  if (document.body.hasAttribute('data-nav-open')) navigation(false);
+  if (!document.body.hasAttribute('data-nav-open')) return;
+  navigation(false);
+  if (!mobile.matches) search?.focus();
 });
 for (const link of document.querySelectorAll('.docs-nav-link'))
   link.addEventListener('click', () => navigation(false));

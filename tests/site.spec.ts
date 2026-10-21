@@ -285,7 +285,11 @@ test('mobile navigation supports keyboard dismissal and page navigation without 
     name: 'Close navigation',
     exact: true,
   });
-  await expect(close).toHaveAttribute('aria-expanded', 'true');
+  await expect(close).toBeVisible();
+  await expect(page.locator('.docs-menu')).toHaveAttribute(
+    'aria-expanded',
+    'true',
+  );
   await expect(sidebar).toBeInViewport();
   expect(
     (

@@ -7,7 +7,13 @@
 The documentation keeps a persistent navy sidebar, an editorial page canvas and
 small uppercase section labels. The sidebar stays navy in either page scheme;
 the theme control changes the content and search palette. Mobile uses the same
-navigation in a dismissible drawer.
+navigation in a dismissible drawer. Its compact navy header places the menu before
+the brand and version. The drawer covers that header, starts the brand at the top,
+and includes its own close control. A dimmed, blurred backdrop separates it from
+the page. Navigation rows have at least 44px touch targets at mobile widths;
+the navigation scrolls independently while search, theme and close stay reachable.
+Opening the drawer makes the page and mobile header inert and contains keyboard
+focus. Dismissal restores the menu trigger; desktop resize restores normal navigation.
 
 The overview introduces CSS, native elements and React, then groups links to the
 component catalogue. Each component retains its own URL and renders every named
