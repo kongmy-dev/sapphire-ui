@@ -1,7 +1,7 @@
-import AxeBuilder from '@axe-core/playwright';
 import { expect, type Page, test } from '@playwright/test';
 import { type ExampleRow, readExamples } from '../tooling/examples/catalog';
 import { readElementExamples } from '../tooling/examples/elements';
+import { audit } from './examples/audit';
 
 const SITE = 'http://localhost:4178';
 
@@ -33,10 +33,8 @@ async function checkExamples(
       return ids.filter((id, index) => ids.indexOf(id) !== index);
     });
     expect(duplicates).toEqual([]);
-    const result = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-      .analyze();
-    expect(result.violations).toEqual([]);
+    await page.evaluate(() => document.fonts.ready);
+    await audit(page);
     await page.setViewportSize({ width: 390, height: 844 });
     expect(
       await page.evaluate(
@@ -102,13 +100,7 @@ test('inline command palettes have spacing and independent state with keyboard f
     );
     await expect(search).toBeFocused();
   }
-  expect(
-    (
-      await new AxeBuilder({ page })
-        .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-        .analyze()
-    ).violations,
-  ).toEqual([]);
+  await audit(page);
   await search.fill('save');
   await search.press('Enter');
   await expect(dialog).toHaveCount(0);
