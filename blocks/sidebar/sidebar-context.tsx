@@ -92,7 +92,7 @@ function SidebarProvider({
           data-slot="sidebar-wrapper"
           style={style}
           className={cn(
-            'sp-sidebar-wrapper group/sidebar-wrapper flex min-h-svh w-full has-data-[variant=inset]:bg-sidebar',
+            'sp-sidebar-wrapper group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full',
             className,
           )}
           {...props}

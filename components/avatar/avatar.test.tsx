@@ -16,7 +16,7 @@ afterEach(() => {
 
 function images() {
   const pending: HTMLImageElement[] = [];
-  function ImageFixture() {
+  function imageFixture() {
     const image = document.createElement('img');
     Object.defineProperty(image, 'complete', {
       configurable: true,
@@ -28,7 +28,7 @@ function images() {
   Object.defineProperty(window, 'Image', {
     configurable: true,
     writable: true,
-    value: ImageFixture,
+    value: imageFixture,
   });
   return pending;
 }

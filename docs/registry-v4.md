@@ -15,7 +15,7 @@ SAPPHIRE_PACKAGE_TARBALL=/absolute/path/sapphire-ui.tgz bun tooling/registry/smo
 The source registry includes generated metadata. The build wrapper stages its
 physical source files because shadcn's included registry paths cannot traverse
 parent directories and the CLI reads file contents from disk. It runs pinned
-`shadcn@4.22.0 build` and `registry validate`, then rewrites source imports to
+`shadcn@4.22.1 build` and `registry validate`, then rewrites source imports to
 consumer aliases. It never rebuilds or rewrites the legacy distribution.
 
 The base has `extends: none`, installs the exact Sapphire package, imports only
@@ -30,8 +30,8 @@ Initialize an existing Vite/Tailwind application using the base URL, then map
 object of `components.json`. Add components with the pinned CLI:
 
 ```sh
-bunx --bun shadcn@4.22.0 init https://design.kongmy.dev/r/v4/base.json --yes
-bunx --bun shadcn@4.22.0 add @sapphire/button @sapphire/dialog @sapphire/sidebar
+bunx --bun shadcn@4.22.1 init https://design.kongmy.dev/r/v4/base.json --yes
+bunx --bun shadcn@4.22.1 add @sapphire/button @sapphire/dialog @sapphire/sidebar
 ```
 
 The smoke creates a temporary Vite application and invokes the real CLI for

@@ -1,6 +1,6 @@
 # Dependency review
 
-Reviewed against registry stable tags on 2026-10-21. All 33 development packages
+Reviewed against registry stable tags. All 33 development packages
 have consumers; none is unused. The package has zero runtime dependencies and
 retains its four optional peer ranges. Those ranges describe consumer compatibility,
 so they are not rewritten as exact development pins.
@@ -51,6 +51,12 @@ including generated Markdown. Test fixtures use stable component definitions and
 the new component-factory correctness check stays enabled. Its calendar finding
 has a focus-preservation regression and stable child components. The updated axe
 checks also enforce matching visible and accessible names on docs controls.
+Chart button names follow the rendered value-then-label order, and the admin
+avatar's name includes its visible initials.
+
+The approved visual refresh covers native button borders and textarea resize
+grips. Expected, actual and diff review found no content or geometry changes;
+zero-tolerance comparisons and the reached-state inventory remain intact.
 
 ## Security limitation
 

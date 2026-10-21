@@ -28,6 +28,52 @@ const Trigger = ({ as: Comp = 'button', ...props }: TriggerProps) => (
   <Comp {...props} />
 );
 
+function RefRenderLoop({
+  Slot,
+  onRender,
+}: {
+  Slot: ElementType;
+  onRender: () => void;
+}) {
+  onRender();
+  const [, forceRender] = useReducer((count: number) => count + 1, 0);
+  const ref = useCallback((node: HTMLElement | null) => {
+    if (node) forceRender();
+  }, []);
+  return (
+    <Slot ref={ref}>
+      <button type="button">Click me</button>
+    </Slot>
+  );
+}
+
+const StableChild = forwardRef<
+  HTMLButtonElement,
+  { recordRef: (ref: unknown) => void }
+>(function StableChild({ recordRef }, ref) {
+  recordRef(ref);
+  return <button type="button" ref={ref} />;
+});
+
+function StableRefApp({
+  Slot,
+  recordRef,
+  setBump,
+}: {
+  Slot: ElementType;
+  recordRef: (ref: unknown) => void;
+  setBump: (bump: () => void) => void;
+}) {
+  const [, forceRender] = useReducer((count: number) => count + 1, 0);
+  setBump(forceRender);
+  const forwardedRef = useRef<HTMLButtonElement>(null);
+  return (
+    <Slot ref={forwardedRef}>
+      <StableChild recordRef={recordRef} />
+    </Slot>
+  );
+}
+
 for (const { name, Slot } of implementations) {
   describe(`${name}: with onClick on itself`, () => {
     const handleClick = mock(() => {});
@@ -300,40 +346,24 @@ for (const { name, Slot } of implementations) {
 
   it('does not cause an infinite render loop when attaching the ref triggers a render', () => {
     let renderCount = 0;
-    function App() {
-      renderCount++;
-      const [, forceRender] = useReducer((count: number) => count + 1, 0);
-      const ref = useCallback((node: HTMLElement | null) => {
-        if (node) forceRender();
-      }, []);
-      return (
-        <Slot ref={ref}>
-          <button type="button">Click me</button>
-        </Slot>
-      );
-    }
-    expect(() => render(<App />)).not.toThrow();
+    expect(() =>
+      render(<RefRenderLoop Slot={Slot} onRender={() => renderCount++} />),
+    ).not.toThrow();
     expect(renderCount).toBeLessThan(25);
   });
 
   it('passes a single stable composed ref to the child across re-renders', () => {
     const refIdentities = new Set<unknown>();
     let bump: () => void = () => {};
-    const Child = forwardRef<HTMLButtonElement>(function Child(_props, ref) {
-      refIdentities.add(ref);
-      return <button type="button" ref={ref} />;
-    });
-    function App() {
-      const [, forceRender] = useReducer((count: number) => count + 1, 0);
-      bump = forceRender;
-      const forwardedRef = useRef<HTMLButtonElement>(null);
-      return (
-        <Slot ref={forwardedRef}>
-          <Child />
-        </Slot>
-      );
-    }
-    render(<App />);
+    render(
+      <StableRefApp
+        Slot={Slot}
+        recordRef={(ref) => refIdentities.add(ref)}
+        setBump={(forceRender) => {
+          bump = forceRender;
+        }}
+      />,
+    );
     act(() => bump());
     act(() => bump());
     expect(refIdentities.size).toBe(1);

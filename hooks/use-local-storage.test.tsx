@@ -20,6 +20,17 @@ const storageEvent = (
 
 afterEach(() => localStorage.clear());
 
+function StoredCount() {
+  const [value] = useLocalStorage('count', 2, number);
+  return createElement('output', null, value);
+}
+
+function HydrationExample({ renders }: { renders: number[] }) {
+  const [value] = useLocalStorage('hydration', 1, number);
+  renders.push(value);
+  return createElement('output', null, value);
+}
+
 test('reads validated data after the initial fallback render and preserves direct and functional updates', () => {
   localStorage.setItem('count', '8');
   const renders: number[] = [];
@@ -101,11 +112,7 @@ test('preserves undefined parser results and function values using React setter 
 
 test('SSR renders the fallback even when browser storage contains a different value', () => {
   localStorage.setItem('count', '50');
-  function Example() {
-    const [value] = useLocalStorage('count', 2, number);
-    return createElement('output', null, value);
-  }
-  expect(renderToString(createElement(Example))).toContain('>2<');
+  expect(renderToString(createElement(StoredCount))).toContain('>2<');
 });
 
 test('keeps in memory updates when private storage or serialization rejects writes', () => {
@@ -136,20 +143,21 @@ test('hydrates with the server fallback before synchronizing persisted data', as
   localStorage.setItem('hydration', '99');
   const renders: number[] = [];
   const errors: unknown[] = [];
-  function Example() {
-    const [value] = useLocalStorage('hydration', 1, number);
-    renders.push(value);
-    return createElement('output', null, value);
-  }
   const container = document.createElement('div');
-  container.innerHTML = renderToString(createElement(Example));
+  container.innerHTML = renderToString(
+    createElement(HydrationExample, { renders }),
+  );
   document.body.append(container);
   let root: Root | undefined;
   try {
     await act(async () => {
-      root = hydrateRoot(container, createElement(Example), {
-        onRecoverableError: (error) => errors.push(error),
-      });
+      root = hydrateRoot(
+        container,
+        createElement(HydrationExample, { renders }),
+        {
+          onRecoverableError: (error) => errors.push(error),
+        },
+      );
     });
     expect(renders.slice(0, 2)).toEqual([1, 1]);
     expect(container.textContent).toBe('99');

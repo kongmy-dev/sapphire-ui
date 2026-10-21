@@ -42,7 +42,7 @@
           "target": "@ui/button.css"
         }
       ],
-      "dependencies": ["react@19.2.7"],
+      "dependencies": ["react@19.3.1"],
       "registryDependencies": [],
       "css": {
         "@import \"@/components/ui/button.css\"": {}
@@ -67,7 +67,7 @@
           "target": "@ui/input.css"
         }
       ],
-      "dependencies": ["react@19.2.7"],
+      "dependencies": ["react@19.3.1"],
       "registryDependencies": [],
       "css": {
         "@import \"@/components/ui/input.css\"": {}
@@ -92,7 +92,7 @@
           "target": "@ui/textarea.css"
         }
       ],
-      "dependencies": ["react@19.2.7"],
+      "dependencies": ["react@19.3.1"],
       "registryDependencies": [],
       "css": {
         "@import \"@/components/ui/textarea.css\"": {}
@@ -117,7 +117,7 @@
           "target": "@ui/label.css"
         }
       ],
-      "dependencies": ["react@19.2.7"],
+      "dependencies": ["react@19.3.1"],
       "registryDependencies": [],
       "css": {
         "@import \"@/components/ui/label.css\"": {}
@@ -147,7 +147,7 @@
           "target": "@ui/separator.css"
         }
       ],
-      "dependencies": ["react@19.2.7"],
+      "dependencies": ["react@19.3.1"],
       "registryDependencies": [],
       "css": {
         "@import \"@/components/ui/separator.css\"": {}
@@ -172,7 +172,7 @@
           "target": "@ui/checkbox.css"
         }
       ],
-      "dependencies": ["radix-ui@1.8.1", "react@19.2.7"],
+      "dependencies": ["radix-ui@1.8.1", "react@19.3.1"],
       "registryDependencies": ["@sapphire/label"],
       "css": {
         "@import \"@/components/ui/checkbox.css\"": {}
@@ -197,7 +197,7 @@
           "target": "@ui/radio-group.css"
         }
       ],
-      "dependencies": ["radix-ui@1.8.1", "react@19.2.7"],
+      "dependencies": ["radix-ui@1.8.1", "react@19.3.1"],
       "registryDependencies": ["@sapphire/label"],
       "css": {
         "@import \"@/components/ui/radio-group.css\"": {}
@@ -227,7 +227,7 @@
           "target": "@ui/select.css"
         }
       ],
-      "dependencies": ["radix-ui@1.8.1", "react@19.2.7"],
+      "dependencies": ["radix-ui@1.8.1", "react@19.3.1"],
       "registryDependencies": [],
       "css": {
         "@import \"@/components/ui/select.css\"": {}
@@ -252,7 +252,7 @@
           "target": "@ui/native-select.css"
         }
       ],
-      "dependencies": ["react@19.2.7"],
+      "dependencies": ["react@19.3.1"],
       "registryDependencies": [],
       "css": {
         "@import \"@/components/ui/native-select.css\"": {}
@@ -277,7 +277,7 @@
           "target": "@ui/dialog.css"
         }
       ],
-      "dependencies": ["radix-ui@1.8.1", "react@19.2.7"],
+      "dependencies": ["radix-ui@1.8.1", "react@19.3.1"],
       "registryDependencies": [],
       "css": {
         "@import \"@/components/ui/dialog.css\"": {}
@@ -302,7 +302,7 @@
           "target": "@ui/sheet.css"
         }
       ],
-      "dependencies": ["radix-ui@1.8.1", "react@19.2.7"],
+      "dependencies": ["radix-ui@1.8.1", "react@19.3.1"],
       "registryDependencies": [],
       "css": {
         "@import \"@/components/ui/sheet.css\"": {}
@@ -332,7 +332,7 @@
           "target": "@ui/dropdown-menu.css"
         }
       ],
-      "dependencies": ["radix-ui@1.8.1", "react@19.2.7"],
+      "dependencies": ["radix-ui@1.8.1", "react@19.3.1"],
       "registryDependencies": [],
       "css": {
         "@import \"@/components/ui/dropdown-menu.css\"": {}
@@ -357,7 +357,7 @@
           "target": "@ui/popover.css"
         }
       ],
-      "dependencies": ["radix-ui@1.8.1", "react@19.2.7"],
+      "dependencies": ["radix-ui@1.8.1", "react@19.3.1"],
       "registryDependencies": [],
       "css": {
         "@import \"@/components/ui/popover.css\"": {}
@@ -382,7 +382,7 @@
           "target": "@ui/tooltip.css"
         }
       ],
-      "dependencies": ["radix-ui@1.8.1", "react@19.2.7"],
+      "dependencies": ["radix-ui@1.8.1", "react@19.3.1"],
       "registryDependencies": [],
       "css": {
         "@import \"@/components/ui/tooltip.css\"": {}
@@ -407,7 +407,7 @@
           "target": "@ui/table.css"
         }
       ],
-      "dependencies": ["react@19.2.7"],
+      "dependencies": ["react@19.3.1"],
       "registryDependencies": [],
       "css": {
         "@import \"@/components/ui/table.css\"": {}
@@ -432,7 +432,7 @@
           "target": "@ui/tabs.css"
         }
       ],
-      "dependencies": ["radix-ui@1.8.1", "react@19.2.7"],
+      "dependencies": ["radix-ui@1.8.1", "react@19.3.1"],
       "registryDependencies": [],
       "css": {
         "@import \"@/components/ui/tabs.css\"": {}
@@ -457,7 +457,7 @@
           "target": "@ui/card.css"
         }
       ],
-      "dependencies": ["react@19.2.7"],
+      "dependencies": ["react@19.3.1"],
       "registryDependencies": [],
       "css": {
         "@import \"@/components/ui/card.css\"": {}
@@ -487,7 +487,7 @@
           "target": "@ui/badge.css"
         }
       ],
-      "dependencies": ["react@19.2.7"],
+      "dependencies": ["react@19.3.1"],
       "registryDependencies": [],
       "css": {
         "@import \"@/components/ui/badge.css\"": {}
@@ -512,7 +512,7 @@
           "target": "@ui/form-field.css"
         }
       ],
-      "dependencies": ["react@19.2.7"],
+      "dependencies": ["react@19.3.1"],
       "registryDependencies": ["@sapphire/label"],
       "css": {
         "@import \"@/components/ui/form-field.css\"": {}
@@ -537,7 +537,7 @@
           "target": "@ui/skeleton.css"
         }
       ],
-      "dependencies": ["react@19.2.7"],
+      "dependencies": ["react@19.3.1"],
       "registryDependencies": [],
       "css": {
         "@import \"@/components/ui/skeleton.css\"": {}
@@ -562,7 +562,7 @@
           "target": "@ui/spinner.css"
         }
       ],
-      "dependencies": ["react@19.2.7"],
+      "dependencies": ["react@19.3.1"],
       "registryDependencies": [],
       "css": {
         "@import \"@/components/ui/spinner.css\"": {}
@@ -587,7 +587,7 @@
           "target": "@ui/empty.css"
         }
       ],
-      "dependencies": ["react@19.2.7"],
+      "dependencies": ["react@19.3.1"],
       "registryDependencies": [],
       "css": {
         "@import \"@/components/ui/empty.css\"": {}
@@ -612,7 +612,7 @@
           "target": "@ui/pagination.css"
         }
       ],
-      "dependencies": ["react@19.2.7"],
+      "dependencies": ["react@19.3.1"],
       "registryDependencies": [],
       "css": {
         "@import \"@/components/ui/pagination.css\"": {}
@@ -637,7 +637,7 @@
           "target": "@ui/stat.css"
         }
       ],
-      "dependencies": ["react@19.2.7"],
+      "dependencies": ["react@19.3.1"],
       "registryDependencies": [],
       "css": {
         "@import \"@/components/ui/stat.css\"": {}
@@ -662,7 +662,7 @@
           "target": "@ui/stat-group.css"
         }
       ],
-      "dependencies": ["react@19.2.7"],
+      "dependencies": ["react@19.3.1"],
       "registryDependencies": [],
       "css": {
         "@import \"@/components/ui/stat-group.css\"": {}
@@ -682,7 +682,7 @@
           "target": "@ui/sonner.tsx"
         }
       ],
-      "dependencies": ["react@19.2.7", "sonner@2.0.8"],
+      "dependencies": ["react@19.3.1", "sonner@2.0.8"],
       "registryDependencies": [],
       "meta": {
         "foundations": "^4.0.0",
@@ -704,7 +704,7 @@
           "target": "@ui/command.tsx"
         }
       ],
-      "dependencies": ["cmdk@1.1.1", "lucide-react@1.55.0", "react@19.2.7"],
+      "dependencies": ["cmdk@1.1.1", "lucide-react@1.61.0", "react@19.3.1"],
       "registryDependencies": ["@sapphire/dialog"],
       "meta": {
         "foundations": "^4.0.0",
@@ -726,7 +726,7 @@
           "target": "@ui/combobox.tsx"
         }
       ],
-      "dependencies": ["lucide-react@1.55.0", "react@19.2.7"],
+      "dependencies": ["lucide-react@1.61.0", "react@19.3.1"],
       "registryDependencies": [
         "@sapphire/button",
         "@sapphire/command",
@@ -753,8 +753,8 @@
         }
       ],
       "dependencies": [
-        "lucide-react@1.55.0",
-        "react@19.2.7",
+        "lucide-react@1.61.0",
+        "react@19.3.1",
         "react-day-picker@10.0.2"
       ],
       "registryDependencies": ["@sapphire/button"],
@@ -798,7 +798,7 @@
           "target": "@ui/sidebar.css"
         }
       ],
-      "dependencies": ["lucide-react@1.55.0", "react@19.2.7"],
+      "dependencies": ["lucide-react@1.61.0", "react@19.3.1"],
       "registryDependencies": [
         "@sapphire/button",
         "@sapphire/input",
@@ -833,7 +833,7 @@
       "dependencies": [
         "@radix-ui/react-icons@1.3.2",
         "@tanstack/react-table@8.21.3",
-        "react@19.2.7"
+        "react@19.3.1"
       ],
       "registryDependencies": ["@sapphire/button", "@sapphire/dropdown-menu"],
       "meta": {
@@ -854,7 +854,7 @@
       "dependencies": [
         "@radix-ui/react-icons@1.3.2",
         "@tanstack/react-table@8.21.3",
-        "react@19.2.7"
+        "react@19.3.1"
       ],
       "registryDependencies": ["@sapphire/button", "@sapphire/dropdown-menu"],
       "meta": {

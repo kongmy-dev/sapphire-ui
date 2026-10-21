@@ -19,6 +19,16 @@ function State() {
   return <output aria-label="Sidebar state">{state}</output>;
 }
 
+function Controlled({ onClick }: { onClick: () => void }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <SidebarProvider open={open} onOpenChange={setOpen}>
+      <SidebarTrigger onClick={onClick} />
+      <State />
+    </SidebarProvider>
+  );
+}
+
 it('toggles desktop state from trigger and keyboard', () => {
   render(
     <SidebarProvider>
@@ -51,16 +61,7 @@ it('toggles desktop state from trigger and keyboard', () => {
 
 it('preserves controlled state and caller trigger handlers', () => {
   const clicked = mock(() => {});
-  function Controlled() {
-    const [open, setOpen] = useState(false);
-    return (
-      <SidebarProvider open={open} onOpenChange={setOpen}>
-        <SidebarTrigger onClick={clicked} />
-        <State />
-      </SidebarProvider>
-    );
-  }
-  render(<Controlled />);
+  render(<Controlled onClick={clicked} />);
   expect(screen.getByLabelText('Sidebar state').textContent).toBe('collapsed');
   fireEvent.click(screen.getByRole('button', { name: 'Toggle Sidebar' }));
   expect(clicked).toHaveBeenCalledTimes(1);

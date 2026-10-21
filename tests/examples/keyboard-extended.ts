@@ -156,14 +156,14 @@ async function accordion(page: Page) {
   await page.keyboard.press('Space');
   await expect(second).toHaveAttribute('aria-expanded', 'true');
   await expect(
-    page.getByRole('region', { name: await second.innerText() }),
+    page.getByRole('region', { name: (await second.textContent()) ?? '' }),
   ).toBeVisible();
   const disabled = page.getByRole('button', { name: 'Unavailable question' });
   if (await disabled.count()) {
     await expect(disabled).toBeDisabled();
     await expect(first).toHaveAttribute('aria-expanded', 'false');
     await expect(
-      page.getByRole('region', { name: await first.innerText() }),
+      page.getByRole('region', { name: (await first.textContent()) ?? '' }),
     ).toHaveCount(0);
   } else {
     await expect(first).toHaveAttribute('aria-expanded', 'true');

@@ -7,11 +7,12 @@ import {
 } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
+import { devDependencies } from '../../package.json';
 import { generatedRegistry, REGISTRY_SOURCE } from './generate.js';
 import { shadcnCliEnv } from './headers.js';
 import { rewrittenSource } from './source.js';
 
-export const SHADCN = 'shadcn@4.22.0';
+export const SHADCN = `shadcn@${devDependencies.shadcn}`;
 export type RegistryFile = {
   path: string;
   target: string;

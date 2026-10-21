@@ -52,30 +52,24 @@ describe('dependency gate: exact toolchain pins', () => {
     ]);
   });
 
-  it.each([
-    '~1.2.3',
-    '*',
-    'x',
-    '1.x',
-    '>=1.2.3',
-    'latest',
-    'next',
-    '^1.2.3',
-  ])('flags the devDependency range %s', (range) => {
-    const text = packageJson(
-      {
-        peerDependencies: [
-          '    "react": "^19.0.0",',
-          '    "react-dom": "^19.0.0"',
-        ],
-        devDependencies: [`    "left-pad": "${range}",`, TYPESCRIPT_OK],
-      },
-      GOOD_HEAD,
-    );
-    expect(found(text)).toEqual([
-      `package.json:8 left-pad is "${range}", not an exact version`,
-    ]);
-  });
+  it.each(['~1.2.3', '*', 'x', '1.x', '>=1.2.3', 'latest', 'next', '^1.2.3'])(
+    'flags the devDependency range %s',
+    (range) => {
+      const text = packageJson(
+        {
+          peerDependencies: [
+            '    "react": "^19.0.0",',
+            '    "react-dom": "^19.0.0"',
+          ],
+          devDependencies: [`    "left-pad": "${range}",`, TYPESCRIPT_OK],
+        },
+        GOOD_HEAD,
+      );
+      expect(found(text)).toEqual([
+        `package.json:8 left-pad is "${range}", not an exact version`,
+      ]);
+    },
+  );
 
   it('passes exact versions, including a prerelease', () => {
     const text = packageJson(

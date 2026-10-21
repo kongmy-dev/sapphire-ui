@@ -1,6 +1,7 @@
 import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { devDependencies } from '../../package.json';
 import { buildPackage } from './build.js';
 import {
   consumerCommand,
@@ -87,7 +88,10 @@ async function reactWithoutRadix(scratch: string, tarball: string) {
     scratch,
     tarball,
     name: 'react-without-radix',
-    dependencies: { react: '19.2.7', 'react-dom': '19.2.7' },
+    dependencies: {
+      react: devDependencies.react,
+      'react-dom': devDependencies['react-dom'],
+    },
   });
   requireNoPeers(cwd, ['radix-ui', 'react-resizable-panels']);
   await runConsumer(
@@ -102,11 +106,11 @@ async function dialogBuild(root: string, scratch: string, tarball: string) {
     tarball,
     name: 'dialog-app',
     dependencies: {
-      react: '19.2.7',
-      'react-dom': '19.2.7',
-      'radix-ui': '1.8.1',
-      '@types/react': '19.3.0',
-      '@types/react-dom': '19.3.0',
+      react: devDependencies.react,
+      'react-dom': devDependencies['react-dom'],
+      'radix-ui': devDependencies['radix-ui'],
+      '@types/react': devDependencies['@types/react'],
+      '@types/react-dom': devDependencies['@types/react-dom'],
     },
   });
   writeFileSync(
