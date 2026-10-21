@@ -124,7 +124,6 @@ export function navigation(
   );
   const start = [
     ['/', 'Overview'],
-    ['/v3-v4/', 'v3 → v4'],
     ['/foundations/', 'Getting started'],
     ['/colors/', 'Colors'],
     ['/typography/', 'Typography'],

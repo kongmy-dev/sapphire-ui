@@ -10,8 +10,9 @@ the theme control changes the content and search palette. Mobile uses the same
 navigation in a dismissible drawer.
 
 The overview introduces CSS, native elements and React, then groups links to the
-component catalogue. Each component retains its own URL and named live examples
-in both schemes. Setup follows examples and the API reference, and includes installation, required behaviour peers,
+component catalogue. Each component retains its own URL and renders every named
+example directly in the page, following the reader's selected theme. Setup follows
+examples and the API reference, and includes installation, required behaviour peers,
 the full package stylesheet and the component's actual entry points. Apps mixing
 package and vendored styles follow the linked selective setup guide. Native registrations use side-effect
 imports; CSS-only components never advertise React imports. Supported API tables
@@ -27,13 +28,25 @@ static builder remains responsible for routes; no router dependency is added.
 A stable shell makes the catalogue familiar without coupling documentation to
 an old implementation. Individual pages keep setup close to the component and
 avoid long category pages. Grouped overview links preserve browsing by purpose.
-Two scheme previews make the current styling contract visible regardless of the
-reader's selected page theme.
+One inline instance per example keeps the page self-contained and avoids nested
+scrolling. The page theme control exposes both schemes without duplicated controls.
+React and native examples reuse the browser harness catalogue, with multiple mount
+targets and unique React ID prefixes. The isolated harness remains for behavioural
+and visual verification. Migration material stays outside the documentation catalogue.
+The nonvisual SEO metadata example is rendered at build time from its original
+component and shown as escaped output, so it cannot overwrite the catalogue's
+document title or metadata. Example modals take keyboard priority over shell search.
+Fixed cookie banners use normal flow within documentation specimens so every
+variant stays reachable. React Toast instances share one document-level viewport;
+their queues and lifetimes stay independent, preventing simultaneous notifications
+from covering one another when multiple examples or app roots are mounted.
 
 ## Verification
 
 Browser checks cover the navy sidebar in both schemes, overview links, setup
-instructions, live frames, mobile navigation, search and accessible headings.
+instructions, inline examples, mobile navigation, search and accessible headings.
+Every discovered example must mount, and multiple examples must retain independent
+state, labels and overlay focus behaviour within the documentation shell.
 Builder checks distinguish React, CSS-only and native imports. Deployment and
 Cloudflare build settings remain under the owner's control.
 

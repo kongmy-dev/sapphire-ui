@@ -34,11 +34,11 @@ function CommandNavigation() {
     },
   ] satisfies CommandItem[];
   return (
-    <>
+    <div className="sp-cluster">
       <Button onClick={() => setOpen(true)}>Search navigation</Button>
       <CommandPalette items={items} open={open} onOpenChange={setOpen} />
       <output>{selected}</output>
-    </>
+    </div>
   );
 }
 
@@ -46,7 +46,7 @@ function CommandActions() {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState('No action');
   return (
-    <>
+    <div className="sp-cluster">
       <Button onClick={() => setOpen(true)}>Search actions</Button>
       <CommandPalette
         placeholder="Find an action…"
@@ -66,7 +66,7 @@ function CommandActions() {
         onOpenChange={setOpen}
       />
       <output>{selected}</output>
-    </>
+    </div>
   );
 }
 

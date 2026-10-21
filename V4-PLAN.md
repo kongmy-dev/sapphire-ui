@@ -5,7 +5,7 @@ P8 is reopened: the owner rejected the removed navigation and reduced foundation
 P11 is held pending documentation acceptance; migration tooling is complete.
 The v4-only visual suite passes 748 zero-tolerance cases; all 1,626 remote browser checks pass
 with 161 files checked by accessibility coverage. The first push and automated documentation deployment
-are complete. Remote accessibility at `462d75b` passes all 1,626 browser checks; remote quality at `2dd34fe` passes; all fourteen native-control baseline changes are owner-approved and local visuals pass all 748 cases;
+are complete. Remote accessibility at `462d75b` passes all 1,626 browser checks; remote quality at `2dd34fe` passes; the fourteen native-control baseline changes and six example-polish updates are owner-approved;
 the v4 tag, publication and published-consumer verification remain.
 D5 retains button widths while reducing height and applies the approved targeted polish.
 Delete this file when 4.0.0 ships.
@@ -13,12 +13,17 @@ Delete this file when 4.0.0 ships.
 ### Current execution checkpoint
 
 - Documentation restores visual colours, font families and type scale, spacing, shape,
-  elevation and hook references. Current token values supply the specimens. Component pages
-  show supported props from the public TypeScript signatures, with grouped platform props,
-  local defaults and separate compound-component APIs. Native pages list attributes, methods
-  and events; CSS-only pages describe HTML parts. Full implementation/example source listings
-  are removed. Side-by-side v3/revised-v4 screenshots and a local preview remain for owner review;
-  documentation acceptance, production deployment, tagging and publication stay held.
+  elevation and hook references. Component pages show supported props from public TypeScript
+  signatures, grouped platform props and compound/supporting APIs; native and CSS-only pages
+  describe their own contracts. Implementation and example source dumps are removed.
+  Each page renders every named example inline in the selected page theme, without frames or
+  standalone launch links. Prose explains article typography. Avatar uses Button and Command
+  Palette uses shared cluster spacing; the owner approved all six resulting pin updates.
+  Shared-page checks also cover SEO output without head pollution, modal shortcut priority,
+  independently clickable native cookie variants and concurrent Toast queues in one viewport.
+  The migration comparison is removed from the documentation catalogue; the separately
+  published comparison and repository migration guide remain available. Documentation
+  acceptance, production deployment, tagging and publication stay held.
 
 - Owner requested the remote accessibility correction and a separately published migration
   comparison. Documentation acceptance, release tagging and npm publication stay owner-gated.
@@ -42,8 +47,8 @@ Delete this file when 4.0.0 ships.
   Remote quality found one HoverCard async assertion failure: formatting a live DOM object
   can starve its close timer. A primitive count keeps the removal check and timeout intact;
   120 focused local reruns and the fresh 923-test gate pass. Remote quality now passes at `2dd34fe`
-  ([run 39527350307](https://github.com/kongmy-dev/sapphire-ui/actions/runs/39527350307)). The concise agent procedure lives in `docs/migrate-v3-v4.md`, linked from `/v3-v4/`,
-  which now explains migration value and unlocked capabilities without performance claims.
+  ([run 39527350307](https://github.com/kongmy-dev/sapphire-ui/actions/runs/39527350307)). The concise agent procedure remains in `docs/migrate-v3-v4.md`; the comparison site is
+  published separately and explains migration value without performance claims.
 
 - Status review at local source `a99658f`: latest observed remote CI is `331ce2e`
   ([run 39397626860](https://github.com/kongmy-dev/sapphire-ui/actions/runs/39397626860)).
@@ -156,7 +161,7 @@ remain the acceptance criteria; retained v3 code does not count as a v4 implemen
 | P8 — site | Reopened for navigation and content depth. Sidebar, visual foundations and supported component APIs are restored in the local review preview; documentation acceptance and production deployment remain held |
 | P9 — retirement | Complete: v3 runtime/build removed, historical migration facts and legacy registry retained, interaction inventory preserved. Current size limits retained by owner approval; measured p95 is 4/34/211/5. Package dry run lists only allowed files, then stops for missing local publish credentials; packed consumer checks pass |
 | P10 — docs | Complete: CLAUDE is 84 lines, consumer skill 40 lines; consolidated guidance, docs and skill-reference gates pass. Release migration notes remain P11 |
-| P11 — release | Migration tooling, generated release maps, local gates and consumer smoke complete. Trusted publisher confirmed by owner. Remote accessibility passes at `462d75b` and quality at `2dd34fe`; candidate `5967f10` has six passing checks and one pending. Documentation acceptance, fresh remote verification of the final candidate, v4 tag, publication and published-package smoke remain |
+| P11 — release | Migration tooling, generated release maps, local gates and consumer smoke complete. Trusted publisher confirmed by owner. Remote accessibility passes at `462d75b` and quality at `2dd34fe`; quality and visual jobs also pass at `65d1011`; final-candidate remote verification remains. Documentation acceptance, fresh remote verification of the final candidate, v4 tag, publication and published-package smoke remain |
 
 ### P3 completion checkpoint
 

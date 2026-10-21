@@ -1,6 +1,6 @@
 import { expect, test } from 'bun:test';
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import { createElement, createRef } from 'react';
+import { createElement, createRef, StrictMode } from 'react';
 import { renderToString } from 'react-dom/server';
 import { examples } from './toast.examples.js';
 import { Toast, type ToastRef } from './toast.js';
@@ -68,6 +68,36 @@ test('can unmount before its animation frame and render on the server', () => {
   act(() => ref.current?.show('Pending'));
   view.unmount();
   expect(renderToString(<Toast />)).toContain('aria-live="polite"');
+});
+
+test('independent roots share a viewport and clean up only their own queue', () => {
+  const first = createRef<ToastRef>();
+  const second = createRef<ToastRef>();
+  const firstRoot = render(
+    <StrictMode>
+      <Toast ref={first} />
+    </StrictMode>,
+  );
+  const secondRoot = render(<Toast ref={second} />);
+  act(() => {
+    first.current?.show('First root');
+    second.current?.show('Second root');
+  });
+  expect(screen.getAllByRole('status')).toHaveLength(1);
+  const region = screen.getByRole('status');
+  expect(region.textContent).toContain('First root');
+  expect(region.textContent).toContain('Second root');
+  firstRoot.unmount();
+  expect(screen.queryByText('First root')).toBeNull();
+  expect(screen.getByRole('status')).toBe(region);
+  expect(region.textContent).toContain('Second root');
+  act(() => second.current?.show('Still active'));
+  expect(region.textContent).toContain('Still active');
+  secondRoot.unmount();
+  expect(screen.queryByRole('status')).toBeNull();
+  const next = render(<Toast />);
+  expect(screen.getByRole('status')).not.toBe(region);
+  next.unmount();
 });
 
 for (const example of examples) {

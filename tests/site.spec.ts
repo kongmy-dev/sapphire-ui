@@ -52,7 +52,7 @@ test('overview groups component links and component pages lead with current setu
   await expect(page).toHaveURL(/#examples$/);
   await expect(
     page
-      .frameLocator('iframe[title="button variants light"]')
+      .locator('#example-variants')
       .getByRole('button', { name: 'Primary', exact: true }),
   ).toBeVisible();
   await page.goto(`${SITE}/native/banner/`);

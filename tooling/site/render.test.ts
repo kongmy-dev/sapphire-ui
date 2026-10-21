@@ -45,8 +45,12 @@ test('API text cannot become executable markup and full example source is omitte
       ],
     },
   ]);
-  expect(html).toContain('scheme=light');
-  expect(html).toContain('scheme=dark');
+  expect(html).toContain(
+    'data-example-component="button" data-example-name="variants"',
+  );
+  expect(html).toContain('src="/assets/examples-entry.js"');
+  expect(html).not.toContain('<iframe');
+  expect(html).not.toContain('preview.html');
   expect(html).toContain('@kongmy-dev/sapphire-ui/sapphire.css');
   expect(html).toContain('&lt;script&gt;alert(&quot;API&quot;)');
   expect(html).not.toContain('<script>alert');

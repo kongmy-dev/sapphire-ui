@@ -22,6 +22,36 @@ type Notification = {
   type: ToastType;
   duration: number;
 };
+const viewports = new WeakMap<
+  Document,
+  { element: HTMLDivElement; owners: number }
+>();
+
+function toastViewport(owner: Document) {
+  let viewport = viewports.get(owner);
+  if (!viewport) {
+    const element = owner.createElement('div');
+    element.className = 'sp-toast-viewport';
+    element.setAttribute('role', 'status');
+    element.setAttribute('aria-live', 'polite');
+    element.setAttribute('aria-atomic', 'false');
+    element.setAttribute('aria-relevant', 'additions text');
+    owner.body.append(element);
+    viewport = { element, owners: 0 };
+    viewports.set(owner, viewport);
+  }
+  const shared = viewport;
+  shared.owners += 1;
+  return {
+    element: shared.element,
+    release() {
+      shared.owners -= 1;
+      if (shared.owners) return;
+      shared.element.remove();
+      viewports.delete(owner);
+    },
+  };
+}
 const icons: Record<ToastType, ReactNode> = {
   success: (
     <>
@@ -107,9 +137,11 @@ export function Toast({ ref }: ToastProps) {
   const active = useRef(true);
   useEffect(() => {
     active.current = true;
-    setPortal(document.body);
+    const viewport = toastViewport(document);
+    setPortal(viewport.element);
     return () => {
       active.current = false;
+      viewport.release();
     };
   }, []);
   useImperativeHandle(
@@ -130,7 +162,20 @@ export function Toast({ ref }: ToastProps) {
     }),
     [],
   );
-  const viewport = (
+  const items = notifications.map((notification) => (
+    <ToastItem
+      key={notification.id}
+      message={notification.message}
+      type={notification.type}
+      duration={notification.duration}
+      remove={() =>
+        setNotifications((current) =>
+          current.filter((item) => item.id !== notification.id),
+        )
+      }
+    />
+  ));
+  return portal === null ? (
     <div
       className="sp-toast-viewport"
       role="status"
@@ -138,20 +183,9 @@ export function Toast({ ref }: ToastProps) {
       aria-atomic="false"
       aria-relevant="additions text"
     >
-      {notifications.map((notification) => (
-        <ToastItem
-          key={notification.id}
-          message={notification.message}
-          type={notification.type}
-          duration={notification.duration}
-          remove={() =>
-            setNotifications((current) =>
-              current.filter((item) => item.id !== notification.id),
-            )
-          }
-        />
-      ))}
+      {items}
     </div>
+  ) : (
+    createPortal(items, portal)
   );
-  return portal === null ? viewport : createPortal(viewport, portal);
 }

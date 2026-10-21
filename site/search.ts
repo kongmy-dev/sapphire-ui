@@ -61,6 +61,12 @@ function results() {
 
 function open(from: Element | null) {
   if (!dialog || !input || dialog.open) return;
+  const modal = [
+    ...document.querySelectorAll(
+      '[role="dialog"], [role="alertdialog"], dialog[open]',
+    ),
+  ].some((element) => element.getClientRects().length > 0);
+  if (modal) return;
   launcher = from instanceof HTMLElement ? from : null;
   input.value = '';
   dialog.showModal();
@@ -83,6 +89,7 @@ function keyboard(event: KeyboardEvent) {
 export function initSearch() {
   trigger?.addEventListener('click', () => open(trigger));
   document.addEventListener('keydown', (event) => {
+    if (event.defaultPrevented) return;
     if (!(event.ctrlKey || event.metaKey) || event.key.toLowerCase() !== 'k')
       return;
     event.preventDefault();
