@@ -1,0 +1,141 @@
+{
+  "reviewDate": "2026-10-21",
+  "timezone": "Asia/Kuala_Lumpur",
+  "v3": {
+    "tag": "v3.0.0",
+    "commit": "d3871388845ee0994601a081464df87e6131a62e"
+  },
+  "v4": {
+    "commit": "a99658f95f81e404105b6eaca72353aa0914bba4",
+    "scope": "Runtime source before comparison-only changes"
+  },
+  "remote": {
+    "commit": "331ce2eaf4db0286840fd9cbd010d435c8bb34ba",
+    "run": "https://github.com/kongmy-dev/sapphire-ui/actions/runs/39397626860",
+    "quality": "success",
+    "visual": "success",
+    "a11y": "failure",
+    "passed": 1589,
+    "failed": 3,
+    "flaky": 1,
+    "npmLatest": "3.0.0"
+  },
+  "capture": {
+    "command": "bun node_modules/.cache/sapphire-comparison/capture.ts",
+    "browser": "Chromium",
+    "viewport": {
+      "width": 560,
+      "height": 850
+    },
+    "deviceScaleFactor": 1,
+    "fontReadiness": "document.fonts.ready",
+    "themes": ["light", "dark"],
+    "fixture": "sources/fixture.txt",
+    "limitations": "Both versions rendered using current checkout dependencies and matching bundled fonts. Not historical production captures or performance evidence."
+  },
+  "measured": {
+    "v3DefaultReactButton": {
+      "width": 113.125,
+      "height": 40.390625
+    },
+    "v4DefaultReactButton": {
+      "width": 113.125,
+      "height": 36
+    },
+    "v3CardPadding": 32,
+    "v4CardPadding": 20
+  },
+  "sourcePaths": [
+    "V4-PLAN.md",
+    "CHANGELOG.md",
+    "DESIGN.md",
+    "docs/package-v4.md",
+    "docs/registry-v4.md",
+    "tooling/migrate/map.ts",
+    "components/button/button.tsx",
+    "components/card/card.css",
+    "components/banner/banner.tsx"
+  ],
+  "images": [
+    {
+      "file": "images/v3-cards-dark.png",
+      "width": 560,
+      "height": 341,
+      "sha256": "403b97c30a5893a0fdee8cc776a7e3b3265c23a84efc6c8e4624ca94c3b246f7"
+    },
+    {
+      "file": "images/v3-cards-light.png",
+      "width": 560,
+      "height": 341,
+      "sha256": "19d66b935f6aea14729861c4b618d1168aa563b16df1464363fa19d1af2dfb61"
+    },
+    {
+      "file": "images/v3-controls-light.png",
+      "width": 560,
+      "height": 202,
+      "sha256": "091cd508ed491fb5cc87e700494e07a51f70265c5f480daecf1d43ea3d22b22a"
+    },
+    {
+      "file": "images/v3-notice-light.png",
+      "width": 560,
+      "height": 151,
+      "sha256": "92368d934cd7c8adbe1ddfeaff37961a7a965145547924cd43434e68dd18caf2"
+    },
+    {
+      "file": "images/v4-cards-dark.png",
+      "width": 560,
+      "height": 340,
+      "sha256": "5fe240083e8bdce9b4ad10b0eea44f5da32d6a3ccf6d723b23f47805c75e9ea4"
+    },
+    {
+      "file": "images/v4-cards-light.png",
+      "width": 560,
+      "height": 340,
+      "sha256": "23dec43df7ad08a7a31d550c396f17fcd9957a43494bc228ba09f316f1d79466"
+    },
+    {
+      "file": "images/v4-controls-light.png",
+      "width": 560,
+      "height": 200,
+      "sha256": "ee0218827878334ef30d99dbc6df08e3c8ce3a543a7b38d4c052c4eb48fa4ecf"
+    },
+    {
+      "file": "images/v4-notice-light.png",
+      "width": 560,
+      "height": 150,
+      "sha256": "3e92a843e2a94d08ff4dcc883b54847f593e552ca46b02dfab9616454bf83c48"
+    }
+  ],
+  "reviewChecks": {
+    "gate": {
+      "command": "bun run gate --force",
+      "sourceCommit": "a99658f95f81e404105b6eaca72353aa0914bba4",
+      "workingChanges": "Comparison page and documentation builder changes",
+      "tasks": 18,
+      "cached": 0,
+      "tests": 923,
+      "failures": 0
+    },
+    "page": {
+      "command": "bun node_modules/.cache/sapphire-comparison/qa.ts",
+      "engines": ["Chromium", "Firefox", "WebKit"],
+      "themes": ["light", "dark"],
+      "viewports": [
+        {
+          "width": 1440,
+          "height": 1000
+        },
+        {
+          "width": 390,
+          "height": 844
+        }
+      ],
+      "combinations": 12,
+      "axeViolations": 0,
+      "brokenImages": 0,
+      "brokenLocalLinks": 0,
+      "pageOverflow": false
+    },
+    "scope": "Comparison-page checks do not resolve or supersede remote runtime accessibility failures."
+  }
+}

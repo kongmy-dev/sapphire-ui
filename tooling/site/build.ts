@@ -72,6 +72,8 @@ for (const guide of foundationGuides(root))
     page(guide.title, guide.body, navigation(react, native, guide.route)),
   );
 cpSync(join(root, 'site/docs.css'), join(assets, 'docs.css'));
+cpSync(join(root, 'site/comparison.css'), join(assets, 'comparison.css'));
+cpSync(join(root, 'site/comparison'), join(out, 'v3-v4'), { recursive: true });
 writeFileSync(
   join(out, 'preview.html'),
   `<!doctype html><html lang="en" class="docs-preview-page"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sapphire live example</title><script>document.documentElement.dataset.theme=new URLSearchParams(location.search).get('scheme')==='dark'?'dark':'light'</script><link rel="stylesheet" href="/assets/sapphire.css"><link rel="stylesheet" href="/assets/examples.css"><link rel="stylesheet" href="/assets/docs.css"></head><body data-example-root><main class="sp-page"><section id="example" class="sp-stack" aria-label="Component example"></section></main><script type="module">const native=new URLSearchParams(location.search).get('kind')==='native';await import(native?'/assets/elements-entry.js':'/assets/examples-entry.js');</script></body></html>`,

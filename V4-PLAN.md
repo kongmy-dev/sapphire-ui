@@ -5,11 +5,22 @@ P8 is reopened: the owner rejected the deployed documentation layout after its l
 P11 is held pending review of the restored navigation; migration tooling is complete.
 The v4-only visual suite passes 748 zero-tolerance cases; all 1,578 final browser checks pass
 with 161 discovered examples after retirement. The first push and automated documentation deployment
-are complete; remote browser/visual verification, the v4 tag and publication remain.
+are complete. Remote quality and visuals at `331ce2e` pass, but accessibility fails;
+the v4 tag, publication and published-consumer verification remain.
 D5 retains button widths while reducing height and applies the approved targeted polish.
 Delete this file when 4.0.0 ships.
 
 ### Current execution checkpoint
+
+- Status review at local source `a99658f`: latest observed remote CI is `331ce2e`
+  ([run 39397626860](https://github.com/kongmy-dev/sapphire-ui/actions/runs/39397626860)).
+  Quality and visual jobs pass; accessibility fails three WebKit dark examples:
+  Avatar lifecycle, controlled Checkbox and controlled Popover. Logs report contrast
+  failures on bare example buttons; Timeline keyboard navigation is also flaky.
+  The run records 1,589 passing cases, three failures and one flaky case. These are
+  remote findings, not a reproduced root-cause diagnosis of the local head. npm latest
+  remains 3.0.0; no v4 tag or GitHub release was observed. Sidebar acceptance remains open.
+  The focused visual/API comparison is available locally at `/v3-v4/`.
 
 - The deployed P8 rewrite incorrectly replaced the left sidebar with a flat catalogue and top links.
   Restore a persistent sidebar with grouped component links, active-page indication, search,
@@ -112,7 +123,7 @@ remain the acceptance criteria; retained v3 code does not count as a v4 implemen
 | P8 — site | Reopened after owner rejected missing left navigation. Sidebar restoration is under local browser and visual review; deployment is held pending the corrected preview decision |
 | P9 — retirement | Complete: v3 runtime/build removed, historical migration facts and legacy registry retained, interaction inventory preserved. Current size limits retained by owner approval; measured p95 is 4/34/211/5. Package dry run lists only allowed files, then stops for missing local publish credentials; packed consumer checks pass |
 | P10 — docs | Complete: CLAUDE is 84 lines, consumer skill 40 lines; consolidated guidance, docs and skill-reference gates pass. Release migration notes remain P11 |
-| P11 — release | Migration tooling, generated release maps, local gates and consumer smoke complete. Trusted publisher confirmed by owner. First push and automated Cloudflare deployment pass; remote browser/visual jobs, v4 tag, publication and published-package smoke remain |
+| P11 — release | Migration tooling, generated release maps, local gates and consumer smoke complete. Trusted publisher confirmed by owner. First push and automated Cloudflare deployment are recorded. Latest observed remote quality/visual jobs at `331ce2e` pass; accessibility fails three WebKit dark cases. Sidebar acceptance, fresh remote verification of the local candidate, v4 tag, publication and published-package smoke remain |
 
 ### P3 completion checkpoint
 

@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A focused visual and technical comparison of Sapphire UI v3 and v4, with release evidence and migration examples.">
+  <title>From v3 to v4 · Sapphire UI</title>
+  <link rel="stylesheet" href="/assets/sapphire.css">
+  <link rel="stylesheet" href="/assets/comparison.css">
+</head>
+<body class="comparison-site">
+  <a class="sp-sr-only-focusable" href="#main">Skip to content</a>
+  <header class="comparison-header">
+    <a class="comparison-brand" href="/">Sapphire <span>UI</span></a>
+    <span class="comparison-edition">An evolution, explained</span>
+    <a href="#status">Release status <span aria-hidden="true">↗</span></a>
+  </header>
+  <div class="comparison-layout">
+    <aside class="comparison-rail">
+      <p class="comparison-kicker">Field guide / 04</p>
+      <nav aria-label="Comparison sections">
+        <a href="#overview">Overview</a>
+        <a href="#controls"><span>01</span> Controls</a>
+        <a href="#cards"><span>02</span> Cards &amp; rhythm</a>
+        <a href="#themes"><span>03</span> Tokens &amp; themes</a>
+        <a href="#clients"><span>04</span> React &amp; native</a>
+        <a href="#distribution"><span>05</span> Package &amp; registry</a>
+        <a href="#migration"><span>06</span> Migration</a>
+        <a href="#status">Release evidence</a>
+      </nav>
+      <p class="comparison-rail-note">Same identity.<br>Shared foundations.<br>A stricter contract.</p>
+      <a class="comparison-small" href="#sources">Sources &amp; capture notes</a>
+    </aside>
+    <main id="main" tabindex="-1">
+      <section id="overview" class="comparison-hero">
+        <p class="comparison-kicker">Sapphire UI / v3 → v4</p>
+        <h1>The same character.<br><em>A different foundation.</em></h1>
+        <p class="comparison-lead">Navy, gold and editorial type stay. v4 makes CSS the shared contract, tightens the UI and gives React, native elements and plain HTML a common foundation.</p>
+        <div class="comparison-verdict"><span class="comparison-status" data-tone="warning">Release held</span><p>Implementation is largely complete. The latest remote accessibility run is red; documentation approval and publication are still open.</p></div>
+        <div class="comparison-facts">
+          <div><strong>0</strong><span>v4 runtime dependencies</span></div>
+          <div><strong>6</strong><span>native element entrypoints</span></div>
+          <div><strong>156</strong><span>exact package exports</span></div>
+          <div><strong>3.0.0</strong><span>still the npm latest</span></div>
+        </div>
+        <p class="comparison-note">Review snapshot · 21 October 2026 · local source <code>a99658f</code> · remote CI <code>331ce2e</code>. These are different revisions; passing remote jobs do not certify the local head.</p>
+      </section>
+      <section class="comparison-section" id="controls">
+        <header class="comparison-section-heading"><p class="comparison-kicker">01 / Visible polish</p><h2>Less height. The same presence.</h2><p>Default v4 controls align at 36px on fine pointers. Button widths and icon footprints are preserved; coarse pointers get a minimum 44px target. Compactness should not cost usability.</p></header>
+        <div class="comparison-pair">
+          <figure><figcaption><span>v3</span> Utility-styled React controls</figcaption><a href="images/v3-controls-light.png"><img src="images/v3-controls-light.png" width="560" height="202" alt="v3 email field and primary, outline and gold buttons in a light theme"></a></figure>
+          <figure><figcaption><span>v4</span> Shared component CSS</figcaption><a href="images/v4-controls-light.png"><img src="images/v4-controls-light.png" width="560" height="200" alt="v4 matching email field and buttons with a tighter vertical rhythm"></a></figure>
+        </div>
+        <div class="comparison-code-pair">
+          <div><p class="comparison-code-label">Before / v3 React</p><pre role="region" aria-label="v3 React button code example"><code>import { Button } from "@kongmy-dev/sapphire-ui";
+
+&lt;Button variant="accent" icon="add"&gt;
+  Add project
+&lt;/Button&gt;</code></pre></div>
+          <div><p class="comparison-code-label">After / v4 React</p><pre role="region" aria-label="v4 React button code example"><code>import { Button } from "@kongmy-dev/sapphire-ui/button";
+import { Plus } from "lucide-react";
+
+&lt;Button variant="brand"
+  icon={&lt;Plus className="sp-icon" aria-hidden="true" /&gt;}&gt;
+  Add project
+&lt;/Button&gt;</code></pre></div>
+        </div>
+        <p class="comparison-takeaway">What changes for you: <code>accent → brand</code>, an explicit import and SVG icons in place of font glyph strings. Lucide is an app choice, not a new runtime dependency of Sapphire.</p>
+      </section>
+      <section class="comparison-section" id="cards">
+        <header class="comparison-section-heading"><p class="comparison-kicker">02 / Content hierarchy</p><h2>Related things sit together.</h2><p>Default card insets move from 32px to 20px. Headers group titles and descriptions closely, operational titles use the sans family, and footer actions gather at the trailing edge. Page and editorial headings keep their serif.</p></header>
+        <div class="comparison-pair">
+          <figure><figcaption><span>v3</span> More padding, separated actions</figcaption><a href="images/v3-cards-light.png"><img src="images/v3-cards-light.png" width="560" height="341" loading="lazy" alt="v3 project card with generous padding, a serif title and actions at opposing edges"></a></figure>
+          <figure><figcaption><span>v4</span> Tighter header, grouped actions</figcaption><a href="images/v4-cards-light.png"><img src="images/v4-cards-light.png" width="560" height="340" loading="lazy" alt="v4 project card with tighter padding, a sans title and grouped trailing actions"></a></figure>
+        </div>
+        <div class="comparison-code-pair">
+          <div><p class="comparison-code-label">Before / plain HTML</p><pre role="region" aria-label="v3 HTML card code example"><code>&lt;div class="card card-static"&gt;
+  &lt;h3 class="t-heading"&gt;Project overview&lt;/h3&gt;
+  &lt;p&gt;Everything for the next release.&lt;/p&gt;
+&lt;/div&gt;</code></pre></div>
+          <div><p class="comparison-code-label">After / plain HTML</p><pre role="region" aria-label="v4 HTML card code example"><code>&lt;div class="sp-card"&gt;
+  &lt;div class="sp-card-header"&gt;
+    &lt;h3&gt;Project overview&lt;/h3&gt;
+    &lt;p&gt;Everything for the next release.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+        </div>
+        <p class="comparison-takeaway">The screenshots use the same React Card/Header/Body/Footer composition. The HTML snippets show the separate CSS contract; they are abbreviated examples, not the screenshot fixture.</p>
+      </section>
+      <section class="comparison-section" id="themes">
+        <header class="comparison-section-heading"><p class="comparison-kicker">03 / Tokens &amp; themes</p><h2>Familiar colours. Clearer names.</h2><p>The navy and gold palette survives the rewrite. v4 uses shadcn-compatible token names and scoped <code>light-dark()</code> values. An explicitly themed section can keep its own scheme inside a page using the other.</p></header>
+        <div class="comparison-pair">
+          <figure><figcaption><span>v3</span> Dark React card</figcaption><a href="images/v3-cards-dark.png"><img src="images/v3-cards-dark.png" width="560" height="341" loading="lazy" alt="v3 project overview card rendered in dark mode"></a></figure>
+          <figure><figcaption><span>v4</span> Dark shared styling</figcaption><a href="images/v4-cards-dark.png"><img src="images/v4-cards-dark.png" width="560" height="340" loading="lazy" alt="v4 project overview card rendered in dark mode with the same navy palette"></a></figure>
+        </div>
+        <div class="comparison-code-pair">
+          <div><p class="comparison-code-label">Before / CSS</p><pre role="region" aria-label="v3 CSS tokens code example"><code>.project-link {
+  color: var(--color-accent-text);
+  background: var(--color-card-bg);
+}</code></pre></div>
+          <div><p class="comparison-code-label">After / CSS</p><pre role="region" aria-label="v4 CSS tokens code example"><code>.project-link {
+  color: var(--brand-text);
+  background: var(--card);
+}
+/* Theme scope: &lt;section data-theme="dark"&gt; */</code></pre></div>
+        </div>
+        <p class="comparison-takeaway">Watch the semantic change: v4 <code>--accent</code> is a quiet interactive tint. Brand gold is <code>--brand</code>; use <code>--brand-text</code> for gold text on light surfaces. Tailwind apps import <code>tailwind.css</code> instead of the old <code>theme.css</code>.</p>
+      </section>
+      <section class="comparison-section" id="clients">
+        <header class="comparison-section-heading"><p class="comparison-kicker">04 / Runtime ownership</p><h2>One style contract. Separate clients.</h2><p>v3 already had native elements, and some React clients wrapped them. In v4, React renders the shared CSS directly; native entrypoints register browser behaviour independently. Plain HTML can use the CSS without either runtime.</p></header>
+        <div class="comparison-pair">
+          <figure><figcaption><span>v3</span> React Banner → custom element</figcaption><a href="images/v3-notice-light.png"><img src="images/v3-notice-light.png" width="560" height="151" loading="lazy" alt="v3 warning banner announcing maintenance at 22:00"></a></figure>
+          <figure><figcaption><span>v4</span> React Banner → shared CSS</figcaption><a href="images/v4-notice-light.png"><img src="images/v4-notice-light.png" width="560" height="150" loading="lazy" alt="v4 warning banner with the same maintenance message"></a></figure>
+        </div>
+        <div class="comparison-code-pair">
+          <div><p class="comparison-code-label">Before / native registration</p><pre role="region" aria-label="v3 native registration code example"><code>import "@kongmy-dev/sapphire-ui/style.css";
+import "@kongmy-dev/sapphire-ui/elements";
+
+&lt;sapphire-banner variant="warning"&gt;
+  Maintenance starts at 22:00.
+&lt;/sapphire-banner&gt;</code></pre></div>
+          <div><p class="comparison-code-label">After / native registration</p><pre role="region" aria-label="v4 native registration code example"><code>import "@kongmy-dev/sapphire-ui/foundations.css";
+import "@kongmy-dev/sapphire-ui/banner.css";
+import "@kongmy-dev/sapphire-ui/elements/banner";
+
+&lt;sapphire-banner variant="warning"&gt;
+  Maintenance starts at 22:00.
+&lt;/sapphire-banner&gt;</code></pre></div>
+        </div>
+        <p class="comparison-takeaway">The tag stays. The registration becomes selective. Server imports are safe, but native constructor exports are <code>undefined</code> on the server; construct instances in a browser.</p>
+      </section>
+      <section class="comparison-section" id="distribution">
+        <header class="comparison-section-heading"><p class="comparison-kicker">05 / Distribution</p><h2>Import what you own.</h2><p>v4 is ESM-only, with exact component exports and zero runtime dependencies. React, React DOM, Radix UI and resizable panels are optional peers; CSS-only and native consumers need none of them.</p></header>
+        <div class="comparison-paths"><div><span class="comparison-kicker">Package only</span><strong>One stylesheet</strong><code>sapphire.css</code><p>All shared component styles, plus foundations.</p></div><div><span class="comparison-kicker">Mixed / vendored</span><strong>Foundations + owned CSS</strong><code>foundations.css + button.css</code><p>A vendored component owns its local stylesheet.</p></div></div>
+        <div class="comparison-code-pair">
+          <div><p class="comparison-code-label">Before / v3 package</p><pre role="region" aria-label="v3 package imports code example"><code>import { Button, Card }
+  from "@kongmy-dev/sapphire-ui";
+import "@kongmy-dev/sapphire-ui/style.css";</code></pre></div>
+          <div><p class="comparison-code-label">After / v4 mixed ownership</p><pre role="region" aria-label="v4 mixed ownership imports code example"><code>import { Button } from "@kongmy-dev/sapphire-ui/button";
+import "@kongmy-dev/sapphire-ui/foundations.css";
+import "@kongmy-dev/sapphire-ui/button.css";
+
+import { Card } from "./components/ui/card";</code></pre></div>
+        </div>
+        <p class="comparison-takeaway">Registry URLs are versioned: frozen <code>/r/{name}.json</code> assets remain; v4 uses <code>/r/v4/{name}.json</code> with 33 items. The registry base installs foundations, then each vendored component owns its CSS. Avoid the full stylesheet in a mixed app.</p>
+        <details class="comparison-details"><summary>A v4 registry example</summary><pre role="region" aria-label="v4 registry installation code example"><code>bunx --bun shadcn@4.22.0 init \
+  https://design.kongmy.dev/r/v4/base.json --yes
+
+# components.json registries:
+# "@sapphire": "https://design.kongmy.dev/r/v4/{name}.json"
+bunx --bun shadcn@4.22.0 add @sapphire/button</code></pre><p>Before npm publication, the repository smoke uses a local tarball override. This is the target install contract, not a claim that a fresh public v4 install works today.</p></details>
+      </section>
+      <section class="comparison-section" id="migration">
+        <header class="comparison-section-heading"><p class="comparison-kicker">06 / Adoption</p><h2>A guided migration, with manual work.</h2><p>The migration CLI previews literal HTML, Astro, JSX/TSX and CSS edits. It reports ambiguous or dynamic usage rather than silently treating it as complete. Application interaction and visual checks still belong to the app.</p></header>
+        <div class="comparison-code-pair">
+          <div><p class="comparison-code-label">Before / v3 storage hook</p><pre role="region" aria-label="v3 storage hook code example"><code>import { useLocalStorage }
+  from "@kongmy-dev/sapphire-ui";
+
+const [name, setName] =
+  useLocalStorage("name", "");</code></pre></div>
+          <div><p class="comparison-code-label">After / v4 explicit parser</p><pre role="region" aria-label="v4 storage parser code example"><code>import { useLocalStorage } from
+  "@kongmy-dev/sapphire-ui/hooks/use-local-storage";
+
+const [name, setName] = useLocalStorage("name", "", value =&gt; {
+  if (typeof value !== "string") throw new Error("Invalid name");
+  return value;
+});</code></pre></div>
+        </div>
+        <pre role="region" aria-label="Migration commands code example"><code>bun run migrate /path/to/app --check
+bun run migrate /path/to/app</code></pre>
+        <p class="comparison-takeaway">Run from the library checkout. Review every <code>file:line: manual</code> report. Also check removed CVA helpers, <code>ThemeToggle.asChild</code>, string icons and CommonJS usage. If your scope points at GitHub Packages in <code>.npmrc</code>, remove that registry override for the npm-only v4 release.</p>
+      </section>
+      <section class="comparison-section" id="status">
+        <header class="comparison-section-heading"><p class="comparison-kicker">Release review / evidence over optimism</p><h2>Built is not released.</h2><p>The architecture, clients, package and migration tooling are in place. The remaining work is release stabilization and acceptance, not another redesign.</p></header>
+        <div class="comparison-table-wrap" role="region" aria-label="Release evidence table"><table class="comparison-table"><caption>v4 status at the review snapshot</caption><thead><tr><th scope="col">Area</th><th scope="col">Status</th><th scope="col">Evidence / remaining work</th></tr></thead><tbody>
+          <tr><th scope="row">CSS, React &amp; native</th><td><span class="comparison-status">Implemented</span></td><td>Shared tokens and styles; six native entries; local plan records lifecycle and equivalence coverage.</td></tr>
+          <tr><th scope="row">Package &amp; registry</th><td><span class="comparison-status">Implemented</span></td><td>156 exports, four optional peers, 33 registry items; local packed-consumer evidence is recorded in the plan.</td></tr>
+          <tr><th scope="row">Fresh local review</th><td><span class="comparison-status">Passed</span></td><td><code>bun run gate --force</code>: 18 tasks, 923 tests, zero cache hits at the local source plus comparison changes. This page passes axe and layout/link checks across 12 browser/theme/viewport combinations.</td></tr>
+          <tr><th scope="row">Remote quality &amp; visuals</th><td><span class="comparison-status">Passed</span></td><td><a href="https://github.com/kongmy-dev/sapphire-ui/actions/runs/39397626860">CI at 331ce2e</a>: both jobs succeeded. This predates the local source snapshot.</td></tr>
+          <tr><th scope="row">Remote accessibility</th><td><span class="comparison-status" data-tone="error">Failed</span></td><td>3 WebKit dark cases: Avatar lifecycle, controlled Checkbox, controlled Popover. Contrast reports affect bare example buttons. 1,589 passed; Timeline keyboard navigation was flaky.</td></tr>
+          <tr><th scope="row">Documentation acceptance</th><td><span class="comparison-status" data-tone="warning">Awaiting review</span></td><td>P8 reopened after removal of left navigation. Local sidebar and command-search restoration is recorded; approval is still open.</td></tr>
+          <tr><th scope="row">Tag &amp; publication</th><td><span class="comparison-status" data-tone="warning">Not released</span></td><td>No v4 tag or release in the local and remote inventories. <a href="https://www.npmjs.com/package/@kongmy-dev/sapphire-ui">npm latest remains 3.0.0</a>. Published v4 consumer smoke remains.</td></tr>
+        </tbody></table></div>
+        <h3>Where to go next</h3>
+        <p>Decision weights below are judgment, not measured probabilities. I would finish the release gates before adopting v4 broadly.</p>
+        <div class="comparison-options">
+          <article data-recommended><p class="comparison-kicker">70% / Recommended</p><h4>Stabilize, then release</h4><p><strong>Gain:</strong> closes known failures and navigation acceptance before tagging.</p><p><strong>Cost:</strong> delays adoption until fresh remote checks and package smoke pass.</p></article>
+          <article><p class="comparison-kicker">25% / Bounded pilot</p><h4>Try a packed candidate</h4><p><strong>Gain:</strong> real app migration feedback using a local tarball.</p><p><strong>Cost:</strong> manual fixes and an unpublished dependency need explicit ownership.</p></article>
+          <article><p class="comparison-kicker">5% / Wait on v3</p><h4>Defer migration</h4><p><strong>Gain:</strong> avoids immediate API and styling churn.</p><p><strong>Cost:</strong> postpones the clearer CSS ownership and selective imports.</p></article>
+        </div>
+      </section>
+      <section class="comparison-section comparison-sources" id="sources">
+        <header class="comparison-section-heading"><p class="comparison-kicker">Traceability</p><h2>What this comparison proves.</h2></header>
+        <p>Real Chromium captures, not mockups: v3 component source at tag <code>v3.0.0</code> (<code>d387138</code>) and v4 source at <code>a99658f</code>. Matching content, 560px frames, device scale 1, light and dark themes. Both use the same locally bundled fonts and the current checkout’s toolchain. This isolates component changes; it is not an archival capture of the historical production build or a performance benchmark.</p>
+        <p>Images show resting states. They do not establish focus, touch targets, runtime equivalence, assistive-technology behaviour or release readiness. Displayed images scale to fit; open a screenshot for its original size. Code examples omit unrelated setup.</p>
+        <ul>
+          <li><a href="evidence.json">Capture metadata and source paths</a></li>
+          <li><a href="sources/plan.txt">Local-revision release checklist</a> · recorded implementation and acceptance status</li>
+          <li><a href="sources/changelog.txt">Migration and breaking changes</a></li>
+          <li><a href="https://github.com/kongmy-dev/sapphire-ui/actions/runs/39397626860">Latest observed remote CI</a> · inspected with <code>gh run view 39397626860 --log-failed</code></li>
+          <li><a href="https://registry.npmjs.org/@kongmy-dev%2fsapphire-ui/latest">npm latest metadata</a> · queried directly during review</li>
+          <li><a href="https://github.com/kongmy-dev/sapphire-ui/releases">GitHub releases</a> · latest observed release v3.0.0</li>
+          <li><a href="https://playwright.dev/docs/screenshots">Playwright capture reference</a> · <a href="https://tailwindcss.com/docs/installation/using-vite">Tailwind Vite compilation reference</a></li>
+        </ul>
+        <p class="comparison-note">Historical plan totals are recorded evidence, not reruns performed for this page. Remote state is a dated snapshot, not a live monitor. No runtime fix, pin update, push, tag or publication is part of this comparison.</p>
+      </section>
+      <footer class="comparison-footer"><span>Sapphire UI / KONGMY Digital Solutions</span><a href="#overview">Back to the top ↑</a></footer>
+    </main>
+  </div>
+</body>
+</html>

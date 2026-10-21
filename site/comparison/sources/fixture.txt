@@ -1,0 +1,39 @@
+Screenshot fixture. The archived v3 source sits under v3/; v4 imports resolve to the checkout. Both use current toolchain dependencies.
+
+import { createRoot } from 'react-dom/client';
+import { Button as OldButton } from './v3/src/components/ui/Button';
+import { Card as OldCard, CardHeader as OldHeader, CardBody as OldBody, CardFooter as OldFooter } from './v3/src/components/ui/Card';
+import { Input as OldInput } from './v3/src/components/ui/Input';
+import { Banner as OldBanner } from './v3/src/components/Banner';
+import { Button } from '../../../components/button/button';
+import { Card, CardHeader, CardBody, CardFooter } from '../../../components/card/card';
+import { Input } from '../../../components/input/input';
+import { Banner } from '../../../components/banner/banner';
+const old = new URLSearchParams(location.search).get('version') === '3';
+const B = old ? OldButton : Button;
+const C = old ? OldCard : Card;
+const H = old ? OldHeader : CardHeader;
+const Body = old ? OldBody : CardBody;
+const F = old ? OldFooter : CardFooter;
+const I = old ? OldInput : Input;
+const N = old ? OldBanner : Banner;
+function SampleCard() {
+  return <C><H><h3>Project overview</h3><p>Everything you need for the next release.</p></H><Body><p>Shared foundations. Clear ownership. Room to build.</p></Body><F><B variant="outline">Details</B><B>Open project</B></F></C>;
+}
+createRoot(document.getElementById('root')!).render(<>
+  <section id="controls" className="frame"><label htmlFor="email">Work email</label><I id="email" placeholder="you@company.com"/><div className="row"><B>Save changes</B><B variant="outline">Cancel</B><B variant={old ? 'accent' : 'brand'}>Get started</B></div></section>
+  <section id="cards" className="frame"><SampleCard/></section>
+  <section id="notice" className="frame"><N variant="warning" dismissible={false}>Maintenance starts at 22:00. Save your work.</N></section>
+</>);
+
+Fixture-only layout CSS:
+@import "../../../css/fonts.css";
+html { scrollbar-gutter: auto; }
+body { margin: 0; }
+.frame { box-sizing: border-box; width: 560px; padding: 28px; }
+.row { display: flex; align-items: center; gap: 12px; margin-top: 20px; }
+#controls { min-height: 200px; }
+#controls label { display: block; margin-bottom: 8px; }
+#controls input { width: 100%; }
+#cards { min-height: 340px; }
+#notice { min-height: 150px; }
