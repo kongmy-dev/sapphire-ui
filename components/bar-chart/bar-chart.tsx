@@ -32,7 +32,7 @@ export function BarChart({
             type="button"
             key={`bar-${index}`}
             className="sp-bar-chart-column"
-            aria-label={`${label || `Bar ${index + 1}`}: ${amount}${tooltipSuffix}`}
+            aria-label={`${amount}${tooltipSuffix} ${label || `Bar ${index + 1}`}`}
           >
             <div
               className="sp-bar-chart-bar"

@@ -9,7 +9,7 @@ test('visual foundations expose current colors, type specimens and spacing', asy
   await expect(page.locator('.docs-swatch')).toHaveCount(42);
   const brand = page.locator('.docs-swatch').filter({
     has: page.getByRole('button', {
-      name: 'Copy --brand token',
+      name: 'Copy token --brand',
       exact: true,
     }),
   });
@@ -50,7 +50,7 @@ test('token copy reports both success and browser denial', async ({ page }) => {
     }),
   );
   const button = page.getByRole('button', {
-    name: 'Copy --brand token',
+    name: 'Copy token --brand',
     exact: true,
   });
   await button.click();

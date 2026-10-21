@@ -42,7 +42,7 @@ async function chartValues(page: Page) {
   for (const bar of await bars.all()) {
     await bar.focus();
     await expect(bar).toBeFocused();
-    await expect(bar).toHaveAccessibleName(/.+: \d+%?$/);
+    await expect(bar).toHaveAccessibleName(/^\d+%? .+$/);
     await expect(bar.locator('.sp-bar-chart-value')).toHaveCSS('opacity', '1');
     await page.keyboard.press('Enter');
     await expect(bar).toBeFocused();

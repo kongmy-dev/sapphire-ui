@@ -21,7 +21,7 @@ it('makes values available in keyboard order without submitting a surrounding fo
   );
   expect(ref.current?.className).toBe('sp-bar-chart custom');
   expect(ref.current?.style.height).toBe('240px');
-  const first = screen.getByRole('button', { name: 'January: 15%' });
+  const first = screen.getByRole('button', { name: '15% January' });
   await userEvent.tab();
   expect(document.activeElement).toBe(first);
   expect(first.getAttribute('type')).toBe('button');
@@ -29,7 +29,7 @@ it('makes values available in keyboard order without submitting a surrounding fo
   expect(document.activeElement).toBe(first);
   await userEvent.tab();
   expect(document.activeElement).toBe(
-    screen.getByRole('button', { name: 'February: 75%' }),
+    screen.getByRole('button', { name: '75% February' }),
   );
 });
 
@@ -42,18 +42,18 @@ it('bounds visual shares and represents invalid amounts as zero', () => {
   );
   expect(
     screen
-      .getByRole('button', { name: 'Bar 1: -5' })
+      .getByRole('button', { name: '-5 Bar 1' })
       .querySelector('.sp-bar-chart-bar')
       ?.getAttribute('style'),
   ).toContain('height: 0%');
   expect(
     screen
-      .getByRole('button', { name: 'Bar 2: 150' })
+      .getByRole('button', { name: '150 Bar 2' })
       .querySelector('.sp-bar-chart-bar')
       ?.getAttribute('style'),
   ).toContain('height: 100%');
-  expect(screen.getByRole('button', { name: 'Bar 3: 0' })).not.toBeNull();
-  expect(screen.getByRole('button', { name: 'Bar 4: 0' })).not.toBeNull();
+  expect(screen.getByRole('button', { name: '0 Bar 3' })).not.toBeNull();
+  expect(screen.getByRole('button', { name: '0 Bar 4' })).not.toBeNull();
   expect(
     container.querySelector('.sp-bar-chart')?.getAttribute('style'),
   ).toContain('height: 10rem');

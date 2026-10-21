@@ -101,7 +101,7 @@ function swatch(
   dark: ReadonlyMap<string, string>,
 ) {
   const token = `--${name}`;
-  return `<figure class="docs-swatch"><div class="docs-swatch-pair" aria-hidden="true"><span data-theme="light" style="background:linear-gradient(var(${token}),var(${token})),var(--background)"></span><span data-theme="dark" style="background:linear-gradient(var(${token}),var(${token})),var(--background)"></span></div><figcaption><strong>${name.split('-').join(' ')}</strong><code>${token}</code><span>Light <code>${escapeHtml(light.get(token) ?? '')}</code></span><span>Dark <code>${escapeHtml(dark.get(token) ?? '')}</code></span><button type="button" class="docs-copy" data-copy="${token}" aria-label="Copy ${token} token">Copy token</button></figcaption></figure>`;
+  return `<figure class="docs-swatch"><div class="docs-swatch-pair" aria-hidden="true"><span data-theme="light" style="background:linear-gradient(var(${token}),var(${token})),var(--background)"></span><span data-theme="dark" style="background:linear-gradient(var(${token}),var(${token})),var(--background)"></span></div><figcaption><strong>${name.split('-').join(' ')}</strong><code>${token}</code><span>Light <code>${escapeHtml(light.get(token) ?? '')}</code></span><span>Dark <code>${escapeHtml(dark.get(token) ?? '')}</code></span><button type="button" class="docs-copy" data-copy="${token}" aria-label="Copy token ${token}">Copy token</button></figcaption></figure>`;
 }
 
 function colours(
