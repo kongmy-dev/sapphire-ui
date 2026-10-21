@@ -82,6 +82,10 @@ export function catalogPage(
 
 const ranks: Record<string, number> = { variants: 0, default: 1, states: 2 };
 const exampleRank = (name: string) => ranks[name] ?? 3;
+const componentNotes: Record<string, string> = {
+  'code-block':
+    '<p>The Copy example uses the default <code>variant="dark"</code>, which stays navy in either page theme. The Light example uses <code>variant="light"</code>, which follows the page theme. Preview labels describe the page theme.</p>',
+};
 
 function componentApi(
   root: string,
@@ -106,7 +110,7 @@ function preview(row: ExampleRow, native: boolean) {
   ]
     .map((scheme) => {
       const url = `/preview.html?component=${row.component}&example=${row.name}&scheme=${scheme}&kind=${native ? 'native' : 'react'}`;
-      return `<section class="docs-preview"><p><strong>${titleOf(scheme)}</strong></p><iframe title="${row.component} ${row.name} ${scheme}" src="${url}" width="100%" height="160" loading="lazy"></iframe><a href="${url}">Open ${scheme} example</a></section>`;
+      return `<section class="docs-preview"><p><strong>${titleOf(scheme)} page theme</strong></p><iframe title="${row.component} ${row.name} ${scheme}" src="${url}" width="100%" height="160" loading="lazy"></iframe><a href="${url}">Open example on ${scheme} page</a></section>`;
     })
     .join('')}</div></section>`;
 }
@@ -130,7 +134,7 @@ export function componentPage(
   const { imports, install } = componentSetup(root, name, native);
   return page(
     titleOf(name),
-    `<p class="docs-lead">${native ? 'Native HTML' : 'Component'} · ${rows.length} live examples in both colour schemes.</p><nav class="docs-page-links sp-cluster" aria-label="On this page"><a href="#examples">Examples</a><a href="#props">${apiTitle}</a><a href="#setup">Setup</a><a href="/${native ? 'native/' : '#catalogue'}">All ${native ? 'native elements' : 'components'} →</a></nav><section class="docs-section" id="examples"><h2>Examples</h2>${[
+    `<p class="docs-lead">${native ? 'Native HTML' : 'Component'} · ${rows.length} live examples in both colour schemes.</p><nav class="docs-page-links sp-cluster" aria-label="On this page"><a href="#examples">Examples</a><a href="#props">${apiTitle}</a><a href="#setup">Setup</a><a href="/${native ? 'native/' : '#catalogue'}">All ${native ? 'native elements' : 'components'} →</a></nav><section class="docs-section" id="examples"><h2>Examples</h2>${componentNotes[name] ?? ''}${[
       ...rows,
     ]
       .sort((a, b) => exampleRank(a.name) - exampleRank(b.name))
