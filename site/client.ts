@@ -1,4 +1,5 @@
 import { getTheme, initTheme, setTheme, subscribeTheme } from '../lib/theme.js';
+import { initCopy } from './copy.js';
 import { initSearch } from './search.js';
 
 const menu = document.querySelector<HTMLButtonElement>('.docs-menu');
@@ -56,6 +57,7 @@ function shortcuts(event: KeyboardEvent) {
 
 initTheme();
 initSearch();
+initCopy();
 themeLabel();
 subscribeTheme(themeLabel);
 theme?.addEventListener('click', () =>

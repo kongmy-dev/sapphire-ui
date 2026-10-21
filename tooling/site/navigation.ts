@@ -126,9 +126,13 @@ export function navigation(
     ['/', 'Overview'],
     ['/v3-v4/', 'v3 → v4'],
     ['/foundations/', 'Getting started'],
+    ['/colors/', 'Colors'],
+    ['/typography/', 'Typography'],
     ['/tokens/', 'Tokens & themes'],
+    ['/spacing/', 'Spacing & shape'],
     ['/layout/', 'Layout primitives'],
-    ['/prose/', 'Typography'],
+    ['/prose/', 'Prose'],
+    ['/hooks/', 'Hooks & utilities'],
   ];
   return `<nav aria-label="Documentation">${start.map(([href = '/', title = 'Overview']) => link(href, title, current)).join('')}<p class="docs-nav-label">Components</p>${componentGroups
     .map(([title, items]) =>

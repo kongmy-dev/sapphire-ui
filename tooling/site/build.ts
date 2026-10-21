@@ -12,8 +12,11 @@ import { readExamples } from '../examples/catalog';
 import { readElementExamples } from '../examples/elements';
 import { buildRegistry } from '../registry/build';
 import { foundationGuides } from './foundations';
+import { code } from './html';
 import { navigation } from './navigation';
-import { catalogPage, code, componentPage, page } from './render';
+import { propReader } from './props';
+import { catalogPage, componentPage, page } from './render';
+import { hookGuide } from './utilities';
 
 const root = process.cwd();
 const destination = resolve(root, process.argv[2] ?? 'dist-site');
@@ -25,6 +28,7 @@ const assets = join(out, 'assets');
 mkdirSync(assets, { recursive: true });
 const react = readExamples(root);
 const native = readElementExamples(root);
+const readProps = propReader(root);
 await buildExamples({ root, out: assets, examples: react });
 const client = await Bun.build({
   entrypoints: [join(root, 'site/client.ts')],
@@ -54,6 +58,7 @@ for (const [prefix, rows] of [
         rows.filter((row) => row.component === name),
         prefix === 'native',
         navigation(react, native, `${prefix}/${name}`),
+        prefix === 'native' ? [] : readProps(name),
       ),
     );
   }
@@ -62,7 +67,7 @@ write(
   'foundations',
   page(
     'Foundations',
-    `<p>Load foundations once for fonts, tokens, base styles and layout primitives.</p>${code('import "@kongmy-dev/sapphire-ui/foundations.css";')}<nav class="sp-cluster" aria-label="Foundation guides"><a href="/tokens/">Tokens and themes</a><a href="/layout/">Layout primitives</a><a href="/prose/">Prose</a></nav><p>Each component stylesheet is separate. Use the full sapphire.css convenience entry only when every component comes from the package.</p>`,
+    `<p>Load foundations once for fonts, tokens, base styles and layout primitives.</p>${code('import "@kongmy-dev/sapphire-ui/foundations.css";')}<nav class="sp-cluster" aria-label="Foundation guides"><a href="/colors/">Colors</a><a href="/typography/">Typography</a><a href="/tokens/">Tokens and themes</a><a href="/layout/">Layout primitives</a><a href="/prose/">Prose</a></nav><p>Each component stylesheet is separate. Use the full sapphire.css convenience entry only when every component comes from the package.</p>`,
     navigation(react, native, 'foundations'),
   ),
 );
@@ -71,7 +76,12 @@ for (const guide of foundationGuides(root))
     guide.route,
     page(guide.title, guide.body, navigation(react, native, guide.route)),
   );
+write(
+  'hooks',
+  page('Hooks and utilities', hookGuide(), navigation(react, native, 'hooks')),
+);
 cpSync(join(root, 'site/docs.css'), join(assets, 'docs.css'));
+cpSync(join(root, 'site/reference.css'), join(assets, 'reference.css'));
 cpSync(join(root, 'site/comparison.css'), join(assets, 'comparison.css'));
 cpSync(join(root, 'site/comparison'), join(out, 'v3-v4'), { recursive: true });
 cpSync(join(root, 'docs/migrate-v3-v4.md'), join(out, 'v3-v4/migration.md'));

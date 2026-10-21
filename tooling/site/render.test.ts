@@ -12,7 +12,7 @@ const row = {
   file: 'components/button/button.examples.tsx',
 };
 
-test('source cannot become executable markup and both schemes have live previews', () => {
+test('API text cannot become executable markup and full example source is omitted', () => {
   const directory = join(root, 'components/button');
   mkdirSync(directory, { recursive: true });
   writeFileSync(
@@ -24,12 +24,35 @@ test('source cannot become executable markup and both schemes have live previews
     join(directory, 'button.examples.tsx'),
     '<script>alert("example")</script>',
   );
-  const html = componentPage(root, [row]);
+  const html = componentPage(root, [row], false, '', [
+    {
+      name: 'Button',
+      supporting: false,
+      definition: '',
+      branches: [
+        {
+          name: 'ButtonProps',
+          props: [
+            {
+              name: 'label',
+              type: '<script>alert("API")</script>',
+              required: true,
+              defaultValue: undefined,
+              platform: false,
+            },
+          ],
+        },
+      ],
+    },
+  ]);
   expect(html).toContain('scheme=light');
   expect(html).toContain('scheme=dark');
   expect(html).toContain('@kongmy-dev/sapphire-ui/sapphire.css');
-  expect(html).toContain('&lt;script&gt;alert(&quot;example&quot;)');
+  expect(html).toContain('&lt;script&gt;alert(&quot;API&quot;)');
   expect(html).not.toContain('<script>alert');
+  expect(html).not.toContain('alert(&quot;example&quot;)');
+  expect(html).toContain('id="props"');
+  expect(html).not.toContain('id="source"');
 });
 
 test('native setup registers the element without importing a named React export', () => {
@@ -59,7 +82,8 @@ test('native setup registers the element without importing a named React export'
   expect(html).not.toContain('import { BannerElement }');
   expect(html).toContain('id="setup"');
   expect(html).toContain('id="examples"');
-  expect(html).toContain('id="source"');
+  expect(html).toContain('id="props"');
+  expect(html).not.toContain('id="source"');
 });
 
 test('CSS-only entries do not advertise nonexistent React imports', () => {
