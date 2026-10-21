@@ -3,6 +3,41 @@ import { expect, test } from '@playwright/test';
 
 const SITE = 'http://localhost:4178';
 
+for (const colorScheme of ['light', 'dark'] as const) {
+  test(`touch disclosures retain usable targets in ${colorScheme}`, async ({
+    browser,
+  }) => {
+    const context = await browser.newContext({
+      hasTouch: true,
+      colorScheme,
+      viewport: { width: 390, height: 844 },
+    });
+    try {
+      const page = await context.newPage();
+      await page.goto(`${SITE}/components/button/`);
+      const summaries = page.locator(
+        '.docs-usage > summary, .docs-inherited > summary',
+      );
+      const heights = await summaries.evaluateAll((elements) =>
+        elements.map((element) => element.getBoundingClientRect().height),
+      );
+      expect(heights.length).toBeGreaterThan(0);
+      for (const height of heights) expect(height).toBeGreaterThanOrEqual(44);
+      await summaries.first().tap();
+      await expect(
+        page.getByRole('button', { name: 'Copy JSX', exact: true }).first(),
+      ).toBeVisible();
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBe(true);
+    } finally {
+      await context.close();
+    }
+  });
+}
+
 for (const scheme of ['light', 'dark'] as const) {
   test(`usage copy, keyboard focus and repeated navigation in ${scheme}`, async ({
     page,

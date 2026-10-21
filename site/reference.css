@@ -348,7 +348,9 @@
 }
 
 @media (pointer: coarse) {
-  .docs-copy {
+  .docs-copy,
+  .docs-usage > summary,
+  .docs-inherited > summary {
     min-height: calc(var(--space-1) * 11);
   }
 }
