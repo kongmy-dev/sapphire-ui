@@ -207,12 +207,14 @@ test('documentation search opens a keyboard command palette and restores focus',
   await trigger.click();
   await search.fill('');
   await search.press('ArrowDown');
-  await expect(dialog.getByRole('option', { selected: true })).toHaveText(
-    'Getting startedGuides',
+  await expect(dialog.getByRole('option').nth(1)).toHaveAttribute(
+    'aria-selected',
+    'true',
   );
   await search.press('ArrowUp');
-  await expect(dialog.getByRole('option', { selected: true })).toHaveText(
-    'OverviewGuides',
+  await expect(dialog.getByRole('option').first()).toHaveAttribute(
+    'aria-selected',
+    'true',
   );
   await search.fill('card');
   await search.press('Enter');
@@ -353,3 +355,17 @@ test('search supports dark mode, mobile resize and pointer selection', async ({
     .click();
   await expect(page).toHaveURL(`${SITE}/components/card/`);
 });
+
+for (const scheme of ['light', 'dark'] as const) {
+  test(`native control contrast ${scheme} without component classes`, async ({
+    page,
+  }) => {
+    await page.setContent(
+      `<!doctype html><html lang="en" data-theme="${scheme}"><head><title>Native control contrast</title><link rel="stylesheet" href="${SITE}/assets/sapphire.css"></head><body><main><button type="button">Native action</button><label>Name<input value="Ada"></label><label>Choice<select><option>One</option></select></label><label>Notes<textarea>Details</textarea></label></main></body></html>`,
+    );
+    const result = await new AxeBuilder({ page })
+      .withRules(['color-contrast'])
+      .analyze();
+    expect(result.violations).toEqual([]);
+  });
+}

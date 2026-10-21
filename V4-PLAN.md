@@ -12,6 +12,16 @@ Delete this file when 4.0.0 ships.
 
 ### Current execution checkpoint
 
+- Owner requested the remote accessibility correction and a separately published migration
+  comparison. Documentation acceptance, release tagging and npm publication stay owner-gated.
+  The three Linux WebKit failures pair inherited light text with a browser-selected grey
+  native-control background. Shared base CSS now pairs `--foreground` and `--card` for native
+  controls; styled components retain their component-layer rules. Timeline hash navigation
+  now uses a retrying URL assertion. Local focused WebKit checks pass; remote proof is pending.
+  Six intentional bare-button pin differences are prepared for owner review; other 742 pins
+  match. The concise agent procedure lives in `docs/migrate-v3-v4.md`, linked from `/v3-v4/`,
+  which now explains migration value and unlocked capabilities without performance claims.
+
 - Status review at local source `a99658f`: latest observed remote CI is `331ce2e`
   ([run 39397626860](https://github.com/kongmy-dev/sapphire-ui/actions/runs/39397626860)).
   Quality and visual jobs pass; accessibility fails three WebKit dark examples:

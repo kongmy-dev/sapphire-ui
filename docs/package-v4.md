@@ -1,5 +1,7 @@
 # v4 package contract
 
+For an existing v3 app, follow the concise [agent migration guide](migrate-v3-v4.md).
+
 The package is ESM-only and has no root JavaScript barrel. Import a component from its
 named subpath, such as `@kongmy-dev/sapphire-ui/button`. CommonJS `require` is unsupported.
 `bun run generate:package` discovers the component, hook and six native-element entrypoints

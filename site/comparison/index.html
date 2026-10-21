@@ -26,6 +26,7 @@
         <a href="#clients"><span>04</span> React &amp; native</a>
         <a href="#distribution"><span>05</span> Package &amp; registry</a>
         <a href="#migration"><span>06</span> Migration</a>
+        <a href="#value"><span>07</span> Value &amp; unlocks</a>
         <a href="#status">Release evidence</a>
       </nav>
       <p class="comparison-rail-note">Same identity.<br>Shared foundations.<br>A stricter contract.</p>
@@ -36,14 +37,14 @@
         <p class="comparison-kicker">Sapphire UI / v3 → v4</p>
         <h1>The same character.<br><em>A different foundation.</em></h1>
         <p class="comparison-lead">Navy, gold and editorial type stay. v4 makes CSS the shared contract, tightens the UI and gives React, native elements and plain HTML a common foundation.</p>
-        <div class="comparison-verdict"><span class="comparison-status" data-tone="warning">Release held</span><p>Implementation is largely complete. The latest remote accessibility run is red; documentation approval and publication are still open.</p></div>
+        <div class="comparison-verdict"><span class="comparison-status" data-tone="warning">Release held</span><p>Implementation is largely complete. The remote accessibility fix is under verification. Documentation acceptance, the release tag and package publication remain owner-gated.</p></div>
         <div class="comparison-facts">
           <div><strong>0</strong><span>v4 runtime dependencies</span></div>
           <div><strong>6</strong><span>native element entrypoints</span></div>
           <div><strong>156</strong><span>exact package exports</span></div>
           <div><strong>3.0.0</strong><span>still the npm latest</span></div>
         </div>
-        <p class="comparison-note">Review snapshot · 21 October 2026 · local source <code>a99658f</code> · remote CI <code>331ce2e</code>. These are different revisions; passing remote jobs do not certify the local head.</p>
+        <p class="comparison-note">Review snapshot · 21 October 2026 · local source <code>312f0b1</code> + current fixes · remote CI <code>331ce2e</code>. These are different revisions; passing remote jobs do not certify the local head.</p>
       </section>
       <section class="comparison-section" id="controls">
         <header class="comparison-section-heading"><p class="comparison-kicker">01 / Visible polish</p><h2>Less height. The same presence.</h2><p>Default v4 controls align at 36px on fine pointers. Button widths and icon footprints are preserved; coarse pointers get a minimum 44px target. Compactness should not cost usability.</p></header>
@@ -166,18 +167,30 @@ const [name, setName] = useLocalStorage("name", "", value =&gt; {
   return value;
 });</code></pre></div>
         </div>
+        <p><a href="migration.md" download>Download the concise migration guide for AI agents (.md)</a> · Steps, ownership rules, breaking APIs and acceptance checks.</p>
         <pre role="region" aria-label="Migration commands code example"><code>bun run migrate /path/to/app --check
 bun run migrate /path/to/app</code></pre>
         <p class="comparison-takeaway">Run from the library checkout. Review every <code>file:line: manual</code> report. Also check removed CVA helpers, <code>ThemeToggle.asChild</code>, string icons and CommonJS usage. If your scope points at GitHub Packages in <code>.npmrc</code>, remove that registry override for the npm-only v4 release.</p>
+      </section>
+      <section class="comparison-section" id="value">
+        <header class="comparison-section-heading"><p class="comparison-kicker">07 / Value created</p><h2>Less coupling. More ways to build.</h2><p>The visible polish is only part of the change. These are capabilities of the implemented architecture; app delivery speed and bundle savings still need consumer measurements.</p></header>
+        <div class="comparison-table-wrap" role="region" aria-label="Migration value and unlocked capabilities"><table class="comparison-table"><caption>What the migration buys, and where it helps</caption><thead><tr><th scope="col">Change</th><th scope="col">Value created</th><th scope="col">What it unlocks / example</th></tr></thead><tbody>
+          <tr><th scope="row">Shared CSS contract</th><td>React, native and HTML use the same tokens, parts and variants. Styling fixes have one owner.</td><td>A static content page and a React dashboard can share cards and controls without adopting the same runtime.</td></tr>
+          <tr><th scope="row">Selective imports, optional peers</th><td>Apps choose the clients and peer packages they use; the library has zero runtime dependencies.</td><td>A CSS-only landing page can use the design system without installing React or Radix. Measure its final payload separately.</td></tr>
+          <tr><th scope="row">Explicit CSS ownership</th><td>Package and vendored components can coexist without loading two complete style systems.</td><td>Customize one local Card while continuing to receive package updates for Button. Local copies still need reviewed fixes.</td></tr>
+          <tr><th scope="row">Scoped semantic tokens</th><td>Brand colour and quiet interactive tint have separate meanings; theme scopes stay explicit.</td><td>Place a dark pricing panel inside a light page, with shared component styles in both.</td></tr>
+          <tr><th scope="row">Migration scan and enforced contracts</th><td>Known rewrites are repeatable; uncertain edits are reported. API, visual, accessibility and dependency gates make drift visible.</td><td>An AI agent can preview a bounded migration, resolve manual reports and hand over exact test evidence. App acceptance remains required.</td></tr>
+        </tbody></table></div>
+        <p class="comparison-takeaway">The tradeoff: v4 makes imports, CSS ownership and data parsing explicit. That costs migration work now and makes future changes easier to locate and verify. No measured app performance gain is claimed.</p>
       </section>
       <section class="comparison-section" id="status">
         <header class="comparison-section-heading"><p class="comparison-kicker">Release review / evidence over optimism</p><h2>Built is not released.</h2><p>The architecture, clients, package and migration tooling are in place. The remaining work is release stabilization and acceptance, not another redesign.</p></header>
         <div class="comparison-table-wrap" role="region" aria-label="Release evidence table"><table class="comparison-table"><caption>v4 status at the review snapshot</caption><thead><tr><th scope="col">Area</th><th scope="col">Status</th><th scope="col">Evidence / remaining work</th></tr></thead><tbody>
           <tr><th scope="row">CSS, React &amp; native</th><td><span class="comparison-status">Implemented</span></td><td>Shared tokens and styles; six native entries; local plan records lifecycle and equivalence coverage.</td></tr>
           <tr><th scope="row">Package &amp; registry</th><td><span class="comparison-status">Implemented</span></td><td>156 exports, four optional peers, 33 registry items; local packed-consumer evidence is recorded in the plan.</td></tr>
-          <tr><th scope="row">Fresh local review</th><td><span class="comparison-status">Passed</span></td><td><code>bun run gate --force</code>: 18 tasks, 923 tests, zero cache hits at the local source plus comparison changes. This page passes axe and layout/link checks across 12 browser/theme/viewport combinations.</td></tr>
+          <tr><th scope="row">Fresh local review</th><td><span class="comparison-status">Passed</span></td><td><code>bun run gate --force</code>: 18 tasks, 923 tests, zero cache hits at <code>312f0b1</code> plus the accessibility, guide and comparison changes. This page passes axe and layout/link checks across 12 browser/theme/viewport combinations.</td></tr>
           <tr><th scope="row">Remote quality &amp; visuals</th><td><span class="comparison-status">Passed</span></td><td><a href="https://github.com/kongmy-dev/sapphire-ui/actions/runs/39397626860">CI at 331ce2e</a>: both jobs succeeded. This predates the local source snapshot.</td></tr>
-          <tr><th scope="row">Remote accessibility</th><td><span class="comparison-status" data-tone="error">Failed</span></td><td>3 WebKit dark cases: Avatar lifecycle, controlled Checkbox, controlled Popover. Contrast reports affect bare example buttons. 1,589 passed; Timeline keyboard navigation was flaky.</td></tr>
+          <tr><th scope="row">Remote accessibility</th><td><span class="comparison-status" data-tone="error">Failed</span></td><td>Last remote result: 3 WebKit dark cases on bare Avatar, Checkbox and Popover buttons; 1,589 passed. Shared native-control colours are now paired locally and Timeline navigation waits for its URL. Fresh remote verification is pending; six changed button pins await owner review.</td></tr>
           <tr><th scope="row">Documentation acceptance</th><td><span class="comparison-status" data-tone="warning">Awaiting review</span></td><td>P8 reopened after removal of left navigation. Local sidebar and command-search restoration is recorded; approval is still open.</td></tr>
           <tr><th scope="row">Tag &amp; publication</th><td><span class="comparison-status" data-tone="warning">Not released</span></td><td>No v4 tag or release in the local and remote inventories. <a href="https://www.npmjs.com/package/@kongmy-dev/sapphire-ui">npm latest remains 3.0.0</a>. Published v4 consumer smoke remains.</td></tr>
         </tbody></table></div>
@@ -202,7 +215,7 @@ bun run migrate /path/to/app</code></pre>
           <li><a href="https://github.com/kongmy-dev/sapphire-ui/releases">GitHub releases</a> · latest observed release v3.0.0</li>
           <li><a href="https://playwright.dev/docs/screenshots">Playwright capture reference</a> · <a href="https://tailwindcss.com/docs/installation/using-vite">Tailwind Vite compilation reference</a></li>
         </ul>
-        <p class="comparison-note">Historical plan totals are recorded evidence, not reruns performed for this page. Remote state is a dated snapshot, not a live monitor. No runtime fix, pin update, push, tag or publication is part of this comparison.</p>
+        <p class="comparison-note">Historical plan totals are recorded evidence, not reruns performed for this page. Remote state is a dated snapshot, not a live monitor. The comparison is published separately from the catalogue. Documentation acceptance, release tagging and npm publication remain owner-gated.</p>
       </section>
       <footer class="comparison-footer"><span>Sapphire UI / KONGMY Digital Solutions</span><a href="#overview">Back to the top ↑</a></footer>
     </main>

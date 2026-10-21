@@ -16,6 +16,7 @@ test('site output replaces stale assets and excludes build-only entry sources', 
   expect(existsSync(join(out, 'components/button/index.html'))).toBe(true);
   expect(existsSync(join(out, 'r/button.json'))).toBe(true);
   expect(existsSync(join(out, 'v3-v4/index.html'))).toBe(true);
+  expect(existsSync(join(out, 'v3-v4/migration.md'))).toBe(true);
   expect(existsSync(join(out, 'v3-v4/images/v4-cards-light.png'))).toBe(true);
   expect(existsSync(join(out, 'assets/comparison.css'))).toBe(true);
   const files = readdirSync(join(out, 'assets'), { recursive: true });
