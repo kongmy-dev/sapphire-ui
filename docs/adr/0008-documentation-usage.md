@@ -20,8 +20,9 @@ continues to require the registration listed under Setup.
 Copy controls report success or failure beside their source and retain manual
 selection. Include example-only install requirements and demo styles alongside JSX.
 Purpose text is maintained with the catalogue, distinct from generated
-API tables. Shell descriptions follow the page introduction; the version comes
-from the package manifest. Migration material and redirects remain outside scope.
+API tables. Shell metadata receives plain text escaped at output; component
+descriptions follow their purpose text. The version comes from the package
+manifest. Migration material and redirects remain outside scope.
 
 ## Why
 

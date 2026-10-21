@@ -118,6 +118,20 @@ test('catalog has one link per component and native links stay in their lane', (
   expect(() => componentPage(root, [])).toThrow();
 });
 
+test('metadata receives text and escapes tag fragments and attribute delimiters', () => {
+  const html = page(
+    'Test',
+    '<p>Body does not supply metadata</p>',
+    '',
+    '<script>alert(1)</script>" onload="alert(2)',
+  );
+  expect(html).toContain(
+    'content="&lt;script&gt;alert(1)&lt;/script&gt;&quot; onload=&quot;alert(2)"',
+  );
+  expect(html).not.toContain('content="<script>');
+  expect(html).not.toContain('content="Body');
+});
+
 test('setup includes behaviour peers from composed components', () => {
   const html = componentPage(process.cwd(), [
     {

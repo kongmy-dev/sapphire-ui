@@ -3,7 +3,9 @@
 **Status:** Implementation authorized through P11, with at most two GPT-6.1 Sol subagents.
 P8 is reopened: the owner rejected the removed navigation and reduced foundation/API content.
 P11 publication through the existing tag workflow is requested; final-candidate
-verification remains. The owner retains documentation acceptance; migration tooling is complete.
+verification remains. The owner authorized master integration, push and cleanup
+of the task branches after release. The owner retains
+documentation acceptance; migration tooling is complete.
 The v4-only visual suite passes 748 zero-tolerance cases; all 1,626 remote browser checks pass
 with 161 files checked by accessibility coverage. The first push and automated documentation deployment
 are complete. Remote accessibility at `462d75b` passes all 1,626 browser checks; remote quality at `2dd34fe` passes; the fourteen native-control baseline changes and six example-polish updates are owner-approved;
@@ -18,9 +20,9 @@ Delete this file when 4.0.0 ships.
   JSX, dependency commands, demo CSS and HTML disclosures; native HTML is captured
   before connection to avoid duplicating generated controls. Catalogue introductions
   explain purpose and use. Shell version and descriptions follow package/page content.
-  Final local and remote checks precede the trusted release tag on v4. The owner
-  authorized that tag workflow; master integration remains separate. Publication
-  and project acceptance are separate milestones.
+  Final local and remote checks precede approved master integration and the trusted
+  release tag. The owner authorized publication and master integration, push and
+  task-branch cleanup. Publication and project acceptance are separate milestones.
 
 - Documentation restores visual colours, font families and type scale, spacing, shape,
   elevation and hook references. Component pages show supported props from public TypeScript

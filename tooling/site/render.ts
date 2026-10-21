@@ -14,14 +14,14 @@ import { exampleUsage } from './usage';
 
 const searchDialog = `<dialog id="docs-search-dialog" class="docs-search-dialog sp-command-palette" aria-labelledby="docs-search-title"><h2 id="docs-search-title" class="sp-command-palette-title">Search documentation</h2><div class="docs-search-header"><input class="sp-input" type="search" role="combobox" aria-label="Search documentation" aria-controls="docs-search-results" aria-autocomplete="list" aria-expanded="true" placeholder="Search components and guides…" autocomplete="off"><button type="button" class="docs-search-close" aria-label="Close search">Esc</button></div><div class="sp-command-palette-body"><p class="sp-command-palette-empty" role="status" hidden>No matching pages.</p><ul id="docs-search-results" class="sp-command-palette-list" role="listbox" aria-label="Documentation results"></ul></div><footer class="sp-command-palette-footer"><span>↑ ↓ navigate</span><span>↵ open</span><span>Esc close</span></footer></dialog>`;
 
-export function page(title: string, body: string, navigation = '') {
+export function page(
+  title: string,
+  body: string,
+  navigation = '',
+  purpose = `${title} documentation for Sapphire UI: setup, examples and reference.`,
+) {
   const brand = '<a class="docs-brand" href="/">Sapphire <span>UI</span></a>';
-  const description = escapeHtml(
-    (
-      /<p[^>]*>(.*?)<\/p>/s.exec(body)?.[1] ??
-      'Sapphire UI: navy and gold components for React and native HTML.'
-    ).replace(/<[^>]+>/g, ''),
-  );
+  const description = escapeHtml(purpose);
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="${description}"><title>${escapeHtml(title)} · Sapphire UI</title><script>${THEME_INIT_SCRIPT}</script><link rel="stylesheet" href="/assets/sapphire.css"><link rel="stylesheet" href="/assets/docs.css"><link rel="stylesheet" href="/assets/reference.css"><link rel="stylesheet" href="/assets/examples.css"></head><body class="docs-site"><a class="sp-sr-only-focusable" href="#main">Skip to content</a><header class="docs-mobile-bar" data-theme="dark"><button type="button" class="docs-menu" aria-label="Open navigation" aria-controls="docs-sidebar" aria-expanded="false"><svg class="sp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>${brand}<span class="docs-mobile-version">v${version}</span></header><aside id="docs-sidebar" class="docs-sidebar" data-theme="dark"><div class="docs-sidebar-header">${brand}<button type="button" class="docs-sidebar-close" aria-label="Close navigation"><svg class="sp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div><p class="docs-version">v${version} · Design system</p><button type="button" class="docs-search" aria-label="Search documentation" aria-haspopup="dialog" aria-controls="docs-search-dialog"><span>Search documentation…</span><kbd aria-hidden="true">⌘K</kbd></button>${navigation}<div class="docs-sidebar-bottom"><button type="button" class="docs-theme" aria-label="Switch to dark theme">Theme: light</button><a class="docs-sidebar-footer" href="https://kongmy.dev">KONGMY.DEV ↗</a></div></aside><button class="docs-nav-backdrop" tabindex="-1" aria-label="Close navigation overlay"></button><main id="main" class="docs-main sp-cq" tabindex="-1"><header class="docs-page-header"><h1>${escapeHtml(title)}</h1></header><div class="docs-content">${body}</div><footer class="docs-footer">Sapphire UI · KONGMY Digital Solutions</footer></main>${searchDialog}<script type="module" src="/assets/site-client.js"></script></body></html>`;
 }
 
@@ -157,5 +157,6 @@ export function componentPage(
         '',
       )}</section><section class="docs-section" id="props"><h2>${apiTitle}</h2>${api}</section><section class="docs-section" id="setup"><h2>Setup</h2>${code(install)}<p>For an app using package components throughout, load the full stylesheet once. Add this ${native ? 'element registration' : 'component import'} where you use it.</p>${code(imports)}<p>Mixing package and vendored components? Follow <a href="/foundations/">application setup</a>.</p></section><script type="module" src="/assets/${native ? 'elements' : 'examples'}-entry.js"></script>`,
     navigation,
+    componentDescription(name),
   );
 }
