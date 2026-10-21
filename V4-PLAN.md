@@ -5,7 +5,7 @@ P8 is reopened: the owner rejected the deployed documentation layout after its l
 P11 is held pending review of the restored navigation; migration tooling is complete.
 The v4-only visual suite passes 748 zero-tolerance cases; all 1,578 final browser checks pass
 with 161 discovered examples after retirement. The first push and automated documentation deployment
-are complete. Remote quality and visuals at `331ce2e` pass, but accessibility fails;
+are complete. Remote accessibility at `462d75b` passes all 1,626 browser checks; quality confirmation and eight visual baseline approvals remain open;
 the v4 tag, publication and published-consumer verification remain.
 D5 retains button widths while reducing height and applies the approved targeted polish.
 Delete this file when 4.0.0 ships.
@@ -22,7 +22,8 @@ Delete this file when 4.0.0 ships.
   A minimal Linux button fixture restores the original reset by a later base-layer override:
   foreground `rgb(241, 245, 249)` over `rgb(192, 192, 192)` fails axe; the fixed background
   `rgb(17, 34, 64)` passes. The fixture is in `site/comparison/sources/linux-native-regression.txt`.
-  Full remote proof is pending.
+  Full Linux CI at `462d75b` now passes all 1,626 browser checks and the 161-file accessibility coverage gate
+  ([run 39524778212](https://github.com/kongmy-dev/sapphire-ui/actions/runs/39524778212)).
   All 1,626 local browser checks pass at `462d75b` (`bun run test:a11y`), including
   six new native-control cases. The owner approved the six bare-button surface/chrome pin
   updates; `bun run pin` updates only those six files. The full rerun has 740 passing cases

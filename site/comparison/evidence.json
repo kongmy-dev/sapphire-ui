@@ -141,7 +141,7 @@
   "followUp": {
     "runtimeCommit": "462d75b0b04bd35c131f5690ea2154a85801dea0",
     "remoteRun": "https://github.com/kongmy-dev/sapphire-ui/actions/runs/39524778212",
-    "remoteAccessibility": "in progress",
+    "remoteAccessibility": "success",
     "remoteQuality": "failed: HoverCard async assertion diagnostic cost; count-based follow-up pending remote proof",
     "localBrowser": {
       "command": "bun run test:a11y",
@@ -177,6 +177,8 @@
         },
         "limitation": "Minimal dark button fixture; the original reset is restored by a later base-layer override. Full CI is separate evidence."
       }
-    }
+    },
+    "remoteAccessibilityPassed": 1626,
+    "remoteAccessibilityCoverageFiles": 161
   }
 }
