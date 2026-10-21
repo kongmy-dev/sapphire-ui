@@ -61,5 +61,5 @@ const hooks = [
 ];
 
 export function hookGuide() {
-  return `<p class="docs-lead">Six focused React hooks for state, browser capabilities and small interactions. Import only the hook you use. Each hook needs React as a peer.</p>${hooks.map((hook) => `<section class="docs-section" id="${hook.entry}"><h2>${hook.name}</h2><p>${hook.description}</p>${table(`${hook.name} API`, ['Signature'], [[`<code>${escapeHtml(hook.signature)}</code>`]])}${code(`import { ${hook.name} } from "@kongmy-dev/sapphire-ui/hooks/${hook.entry}";\n\n${hook.sample}`)}</section>`).join('')}`;
+  return `<p class="docs-lead">Six focused React hooks for state, browser capabilities and small interactions. Import only the hook you use. Each hook needs React as a peer.</p>${hooks.map((hook) => `<section class="docs-section" id="${hook.entry}"><h2>${hook.name}</h2><p>${hook.description}</p><div class="docs-example-stage sp-stack" data-hook-demo="${hook.entry}"></div>${table(`${hook.name} API`, ['Signature'], [[`<code>${escapeHtml(hook.signature)}</code>`]])}${code(`import { ${hook.name} } from "@kongmy-dev/sapphire-ui/hooks/${hook.entry}";\n\n${hook.sample}`)}</section>`).join('')}`;
 }

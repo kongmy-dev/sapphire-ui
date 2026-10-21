@@ -12,7 +12,7 @@ const row = {
   file: 'components/button/button.examples.tsx',
 };
 
-test('API text cannot become executable markup and full example source is omitted', () => {
+test('API and usage text cannot become executable markup', () => {
   const directory = join(root, 'components/button');
   mkdirSync(directory, { recursive: true });
   writeFileSync(
@@ -22,7 +22,7 @@ test('API text cannot become executable markup and full example source is omitte
   writeFileSync(join(directory, 'button.css'), '.sp-button {}');
   writeFileSync(
     join(directory, 'button.examples.tsx'),
-    '<script>alert("example")</script>',
+    'function Usage() { return <p>{"<script>alert(example)</script>"}</p>; } export const examples = [{ name: "variants", render: Usage }] as const;',
   );
   const html = componentPage(root, [row], false, '', [
     {
@@ -54,7 +54,8 @@ test('API text cannot become executable markup and full example source is omitte
   expect(html).toContain('@kongmy-dev/sapphire-ui/sapphire.css');
   expect(html).toContain('&lt;script&gt;alert(&quot;API&quot;)');
   expect(html).not.toContain('<script>alert');
-  expect(html).not.toContain('alert(&quot;example&quot;)');
+  expect(html).toContain('JSX usage');
+  expect(html).toContain('&lt;script&gt;alert(example)&lt;/script&gt;');
   expect(html).toContain('id="props"');
   expect(html).not.toContain('id="source"');
 });
@@ -96,7 +97,7 @@ test('CSS-only entries do not advertise nonexistent React imports', () => {
   writeFileSync(join(directory, 'document.css'), '.sp-document {}');
   writeFileSync(
     join(directory, 'document.examples.tsx'),
-    'function Example() {}',
+    'function Article() { return <article>Example</article>; } export const examples = [{ name: "article", render: Article }] as const;',
   );
   const html = componentPage(root, [
     {

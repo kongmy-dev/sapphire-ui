@@ -1,6 +1,8 @@
 import { getTheme, initTheme, setTheme, subscribeTheme } from '../lib/theme.js';
 import { initCopy } from './copy.js';
+import { mountHooks } from './hooks.js';
 import { initSearch } from './search.js';
+import { initUsage } from './usage.js';
 
 const menu = document.querySelector<HTMLButtonElement>('.docs-menu');
 const sidebar = document.querySelector<HTMLElement>('#docs-sidebar');
@@ -67,6 +69,8 @@ function shortcuts(event: KeyboardEvent) {
 initTheme();
 initSearch();
 initCopy();
+initUsage();
+mountHooks();
 themeLabel();
 subscribeTheme(themeLabel);
 theme?.addEventListener('click', () =>

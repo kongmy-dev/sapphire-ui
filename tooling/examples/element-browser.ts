@@ -16,6 +16,20 @@ export function mountElementExample(
       throw new Error(
         `The requested native example ${component}/${name} is missing`,
       );
-    root.replaceChildren(example.render());
+    const rendered = example.render();
+    if (root.closest('.docs-example')) {
+      const elements = [rendered, ...rendered.querySelectorAll('*')];
+      root.dataset.usageHtml = elements
+        .filter(
+          (element) =>
+            element.localName.includes('-') &&
+            !element.parentElement?.closest(
+              'sapphire-banner, sapphire-site-header, sapphire-site-footer, cookie-banner, sapphire-toast, sapphire-analytics',
+            ),
+        )
+        .map((element) => element.outerHTML)
+        .join('\n');
+    }
+    root.replaceChildren(rendered);
   }
 }

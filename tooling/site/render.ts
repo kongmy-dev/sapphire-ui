@@ -2,18 +2,27 @@ import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { examples as metadataExamples } from '../../components/seo-head/seo-head.examples';
 import { THEME_INIT_SCRIPT } from '../../lib/theme';
+import { version } from '../../package.json';
 import type { ExampleRow } from '../examples/catalog';
 import { cssReference, nativeReference, reactReference } from './api';
+import { componentDescription } from './descriptions';
 import { code, escapeHtml, titleOf } from './html';
 import { componentGroups } from './navigation';
 import type { ComponentReference } from './props';
 import { componentSetup } from './setup';
+import { exampleUsage } from './usage';
 
 const searchDialog = `<dialog id="docs-search-dialog" class="docs-search-dialog sp-command-palette" aria-labelledby="docs-search-title"><h2 id="docs-search-title" class="sp-command-palette-title">Search documentation</h2><div class="docs-search-header"><input class="sp-input" type="search" role="combobox" aria-label="Search documentation" aria-controls="docs-search-results" aria-autocomplete="list" aria-expanded="true" placeholder="Search components and guides…" autocomplete="off"><button type="button" class="docs-search-close" aria-label="Close search">Esc</button></div><div class="sp-command-palette-body"><p class="sp-command-palette-empty" role="status" hidden>No matching pages.</p><ul id="docs-search-results" class="sp-command-palette-list" role="listbox" aria-label="Documentation results"></ul></div><footer class="sp-command-palette-footer"><span>↑ ↓ navigate</span><span>↵ open</span><span>Esc close</span></footer></dialog>`;
 
 export function page(title: string, body: string, navigation = '') {
   const brand = '<a class="docs-brand" href="/">Sapphire <span>UI</span></a>';
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Sapphire UI: navy and gold components for React and native HTML."><title>${escapeHtml(title)} · Sapphire UI</title><script>${THEME_INIT_SCRIPT}</script><link rel="stylesheet" href="/assets/sapphire.css"><link rel="stylesheet" href="/assets/docs.css"><link rel="stylesheet" href="/assets/reference.css"><link rel="stylesheet" href="/assets/examples.css"></head><body class="docs-site"><a class="sp-sr-only-focusable" href="#main">Skip to content</a><header class="docs-mobile-bar" data-theme="dark"><button type="button" class="docs-menu" aria-label="Open navigation" aria-controls="docs-sidebar" aria-expanded="false"><svg class="sp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>${brand}<span class="docs-mobile-version">v4.0.0</span></header><aside id="docs-sidebar" class="docs-sidebar" data-theme="dark"><div class="docs-sidebar-header">${brand}<button type="button" class="docs-sidebar-close" aria-label="Close navigation"><svg class="sp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div><p class="docs-version">v4.0.0 · Design system</p><button type="button" class="docs-search" aria-label="Search documentation" aria-haspopup="dialog" aria-controls="docs-search-dialog"><span>Search documentation…</span><kbd aria-hidden="true">⌘K</kbd></button>${navigation}<div class="docs-sidebar-bottom"><button type="button" class="docs-theme" aria-label="Switch to dark theme">Theme: light</button><a class="docs-sidebar-footer" href="https://kongmy.dev">KONGMY.DEV ↗</a></div></aside><button class="docs-nav-backdrop" tabindex="-1" aria-label="Close navigation overlay"></button><main id="main" class="docs-main sp-cq" tabindex="-1"><header class="docs-page-header"><h1>${escapeHtml(title)}</h1></header><div class="docs-content">${body}</div><footer class="docs-footer">Sapphire UI · KONGMY Digital Solutions</footer></main>${searchDialog}<script type="module" src="/assets/site-client.js"></script></body></html>`;
+  const description = escapeHtml(
+    (
+      /<p[^>]*>(.*?)<\/p>/s.exec(body)?.[1] ??
+      'Sapphire UI: navy and gold components for React and native HTML.'
+    ).replace(/<[^>]+>/g, ''),
+  );
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="${description}"><title>${escapeHtml(title)} · Sapphire UI</title><script>${THEME_INIT_SCRIPT}</script><link rel="stylesheet" href="/assets/sapphire.css"><link rel="stylesheet" href="/assets/docs.css"><link rel="stylesheet" href="/assets/reference.css"><link rel="stylesheet" href="/assets/examples.css"></head><body class="docs-site"><a class="sp-sr-only-focusable" href="#main">Skip to content</a><header class="docs-mobile-bar" data-theme="dark"><button type="button" class="docs-menu" aria-label="Open navigation" aria-controls="docs-sidebar" aria-expanded="false"><svg class="sp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>${brand}<span class="docs-mobile-version">v${version}</span></header><aside id="docs-sidebar" class="docs-sidebar" data-theme="dark"><div class="docs-sidebar-header">${brand}<button type="button" class="docs-sidebar-close" aria-label="Close navigation"><svg class="sp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div><p class="docs-version">v${version} · Design system</p><button type="button" class="docs-search" aria-label="Search documentation" aria-haspopup="dialog" aria-controls="docs-search-dialog"><span>Search documentation…</span><kbd aria-hidden="true">⌘K</kbd></button>${navigation}<div class="docs-sidebar-bottom"><button type="button" class="docs-theme" aria-label="Switch to dark theme">Theme: light</button><a class="docs-sidebar-footer" href="https://kongmy.dev">KONGMY.DEV ↗</a></div></aside><button class="docs-nav-backdrop" tabindex="-1" aria-label="Close navigation overlay"></button><main id="main" class="docs-main sp-cq" tabindex="-1"><header class="docs-page-header"><h1>${escapeHtml(title)}</h1></header><div class="docs-content">${body}</div><footer class="docs-footer">Sapphire UI · KONGMY Digital Solutions</footer></main>${searchDialog}<script type="module" src="/assets/site-client.js"></script></body></html>`;
 }
 
 const architecture = [
@@ -106,7 +115,7 @@ function componentApi(
   return { title: 'HTML API', body: cssReference(root, name) };
 }
 
-function preview(row: ExampleRow) {
+function preview(root: string, row: ExampleRow, native: boolean) {
   const metadata =
     row.component === 'seo-head' && row.name === 'metadata'
       ? metadataExamples.find((example) => example.name === row.name)
@@ -117,19 +126,7 @@ function preview(row: ExampleRow) {
   const body = metadata
     ? `<p>Generated document metadata, shown as text to preserve this page's title and description.</p>${code(renderToStaticMarkup(createElement(metadata.render)))}`
     : '';
-  return `<section class="docs-example" id="example-${escapeHtml(row.name)}"><h3>${titleOf(row.name)}</h3><div class="docs-example-stage sp-stack sp-cq" ${target}>${body}</div></section>`;
-}
-
-const componentDescriptions: Record<string, string> = {
-  prose:
-    'Prose gives ordinary article HTML consistent typography and spacing: headings, paragraphs, lists, links, quotations and code. Use it for documentation, articles and other long-form content.',
-};
-
-function componentDescription(name: string, native: boolean, count: number) {
-  return (
-    componentDescriptions[name] ??
-    `${native ? 'Native HTML' : 'Component'} · ${count} live example${count === 1 ? '' : 's'}. Use the page theme control to compare light and dark.`
-  );
+  return `<section class="docs-example" id="example-${escapeHtml(row.name)}"><h3>${titleOf(row.name)}</h3><div class="docs-example-stage sp-stack sp-cq" ${target}>${body}</div>${exampleUsage(root, row, native)}</section>`;
 }
 
 export function componentPage(
@@ -151,11 +148,11 @@ export function componentPage(
   const { imports, install } = componentSetup(root, name, native);
   return page(
     titleOf(name),
-    `<p class="docs-lead">${componentDescription(name, native, rows.length)}</p><nav class="docs-page-links sp-cluster" aria-label="On this page"><a href="#examples">Examples</a><a href="#props">${apiTitle}</a><a href="#setup">Setup</a><a href="/${native ? 'native/' : '#catalogue'}">All ${native ? 'native elements' : 'components'} →</a></nav><section class="docs-section" id="examples"><h2>Examples</h2>${componentNotes[name] ?? ''}${[
+    `<p class="docs-lead">${componentDescription(name)}</p><nav class="docs-page-links sp-cluster" aria-label="On this page"><a href="#examples">Examples</a><a href="#props">${apiTitle}</a><a href="#setup">Setup</a><a href="/${native ? 'native/' : '#catalogue'}">All ${native ? 'native elements' : 'components'} →</a></nav><section class="docs-section" id="examples"><h2>Examples</h2>${componentNotes[name] ?? ''}${[
       ...rows,
     ]
       .sort((a, b) => exampleRank(a.name) - exampleRank(b.name))
-      .map(preview)
+      .map((row) => preview(root, row, native))
       .join(
         '',
       )}</section><section class="docs-section" id="props"><h2>${apiTitle}</h2>${api}</section><section class="docs-section" id="setup"><h2>Setup</h2>${code(install)}<p>For an app using package components throughout, load the full stylesheet once. Add this ${native ? 'element registration' : 'component import'} where you use it.</p>${code(imports)}<p>Mixing package and vendored components? Follow <a href="/foundations/">application setup</a>.</p></section><script type="module" src="/assets/${native ? 'elements' : 'examples'}-entry.js"></script>`,

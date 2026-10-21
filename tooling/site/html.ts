@@ -11,8 +11,8 @@ export const titleOf = (name: string) =>
     .map((part) => part[0]?.toUpperCase() + part.slice(1))
     .join(' ');
 
-export const code = (source: string) =>
-  `<div class="sp-code-block"><pre class="sp-code-block-pre" tabindex="0"><code>${escapeHtml(source)}</code></pre></div>`;
+export const code = (source: string, label = 'code') =>
+  `<div class="sp-code-block docs-code"><button type="button" class="docs-copy" data-copy-code aria-label="Copy ${escapeHtml(label)}">Copy ${escapeHtml(label)}</button><pre class="sp-code-block-pre" tabindex="0"><code>${escapeHtml(source)}</code></pre><p class="docs-copy-status" role="status" aria-live="polite" hidden></p></div>`;
 
 export function table(
   caption: string,

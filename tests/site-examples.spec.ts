@@ -146,9 +146,9 @@ test('SEO metadata output leaves the documentation head intact', async ({
   page,
 }) => {
   await page.goto(`${SITE}/components/seo-head/`);
-  await expect(page.locator('#example-metadata pre')).toContainText(
-    '<title>Sapphire metadata example</title>',
-  );
+  await expect(
+    page.locator('#example-metadata .docs-example-stage pre'),
+  ).toContainText('<title>Sapphire metadata example</title>');
   await expect(page).toHaveTitle('Seo Head · Sapphire UI');
   await expect(page.locator('head meta[name="description"]')).toHaveCount(1);
   await expect(page.locator('head title')).toHaveCount(1);
