@@ -482,7 +482,6 @@ dimensions are starting points to validate per component, not a blanket replacem
   checked against them.
 - Storybook or a hosted visual-diff service: the site is the specimen and Playwright is the pin.
 - Aliases for v3 class names or props: apps on 3.x stay pinned and migrate with a map.
-- `@tanstack/react-table` 9 (backlog).
 - A replacement brand theme. D5 selects tighter proportions across product and editorial UI.
   Do not scale every spacing token down globally.
 - Progress checkboxes in this file: `bun run scorecard` reads progress from the tree, so parallel

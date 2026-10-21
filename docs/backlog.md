@@ -11,16 +11,11 @@ Local docs verification does not establish registry publication or project accep
 Dependency migrations:
 
 The [dependency review](dependency-review.md) records retained packages,
-compatibility holds and the outstanding tooling advisory.
+the TypeScript hold and the locally mitigated tooling advisory.
 
 - Keep TypeScript on 6.0.3 until the gates, migration tools and documentation
   builders migrate from the classic compiler API. TypeScript 7.0.2 exposes a
   different API; P-12 deliberately enforces 6.0.x.
-- Keep `@tanstack/react-table` on 8.21.3 for this release. A 9.3.1 install trial
-  fails `bun run typecheck --force` in both data-table blocks: `Column` and
-  `Table` require new feature generics. Migration must cover sorting, visibility,
-  consumer types and registry installation before changing the pin.
-- Track the unpatched `braces` stack-exhaustion advisory through shadcn's
-  `fast-glob`/`micromatch` tooling chain. Replace or update that upstream chain
-  when a supported fix is available; the published package has no runtime
-  dependencies. See the review for the advisory and current exposure limits.
+- Replace the local `braces` patch when upstream publishes a supported release
+  with equivalent traversal bounds. Retain the security regressions and the
+  installed-CLI wrapper; version-based audit output remains open until then.

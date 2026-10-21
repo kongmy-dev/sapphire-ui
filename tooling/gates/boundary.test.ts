@@ -23,6 +23,22 @@ test('boundary fails when nothing is checked', () => {
   expect(renderReport(check([])).ok).toBe(false);
 });
 
+test('boundary permits real table fixtures only in block tests', () => {
+  const result = check([
+    file('blocks/table/table.test.tsx', "import '@tanstack/react-table';"),
+    file('components/table/table.test.tsx', "import '@tanstack/react-table';"),
+  ]);
+  expect(result.violations).toEqual([
+    expect.objectContaining({
+      file: 'components/table/table.test.tsx',
+      line: 1,
+      rule: 'P-2',
+      problem: 'Unverified test package @tanstack/react-table',
+      fix: 'Import only an allowed lower layer or the public component/example entry.',
+    }),
+  ]);
+});
+
 test('boundary rejects upward reexports and reports their location', () => {
   expect(
     check([

@@ -1,5 +1,5 @@
 import { MixerHorizontalIcon } from '@radix-ui/react-icons';
-import type { Table } from '@tanstack/react-table';
+import type { Column, RowData, StockFeatures } from '@tanstack/react-table';
 import { Button } from '../../components/button/button.js';
 import {
   DropdownMenu,
@@ -10,10 +10,15 @@ import {
   DropdownMenuTrigger,
 } from '../../components/dropdown-menu/dropdown-menu.js';
 
-type DataTableViewOptionsProps<TData> = {
-  table: Table<TData>;
+type DataTableViewOptionsProps<TData extends RowData> = {
+  table: {
+    getAllColumns: () => Pick<
+      Column<Pick<StockFeatures, 'columnVisibilityFeature'>, TData>,
+      'id' | 'accessorFn' | 'getCanHide' | 'getIsVisible' | 'toggleVisibility'
+    >[];
+  };
 };
-export function DataTableViewOptions<TData>({
+export function DataTableViewOptions<TData extends RowData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
   return (

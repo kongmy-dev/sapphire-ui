@@ -113,7 +113,10 @@ function testPackageProblems(input: {
     'radix-ui',
     'react-resizable-panels',
   ];
-  return allowed.includes(packageOf(specifier))
+  const isTableBlock =
+    layer(file) === 'blocks' &&
+    packageOf(specifier) === '@tanstack/react-table';
+  return allowed.includes(packageOf(specifier)) || isTableBlock
     ? []
     : [problem(file, edge, `Unverified test package ${specifier}`)];
 }

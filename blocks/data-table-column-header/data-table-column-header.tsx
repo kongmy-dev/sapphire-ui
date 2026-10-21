@@ -4,7 +4,7 @@ import {
   CaretSortIcon,
   EyeNoneIcon,
 } from '@radix-ui/react-icons';
-import type { Column } from '@tanstack/react-table';
+import type { Column, RowData, StockFeatures } from '@tanstack/react-table';
 import { Button } from '../../components/button/button.js';
 import {
   DropdownMenu,
@@ -15,12 +15,25 @@ import {
 } from '../../components/dropdown-menu/dropdown-menu.js';
 import { cn } from '../classes.js';
 
-type DataTableColumnHeaderProps<TData, TValue> =
-  React.HTMLAttributes<HTMLDivElement> & {
-    column: Column<TData, TValue>;
-    title: string;
-  };
-export function DataTableColumnHeader<TData, TValue>({
+type DataTableColumnHeaderProps<
+  TData extends RowData,
+  TValue,
+> = React.HTMLAttributes<HTMLDivElement> & {
+  column: Pick<
+    Column<
+      Pick<StockFeatures, 'rowSortingFeature' | 'columnVisibilityFeature'>,
+      TData,
+      TValue
+    >,
+    | 'getCanSort'
+    | 'getIsSorted'
+    | 'toggleSorting'
+    | 'getCanHide'
+    | 'toggleVisibility'
+  >;
+  title: string;
+};
+export function DataTableColumnHeader<TData extends RowData, TValue>({
   column,
   title,
   className,

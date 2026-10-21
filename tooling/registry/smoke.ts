@@ -84,6 +84,8 @@ export async function smokeRegistry(
           '@sapphire/button',
           '@sapphire/dialog',
           '@sapphire/sidebar',
+          '@sapphire/data-table-column-header',
+          '@sapphire/data-table-view-options',
           '--yes',
           '--overwrite',
         ],

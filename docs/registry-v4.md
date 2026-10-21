@@ -18,6 +18,10 @@ parent directories and the CLI reads file contents from disk. It runs pinned
 `shadcn@4.22.1 build` and `registry validate`, then rewrites source imports to
 consumer aliases. It never rebuilds or rewrites the legacy distribution.
 
+Repository commands run the installed CLI with Bun, preserving the local
+`braces` dependency patch. Ephemeral CLI installs in consumer applications do not
+inherit this repository's patch; see [the tooling patch decision](adr/0009-bounded-development-globs.md).
+
 The base has `extends: none`, installs the exact Sapphire package, imports only
 `foundations.css`, and installs `.claude/skills/sapphire/SKILL.md`. Foundations
 includes the bundled font files and font faces; no extra font package is needed.
@@ -44,3 +48,21 @@ unimported package Button CSS stays outside the application bundle. This is a
 build and ownership test, not a browser screenshot assertion or a published
 package upgrade. Set `SAPPHIRE_REGISTRY_URL` to the deployed URL template to
 repeat installation against production after deployment.
+
+The data-table blocks use TanStack Table 9. Use `useTable` with explicitly
+registered features and a sorting row model:
+
+```ts
+const features = tableFeatures({
+  rowSortingFeature,
+  columnVisibilityFeature,
+  sortedRowModel: createSortedRowModel(),
+});
+```
+
+Supply a `sortFn` on sortable columns or register the matching sort function.
+The header consumes sorting and hiding capabilities; the view menu consumes
+visibility-capable accessor columns. Additional table features remain supported.
+The consumer smoke installs both blocks and exercises these types with an extra
+column-ordering feature. Follow the [upstream migration guide](https://github.com/TanStack/table/blob/main/docs/framework/react/guide/migrating.md)
+when updating an existing version 8 table.

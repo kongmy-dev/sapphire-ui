@@ -20,5 +20,8 @@
     "blocks/*/*.css"
   ],
   "project": ["**/*.{ts,tsx,css}"],
-  "ignoreDependencies": ["^@fontsource-variable/", "shadcn", "tailwindcss"]
+  "ignoreDependencies": ["tailwindcss"],
+  "ignoreIssues": {
+    "tooling/registry/braces.test.ts": ["unlisted"]
+  }
 }

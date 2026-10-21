@@ -7,12 +7,12 @@ import {
 } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
-import { devDependencies } from '../../package.json';
+import { fileURLToPath } from 'node:url';
 import { generatedRegistry, REGISTRY_SOURCE } from './generate.js';
 import { shadcnCliEnv } from './headers.js';
 import { rewrittenSource } from './source.js';
 
-export const SHADCN = `shadcn@${devDependencies.shadcn}`;
+const SHADCN = fileURLToPath(import.meta.resolve('shadcn'));
 export type RegistryFile = {
   path: string;
   target: string;
@@ -56,7 +56,7 @@ export function readRegistry(text: string): Registry {
 }
 
 export function cli(args: readonly string[], cwd: string) {
-  const result = Bun.spawnSync(['bunx', '--bun', SHADCN, ...args], {
+  const result = Bun.spawnSync([process.execPath, SHADCN, ...args], {
     cwd,
     env: shadcnCliEnv(process.env),
     stdout: 'pipe',
