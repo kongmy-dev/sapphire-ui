@@ -3,9 +3,9 @@
 **Status:** Implementation authorized through P11, with at most two GPT-6.1 Sol subagents.
 P8 is reopened: the owner rejected the deployed documentation layout after its left navigation was removed.
 P11 is held pending review of the restored navigation; migration tooling is complete.
-The v4-only visual suite passes 748 zero-tolerance cases; all 1,578 final browser checks pass
-with 161 discovered examples after retirement. The first push and automated documentation deployment
-are complete. Remote accessibility at `462d75b` passes all 1,626 browser checks; quality confirmation and eight visual baseline approvals remain open;
+The v4-only visual suite passes 748 zero-tolerance cases; all 1,626 remote browser checks pass
+with 161 files checked by accessibility coverage. The first push and automated documentation deployment
+are complete. Remote accessibility at `462d75b` passes all 1,626 browser checks; remote quality at `2dd34fe` passes; all fourteen native-control baseline changes are owner-approved and local visuals pass all 748 cases;
 the v4 tag, publication and published-consumer verification remain.
 D5 retains button widths while reducing height and applies the approved targeted polish.
 Delete this file when 4.0.0 ships.
@@ -26,12 +26,15 @@ Delete this file when 4.0.0 ships.
   ([run 39524778212](https://github.com/kongmy-dev/sapphire-ui/actions/runs/39524778212)).
   All 1,626 local browser checks pass at `462d75b` (`bun run test:a11y`), including
   six new native-control cases. The owner approved the six bare-button surface/chrome pin
-  updates; `bun run pin` updates only those six files. The full rerun has 740 passing cases
-  and eight intentional raw-field changes (Dialog, Popover, Sheet and SplitLayout in both
-  themes), prepared for separate owner approval. No other pins are changed.
+  updates; `bun run pin` updates only those six files. The owner subsequently approved the eight field updates and requested more text-field spacing.
+  Dialog, Popover and Sheet examples now reuse Input and Label with 12px label gaps; SplitLayout
+  uses Textarea with 16px editor/navigation insets. Runtime CSS and APIs stay unchanged by this
+  composition correction. All 24 focused three-engine browser checks and 27 independent unit
+  checks pass. The supported pin command updates the eight approved files; the full local visual suite passes all 748 cases. The fresh spacing-change gate passes 18 tasks and 923 tests with zero cache hits.
   Remote quality found one HoverCard async assertion failure: formatting a live DOM object
   can starve its close timer. A primitive count keeps the removal check and timeout intact;
-  120 focused local reruns and the fresh 923-test gate pass. Remote confirmation is pending. The concise agent procedure lives in `docs/migrate-v3-v4.md`, linked from `/v3-v4/`,
+  120 focused local reruns and the fresh 923-test gate pass. Remote quality now passes at `2dd34fe`
+  ([run 39527350307](https://github.com/kongmy-dev/sapphire-ui/actions/runs/39527350307)). The concise agent procedure lives in `docs/migrate-v3-v4.md`, linked from `/v3-v4/`,
   which now explains migration value and unlocked capabilities without performance claims.
 
 - Status review at local source `a99658f`: latest observed remote CI is `331ce2e`

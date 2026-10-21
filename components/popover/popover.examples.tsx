@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { Button } from '../button/button.js';
+import { Input } from '../input/input.js';
+import { Label } from '../label/label.js';
 import {
   Popover,
   PopoverAnchor,
@@ -16,12 +18,12 @@ function PopoverSettings() {
       <PopoverTrigger asChild>
         <Button>Open settings</Button>
       </PopoverTrigger>
-      <PopoverContent aria-label="Display settings">
+      <PopoverContent className="sp-stack" aria-label="Display settings">
         <h3>Display settings</h3>
-        <label>
-          Display name
-          <input defaultValue="Alex" />
-        </label>
+        <div className="sp-stack" data-size="sm">
+          <Label htmlFor="popover-name">Display name</Label>
+          <Input id="popover-name" defaultValue="Alex" />
+        </div>
         <PopoverClose asChild>
           <Button>Save settings</Button>
         </PopoverClose>

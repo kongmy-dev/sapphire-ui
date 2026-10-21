@@ -142,7 +142,7 @@
     "runtimeCommit": "462d75b0b04bd35c131f5690ea2154a85801dea0",
     "remoteRun": "https://github.com/kongmy-dev/sapphire-ui/actions/runs/39524778212",
     "remoteAccessibility": "success",
-    "remoteQuality": "failed: HoverCard async assertion diagnostic cost; count-based follow-up pending remote proof",
+    "remoteQuality": "success",
     "localBrowser": {
       "command": "bun run test:a11y",
       "passed": 1626,
@@ -150,7 +150,8 @@
     },
     "pins": {
       "approvedButtonUpdates": 6,
-      "fieldUpdatesAwaitingReview": 8
+      "fieldUpdatesAwaitingReview": 0,
+      "approvedFieldUpdates": 8
     },
     "ownerGates": [
       "documentation acceptance",
@@ -179,6 +180,40 @@
       }
     },
     "remoteAccessibilityPassed": 1626,
-    "remoteAccessibilityCoverageFiles": 161
+    "remoteAccessibilityCoverageFiles": 161,
+    "remoteQualityCommit": "2dd34fe450cef39e7d38c1b24a95949dbcf86948",
+    "remoteQualityRun": "https://github.com/kongmy-dev/sapphire-ui/actions/runs/39527350307",
+    "fieldSpacing": {
+      "scope": "Dialog, Popover, Sheet and SplitLayout examples reuse Input, Textarea and Label; runtime contracts unchanged",
+      "labelGapPx": 12,
+      "editorInsetPx": 16,
+      "focusedBrowserCommand": "bunx --no-install playwright test tests/examples.a11y.spec.ts --grep \"react/(dialog/uncontrolled|popover/settings|sheet/settings|split-layout/workspace)/\" --workers=3 --reporter=line",
+      "focusedBrowserPassed": 24,
+      "independentUnitTestsPassed": 27,
+      "labelGapNote": "Existing 4px Label margin plus 8px small-stack spacing",
+      "responsiveInspection": {
+        "command": "bun node_modules/.cache/sapphire-comparison/field-spacing-qa.ts",
+        "combinations": 16,
+        "inputHeightFinePx": 36,
+        "inputHeightCoarsePx": 44,
+        "fieldPaddingInlinePx": 12,
+        "themes": ["light", "dark"],
+        "viewports": [1280, 390]
+      },
+      "verificationBaseCommit": "2dd34fe450cef39e7d38c1b24a95949dbcf86948",
+      "workingChanges": "Five example-composition/style files and eight approved field pins",
+      "fullVisual": {
+        "command": "bun run test:visual",
+        "passed": 748,
+        "failed": 0
+      },
+      "gate": {
+        "command": "bun run gate --force",
+        "tasks": 18,
+        "tests": 923,
+        "cached": 0,
+        "failed": 0
+      }
+    }
   }
 }
