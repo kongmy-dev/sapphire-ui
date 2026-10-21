@@ -121,7 +121,7 @@ test('inline command palettes have spacing and independent state with keyboard f
   await search.press('Escape');
   await expect(nav).toBeFocused();
   await page
-    .getByRole('button', { name: 'Search documentation', exact: true })
+    .getByRole('button', { name: 'Search documentation… ⌘K', exact: true })
     .click();
   await expect(
     page.getByRole('dialog', { name: 'Search documentation' }),

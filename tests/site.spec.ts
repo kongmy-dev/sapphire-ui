@@ -175,7 +175,7 @@ test('documentation search opens a keyboard command palette and restores focus',
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(`${SITE}/components/button/`);
   const trigger = page.getByRole('button', {
-    name: 'Search documentation',
+    name: 'Search documentation… ⌘K',
     exact: true,
   });
   const dialog = page.getByRole('dialog', { name: 'Search documentation' });
@@ -243,7 +243,10 @@ test('documentation theme toggle changes and persists the selected scheme', asyn
     (element) => getComputedStyle(element).backgroundColor,
   );
   await page
-    .getByRole('button', { name: 'Switch to dark theme', exact: true })
+    .getByRole('button', {
+      name: 'Theme: light. Switch to dark theme',
+      exact: true,
+    })
     .click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   const darkSurface = await sidebar.evaluate(
@@ -256,12 +259,18 @@ test('documentation theme toggle changes and persists the selected scheme', asyn
       .evaluate((element) => getComputedStyle(element).backgroundColor),
   ).not.toBe(lightCanvas);
   await expect(
-    page.getByRole('button', { name: 'Switch to light theme', exact: true }),
+    page.getByRole('button', {
+      name: 'Theme: dark. Switch to light theme',
+      exact: true,
+    }),
   ).toBeVisible();
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await page
-    .getByRole('button', { name: 'Switch to light theme', exact: true })
+    .getByRole('button', {
+      name: 'Theme: dark. Switch to light theme',
+      exact: true,
+    })
     .click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
 });
@@ -299,7 +308,7 @@ test('mobile navigation supports keyboard dismissal and page navigation without 
     ).violations,
   ).toEqual([]);
   await page
-    .getByRole('button', { name: 'Search documentation', exact: true })
+    .getByRole('button', { name: 'Search documentation… ⌘K', exact: true })
     .click();
   const search = page.getByRole('combobox', { name: 'Search documentation' });
   await expect(search).toBeFocused();
@@ -339,7 +348,7 @@ test('search supports dark mode, mobile resize and pointer selection', async ({
   await page.emulateMedia({ colorScheme: 'dark' });
   await page.goto(`${SITE}/components/button/`);
   await page
-    .getByRole('button', { name: 'Search documentation', exact: true })
+    .getByRole('button', { name: 'Search documentation… ⌘K', exact: true })
     .click();
   const dialog = page.getByRole('dialog', { name: 'Search documentation' });
   const search = dialog.getByRole('combobox');

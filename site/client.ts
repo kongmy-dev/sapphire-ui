@@ -35,7 +35,7 @@ function themeLabel() {
   const current = getTheme();
   theme?.setAttribute(
     'aria-label',
-    `Switch to ${current === 'dark' ? 'light' : 'dark'} theme`,
+    `Theme: ${current}. Switch to ${current === 'dark' ? 'light' : 'dark'} theme`,
   );
   if (theme) theme.textContent = `Theme: ${current}`;
 }

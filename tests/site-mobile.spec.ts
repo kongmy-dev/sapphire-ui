@@ -105,7 +105,10 @@ test('mobile drawer traps focus, closes from its backdrop and resets on desktop 
   await expect(page.locator('body')).not.toHaveAttribute('data-nav-open');
   await expect(sidebar).not.toHaveAttribute('aria-modal');
   await expect(
-    sidebar.getByRole('button', { name: 'Search documentation', exact: true }),
+    sidebar.getByRole('button', {
+      name: 'Search documentation… ⌘K',
+      exact: true,
+    }),
   ).toBeFocused();
   await expect(page.locator('#main')).not.toHaveAttribute('inert');
   await expect(sidebar).toBeInViewport();
@@ -125,7 +128,7 @@ test('short mobile drawers keep controls reachable while only the page list scro
     exact: true,
   });
   const theme = sidebar.getByRole('button', {
-    name: 'Switch to dark theme',
+    name: 'Theme: light. Switch to dark theme',
     exact: true,
   });
   await expect(close).toBeInViewport();
