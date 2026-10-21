@@ -30,7 +30,7 @@ test('focus opens a portaled preview and blur dismisses it without moving focus'
   expect(document.activeElement).toBe(trigger);
   act(() => trigger.blur());
   await waitFor(() =>
-    expect(screen.queryByText('Preview biography')).toBeNull(),
+    expect(screen.queryAllByText('Preview biography').length).toBe(0),
   );
 });
 

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Button } from '../button/button.js';
 import { Avatar } from './avatar.js';
 
 const portrait =
@@ -27,9 +28,13 @@ function AvatarLifecycle() {
         alt="Profile portrait"
         fallback="AP"
       />
-      <button type="button" onClick={() => setBroken((current) => !current)}>
+      <Button
+        type="button"
+        variant="outline"
+        onClick={() => setBroken((current) => !current)}
+      >
         {broken ? 'Restore portrait' : 'Break portrait'}
-      </button>
+      </Button>
     </div>
   );
 }

@@ -1,15 +1,82 @@
 # Sapphire UI v4 — plan
 
 **Status:** Implementation authorized through P11, with at most two GPT-6.1 Sol subagents.
-P8 is reopened: the owner rejected the deployed documentation layout after its left navigation was removed.
-P11 is held pending review of the restored navigation; migration tooling is complete.
-The v4-only visual suite passes 748 zero-tolerance cases; all 1,578 final browser checks pass
-with 161 discovered examples after retirement. The first push and automated documentation deployment
-are complete; remote browser/visual verification, the v4 tag and publication remain.
+P8 is reopened: the owner rejected the removed navigation and reduced foundation/API content.
+P11 publication through the existing tag workflow is requested; final-candidate
+verification remains. The owner authorized master integration, push and cleanup
+of the task branches after release. The owner retains
+documentation acceptance; migration tooling is complete.
+The v4-only visual suite passes 748 zero-tolerance cases; all 1,626 remote browser checks pass
+with 161 files checked by accessibility coverage. The first push and automated documentation deployment
+are complete. Remote accessibility at `462d75b` passes all 1,626 browser checks; remote quality at `2dd34fe` passes; the fourteen native-control baseline changes and six example-polish updates are owner-approved;
+the v4 tag, publication and published-consumer verification remain.
 D5 retains button widths while reducing height and applies the approved targeted polish.
 Delete this file when 4.0.0 ships.
 
 ### Current execution checkpoint
+
+- The owner requested npm v4 publication after the remaining documentation fixes.
+  Hook guides now mount the six real hooks. Component examples include copyable
+  JSX, dependency commands, demo CSS and HTML disclosures; native HTML is captured
+  before connection to avoid duplicating generated controls. Catalogue introductions
+  explain purpose and use. Shell version and descriptions follow package/page content.
+  Final local and remote checks precede approved master integration and the trusted
+  release tag. The owner authorized publication and master integration, push and
+  task-branch cleanup. Publication and project acceptance are separate milestones.
+
+- Documentation restores visual colours, font families and type scale, spacing, shape,
+  elevation and hook references. Component pages show supported props from public TypeScript
+  signatures, grouped platform props and compound/supporting APIs; native and CSS-only pages
+  describe their own contracts. Implementation and example source dumps are removed.
+  Each page renders every named example inline in the selected page theme, without frames or
+  standalone launch links. Prose explains article typography. Avatar uses Button and Command
+  Palette uses shared cluster spacing; the owner approved all six resulting pin updates.
+  Shared-page checks also cover SEO output without head pollution, modal shortcut priority,
+  independently clickable native cookie variants and concurrent Toast queues in one viewport.
+  The migration comparison is removed from the documentation catalogue; the separately
+  published comparison and repository migration guide remain available. Documentation
+  acceptance, production deployment, tagging and publication stay held.
+
+- Mobile documentation restores the menu before the brand and version, with the
+  drawer covering the header and its close control inside the drawer. Mobile
+  navigation rows retain touch targets; the page list scrolls independently.
+  Drawer search, focus containment, backdrop dismissal and desktop resize have
+  browser regressions, alongside the existing content and accessibility checks.
+
+- Owner requested the remote accessibility correction and a separately published migration
+  comparison. Documentation acceptance, release tagging and npm publication stay owner-gated.
+  The three Linux WebKit failures pair inherited light text with a browser-selected grey
+  native-control background. Shared base CSS now pairs `--foreground` and `--card` for native
+  controls; styled components retain their component-layer rules. Timeline hash navigation
+  now uses a retrying URL assertion. Five focused Linux WebKit checks pass at `462d75b` with `bunx --no-install playwright test`
+  (three originally failing examples plus the native-control regression in both themes).
+  A minimal Linux button fixture restores the original reset by a later base-layer override:
+  foreground `rgb(241, 245, 249)` over `rgb(192, 192, 192)` fails axe; the fixed background
+  `rgb(17, 34, 64)` passes. The fixture is in `site/comparison/sources/linux-native-regression.txt`.
+  Full Linux CI at `462d75b` now passes all 1,626 browser checks and the 161-file accessibility coverage gate
+  ([run 39524778212](https://github.com/kongmy-dev/sapphire-ui/actions/runs/39524778212)).
+  All 1,626 local browser checks pass at `462d75b` (`bun run test:a11y`), including
+  six new native-control cases. The owner approved the six bare-button surface/chrome pin
+  updates; `bun run pin` updates only those six files. The owner subsequently approved the eight field updates and requested more text-field spacing.
+  Dialog, Popover and Sheet examples now reuse Input and Label with 12px label gaps; SplitLayout
+  uses Textarea with 16px editor/navigation insets. Runtime CSS and APIs stay unchanged by this
+  composition correction. All 24 focused three-engine browser checks and 27 independent unit
+  checks pass. The supported pin command updates the eight approved files; the full local visual suite passes all 748 cases. The fresh spacing-change gate passes 18 tasks and 923 tests with zero cache hits.
+  Remote quality found one HoverCard async assertion failure: formatting a live DOM object
+  can starve its close timer. A primitive count keeps the removal check and timeout intact;
+  120 focused local reruns and the fresh 923-test gate pass. Remote quality now passes at `2dd34fe`
+  ([run 39527350307](https://github.com/kongmy-dev/sapphire-ui/actions/runs/39527350307)). The concise agent procedure remains in `docs/migrate-v3-v4.md`; the comparison site is
+  published separately and explains migration value without performance claims.
+
+- Status review at local source `a99658f`: latest observed remote CI is `331ce2e`
+  ([run 39397626860](https://github.com/kongmy-dev/sapphire-ui/actions/runs/39397626860)).
+  Quality and visual jobs pass; accessibility fails three WebKit dark examples:
+  Avatar lifecycle, controlled Checkbox and controlled Popover. Logs report contrast
+  failures on bare example buttons; Timeline keyboard navigation is also flaky.
+  The run records 1,589 passing cases, three failures and one flaky case. These are
+  remote findings, not a reproduced root-cause diagnosis of the local head. npm latest
+  remains 3.0.0; no v4 tag or GitHub release was observed. Sidebar acceptance remains open.
+  The focused visual/API comparison is available locally at `/v3-v4/`.
 
 - The deployed P8 rewrite incorrectly replaced the left sidebar with a flat catalogue and top links.
   Restore a persistent sidebar with grouped component links, active-page indication, search,
@@ -109,10 +176,10 @@ remain the acceptance criteria; retained v3 code does not count as a v4 implemen
 | P5 — elements | Complete: six native elements with passing lifecycle, SSR, equivalence, keyboard, accessibility and visual coverage |
 | P6 — package | Integrated: 156 generated exact exports, ESM/declarations, zero runtime dependencies, four optional peers and passing packed consumer smoke |
 | P7 — registry | Integrated: 33 v4 items, seven ported blocks, frozen legacy URLs and passing real CLI/mixed ownership smoke. Integrated gate and production build pass; deployed smoke remains P11 |
-| P8 — site | Reopened after owner rejected missing left navigation. Sidebar restoration is under local browser and visual review; deployment is held pending the corrected preview decision |
+| P8 — site | Reopened for navigation and content depth. Sidebar, visual foundations and supported component APIs are restored in the local review preview; documentation acceptance and production deployment remain held |
 | P9 — retirement | Complete: v3 runtime/build removed, historical migration facts and legacy registry retained, interaction inventory preserved. Current size limits retained by owner approval; measured p95 is 4/34/211/5. Package dry run lists only allowed files, then stops for missing local publish credentials; packed consumer checks pass |
 | P10 — docs | Complete: CLAUDE is 84 lines, consumer skill 40 lines; consolidated guidance, docs and skill-reference gates pass. Release migration notes remain P11 |
-| P11 — release | Migration tooling, generated release maps, local gates and consumer smoke complete. Trusted publisher confirmed by owner. First push and automated Cloudflare deployment pass; remote browser/visual jobs, v4 tag, publication and published-package smoke remain |
+| P11 — release | Migration tooling, generated release maps, local gates and consumer smoke complete. Trusted publisher confirmed by owner. Remote accessibility passes at `462d75b` and quality at `2dd34fe`; quality and visual jobs also pass at `65d1011`; final-candidate remote verification remains. Documentation acceptance, fresh remote verification of the final candidate, v4 tag, publication and published-package smoke remain |
 
 ### P3 completion checkpoint
 

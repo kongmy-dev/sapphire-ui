@@ -1,5 +1,6 @@
 import { type ComponentType, createElement } from 'react';
 import { createRoot } from 'react-dom/client';
+import { exampleTargets } from './targets';
 
 type Example = {
   readonly name: string;
@@ -9,10 +10,14 @@ type Example = {
 export function mountExample(
   catalog: Readonly<Record<string, readonly Example[]>>,
 ) {
-  const params = new URL(location.href).searchParams;
-  const examples = catalog[params.get('component') ?? ''];
-  const example = examples?.find(({ name }) => name === params.get('example'));
-  const root = document.getElementById('example');
-  if (!root || !example) throw new Error('The requested example is missing');
-  createRoot(root).render(createElement(example.render));
+  for (const { root, component, name } of exampleTargets()) {
+    const example = catalog[component]?.find(
+      (example) => example.name === name,
+    );
+    if (!example)
+      throw new Error(`The requested example ${component}/${name} is missing`);
+    createRoot(root, { identifierPrefix: `${component}-${name}-` }).render(
+      createElement(example.render),
+    );
+  }
 }

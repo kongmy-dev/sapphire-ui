@@ -31,3 +31,7 @@
 .docs-split-text--main {
   color: var(--foreground);
 }
+
+.docs-split-content {
+  padding: var(--space-4);
+}

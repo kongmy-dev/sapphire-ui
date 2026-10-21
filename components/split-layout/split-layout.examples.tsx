@@ -1,3 +1,4 @@
+import { Textarea } from '../textarea/textarea.js';
 import { SplitHandle, SplitLayout, SplitPanel } from './split-layout.js';
 
 function SplitWorkspace() {
@@ -5,16 +6,20 @@ function SplitWorkspace() {
     <div className="docs-split-frame">
       <SplitLayout aria-label="Workspace panels">
         <SplitPanel id="navigation" defaultSize="30%" minSize="15%">
-          <h2>Navigation</h2>
-          <a href="#workspace-projects">Projects</a>
+          <div className="docs-split-content">
+            <h2>Navigation</h2>
+            <a href="#workspace-projects">Projects</a>
+          </div>
         </SplitPanel>
         <SplitHandle withHandle aria-label="Resize navigation" />
         <SplitPanel id="editor">
-          <h2>Editor</h2>
-          <textarea
-            aria-label="Document content"
-            defaultValue="Project notes"
-          />
+          <div className="docs-split-content">
+            <h2>Editor</h2>
+            <Textarea
+              aria-label="Document content"
+              defaultValue="Project notes"
+            />
+          </div>
         </SplitPanel>
       </SplitLayout>
     </div>

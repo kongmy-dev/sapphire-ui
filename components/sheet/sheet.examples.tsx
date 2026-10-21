@@ -1,6 +1,8 @@
 'use client';
 
 import { Button } from '../button/button.js';
+import { Input } from '../input/input.js';
+import { Label } from '../label/label.js';
 import {
   Sheet,
   SheetClose,
@@ -25,10 +27,10 @@ function SheetSettings() {
             Manage your workspace preferences.
           </SheetDescription>
         </SheetHeader>
-        <label>
-          Workspace name
-          <input defaultValue="Sapphire" />
-        </label>
+        <div className="sp-stack docs-sheet-slot" data-size="sm">
+          <Label htmlFor="sheet-name">Workspace name</Label>
+          <Input id="sheet-name" defaultValue="Sapphire" />
+        </div>
         <SheetFooter>
           <SheetClose asChild>
             <Button>Save workspace</Button>

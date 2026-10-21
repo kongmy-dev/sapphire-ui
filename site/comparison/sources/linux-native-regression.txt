@@ -1,0 +1,21 @@
+import { webkit } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+const css = await Bun.file('dist-site/assets/sapphire.css').text();
+const browser = await webkit.launch();
+const context = await browser.newContext({ colorScheme: 'dark' });
+const page = await context.newPage();
+const results = [];
+for (const state of ['before', 'after']) {
+  const previous = state === 'before' ? '@layer base {button,input,select,textarea{color:inherit;background:revert-layer}}' : '';
+  await page.setContent(`<!doctype html><html lang="en" data-theme="dark"><head><title>Native control regression</title><style>${css}${previous}</style></head><body><main><button>Native action</button></main></body></html>`);
+  const control = await page.getByRole('button').evaluate(element => {
+    const style = getComputedStyle(element);
+    return { color: style.color, background: style.backgroundColor };
+  });
+  const axe = await new AxeBuilder({ page }).withRules(['color-contrast']).analyze();
+  results.push({ state, control, violations: axe.violations.map(v => v.id) });
+}
+await browser.close();
+await Bun.write('dist-site-review/linux-native-regression.json', JSON.stringify(results, null, 2));
+console.log(JSON.stringify(results));
+if (!results[0]?.violations.includes('color-contrast') || results[1]?.violations.length) throw Error('Regression did not distinguish the original reset from the fix');

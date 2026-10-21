@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { Button } from '../button/button.js';
+import { Input } from '../input/input.js';
+import { Label } from '../label/label.js';
 import {
   ConfirmDialog,
   Dialog,
@@ -25,12 +27,12 @@ function DialogUncontrolled() {
         <DialogHeader>
           <DialogTitle>Edit profile</DialogTitle>
         </DialogHeader>
-        <DialogBody>
+        <DialogBody className="sp-stack">
           <DialogDescription>Update your public profile.</DialogDescription>
-          <label>
-            Display name
-            <input defaultValue="Alex" />
-          </label>
+          <div className="sp-stack" data-size="sm">
+            <Label htmlFor="dialog-name">Display name</Label>
+            <Input id="dialog-name" defaultValue="Alex" />
+          </div>
         </DialogBody>
         <DialogFooter>
           <DialogClose asChild>

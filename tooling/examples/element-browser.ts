@@ -1,3 +1,5 @@
+import { exampleTargets } from './targets';
+
 type NativeExample = {
   readonly name: string;
   readonly render: () => HTMLElement;
@@ -6,12 +8,28 @@ type NativeExample = {
 export function mountElementExample(
   catalog: Readonly<Record<string, readonly NativeExample[]>>,
 ) {
-  const params = new URL(location.href).searchParams;
-  const example = catalog[params.get('component') ?? '']?.find(
-    ({ name }) => name === params.get('example'),
-  );
-  const root = document.getElementById('example');
-  if (!root || !example)
-    throw new Error('The requested native example is missing');
-  root.replaceChildren(example.render());
+  for (const { root, component, name } of exampleTargets()) {
+    const example = catalog[component]?.find(
+      (example) => example.name === name,
+    );
+    if (!example)
+      throw new Error(
+        `The requested native example ${component}/${name} is missing`,
+      );
+    const rendered = example.render();
+    if (root.closest('.docs-example')) {
+      const elements = [rendered, ...rendered.querySelectorAll('*')];
+      root.dataset.usageHtml = elements
+        .filter(
+          (element) =>
+            element.localName.includes('-') &&
+            !element.parentElement?.closest(
+              'sapphire-banner, sapphire-site-header, sapphire-site-footer, cookie-banner, sapphire-toast, sapphire-analytics',
+            ),
+        )
+        .map((element) => element.outerHTML)
+        .join('\n');
+    }
+    root.replaceChildren(rendered);
+  }
 }

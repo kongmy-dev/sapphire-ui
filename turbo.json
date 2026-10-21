@@ -1,0 +1,51 @@
+{
+  "$schema": "https://turborepo.dev/schema.json",
+  "agentGuidance": false,
+  "remoteCache": { "enabled": false },
+  "cacheDir": ".turbo/cache",
+  "concurrency": "4",
+  "globalDependencies": [".bun-version"],
+  "globalEnv": ["CI", "NODE_ENV", "TZ"],
+  "tasks": {
+    "lint": {},
+    "typecheck": {
+      "outputs": ["node_modules/.tmp/tsconfig.node.tsbuildinfo"]
+    },
+    "knip": {},
+    "comment-check": { "cache": false },
+    "size-check": { "cache": false },
+    "dep-check": {},
+    "token-check": { "cache": false },
+    "budget-check": {},
+    "generated-check": {},
+    "api-check": { "cache": false },
+    "boundary-check": { "cache": false },
+    "contract-check": { "cache": false },
+    "docs-check": { "cache": false },
+    "skill-refs-check": { "cache": false },
+    "test": {
+      "outputs": ["coverage/**"]
+    },
+    "coverage-check": {
+      "dependsOn": ["test"],
+      "cache": false
+    },
+    "build:registry": {
+      "cache": false,
+      "passThroughEnv": ["REGISTRY_V4_OUT"]
+    },
+    "check:registry:v4": {
+      "dependsOn": ["build:registry"],
+      "cache": false,
+      "passThroughEnv": ["REGISTRY_V4_OUT"]
+    },
+    "test:registry": {
+      "cache": false,
+      "passThroughEnv": ["SAPPHIRE_PACKAGE_TARBALL", "SAPPHIRE_REGISTRY_URL"]
+    },
+    "smoke:registry": {
+      "cache": false,
+      "passThroughEnv": ["SAPPHIRE_PACKAGE_TARBALL", "SAPPHIRE_REGISTRY_URL"]
+    }
+  }
+}

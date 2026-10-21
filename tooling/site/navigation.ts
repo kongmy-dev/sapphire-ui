@@ -1,6 +1,6 @@
 import type { ExampleRow } from '../examples/catalog';
 
-const groups = [
+export const componentGroups = [
   ['Actions', ['button', 'toggle', 'chip', 'icon-mark']],
   [
     'Forms',
@@ -119,15 +119,21 @@ export function navigation(
 ) {
   const current = route ? `/${route}/` : '/';
   const names = [...new Set(react.map((row) => row.component))];
-  const grouped = new Set<string>(groups.flatMap(([, items]) => [...items]));
+  const grouped = new Set<string>(
+    componentGroups.flatMap(([, items]) => [...items]),
+  );
   const start = [
     ['/', 'Overview'],
     ['/foundations/', 'Getting started'],
+    ['/colors/', 'Colors'],
+    ['/typography/', 'Typography'],
     ['/tokens/', 'Tokens & themes'],
+    ['/spacing/', 'Spacing & shape'],
     ['/layout/', 'Layout primitives'],
-    ['/prose/', 'Typography'],
+    ['/prose/', 'Prose'],
+    ['/hooks/', 'Hooks & utilities'],
   ];
-  return `<nav aria-label="Documentation">${start.map(([href = '/', title = 'Overview']) => link(href, title, current)).join('')}<p class="docs-nav-label">Components</p>${groups
+  return `<nav aria-label="Documentation">${start.map(([href = '/', title = 'Overview']) => link(href, title, current)).join('')}<p class="docs-nav-label">Components</p>${componentGroups
     .map(([title, items]) =>
       group(
         title,

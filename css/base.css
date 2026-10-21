@@ -79,7 +79,8 @@
   textarea {
     font: inherit;
     letter-spacing: inherit;
-    color: inherit;
+    color: var(--foreground);
+    background: var(--card);
   }
 
   :focus-visible {

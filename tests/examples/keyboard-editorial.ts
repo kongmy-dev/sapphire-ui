@@ -27,7 +27,7 @@ async function contentsLinks(page: Page) {
     await expect(link).toBeFocused();
     await page.keyboard.press('Enter');
     const target = await link.getAttribute('href');
-    expect(new URL(page.url()).hash).toBe(target);
+    await expect(page).toHaveURL((url) => url.hash === target);
   }
   const long = page.getByRole('link', {
     name: /^Requirements and implementation/,
@@ -63,7 +63,7 @@ async function followLink(page: Page, name: string, hash: string) {
   const link = page.getByRole('link', { name, exact: true });
   await link.focus();
   await page.keyboard.press('Enter');
-  expect(new URL(page.url()).hash).toBe(hash);
+  await expect(page).toHaveURL((url) => url.hash === hash);
 }
 
 export const keyboardCases: Readonly<

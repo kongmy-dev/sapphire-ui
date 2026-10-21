@@ -8,6 +8,10 @@ const routes = [
   '/',
   '/foundations/',
   '/tokens/',
+  '/colors/',
+  '/typography/',
+  '/spacing/',
+  '/hooks/',
   '/layout/',
   '/prose/',
   '/native/',
@@ -30,45 +34,82 @@ test('static site serves every independently discovered component and native pag
   expect((await request.get(`${SITE}/missing-page`)).status()).toBe(404);
 });
 
-for (const route of [
-  '/',
-  '/components/button/',
-  '/components/card/',
-  '/native/banner/',
-  '/tokens/',
-  '/layout/',
-  '/prose/',
-]) {
-  test(`site accessibility ${route}`, async ({ page }) => {
-    const errors: string[] = [];
-    page.on('pageerror', (error) => errors.push(error.message));
-    await page.goto(`${SITE}${route}`);
-    const main = page.locator('#main');
-    await expect(main.getByRole('heading', { level: 1 })).toHaveCount(1);
-    await expect(main.getByRole('heading', { level: 1 })).toBeVisible();
-    const levels = await main
-      .getByRole('heading')
-      .evaluateAll((headings) =>
-        headings.map((heading) => Number(heading.tagName.slice(1))),
-      );
-    expect(levels[0]).toBe(1);
-    for (const [index, level] of levels.entries())
-      expect(level).toBeLessThanOrEqual((levels[index - 1] ?? 0) + 1);
-    const result = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-      .analyze();
-    expect(result.violations).toEqual([]);
-    await page.setViewportSize({ width: 390, height: 844 });
-    expect(
-      await page.evaluate(
-        () => document.documentElement.scrollWidth <= innerWidth,
-      ),
-    ).toBe(true);
-    await page.getByRole('link', { name: 'Skip to content' }).focus();
-    await page.keyboard.press('Enter');
-    await expect(page).toHaveURL(/#main$/);
-    expect(errors).toEqual([]);
-  });
+test('overview groups component links and component pages lead with current setup', async ({
+  page,
+}) => {
+  await page.goto(SITE);
+  const main = page.locator('#main');
+  await expect(
+    main.getByRole('heading', { name: 'Architecture', exact: true }),
+  ).toBeVisible();
+  await main.getByRole('link', { name: 'Button', exact: true }).click();
+  const setup = page.locator('#setup');
+  await expect(setup).toContainText(
+    'bun add @kongmy-dev/sapphire-ui react react-dom',
+  );
+  await expect(setup).toContainText('@kongmy-dev/sapphire-ui/sapphire.css');
+  await page.getByRole('link', { name: 'Examples', exact: true }).click();
+  await expect(page).toHaveURL(/#examples$/);
+  await expect(
+    page
+      .locator('#example-variants')
+      .getByRole('button', { name: 'Primary', exact: true }),
+  ).toBeVisible();
+  await page.goto(`${SITE}/native/banner/`);
+  await expect(page.locator('#setup')).toContainText(
+    'import "@kongmy-dev/sapphire-ui/elements/banner";',
+  );
+  await expect(page.locator('#setup')).not.toContainText(
+    'import { BannerElement }',
+  );
+});
+
+for (const scheme of ['light', 'dark'] as const) {
+  for (const route of [
+    '/',
+    '/components/button/',
+    '/components/card/',
+    '/native/banner/',
+    '/tokens/',
+    '/colors/',
+    '/typography/',
+    '/spacing/',
+    '/hooks/',
+    '/layout/',
+    '/prose/',
+  ]) {
+    test(`site accessibility ${scheme} ${route}`, async ({ page }) => {
+      await page.emulateMedia({ colorScheme: scheme });
+      const errors: string[] = [];
+      page.on('pageerror', (error) => errors.push(error.message));
+      await page.goto(`${SITE}${route}`);
+      const main = page.locator('#main');
+      await expect(main.getByRole('heading', { level: 1 })).toHaveCount(1);
+      await expect(main.getByRole('heading', { level: 1 })).toBeVisible();
+      const levels = await main
+        .getByRole('heading')
+        .evaluateAll((headings) =>
+          headings.map((heading) => Number(heading.tagName.slice(1))),
+        );
+      expect(levels[0]).toBe(1);
+      for (const [index, level] of levels.entries())
+        expect(level).toBeLessThanOrEqual((levels[index - 1] ?? 0) + 1);
+      const result = await new AxeBuilder({ page })
+        .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+        .analyze();
+      expect(result.violations).toEqual([]);
+      await page.setViewportSize({ width: 390, height: 844 });
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBe(true);
+      await page.getByRole('link', { name: 'Skip to content' }).focus();
+      await page.keyboard.press('Enter');
+      await expect(page).toHaveURL(/#main$/);
+      expect(errors).toEqual([]);
+    });
+  }
 }
 
 test('desktop documentation keeps a persistent sidebar beside the active page', async ({
@@ -108,6 +149,24 @@ test('desktop documentation keeps a persistent sidebar beside the active page', 
     throw new Error('Sidebar must remain visible after content scroll');
   expect(Math.abs(after.y)).toBeLessThan(1);
   expect(after.x + after.width).toBe(columns.sidebarRight);
+});
+
+test('resizing a closed navigation preserves keyboard focus', async ({
+  page,
+}) => {
+  await page.goto(`${SITE}/components/button/`);
+  const skip = page.getByRole('link', { name: 'Skip to content' });
+  await skip.focus();
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.evaluate(
+    () =>
+      new Promise<void>((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+      ),
+  );
+  await expect(skip).toBeFocused();
+  await skip.press('Enter');
+  await expect(page).toHaveURL(/#main$/);
 });
 
 test('documentation search opens a keyboard command palette and restores focus', async ({
@@ -156,12 +215,14 @@ test('documentation search opens a keyboard command palette and restores focus',
   await trigger.click();
   await search.fill('');
   await search.press('ArrowDown');
-  await expect(dialog.getByRole('option', { selected: true })).toHaveText(
-    'Getting startedGuides',
+  await expect(dialog.getByRole('option').nth(1)).toHaveAttribute(
+    'aria-selected',
+    'true',
   );
   await search.press('ArrowUp');
-  await expect(dialog.getByRole('option', { selected: true })).toHaveText(
-    'OverviewGuides',
+  await expect(dialog.getByRole('option').first()).toHaveAttribute(
+    'aria-selected',
+    'true',
   );
   await search.fill('card');
   await search.press('Enter');
@@ -175,6 +236,9 @@ test('documentation theme toggle changes and persists the selected scheme', asyn
   await page.emulateMedia({ colorScheme: 'light' });
   await page.goto(`${SITE}/components/button/`);
   const sidebar = page.locator('#docs-sidebar');
+  const lightCanvas = await page
+    .locator('body')
+    .evaluate((element) => getComputedStyle(element).backgroundColor);
   const lightSurface = await sidebar.evaluate(
     (element) => getComputedStyle(element).backgroundColor,
   );
@@ -185,7 +249,12 @@ test('documentation theme toggle changes and persists the selected scheme', asyn
   const darkSurface = await sidebar.evaluate(
     (element) => getComputedStyle(element).backgroundColor,
   );
-  expect(darkSurface).not.toBe(lightSurface);
+  expect(darkSurface).toBe(lightSurface);
+  expect(
+    await page
+      .locator('body')
+      .evaluate((element) => getComputedStyle(element).backgroundColor),
+  ).not.toBe(lightCanvas);
   await expect(
     page.getByRole('button', { name: 'Switch to light theme', exact: true }),
   ).toBeVisible();
@@ -216,7 +285,11 @@ test('mobile navigation supports keyboard dismissal and page navigation without 
     name: 'Close navigation',
     exact: true,
   });
-  await expect(close).toHaveAttribute('aria-expanded', 'true');
+  await expect(close).toBeVisible();
+  await expect(page.locator('.docs-menu')).toHaveAttribute(
+    'aria-expanded',
+    'true',
+  );
   await expect(sidebar).toBeInViewport();
   expect(
     (
@@ -294,3 +367,17 @@ test('search supports dark mode, mobile resize and pointer selection', async ({
     .click();
   await expect(page).toHaveURL(`${SITE}/components/card/`);
 });
+
+for (const scheme of ['light', 'dark'] as const) {
+  test(`native control contrast ${scheme} without component classes`, async ({
+    page,
+  }) => {
+    await page.setContent(
+      `<!doctype html><html lang="en" data-theme="${scheme}"><head><title>Native control contrast</title><link rel="stylesheet" href="${SITE}/assets/sapphire.css"></head><body><main><button type="button">Native action</button><label>Name<input value="Ada"></label><label>Choice<select><option>One</option></select></label><label>Notes<textarea>Details</textarea></label></main></body></html>`,
+    );
+    const result = await new AxeBuilder({ page })
+      .withRules(['color-contrast'])
+      .analyze();
+    expect(result.violations).toEqual([]);
+  });
+}
