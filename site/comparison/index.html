@@ -37,14 +37,14 @@
         <p class="comparison-kicker">Sapphire UI / v3 → v4</p>
         <h1>The same character.<br><em>A different foundation.</em></h1>
         <p class="comparison-lead">Navy, gold and editorial type stay. v4 makes CSS the shared contract, tightens the UI and gives React, native elements and plain HTML a common foundation.</p>
-        <div class="comparison-verdict"><span class="comparison-status" data-tone="warning">Release held</span><p>Implementation is largely complete. The remote accessibility fix is under verification. Documentation acceptance, the release tag and package publication remain owner-gated.</p></div>
+        <div class="comparison-verdict"><span class="comparison-status" data-tone="warning">Release held</span><p>Implementation is largely complete. Local accessibility passes. Remote CI and visual baseline review are in progress. Documentation acceptance, the release tag and package publication remain owner-gated.</p></div>
         <div class="comparison-facts">
           <div><strong>0</strong><span>v4 runtime dependencies</span></div>
           <div><strong>6</strong><span>native element entrypoints</span></div>
           <div><strong>156</strong><span>exact package exports</span></div>
           <div><strong>3.0.0</strong><span>still the npm latest</span></div>
         </div>
-        <p class="comparison-note">Review snapshot · 21 October 2026 · local source <code>312f0b1</code> + current fixes · remote CI <code>331ce2e</code>. These are different revisions; passing remote jobs do not certify the local head.</p>
+        <p class="comparison-note">Review snapshot · 21 October 2026 · runtime fix <code>462d75b</code> plus follow-up verification changes. Screenshots retain the source revisions named below; CI results identify their own revision.</p>
       </section>
       <section class="comparison-section" id="controls">
         <header class="comparison-section-heading"><p class="comparison-kicker">01 / Visible polish</p><h2>Less height. The same presence.</h2><p>Default v4 controls align at 36px on fine pointers. Button widths and icon footprints are preserved; coarse pointers get a minimum 44px target. Compactness should not cost usability.</p></header>
@@ -188,9 +188,9 @@ bun run migrate /path/to/app</code></pre>
         <div class="comparison-table-wrap" role="region" aria-label="Release evidence table"><table class="comparison-table"><caption>v4 status at the review snapshot</caption><thead><tr><th scope="col">Area</th><th scope="col">Status</th><th scope="col">Evidence / remaining work</th></tr></thead><tbody>
           <tr><th scope="row">CSS, React &amp; native</th><td><span class="comparison-status">Implemented</span></td><td>Shared tokens and styles; six native entries; local plan records lifecycle and equivalence coverage.</td></tr>
           <tr><th scope="row">Package &amp; registry</th><td><span class="comparison-status">Implemented</span></td><td>156 exports, four optional peers, 33 registry items; local packed-consumer evidence is recorded in the plan.</td></tr>
-          <tr><th scope="row">Fresh local review</th><td><span class="comparison-status">Passed</span></td><td><code>bun run gate --force</code>: 18 tasks, 923 tests, zero cache hits at <code>312f0b1</code> plus the accessibility, guide and comparison changes. This page passes axe and layout/link checks across 12 browser/theme/viewport combinations.</td></tr>
-          <tr><th scope="row">Remote quality &amp; visuals</th><td><span class="comparison-status">Passed</span></td><td><a href="https://github.com/kongmy-dev/sapphire-ui/actions/runs/39397626860">CI at 331ce2e</a>: both jobs succeeded. This predates the local source snapshot.</td></tr>
-          <tr><th scope="row">Remote accessibility</th><td><span class="comparison-status" data-tone="error">Failed</span></td><td>Last remote result: 3 WebKit dark cases on bare Avatar, Checkbox and Popover buttons; 1,589 passed. Shared native-control colours are now paired locally and Timeline navigation waits for its URL. Fresh remote verification is pending; six changed button pins await owner review.</td></tr>
+          <tr><th scope="row">Fresh local review</th><td><span class="comparison-status">Passed</span></td><td><code>bun run gate --force</code>: 18 tasks, 923 tests, zero cache hits at <code>462d75b</code>. All 1,626 local browser checks pass at that revision. This page passes axe and layout/link checks across 12 browser/theme/viewport combinations.</td></tr>
+          <tr><th scope="row">Remote quality &amp; visuals</th><td><span class="comparison-status" data-tone="warning">Verification open</span></td><td><a href="https://github.com/kongmy-dev/sapphire-ui/actions/runs/39524778212">Draft PR CI at 462d75b</a>: quality failed on HoverCard test diagnostics; a count-based assertion passes 120 local repeats. Six button pins are owner-approved and updated; eight plain-field pin changes await review.</td></tr>
+          <tr><th scope="row">Remote accessibility</th><td><span class="comparison-status" data-tone="warning">Running</span></td><td>Fresh Linux CI is running at <code>462d75b</code>. The earlier three WebKit dark failures came from bare buttons inheriting light text over a grey native background. Shared control colours are now paired; all 1,626 local browser checks and five focused Linux WebKit cases pass. A minimal Linux fixture reproduces the old contrast failure and passes with the fix. Full remote proof remains open.</td></tr>
           <tr><th scope="row">Documentation acceptance</th><td><span class="comparison-status" data-tone="warning">Awaiting review</span></td><td>P8 reopened after removal of left navigation. Local sidebar and command-search restoration is recorded; approval is still open.</td></tr>
           <tr><th scope="row">Tag &amp; publication</th><td><span class="comparison-status" data-tone="warning">Not released</span></td><td>No v4 tag or release in the local and remote inventories. <a href="https://www.npmjs.com/package/@kongmy-dev/sapphire-ui">npm latest remains 3.0.0</a>. Published v4 consumer smoke remains.</td></tr>
         </tbody></table></div>
@@ -210,7 +210,8 @@ bun run migrate /path/to/app</code></pre>
           <li><a href="evidence.json">Capture metadata and source paths</a></li>
           <li><a href="sources/plan.txt">Local-revision release checklist</a> · recorded implementation and acceptance status</li>
           <li><a href="sources/changelog.txt">Migration and breaking changes</a></li>
-          <li><a href="https://github.com/kongmy-dev/sapphire-ui/actions/runs/39397626860">Latest observed remote CI</a> · inspected with <code>gh run view 39397626860 --log-failed</code></li>
+          <li><a href="sources/linux-native-regression.txt">Linux WebKit contrast reproduction</a> · original reset fails; token-paired reset passes</li>
+          <li><a href="https://github.com/kongmy-dev/sapphire-ui/actions/runs/39524778212">Current draft PR CI</a> · job results and logs identify unresolved checks</li>
           <li><a href="https://registry.npmjs.org/@kongmy-dev%2fsapphire-ui/latest">npm latest metadata</a> · queried directly during review</li>
           <li><a href="https://github.com/kongmy-dev/sapphire-ui/releases">GitHub releases</a> · latest observed release v3.0.0</li>
           <li><a href="https://playwright.dev/docs/screenshots">Playwright capture reference</a> · <a href="https://tailwindcss.com/docs/installation/using-vite">Tailwind Vite compilation reference</a></li>

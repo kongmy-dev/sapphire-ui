@@ -137,5 +137,46 @@
       "pageOverflow": false
     },
     "scope": "Comparison-page checks do not resolve or supersede remote runtime accessibility failures."
+  },
+  "followUp": {
+    "runtimeCommit": "462d75b0b04bd35c131f5690ea2154a85801dea0",
+    "remoteRun": "https://github.com/kongmy-dev/sapphire-ui/actions/runs/39524778212",
+    "remoteAccessibility": "in progress",
+    "remoteQuality": "failed: HoverCard async assertion diagnostic cost; count-based follow-up pending remote proof",
+    "localBrowser": {
+      "command": "bun run test:a11y",
+      "passed": 1626,
+      "failed": 0
+    },
+    "pins": {
+      "approvedButtonUpdates": 6,
+      "fieldUpdatesAwaitingReview": 8
+    },
+    "ownerGates": [
+      "documentation acceptance",
+      "release tag",
+      "package publication"
+    ],
+    "linuxWebKit": {
+      "command": "Linux arm64 pin image: bunx --no-install playwright test tests/examples.a11y.spec.ts tests/site.spec.ts --project=webkit --grep \"react/(avatar/lifecycle|checkbox/controlled|popover/controlled)/dark|native control contrast\" --workers=2 --reporter=line",
+      "runtimeCommit": "462d75b0b04bd35c131f5690ea2154a85801dea0",
+      "focusedPassed": 5,
+      "focusedFailed": 0,
+      "causalExperiment": {
+        "command": "bun node_modules/.cache/sapphire-comparison/linux-native-regression.ts (inside Linux arm64 pin image)",
+        "fixtureSource": "sources/linux-native-regression.txt",
+        "originalResetEmulation": {
+          "foreground": "rgb(241, 245, 249)",
+          "background": "rgb(192, 192, 192)",
+          "axeViolations": ["color-contrast"]
+        },
+        "fixedReset": {
+          "foreground": "rgb(241, 245, 249)",
+          "background": "rgb(17, 34, 64)",
+          "axeViolations": []
+        },
+        "limitation": "Minimal dark button fixture; the original reset is restored by a later base-layer override. Full CI is separate evidence."
+      }
+    }
   }
 }

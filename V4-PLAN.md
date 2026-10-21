@@ -17,9 +17,20 @@ Delete this file when 4.0.0 ships.
   The three Linux WebKit failures pair inherited light text with a browser-selected grey
   native-control background. Shared base CSS now pairs `--foreground` and `--card` for native
   controls; styled components retain their component-layer rules. Timeline hash navigation
-  now uses a retrying URL assertion. Local focused WebKit checks pass; remote proof is pending.
-  Six intentional bare-button pin differences are prepared for owner review; other 742 pins
-  match. The concise agent procedure lives in `docs/migrate-v3-v4.md`, linked from `/v3-v4/`,
+  now uses a retrying URL assertion. Five focused Linux WebKit checks pass at `462d75b` with `bunx --no-install playwright test`
+  (three originally failing examples plus the native-control regression in both themes).
+  A minimal Linux button fixture restores the original reset by a later base-layer override:
+  foreground `rgb(241, 245, 249)` over `rgb(192, 192, 192)` fails axe; the fixed background
+  `rgb(17, 34, 64)` passes. The fixture is in `site/comparison/sources/linux-native-regression.txt`.
+  Full remote proof is pending.
+  All 1,626 local browser checks pass at `462d75b` (`bun run test:a11y`), including
+  six new native-control cases. The owner approved the six bare-button surface/chrome pin
+  updates; `bun run pin` updates only those six files. The full rerun has 740 passing cases
+  and eight intentional raw-field changes (Dialog, Popover, Sheet and SplitLayout in both
+  themes), prepared for separate owner approval. No other pins are changed.
+  Remote quality found one HoverCard async assertion failure: formatting a live DOM object
+  can starve its close timer. A primitive count keeps the removal check and timeout intact;
+  120 focused local reruns and the fresh 923-test gate pass. Remote confirmation is pending. The concise agent procedure lives in `docs/migrate-v3-v4.md`, linked from `/v3-v4/`,
   which now explains migration value and unlocked capabilities without performance claims.
 
 - Status review at local source `a99658f`: latest observed remote CI is `331ce2e`

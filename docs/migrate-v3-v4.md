@@ -4,6 +4,11 @@ Scope: migrate one app; preserve its behaviour and content. v4 is a breaking
 release. Confirm the approved v4 package or tarball before installing; do not
 assume the registry's `latest` tag is v4. Do not publish or tag the library.
 
+Value: shared CSS unifies React, native and HTML styling. Selective imports and
+optional peers enable CSS-only apps; explicit ownership enables one vendored
+component beside package components. These are capabilities, not measured app
+performance gains.
+
 ## Execute in this order
 
 1. Inspect the app's imports, CSS ownership, native registrations and lockfile.
@@ -52,7 +57,6 @@ Override colours on `:root, [data-theme="light"], [data-theme="dark"], .dark`, n
 only `:root`. Native tags/methods/events stay; React clients use shared CSS directly.
 
 ```tsx
-import { Button } from '@kongmy-dev/sapphire-ui/button';
 import { useLocalStorage } from '@kongmy-dev/sapphire-ui/hooks/use-local-storage';
 
 const [name, setName] = useLocalStorage('name', '', value => {
