@@ -5,7 +5,7 @@ import { createRef } from 'react';
 import { examples } from './wizard-layout.examples.js';
 import { WizardLayout, type WizardLayoutProps } from './wizard-layout.js';
 
-const steps = [{ label: 'One' }, { label: 'Two' }];
+const steps = [{ label: 'One' }, { label: 'Two' }] as const;
 
 it('preserves native props/ref and disabled actions across first and last steps', async () => {
   const ref = createRef<HTMLDivElement>();

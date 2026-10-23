@@ -46,7 +46,7 @@
 
   .sp-steps-step[data-status="done"] {
     --sp-steps-indicator-bg: var(--primary);
-    --sp-steps-indicator-fg: var(--on-dark);
+    --sp-steps-indicator-fg: var(--primary-foreground);
     --sp-steps-indicator-border-width: 0;
     --sp-steps-label-fg: var(--foreground-strong);
     --sp-steps-connector-bg: var(--foreground-strong);
@@ -54,7 +54,7 @@
 
   .sp-steps-step[data-status="active"] {
     --sp-steps-indicator-bg: var(--brand);
-    --sp-steps-indicator-fg: var(--primary);
+    --sp-steps-indicator-fg: var(--brand-foreground);
     --sp-steps-indicator-border-width: 0;
     --sp-steps-indicator-shadow: 0 0 0 var(--space-1)
       color-mix(in oklab, var(--brand) 18%, transparent);

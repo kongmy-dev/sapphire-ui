@@ -29,25 +29,131 @@ async function resizePanels(page: Page) {
 }
 
 async function adminNavigation(page: Page) {
-  const sidebar = page.getByRole('complementary');
-  const toggle = sidebar.getByRole('button');
+  const sidebar = page.getByRole('complementary', {
+    name: 'Workspace navigation',
+  });
   const initiallyCollapsed =
     (await sidebar.getAttribute('data-collapsed')) !== null;
-  await toggle.focus();
-  await page.keyboard.press('Enter');
+  const toggle = page.getByRole('button', {
+    name: /^(Expand|Collapse) sidebar$/,
+  });
+  await toggle.press('Enter');
   await expect(toggle).toHaveAccessibleName(
     initiallyCollapsed ? 'Collapse sidebar' : 'Expand sidebar',
   );
-  await page.keyboard.press('Space');
+  await toggle.press('Space');
   await expect(toggle).toHaveAccessibleName(
     initiallyCollapsed ? 'Expand sidebar' : 'Collapse sidebar',
   );
-  for (const link of await sidebar.getByRole('link').all()) {
-    const href = await link.getAttribute('href');
-    await link.focus();
-    await page.keyboard.press('Enter');
-    expect(new URL(page.url()).hash).toBe(href);
-  }
+  await sidebar.getByRole('link', { name: 'Projects 6' }).press('Enter');
+  await expect(
+    page.getByRole('heading', { level: 1, name: 'Projects' }),
+  ).toBeVisible();
+  await sidebar.getByRole('button', { name: 'Library' }).press('Enter');
+  await page
+    .getByRole('link', { name: 'Archived projects', exact: true })
+    .press('Enter');
+  await expect(
+    page.getByRole('heading', { level: 1, name: 'Archived projects' }),
+  ).toBeVisible();
+  await sidebar
+    .getByRole('link', { name: 'Overview', exact: true })
+    .press('Enter');
+  await expect(
+    page.getByRole('heading', { level: 1, name: 'Workspace overview' }),
+  ).toBeVisible();
+  const help = sidebar.getByRole('link', { name: 'Help', exact: true });
+  const href = await help.getAttribute('href');
+  await help.press('Enter');
+  expect(new URL(page.url()).hash).toBe(href);
+}
+
+async function adminRecords(page: Page) {
+  await page.getByRole('button', { name: 'Next', exact: true }).press('Enter');
+  await expect(page.getByRole('status')).toHaveText('6 projects · Page 2 of 2');
+  await page
+    .getByRole('button', { name: 'Previous', exact: true })
+    .press('Enter');
+  const search = page.getByRole('searchbox', { name: 'Search projects' });
+  await search.focus();
+  await search.pressSequentially('nothing');
+  await expect(
+    page.getByRole('heading', { name: 'No projects found' }),
+  ).toBeVisible();
+  await page.getByRole('button', { name: 'Clear filters' }).press('Enter');
+  await expect(search).toHaveValue('');
+  const create = page.getByRole('button', { name: 'New project' });
+  await create.press('Enter');
+  const dialog = page.getByRole('dialog', { name: 'Create project' });
+  await expect(
+    dialog.getByRole('textbox', { name: 'Project name' }),
+  ).toBeFocused();
+  await dialog
+    .getByRole('textbox', { name: 'Project name' })
+    .pressSequentially('Keyboard project');
+  await dialog
+    .getByRole('button', { name: 'Create project', exact: true })
+    .press('Enter');
+  await expect(dialog).toHaveCount(0);
+  await expect(
+    page.getByRole('row', { name: /Keyboard project/ }),
+  ).toBeVisible();
+}
+
+async function adminSettings(page: Page) {
+  const name = page.getByRole('textbox', { name: 'Workspace name' });
+  await name.fill('');
+  await page.getByRole('button', { name: 'Save changes' }).press('Enter');
+  await expect(name).toHaveAttribute('aria-invalid', 'true');
+  await name.focus();
+  await name.pressSequentially('Sapphire team');
+  await page
+    .getByRole('checkbox', { name: 'Weekly project summary' })
+    .press('Space');
+  await page.getByRole('button', { name: 'Save changes' }).press('Enter');
+  await expect(page.getByRole('status')).toHaveText(
+    'Workspace settings saved.',
+  );
+  await name.pressSequentially(' updated');
+  await expect(page.getByRole('status')).toBeEmpty();
+}
+
+async function compoundSelect(page: Page) {
+  const trigger = page.getByRole('combobox', { name: 'Billing country' });
+  await trigger.press('Enter');
+  await expect(
+    page.getByRole('option', { name: 'Malaysia', exact: true }),
+  ).toBeFocused();
+  await page.keyboard.press('ArrowDown');
+  await expect(
+    page.getByRole('option', { name: 'Singapore', exact: true }),
+  ).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(trigger).toBeFocused();
+  await expect(trigger).toContainText('Singapore');
+}
+
+async function businessFields(page: Page) {
+  const name = page.getByRole('textbox', { name: 'Business name' });
+  await name.focus();
+  await name.press('End');
+  await name.pressSequentially(' team');
+  await expect(name).toHaveValue('Acme Trading team');
+  await page.getByRole('textbox', { name: 'Billing email' }).focus();
+  await expect(
+    page.getByRole('textbox', { name: 'Billing email' }),
+  ).toBeFocused();
+}
+
+async function headerAction(page: Page) {
+  const action = page.getByRole('button', { name: 'New invoice' });
+  await action.press('Enter');
+  await expect(action).toBeFocused();
+}
+
+async function headerBreadcrumb(page: Page) {
+  await page.getByRole('link', { name: 'Settings' }).press('Enter');
+  await expect(page).toHaveURL(/#settings$/);
 }
 
 async function verticalTabs(page: Page) {
@@ -74,5 +180,11 @@ export const keyboardCases: Readonly<
   'split-layout/vertical': resizePanels,
   'admin-layout/workspace': adminNavigation,
   'admin-layout/collapsed': adminNavigation,
+  'admin-layout/records': adminRecords,
+  'admin-layout/settings': adminSettings,
+  'form-field/compound-control': compoundSelect,
+  'form-section/business-details': businessFields,
+  'page-header/records': headerAction,
+  'page-header/breadcrumbs': headerBreadcrumb,
   'vertical-tabs-layout/settings': verticalTabs,
 };

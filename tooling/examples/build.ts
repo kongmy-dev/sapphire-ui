@@ -3,12 +3,15 @@ import { join, resolve } from 'node:path';
 import { buildStylesheet } from '../css/build';
 import type { ExampleRow } from './catalog';
 import { readElementExamples } from './elements';
+import { buildProductionExamples } from './production';
 
 export async function buildExamples(options: {
   root: string;
   out: string;
   examples: readonly ExampleRow[];
+  production?: boolean;
 }) {
+  if (options.production) return buildProductionExamples(options);
   const { root, out, examples } = options;
   const files = [...new Map(examples.map((row) => [row.component, row.file]))];
   const source = [

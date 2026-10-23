@@ -1,13 +1,13 @@
 # DESIGN.md
 
-Sapphire UI is the design system for KONGMY Digital Solutions: editorial, restrained, navy and gold. `css/tokens.css` is the source of every token; the token gate (P-5) fails when a table below disagrees with it.
+Sapphire UI is the design system for KONGMY Digital Solutions: usable product interfaces with navy, gold and an optional editorial type scale. `css/tokens.css` is the source of every token; the token gate (P-5) fails when a table below disagrees with it.
 
 ## Brand
 
 - KONGMY is an independent, founder-led IT consultancy in Kuala Lumpur: the anti-bloat partner, bespoke, hands-on and quietly authoritative.
 - Voice is first person singular ("I build", never "we"), direct and concrete. No emoji, no exclamation marks, no corporate filler.
 - Two colours on an off-white surface: navy for authority, gold for warmth. Add an opacity or a tint before adding a hue.
-- Solid fills. The one gradient is the `premium` button.
+- Solid fills, including primary actions. Keep competing accents out of routine screens.
 
 ## Using the tokens
 
@@ -39,7 +39,7 @@ A Tailwind app maps every token to utilities that read the same variables:
 @import "@kongmy-dev/sapphire-ui/tailwind.css";
 ```
 
-Colour tokens declare `light-dark()` on that list, so a build that lowers `light-dark()` keeps each scope's side. Every other token is declared once on `:root` and does not change with the scheme. A shadow reads its colour from `--primary`.
+Colour tokens declare `light-dark()` on that list, so a build that lowers `light-dark()` keeps each scope's side. Every other token is declared once on `:root` and does not change with the scheme. Shadows and permanent navy surfaces use `--brand-navy`; actions use `--primary` and `--primary-foreground` together.
 
 ## Colour
 
@@ -64,8 +64,8 @@ Each row gives the resolved colour per scheme.
 | `--border` | `#e2e8f0` | `rgb(255, 255, 255, 0.12)` | Hairline border |
 | `--input` | `#cbd5e1` | `rgb(255, 255, 255, 0.28)` | Form-control border; alias of `--border-strong` |
 | `--ring` | `#c5a065` | `#c5a065` | Focus ring |
-| `--primary` | `#0a192f` | `#0a192f` | Navy fill for buttons, headers and dark surfaces; never flips |
-| `--primary-foreground` | `#f1f5f9` | `#f1f5f9` | Text on navy |
+| `--primary` | `#0a192f` | `#c5a065` | Primary action fill, navy in light and gold in dark |
+| `--primary-foreground` | `#f1f5f9` | `#0a192f` | Text on navy |
 | `--destructive` | `#b91c1c` | `#b91c1c` | Irreversible actions; alias of `--error` |
 | `--destructive-foreground` | `#fff` | `#fff` | Text on a destructive fill |
 
@@ -73,12 +73,13 @@ Each row gives the resolved colour per scheme.
 
 | Token | Light | Dark | Use |
 | --- | --- | --- | --- |
+| `--brand-navy` | `#0a192f` | `#0a192f` | Permanent navy surfaces and shadows |
 | `--brand` | `#c5a065` | `#c5a065` | Gold fill for CTAs, active states and thin dividers; decorative, never text on a light surface |
 | `--brand-hover` | `#b8904f` | `#b8904f` | Gold hover fill |
 | `--brand-text` | `#8a5a1f` | `#c5a065` | Gold text; 4.6:1 on the light background, and the brand gold itself on dark |
 | `--brand-on-fill` | `#b8904f` | `#c5a065` | Gold on a tinted or coloured fill, never on the plain page |
-| `--brand-foreground` | `#0a192f` | `#0a192f` | Text on a gold fill; alias of `--primary` |
-| `--primary-hover` | `#1a3358` | `#1a3358` | Navy hover fill |
+| `--brand-foreground` | `#0a192f` | `#0a192f` | Text on a gold fill; alias of `--brand-navy` |
+| `--primary-hover` | `#1a3358` | `#b8904f` | Navy hover fill |
 | `--foreground-strong` | `#0a192f` | `#f1f5f9` | Headings and emphasis |
 | `--on-dark` | `#f1f5f9` | `#f1f5f9` | Text on navy |
 | `--on-dark-muted` | `rgb(241, 245, 249, 0.65)` | `rgb(241, 245, 249, 0.65)` | Secondary text on navy |
@@ -87,7 +88,7 @@ Each row gives the resolved colour per scheme.
 | `--field-dark` | `rgb(0, 0, 0, 0.2)` | `rgb(0, 0, 0, 0.2)` | Recessed fill of an input, textarea or select on navy surfaces |
 | `--switch-off` | `#94a3b8` | `rgb(255, 255, 255, 0.28)` | Track of a switch that is off |
 | `--white` | `#fff` | `#fff` | White in both schemes |
-| `--card-dark` | `#0a192f` | `#0a192f` | Featured dark card; alias of `--primary` |
+| `--card-dark` | `#0a192f` | `#0a192f` | Featured dark card; alias of `--brand-navy` |
 
 ### Status
 
@@ -127,22 +128,22 @@ Each row gives the resolved colour per scheme.
 
 | Token | Light | Dark | Use |
 | --- | --- | --- | --- |
-| `--sidebar` | `#0a192f` | `#0a192f` | Admin shell surface |
-| `--sidebar-foreground` | `#f1f5f9` | `#f1f5f9` | Sidebar text |
+| `--sidebar` | `#fff` | `#112240` | Admin shell surface |
+| `--sidebar-foreground` | `#1e293b` | `#f1f5f9` | Sidebar text |
 | `--sidebar-primary` | `#c5a065` | `#c5a065` | Active indicator |
 | `--sidebar-primary-foreground` | `#0a192f` | `#0a192f` | Text on the active indicator |
-| `--sidebar-accent` | `#1a3358` | `#1a3358` | Hovered item |
-| `--sidebar-accent-foreground` | `#f1f5f9` | `#f1f5f9` | Text on a hovered item |
-| `--sidebar-border` | `rgb(255, 255, 255, 0.12)` | `rgb(255, 255, 255, 0.12)` | Sidebar hairline |
+| `--sidebar-accent` | `rgb(197, 160, 101, 0.08)` | `rgb(197, 160, 101, 0.08)` | Hovered item |
+| `--sidebar-accent-foreground` | `#1e293b` | `#f1f5f9` | Text on a hovered item |
+| `--sidebar-border` | `#e2e8f0` | `rgb(255, 255, 255, 0.12)` | Sidebar hairline |
 | `--sidebar-ring` | `#c5a065` | `#c5a065` | Sidebar focus ring |
 
 ## Typography, shape and elevation
 
-Three families. The contrast between the Newsreader headlines and the Source Sans 3 body is the key move. Never set body copy in the serif or a heading in the sans.
+Product screens use Source Sans 3, including headings: page titles 28px, sections 18px and card titles 16px. Use `data-typography="editorial"` on a page or section for Newsreader and the fluid display scale. A nested `data-typography="product"` restores the product scale. Body copy remains sans-serif in either mode.
 
 | Token | Value | Use |
 | --- | --- | --- |
-| `--font-serif` | `"Newsreader", georgia, serif` | Headings h1 to h6, weight 500 to 600 |
+| `--font-serif` | `"Newsreader", georgia, serif` | Editorial headings, weight 500 to 600 |
 | `--font-sans` | `"Source Sans 3", system-ui, sans-serif` | Body, UI labels, navigation, weight 400 to 600 |
 | `--font-mono` | `"JetBrains Mono", "Fira Code", monospace` | Code and technical meta |
 | `--text-display-xl` | `clamp(2.5rem, 6vw, 4.5rem)` | Hero h1, fluid |
@@ -190,7 +191,7 @@ Depth comes from background contrast, not shadow. A light card has a 1px `--bord
 | --- | --- |
 | Button, main action | Navy fill on a light surface; gold fill with navy text on a navy one |
 | Button, secondary | Outline on light, outline on navy; a ghost for the tertiary action |
-| Button, flagship | One `premium` per page, used sparingly |
+| Button, brand | Solid gold with navy text; reserve for a deliberate branded action |
 | Button, destructive | Only for an irreversible delete or remove |
 | Card | `--card`, `--radius-md`, 1px `--border`; a navy card features a hero item |
 | Tag and badge | Always a pill. Default is the muted surface with muted text; a gold tint for emphasis; a navy-surface variant |
@@ -231,7 +232,7 @@ that separate related information without giving it hierarchy.
 ### Card and disclosure hierarchy
 
 Card headers group their title and description with a small gap and reset inherited text margins.
-Operational card titles use the sans family; page and editorial headings keep the serif family.
+Operational page and card titles use the sans family; editorial headings use the serif family.
 Card actions sit together at the trailing edge with a consistent gap. Disclosure rows use a
 quiet hover surface and small chevrons, with inset labels and a visible keyboard focus ring.
 Button widths, horizontal padding and icon footprints remain unchanged by this polish.

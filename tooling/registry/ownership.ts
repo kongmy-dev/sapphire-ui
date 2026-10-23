@@ -46,15 +46,35 @@ function buildOrder(app: string, css: string, packageFirst: boolean) {
     throw new Error('Package button CSS replaced vendored ownership');
 }
 
-function updateFixture(app: string): string {
-  const directory = mkdtempSync(join(tmpdir(), 'sapphire-compatible-update-'));
+function nextPatch(version: unknown) {
+  if (typeof version !== 'string')
+    throw new Error('Missing packed package version');
+  const match = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.exec(version);
+  const major = match?.[1];
+  const minor = match?.[2];
+  const patch = match?.[3];
+  const next = Number(patch) + 1;
+  if (!major || !minor || !patch || !Number.isSafeInteger(next))
+    throw new Error(
+      'Packed package needs a stable version with a safe patch number',
+    );
+  return `${major}.${minor}.${next}`;
+}
+
+export function updateFixture(app: string): string {
   const source = join(app, 'node_modules/@kongmy-dev/sapphire-ui');
-  cpSync(source, directory, { recursive: true });
-  const path = join(directory, 'package.json');
-  const pkg: unknown = JSON.parse(readFileSync(path, 'utf8'));
+  const pkg: unknown = JSON.parse(
+    readFileSync(join(source, 'package.json'), 'utf8'),
+  );
   if (typeof pkg !== 'object' || pkg === null)
     throw new Error('Invalid packed package');
-  writeFileSync(path, JSON.stringify({ ...pkg, version: '4.0.1' }));
+  const version = nextPatch('version' in pkg ? pkg.version : undefined);
+  const directory = mkdtempSync(join(tmpdir(), 'sapphire-compatible-update-'));
+  cpSync(source, directory, { recursive: true });
+  writeFileSync(
+    join(directory, 'package.json'),
+    JSON.stringify({ ...pkg, version }),
+  );
   const css = join(directory, 'dist/components/button/button.css');
   writeFileSync(
     css,
@@ -106,6 +126,6 @@ export function checkMixedOwnership(app: string) {
   buildOrder(app, css, true);
   buildOrder(app, css, false);
   console.log(
-    'registry v4 smoke: both CSS orders and compatible 4.0.1 package fixture preserve vendored customization',
+    'registry smoke: both CSS orders and compatible package fixture preserve vendored customization',
   );
 }

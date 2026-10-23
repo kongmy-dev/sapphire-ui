@@ -1,7 +1,7 @@
 @layer components {
   .sp-stat {
     --sp-stat-gap: var(--space-1);
-    --sp-stat-label-size: var(--text-xs);
+    --sp-stat-label-size: var(--text-sm);
     --sp-stat-label-line-height: var(--leading-normal);
     --sp-stat-value-size: calc(var(--text-base) * 1.75);
     --sp-stat-value-line-height: var(--leading-normal);
@@ -47,8 +47,6 @@
     font-weight: 600;
     line-height: var(--sp-stat-label-line-height);
     color: var(--muted-foreground);
-    text-transform: uppercase;
-    letter-spacing: calc(var(--sp-stat-label-size) * 0.06);
   }
 
   .sp-stat-figure {
@@ -60,9 +58,9 @@
   }
 
   .sp-stat-value {
-    font-family: var(--font-serif);
+    font-family: var(--sp-heading-font);
     font-size: var(--sp-stat-value-size);
-    font-weight: 500;
+    font-weight: 600;
     line-height: var(--sp-stat-value-line-height);
     color: var(--foreground);
     letter-spacing: calc(var(--sp-stat-value-size) * -0.01);

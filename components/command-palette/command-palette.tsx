@@ -5,9 +5,9 @@ import {
   type ReactElement,
   useEffect,
   useId,
-  useRef,
   useState,
 } from 'react';
+import { useFocusReturn } from '../../lib/use-focus-return.js';
 import { Input } from '../input/input.js';
 import { Kbd } from '../kbd/kbd.js';
 import { Sheet, SheetContent, SheetTitle } from '../sheet/sheet.js';
@@ -21,7 +21,7 @@ export type CommandItem = {
 };
 
 export type CommandPaletteProps = {
-  items: CommandItem[];
+  items: readonly CommandItem[];
   open: boolean;
   onOpenChange: (open: boolean) => void;
   placeholder?: string | undefined;
@@ -170,23 +170,14 @@ export function CommandPalette({
   onOpenChange,
   ...props
 }: CommandPaletteProps) {
-  const launcher = useRef<HTMLElement | null>(null);
+  const focusReturn = useFocusReturn();
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="top"
         className="sp-command-palette"
         aria-describedby={undefined}
-        onOpenAutoFocus={() => {
-          const active = document.activeElement;
-          launcher.current = active instanceof HTMLElement ? active : null;
-        }}
-        onCloseAutoFocus={(event) => {
-          if (launcher.current?.isConnected) {
-            event.preventDefault();
-            launcher.current.focus();
-          }
-        }}
+        {...focusReturn}
       >
         <SheetTitle className="sp-command-palette-title">
           Command palette

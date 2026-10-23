@@ -28,6 +28,9 @@ const components = [
   'pagination',
   'stat',
   'stat-group',
+  'page-header',
+  'form-section',
+  'admin-layout',
 ];
 const blocks = [
   'sonner',
@@ -37,6 +40,7 @@ const blocks = [
   'sidebar',
   'data-table-column-header',
   'data-table-view-options',
+  'data-table',
 ];
 export const registryEntries = [
   ...components.map((name) => ({

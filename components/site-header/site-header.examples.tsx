@@ -14,7 +14,7 @@ function SiteHeaderDark() {
         </>
       }
       actions={
-        <Button variant="on-dark-outline" asChild>
+        <Button variant="outline" asChild>
           <a href="#contact">Contact us</a>
         </Button>
       }

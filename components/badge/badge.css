@@ -35,7 +35,7 @@
 
   .sp-badge[data-variant="on-dark"] {
     --sp-badge-bg: color-mix(in oklab, var(--white) 10%, transparent);
-    --sp-badge-fg: var(--primary-foreground);
+    --sp-badge-fg: var(--on-dark);
     --sp-badge-border-color: var(--border-dark);
   }
 

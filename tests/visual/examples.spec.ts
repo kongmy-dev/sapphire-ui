@@ -40,6 +40,25 @@ async function settleAvatar(page: Page, component: string) {
       page.locator('.sp-avatar:not(:has(img, .sp-avatar-fallback))').count(),
     )
     .toBe(0);
+  await page.locator('.sp-avatar:has(img)').evaluateAll(async (avatars) => {
+    const originals = avatars.map((avatar) => ({
+      avatar,
+      style: avatar.getAttribute('style'),
+    }));
+    for (const avatar of avatars) {
+      avatar.setAttribute(
+        'style',
+        `${avatar.getAttribute('style') ?? ''};visibility:hidden`,
+      );
+    }
+    await new Promise<void>((resolve) =>
+      requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+    );
+    for (const { avatar, style } of originals) {
+      if (style === null) avatar.removeAttribute('style');
+      else avatar.setAttribute('style', style);
+    }
+  });
 }
 
 for (const { example, open, name } of cases) {

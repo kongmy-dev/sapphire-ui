@@ -56,7 +56,7 @@
     --sp-tabs-trigger-line-height: var(--leading-normal);
     --sp-tabs-trigger-indicator-width: 0;
     --sp-tabs-trigger-overlap: 0;
-    --sp-tabs-trigger-active-fg: var(--white);
+    --sp-tabs-trigger-active-fg: var(--primary-foreground);
     --sp-tabs-trigger-active-bg: var(--primary);
   }
 

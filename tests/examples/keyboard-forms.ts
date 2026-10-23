@@ -42,7 +42,9 @@ export async function validateEmail(page: Page) {
   await field.focus();
   await field.pressSequentially('invalid');
   await expect(field).toHaveAttribute('aria-invalid', 'true');
-  await expect(field).toHaveAccessibleDescription('Enter an email with @.');
+  await expect(field).toHaveAccessibleDescription(
+    'Use your work email. Enter an email with @.',
+  );
   await field.pressSequentially('@example.com');
   await expect(field).not.toHaveAttribute('aria-invalid', 'true');
   await expect(field).toHaveAccessibleDescription('Use your work email.');

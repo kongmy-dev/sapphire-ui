@@ -3,7 +3,7 @@
   .sp-dialog-overlay {
     --sp-dialog-overlay-bg: color-mix(
       in oklab,
-      var(--primary) 85%,
+      var(--brand-navy) 85%,
       transparent
     );
     --sp-dialog-overlay-blur: var(--space-1);
@@ -94,8 +94,8 @@
 
   .sp-dialog-title {
     margin: 0;
-    font-family: var(--font-serif);
-    font-size: var(--text-lg);
+    font-family: var(--sp-heading-font);
+    font-size: var(--sp-heading-section);
     font-weight: 600;
     line-height: calc(var(--space-1) * 7);
     color: var(--foreground-strong);
@@ -192,7 +192,7 @@
 
   .sp-dialog-action[data-variant="destructive"] {
     --sp-dialog-action-bg: var(--error);
-    --sp-dialog-action-fg: var(--primary-foreground);
+    --sp-dialog-action-fg: var(--destructive-foreground);
     --sp-dialog-action-border-width: 0;
     --sp-dialog-action-bg-hover: var(--error-hover);
     --sp-dialog-action-ring: var(--error-ring);

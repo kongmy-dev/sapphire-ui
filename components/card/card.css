@@ -28,8 +28,8 @@
   }
 
   .sp-card[data-variant="dark"] {
-    --sp-card-bg: var(--primary);
-    --sp-card-fg: var(--primary-foreground);
+    --sp-card-bg: var(--brand-navy);
+    --sp-card-fg: var(--on-dark);
     --sp-card-border-color: var(--border-dark);
     --sp-card-border-color-hover: var(--brand);
     --sp-card-shadow-hover: none;

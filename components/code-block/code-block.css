@@ -19,7 +19,7 @@
   }
 
   .sp-code-block[data-variant="dark"] {
-    --sp-code-block-bg: var(--primary);
+    --sp-code-block-bg: var(--brand-navy);
     --sp-code-block-fg: var(--on-dark);
     --sp-code-block-muted: var(--on-dark-muted);
     --sp-code-block-border-width: 0;

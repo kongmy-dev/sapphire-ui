@@ -186,7 +186,7 @@ test('copied icon and navy surface examples include their extra requirements', a
       .getByRole('button', { name: 'Copy CSS' })
       .locator('..')
       .locator('code'),
-  ).toContainText('var(--primary)');
+  ).toContainText('var(--brand-navy)');
 });
 
 test('page metadata describes its purpose and is isolated from SEO examples', async ({

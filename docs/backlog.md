@@ -1,12 +1,17 @@
 # Open work
 
+The product-layout redesign (ADR-0011) is implemented as an unpublished v5
+candidate. Its breaking contracts and manual choices are in
+[the migration guide](migrate-v5.md). Publication and deployment require separate
+authorization; prior v4 release approval does not authorize v5.
+
 Release stabilization and deployment remain in `V4-PLAN.md` until the owner closes
 the release checklist. No unverified remote CI, publication or production smoke
 result is implied by local checks.
 
-The owner requested npm v4 publication through the existing trusted-publishing
-tag workflow after final-candidate remote CI and approved master integration.
-Local docs verification does not establish registry publication or project acceptance.
+Before deploying the v5 catalogue, retain the deployed `/r/v4/` assets alongside
+the frozen `/r/` distribution. This checkout does not contain a frozen v4 copy.
+Local checks do not establish publication, deployment or consumer adoption.
 
 Dependency migrations:
 

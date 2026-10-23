@@ -1,4 +1,5 @@
 import type { Locator, Page, TestInfo } from '@playwright/test';
+import { exampleUrl } from '../../tooling/examples/catalog.js';
 import { SCHEMES, type Scheme } from '../../tooling/source/token-values';
 import { specimenUrl } from '../../tooling/visual/specimens';
 import {
@@ -17,88 +18,10 @@ import {
 import { captureState } from './capture-state';
 import { expect, test } from './fixtures';
 
-const V4_PAGE = 'components/admin-layout/admin-layout.examples.html';
-const COLOUR = /(?:rgba?|color|oklab|oklch)\([^)]*\)/g;
+const SPECIMEN = 'components/admin-layout/admin-layout.examples.html';
 const GLYPHS =
-  '.material-symbols-outlined, .sp-admin-layout-icon, .sp-theme-toggle-icon, .docs-admin-glyph, .sp-document-bar-separator';
-const PROPERTIES = [
-  'display',
-  'position',
-  'top',
-  'right',
-  'bottom',
-  'left',
-  'z-index',
-  'width',
-  'height',
-  'min-width',
-  'min-height',
-  'max-width',
-  'margin-top',
-  'margin-right',
-  'margin-bottom',
-  'margin-left',
-  'padding-top',
-  'padding-right',
-  'padding-bottom',
-  'padding-left',
-  'border-top-width',
-  'border-right-width',
-  'border-bottom-width',
-  'border-left-width',
-  'border-top-style',
-  'border-right-style',
-  'border-bottom-style',
-  'border-left-style',
-  'border-top-left-radius',
-  'border-top-right-radius',
-  'border-bottom-right-radius',
-  'border-bottom-left-radius',
-  'font-family',
-  'font-size',
-  'font-weight',
-  'line-height',
-  'letter-spacing',
-  'text-transform',
-  'text-align',
-  'text-decoration-line',
-  'text-overflow',
-  'white-space',
-  'flex-direction',
-  'flex-wrap',
-  'flex-grow',
-  'flex-shrink',
-  'flex-basis',
-  'align-items',
-  'justify-content',
-  'row-gap',
-  'column-gap',
-  'grid-template-columns',
-  'overflow-x',
-  'overflow-y',
-  'opacity',
-  'visibility',
-  'clip-path',
-  'cursor',
-  'pointer-events',
-] as const;
-const COLOURS = [
-  'color',
-  'background-color',
-  'border-top-color',
-  'border-right-color',
-  'border-bottom-color',
-  'border-left-color',
-] as const;
-type Style = {
-  tag: string;
-  values: Record<string, string>;
-};
-type Capture = {
-  styles: Style[];
-  pixels: Buffer | null;
-};
-type Side = 'v3' | 'v4';
+  '.sp-admin-layout-icon, .sp-theme-toggle-icon, .docs-admin-glyph, .sp-document-bar-separator';
+type Capture = Buffer | null;
 type Mode = {
   collapsed: boolean;
   width: number;
@@ -120,20 +43,7 @@ const settled = async (page: Page) => {
   await page.evaluate(() => new Promise(requestAnimationFrame));
   await page.waitForFunction(() => document.getAnimations().length === 0);
 };
-const shellOf = (page: Page): Locator =>
-  page
-    .locator('section.docs-section')
-    .filter({
-      has: page.locator('h2.docs-section-title', { hasText: /^Admin Layout$/ }),
-    })
-    .locator('.sp-admin-layout')
-    .first();
-async function shellMarkup(page: Page) {
-  const shell = shellOf(page);
-  await expect(shell.getByText('KM', { exact: true })).toHaveCount(2);
-  return shell.evaluate((element) => element.outerHTML);
-}
-async function mount(page: Page, markup: string, mode: Mode, side: Side) {
+async function mount(page: Page, markup: string, mode: Mode) {
   await page.evaluate(
     (spec) => {
       document.getElementById('parity')?.remove();
@@ -142,11 +52,6 @@ async function mount(page: Page, markup: string, mode: Mode, side: Side) {
       const background = getComputedStyle(document.body).backgroundColor;
       holder.style.cssText = `position:absolute;top:0;left:0;width:${spec.width}px;z-index:99999;background:${background}`;
       holder.innerHTML = spec.markup;
-      if (spec.collapsed) {
-        const aside = holder.querySelector('aside');
-        aside?.setAttribute('data-collapsed', '');
-        holder.querySelector('.docs-admin-user')?.remove();
-      }
       document.body.append(holder);
       if (spec.snap)
         holder.style.height = `${Math.ceil(holder.getBoundingClientRect().height)}px`;
@@ -154,9 +59,7 @@ async function mount(page: Page, markup: string, mode: Mode, side: Side) {
     {
       markup,
       width: mode.width,
-      collapsed: mode.collapsed,
       snap: mode.snap === true,
-      side,
     },
   );
   await page.evaluate(async () => {
@@ -164,142 +67,125 @@ async function mount(page: Page, markup: string, mode: Mode, side: Side) {
     await document.fonts.ready;
   });
 }
-const readStyles = (target: Locator, deep: boolean): Promise<Style[]> =>
-  target.evaluate(
-    (element, spec) => {
-      const canvas = document.createElement('canvas');
-      canvas.width = 1;
-      canvas.height = 1;
-      const context = canvas.getContext('2d', { willReadFrequently: true });
-      if (context === null) throw new Error('no 2d context');
-      const rgba = (value: string) => {
-        context.clearRect(0, 0, 1, 1);
-        context.fillStyle = '#000';
-        context.fillStyle = value;
-        context.fillRect(0, 0, 1, 1);
-        return context.getImageData(0, 0, 1, 1).data.join(',');
-      };
-      const dropZeroBorders = (values: Record<string, string>) => {
-        for (const side of ['top', 'right', 'bottom', 'left']) {
-          if (values[`border-${side}-width`] !== '0px') continue;
-          values[`border-${side}-style`] = 'none';
-          values[`border-${side}-color`] = 'none';
-        }
-        return values;
-      };
-      const glyphProperties = [
-        'font-family',
-        'font-size',
-        'font-weight',
-        'line-height',
-        'white-space',
-        'flex-shrink',
-        'flex-basis',
-        'overflow-x',
-        'overflow-y',
-      ];
-      const origin = element.getBoundingClientRect();
-      const read = (node: Element): Style => {
-        const style = getComputedStyle(node);
-        const box = node.getBoundingClientRect();
-        const shadow = style.boxShadow.replace(
-          new RegExp(spec.colour, 'g'),
-          '',
-        );
-        const values: Record<string, string> = {
-          ...Object.fromEntries(
-            spec.properties.map((name) => [name, style.getPropertyValue(name)]),
-          ),
-          ...Object.fromEntries(
-            spec.colours.map((name) => [
-              name,
-              rgba(style.getPropertyValue(name)),
-            ]),
-          ),
-          'rect-offset': `${(box.left - origin.left).toFixed(4)},${(box.top - origin.top).toFixed(4)}`,
-          'rect-size': `${box.width.toFixed(4)},${box.height.toFixed(4)}`,
-          'shadow-geometry': shadow
-            .split(',')
-            .map((part) => part.trim().replace(/\s+/g, ' '))
-            .filter(
-              (part) =>
-                part !== '' && part !== 'none' && part !== spec.noShadow,
-            )
-            .join(', '),
-        };
-        if (values['text-align'] === 'start') values['text-align'] = 'left';
-        if (node.matches(spec.glyphs))
-          for (const name of glyphProperties) values[name] = 'glyph';
-        return {
-          tag: node.tagName.toLowerCase(),
-          values: dropZeroBorders(values),
-        };
-      };
-      const nodes = spec.deep
-        ? [element, ...element.querySelectorAll('*')]
-        : [element];
-      return nodes
-        .filter((node) => !node.parentElement?.closest(spec.glyphs))
-        .map(read);
-    },
-    {
-      properties: [...PROPERTIES],
-      colours: [...COLOURS],
-      colour: COLOUR.source,
-      noShadow: '0px 0px 0px 0px',
-      glyphs: GLYPHS,
-      deep,
-    },
-  );
-async function shoot(target: Locator, part: Part): Promise<Buffer | null> {
-  if (part.pixels === false || !(await target.isVisible())) return null;
+async function capture(target: Locator, pixels = true): Promise<Capture> {
+  if (!pixels) return null;
+  await expect(target).toBeVisible();
   return captureState(target, { animations: 'disabled', caret: 'hide' });
 }
-async function capture(target: Locator, part: Part): Promise<Capture> {
-  return {
-    styles:
-      part.styles === false ? [] : await readStyles(target, part.deep === true),
-    pixels: await shoot(target, part),
-  };
+async function observe(page: Page, scheme: Scheme, mode: Mode) {
+  await page.setViewportSize({ width: WIDE, height: 900 });
+  await page.goto(
+    exampleUrl(
+      {
+        component: 'admin-layout',
+        name: 'workspace',
+        file: 'components/admin-layout/admin-layout.examples.tsx',
+      },
+      scheme,
+    ),
+  );
+  await expect(
+    page.getByRole('heading', { name: 'Workspace overview' }),
+  ).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+  await expect(page.locator('html')).toHaveAttribute('data-theme', scheme);
+  if (mode.collapsed)
+    await page
+      .getByRole('button', { name: 'Collapse sidebar', exact: true })
+      .click();
+  await assertDesktop(page, mode.collapsed);
+  if (mode.width < 768) await openMobile(page, mode.width);
+  return page.locator('body');
 }
-async function observe(
-  page: Page,
-  side: Side,
-  scheme: Scheme,
-  mode: Mode,
-): Promise<Locator> {
-  await open(page, specimenUrl(V4_PAGE, scheme), scheme);
-  await page.addStyleTag({
-    content: `${GLYPHS} { visibility: hidden !important }`,
+async function assertDesktop(page: Page, compact: boolean) {
+  const sidebar = page.getByRole('complementary', {
+    name: 'Workspace navigation',
   });
-  const markup = await shellMarkup(page);
-  await mount(page, markup, mode, side);
-  return page.locator('#parity');
+  const trigger = page.getByRole('button', {
+    name: compact ? 'Expand sidebar' : 'Collapse sidebar',
+    exact: true,
+  });
+  await expect(sidebar).toBeVisible();
+  await expect(sidebar).toHaveCSS('width', compact ? '64px' : '256px');
+  await expect(trigger).toHaveAttribute('aria-expanded', String(!compact));
+  if (compact) await expect(sidebar).toHaveAttribute('data-collapsed', 'true');
+  else await expect(sidebar).not.toHaveAttribute('data-collapsed');
+  await expect(
+    sidebar.getByRole('link', {
+      name: compact ? 'Sapphire workspace' : 'S Sapphire Team workspace',
+      exact: true,
+    }),
+  ).toBeVisible();
+  await expect(
+    sidebar.getByRole('button', {
+      name: compact
+        ? 'AR Aisha Rahman account'
+        : 'AR Aisha Rahman Workspace admin account',
+      exact: true,
+    }),
+  ).toBeVisible();
 }
-const find = (holder: Locator, part: Part) => holder.locator(part.v4).first();
-async function observeParts(
-  page: Page,
-  side: Side,
-  scheme: Scheme,
-  mode: Mode,
-  parts: readonly Part[],
-) {
-  const holder = await observe(page, side, scheme, mode);
-  const found = new Map<string, Capture>();
-  for (const part of parts)
-    found.set(part.name, await capture(find(holder, part), part));
-  return found;
+async function openMobile(page: Page, width: number) {
+  await page.setViewportSize({ width, height: 900 });
+  await expect(page.getByRole('complementary')).toHaveCount(0);
+  const trigger = page.getByRole('button', {
+    name: 'Open navigation',
+    exact: true,
+  });
+  await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+  await captureState(page.locator('.sp-admin-layout'), {
+    animations: 'disabled',
+    caret: 'hide',
+  });
+  await trigger.press('Enter');
+  const drawer = page.getByRole('dialog', { name: 'Workspace navigation' });
+  await expect(drawer).toHaveAttribute('aria-modal', 'true');
+  await expect(drawer.getByRole('complementary')).not.toHaveAttribute(
+    'data-collapsed',
+  );
+  await expect(
+    drawer.getByRole('button', { name: 'Close navigation', exact: true }),
+  ).toBeVisible();
+  await settled(page);
 }
+async function roundTrip(page: Page, mode: Mode) {
+  const drawer = page.getByRole('dialog', { name: 'Workspace navigation' });
+  await captureState(drawer, { animations: 'disabled', caret: 'hide' });
+  await page.setViewportSize({ width: WIDE, height: 900 });
+  await expect(drawer).toHaveCount(0);
+  await assertDesktop(page, mode.collapsed);
+  await captureState(page.locator('.sp-admin-layout'), {
+    animations: 'disabled',
+    caret: 'hide',
+  });
+  await page.setViewportSize({ width: mode.width, height: 900 });
+  await expect(page.getByRole('complementary')).toHaveCount(0);
+  await expect(
+    page.getByRole('button', { name: 'Open navigation', exact: true }),
+  ).toHaveAttribute('aria-expanded', 'false');
+  await expect(drawer).toHaveCount(0);
+  await captureState(page.locator('.sp-admin-layout'), {
+    animations: 'disabled',
+    caret: 'hide',
+  });
+}
+const find = (holder: Locator, part: Part) =>
+  holder.locator(part.selector).first();
 async function runParts(
   page: Page,
   testInfo: TestInfo,
   mode: Mode,
   parts: readonly Part[],
 ) {
-  const scheme = schemeOf(testInfo);
-  await page.setViewportSize({ width: mode.width, height: 900 });
-  const v4 = await observeParts(page, 'v4', scheme, mode, parts);
-  for (const part of parts) expect(v4.has(part.name), part.name).toBe(true);
+  const holder = await observe(page, schemeOf(testInfo), mode);
+  const found = new Map<string, Capture>();
+  for (const part of parts) {
+    const target = find(holder, part);
+    await expect(target).toBeAttached();
+    found.set(part.name, await capture(target, part.pixels));
+  }
+  for (const part of parts) expect(found.has(part.name), part.name).toBe(true);
+  if (mode.width < 768) await roundTrip(page, mode);
 }
 test('admin-shell-parity/expanded', async ({ page }, testInfo) => {
   await runParts(
@@ -331,27 +217,18 @@ test('admin-shell-parity/narrow-collapsed', async ({ page }, testInfo) => {
 });
 const ASIDE: Part = {
   name: 'aside',
-  v3: '.sf-admin-sidebar',
-  v4: '.sp-admin-layout-sidebar',
+  selector: '.sp-admin-layout-sidebar',
 };
-const targetOf = (interaction: Interaction): Part => ({
-  name: interaction.name,
-  v3: interaction.v3,
-  v4: interaction.v4,
-  deep: true,
-});
 async function interact(
   page: Page,
   scheme: Scheme,
-  side: Side,
   interaction: Interaction,
 ): Promise<Capture[]> {
-  const holder = await observe(page, side, scheme, {
+  const holder = await observe(page, scheme, {
     collapsed: false,
     width: WIDE,
   });
-  const target = targetOf(interaction);
-  const element = find(holder, target);
+  const element = find(holder, interaction);
   await page.mouse.move(0, 0);
   if (interaction.action === 'hover') await element.hover();
   else await element.focus();
@@ -363,10 +240,7 @@ async function interact(
       interaction.action,
     ),
   ).toBe(true);
-  return [
-    await capture(element, target),
-    await capture(find(holder, ASIDE), ASIDE),
-  ];
+  return [await capture(element), await capture(find(holder, ASIDE))];
 }
 async function runInteraction(
   page: Page,
@@ -375,8 +249,8 @@ async function runInteraction(
 ) {
   const scheme = schemeOf(testInfo);
   await page.setViewportSize({ width: WIDE, height: 900 });
-  const v4 = await interact(page, scheme, 'v4', interaction);
-  expect(v4).toHaveLength(2);
+  const seen = await interact(page, scheme, interaction);
+  expect(seen).toHaveLength(2);
 }
 for (const interaction of INTERACTIONS) {
   test(`admin-shell-parity/${interaction.name}`, async ({ page }, testInfo) => {
@@ -385,54 +259,37 @@ for (const interaction of INTERACTIONS) {
 }
 async function pageSteps(page: Page, kase: PageCase): Promise<Capture[]> {
   const holder = page.locator('#parity');
-  const root: Part = { name: kase.name, v3: '', v4: '', deep: true };
-  const seen = [await capture(holder, root)];
+  const seen = [await capture(holder)];
   for (const target of [kase.hover, kase.focus]) {
     if (target === undefined) continue;
     const element = page.locator(`#parity ${target}`).first();
     await (target === kase.hover ? element.hover() : element.focus());
     await settled(page);
-    seen.push(await capture(holder, root));
+    seen.push(await capture(holder));
     await page.mouse.move(0, 0);
     await settled(page);
   }
   return seen;
 }
-const readBrandText = (page: Page): Promise<string> =>
-  page.evaluate(() => {
-    const probe = document.createElement('i');
-    probe.style.color = 'var(--brand-text)';
-    document.body.append(probe);
-    const colour = getComputedStyle(probe).color;
-    probe.remove();
-    return colour;
-  });
 async function observePage(
   page: Page,
   scheme: Scheme,
-  side: Side,
   kase: PageCase,
-): Promise<{
-  seen: Capture[];
-  brandText: string;
-}> {
-  const path = specimenUrl(V4_PAGE, scheme);
+): Promise<Capture[]> {
+  const path = specimenUrl(SPECIMEN, scheme);
   await open(page, path, scheme);
-  const fresh = await readBrandText(page);
-  const decided = '';
-  const placeholder = '';
   await page.addStyleTag({
-    content: `${GLYPHS} { visibility: hidden !important }\n${placeholder}\n${decided}`,
+    content: `${GLYPHS} { visibility: hidden !important }`,
   });
   const mode: Mode = { collapsed: false, width: kase.width, snap: true };
-  await mount(page, kase.v4, mode, side);
-  return { seen: await pageSteps(page, kase), brandText: fresh };
+  await mount(page, kase.markup, mode);
+  return pageSteps(page, kase);
 }
 async function runPageCase(page: Page, testInfo: TestInfo, kase: PageCase) {
   const scheme = schemeOf(testInfo);
   await page.setViewportSize({ width: kase.width, height: 900 });
-  const v4 = await observePage(page, scheme, 'v4', kase);
-  expect(v4.seen).toHaveLength(
+  const seen = await observePage(page, scheme, kase);
+  expect(seen).toHaveLength(
     1 + Number(kase.hover !== undefined) + Number(kase.focus !== undefined),
   );
 }

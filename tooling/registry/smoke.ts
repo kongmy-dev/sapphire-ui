@@ -36,7 +36,7 @@ export async function smokeRegistry(
   tarball: string,
   deployed?: string,
 ) {
-  const directory = mkdtempSync(join(tmpdir(), 'sapphire-v4-smoke-'));
+  const directory = mkdtempSync(join(tmpdir(), 'sapphire-registry-smoke-'));
   const output = join(directory, 'r');
   buildRegistry(root, output);
   const failures = checkRegistry(root, output);
@@ -84,8 +84,7 @@ export async function smokeRegistry(
           '@sapphire/button',
           '@sapphire/dialog',
           '@sapphire/sidebar',
-          '@sapphire/data-table-column-header',
-          '@sapphire/data-table-view-options',
+          '@sapphire/data-table',
           '--yes',
           '--overwrite',
         ],
@@ -96,7 +95,7 @@ export async function smokeRegistry(
     command(['bunx', 'tsc', '--noEmit'], app);
     command(['bunx', 'vite', 'build'], app);
     checkMixedOwnership(app);
-    console.log(`registry v4 smoke: installed and built ${app}`);
+    console.log(`registry smoke: installed and built ${app}`);
     return app;
   } finally {
     server.kill();
@@ -106,7 +105,7 @@ export async function smokeRegistry(
 if (import.meta.main) {
   const tarball = process.env.SAPPHIRE_PACKAGE_TARBALL;
   if (!tarball)
-    throw new Error('Set SAPPHIRE_PACKAGE_TARBALL to the packed v4 package');
+    throw new Error('Set SAPPHIRE_PACKAGE_TARBALL to the packed package');
   await smokeRegistry(
     process.cwd(),
     tarball,

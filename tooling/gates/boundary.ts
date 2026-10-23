@@ -65,7 +65,11 @@ function problem(file: string, edge: ImportEdge, message: string): Violation {
 }
 
 const canUseExample = (file: string, target: string) =>
-  !target.includes('.examples.') || layer(file) === 'site';
+  !target.includes('.examples.') ||
+  layer(file) === 'site' ||
+  (layer(file) === 'components' &&
+    file.endsWith('.examples.tsx') &&
+    dirname(file) === dirname(target));
 const canUseIcons = (file: string, specifier: string) =>
   file.endsWith('.examples.tsx') && packageOf(specifier) === 'lucide-react';
 

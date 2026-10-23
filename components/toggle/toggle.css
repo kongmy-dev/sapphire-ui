@@ -9,7 +9,7 @@
     --sp-toggle-bg-hover: var(--background);
     --sp-toggle-fg-hover: var(--sp-toggle-fg);
     --sp-toggle-bg-on: var(--primary);
-    --sp-toggle-fg-on: var(--on-dark);
+    --sp-toggle-fg-on: var(--primary-foreground);
     --sp-toggle-border-color-on: var(--primary);
     --sp-toggle-focus: 0 0 transparent;
 

@@ -38,11 +38,7 @@ function MobileNavLinks() {
             Search navigation
             <input type="search" className="sp-input" data-variant="on-dark" />
           </label>
-          <button
-            type="submit"
-            className="sp-button"
-            data-variant="on-dark-outline"
-          >
+          <button type="submit" className="sp-button" data-variant="outline">
             Search
           </button>
         </form>

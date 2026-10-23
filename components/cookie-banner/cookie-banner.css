@@ -24,8 +24,9 @@
 
   .sp-cookie-banner-title {
     margin: 0 0 var(--space-1);
-    font-family: var(--font-serif);
-    font-size: var(--text-lg);
+    font-family: var(--sp-heading-font);
+    font-size: var(--sp-heading-card);
+    font-weight: 600;
     color: var(--foreground-strong);
   }
 

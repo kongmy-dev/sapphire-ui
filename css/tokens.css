@@ -8,8 +8,9 @@
   --card-foreground: var(--foreground);
   --popover: var(--card);
   --popover-foreground: var(--foreground);
-  --primary: light-dark(#0a192f, #0a192f);
-  --primary-foreground: var(--on-dark);
+  --brand-navy: light-dark(#0a192f, #0a192f);
+  --primary: light-dark(#0a192f, #c5a065);
+  --primary-foreground: light-dark(#f1f5f9, #0a192f);
   --secondary: var(--background);
   --secondary-foreground: var(--foreground);
   --muted: var(--background);
@@ -23,26 +24,26 @@
   --ring: light-dark(#c5a065, #c5a065);
 
   --chart-1: var(--brand);
-  --chart-2: var(--primary);
+  --chart-2: var(--brand-navy);
   --chart-3: var(--info);
   --chart-4: var(--success);
   --chart-5: var(--warning);
 
-  --sidebar: var(--primary);
-  --sidebar-foreground: var(--on-dark);
+  --sidebar: var(--card);
+  --sidebar-foreground: var(--foreground);
   --sidebar-primary: var(--brand);
-  --sidebar-primary-foreground: var(--primary);
-  --sidebar-accent: var(--primary-hover);
-  --sidebar-accent-foreground: var(--on-dark);
-  --sidebar-border: var(--border-dark);
+  --sidebar-primary-foreground: var(--brand-navy);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--border);
   --sidebar-ring: var(--ring);
 
-  --primary-hover: light-dark(#1a3358, #1a3358);
+  --primary-hover: light-dark(#1a3358, #b8904f);
   --brand: light-dark(#c5a065, #c5a065);
   --brand-hover: light-dark(#b8904f, #b8904f);
   --brand-text: light-dark(#8a5a1f, #c5a065);
   --brand-on-fill: light-dark(#b8904f, #c5a065);
-  --brand-foreground: var(--primary);
+  --brand-foreground: var(--brand-navy);
   --foreground-strong: light-dark(#0a192f, #f1f5f9);
   --on-dark: light-dark(#f1f5f9, #f1f5f9);
   --on-dark-muted: light-dark(
@@ -54,7 +55,7 @@
   --field-dark: light-dark(rgb(0, 0, 0, 0.2), rgb(0, 0, 0, 0.2));
   --switch-off: light-dark(#94a3b8, rgb(255, 255, 255, 0.28));
   --white: light-dark(#fff, #fff);
-  --card-dark: var(--primary);
+  --card-dark: var(--brand-navy);
 
   --success: light-dark(#15803d, #15803d);
   --success-text: light-dark(#166534, #4ade80);
@@ -139,16 +140,16 @@
   --ring-offset: 2px;
 
   --shadow-sm:
-    0 1px 3px color-mix(in srgb, var(--primary) 6%, transparent),
-    0 1px 2px color-mix(in srgb, var(--primary) 4%, transparent);
+    0 1px 3px color-mix(in srgb, var(--brand-navy) 6%, transparent),
+    0 1px 2px color-mix(in srgb, var(--brand-navy) 4%, transparent);
   --shadow-md:
-    0 4px 16px color-mix(in srgb, var(--primary) 8%, transparent),
-    0 2px 6px color-mix(in srgb, var(--primary) 5%, transparent);
+    0 4px 16px color-mix(in srgb, var(--brand-navy) 8%, transparent),
+    0 2px 6px color-mix(in srgb, var(--brand-navy) 5%, transparent);
   --shadow-lg:
-    0 8px 32px color-mix(in srgb, var(--primary) 12%, transparent),
-    0 4px 12px color-mix(in srgb, var(--primary) 7%, transparent);
+    0 8px 32px color-mix(in srgb, var(--brand-navy) 12%, transparent),
+    0 4px 12px color-mix(in srgb, var(--brand-navy) 7%, transparent);
   --shadow-card-hover: 0 8px 24px
-    color-mix(in srgb, var(--primary) 12%, transparent);
+    color-mix(in srgb, var(--brand-navy) 12%, transparent);
 
   --transition-fast: 150ms ease;
   --transition-base: 200ms ease;

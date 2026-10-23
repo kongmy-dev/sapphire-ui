@@ -107,7 +107,7 @@ export const tokenRenames = {
   '--radius-xl': '--radius-xl',
   '--bg-page': '--background',
   '--bg-card': '--card',
-  '--bg-dark': '--primary',
+  '--bg-dark': '--brand-navy',
   '--bg-accent': '--brand',
   '--fg-primary': '--foreground',
   '--fg-secondary': '--muted-foreground',
@@ -119,6 +119,7 @@ export const tokenRenames = {
 } as const;
 
 export const newTokens = [
+  '--brand-navy',
   '--accent-foreground',
   '--error-text',
   '--success-text',
@@ -165,6 +166,23 @@ export const variableRenames = {
 } as const;
 
 export const unmappedClasses = {
+  '.sf-search':
+    'Use a labeled Input with type="search"; compose filter layout in the consuming application',
+  '.plan':
+    'Document type decoration belongs to application CSS; use a labeled IconMark or Badge instead',
+  '.proposal':
+    'Document type decoration belongs to application CSS; use a labeled IconMark or Badge instead',
+  '.sf-icon-btn':
+    'Use Button with variant="ghost", an icon size and an accessible label',
+  '.doc-title':
+    'Compose document title and metadata in the consuming application; AdminLayout owns only the shell',
+  '.dot':
+    'Compose a document icon with IconMark; AdminLayout no longer owns document decoration',
+  '.sf-pass':
+    'Compose the passphrase preview and copy action in the consuming application',
+  '.dots': 'Password preview typography belongs to the consuming application',
+  '.sf-row-actions':
+    'Compose labeled Button actions in a Cluster; there is no document row API in AdminLayout',
   '.t-display':
     'display typography moves to the semantic h2 base rule or consumer utilities using --text-display; no sp-* typography class is shipped',
   '.t-heading':
@@ -235,7 +253,7 @@ export const unmappedClasses = {
   '.sf-stat':
     'a stat in a bordered card; v4 puts .sp-stat inside .sp-card, two elements the class map cannot express',
   '.sf-type-tag':
-    'the document type tag in the admin table; the admin layout shows the type with .sp-admin-layout-doc-icon[data-kind] and has no tag part',
+    'the document type tag belongs to application content; compose a labeled Badge or IconMark',
 } as const;
 
 export const propValueRenames = {
@@ -243,7 +261,12 @@ export const propValueRenames = {
     variant: { dark: 'on-dark' },
   },
   Button: {
-    variant: { accent: 'brand' },
+    variant: {
+      accent: 'brand',
+      premium: 'brand',
+      'on-dark-primary': 'brand',
+      'on-dark-outline': 'outline',
+    },
   },
   Badge: {
     variant: { accent: 'brand', dark: 'on-dark' },
@@ -276,6 +299,23 @@ export const subpathRenames = {
 } as const;
 
 export const manualApiChanges = {
+  AdminLayout: {
+    sidebarCollapsed:
+      'Move state to desktopState="compact" or "expanded" on AdminLayout; remove repeated collapsed props from its children',
+  },
+  AdminSidebar: {
+    collapsed:
+      'Move collapse state to AdminLayout.desktopState or defaultDesktopState; use brand/footer render children to retain a compact mark or account avatar',
+    onToggleCollapse:
+      'Use AdminLayout.onDesktopStateChange; desktop and mobile navigation are independent',
+  },
+  AdminSidebarSection: {
+    collapsed: 'Remove collapsed; navigation state comes from AdminLayout',
+  },
+  AdminSidebarLink: {
+    collapsed:
+      'Remove collapsed; navigation state and compact tooltips come from AdminLayout',
+  },
   ThemeToggle: {
     asChild:
       'Remove asChild; ThemeToggle owns its icon children and always renders a button',

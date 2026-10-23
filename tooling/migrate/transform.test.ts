@@ -85,6 +85,34 @@ it('uses imported component identity and aliases for prop values while leaving l
   expect(migrateText('view.tsx', result.text).text).toBe(result.text);
 });
 
+it('migrates removed Button variants through imported aliases', () => {
+  const text =
+    'import { Button as Action } from "@kongmy-dev/sapphire-ui/button"; const view = <><Action variant="premium"/><Action variant="on-dark-primary"/><Action variant="on-dark-outline"/></>;';
+  const result = migrateText('view.tsx', text);
+  expect(result.text).toBe(
+    'import { Button as Action } from "@kongmy-dev/sapphire-ui/button"; const view = <><Action variant="brand"/><Action variant="brand"/><Action variant="outline"/></>;',
+  );
+  expect(result.issues).toEqual([]);
+  expect(migrateText('view.tsx', result.text).text).toBe(result.text);
+});
+
+it('reports removed admin collapse props without guessing state ownership', () => {
+  const text =
+    'import { AdminSidebar as Sidebar, AdminSidebarSection, AdminSidebarLink } from "@kongmy-dev/sapphire-ui/admin-layout"; const view = <Sidebar collapsed={compact} onToggleCollapse={toggle}><AdminSidebarSection collapsed={compact}><AdminSidebarLink collapsed={compact} href="/">Home</AdminSidebarLink></AdminSidebarSection></Sidebar>;';
+  const result = migrateText('view.tsx', text);
+  expect(result.text).toBe(text);
+  expect(result.issues).toHaveLength(4);
+  expect(
+    result.issues.filter((issue) => issue.message.includes('collapsed')),
+  ).toHaveLength(3);
+  expect(
+    result.issues.some((issue) => issue.message.includes('onToggleCollapse')),
+  ).toBe(true);
+  expect(
+    result.issues.every((issue) => issue.message.includes('AdminLayout')),
+  ).toBe(true);
+});
+
 it('does not apply DOM data modifiers to a React component that owns those attributes', () => {
   const text =
     'import { Button } from "@kongmy-dev/sapphire-ui/button"; const view = <Button className="btn-outline"/>;';

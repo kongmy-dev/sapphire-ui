@@ -213,7 +213,7 @@
   margin: 0;
   padding: var(--space-2) var(--space-4);
   color: var(--on-dark-muted);
-  background: var(--primary);
+  background: var(--brand-navy);
   font-size: var(--text-xs);
   font-family: var(--font-mono);
   text-transform: uppercase;
@@ -227,7 +227,7 @@
   overflow-wrap: anywhere;
   font-size: var(--text-xs);
   line-height: var(--leading-relaxed);
-  background: var(--primary);
+  background: var(--brand-navy);
   color: var(--on-dark);
   border-radius: 0;
 }

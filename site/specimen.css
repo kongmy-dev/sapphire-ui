@@ -73,7 +73,7 @@
 }
 
 .docs-preview--dark {
-  background: var(--primary);
+  background: var(--brand-navy);
   border-color: var(--border-dark);
 }
 

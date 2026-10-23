@@ -50,9 +50,9 @@
 
   .sp-page-section-title {
     margin: 0;
-    font-family: var(--font-serif);
-    font-size: clamp(var(--space-6), 3vw, var(--space-10));
-    font-weight: 700;
+    font-family: var(--sp-heading-font);
+    font-size: var(--sp-heading-section);
+    font-weight: 600;
     line-height: var(--leading-tight);
     color: var(--foreground-strong);
   }

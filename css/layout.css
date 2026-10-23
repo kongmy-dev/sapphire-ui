@@ -88,7 +88,7 @@
     padding: var(--space-8) var(--space-6);
     margin-bottom: var(--space-6);
     color: var(--on-dark);
-    background: var(--primary);
+    background: var(--brand-navy);
     border-radius: var(--radius-md);
   }
 

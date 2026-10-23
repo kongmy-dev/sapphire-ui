@@ -94,7 +94,8 @@ test('every discovered catalogue entry has an API without embedding implementati
 test('foundation references retain visual depth and resolve current token values', () => {
   const guides = foundationGuides(root);
   const colors = guides.find((guide) => guide.route === 'colors')?.body ?? '';
-  expect(colors.match(/class="docs-swatch"/g)).toHaveLength(42);
+  expect(colors.match(/class="docs-swatch"/g)).toHaveLength(43);
+  expect(colors).toContain('Copy token --brand-navy');
   expect(colors).toContain('#c5a065');
   const typography =
     guides.find((guide) => guide.route === 'typography')?.body ?? '';

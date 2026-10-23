@@ -29,11 +29,12 @@ mkdirSync(assets, { recursive: true });
 const react = readExamples(root);
 const native = readElementExamples(root);
 const readProps = propReader(root);
-await buildExamples({ root, out: assets, examples: react });
+await buildExamples({ root, out: assets, examples: react, production: true });
 const client = await Bun.build({
   entrypoints: [join(root, 'site/client.ts')],
   outdir: assets,
   naming: 'site-client.js',
+  define: { 'process.env.NODE_ENV': '"production"' },
   minify: true,
   target: 'browser',
 });
@@ -85,7 +86,7 @@ cpSync(join(root, 'site/reference.css'), join(assets, 'reference.css'));
 if (existsSync(join(root, 'registry/legacy-r')))
   cpSync(join(root, 'registry/legacy-r'), join(out, 'r'), { recursive: true });
 cpSync(join(root, 'public/_headers'), join(out, '_headers'));
-if (process.argv.includes('--registry')) buildRegistry(root, join(out, 'r/v4'));
+if (process.argv.includes('--registry')) buildRegistry(root, join(out, 'r/v5'));
 mkdirSync(dirname(destination), { recursive: true });
 if (existsSync(destination)) renameSync(destination, join(scratch, 'previous'));
 renameSync(out, destination);

@@ -252,7 +252,7 @@ test('documentation theme toggle changes and persists the selected scheme', asyn
   const darkSurface = await sidebar.evaluate(
     (element) => getComputedStyle(element).backgroundColor,
   );
-  expect(darkSurface).toBe(lightSurface);
+  expect(darkSurface).not.toBe(lightSurface);
   expect(
     await page
       .locator('body')

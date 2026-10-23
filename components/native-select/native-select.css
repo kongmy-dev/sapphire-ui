@@ -74,7 +74,7 @@
 
   .sp-native-select[data-variant="on-dark"] > option {
     color: var(--on-dark);
-    background-color: var(--primary);
+    background-color: var(--brand-navy);
   }
 
   .sp-native-select[data-size="sm"] {

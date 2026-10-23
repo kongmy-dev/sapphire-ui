@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { sourceImports } from '../source/imports.js';
-import { readRegistry } from './build.js';
+import { readRegistry, registryOutput } from './build.js';
 import { generatedRegistry, REGISTRY_SOURCE } from './generate.js';
 import { registryEntries } from './source.js';
 
@@ -90,11 +90,8 @@ export function checkRegistry(root: string, output: string): string[] {
 }
 
 if (import.meta.main) {
-  const failures = checkRegistry(
-    process.cwd(),
-    process.env.REGISTRY_V4_OUT ?? 'dist-docs/r/v4',
-  );
+  const failures = checkRegistry(process.cwd(), registryOutput(process.env));
   for (const failure of failures) console.error(failure);
   if (failures.length) process.exitCode = 1;
-  else console.log(`registry v4: ${registryEntries.length + 1} items checked`);
+  else console.log(`registry: ${registryEntries.length + 1} items checked`);
 }

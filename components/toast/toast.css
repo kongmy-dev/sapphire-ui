@@ -31,7 +31,7 @@
     border-left: var(--space-1) solid var(--sp-toast-accent);
     border-radius: var(--radius-md);
     box-shadow: 0 var(--space-2) var(--space-8)
-      color-mix(in srgb, var(--primary) 14%, transparent);
+      color-mix(in srgb, var(--brand-navy) 14%, transparent);
     opacity: 0;
     transition:
       transform var(--sp-toast-transition),

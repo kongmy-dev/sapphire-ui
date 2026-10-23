@@ -1,5 +1,11 @@
 import { expect, test } from 'bun:test';
-import { existsSync, mkdtempSync, readdirSync, writeFileSync } from 'node:fs';
+import {
+  existsSync,
+  mkdtempSync,
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
@@ -20,6 +26,25 @@ test('site output replaces stale assets and excludes build-only entry sources', 
   expect(existsSync(join(out, 'assets/comparison.css'))).toBe(false);
   const files = readdirSync(join(out, 'assets'), { recursive: true });
   expect(files.some((file) => /\.[cm]?tsx?$/.test(String(file)))).toBe(false);
-  expect(files).toContain('examples-entry.js');
-  expect(files).toContain('elements-entry.js');
+  expect(files).not.toContain('examples-entry.js');
+  expect(files).not.toContain('elements-entry.js');
+  expect(files).not.toContain('equivalence.js');
+  expect(files).not.toContain('examples.css');
+  expect(files).toContain('examples/button.js');
+  expect(files).toContain('examples/button.css');
+  expect(files).toContain('native/banner.js');
+  const button = readFileSync(
+    join(out, 'components/button/index.html'),
+    'utf8',
+  );
+  expect(button).toContain('src="/assets/examples/button.js"');
+  expect(button).toContain('href="/assets/examples/button.css"');
+  expect(button).not.toContain('/assets/examples/form-field');
+  expect(button).not.toContain('/assets/examples-entry.js');
+  const styles = readFileSync(join(out, 'assets/examples/button.css'), 'utf8');
+  expect(styles).toContain('.docs-button-hint');
+  expect(styles).not.toContain('.docs-form-field-demo');
+  const shared = readFileSync(join(out, 'assets/sapphire.css'), 'utf8');
+  expect(shared).toContain('.sp-prose');
+  expect(shared).toContain('.sp-command-palette');
 });

@@ -9,6 +9,14 @@
     scrollbar-gutter: stable;
   }
 
+  :root,
+  [data-typography="product"] {
+    --sp-heading-font: var(--font-sans);
+    --sp-heading-page: calc(var(--text-base) * 1.75);
+    --sp-heading-section: var(--text-lg);
+    --sp-heading-card: var(--text-base);
+  }
+
   body {
     margin: 0;
     font-family: var(--font-sans);
@@ -19,6 +27,13 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  [data-typography="editorial"] {
+    --sp-heading-font: var(--font-serif);
+    --sp-heading-page: var(--text-display-xl);
+    --sp-heading-section: var(--text-display);
+    --sp-heading-card: var(--text-heading);
+  }
+
   h1,
   h2,
   h3,
@@ -26,31 +41,27 @@
   h5,
   h6 {
     margin: 0 0 var(--space-4);
-    font-family: var(--font-serif);
+    font-family: var(--sp-heading-font);
     font-size: inherit;
-    font-weight: inherit;
+    font-weight: 600;
     line-height: var(--leading-tight);
     color: var(--foreground);
   }
 
   h1 {
-    font-size: var(--text-display-xl);
-    font-weight: 600;
+    font-size: var(--sp-heading-page);
   }
 
   h2 {
-    font-size: var(--text-display);
-    font-weight: 600;
+    font-size: var(--sp-heading-section);
   }
 
   h3 {
-    font-size: var(--text-heading);
-    font-weight: 500;
+    font-size: var(--sp-heading-card);
   }
 
   h4 {
-    font-size: var(--text-subheading);
-    font-weight: 500;
+    font-size: var(--text-base);
   }
 
   p {

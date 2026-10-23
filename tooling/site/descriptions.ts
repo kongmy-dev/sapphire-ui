@@ -45,6 +45,8 @@ const descriptions: Record<string, string> = {
     'Explain why a collection has no content and what to do next. Use it for first use, no search results or a cleared workspace.',
   'form-field':
     'Keep a label, control, help text and validation message together. Use it for forms where every input needs an accessible name and nearby guidance.',
+  'form-section':
+    'Group related fields under a legend and description. Use native fieldset behavior to disable a section and keep forms easy to scan.',
   'hover-card':
     'Preview supporting information about a linked item. Use it for optional context available on hover or focus; keep essential actions in the main flow.',
   'icon-mark':
@@ -66,6 +68,8 @@ const descriptions: Record<string, string> = {
     'Choose one value through the browser’s native select control. Use it for straightforward forms where platform behaviour is preferable to a custom popup.',
   'page-section':
     'Group a page section with a heading and consistent spacing. Use it to build a clear reading sequence across landing or content pages.',
+  'page-header':
+    'Give an application page a clear title, description, breadcrumbs and primary actions with consistent responsive spacing.',
   pagination:
     'Move through a collection divided into pages. Use it when readers need stable page positions and direct access to earlier results.',
   'passphrase-gate':

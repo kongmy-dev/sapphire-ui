@@ -3,7 +3,7 @@
     --sp-callout-border-color: var(--border);
     --sp-callout-bg: var(--background);
     --sp-callout-icon-size: var(--space-6);
-    --sp-callout-title-size: var(--text-lg);
+    --sp-callout-title-size: var(--sp-heading-card);
 
     position: relative;
     display: flex;
@@ -40,7 +40,7 @@
   }
 
   .sp-callout-title {
-    font-family: var(--font-serif);
+    font-family: var(--sp-heading-font);
     font-size: var(--sp-callout-title-size);
     font-weight: 600;
     line-height: calc(var(--space-1) * 7);

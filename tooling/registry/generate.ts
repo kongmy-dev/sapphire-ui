@@ -9,6 +9,15 @@ import {
 
 export const REGISTRY_SOURCE = 'tooling/registry/generated/registry.json';
 export function generatedRegistry(root: string): string {
+  const pkg: unknown = JSON.parse(
+    readFileSync(resolve(root, 'package.json'), 'utf8'),
+  );
+  const version =
+    typeof pkg === 'object' && pkg !== null && 'version' in pkg
+      ? pkg.version
+      : undefined;
+  if (typeof version !== 'string') throw new Error('Missing package version');
+  const foundations = `^${version}`;
   const items: {
     name: string;
     type: string;
@@ -39,17 +48,9 @@ export function generatedRegistry(root: string): string {
       ...(hasCss
         ? { css: { [`@import "@/components/ui/${item.name}.css"`]: {} } }
         : {}),
-      meta: { foundations: '^4.0.0', cssOwner: item.name },
+      meta: { foundations, cssOwner: item.name },
     };
   });
-  const pkg: unknown = JSON.parse(
-    readFileSync(resolve(root, 'package.json'), 'utf8'),
-  );
-  const version =
-    typeof pkg === 'object' && pkg !== null && 'version' in pkg
-      ? pkg.version
-      : undefined;
-  if (typeof version !== 'string') throw new Error('Missing package version');
   items.unshift({
     name: 'base',
     type: 'registry:base',
@@ -63,7 +64,7 @@ export function generatedRegistry(root: string): string {
     dependencies: [`@kongmy-dev/sapphire-ui@${version}`],
     registryDependencies: [],
     css: { '@import "@kongmy-dev/sapphire-ui/foundations.css"': {} },
-    meta: { foundations: '^4.0.0', cssOwner: 'foundations' },
+    meta: { foundations, cssOwner: 'foundations' },
     extends: 'none',
   });
   const json = `${JSON.stringify({ $schema: 'https://ui.shadcn.com/schema/registry.json', items }, null, 2)}\n`;

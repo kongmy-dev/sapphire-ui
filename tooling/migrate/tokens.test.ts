@@ -17,7 +17,7 @@ const read = (path: string) =>
 const v3Theme = legacyFacts.themeTokens;
 const v3Index = legacyFacts.indexTokens;
 const v3 = [...v3Theme, ...v3Index];
-const v4 = tokenSheet(read('css/tokens.css'));
+const v5 = tokenSheet(read('css/tokens.css'));
 const mapping = tokenSheet(read('css/tailwind.css'));
 
 const renames: Record<string, string> = tokenRenames;
@@ -25,22 +25,42 @@ const utilityTable: Record<string, Record<string, string>> = utilityRenames;
 
 const unique = (names: readonly string[]) => [...new Set(names)];
 const v3Names = unique(v3.map((declaration) => declaration.name));
-const v4Names = unique(v4.map((declaration) => declaration.name));
+const v5Names = unique(v5.map((declaration) => declaration.name));
+
+const semanticValues: Record<string, Record<Scheme, string>> = {
+  '--color-primary': { light: '#0a192f', dark: '#c5a065' },
+  '--color-primary-hover': { light: '#1a3358', dark: '#b8904f' },
+  '--color-primary-foreground': { light: '#f1f5f9', dark: '#0a192f' },
+  '--color-sidebar': { light: '#fff', dark: '#112240' },
+  '--color-sidebar-foreground': { light: '#1e293b', dark: '#f1f5f9' },
+  '--color-sidebar-accent': {
+    light: 'rgb(197,160,101,0.08)',
+    dark: 'rgb(197,160,101,0.08)',
+  },
+  '--color-sidebar-accent-foreground': { light: '#1e293b', dark: '#f1f5f9' },
+  '--color-sidebar-border': {
+    light: '#e2e8f0',
+    dark: 'rgb(255,255,255,0.12)',
+  },
+};
 
 const effective = (value: string | undefined) => normaliseValue(value ?? '');
 
 function valueMismatches(scheme: Scheme): string[] {
   const before = resolveSheet(v3, scheme);
-  const after = resolveSheet(v4, scheme);
+  const after = resolveSheet(v5, scheme);
   return Object.entries(renames).flatMap(([from, to]) => {
     const was = effective(before.get(from));
     const now = effective(after.get(to));
-    const same = was !== '' && was === now && !now.includes('var(');
-    return same ? [] : [`${scheme}: ${from} is "${was}", ${to} is "${now}"`];
+    const expected = semanticValues[from]?.[scheme] ?? was;
+    const same = was !== '' && expected === now && !now.includes('var(');
+    return same
+      ? []
+      : [`${scheme}: ${from} expects "${expected}", ${to} is "${now}"`];
   });
 }
 
-describe('v3 tokens map to v4 tokens of the same value', () => {
+describe('v3 tokens retain values except for explicit v5 semantic changes', () => {
   it('has a rename entry for every v3 token and none for a token v3 never declared', () => {
     expect(v3Names.filter((name) => !(name in renames))).toEqual([]);
     expect(
@@ -50,23 +70,45 @@ describe('v3 tokens map to v4 tokens of the same value', () => {
 
   it('points every rename at a token that css/tokens.css declares', () => {
     expect(
-      Object.values(renames).filter((name) => !v4Names.includes(name)),
+      Object.values(renames).filter((name) => !v5Names.includes(name)),
     ).toEqual([]);
   });
 
   for (const scheme of SCHEMES) {
-    it(`gives each v3 token its v4 token's value in ${scheme}`, () => {
+    it(`preserves values or matches the pinned v5 semantic value in ${scheme}`, () => {
       expect(valueMismatches(scheme)).toEqual([]);
     });
   }
 
-  it('declares no v4 token that neither a rename nor newTokens accounts for', () => {
+  it('pins only renamed tokens whose semantics change in at least one scheme', () => {
+    const unchanged = Object.entries(semanticValues).filter(([from, values]) =>
+      SCHEMES.every(
+        (scheme) =>
+          effective(resolveSheet(v3, scheme).get(from)) === values[scheme],
+      ),
+    );
+    expect(unchanged).toEqual([]);
+    expect(
+      Object.keys(semanticValues).filter((name) => !(name in renames)),
+    ).toEqual([]);
+  });
+
+  it('keeps the former dark surface token fixed navy in both schemes', () => {
+    expect(renames['--bg-dark']).toBe('--brand-navy');
+    for (const scheme of SCHEMES) {
+      expect(effective(resolveSheet(v5, scheme).get('--brand-navy'))).toBe(
+        '#0a192f',
+      );
+    }
+  });
+
+  it('declares no v5 token that neither a rename nor newTokens accounts for', () => {
     const targets = new Set(Object.values(renames));
-    const unaccounted = v4Names.filter(
+    const unaccounted = v5Names.filter(
       (name) => !targets.has(name) && !newTokens.some((n) => n === name),
     );
     expect(unaccounted).toEqual([]);
-    expect(newTokens.filter((name) => !v4Names.includes(name))).toEqual([]);
+    expect(newTokens.filter((name) => !v5Names.includes(name))).toEqual([]);
   });
 
   it('agrees between the two v3 files on every token both declare', () => {

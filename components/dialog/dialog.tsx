@@ -1,7 +1,9 @@
 'use client';
 
 import { Dialog as Primitive } from 'radix-ui';
-import { type ComponentProps, type ReactNode, useRef } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
+
+import { useFocusReturn } from '../../lib/use-focus-return.js';
 
 export const Dialog = Primitive.Root;
 export const DialogTrigger = Primitive.Trigger;
@@ -155,23 +157,10 @@ export function ConfirmDialog({
   isDanger = false,
   children,
 }: ConfirmDialogProps) {
-  const returnTarget = useRef<HTMLElement | null>(null);
-  function rememberFocus() {
-    const active = document.activeElement;
-    returnTarget.current = active instanceof HTMLElement ? active : null;
-  }
-  function restoreFocus(event: Event) {
-    if (!returnTarget.current?.isConnected) return;
-    event.preventDefault();
-    returnTarget.current.focus();
-  }
+  const focusReturn = useFocusReturn();
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        maxWidth="420px"
-        onOpenAutoFocus={rememberFocus}
-        onCloseAutoFocus={restoreFocus}
-      >
+      <DialogContent maxWidth="420px" {...focusReturn}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>

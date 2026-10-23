@@ -1,6 +1,7 @@
 'use client';
 
-import { type ComponentProps, type ReactNode, useRef } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
+import { useFocusReturn } from '../../lib/use-focus-return.js';
 import { Button } from '../button/button.js';
 import {
   Dialog,
@@ -13,7 +14,7 @@ import { type StepItem, Steps } from '../steps/steps.js';
 const modes = ['inline', 'fullscreen', 'modal'] as const;
 export type WizardLayoutProps = Omit<ComponentProps<'div'>, 'title'> & {
   mode?: (typeof modes)[number] | undefined;
-  steps: StepItem[];
+  steps: readonly StepItem[];
   currentStep: number;
   title?: string | undefined;
   description?: string | undefined;
@@ -110,7 +111,7 @@ export function WizardLayout({
   children,
   ...props
 }: WizardLayoutProps) {
-  const launcher = useRef<HTMLElement | null>(null);
+  const focusReturn = useFocusReturn();
   const content = (
     <WizardContent
       steps={steps}
@@ -139,16 +140,7 @@ export function WizardLayout({
           ref={ref}
           className={classes}
           data-mode={mode}
-          onOpenAutoFocus={() => {
-            const active = document.activeElement;
-            launcher.current = active instanceof HTMLElement ? active : null;
-          }}
-          onCloseAutoFocus={(event) => {
-            if (launcher.current?.isConnected) {
-              event.preventDefault();
-              launcher.current.focus();
-            }
-          }}
+          {...focusReturn}
         >
           <div className="sp-sr-only">
             <DialogTitle>{title || 'Wizard Modal'}</DialogTitle>

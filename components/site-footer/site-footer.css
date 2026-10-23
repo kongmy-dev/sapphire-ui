@@ -2,7 +2,7 @@
   .sp-site-footer {
     --sp-site-footer-padding-block: var(--space-8);
     --sp-site-footer-gap: var(--space-6);
-    --sp-site-footer-bg: var(--primary);
+    --sp-site-footer-bg: var(--brand-navy);
     --sp-site-footer-fg: var(--on-dark);
     --sp-site-footer-border-color: var(--border-dark);
     --sp-site-footer-title-fg: var(--brand);

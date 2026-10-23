@@ -1,4 +1,5 @@
 import type { Locator, Page } from '@playwright/test';
+import { EXAMPLE_URL } from '../../tooling/examples/catalog.js';
 import { SPECIMEN_URL } from '../../tooling/visual/specimens';
 import { stateName } from '../../tooling/visual/state-inventory';
 import { expect, test } from './fixtures';
@@ -9,7 +10,8 @@ export async function captureState(
 ): Promise<Buffer> {
   const pixels = await target.screenshot(options);
   const page = 'page' in target ? target.page() : target;
-  if (!page.url().startsWith(SPECIMEN_URL)) return pixels;
+  const origin = new URL(page.url()).origin;
+  if (origin !== SPECIMEN_URL && origin !== EXAMPLE_URL) return pixels;
   const info = test.info();
   const index = info.annotations.filter(
     (item) => item.type === 'v4-state',

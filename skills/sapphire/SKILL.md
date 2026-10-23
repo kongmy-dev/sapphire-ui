@@ -1,11 +1,11 @@
 ---
 name: sapphire
-description: Consume Sapphire v4 through npm or owned registry source.
+description: Consume Sapphire through npm or owned registry source.
 ---
 
-# Sapphire v4
+# Sapphire
 
-Use Bun. Install the v4 registry base before adding `@sapphire` items.
+Use Bun. Install the matching major-version registry base before adding `@sapphire` items.
 The base installs Sapphire at an exact version, imports the foundations stylesheet,
 and bundles the fonts; no Google Fonts or icon font request is needed.
 
@@ -26,7 +26,12 @@ and bundles the fonts; no Google Fonts or icon font request is needed.
 The local component and its local stylesheet are yours. Keep `sp-*` part classes
 and `data-*` variants together. Keep styles separate from JavaScript. Use tokens
 from foundations; use `--brand-text` for readable gold text and `--brand` for decoration.
-No gradients except premium buttons. Preserve keyboard focus and reduced motion.
+Use solid fills. Preserve keyboard focus and reduced motion.
+
+Product headings are sans-serif; opt into `data-typography="editorial"` for serif display type.
+Use `--primary` with `--primary-foreground` for actions, `--brand-navy` for fixed navy.
+Let AdminLayout own desktop/mobile navigation. Compose PageHeader and FormSection;
+put FormField render-child controlProps on the actual compound-control trigger.
 
 Set `data-theme="light"` or `data-theme="dark"` on the document element.
 React and Radix are optional package peers; install the exact dependencies listed

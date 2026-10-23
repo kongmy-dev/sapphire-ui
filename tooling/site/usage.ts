@@ -3,6 +3,7 @@ import { dirname, join, relative, resolve } from 'node:path';
 import ts from 'typescript';
 import type { ExampleRow } from '../examples/catalog';
 import { parseSource } from '../source/parse';
+import { expandedExampleSource } from './example-modules';
 import { code, escapeHtml } from './html';
 import { componentSetup } from './setup';
 
@@ -117,16 +118,30 @@ function dependencyClosure(source: ts.SourceFile, render: string) {
   return { used, selected };
 }
 
+function consumeImport(
+  statement: ts.ImportDeclaration,
+  remaining: Set<string>,
+) {
+  const clause = statement.importClause;
+  if (clause?.name) remaining.delete(clause.name.text);
+  const bindings = clause?.namedBindings;
+  if (!bindings) return;
+  if (ts.isNamespaceImport(bindings)) remaining.delete(bindings.name.text);
+  else for (const item of bindings.elements) remaining.delete(item.name.text);
+}
+
 export function exampleSource(root: string, row: ExampleRow) {
-  const source = parseSource(
-    row.file,
-    readFileSync(join(root, row.file), 'utf8'),
-  );
+  const source = expandedExampleSource(root, row);
   const render = renderer(source, row);
   const { used, selected } = dependencyClosure(source, render);
+  const remaining = new Set(used);
   const imports = source.statements
     .filter(ts.isImportDeclaration)
-    .map((statement) => imported(statement, used, root, row.file))
+    .map((statement) => {
+      const declaration = imported(statement, remaining, root, row.file);
+      consumeImport(statement, remaining);
+      return declaration;
+    })
     .filter(Boolean);
   return [
     '"use client";',

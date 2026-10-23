@@ -6,7 +6,15 @@ test('visual foundations expose current colors, type specimens and spacing', asy
   page,
 }) => {
   await page.goto(`${SITE}/colors/`);
-  await expect(page.locator('.docs-swatch')).toHaveCount(42);
+  await expect(page.locator('.docs-swatch')).toHaveCount(43);
+  const navy = page.locator('.docs-swatch').filter({
+    has: page.getByRole('button', {
+      name: 'Copy token --brand-navy',
+      exact: true,
+    }),
+  });
+  await expect(navy).toContainText('Light #0a192f');
+  await expect(navy).toContainText('Dark #0a192f');
   const brand = page.locator('.docs-swatch').filter({
     has: page.getByRole('button', {
       name: 'Copy token --brand',

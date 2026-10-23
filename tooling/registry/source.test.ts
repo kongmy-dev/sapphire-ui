@@ -1,17 +1,64 @@
-import { describe, expect, test } from 'bun:test';
-import { readFileSync } from 'node:fs';
+import { afterEach, describe, expect, test } from 'bun:test';
+import {
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  symlinkSync,
+  writeFileSync,
+} from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { checkItem } from './check.js';
 import { generatedRegistry, REGISTRY_SOURCE } from './generate.js';
 import {
   collectItem,
   exactDependencies,
+  registryEntries,
   resolvedModule,
   rewrittenSource,
   targetFor,
 } from './source.js';
 
 const root = process.cwd();
+const fixtures: string[] = [];
+afterEach(() => {
+  for (const fixture of fixtures.splice(0))
+    rmSync(fixture, { recursive: true, force: true });
+});
+
+function versionFixture(version: unknown) {
+  const directory = mkdtempSync(join(tmpdir(), 'sapphire-registry-version-'));
+  fixtures.push(directory);
+  for (const name of ['components', 'blocks', 'lib', 'hooks', 'node_modules'])
+    symlinkSync(join(root, name), join(directory, name));
+  const manifest: unknown = JSON.parse(
+    readFileSync(join(root, 'package.json'), 'utf8'),
+  );
+  if (typeof manifest !== 'object' || manifest === null)
+    throw new Error('Invalid fixture manifest');
+  writeFileSync(
+    join(directory, 'package.json'),
+    JSON.stringify({ ...manifest, version }),
+  );
+  return directory;
+}
+
 describe('registry source ownership', () => {
+  test('derives every foundations range and base dependency from the package version', () => {
+    const generated = generatedRegistry(versionFixture('7.2.3'));
+    const foundations = Array.from(
+      generated.matchAll(/"foundations":\s*"([^"]+)"/g),
+      (match) => match[1],
+    );
+    expect(foundations).toHaveLength(registryEntries.length + 1);
+    expect(foundations.every((version) => version === '^7.2.3')).toBe(true);
+    expect(generated).toContain('@kongmy-dev/sapphire-ui@7.2.3');
+  });
+  test('rejects a missing package version before generating compatibility metadata', () => {
+    expect(() => generatedRegistry(versionFixture(undefined))).toThrow(
+      'Missing package version',
+    );
+  });
   test('button carries its Slot implementation and exact peers', () => {
     const item = collectItem(root, 'components/button/button.tsx');
     expect(item.files).toContain('lib/slot.tsx');
@@ -52,6 +99,26 @@ describe('registry source ownership', () => {
     expect(() => exactDependencies(root, ['not-installed'])).toThrow(
       'Unpinned',
     );
+  });
+  test('data-table composes owned controls and admin source carries shared state', () => {
+    const table = collectItem(root, 'blocks/data-table/data-table.tsx');
+    expect(table.registryDependencies).toContain('@sapphire/table');
+    expect(table.registryDependencies).toContain(
+      '@sapphire/data-table-column-header',
+    );
+    expect(table.registryDependencies).toContain(
+      '@sapphire/data-table-view-options',
+    );
+    expect(table.dependencies).toContain('@tanstack/react-table');
+    const admin = collectItem(root, 'components/admin-layout/admin-layout.tsx');
+    expect(admin.files).toContain('lib/navigation-state.ts');
+    expect(admin.files).toContain('components/admin-layout/admin-context.tsx');
+    expect(admin.files).toContain(
+      'components/admin-layout/admin-navigation.tsx',
+    );
+    expect(admin.registryDependencies).toContain('@sapphire/sheet');
+    expect(admin.registryDependencies).toContain('@sapphire/tooltip');
+    expect(admin.registryDependencies).toContain('@sapphire/popover');
   });
   test('generated metadata stays reproducible and base has one foundations import', () => {
     expect(readFileSync(REGISTRY_SOURCE, 'utf8')).toBe(generatedRegistry(root));

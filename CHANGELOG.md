@@ -1,5 +1,32 @@
 # Changelog
 
+## 5.0.0 — Unreleased
+
+- Product headings default to sans-serif at 28/18/16px. Set
+  `data-typography="editorial"` for the fluid serif scale.
+- `--primary` is now a semantic action colour: navy in light mode, gold in dark.
+  Use `--brand-navy` with `--on-dark` for permanent navy surfaces. Shadows retain navy.
+- Button removes `premium`, `on-dark-primary` and `on-dark-outline`. Use `brand`,
+  `brand` and `outline` respectively; set `data-theme="dark"` on dark surfaces.
+- AdminLayout owns controlled/default desktop and mobile navigation state.
+  Children no longer accept collapse props. A stable header trigger, compact
+  tooltips, visible account/brand recipes, groups and modal mobile navigation
+  replace the separate collapse controls. Registry Sidebar no longer writes
+  cookies or installs a global keyboard shortcut; applications own those policies.
+- PageHeader and FormSection reduce repeated page/form markup. FormField render
+  children associate compound controls with their labels, help and errors.
+  Combobox searches visible labels and forwards trigger/form attributes.
+- StatGroup owns the grid; Stat owns its surface. Remove extra Card wrappers.
+  Readonly collections and a private shared focus-return helper reduce glue code.
+- Document title/icon, passphrase and row-action demo styles leave the shared
+  AdminLayout stylesheet. Compose application content with IconMark/Badge/Button.
+- The registry adds complete table and layout recipes. Current registry output
+  is `/r/v5/`; legacy assets stay frozen. Documentation loads production code and
+  example styles for the current component page.
+
+See [the migration guide](docs/migrate-v5.md) for required manual decisions.
+This candidate has not been published.
+
 ## 4.0.0 — 2026-10-20
 
 3.0.1 and 3.0.2 reached GitHub Packages only, so this is the first npm release since
@@ -63,8 +90,6 @@ Generated from `tooling/migrate/map.ts`. Review ambiguous class names and manual
 | `.delta` | `.sp-stat-change` |
 | `.up` | `.sp-stat-change[data-direction=up]` |
 | `.down` | `.sp-stat-change[data-direction=down]` |
-| `.plan` | `.sp-admin-layout-doc-icon[data-kind=plan]` |
-| `.proposal` | `.sp-admin-layout-doc-icon[data-kind=proposal]` |
 | `.published` | `.sp-badge[data-variant=success]` |
 | `.draft` | `.sp-badge` |
 | `.review` | `.sp-badge[data-variant=warning]` |
@@ -214,9 +239,7 @@ Generated from `tooling/migrate/map.ts`. Review ambiguous class names and manual
 | `.sf-count` | `.sp-admin-layout-badge` |
 | `.sf-side-foot` | `.sp-admin-layout-sidebar-footer` |
 | `.sf-avatar` | `.sp-avatar[data-size=sm]` |
-| `.sf-search` | `.sp-admin-layout-search` |
 | `.sf-kbd` | `.sp-kbd` |
-| `.sf-icon-btn` | `.sp-admin-layout-icon-button` |
 | `.sf-page-head` | `.sp-admin-layout-page-head` |
 | `.sf-sub` | `.sp-admin-layout-page-sub` |
 | `.sf-actions` | `.sp-admin-layout-page-actions` |
@@ -232,12 +255,7 @@ Generated from `tooling/migrate/map.ts`. Review ambiguous class names and manual
 | `.sf-tab` | `.sp-tabs-trigger` |
 | `.sf-table-wrap` | `.sp-table-container` |
 | `.sf-table` | `.sp-table` |
-| `.doc-title` | `.sp-admin-layout-doc-title` |
-| `.dot` | `.sp-admin-layout-doc-icon` |
 | `.sf-pill` | `.sp-badge` |
-| `.sf-pass` | `.sp-admin-layout-pass` |
-| `.dots` | `.sp-admin-layout-pass-dots` |
-| `.sf-row-actions` | `.sp-admin-layout-row-actions` |
 | `.gate` | `.sp-passphrase-gate` |
 | `.gate-card` | `.sp-passphrase-gate-card` |
 | `.gate-brand` | `.sp-passphrase-gate-brand` |
@@ -322,7 +340,7 @@ Generated from `tooling/migrate/map.ts`. Review ambiguous class names and manual
 | `--radius-lg` | `--radius` |
 | `--bg-page` | `--background` |
 | `--bg-card` | `--card` |
-| `--bg-dark` | `--primary` |
+| `--bg-dark` | `--brand-navy` |
 | `--bg-accent` | `--brand` |
 | `--fg-primary` | `--foreground` |
 | `--fg-secondary` | `--muted-foreground` |
@@ -369,6 +387,9 @@ Generated from `tooling/migrate/map.ts`. Review ambiguous class names and manual
 |---|---|
 | `IconMark.variant="dark"` | `variant="on-dark"` |
 | `Button.variant="accent"` | `variant="brand"` |
+| `Button.variant="premium"` | `variant="brand"` |
+| `Button.variant="on-dark-primary"` | `variant="brand"` |
+| `Button.variant="on-dark-outline"` | `variant="outline"` |
 | `Badge.variant="accent"` | `variant="brand"` |
 | `Badge.variant="dark"` | `variant="on-dark"` |
 | `Chip.variant="accent"` | `variant="brand"` |
@@ -389,6 +410,11 @@ Generated from `tooling/migrate/map.ts`. Review ambiguous class names and manual
 
 | Before | After / action |
 |---|---|
+| `AdminLayout.sidebarCollapsed` | Move state to desktopState="compact" or "expanded" on AdminLayout; remove repeated collapsed props from its children |
+| `AdminSidebar.collapsed` | Move collapse state to AdminLayout.desktopState or defaultDesktopState; use brand/footer render children to retain a compact mark or account avatar |
+| `AdminSidebar.onToggleCollapse` | Use AdminLayout.onDesktopStateChange; desktop and mobile navigation are independent |
+| `AdminSidebarSection.collapsed` | Remove collapsed; navigation state comes from AdminLayout |
+| `AdminSidebarLink.collapsed` | Remove collapsed; navigation state and compact tooltips come from AdminLayout |
 | `ThemeToggle.asChild` | Remove asChild; ThemeToggle owns its icon children and always renders a button |
 | `Icon.name` | Replace font glyph names with a React SVG element; no Icon name registry is exported |
 | `Icon.filled` | Filled font glyphs are removed; choose explicit SVG geometry |
@@ -410,6 +436,15 @@ Generated from `tooling/migrate/map.ts`. Review ambiguous class names and manual
 
 | Before | After / action |
 |---|---|
+| `.sf-search` | Use a labeled Input with type="search"; compose filter layout in the consuming application |
+| `.plan` | Document type decoration belongs to application CSS; use a labeled IconMark or Badge instead |
+| `.proposal` | Document type decoration belongs to application CSS; use a labeled IconMark or Badge instead |
+| `.sf-icon-btn` | Use Button with variant="ghost", an icon size and an accessible label |
+| `.doc-title` | Compose document title and metadata in the consuming application; AdminLayout owns only the shell |
+| `.dot` | Compose a document icon with IconMark; AdminLayout no longer owns document decoration |
+| `.sf-pass` | Compose the passphrase preview and copy action in the consuming application |
+| `.dots` | Password preview typography belongs to the consuming application |
+| `.sf-row-actions` | Compose labeled Button actions in a Cluster; there is no document row API in AdminLayout |
 | `.t-display` | display typography moves to the semantic h2 base rule or consumer utilities using --text-display; no sp-* typography class is shipped |
 | `.t-heading` | heading typography moves to the semantic h3 base rule or consumer utilities using --text-heading; no sp-* typography class is shipped |
 | `.t-subheading` | subheading typography moves to the semantic h4 base rule or consumer utilities using --text-subheading; no sp-* typography class is shipped |
@@ -445,7 +480,7 @@ Generated from `tooling/migrate/map.ts`. Review ambiguous class names and manual
 | `.sf-tag` | the version tag in the admin brand; .sp-admin-layout-brand has no tag part |
 | `.sf-spacer` | a flex spacer in the top bar; .sp-admin-layout-header spaces its start and end itself |
 | `.sf-stat` | a stat in a bordered card; v4 puts .sp-stat inside .sp-card, two elements the class map cannot express |
-| `.sf-type-tag` | the document type tag in the admin table; the admin layout shows the type with .sp-admin-layout-doc-icon[data-kind] and has no tag part |
+| `.sf-type-tag` | the document type tag belongs to application content; compose a labeled Badge or IconMark |
 
 <!-- sapphire-migration:end -->
 

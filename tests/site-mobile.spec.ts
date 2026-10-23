@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
+import packageMetadata from '../package.json' with { type: 'json' };
 
 const SITE = 'http://localhost:4178';
 
@@ -24,7 +25,7 @@ for (const scheme of ['light', 'dark'] as const) {
     expect(menuBox.width).toBeGreaterThanOrEqual(44);
     expect(menuBox.height).toBeGreaterThanOrEqual(44);
     expect(menuBox.x + menuBox.width).toBeLessThanOrEqual(brandBox.x);
-    await expect(bar).toContainText('v4.0.0');
+    await expect(bar).toContainText(`v${packageMetadata.version}`);
     await expect(bar).toHaveCSS('height', '64px');
     await open.click();
     const drawer = page.getByRole('dialog', {

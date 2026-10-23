@@ -1,0 +1,42 @@
+@layer components {
+  .sp-page-header {
+    margin-block-end: var(--space-6);
+  }
+  .sp-page-header-breadcrumbs {
+    margin-block-end: var(--space-3);
+    font-size: var(--text-sm);
+  }
+  .sp-page-header-body {
+    display: flex;
+    gap: var(--space-4);
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  .sp-page-header-heading {
+    min-width: 0;
+  }
+  .sp-page-header-heading h1 {
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+  .sp-page-header-description {
+    margin: var(--space-2) 0 0;
+    color: var(--muted-foreground);
+    font-size: var(--text-sm);
+  }
+  .sp-page-header-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+    flex-shrink: 0;
+  }
+  @media (max-width: 47.999rem) {
+    .sp-page-header-body {
+      flex-direction: column;
+    }
+    .sp-page-header-actions {
+      width: 100%;
+    }
+  }
+}

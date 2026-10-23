@@ -21,9 +21,9 @@
 
   .sp-empty-title {
     margin: 0 0 var(--space-2);
-    font-family: var(--font-serif);
-    font-size: var(--text-lg);
-    font-weight: 500;
+    font-family: var(--sp-heading-font);
+    font-size: var(--sp-heading-card);
+    font-weight: 600;
     line-height: calc(var(--space-1) * 7);
     color: var(--foreground-strong);
   }

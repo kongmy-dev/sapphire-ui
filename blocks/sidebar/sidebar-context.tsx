@@ -1,11 +1,11 @@
 'use client';
+
 import * as React from 'react';
+import { Sheet } from '../../components/sheet/sheet.js';
 import { TooltipProvider } from '../../components/tooltip/tooltip.js';
+import { useNavigationState } from '../../lib/navigation-state.js';
 import { cn } from '../classes.js';
 
-const SIDEBAR_COOKIE_NAME = 'sidebar_state';
-const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
-const SIDEBAR_KEYBOARD_SHORTCUT = 'b';
 type SidebarContextProps = {
   state: 'expanded' | 'collapsed';
   open: boolean;
@@ -13,20 +13,20 @@ type SidebarContextProps = {
   openMobile: boolean;
   setOpenMobile: (open: boolean) => void;
   isMobile: boolean;
+  sidebarId: string;
   toggleSidebar: () => void;
 };
 const SidebarContext = React.createContext<SidebarContextProps | null>(null);
 function useSidebar() {
   const context = React.useContext(SidebarContext);
-  if (!context) {
+  if (!context)
     throw new Error('useSidebar must be used within a SidebarProvider.');
-  }
   return context;
 }
 function SidebarProvider({
   defaultOpen = true,
-  open: openProp,
-  onOpenChange: setOpenProp,
+  open: controlledOpen,
+  onOpenChange,
   className,
   style,
   children,
@@ -36,83 +36,45 @@ function SidebarProvider({
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }) {
-  const isMobile = useIsMobile();
-  const [openMobile, setOpenMobile] = React.useState(false);
-  const [_open, _setOpen] = React.useState(defaultOpen);
-  const open = openProp ?? _open;
-  const setOpen = React.useCallback(
-    (value: boolean | ((value: boolean) => boolean)) => {
-      const openState = typeof value === 'function' ? value(open) : value;
-      if (setOpenProp) {
-        setOpenProp(openState);
-      } else {
-        _setOpen(openState);
-      }
-      Reflect.set(
-        document,
-        'cookie',
-        `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`,
-      );
-    },
-    [setOpenProp, open],
-  );
-  const toggleSidebar = React.useCallback(() => {
-    return isMobile ? setOpenMobile((open) => !open) : setOpen((open) => !open);
-  }, [isMobile, setOpen]);
-  React.useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (
-        event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
-        (event.metaKey || event.ctrlKey)
-      ) {
-        event.preventDefault();
-        toggleSidebar();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [toggleSidebar]);
-  const state = open ? 'expanded' : 'collapsed';
-  const contextValue = React.useMemo<SidebarContextProps>(
-    () => ({
-      state,
-      open,
-      setOpen,
-      isMobile,
-      openMobile,
-      setOpenMobile,
-      toggleSidebar,
-    }),
-    [state, open, setOpen, isMobile, openMobile, toggleSidebar],
-  );
+  const controlledDesktop = controlledOpen ? 'expanded' : 'compact';
+  const navigation = useNavigationState({
+    desktopState: controlledOpen === undefined ? undefined : controlledDesktop,
+    defaultDesktopState: defaultOpen ? 'expanded' : 'compact',
+    onDesktopStateChange: (state) => onOpenChange?.(state === 'expanded'),
+  });
+  const sidebarId = React.useId();
+  const context: SidebarContextProps = {
+    state: navigation.desktopState === 'expanded' ? 'expanded' : 'collapsed',
+    open: navigation.desktopState === 'expanded',
+    setOpen: (open: boolean) =>
+      navigation.setDesktopState(open ? 'expanded' : 'compact'),
+    openMobile: navigation.mobileOpen,
+    setOpenMobile: navigation.setMobileOpen,
+    isMobile: navigation.isMobile,
+    sidebarId,
+    toggleSidebar: navigation.toggleNavigation,
+  };
   return (
-    <SidebarContext.Provider value={contextValue}>
+    <SidebarContext.Provider value={context}>
       <TooltipProvider delayDuration={0}>
-        <div
-          data-slot="sidebar-wrapper"
-          style={style}
-          className={cn(
-            'sp-sidebar-wrapper group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full',
-            className,
-          )}
-          {...props}
+        <Sheet
+          open={navigation.isMobile && navigation.mobileOpen}
+          onOpenChange={navigation.setMobileOpen}
         >
-          {children}
-        </div>
+          <div
+            data-slot="sidebar-wrapper"
+            style={style}
+            className={cn(
+              'sp-sidebar-wrapper group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full',
+              className,
+            )}
+            {...props}
+          >
+            {children}
+          </div>
+        </Sheet>
       </TooltipProvider>
     </SidebarContext.Provider>
-  );
-}
-const MOBILE_BREAKPOINT = 768;
-function useIsMobile() {
-  return React.useSyncExternalStore(
-    (cb) => {
-      const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
-      mql.addEventListener('change', cb);
-      return () => mql.removeEventListener('change', cb);
-    },
-    () => window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`).matches,
-    () => false,
   );
 }
 

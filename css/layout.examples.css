@@ -87,7 +87,7 @@
 
 .docs-skip-link {
   padding: var(--space-2) var(--space-4);
-  color: var(--primary-foreground);
-  background: var(--primary);
+  color: var(--on-dark);
+  background: var(--brand-navy);
   border-radius: var(--radius-btn);
 }

@@ -17,9 +17,6 @@
     --sp-button-fg-hover: var(--sp-button-fg);
     --sp-button-border-color-hover: var(--sp-button-border-color);
     --sp-button-ring: var(--ring);
-    --sp-button-shadow: 0 0 transparent;
-    --sp-button-shadow-hover: var(--sp-button-shadow);
-    --sp-button-lift: 0;
     --sp-button-focus: 0 0 transparent;
 
     display: inline-flex;
@@ -46,7 +43,7 @@
     border-radius: var(--sp-button-radius);
     outline: var(--ring-width) solid transparent;
     outline-offset: var(--ring-offset);
-    box-shadow: var(--sp-button-focus), var(--sp-button-shadow);
+    box-shadow: var(--sp-button-focus);
     transition: all var(--transition-fast);
   }
 
@@ -89,7 +86,7 @@
 
   .sp-button[data-variant="ghost"] {
     --sp-button-bg: transparent;
-    --sp-button-fg: var(--brand-text);
+    --sp-button-fg: var(--foreground);
     --sp-button-bg-hover: var(--accent);
   }
 
@@ -97,25 +94,6 @@
     --sp-button-bg: var(--brand);
     --sp-button-fg: var(--brand-foreground);
     --sp-button-bg-hover: var(--brand-hover);
-  }
-
-  .sp-button[data-variant="on-dark-primary"] {
-    --sp-button-bg: var(--brand);
-    --sp-button-fg: var(--brand-foreground);
-    --sp-button-font-weight: 700;
-    --sp-button-bg-hover: var(--brand-hover);
-  }
-
-  .sp-button[data-variant="on-dark-outline"] {
-    --sp-button-bg: transparent;
-    --sp-button-border-width: var(--border-width-strong);
-    --sp-button-border-color: color-mix(
-      in oklab,
-      var(--white) 30%,
-      transparent
-    );
-    --sp-button-bg-hover: transparent;
-    --sp-button-border-color-hover: var(--white);
   }
 
   .sp-button[data-variant="link"] {
@@ -128,22 +106,9 @@
     text-underline-offset: var(--space-1);
   }
 
-  .sp-button[data-variant="premium"] {
-    --sp-button-bg: linear-gradient(
-      to bottom right in oklab,
-      var(--brand) 0%,
-      var(--brand-hover) 100%
-    );
-    --sp-button-bg-hover: var(--sp-button-bg);
-    --sp-button-shadow: 0 var(--space-1) calc(var(--space-1) * 3.5)
-      color-mix(in oklab, var(--brand) 30%, transparent);
-    --sp-button-shadow-hover: 0 calc(var(--space-1) * 1.5) var(--space-5)
-      color-mix(in oklab, var(--brand) 40%, transparent);
-    --sp-button-lift: calc(var(--space-1) * -0.5);
-  }
-
   .sp-button[data-variant="destructive"] {
     --sp-button-bg: var(--error);
+    --sp-button-fg: var(--destructive-foreground);
     --sp-button-bg-hover: var(--error-hover);
     --sp-button-ring: var(--error-ring);
   }
@@ -155,7 +120,7 @@
     --sp-button-border-color: var(--error-text);
     --sp-button-bg-hover: var(--error);
     --sp-button-border-color-hover: var(--error);
-    --sp-button-fg-hover: var(--primary-foreground);
+    --sp-button-fg-hover: var(--destructive-foreground);
     --sp-button-ring: var(--error-ring);
   }
 
@@ -221,8 +186,6 @@
       color: var(--sp-button-fg-hover);
       background: var(--sp-button-bg-hover);
       border-color: var(--sp-button-border-color-hover);
-      box-shadow: var(--sp-button-focus), var(--sp-button-shadow-hover);
-      translate: 0 var(--sp-button-lift);
     }
 
     .sp-button[data-variant="link"]:hover:not(

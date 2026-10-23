@@ -1,6 +1,6 @@
 @layer components {
   .sp-site-header {
-    --sp-site-header-bg: var(--primary);
+    --sp-site-header-bg: var(--brand-navy);
     --sp-site-header-fg: var(--on-dark);
     --sp-site-header-border-color: var(--border-dark);
 

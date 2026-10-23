@@ -1,5 +1,11 @@
 # Sapphire UI v4 — plan
 
+The working tree now prepares an unpublished v5 product-layout candidate
+(ADR-0011). The v4 release authorization and historical measurements below do
+not authorize publishing v5. Current local verification and remaining visual
+baseline work are recorded in `docs/backlog.md`; release/deployment need a fresh
+candidate decision, including preservation of any existing `/r/v4/` distribution.
+
 **Status:** Implementation authorized through P11, with at most two GPT-6.1 Sol subagents.
 P8 is reopened: the owner rejected the removed navigation and reduced foundation/API content.
 P11 publication through the existing tag workflow is requested; final-candidate

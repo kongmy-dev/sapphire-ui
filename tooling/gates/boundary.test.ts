@@ -194,3 +194,25 @@ test('native examples and tests use public element entries without opening runti
   expect(result.violations).toHaveLength(1);
   expect(result.violations[0]?.file).toBe('elements/banner.ts');
 });
+
+test('component examples can compose sibling examples while runtime and cross-component imports stay closed', () => {
+  const result = check([
+    file(
+      'components/button/button.examples.tsx',
+      "import './button-panel.examples'; import '../card/card-panel.examples';",
+    ),
+    file('components/button/button.tsx', "import './button-panel.examples';"),
+    file('components/button/button-panel.examples.tsx'),
+    file('components/card/card-panel.examples.tsx'),
+  ]);
+  expect(result.violations.map((item) => [item.file, item.problem])).toEqual([
+    [
+      'components/button/button.examples.tsx',
+      'Forbidden dependency on components/card/card-panel.examples.tsx',
+    ],
+    [
+      'components/button/button.tsx',
+      'Forbidden dependency on components/button/button-panel.examples.tsx',
+    ],
+  ]);
+});

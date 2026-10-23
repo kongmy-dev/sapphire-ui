@@ -9,8 +9,8 @@
     --sp-table-border-color: var(--border);
     --sp-table-head-bg: transparent;
     --sp-table-head-white-space: nowrap;
-    --sp-table-head-font-size: calc(var(--text-base) * 0.6875);
-    --sp-table-head-tracking: 0.08;
+    --sp-table-head-font-size: var(--text-sm);
+    --sp-table-head-tracking: 0;
     --sp-table-head-padding-block: var(--space-3);
     --sp-table-head-padding-inline: var(--space-4);
     --sp-table-cell-padding: var(--space-3);
@@ -48,7 +48,7 @@
     color: var(--muted-foreground);
     text-align: left;
     background: var(--sp-table-head-bg);
-    text-transform: uppercase;
+    text-transform: none;
     letter-spacing: calc(
       var(--sp-table-head-font-size) *
       var(--sp-table-head-tracking)
@@ -100,7 +100,7 @@
     font-size: var(--sp-table-head-font-size);
     font-weight: 700;
     color: var(--brand-text);
-    text-transform: uppercase;
+    text-transform: none;
     letter-spacing: calc(
       var(--sp-table-head-font-size) *
       var(--sp-table-head-tracking)
@@ -120,7 +120,7 @@
     .sp-table-row[data-row="total"]
     .sp-table-cell {
     font-weight: 600;
-    color: var(--on-dark);
+    color: var(--primary-foreground);
     background: var(--primary);
   }
 

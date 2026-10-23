@@ -26,6 +26,12 @@ export type RegistryItem = {
 };
 export type Registry = { items: RegistryItem[] };
 
+export function registryOutput(
+  env: Readonly<Record<string, string | undefined>>,
+) {
+  return resolve(env.REGISTRY_V5_OUT ?? 'dist-docs/r/v5');
+}
+
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null;
 export function readRegistry(text: string): Registry {
@@ -102,7 +108,7 @@ function rewrittenFile(root: string, file: unknown) {
 }
 
 export function buildRegistry(root: string, output: string): string {
-  const staging = mkdtempSync(join(tmpdir(), 'sapphire-registry-v4-'));
+  const staging = mkdtempSync(join(tmpdir(), 'sapphire-registry-'));
   const source = generatedRegistry(root);
   const registry = readRegistry(source);
   const included = dirname(join(staging, REGISTRY_SOURCE));
@@ -123,7 +129,7 @@ export function buildRegistry(root: string, output: string): string {
 
 if (import.meta.main) {
   const root = process.cwd();
-  const output = resolve(process.env.REGISTRY_V4_OUT ?? 'dist-docs/r/v4');
+  const output = registryOutput(process.env);
   buildRegistry(root, output);
-  console.log(`registry v4: built and validated ${output}`);
+  console.log(`registry: built and validated ${output}`);
 }

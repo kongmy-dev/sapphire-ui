@@ -12,7 +12,7 @@ function ButtonVariants() {
       <Button variant="ghost">Ghost</Button>
       <Button variant="brand">Brand</Button>
       <Button variant="link">Link</Button>
-      <Button variant="premium">Premium</Button>
+
       <Button variant="destructive">Delete</Button>
       <Button variant="destructive-outline">Delete outline</Button>
       <Button variant="destructive-ghost">Delete ghost</Button>
@@ -22,9 +22,9 @@ function ButtonVariants() {
 
 function ButtonOnDark() {
   return (
-    <div className="sp-button-demo-dark sp-cluster">
-      <Button variant="on-dark-primary">Get started</Button>
-      <Button variant="on-dark-outline">Learn more</Button>
+    <div className="sp-button-demo-dark sp-cluster" data-theme="dark">
+      <Button variant="brand">Get started</Button>
+      <Button variant="outline">Learn more</Button>
     </div>
   );
 }

@@ -48,7 +48,7 @@ test('API and usage text cannot become executable markup', () => {
   expect(html).toContain(
     'data-example-component="button" data-example-name="variants"',
   );
-  expect(html).toContain('src="/assets/examples-entry.js"');
+  expect(html).toContain('src="/assets/examples/button.js"');
   expect(html).not.toContain('<iframe');
   expect(html).not.toContain('preview.html');
   expect(html).toContain('@kongmy-dev/sapphire-ui/sapphire.css');
@@ -146,4 +146,49 @@ test('setup includes behaviour peers from composed components', () => {
   expect(html).toContain('@kongmy-dev/sapphire-ui/sapphire.css');
   const native = catalogPage([row], true);
   expect(native).not.toContain('import { Button }');
+});
+
+test('component pages load only their example assets and chrome follows the page scheme', () => {
+  const html = componentPage(root, [row]);
+  expect(html).toContain('href="/assets/examples/button.css"');
+  expect(html).toContain('src="/assets/examples/button.js"');
+  expect(html).not.toContain('/assets/examples.css');
+  expect(html).not.toContain('/assets/examples-entry.js');
+  expect(html).not.toContain('data-theme="dark"');
+  expect(catalogPage([row])).not.toContain('/assets/examples/');
+});
+
+test('native component pages use their own script and stylesheet', () => {
+  const html = componentPage(
+    root,
+    [
+      {
+        component: 'banner',
+        name: 'notice',
+        file: 'elements/banner.examples.ts',
+      },
+    ],
+    true,
+  );
+  expect(html).toContain('src="/assets/native/banner.js"');
+  expect(html).toContain('href="/assets/native/banner.css"');
+  expect(html).not.toContain('/assets/elements-entry.js');
+});
+
+test('the workspace example precedes collapsed navigation while keeping all examples', () => {
+  const file = 'components/button/order.examples.tsx';
+  writeFileSync(
+    join(root, file),
+    'function Example() { return <p>Example</p>; } export const examples = [{name:"collapsed",render:Example},{name:"workspace",render:Example},{name:"variants",render:Example}] as const;',
+  );
+  const rows = ['collapsed', 'workspace', 'variants'].map((name) => ({
+    ...row,
+    file,
+    name,
+  }));
+  const html = componentPage(root, rows);
+  expect(html.indexOf('id="example-workspace"')).toBeLessThan(
+    html.indexOf('id="example-collapsed"'),
+  );
+  expect(html).toContain('id="example-variants"');
 });

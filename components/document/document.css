@@ -16,7 +16,7 @@
     padding: var(--space-3) var(--space-6);
     font-size: calc(var(--text-base) * 0.8125);
     color: var(--sp-document-bar-fg);
-    background: var(--primary);
+    background: var(--brand-navy);
   }
 
   .sp-document-bar[data-sticky] {
@@ -28,7 +28,7 @@
   .sp-document-mark {
     --sp-document-mark-size: calc(var(--space-1) * 6.5);
     --sp-document-mark-bg: var(--brand);
-    --sp-document-mark-fg: var(--primary);
+    --sp-document-mark-fg: var(--brand-navy);
 
     display: grid;
     place-items: center;
@@ -44,7 +44,7 @@
 
   .sp-document-mark[data-variant="primary"] {
     --sp-document-mark-size: calc(var(--space-1) * 7);
-    --sp-document-mark-bg: var(--primary);
+    --sp-document-mark-bg: var(--brand-navy);
     --sp-document-mark-fg: var(--brand);
   }
 
@@ -266,7 +266,7 @@
   }
 
   .sp-document-card[data-variant="on-dark"] {
-    --sp-document-card-bg: var(--primary);
+    --sp-document-card-bg: var(--brand-navy);
     --sp-document-card-fg: var(--on-dark);
     --sp-document-card-border-color: var(--border-dark);
     --sp-document-card-heading-fg: var(--on-dark);

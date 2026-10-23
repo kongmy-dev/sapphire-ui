@@ -19,10 +19,11 @@ export function page(
   body: string,
   navigation = '',
   purpose = `${title} documentation for Sapphire UI: setup, examples and reference.`,
+  exampleStylesheet?: string,
 ) {
   const brand = '<a class="docs-brand" href="/">Sapphire <span>UI</span></a>';
   const description = escapeHtml(purpose);
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="${description}"><title>${escapeHtml(title)} · Sapphire UI</title><script>${THEME_INIT_SCRIPT}</script><link rel="stylesheet" href="/assets/sapphire.css"><link rel="stylesheet" href="/assets/docs.css"><link rel="stylesheet" href="/assets/reference.css"><link rel="stylesheet" href="/assets/examples.css"></head><body class="docs-site"><a class="sp-sr-only-focusable" href="#main">Skip to content</a><header class="docs-mobile-bar" data-theme="dark"><button type="button" class="docs-menu" aria-label="Open navigation" aria-controls="docs-sidebar" aria-expanded="false"><svg class="sp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>${brand}<span class="docs-mobile-version">v${version}</span></header><aside id="docs-sidebar" class="docs-sidebar" data-theme="dark"><div class="docs-sidebar-header">${brand}<button type="button" class="docs-sidebar-close" aria-label="Close navigation"><svg class="sp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div><p class="docs-version">v${version} · Design system</p><button type="button" class="docs-search" aria-label="Search documentation… ⌘K" aria-haspopup="dialog" aria-controls="docs-search-dialog"><span>Search documentation…</span><kbd aria-hidden="true">⌘K</kbd></button>${navigation}<div class="docs-sidebar-bottom"><button type="button" class="docs-theme" aria-label="Theme: light. Switch to dark theme">Theme: light</button><a class="docs-sidebar-footer" href="https://kongmy.dev">KONGMY.DEV ↗</a></div></aside><button class="docs-nav-backdrop" tabindex="-1" aria-label="Close navigation overlay"></button><main id="main" class="docs-main sp-cq" tabindex="-1"><header class="docs-page-header"><h1>${escapeHtml(title)}</h1></header><div class="docs-content">${body}</div><footer class="docs-footer">Sapphire UI · KONGMY Digital Solutions</footer></main>${searchDialog}<script type="module" src="/assets/site-client.js"></script></body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="${description}"><title>${escapeHtml(title)} · Sapphire UI</title><script>${THEME_INIT_SCRIPT}</script><link rel="stylesheet" href="/assets/sapphire.css"><link rel="stylesheet" href="/assets/docs.css"><link rel="stylesheet" href="/assets/reference.css">${exampleStylesheet ? `<link rel="stylesheet" href="/assets/${escapeHtml(exampleStylesheet)}">` : ''}</head><body class="docs-site"><a class="sp-sr-only-focusable" href="#main">Skip to content</a><header class="docs-mobile-bar"><button type="button" class="docs-menu" aria-label="Open navigation" aria-controls="docs-sidebar" aria-expanded="false"><svg class="sp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>${brand}<span class="docs-mobile-version">v${version}</span></header><aside id="docs-sidebar" class="docs-sidebar"><div class="docs-sidebar-header">${brand}<button type="button" class="docs-sidebar-close" aria-label="Close navigation"><svg class="sp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div><p class="docs-version">v${version} · Design system</p><button type="button" class="docs-search" aria-label="Search documentation… ⌘K" aria-haspopup="dialog" aria-controls="docs-search-dialog"><span>Search documentation…</span><kbd aria-hidden="true">⌘K</kbd></button>${navigation}<div class="docs-sidebar-bottom"><button type="button" class="docs-theme" aria-label="Theme: light. Switch to dark theme">Theme: light</button><a class="docs-sidebar-footer" href="https://kongmy.dev">KONGMY.DEV ↗</a></div></aside><button class="docs-nav-backdrop" tabindex="-1" aria-label="Close navigation overlay"></button><main id="main" class="docs-main sp-cq" tabindex="-1"><header class="docs-page-header"><h1>${escapeHtml(title)}</h1></header><div class="docs-content">${body}</div><footer class="docs-footer">Sapphire UI · KONGMY Digital Solutions</footer></main>${searchDialog}<script type="module" src="/assets/site-client.js"></script></body></html>`;
 }
 
 const architecture = [
@@ -92,7 +93,12 @@ export function catalogPage(
   );
 }
 
-const ranks: Record<string, number> = { variants: 0, default: 1, states: 2 };
+const ranks: Record<string, number> = {
+  workspace: -1,
+  variants: 0,
+  default: 1,
+  states: 2,
+};
 const exampleRank = (name: string) => ranks[name] ?? 3;
 const componentNotes: Record<string, string> = {
   'code-block':
@@ -155,8 +161,9 @@ export function componentPage(
       .map((row) => preview(root, row, native))
       .join(
         '',
-      )}</section><section class="docs-section" id="props"><h2>${apiTitle}</h2>${api}</section><section class="docs-section" id="setup"><h2>Setup</h2>${code(install)}<p>For an app using package components throughout, load the full stylesheet once. Add this ${native ? 'element registration' : 'component import'} where you use it.</p>${code(imports)}<p>Mixing package and vendored components? Follow <a href="/foundations/">application setup</a>.</p></section><script type="module" src="/assets/${native ? 'elements' : 'examples'}-entry.js"></script>`,
+      )}</section><section class="docs-section" id="props"><h2>${apiTitle}</h2>${api}</section><section class="docs-section" id="setup"><h2>Setup</h2>${code(install)}<p>For an app using package components throughout, load the full stylesheet once. Add this ${native ? 'element registration' : 'component import'} where you use it.</p>${code(imports)}<p>Mixing package and vendored components? Follow <a href="/foundations/">application setup</a>.</p></section><script type="module" src="/assets/${native ? 'native' : 'examples'}/${escapeHtml(name)}.js"></script>`,
     navigation,
     componentDescription(name),
+    `${native ? 'native' : 'examples'}/${name}.css`,
   );
 }

@@ -5,7 +5,7 @@ const statuses = ['done', 'active', 'upcoming'] as const;
 type StepStatus = (typeof statuses)[number];
 export type StepItem = { label: string; description?: string | undefined };
 export type StepsProps = ComponentProps<'nav'> & {
-  steps: StepItem[];
+  steps: readonly StepItem[];
   current: number;
   variant?: (typeof variants)[number] | undefined;
   renderIndicator?:

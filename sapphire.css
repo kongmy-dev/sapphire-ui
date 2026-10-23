@@ -26,6 +26,7 @@
 @import "./components/dropdown-menu/dropdown-menu.css";
 @import "./components/empty/empty.css";
 @import "./components/form-field/form-field.css";
+@import "./components/form-section/form-section.css";
 @import "./components/hover-card/hover-card.css";
 @import "./components/icon/icon.css";
 @import "./components/icon-mark/icon-mark.css";
@@ -37,6 +38,7 @@
 @import "./components/margin-note/margin-note.css";
 @import "./components/mobile-nav/mobile-nav.css";
 @import "./components/native-select/native-select.css";
+@import "./components/page-header/page-header.css";
 @import "./components/page-section/page-section.css";
 @import "./components/pagination/pagination.css";
 @import "./components/passphrase-gate/passphrase-gate.css";

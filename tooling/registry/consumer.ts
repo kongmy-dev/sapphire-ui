@@ -64,19 +64,20 @@ export function consumerSource(): string {
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogTrigger, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar';
-import { DataTableColumnHeader } from '@/components/ui/data-table-column-header';
-import { DataTableViewOptions } from '@/components/ui/data-table-view-options';
-import { columnOrderingFeature, columnVisibilityFeature, createSortedRowModel, rowSortingFeature, sortFn_text, tableFeatures, useTable } from '@tanstack/react-table';
+import { DataTable } from '@/components/ui/data-table';
+import { Input } from '@/components/ui/input';
+import { columnFilteringFeature, columnOrderingFeature, columnVisibilityFeature, createFilteredRowModel, createPaginatedRowModel, createSortedRowModel, filterFn_includesString, rowPaginationFeature, rowSortingFeature, sortFn_text, tableFeatures, useTable } from '@tanstack/react-table';
 import { Card } from '@kongmy-dev/sapphire-ui/card';
 import './index.css';
-const features = tableFeatures({ rowSortingFeature, columnVisibilityFeature, columnOrderingFeature, sortedRowModel: createSortedRowModel() });
-const columns = [{ accessorKey: 'name', sortFn: sortFn_text }, { accessorKey: 'fixed', enableSorting: false, enableHiding: false }, { id: 'actions' }];
+const features = tableFeatures({ columnFilteringFeature, rowSortingFeature, columnVisibilityFeature, columnOrderingFeature, rowPaginationFeature, filteredRowModel: createFilteredRowModel(), sortedRowModel: createSortedRowModel(), paginatedRowModel: createPaginatedRowModel() });
+const columns = [{ accessorKey: 'name', header: 'Name', sortFn: sortFn_text, filterFn: filterFn_includesString }, { accessorKey: 'fixed', header: 'Fixed', enableSorting: false, enableHiding: false }, { id: 'actions', header: 'Actions' }];
 const data = [{name: 'Zed', fixed: 'First'}, {name: 'Amy', fixed: 'Second'}];
 function TableControls() {
-  const table = useTable({features, columns, data});
+  const table = useTable({features, columns, data, initialState: { pagination: { pageIndex: 0, pageSize: 1 } }});
   const column = table.getColumn('name');
   if (!column) throw new Error('Missing name column');
-  return <section aria-label="Table controls"><DataTableColumnHeader column={column} title="Name" /><DataTableViewOptions table={table} /><output aria-label="Row order">{table.getRowModel().rows.map(row => row.original.name).join(',')}</output><output aria-label="Visible columns">{table.getVisibleLeafColumns().map(entry => entry.id).join(',')}</output></section>;
+  const filter = column.getFilterValue();
+  return <DataTable table={table} caption="Consumer records" filters={<Input aria-label="Filter records" value={typeof filter === 'string' ? filter : ''} onChange={event => column.setFilterValue(event.currentTarget.value)} />} />;
 }
 const root = document.getElementById('root');
 if (root) createRoot(root).render(<SidebarProvider><Sidebar><SidebarContent><SidebarMenu><SidebarMenuItem><SidebarMenuButton>Overview</SidebarMenuButton></SidebarMenuItem></SidebarMenu></SidebarContent></Sidebar><main><SidebarTrigger /><Card>Package card</Card><TableControls /><Dialog><DialogTrigger asChild><Button data-consumer-custom="true">Open dialog</Button></DialogTrigger><DialogContent><DialogTitle>Vendored dialog</DialogTitle></DialogContent></Dialog></main></SidebarProvider>);

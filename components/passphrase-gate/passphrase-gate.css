@@ -7,7 +7,7 @@
     place-items: center;
     padding: var(--space-8);
     color: var(--on-dark);
-    background: var(--primary);
+    background: var(--brand-navy);
   }
 
   .sp-passphrase-gate[data-hidden] {
@@ -60,16 +60,16 @@
     font-family: var(--font-serif);
     font-size: var(--text-sm);
     font-weight: 700;
-    color: var(--primary);
+    color: var(--brand-navy);
     background: var(--brand);
     border-radius: calc(var(--space-1) * 1.5);
   }
 
   .sp-passphrase-gate-title {
     margin: 0 0 var(--space-2);
-    font-family: var(--font-serif);
-    font-size: calc(var(--text-base) * 1.75);
-    font-weight: 500;
+    font-family: var(--sp-heading-font);
+    font-size: var(--sp-heading-page);
+    font-weight: 600;
     letter-spacing: -0.01em;
     color: var(--on-dark);
   }
@@ -132,7 +132,7 @@
     place-items: center;
     padding: 0 calc(var(--space-1) * 4.5);
     font-weight: 700;
-    color: var(--primary);
+    color: var(--brand-navy);
     cursor: pointer;
     background: var(--brand);
     border: 0;
@@ -171,7 +171,7 @@
     font-weight: 600;
     color: var(--brand);
     cursor: pointer;
-    background: var(--primary);
+    background: var(--brand-navy);
     border: var(--border-width) solid var(--border-dark);
     border-radius: var(--radius-pill);
     box-shadow: var(--shadow-lg);
@@ -199,7 +199,7 @@
 
     .sp-passphrase-gate-toggle:hover {
       color: var(--white);
-      background: var(--primary-hover);
+      background: var(--card-dark);
     }
   }
 

@@ -3,6 +3,13 @@
 import { useState } from 'react';
 import { Input } from '../input/input.js';
 import { NativeSelect } from '../native-select/native-select.js';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../select/select.js';
 import { Textarea } from '../textarea/textarea.js';
 import { FormField } from './form-field.js';
 
@@ -61,7 +68,30 @@ function FieldValidation() {
   );
 }
 
+function CompoundField() {
+  return (
+    <FormField
+      label="Billing country"
+      required
+      hint="Used for tax calculations."
+    >
+      {({ controlProps, required }) => (
+        <Select required={required} defaultValue="my" name="billing-country">
+          <SelectTrigger {...controlProps}>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="my">Malaysia</SelectItem>
+            <SelectItem value="sg">Singapore</SelectItem>
+          </SelectContent>
+        </Select>
+      )}
+    </FormField>
+  );
+}
+
 export const examples = [
+  { name: 'compound-control', render: CompoundField },
   { name: 'composition', render: FieldComposition },
   { name: 'states', render: FieldStates },
   { name: 'validation', render: FieldValidation },
