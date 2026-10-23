@@ -22,7 +22,7 @@ import { dirname } from 'node:path';
 const task = process.argv[2];
 appendFileSync('.runs', task + '\\n');
 const source = readFileSync('input.ts', 'utf8');
-const registry = (process.env.REGISTRY_V5_OUT ?? 'dist-docs/r/v5') + '/registry.json';
+const registry = (process.env.REGISTRY_V4_OUT ?? 'dist-docs/r/v4') + '/registry.json';
 const artifacts = { test: 'coverage/lcov.info', 'build:registry': registry };
 if (task === 'test' && existsSync('fail-test')) process.exit(1);
 if (task === 'comment-check') {
@@ -199,7 +199,7 @@ it('builds the registry before checking a missing or caller-selected output', ()
   const root = fixture();
   expect(existsSync(join(root, 'dist-docs'))).toBe(false);
   expect(run(root, ['check:registry']).exitCode).toBe(0);
-  const env = { ...process.env, REGISTRY_V5_OUT: 'coverage/custom-registry' };
+  const env = { ...process.env, REGISTRY_V4_OUT: 'coverage/custom-registry' };
   expect(run(root, ['check:registry'], env).exitCode).toBe(0);
   expect(existsSync(join(root, 'coverage/custom-registry/registry.json'))).toBe(
     true,

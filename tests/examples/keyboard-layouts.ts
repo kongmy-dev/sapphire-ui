@@ -51,7 +51,7 @@ async function headerLinks(page: Page) {
     const href = await link.getAttribute('href');
     await link.focus();
     await page.keyboard.press('Enter');
-    expect(new URL(page.url()).hash).toBe(href);
+    await expect(page).toHaveURL((url) => url.hash === href);
   }
 }
 
@@ -61,7 +61,7 @@ async function footerLinks(page: Page) {
     const href = await link.getAttribute('href');
     await link.focus();
     await page.keyboard.press('Enter');
-    expect(new URL(page.url()).hash).toBe(href);
+    await expect(page).toHaveURL((url) => url.hash === href);
   }
 }
 

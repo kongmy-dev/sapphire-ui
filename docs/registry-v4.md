@@ -1,10 +1,9 @@
-# Registry v5 candidate
+# Registry v4
 
-The unpublished v5 registry is built at `/r/v5/{name}.json`. The 35 JSON files in
+The current registry is built at `/r/v4/{name}.json`. The 35 JSON files in
 `registry/legacy-r/` are the frozen `/r/` distribution; copy them unchanged into
-the site's `/r/` output before writing the v5 subdirectory.
-Before a later whole-site deployment, also retain any deployed `/r/v4/` assets;
-this checkout does not contain a frozen copy of that distribution.
+the site's `/r/` output before writing the v4 subdirectory. Version 4.1 updates
+the same v4 route; existing 4.0 consumers follow [the migration guide](migrate-v4-1.md).
 
 ```sh
 bun tooling/registry/generate.ts
@@ -13,7 +12,7 @@ bun tooling/registry/check.ts
 SAPPHIRE_PACKAGE_TARBALL=/absolute/path/sapphire-ui.tgz bun tooling/registry/smoke.ts
 ```
 
-`REGISTRY_V5_OUT` selects the build/check output, defaulting to `dist-docs/r/v5`.
+`REGISTRY_V4_OUT` selects the build/check output, defaulting to `dist-docs/r/v4`.
 The source registry includes generated metadata. The build wrapper stages its
 physical source files because shadcn's included registry paths cannot traverse
 parent directories and the CLI reads file contents from disk. It runs pinned
@@ -32,19 +31,19 @@ versions from the development manifest. Transitive components are registry
 items; private implementation files, including Slot, travel with their owner.
 
 Initialize an existing Vite/Tailwind application using the base URL, then map
-`@sapphire` to `https://design.kongmy.dev/r/v5/{name}.json` in the `registries`
+`@sapphire` to `https://design.kongmy.dev/r/v4/{name}.json` in the `registries`
 object of `components.json`. Add components with the pinned CLI:
 
 ```sh
-bunx --bun shadcn@4.22.1 init https://design.kongmy.dev/r/v5/base.json --yes
+bunx --bun shadcn@4.22.1 init https://design.kongmy.dev/r/v4/base.json --yes
 bunx --bun shadcn@4.22.1 add @sapphire/button @sapphire/dialog @sapphire/sidebar
 ```
 
 The smoke creates a temporary Vite application and invokes the real CLI for
 both commands. Before publication it resolves the exact package through a
-local tarball override, while the registry still declares `5.0.0`. It checks
+local tarball override, while the registry still declares `4.1.0`. It checks
 strict types and builds a customized vendored Button beside a package Card,
-with both CSS import orders. A synthetic compatible `5.0.1` tarball changes
+with both CSS import orders. A synthetic compatible `4.1.1` tarball changes
 package Button CSS; the smoke verifies that customization survives and the
 unimported package Button CSS stays outside the application bundle. This is a
 build and ownership test, not a browser screenshot assertion or a published

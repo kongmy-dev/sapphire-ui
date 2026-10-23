@@ -50,7 +50,7 @@
     },
     "build:registry": {
       "cache": false,
-      "passThroughEnv": ["REGISTRY_V5_OUT"]
+      "passThroughEnv": ["REGISTRY_V4_OUT"]
     },
     "test:registry": {
       "cache": false,
@@ -63,7 +63,7 @@
     "check:registry": {
       "dependsOn": ["build:registry"],
       "cache": false,
-      "passThroughEnv": ["REGISTRY_V5_OUT"]
+      "passThroughEnv": ["REGISTRY_V4_OUT"]
     }
   }
 }

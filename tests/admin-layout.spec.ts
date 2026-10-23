@@ -40,7 +40,7 @@ for (const scheme of ['light', 'dark'] as const) {
     await expect(help.locator('.sp-admin-layout-label')).toBeVisible();
     const helpHref = await help.getAttribute('href');
     await help.press('Enter');
-    expect(new URL(page.url()).hash).toBe(helpHref);
+    await expect(page).toHaveURL((url) => url.hash === helpHref);
     const library = sidebar.getByRole('button', {
       name: 'Library',
       exact: true,

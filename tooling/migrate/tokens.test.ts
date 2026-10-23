@@ -17,7 +17,7 @@ const read = (path: string) =>
 const v3Theme = legacyFacts.themeTokens;
 const v3Index = legacyFacts.indexTokens;
 const v3 = [...v3Theme, ...v3Index];
-const v5 = tokenSheet(read('css/tokens.css'));
+const current = tokenSheet(read('css/tokens.css'));
 const mapping = tokenSheet(read('css/tailwind.css'));
 
 const renames: Record<string, string> = tokenRenames;
@@ -25,7 +25,7 @@ const utilityTable: Record<string, Record<string, string>> = utilityRenames;
 
 const unique = (names: readonly string[]) => [...new Set(names)];
 const v3Names = unique(v3.map((declaration) => declaration.name));
-const v5Names = unique(v5.map((declaration) => declaration.name));
+const currentNames = unique(current.map((declaration) => declaration.name));
 
 const semanticValues: Record<string, Record<Scheme, string>> = {
   '--color-primary': { light: '#0a192f', dark: '#c5a065' },
@@ -48,7 +48,7 @@ const effective = (value: string | undefined) => normaliseValue(value ?? '');
 
 function valueMismatches(scheme: Scheme): string[] {
   const before = resolveSheet(v3, scheme);
-  const after = resolveSheet(v5, scheme);
+  const after = resolveSheet(current, scheme);
   return Object.entries(renames).flatMap(([from, to]) => {
     const was = effective(before.get(from));
     const now = effective(after.get(to));
@@ -60,7 +60,7 @@ function valueMismatches(scheme: Scheme): string[] {
   });
 }
 
-describe('v3 tokens retain values except for explicit v5 semantic changes', () => {
+describe('v3 tokens retain values except for explicit current semantic changes', () => {
   it('has a rename entry for every v3 token and none for a token v3 never declared', () => {
     expect(v3Names.filter((name) => !(name in renames))).toEqual([]);
     expect(
@@ -70,12 +70,12 @@ describe('v3 tokens retain values except for explicit v5 semantic changes', () =
 
   it('points every rename at a token that css/tokens.css declares', () => {
     expect(
-      Object.values(renames).filter((name) => !v5Names.includes(name)),
+      Object.values(renames).filter((name) => !currentNames.includes(name)),
     ).toEqual([]);
   });
 
   for (const scheme of SCHEMES) {
-    it(`preserves values or matches the pinned v5 semantic value in ${scheme}`, () => {
+    it(`preserves values or matches the pinned current semantic value in ${scheme}`, () => {
       expect(valueMismatches(scheme)).toEqual([]);
     });
   }
@@ -96,19 +96,21 @@ describe('v3 tokens retain values except for explicit v5 semantic changes', () =
   it('keeps the former dark surface token fixed navy in both schemes', () => {
     expect(renames['--bg-dark']).toBe('--brand-navy');
     for (const scheme of SCHEMES) {
-      expect(effective(resolveSheet(v5, scheme).get('--brand-navy'))).toBe(
+      expect(effective(resolveSheet(current, scheme).get('--brand-navy'))).toBe(
         '#0a192f',
       );
     }
   });
 
-  it('declares no v5 token that neither a rename nor newTokens accounts for', () => {
+  it('declares no current token that neither a rename nor newTokens accounts for', () => {
     const targets = new Set(Object.values(renames));
-    const unaccounted = v5Names.filter(
+    const unaccounted = currentNames.filter(
       (name) => !targets.has(name) && !newTokens.some((n) => n === name),
     );
     expect(unaccounted).toEqual([]);
-    expect(newTokens.filter((name) => !v5Names.includes(name))).toEqual([]);
+    expect(newTokens.filter((name) => !currentNames.includes(name))).toEqual(
+      [],
+    );
   });
 
   it('agrees between the two v3 files on every token both declare', () => {

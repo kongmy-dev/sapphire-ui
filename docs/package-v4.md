@@ -1,7 +1,7 @@
 # Package contract
 
 For an existing v3 app, follow the concise [agent migration guide](migrate-v3-v4.md).
-For the unpublished v5 candidate, also follow [v5 migration](migrate-v5.md).
+For an existing 4.0 app, also follow [4.1 migration](migrate-v4-1.md).
 
 The package is ESM-only and has no root JavaScript barrel. Import a component from its
 named subpath, such as `@kongmy-dev/sapphire-ui/button`. CommonJS `require` is unsupported.

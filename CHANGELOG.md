@@ -1,6 +1,9 @@
 # Changelog
 
-## 5.0.0 — Unreleased
+## 4.1.0 — 2026-10-23
+
+Owner-approved breaking update within early 4.x; existing 4.0 applications need
+the migrations below.
 
 - Product headings default to sans-serif at 28/18/16px. Set
   `data-typography="editorial"` for the fluid serif scale.
@@ -21,11 +24,10 @@
 - Document title/icon, passphrase and row-action demo styles leave the shared
   AdminLayout stylesheet. Compose application content with IconMark/Badge/Button.
 - The registry adds complete table and layout recipes. Current registry output
-  is `/r/v5/`; legacy assets stay frozen. Documentation loads production code and
+  remains `/r/v4/`; legacy assets stay frozen. Documentation loads production code and
   example styles for the current component page.
 
-See [the migration guide](docs/migrate-v5.md) for required manual decisions.
-This candidate has not been published.
+See [the migration guide](docs/migrate-v4-1.md) for required manual decisions.
 
 ## 4.0.0 — 2026-10-20
 

@@ -49,18 +49,18 @@ const tarball = join(
 await Bun.write(tarball, bytes);
 await smokeTarball(root, tarball);
 const origin = 'https://design.kongmy.dev';
-for (const path of ['/r/button.json', '/r/v5/button.json']) {
+for (const path of ['/r/button.json', '/r/v4/button.json']) {
   const item = await fetch(origin + path);
   const problems = registryItemHeaderProblems(item.headers);
   if (!item.ok || problems.length)
     throw new Error(`${path}: ${item.status} ${problems.join('; ')}`);
 }
-for (const path of ['/r/missing-item.json', '/r/v5/nested/missing-item.json']) {
+for (const path of ['/r/missing-item.json', '/r/v4/nested/missing-item.json']) {
   const missing = await fetch(origin + path);
   if (missing.status !== 404)
     throw new Error(`${path}: expected 404, got ${missing.status}`);
 }
-await smokeRegistry(root, tarball, `${origin}/r/v5/{name}.json`);
+await smokeRegistry(root, tarball, `${origin}/r/v4/{name}.json`);
 console.log(
   `Published ${manifest.version} and production registry consumer checks passed`,
 );

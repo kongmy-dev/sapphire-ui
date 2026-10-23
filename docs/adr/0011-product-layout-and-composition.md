@@ -40,9 +40,10 @@ retaining every named example and foundation/API reference.
 
 ## Compatibility
 
-This is a breaking contract, prepared as version 5.0.0 with explicit migration
-entries. It does not authorize release tags, publication or deployment. Legacy
-registry assets remain frozen. CSS-first delivery, native elements, optional
+The owner selected version 4.1.0 because early 4.x has one controlled consumer.
+This is an explicit exception to a major-version increase for these breaking
+contracts; migration entries remain required. The registry stays at `/r/v4/`.
+Legacy registry assets remain frozen. CSS-first delivery, native elements, optional
 peers and zero runtime dependencies remain supported. No generic application
 schema, router, icon registry or persistence service is introduced.
 

@@ -6,11 +6,11 @@ import { devDependencies } from '../../package.json';
 import { registryOutput } from './build.js';
 
 it('isolates the current registry route and honors only its current output variable', () => {
-  expect(registryOutput({})).toBe(resolve('dist-docs/r/v5'));
-  expect(registryOutput({ REGISTRY_V4_OUT: 'dist-docs/r/v4' })).toBe(
-    resolve('dist-docs/r/v5'),
+  expect(registryOutput({})).toBe(resolve('dist-docs/r/v4'));
+  expect(registryOutput({ REGISTRY_V5_OUT: 'coverage/unused-registry' })).toBe(
+    resolve('dist-docs/r/v4'),
   );
-  expect(registryOutput({ REGISTRY_V5_OUT: 'coverage/custom-registry' })).toBe(
+  expect(registryOutput({ REGISTRY_V4_OUT: 'coverage/custom-registry' })).toBe(
     resolve('coverage/custom-registry'),
   );
 });

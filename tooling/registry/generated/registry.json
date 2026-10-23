@@ -11,13 +11,13 @@
           "target": "~/.claude/skills/sapphire/SKILL.md"
         }
       ],
-      "dependencies": ["@kongmy-dev/sapphire-ui@5.0.0"],
+      "dependencies": ["@kongmy-dev/sapphire-ui@4.1.0"],
       "registryDependencies": [],
       "css": {
         "@import \"@kongmy-dev/sapphire-ui/foundations.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "foundations"
       },
       "extends": "none"
@@ -48,7 +48,7 @@
         "@import \"@/components/ui/button.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "button"
       }
     },
@@ -73,7 +73,7 @@
         "@import \"@/components/ui/input.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "input"
       }
     },
@@ -98,7 +98,7 @@
         "@import \"@/components/ui/textarea.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "textarea"
       }
     },
@@ -123,7 +123,7 @@
         "@import \"@/components/ui/label.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "label"
       }
     },
@@ -153,7 +153,7 @@
         "@import \"@/components/ui/separator.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "separator"
       }
     },
@@ -178,7 +178,7 @@
         "@import \"@/components/ui/checkbox.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "checkbox"
       }
     },
@@ -203,7 +203,7 @@
         "@import \"@/components/ui/radio-group.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "radio-group"
       }
     },
@@ -233,7 +233,7 @@
         "@import \"@/components/ui/select.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "select"
       }
     },
@@ -258,7 +258,7 @@
         "@import \"@/components/ui/native-select.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "native-select"
       }
     },
@@ -288,7 +288,7 @@
         "@import \"@/components/ui/dialog.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "dialog"
       }
     },
@@ -313,7 +313,7 @@
         "@import \"@/components/ui/sheet.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "sheet"
       }
     },
@@ -343,7 +343,7 @@
         "@import \"@/components/ui/dropdown-menu.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "dropdown-menu"
       }
     },
@@ -368,7 +368,7 @@
         "@import \"@/components/ui/popover.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "popover"
       }
     },
@@ -393,7 +393,7 @@
         "@import \"@/components/ui/tooltip.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "tooltip"
       }
     },
@@ -418,7 +418,7 @@
         "@import \"@/components/ui/table.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "table"
       }
     },
@@ -443,7 +443,7 @@
         "@import \"@/components/ui/tabs.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "tabs"
       }
     },
@@ -468,7 +468,7 @@
         "@import \"@/components/ui/card.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "card"
       }
     },
@@ -498,7 +498,7 @@
         "@import \"@/components/ui/badge.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "badge"
       }
     },
@@ -523,7 +523,7 @@
         "@import \"@/components/ui/form-field.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "form-field"
       }
     },
@@ -548,7 +548,7 @@
         "@import \"@/components/ui/skeleton.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "skeleton"
       }
     },
@@ -573,7 +573,7 @@
         "@import \"@/components/ui/spinner.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "spinner"
       }
     },
@@ -598,7 +598,7 @@
         "@import \"@/components/ui/empty.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "empty"
       }
     },
@@ -623,7 +623,7 @@
         "@import \"@/components/ui/pagination.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "pagination"
       }
     },
@@ -648,7 +648,7 @@
         "@import \"@/components/ui/stat.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "stat"
       }
     },
@@ -673,7 +673,7 @@
         "@import \"@/components/ui/stat-group.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "stat-group"
       }
     },
@@ -698,7 +698,7 @@
         "@import \"@/components/ui/page-header.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "page-header"
       }
     },
@@ -723,7 +723,7 @@
         "@import \"@/components/ui/form-section.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "form-section"
       }
     },
@@ -772,7 +772,7 @@
         "@import \"@/components/ui/admin-layout.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "admin-layout"
       }
     },
@@ -789,7 +789,7 @@
       "dependencies": ["react@19.3.1", "sonner@2.0.8"],
       "registryDependencies": [],
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "toaster"
       }
     },
@@ -811,7 +811,7 @@
       "dependencies": ["cmdk@1.1.1", "lucide-react@1.61.0", "react@19.3.1"],
       "registryDependencies": ["@sapphire/dialog"],
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "command"
       }
     },
@@ -837,7 +837,7 @@
         "@sapphire/popover"
       ],
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "combobox"
       }
     },
@@ -863,7 +863,7 @@
       ],
       "registryDependencies": ["@sapphire/button"],
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "calendar"
       }
     },
@@ -920,7 +920,7 @@
         "@import \"@/components/ui/sidebar.css\"": {}
       },
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "sidebar"
       }
     },
@@ -946,7 +946,7 @@
       ],
       "registryDependencies": ["@sapphire/button", "@sapphire/dropdown-menu"],
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "data-table-column-header"
       }
     },
@@ -967,7 +967,7 @@
       ],
       "registryDependencies": ["@sapphire/button", "@sapphire/dropdown-menu"],
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "data-table-view-options"
       }
     },
@@ -994,7 +994,7 @@
         "@sapphire/table"
       ],
       "meta": {
-        "foundations": "^5.0.0",
+        "foundations": "^4.1.0",
         "cssOwner": "data-table"
       }
     }

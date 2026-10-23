@@ -6,11 +6,10 @@ Fonts ship with the package. CSS and native elements need no React dependency.
 
 [Catalogue](https://design.kongmy.dev) · [Design](DESIGN.md) ·
 [Package contract](docs/package-v4.md) · [Registry](docs/registry-v4.md) ·
-[Migration](docs/migrate-v5.md) · [Changelog](CHANGELOG.md)
+[Migration](docs/migrate-v4-1.md) · [Changelog](CHANGELOG.md)
 
-This checkout prepares the unpublished v5 candidate. The v5 registry commands
-below become available after release; current installations follow their
-published version's contract.
+Version 4.1 includes API and theme changes from 4.0. Follow the migration guide
+before updating an existing application.
 
 ```sh
 bun add @kongmy-dev/sapphire-ui
@@ -70,17 +69,17 @@ Icons accept React SVG elements. Basic components do not load Radix.
 ## Registry
 
 Initialize an existing Vite/Tailwind app with the base and map `@sapphire` to
-`https://design.kongmy.dev/r/v5/{name}.json` in `components.json`:
+`https://design.kongmy.dev/r/v4/{name}.json` in `components.json`:
 
 ```sh
-bunx --bun shadcn@4.22.1 init https://design.kongmy.dev/r/v5/base.json --yes
+bunx --bun shadcn@4.22.1 init https://design.kongmy.dev/r/v4/base.json --yes
 bunx --bun shadcn@4.22.1 add @sapphire/button @sapphire/dialog @sapphire/sidebar
 ```
 
 The base imports foundations and bundled fonts. Each vendored component owns
 its local CSS. In a mixed app, import `foundations.css` plus only the package
 component CSS still in use. Give each component one JavaScript and CSS owner.
-The existing `/r/` registry remains frozen; moving to `/r/v5/` is explicit.
+The existing `/r/` registry remains frozen; moving to `/r/v4/` is explicit.
 
 ## Customization
 

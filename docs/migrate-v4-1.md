@@ -1,7 +1,8 @@
-# Migrating to v5
+# Migrating from 4.0 to 4.1
 
-This is an unpublished breaking candidate. Run `bun run migrate <app> --check`
-before applying literal migrations. Review its manual reports and the choices below.
+Version 4.1 includes owner-approved breaking changes within early 4.x. Run
+`bun run migrate <app> --check` before applying literal migrations. Review its
+manual reports and the choices below before updating existing applications.
 
 ## Layout and navigation
 
@@ -78,5 +79,6 @@ your application owns data fetching and filter state.
   icon-button or search-wrapper styles. Those were demo content, now scoped to
   example CSS. Compose Input, IconMark, Badge and labeled Button actions with
   application content.
-- Point registry installs at `/r/v5/{name}.json` when this candidate is released.
+- Registry installs continue to use `/r/v4/{name}.json`; refresh vendored items
+  together with the 4.1 foundations package.
   Package subpaths remain explicit; there is no root barrel or new runtime dependency.

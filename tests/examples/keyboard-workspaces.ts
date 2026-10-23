@@ -65,7 +65,7 @@ async function adminNavigation(page: Page) {
   const help = sidebar.getByRole('link', { name: 'Help', exact: true });
   const href = await help.getAttribute('href');
   await help.press('Enter');
-  expect(new URL(page.url()).hash).toBe(href);
+  await expect(page).toHaveURL((url) => url.hash === href);
 }
 
 async function adminRecords(page: Page) {

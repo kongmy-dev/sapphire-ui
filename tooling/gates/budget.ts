@@ -25,7 +25,7 @@ export const budgetGate = (
             line: 1,
             rule: 'P-13',
             problem: `gzipped stylesheet is ${count(gzipped)} bytes, ${count(gzipped - ceiling)} over the ${count(ceiling)} ceiling`,
-            fix: 'Remove or merge CSS until it fits; the ceiling changes only when the owner decides it (V4-PLAN.md §10).',
+            fix: 'Remove or merge CSS until it fits; the ceiling changes only when the owner decides it (docs/adr/0003-the-css-contract-comes-first.md).',
           },
         ]
       : [],

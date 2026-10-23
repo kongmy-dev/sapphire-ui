@@ -29,7 +29,7 @@ export type Registry = { items: RegistryItem[] };
 export function registryOutput(
   env: Readonly<Record<string, string | undefined>>,
 ) {
-  return resolve(env.REGISTRY_V5_OUT ?? 'dist-docs/r/v5');
+  return resolve(env.REGISTRY_V4_OUT ?? 'dist-docs/r/v4');
 }
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
