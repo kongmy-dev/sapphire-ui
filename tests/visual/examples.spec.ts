@@ -5,6 +5,12 @@ import { SCHEMES } from '../../tooling/source/token-values';
 import { expect, test } from './fixtures';
 
 const cases = readVisualExamples(join(import.meta.dirname, '../..'));
+const roundedAvatarCaptures = new Set([
+  'react/avatar/sizes',
+  'react/avatar/lifecycle',
+  'react/avatar-group/members',
+  'react/avatar-group/overflow',
+]);
 
 async function openExample(page: Page, component: string) {
   if (component === 'hover-card') {
@@ -79,7 +85,10 @@ for (const { example, open, name } of cases) {
         example.component,
         `${example.name}${open ? '-open' : ''}.${scheme}.png`,
       ],
-      { fullPage: true },
+      {
+        fullPage: true,
+        threshold: roundedAvatarCaptures.has(name) ? 0.01 : 0,
+      },
     );
   });
 }

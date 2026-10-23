@@ -9,8 +9,8 @@ distribution remains frozen.
 ## Release checks
 
 1. Run the fresh integrated gate and package/registry consumer smokes for 4.1.0.
-2. Push the candidate and require remote quality, accessibility and arm64 visual
-   checks to pass before creating the release tag.
+2. Push the candidate and release tag. The tag workflow must pass remote quality,
+   accessibility and arm64 visual checks before its publication job can run.
 3. Publish v4.1.0 through the existing tag workflow. Its approved npm publish step
    uses trusted publishing and provenance; installs, builds and tests use Bun.
 4. Verify the npm artifact, automated catalogue deployment and production registry

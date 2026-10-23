@@ -30,7 +30,7 @@ shared CSS, typed React clients and native custom elements. Read `DESIGN.md` for
 | P-6 | Each new file, export and dependency has a consumer in the same change. | Knip |
 | P-7 | Limits stay 7 cognitive complexity, 89 function lines, 474 file lines and 5 nesting levels; improve measured p95 without raising limits. | `size-check` |
 | P-8 | Examples are accessible in both schemes; interactions support keyboard input. | `test:a11y`, coverage checks |
-| P-9 | Examples and reached states match zero-tolerance pins; only reviewed `bun run pin` updates them. | `test:visual` |
+| P-9 | Examples and reached states match zero-tolerance pins except ADR-0011's named captures; only reviewed `bun run pin` updates them. | `test:visual` |
 | P-10 | Tests use public props and DOM roles, assert behaviour without snapshots, and cover at least 95% of lines/functions per runtime/example file. | `test`, `coverage-check`, boundary gate |
 | P-11 | Docs describe the current contract; CLAUDE ≤120 lines, consumer skill ≤60; ADRs <1,000 words; skill paths exist. | `docs-check`, `skill-refs-check` |
 | P-12 | Exact devDeps, pinned Bun/TypeScript, no runtime dependencies, optional peers, versioned registry dependencies. | `dep-check` |

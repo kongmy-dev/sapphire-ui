@@ -63,7 +63,9 @@ avatar's name includes its visible initials.
 
 The approved visual refresh covers native button borders and textarea resize
 grips. Expected, actual and diff review found no content or geometry changes;
-zero-tolerance comparisons and the reached-state inventory remain intact.
+Comparisons remain exact except for the named avatar captures in
+[ADR-0011](adr/0011-product-layout-and-composition.md#avatar-capture-exception);
+the reached-state inventory remains intact.
 
 ## Development tooling patch
 

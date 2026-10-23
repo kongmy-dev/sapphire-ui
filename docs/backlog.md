@@ -6,6 +6,10 @@ Its breaking contracts and manual choices are in
 automated catalogue deployment and published consumer checks in V4-PLAN.md.
 The registry remains at /r/v4/; the legacy /r/ distribution remains frozen.
 
+- Revisit the narrow avatar screenshot colour tolerance in ADR-0011 when
+  the pinned browser changes. The underlying circular-edge rendering cause
+  remains unproven; retain the reviewed baseline and all other strict captures.
+
 Dependency migrations:
 
 The [dependency review](dependency-review.md) records retained packages,

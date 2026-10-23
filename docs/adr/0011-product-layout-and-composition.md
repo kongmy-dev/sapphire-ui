@@ -56,6 +56,23 @@ schemes. Review real desktop/mobile rendering before visual pins are updated.
 Run fresh integrated gates and package, native and registry consumer checks.
 Preserve coverage, reached-state assertions and the approved CSS budget.
 
+### Avatar capture exception
+
+The owner accepts the low visual risk of circular-edge colour rounding in the
+avatar examples. `bun run test:visual` at c849019
+passed 761 of 762 cases in [CI](https://github.com/kongmy-dev/sapphire-ui/actions/runs/39937036460).
+The failed image has 12 changed raw pixels, each at most one channel level out of
+255, confined to the smallest avatar's left edge; Playwright reports 8 mismatches.
+Repeated captures also showed edge rounding of up to two channel levels without
+text or geometry changes. The browser rendering cause remains unproven.
+
+Only `react/avatar/sizes`, `react/avatar/lifecycle`, `react/avatar-group/members`
+and `react/avatar-group/overflow`, in both schemes, may use a perceptual colour
+threshold of 0.01, with zero pixels allowed beyond that threshold. All other
+captures retain zero tolerance. Keep the reviewed baselines, every example and all behaviour and
+accessibility checks. This accepts rendering noise without hiding the avatar,
+skipping its test or changing component styling.
+
 ## Alternatives
 
 Always-expanded desktop navigation is simpler but prevents reclaiming content
